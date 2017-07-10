@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 25
@@ -7,10 +8,18 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode appVersionCode
+        versionName appVersionName
+        multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86_64", "arm64-v8a", "x86"
+        }
+
+        lintOptions {
+            abortOnError false
+        }
 
     }
     buildTypes {
@@ -19,6 +28,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    resourcePrefix "module_detail_"
 }
 
 dependencies {
@@ -28,4 +38,30 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+
+    provided 'cn.daily.android:core-library:0.0.1-SNAPSHOT'
+    provided 'com.android.support:multidex:1.0.1'
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            snapshotRepository(url: 'http://10.100.47.176:8086/nexus/content/repositories/snapshots') {
+                authentication(userName: 'deployment', password: 'deployment123')
+            }
+            repository(url: 'http://10.100.47.176:8086/nexus/content/repositories/releases') {
+                authentication(userName: 'deployment', password: 'deployment123')
+            }
+            pom.project {
+                version '0.0.1-SNAPSHOT'
+                artifactId 'detail-library'
+                groupId 'cn.daily.android'
+                packaging 'aar'
+                description 'detailProject lib'
+            }
+        }
+        artifacts {
+            archives file('detailPageProject.aar')
+        }
+    }
 }

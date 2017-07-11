@@ -60,7 +60,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     private AuthorAdapter mAuthorAdapter;
 
     public NewsDetailMiddleHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_layout_news_detail_middle, parent, false));
+        super(UIUtils.inflate(R.layout.module_detail_layout_middle, parent, false));
         ButterKnife.bind(this, itemView);
     }
 

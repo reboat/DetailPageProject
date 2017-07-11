@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.zjrb.coreprojectlibrary.utils.TimeUtils;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
@@ -24,17 +25,17 @@ import butterknife.OnClick;
 public class NewsDetailTitleVideoHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
         NewsDetailAdapter.IBindSubscribe {
 
-    @BindView(R.id.tv_title)
+    @BindView(R2.id.tv_title)
     TextView mTvTitle;
-    @BindView(R.id.tv_draft_other)
+    @BindView(R2.id.tv_draft_other)
     TextView mTvDraftOther;
-    @BindView(R.id.tv_column_name)
+    @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
-    @BindView(R.id.tv_subscribe)
+    @BindView(R2.id.tv_subscribe)
     TextView mTvSubscribe;
 
     public NewsDetailTitleVideoHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.layout_news_detail_top_video, parent, false));
+        super(UIUtils.inflate(R.layout.module_detail_layout_top_video, parent, false));
         ButterKnife.bind(this, itemView);
     }
 

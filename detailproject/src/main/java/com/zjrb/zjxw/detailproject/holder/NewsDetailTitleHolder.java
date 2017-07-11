@@ -50,7 +50,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     RelativeLayout mTopContainer;
 
     public NewsDetailTitleHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_layout_news_detail_top, parent, false));
+        super(UIUtils.inflate(R.layout.module_detail_layout_top, parent, false));
         ButterKnife.bind(this, itemView);
         mTopContainer.addOnLayoutChangeListener(this);
     }

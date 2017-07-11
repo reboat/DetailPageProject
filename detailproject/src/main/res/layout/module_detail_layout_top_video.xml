@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="?attr/tc_3b424c"
+        android:textSize="@dimen/text_size_16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_draft_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/tc_a0a4a9"
+        android:textSize="@dimen/text_size_10sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp">
+
+        <TextView
+            android:id="@+id/tv_column_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="150dp"
+            android:layout_gravity="left|center_vertical"
+            android:background="?attr/actionBarItemBackground"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:textColor="?attr/tc_3b424c"
+            android:textSize="@dimen/text_size_14sp" />
+
+        <TextView
+            android:id="@+id/tv_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:background="?attr/bg_corners_50dp_3b424c"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="3dp"
+            android:text="订阅"
+            android:textColor="?attr/tc_3b424c"
+            android:textSize="@dimen/text_size_12sp" />
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="?attr/divider_f0f0f0" />
+
+</LinearLayout>

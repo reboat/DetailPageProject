@@ -135,8 +135,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucenceStatusBarBg();
-        setContentView(R.layout.module_detail_activity_news_detail);
-        ButterKnife.bind(this, View.inflate(getContext(), R.layout.module_detail_activity_news_detail, null));
+        setContentView(R.layout.module_detail_activity_detail);
+        ButterKnife.bind(this, View.inflate(getContext(), R.layout.module_detail_activity_detail, null));
 
         initSavedState(savedInstanceState);
 
@@ -304,7 +304,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         wmParams.height = UIUtils.dip2px(30);
 
         mTvShallow = (TextView) getLayoutInflater().inflate(R.layout
-                .module_detail_layout_news_integral_float, null);
+                .module_detail_layout_integral_float, null);
         windowManager.addView(mTvShallow, wmParams);
         BizUtils.setGetIntegralText(mTvShallow, integral);
         runOnUiThread(new Runnable() {

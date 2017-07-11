@@ -32,7 +32,7 @@ public class NewsDetailEndHolder extends BaseRecyclerViewHolder<Object> implemen
     private final int MAX_HEIGHT = UIUtils.dip2px(150);
 
     public NewsDetailEndHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_layout_news_detail_end, parent, false));
+        super(UIUtils.inflate(R.layout.module_detail_layout_end, parent, false));
         ButterKnife.bind(this, itemView);
         itemView.addOnAttachStateChangeListener(this);
     }

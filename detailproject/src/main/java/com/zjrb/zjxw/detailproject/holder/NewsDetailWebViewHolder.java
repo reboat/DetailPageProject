@@ -54,7 +54,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     private int mWebViewMaxScroll;
 
     public NewsDetailWebViewHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_layout_news_detail_web_view, parent, false));
+        super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
         initWebView();
         itemView.addOnAttachStateChangeListener(this);

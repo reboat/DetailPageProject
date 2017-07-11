@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:id="@+id/video_container"
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/module_detail_fg_image_mask"
+            android:scaleType="centerCrop"/>
+
+        <ImageView
+            android:id="@+id/iv_type_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/module_detail_ic_video_player_start"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinRecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:fitsSystemWindows="true"
+            android:scrollbars="vertical"
+            app:module_core_fitType="bottom"/>
+
+        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout
+            android:id="@+id/floor_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="15dp"
+            android:fitsSystemWindows="true"
+            app:module_core_fitType="bottom">
+
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/module_detail_floor_bar_height"
+                android:layout_height="@dimen/module_detail_floor_bar_height"
+                android:layout_gravity="left"
+                android:layout_marginLeft="15.5dp"
+                android:foreground="?android:attr/actionBarItemBackground"
+                android:src="@mipmap/ic_floor_bar_back"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/module_detail_floor_bar_height"
+                android:layout_gravity="right"
+                android:gravity="right">
+
+                <FrameLayout
+                    android:id="@+id/fl_comment"
+                    android:layout_width="110dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:gravity="center_vertical|left"
+                        android:paddingLeft="10dp"
+                        android:text="@string/string_comment_hint"
+                        android:textSize="@dimen/ts_14sp"/>
+                </FrameLayout>
+
+                <ImageView
+                    android:id="@+id/menu_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_toRightOf="@id/fl_comment"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:src="@mipmap/ic_detail_menu_comments"/>
+
+                <TextView
+                    android:id="@+id/tv_comments_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/menu_comment"
+                    android:layout_marginLeft="-12dp"
+                    android:layout_marginTop="-3dp"
+                    android:layout_toRightOf="@id/menu_comment"
+                    android:textSize="@dimen/ts_11sp"/>
+
+                <ImageView
+                    android:id="@+id/menu_collected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/menu_comment"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:src="@drawable/sl_news_detail_collected"/>
+
+                <ImageView
+                    android:id="@+id/menu_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="2dp"
+                    android:layout_toRightOf="@id/menu_collected"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:src="@mipmap/ic_detail_menu_share"/>
+            </RelativeLayout>
+        </com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout>
+
+    </FrameLayout>
+
+    <ViewStub
+        android:id="@+id/vs_no_exist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/module_detail_draft_not_exist"/>
+
+</LinearLayout>

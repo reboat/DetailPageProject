@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply from: 'http://10.100.47.176:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.3/publish-0.0.3.gradle'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 25
@@ -36,32 +37,19 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
 
-    provided 'cn.daily.android:core-library:0.0.1-SNAPSHOT'
+    compile 'cn.daily.android:core-library:0.0.3-SNAPSHOT'
     provided 'com.android.support:multidex:1.0.1'
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            snapshotRepository(url: 'http://10.100.47.176:8086/nexus/content/repositories/snapshots') {
-                authentication(userName: 'deployment', password: 'deployment123')
-            }
-            repository(url: 'http://10.100.47.176:8086/nexus/content/repositories/releases') {
-                authentication(userName: 'deployment', password: 'deployment123')
-            }
-            pom.project {
-                version '0.0.1-SNAPSHOT'
-                artifactId 'detail-library'
-                groupId 'cn.daily.android'
-                packaging 'aar'
-                description 'detailProject lib'
-            }
-        }
-        artifacts {
-            archives file('detailPageProject.aar')
-        }
-    }
+    provided 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    provided 'com.google.code.gson:gson:2.6.2'
+    provided 'com.umeng.analytics:analytics:latest.integration'
+    provided 'org.greenrobot:eventbus:3.0.0'
+    provided 'com.github.bumptech.glide:glide:4.0.0-RC1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'
+    provided 'org.jsoup:jsoup:1.10.2'
+    provided 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+    debugProvided 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseProvided 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }

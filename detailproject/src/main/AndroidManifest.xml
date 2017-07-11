@@ -8,6 +8,10 @@
                  android:supportsRtl="true"
     >
 
+        <activity
+            android:name=".NewsDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
     </application>
 
 </manifest>

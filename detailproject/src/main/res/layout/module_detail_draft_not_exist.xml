@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><!--稿件不存在-->
+<com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                                   android:layout_width="match_parent"
+                                                                   android:layout_height="match_parent"
+                                                                   android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_page_load_failed"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="很抱歉！该文章已删除"
+            android:textSize="@dimen/ts_14sp"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/fl_finish"
+        android:layout_width="@dimen/toolbar_normal_height"
+        android:layout_height="@dimen/toolbar_normal_height">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </FrameLayout>
+
+</com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_top_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bc_7f000000"
+        android:scaleType="centerCrop" />
+
+    <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinLinearLayout
+        android:id="@+id/fit_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:fitType="top">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxLines="2"
+            android:textSize="@dimen/ts_22sp" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/ts_10sp" />
+
+    </com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinLinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_column"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fit_top_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/tv_column_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginRight="15dp"
+            android:background="?attr/actionBarItemBackground"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:maxWidth="150dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textSize="@dimen/ts_14sp" />
+
+        <TextView
+            android:id="@+id/tv_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="3dp"
+            android:textSize="@dimen/ts_12sp" />
+
+    </FrameLayout>
+
+</RelativeLayout>

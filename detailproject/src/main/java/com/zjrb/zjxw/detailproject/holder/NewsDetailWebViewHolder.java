@@ -1,0 +1,234 @@
+package com.zjrb.zjxw.detailproject.holder;
+
+import android.app.Activity;
+import android.app.UiModeManager;
+import android.content.pm.ActivityInfo;
+import android.os.Build;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+
+
+import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
+import com.zjrb.coreprojectlibrary.common.base.WebJsInterface;
+import com.zjrb.coreprojectlibrary.common.biz.SettingBiz;
+import com.zjrb.coreprojectlibrary.common.global.C;
+import com.zjrb.coreprojectlibrary.ui.widget.WebFullScreenContainer;
+import com.zjrb.coreprojectlibrary.utils.AppUtils;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.utils.WebBiz;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+/**
+ * 新闻详情页 WebView - ViewHolder
+ *
+ * @author a_liYa
+ * @date 2017/5/16 09:17.
+ */
+public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
+        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, View
+        .OnLayoutChangeListener {
+
+    @BindView(R2.id.web_view)
+    WebView mWebView;
+    private WebJsInterface mWebJsInterface;
+
+    /**
+     * WebView的高度
+     */
+    private int mWebViewHeight;
+    /**
+     * WebView滚动到屏幕内最大值（用于计算阅读百分比）
+     */
+    private int mWebViewMaxScroll;
+
+    public NewsDetailWebViewHolder(ViewGroup parent) {
+        super(UIUtils.inflate(R.layout.module_detail_layout_news_detail_web_view, parent, false));
+        ButterKnife.bind(this, itemView);
+        initWebView();
+        itemView.addOnAttachStateChangeListener(this);
+        mWebView.addOnLayoutChangeListener(this);
+    }
+
+    @Override
+    public void bindView() {
+        itemView.setClickable(false);
+        String htmlCode = AppUtils.getAssetsText(C.asset.HTML_RULE_PATH);
+
+        String uiModeCss = "";
+        if (UiModeManager.get().isNightMode()) {
+            uiModeCss = AppUtils.getAssetsText(C.asset.NIGHT_CSS_PATH);
+        }
+
+        String htmlBody = WebBiz.parseHandleHtml(mData.getHTMLContent(),
+                new WebBiz.ImgSrcsCallBack() {
+                    @Override
+                    public void callBack(String[] imgSrcs) {
+                        mWebJsInterface.setImgSrcs(imgSrcs);
+                    }
+                });
+
+        String htmlResult = String.format(htmlCode, uiModeCss, htmlBody);
+
+        mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
+    }
+
+    private void initWebView() {
+        mWebView.setFocusable(false);
+
+        // 隐藏到滚动条
+        mWebView.setVerticalScrollBarEnabled(false);
+        mWebView.setHorizontalScrollBarEnabled(false);
+        mWebView.setScrollContainer(false);
+        mWebJsInterface = new WebJsInterface(itemView.getContext());
+        mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
+
+        // 夜间模式
+        if (UiModeManager.get().isNightMode()) {
+            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bg_white_night));
+        } else {
+            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bg_white));
+        }
+
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true); // 启用支持javaScript
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 没网使用缓存
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 禁止横向滑动
+        settings.setDomStorageEnabled(true);//开启DOM storage API功能
+        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100)); // 字体缩放倍数
+        settings.setUseWideViewPort(true); // 视频全屏点击支持回调
+        settings.setLoadWithOverviewMode(true);
+        settings.setAllowFileAccess(true); // 允许访问文件
+
+        // WebView在安卓5.0之前默认允许其加载混合网络协议内容
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                // 重定向
+//                if (hitTestResult != null && TextUtils.isEmpty(hitTestResult.getExtra())) {
+//                    view.loadUrl(url);
+//                } else { // 点击跳转
+                itemView.getContext().startActivity(BrowserActivity.getIntent(url, ""));
+//                }
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                NewsDetailAdapter.CommonOptCallBack callBack;
+                if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+                    callBack = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
+                    callBack.onOptPageFinished();
+                }
+            }
+
+        });
+
+        mWebView.setWebChromeClient(new WebChromeClient() {
+
+            private FrameLayout container;
+            private View videoView;
+            private CustomViewCallback customViewCallback;
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                if (videoView != null) {
+                    callback.onCustomViewHidden();
+                    return;
+                }
+
+                FrameLayout decor = getDecorView();
+                ((Activity) itemView.getContext())
+                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                container = new WebFullScreenContainer(itemView.getContext());
+                container.addView(view, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                decor.addView(container, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                videoView = view;
+                customViewCallback = callback;
+            }
+
+            @Override
+            public void onHideCustomView() {
+                if (videoView == null) {
+                    return;
+                }
+                ((Activity) itemView.getContext())
+                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                FrameLayout decor = getDecorView();
+                decor.removeView(container);
+                container = null;
+                videoView = null;
+                customViewCallback.onCustomViewHidden();
+                mWebView.setVisibility(View.VISIBLE);
+            }
+
+
+        });
+    }
+
+    protected FrameLayout getDecorView() {
+        return (FrameLayout) ((BaseActivity) itemView.getContext()).getWindow().getDecorView();
+    }
+
+    @Override
+    public void onResume() {
+        if (mWebView != null) {
+            mWebView.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        if (mWebView != null) {
+            mWebView.onPause();
+        }
+    }
+
+    // RecyclerView滚动监听
+    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            mWebViewMaxScroll =
+                    Math.max(recyclerView.getHeight() - mWebView.getTop(), mWebViewHeight);
+        }
+
+    };
+
+    @Override
+    public void onViewAttachedToWindow(View v) {
+        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+            ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
+        }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(View v) {
+        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+            ((RecyclerView) itemView.getParent()).removeOnScrollListener(mScrollListener);
+        }
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int
+            oldTop, int oldRight, int oldBottom) {
+        mWebViewHeight = bottom - top;
+    }
+}

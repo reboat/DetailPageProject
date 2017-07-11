@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">detailProject</string>
+    <string name="string_comment_hint">写评论…</string>
 </resources>

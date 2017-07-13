@@ -6,4 +6,8 @@
     <color name="bc_7f000000">#7f000000</color>
     <color name="bc_f70000">#f70000</color>
     <color name="color_translucent_black">#7f000000</color>
+    <color name="tc_bcc1c8">#bcc1c8</color>
+    <color name="bc_fdc247">#fdc247</color>
+    <!--评论框-->
+    <color name="bc_ebebed">#ebebed</color>
 </resources>

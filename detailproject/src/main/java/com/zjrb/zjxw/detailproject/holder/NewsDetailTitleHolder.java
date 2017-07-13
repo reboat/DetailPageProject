@@ -100,23 +100,20 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
     }
 
-    @OnClick({R.id.tv_subscribe, R.id.tv_admire, R.id.tv_column_name})
+    @OnClick({R2.id.tv_subscribe, R2.id.tv_column_name})
     public void onViewClicked(View view) {
         NewsDetailAdapter.CommonOptCallBack callback;
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
             switch (view.getId()) {
-                case R.id.tv_subscribe:
+                case R2.id.tv_subscribe:
                     if (mData.isSubscribed()) {
                         callback.onOptCancelSubscribe();
                     } else {
                         callback.onOptSubscribe();
                     }
                     break;
-                case R.id.tv_admire:
-                    callback.onOptAward();
-                    break;
-                case R.id.tv_column_name:
+                case R2.id.tv_column_name:
                     callback.onOptClickColumn();
                     break;
             }

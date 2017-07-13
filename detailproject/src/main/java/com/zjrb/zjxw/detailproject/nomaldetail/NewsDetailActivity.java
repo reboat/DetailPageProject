@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject;
+package com.zjrb.zjxw.detailproject.nomaldetail;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

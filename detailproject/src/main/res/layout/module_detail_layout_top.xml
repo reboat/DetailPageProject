@@ -20,7 +20,7 @@
         android:layout_marginRight="20dp"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        app:module_core_fitType="top">
+        app:fitType="top">
 
         <TextView
             android:id="@+id/tv_title"

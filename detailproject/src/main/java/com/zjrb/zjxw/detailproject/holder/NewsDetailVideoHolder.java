@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,9 +22,9 @@ import butterknife.ButterKnife;
 public class NewsDetailVideoHolder implements View.OnClickListener, View
         .OnAttachStateChangeListener {
 
-    @BindView(R.id.iv_image)
+    @BindView(R2.id.iv_image)
     ImageView mIvImage;
-    @BindView(R.id.iv_type_video)
+    @BindView(R2.id.iv_type_video)
     ImageView mIvTypeVideo;
 
     private ViewGroup mVideoParent;

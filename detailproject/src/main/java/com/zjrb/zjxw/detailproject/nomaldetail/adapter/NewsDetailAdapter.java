@@ -1,8 +1,7 @@
-package com.zjrb.zjxw.detailproject.adapter;
+package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;

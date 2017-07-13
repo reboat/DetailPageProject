@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">detailProject</string>
     <string name="string_comment_hint">写评论…</string>
+    <string name="label_comment">评论</string>
+    <string name="tip_original">原创</string>
+    <string name="say_two_words">我说两句…</string>
 </resources>

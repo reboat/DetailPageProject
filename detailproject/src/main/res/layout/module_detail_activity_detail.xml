@@ -41,7 +41,7 @@
             android:clipToPadding="false"
             android:fitsSystemWindows="true"
             android:scrollbars="vertical"
-            app:module_core_fitType="bottom"/>
+            app:fitType="bottom"/>
 
         <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout
             android:id="@+id/floor_bar"
@@ -50,7 +50,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="15dp"
             android:fitsSystemWindows="true"
-            app:module_core_fitType="bottom">
+            app:fitType="bottom">
 
             <ImageView
                 android:id="@+id/btn_back"

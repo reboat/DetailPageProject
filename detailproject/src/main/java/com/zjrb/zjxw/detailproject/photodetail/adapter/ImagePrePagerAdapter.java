@@ -11,9 +11,8 @@ import java.util.List;
 
 /**
  * 图片预览 ViewPager 适配器
- *
- * @author a_liYa
- * @date 16/10/25 12:30.
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:14
  */
 public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
@@ -31,7 +30,11 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ImagePreviewFragment.newInstance(mDatas.get(position));
+        return ImagePreviewFragment.newInstance(
+                new ImagePreviewFragment.ParamsEntity.Builder()
+                        .setUrl(mDatas.get(position))
+                        .build()
+        );
     }
 
 }

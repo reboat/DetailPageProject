@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.utils;
 
-import android.app.UiModeManager;
 import android.text.TextUtils;
 
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
@@ -16,9 +15,8 @@ import java.util.regex.Pattern;
 
 /**
  * WebView相关业务处理
- *
- * @author a_liYa
- * @date 2017/4/5 17:07.
+ * Created by wanglinjie.
+ * create time:2017/7/28  上午11:18
  */
 public class WebBiz {
 
@@ -150,11 +148,12 @@ public class WebBiz {
                 }
 
                 // 夜间模式点击应在遮罩层
-                if (isNeedOnClick && !UiModeManager.get().isNightMode()) {
-                    node.attr("onClick", "imageBrowse(" + index + ")");
-                }
-
-                UiModeManager.get().fitUiModeForImgTag(node, isNeedOnClick, index);
+                //TODO  WLJ
+//                if (isNeedOnClick && !UiModeManager.get().isNightMode()) {
+//                    node.attr("onClick", "imageBrowse(" + index + ")");
+//                }
+//
+//                UiModeManager.get().fitUiModeForImgTag(node, isNeedOnClick, index);
             }
         }
 

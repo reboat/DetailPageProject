@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingExtra="6dp"
+        android:maxLines="2"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="国家主席习近平在伦敦白金汉宫出席英国女王伊王,你说骄傲大家啊打吧就是大厦将颠阿接口s就手机端考虑考虑水电费了世纪东方把简历卡水电费吧"/>
+    <!--阅读量/点赞数-->
+    <TextView
+        android:id="@+id/tv_praise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="6.5dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_11sp"
+        tools:text="777赞"/>
+
+    <TextView
+        android:id="@+id/tv_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="10dp"
+        android:layout_toLeftOf="@+id/tv_praise"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_11sp"
+        tools:text="7233万阅读"/>
+
+
+</RelativeLayout>

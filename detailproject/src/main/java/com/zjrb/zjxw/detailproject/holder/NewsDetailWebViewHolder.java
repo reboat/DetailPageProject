@@ -1,10 +1,11 @@
 package com.zjrb.zjxw.detailproject.holder;
 
 import android.app.Activity;
-import android.app.UiModeManager;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
@@ -14,27 +15,28 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
-
 import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.base.WebJsInterface;
+import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
 import com.zjrb.coreprojectlibrary.common.biz.SettingBiz;
-import com.zjrb.coreprojectlibrary.common.global.C;
+import com.zjrb.coreprojectlibrary.db.ThemeMode;
 import com.zjrb.coreprojectlibrary.ui.widget.WebFullScreenContainer;
 import com.zjrb.coreprojectlibrary.utils.AppUtils;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.C;
+import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * 新闻详情页 WebView - ViewHolder
- *
- * @author a_liYa
- * @date 2017/5/16 09:17.
+ * Created by wanglinjie.
+ * create time:2017/7/18  上午09:14
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
         NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, View
@@ -64,23 +66,17 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void bindView() {
         itemView.setClickable(false);
-        String htmlCode = AppUtils.getAssetsText(C.asset.HTML_RULE_PATH);
-
-        String uiModeCss = "";
-        if (UiModeManager.get().isNightMode()) {
-            uiModeCss = AppUtils.getAssetsText(C.asset.NIGHT_CSS_PATH);
-        }
-
-        String htmlBody = WebBiz.parseHandleHtml(mData.getHTMLContent(),
+        String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
+        String uiModeCssUri = ThemeMode.isNightMode()
+                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
+        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getContent()) ? "" : mData.getContent(),
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
                     public void callBack(String[] imgSrcs) {
                         mWebJsInterface.setImgSrcs(imgSrcs);
                     }
                 });
-
-        String htmlResult = String.format(htmlCode, uiModeCss, htmlBody);
-
+        String htmlResult = String.format(htmlCode, uiModeCssUri, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 
@@ -95,10 +91,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 
         // 夜间模式
-        if (UiModeManager.get().isNightMode()) {
-            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bg_white_night));
+        if (ThemeMode.isNightMode()) {
+            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bc_202124_night));
         } else {
-            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bg_white));
+            mWebView.setBackgroundColor(UIUtils.getColor(R.color.bc_ffffff));
         }
 
         WebSettings settings = mWebView.getSettings();
@@ -124,7 +120,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 //                if (hitTestResult != null && TextUtils.isEmpty(hitTestResult.getExtra())) {
 //                    view.loadUrl(url);
 //                } else { // 点击跳转
-                itemView.getContext().startActivity(BrowserActivity.getIntent(url, ""));
+//                itemView.getContext().startActivity(BrowserActivity.getIntent(url, ""));
 //                }
                 return true;
             }
@@ -132,10 +128,15 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                NewsDetailAdapter.CommonOptCallBack callBack;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                // 因为加载的是html文本，所以onPageStart时机比较合适
                 if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
-                    callBack = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
-                    callBack.onOptPageFinished();
+                    ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
+                            .onOptPageFinished();
                 }
             }
 

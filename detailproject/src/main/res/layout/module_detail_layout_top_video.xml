@@ -1,68 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:background="?attr/bc_ffffff"
+              android:orientation="vertical"
+              android:padding="10dp">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_marginTop="18dp"
         android:ellipsize="end"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="2"
-        android:textColor="?attr/tc_3b424c"
-        android:textSize="@dimen/ts_16sp"
-        android:textStyle="bold" />
+        android:textColor="?attr/tc_000000"
+        android:textSize="@dimen/ts_22sp"
+        tools:text="浙商银行程度分行紧急启动抗震救灾工作"/>
+
 
     <TextView
-        android:id="@+id/tv_draft_other"
+        android:id="@+id/tv_reporter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="@dimen/ts_10sp" />
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_10sp"
+        tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="65dp">
+    <TextView
+        android:id="@+id/tv_column_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fit_top_layout"
+        android:layout_marginRight="15dp"
+        android:background="?attr/actionBarItemBackground"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:paddingBottom="6dp"
+        android:paddingTop="6dp"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="2017-05-16 14:24 ｜杭州频道"/>
 
-        <TextView
-            android:id="@+id/tv_column_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:maxWidth="150dp"
-            android:layout_gravity="left|center_vertical"
-            android:background="?attr/actionBarItemBackground"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:textColor="?attr/tc_3b424c"
-            android:textSize="@dimen/ts_14sp" />
-
-        <TextView
-            android:id="@+id/tv_subscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="3dp"
-            android:text="订阅"
-            android:textColor="?attr/tc_3b424c"
-            android:textSize="@dimen/ts_12sp" />
-
-    </FrameLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        />
 
 </LinearLayout>

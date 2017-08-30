@@ -3,6 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="?attr/bc_202124"
               android:orientation="vertical"
     >
 
@@ -31,9 +32,10 @@
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?attr/bc_202124">
 
-        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinRecyclerView
+        <com.aliya.view.fitsys.FitWindowsRecyclerView
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,37 +45,30 @@
             android:scrollbars="vertical"
             app:fitType="bottom"/>
 
-        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout
+        <com.aliya.view.fitsys.FitWindowsFrameLayout
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/module_detail_floor_bar_height"
             android:layout_gravity="bottom"
             android:layout_marginBottom="15dp"
             android:fitsSystemWindows="true"
             app:fitType="bottom">
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="@dimen/module_detail_floor_bar_height"
-                android:layout_height="@dimen/module_detail_floor_bar_height"
-                android:layout_gravity="left"
-                android:layout_marginLeft="15.5dp"
-                android:foreground="?android:attr/actionBarItemBackground"
-                android:src="@mipmap/ic_floor_bar_back"/>
-
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/module_detail_floor_bar_height"
-                android:layout_gravity="right"
-                android:gravity="right">
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:background="?attr/bc_191919"
+                >
 
                 <FrameLayout
                     android:id="@+id/fl_comment"
-                    android:layout_width="110dp"
-                    android:layout_height="32dp"
+                    android:layout_width="230dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/module_detail_comment_edit"
                     >
 
                     <TextView
@@ -81,25 +76,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:drawableLeft="@mipmap/me_qq_btn"
                         android:gravity="center_vertical|left"
-                        android:paddingLeft="10dp"
-                        android:text="@string/string_comment_hint"
+                        android:paddingLeft="20dp"
+                        android:text="@string/module_detail_comment_hint"
+                        android:textColor="?attr/tc_484848"
+                        android:textColorHint="?attr/tc_999999"
                         android:textSize="@dimen/ts_14sp"/>
                 </FrameLayout>
 
                 <ImageView
                     android:id="@+id/menu_comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@id/fl_comment"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:src="@mipmap/ic_detail_menu_comments"/>
+                    android:src="@mipmap/ic_detail_menu_comments"
+                    app:iv_maskColor="@color/module_detail_comment_night"/>
 
                 <TextView
                     android:id="@+id/tv_comments_num"
@@ -109,43 +104,38 @@
                     android:layout_marginLeft="-12dp"
                     android:layout_marginTop="-3dp"
                     android:layout_toRightOf="@id/menu_comment"
-                    android:textSize="@dimen/ts_11sp"/>
+                    android:background="@drawable/module_detail_comment_num"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="2dp"
+                    android:textColor="?attr/tc_aaaaaa"
+                    android:textSize="@dimen/ts_10sp"/>
 
                 <ImageView
-                    android:id="@+id/menu_collected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/menu_prised"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@id/menu_comment"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:src="@drawable/sl_news_detail_collected"/>
+                    android:src="@drawable/sl_news_detail_collected"
+                    app:iv_maskColor="@color/module_detail_comment_night"/>
 
                 <ImageView
                     android:id="@+id/menu_share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="2dp"
-                    android:layout_toRightOf="@id/menu_collected"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/menu_prised"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:paddingBottom="5dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:src="@mipmap/ic_detail_menu_share"/>
+                    android:src="@mipmap/ic_detail_menu_share"
+                    app:iv_maskColor="@color/module_detail_comment_night"/>
             </RelativeLayout>
-        </com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout>
+        </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
     </FrameLayout>
-
-    <ViewStub
-        android:id="@+id/vs_no_exist"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout="@layout/module_detail_draft_not_exist"/>
 
 </LinearLayout>

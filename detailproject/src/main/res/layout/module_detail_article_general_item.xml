@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aliya.view.ratio.RatioRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                          xmlns:app="http://schemas.android.com/apk/res-auto"
+                                          xmlns:tools="http://schemas.android.com/tools"
+                                          android:layout_width="match_parent"
+                                          android:layout_height="wrap_content"
+                                          android:background="?attr/selectableItemBackground"
+                                          android:paddingBottom="5dp"
+                                          android:paddingTop="5dp"
+                                          app:ratio_w2h="360:88">
+
+    <ImageView
+        android:id="@+id/iv_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@android:color/background_dark"
+        app:ratio_w2h="117:78"
+        tools:src="@mipmap/default_avatar_icon"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_picture"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_toRightOf="@id/iv_picture"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="张高丽夏宝龙车俊对温州倒房作出批到要求全力搜救要求全力搜救要求全张高丽夏宝龙车俊对温州倒房作出批到要求全力搜救要求全力搜救要求全张高丽夏宝龙车俊对温州倒房作出批到要求全力搜救要求全力搜救要求全"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@+id/iv_picture">
+        <!--频道名-->
+        <TextView
+            android:id="@+id/tv_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="?attr/border_999999_r10"
+            android:ellipsize="end"
+            android:gravity="left|center"
+            android:maxLines="1"
+            android:minHeight="18dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="?attr/tc_999999"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="新闻眼"/>
+
+
+        <TextView
+            android:id="@+id/tv_prise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="7dp"
+            android:layout_toRightOf="@+id/tv_read"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="?attr/tc_999999"
+            tools:text="1.4万点赞"/>
+
+        <TextView
+            android:id="@+id/tv_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/tv_flag"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="?attr/tc_999999"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="1.4万万人观看"/>
+    </RelativeLayout>
+
+</com.aliya.view.ratio.RatioRelativeLayout>

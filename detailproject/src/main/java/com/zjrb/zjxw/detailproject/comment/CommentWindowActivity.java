@@ -1,167 +1,175 @@
 package com.zjrb.zjxw.detailproject.comment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
 import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.global.SPKey;
 import com.zjrb.coreprojectlibrary.db.SPHelper;
+import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
+import com.zjrb.coreprojectlibrary.nav.Nav;
+import com.zjrb.coreprojectlibrary.utils.T;
 import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.task.CommentSubmitTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2016/11/30.
  * 提交评论
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:14
  */
-public class CommentWindowActivity extends BaseActivity implements View.OnClickListener,
+
+public class CommentWindowActivity extends BaseActivity implements
         TextWatcher, View.OnTouchListener {
+    public int articleId = -1;
+    public int mlfId = -1;
+    public int parentId = -1;
+    public boolean isFromCommentAct = false;
+
+    @BindView(R2.id.iv_close_window)
+    ImageView ivCloseWindow;
+    @BindView(R2.id.iv_send_comment)
+    ImageView ivSendComment;
     @BindView(R2.id.et_input_comment)
     EditText etInputComment;
-    @BindView(R2.id.bt_send)
-    Button btSend;
+    @BindView(R2.id.tv_comment_num)
+    TextView tvCommentNum;
+    @BindView(R2.id.fy_comment_content)
+    FrameLayout fyCommentContent;
     @BindView(R2.id.activity_comment_window)
-    FrameLayout mActivityCommentWindow;
-    private int articleId;   //稿件id
-    private int mlfId;   //稿件id
-    private int parentId;    //被回复用户的评论id
-    private int parentCommentUserId;    //被回复用户
-    // 是否来自评论列表Activity
-    private boolean isFromCommentAct;
+    RelativeLayout activityCommentWindow;
+
     /**
      * 评论内容
      */
     private String mContent = "";
 
-    public static Intent getIntent(int articleId, boolean isFromCommentAct, int mlfId) {
-        return IntentHelper.get(CommentWindowActivity.class)
-                .put(IKey.ARTICLE_ID, articleId)
-                .put(IKey.MLF_ID, mlfId)
-                .put(IKey.BOOL_TAG, isFromCommentAct)
-                .put(IKey.MLF_ID, mlfId)
-                .intent();
-    }
-
-    public static Intent getIntent(int articleId, int parentId, int parentCommentUserId, boolean
-            isFromCommentAct, int mlfId) {
-        return IntentHelper.get(CommentWindowActivity.class)
-                .put(IKey.ARTICLE_ID, articleId)
-                .put(IKey.MLF_ID, mlfId)
-                .put(IKey.PARENT_ID, parentId)
-                .put(IKey.USER_ID, parentCommentUserId)
-                .put(IKey.BOOL_TAG, isFromCommentAct)
-                .intent();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initState(savedInstanceState);
         setContentView(R.layout.module_detail_comment_window);
         ButterKnife.bind(this);
+        getIntentData(getIntent());
         initOnclick();
         initEditText();
     }
 
+    /**
+     * @param intent 获取传递数据
+     */
+    private void getIntentData(Intent intent) {
+        if (intent != null && intent.getData() != null) {
+            Uri data = intent.getData();
+            if (intent.hasExtra(Key.ARTICLE_ID)) {
+                articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            }
+            if (intent.hasExtra(Key.MLF_ID)) {
+                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            }
+            if (intent.hasExtra(Key.PARENT_ID)) {
+                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
+            }
+            if (intent.hasExtra(Key.FROM_TYPE)) {
+                isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
+            }
+        }
+    }
+
+
+    /**
+     * 初始化编辑框
+     */
     private void initEditText() {
-        String content = SPHelper.get().get(SPKey.ARTICLE_COMMENT_EDITING, "");
+        String content = SPHelper.get().get(Key.ARTICLE_COMMENT_EDITING, "");
         etInputComment.setText(content);
         etInputComment.setSelection(content.length());
     }
 
-    private void initState(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            articleId = getIntent().getIntExtra(IKey.ARTICLE_ID, -1);
-            mlfId = getIntent().getIntExtra(IKey.MLF_ID, -1);
-            parentId = getIntent().getIntExtra(IKey.PARENT_ID, -1);
-            parentCommentUserId = getIntent().getIntExtra(IKey.USER_ID, -1);
-            isFromCommentAct = getIntent().getBooleanExtra(IKey.BOOL_TAG, false);
-        } else {
-            articleId = savedInstanceState.getInt(IKey.ARTICLE_ID, -1);
-            mlfId = savedInstanceState.getInt(IKey.MLF_ID, -1);
-            parentId = savedInstanceState.getInt(IKey.PARENT_ID, -1);
-            parentCommentUserId = savedInstanceState.getInt(IKey.USER_ID, -1);
-            isFromCommentAct = savedInstanceState.getBoolean(IKey.BOOL_TAG, false);
-        }
-    }
-
     @Override
     public void finish() {
-        SPHelper.get().put(SPKey.ARTICLE_COMMENT_EDITING, mContent.trim()).commit(); // 缓存数据
+        SPHelper.get().put(Key.ARTICLE_COMMENT_EDITING, mContent.trim()).commit(); // 缓存数据
         super.finish();
         overridePendingTransition(0, 0);
     }
 
-    @Override
-    public boolean isShowToolBar() {
-        return false;
-    }
-
+    /**
+     * 初始化监听
+     */
     private void initOnclick() {
-        btSend.setOnClickListener(this);
         etInputComment.addTextChangedListener(this);
-        mActivityCommentWindow.setOnTouchListener(this);
+        activityCommentWindow.setOnTouchListener(this);
     }
 
     private boolean submiting;
 
-    @Override
-    public void onClick(View v) {
+    @OnClick({R2.id.iv_send_comment, R2.id.iv_close_window})
+    public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-
-        mContent = mContent.trim();
-        switch (v.getId()) {
-            case R2.id.bt_send://提交
-                if (submiting) return; // 提交中
-                submiting = true;
-                submitComment(mContent); // 提交评论
-                break;
+        if (view.getId() == R2.id.iv_send_comment) {
+            if (submiting) return; // 提交中
+            submiting = true;
+            submitComment(mContent); // 提交评论
+        } else {
+            finish();
         }
     }
 
+
+    /**
+     * @param content 提交评论
+     */
     private void submitComment(String content) {
-        new SubmitCommentTask(new APIExpandCallBack<SubmitCommentStateBean>() {
+        new CommentSubmitTask(new APIExpandCallBack<BaseInnerData>() {
 
             @Override
-            public void onSuccess(SubmitCommentStateBean stateBean) {
-                mContent = "";
+            public void onSuccess(BaseInnerData stateBean) {
                 handlerResult(stateBean);
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                showShortToast(errMsg);
+                T.showShort(getBaseContext(), errMsg);
             }
 
             @Override
             public void onAfter() {
                 submiting = false;
             }
-        }).setTag(this).exe(articleId, content);
+        }).setTag(this).exe(articleId, content, parentId);
     }
 
-
-    private void handlerResult(SubmitCommentStateBean stateBean) {
+    /**
+     * @param stateBean UI展现
+     */
+    private void handlerResult(BaseInnerData stateBean) {
         if (stateBean.getResultCode() == 0) {
-            showShortToast("评论成功");
+            T.showShort(getBaseContext(), "评论成功");
             setResult(RESULT_OK);
             if (!isFromCommentAct) {
-                startActivity(CommentActivity.newIntent(articleId, 1, BizUtils.comment.ALLOW, mlfId));
+                Nav.with(CommentWindowActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                        .buildUpon()
+                        .build(), RESULT_OK);
             }
             finish();
         } else {
-            showShortToast(stateBean.getResultMsg());
+            T.showShort(getBaseContext(), stateBean.getResultMsg());
         }
     }
 
@@ -172,17 +180,23 @@ public class CommentWindowActivity extends BaseActivity implements View.OnClickL
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        if (s.length() > 0 && s.length() <= 250) {
+            ivSendComment.setEnabled(true);
+            tvCommentNum.setText(s.length() + "/ 250");
+        } else {
+            ivSendComment.setEnabled(false);
+            T.showShort(this, "文字过长");
+        }
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-        btSend.setEnabled(s.length() > 0);
+        ivSendComment.setEnabled(s.length() > 0);
         mContent = s.toString();
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) { // 触摸空白区域关闭该页面
+    public boolean onTouch(View v, MotionEvent event) {
         finish();
         return false;
     }

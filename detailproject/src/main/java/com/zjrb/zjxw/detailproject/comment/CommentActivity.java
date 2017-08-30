@@ -1,204 +1,269 @@
 package com.zjrb.zjxw.detailproject.comment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
+import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
 import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.base.toolbar.ToolBarFactory;
+import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
+import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
+import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
 import com.zjrb.coreprojectlibrary.common.global.C;
-import com.zjrb.coreprojectlibrary.common.global.IKey;
+import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
+import com.zjrb.coreprojectlibrary.nav.Nav;
+import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
+import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.coreprojectlibrary.utils.T;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
+import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
  * 评论列表页面
- *
- * @author a_liYa
- * @date 16/10/18 下午7:20.
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:14
  */
-public class CommentActivity extends BaseActivity implements SwipeRefreshLayout
-        .OnRefreshListener, View.OnClickListener, IOnItemClickListener<CommentItemBean> {
+
+public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener, LoadMoreListener<CommentRefreshBean> {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
-    @BindView(R2.id.srl_refresh)
-    SwipeRefreshLayout mSrlRefresh;
     @BindView(R2.id.tv_comment)
     TextView tvComment;
-    private int articleId;
-    private int mlfId;
-    private CommentAdapter mCommentAdapter;
-    private int newCount;   // 新评论个数 只统计自己的评论
-    private int commentSet;   // 评论权限类型
+    @BindView(R2.id.tv_title)
+    TextView tvTitle;
+    @BindView(R2.id.tv_hot)
+    TextView tvHot;
+    @BindView(R2.id.activity_comment)
+    RelativeLayout activityComment;
 
-    public static Intent newIntent(int articleId, int newCount, int commentSet, int mlfId) {
-        return IntentHelper.get(CommentActivity.class)
-                .put(IKey.ARTICLE_ID, articleId)
-                .put(IKey.MLF_ID, mlfId)
-                .put(IKey.COUNT, newCount)
-                .put(IKey.COMMENT_SET, commentSet).intent();
-    }
+    /**
+     * 文章id
+     */
+    public int articleId = -1;
+    /**
+     * 媒立方id
+     */
+    public int mlfId = -1;
+    /**
+     * 评论登记(是否可以评论)
+     * 0 禁止评论 1 先审后发 2 先发后审
+     */
+    public int commentSet = -1;
+
+    /**
+     * 父评论id
+     */
+    public int parentId = 0;
+    /**
+     * 是否来自评论页
+     */
+    public boolean isFromCommentAct = false;
+    /**
+     * 评论标题
+     */
+    public String title;
+
+    private CommentAdapter mCommentAdapter;
+    /**
+     * 刷新头
+     */
+    private HeaderRefresh refresh;
+    /**
+     * 加载更多
+     */
+    private FooterLoadMore more;
+    /**
+     * 评论数据
+     */
+    private List<HotCommentsBean> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
-
-//        fitStatusBarMode(true);
-
-        initState(savedInstanceState);
-
-        initRefresh();
-
+        initState();
+        getIntentData(getIntent());
         initData();
+    }
 
-        initOnclick();
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected View onCreateTopBar(ViewGroup view) {
+        return TopBarFactory.createDefault(view, this, "").getView();
+    }
+
+    /**
+     * 设置评论等级(禁言)
+     */
+    private void initState() {
+        BizUtils.setCommentSet(tvComment, commentSet);
+    }
+
+    /**
+     * @param intent 获取传递数据
+     */
+    private void getIntentData(Intent intent) {
+        if (intent != null && intent.getData() != null) {
+            Uri data = intent.getData();
+            if (intent.hasExtra(Key.ARTICLE_ID)) {
+                articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            }
+            if (intent.hasExtra(Key.MLF_ID)) {
+                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            }
+            if (intent.hasExtra(Key.COMMENT_SET)) {
+                commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
+            }
+            if (intent.hasExtra(Key.TITLE)) {
+                title = data.getQueryParameter(Key.TITLE);
+            }
+            if (intent.hasExtra(Key.PARENT_ID)) {
+                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
+            }
+            if (intent.hasExtra(Key.FROM_TYPE)) {
+                isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
+            }
+        }
     }
 
     /**
      * 初始化评论界面数据
      */
     private void initData() {
+        if (title != null && !title.isEmpty()) {
+            tvTitle.setText(title);
+        }
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
-        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor
-                (R.color
-                         .dc_f5f5f5), 15, true));
-
+        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
+        //添加刷新头
+        refresh = new HeaderRefresh(mRvContent);
+        refresh.setOnRefreshListener(this);
+        more = new FooterLoadMore(mRvContent, this);
         requestData();
     }
 
+    /**
+     * 初始化适配器
+     * 如果禁言，则不允许弹出评论框
+     */
+    private void initAdapter() {
+        mCommentAdapter.setHeaderRefresh(refresh.getItemView());
+        mCommentAdapter.setFooterLoadMore(more.getItemView());
+        mCommentAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
+                    tvComment.setVisibility(View.VISIBLE);
+                    Nav.with(CommentActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                            .buildUpon()
+                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+                            .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+                            .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
+                            .build(), RESULT_OK);
+                }
+            }
+        });
+    }
 
+    /**
+     * 下拉刷新取评论数据
+     */
     private void requestData() {
-        startLoading();
-        new ArticleCommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
-            private List<CommentItemBean> commentList;
-
+        new CommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
                 if (commentRefreshBean == null) {
                     return;
                 }
                 if (commentRefreshBean.getResultCode() == 0) {//成功
-                    commentList = commentRefreshBean.getCommentList();
+                    commentList = commentRefreshBean.getComments();
                     if (commentList != null) {
-                        mCommentAdapter = new CommentAdapter(commentList);
-                        mCommentAdapter.setEmptyInfo("客官，赶紧留个言!", R.mipmap.ic_empty_page_comment);
-                        mCommentAdapter.setOnItemClickListener(CommentActivity.this);
+                        if (mCommentAdapter == null) {
+                            mCommentAdapter = new CommentAdapter(commentList);
+                            initAdapter();
+                        }
                         mRvContent.setAdapter(mCommentAdapter);
-                        //传递参数
-                        mCommentAdapter.setparams(articleId);
-                        //fucking wm mlfid params
-                        mCommentAdapter.setMlfparams(mlfId);
-                        WmUtil.onColumnList(mlfId, commentList.size());
+                        mCommentAdapter.setData(commentList);
+                        mCommentAdapter.notifyDataSetChanged();
                     }
                 } else {
-                    showShortToast(commentRefreshBean.getResultMsg());
+                    T.showShort(getBaseContext(), commentRefreshBean.getResultMsg());
                 }
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                showShortToast(errMsg);
+                T.showShort(getBaseContext(), errMsg);
             }
 
             @Override
             public void onAfter() {
-                stopLoading();
             }
-        }).setTag(this).exe(articleId);
+        }).setTag(this).exe(articleId, lastMinPublishTime + "", "20");
     }
 
-    private void initOnclick() {
-        tvComment.setOnClickListener(this);
+    @OnClick({R2.id.tv_comment})
+    public void onClick(View v) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (v.getId() == R.id.tv_comment) {
+            if (BizUtils.isCanComment(this, commentSet)) {
+                tvComment.setVisibility(View.VISIBLE);
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+                        .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+                        .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
+                        .build(), RESULT_OK);
+            }
+        }
     }
 
     /**
-     * 初始化上拉刷新
+     * @param requestCode
+     * @param resultCode
+     * @param data        评论提交成功后刷新评论数据
      */
-    private void initRefresh() {
-        mSrlRefresh.setOnRefreshListener(this);
-    }
-
-    private void initState(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            articleId = getIntent().getIntExtra(IKey.ARTICLE_ID, -1);
-            mlfId = getIntent().getIntExtra(IKey.MLF_ID, -1);
-            commentSet = getIntent().getIntExtra(IKey.COMMENT_SET, 0);
-            newCount = getIntent().getIntExtra(IKey.COUNT, 0);
-        } else {
-            articleId = savedInstanceState.getInt(IKey.ARTICLE_ID, -1);
-            mlfId = savedInstanceState.getInt(IKey.MLF_ID, -1);
-            commentSet = savedInstanceState.getInt(IKey.COMMENT_SET, 0);
-            newCount = savedInstanceState.getInt(IKey.COUNT);
-        }
-
-        BizUtils.setCommentSet(tvComment, commentSet);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(IKey.COUNT, newCount);
-    }
-
-    @Override
-    protected void onSetUpToolBar(Toolbar toolbar, ActionBar actionBar) {
-        ToolBarFactory.createStyle1(this, toolbar, R.string.label_comment);
-    }
-
-    @Override
-    public void onRefresh() {
-        mSrlRefresh.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                requestData();
-            }
-        }, 0);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (ClickTracker.isDoubleClick()) return;
-        switch (v.getId()) {
-            case R.id.tv_comment:
-                if (BizUtils.isCanComment(this, commentSet)) {
-                    tvComment.setVisibility(View.GONE);
-                    startActivityForResult(CommentWindowActivity.getIntent(articleId, true, mlfId),
-                                           C.request.COMMENT_WINDOW);
-                    overridePendingTransition(0, 0); // 关闭动切换动画
-                }
-                break;
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == C.request.COMMENT_WINDOW) {
-                newCount++;
                 // 增量更新
-                initData();
+                requestData();
             }
         }
     }
@@ -209,41 +274,72 @@ public class CommentActivity extends BaseActivity implements SwipeRefreshLayout
         tvComment.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * 每个item的点击事件
-     *
-     * @param view
-     * @param position
-     * @param data
-     */
-    @Override
-    public void onItemClick(View view, int position, CommentItemBean data) {
-//        showShortToast("position: " + position);
-    }
-
-    private void startLoading() {
-        mSrlRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSrlRefresh.setRefreshing(true);
-            }
-        });
-    }
-
-    private void stopLoading() {
-        mSrlRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSrlRefresh.setRefreshing(false);
-            }
-        });
-
-    }
-
     @Override
     public void finish() {
-        EventBus.getDefault().postSticky(new CommentResultEvent(newCount));
+        EventBus.getDefault().postSticky(new CommentResultEvent());
         super.finish();
+    }
+
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (BizUtils.isCanComment(this, commentSet)) {
+            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+                    .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+                    .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
+                    .build(), 0);
+        }
+
+    }
+
+    @Override
+    public void onRefresh() {
+        mRvContent.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+                requestData();
+            }
+        });
+    }
+
+    //最后刷新时间
+    private long lastMinPublishTime = 0;
+
+    /**
+     * @param data
+     * @param loadMore 加载更多成功
+     */
+    @Override
+    public void onLoadMoreSuccess(CommentRefreshBean data, LoadMore loadMore) {
+        if (data != null) {
+            List<HotCommentsBean> commentList = data.getComments();
+            if (commentList != null && commentList.size() > 0) {
+                lastMinPublishTime = getLastMinPublishTime(commentList);//获取最后的刷新时间
+            }
+            mCommentAdapter.addData(commentList, true);
+        } else {
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+    }
+
+    /**
+     * @param callback 加载更多操作
+     */
+    @Override
+    public void onLoadMore(LoadingCallBack callback) {
+        new CommentListTask(callback).setTag(this).exe(articleId, lastMinPublishTime, "20");
+    }
+
+    /**
+     * @param commentList
+     * @return 获取最后一次刷新的时间戳
+     */
+    private long getLastMinPublishTime(List<HotCommentsBean> commentList) {
+        return commentList.get(commentList.size() - 1).getCreated_at();
     }
 
 }

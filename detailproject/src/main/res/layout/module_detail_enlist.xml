@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ly_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f5f5f5">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="16.5dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/me_qq_btn"
+            android:gravity="center"
+            tools:text="已报名数"/>
+
+        <TextView
+            android:id="@+id/tv_yb_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="567"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_baoming"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="54dp"
+        android:layout_marginTop="16.5dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/me_qq_btn"
+            android:gravity="center"
+            tools:text="限报数"/>
+
+        <TextView
+            android:id="@+id/tv_xb_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10000"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_enlist"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/ly_baoming"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/border_detail_enlist"
+        android:textColor="?attr/tc_ffffff"
+        tools:text="我要报名"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bt_enlist"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="13dp"
+        android:textColor="?attr/tc_484848"
+        tools:text="报名截止时间：2017-07-17 23:00"/>
+
+
+</RelativeLayout>

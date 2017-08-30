@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pf_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible">
+    <!--宽高比为3:2-->
+    <ImageView
+        android:id="@+id/iv_subject"
+        android:scaleType="centerCrop"
+        app:layout_aspectRatio="235%"
+        app:layout_widthPercent="100%"
+        app:iv_maskColor="@color/dc_f5f5f5_night"
+        tools:src="@mipmap/ic_detail_integral"/>
+</android.support.percent.PercentFrameLayout>

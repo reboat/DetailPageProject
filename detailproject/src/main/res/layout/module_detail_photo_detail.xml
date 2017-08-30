@@ -21,7 +21,7 @@
         android:layout_gravity="top"
         android:orientation="vertical">
 
-        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout
+        <com.aliya.view.fitsys.FitWindowsFrameLayout
             android:id="@+id/fit_top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,31 +32,25 @@
             android:layout_width="match_parent"
             android:layout_height="61dp">
 
-            <TextView
-                android:id="@+id/tv_atlas_top_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="65dp"
-                android:layout_marginRight="65dp"
-                android:ellipsize="end"
-                android:lines="1"
-                android:textSize="@dimen/ts_18sp"
-                tools:text="杭州动动帮杭州动动帮杭州动动帮杭州动动帮杭州动动帮杭州动动帮杭州动动帮杭州动动帮杭州动动帮"/>
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="16dp"
+                tools:src="@mipmap/ic_launcher"
+                />
 
-            <TextView
-                android:id="@+id/tv_atlas_top_subscribe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="22.5dp"
-                android:paddingBottom="3dp"
-                android:paddingLeft="11dp"
-                android:paddingRight="11dp"
-                android:paddingTop="3dp"
-                android:textSize="@dimen/ts_12sp"
-                tools:text="订阅"/>
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="16dp"
+                tools:src="@mipmap/ic_launcher"
+                />
         </RelativeLayout>
 
     </LinearLayout>
@@ -69,45 +63,60 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <com.zjrb.coreprojectlibrary.ui.widget.AtlasIndexView
-            android:id="@+id/index_view"
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:gravity="center"
+            >
 
             <TextView
-                android:id="@+id/tv_tag_original"
+                android:id="@+id/tv_title"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:textSize="@dimen/ts_16sp"
+                android:textStyle="bold"
+                tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发"/>
+
+            <TextView
+                android:id="@+id/tv_index"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="18dp"
-                android:layout_marginLeft="110dp"
-                android:paddingBottom="2dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:paddingTop="2dp"
-                android:text="@string/tip_original"
-                android:textColor="?attr/color_fdc247"
-                android:textSize="@dimen/ts_10sp"
-                android:visibility="gone"/>
-        </com.zjrb.coreprojectlibrary.ui.widget.AtlasIndexView>
+                android:layout_alignBottom="@+id/tv_title"
+                android:layout_marginRight="11dp"
+                android:layout_toLeftOf="@+id/tv_tottle_num"
+                android:textColor="?attr/tc_ffffff"
+                android:textSize="@dimen/ts_20sp"
+                tools:text="1"
+                />
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:textSize="@dimen/ts_16sp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_tottle_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_title"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="11dp"
+                android:textColor="?attr/tc_ffffff"
+                android:textSize="@dimen/ts_12sp"
+                tools:text="/6"
+                />
+
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="11dp"
             android:fadingEdge="vertical"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="4"
@@ -123,17 +132,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/module_detail_floor_bar_height"
             >
-
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="@dimen/module_detail_floor_bar_height"
-                android:layout_height="@dimen/module_detail_floor_bar_height"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="15.5dp"
-                android:background="?android:attr/actionBarItemBackground"
-                android:scaleType="center"
-                android:src="@mipmap/nav_bar_back_w_btn"
-                />
 
             <ImageView
                 android:id="@+id/menu_share"
@@ -186,31 +184,32 @@
                 android:layout_marginLeft="-12dp"
                 android:layout_marginTop="-3dp"
                 android:layout_toRightOf="@id/menu_comment"
-                android:textColor="?attr/color_fdc247"
                 android:textSize="@dimen/ts_11sp"/>
 
             <FrameLayout
-                android:layout_width="110dp"
-                android:layout_height="32dp"
+                android:layout_width="217dp"
+                android:layout_height="34dp"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@id/menu_comment"
-                android:background="@drawable/bg_atlas_say_words">
+                android:background="@drawable/module_detail_bg_atlas_say_words">
 
                 <TextView
                     android:id="@+id/tv_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:drawableLeft="@mipmap/me_qq_btn"
                     android:gravity="center_vertical|left"
                     android:paddingLeft="10dp"
-                    android:text="@string/say_two_words"
-                    android:textSize="@dimen/ts_14sp"/>
+                    android:textSize="@dimen/ts_14sp"
+                    tools:hint="写评论"/>
             </FrameLayout>
         </RelativeLayout>
 
-        <com.zjrb.coreprojectlibrary.ui.widget.fitsys.FitSysWinFrameLayout
+        <com.aliya.view.fitsys.FitWindowsFrameLayout
             android:id="@+id/fit_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

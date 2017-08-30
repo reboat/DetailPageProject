@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="0dp">
+             android:layout_width="match_parent"
+             android:layout_height="0dp"
+             xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/tv_end"
@@ -11,8 +12,9 @@
         android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="10sp"
-        android:text="哎呀，已经拉到底啦～"
+        android:textColor="?attr/tc_484848"
         android:textSize="14sp"
-        android:visibility="visible" />
+        android:visibility="visible"
+        tools:text="哎呀，已经拉到底啦～"/>
 
 </FrameLayout>

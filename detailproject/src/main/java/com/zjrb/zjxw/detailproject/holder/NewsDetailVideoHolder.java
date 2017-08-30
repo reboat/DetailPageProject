@@ -5,21 +5,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
+import com.zjrb.coreprojectlibrary.common.glide.GlideApp;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 新闻详情页 - top视频 逻辑处理
- *
- * @author a_liYa
- * @date 2017/5/17 17:20.
+ * Created by wanglinjie.
+ * create time:2017/7/25  上午10:31
  */
-public class NewsDetailVideoHolder implements View.OnClickListener, View
+//TODO  WLJ 未实现
+public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements View
         .OnAttachStateChangeListener {
 
     @BindView(R2.id.iv_image)
@@ -31,36 +35,33 @@ public class NewsDetailVideoHolder implements View.OnClickListener, View
     private DraftDetailBean mData;
 
     public NewsDetailVideoHolder(ViewGroup videoParent) {
-        mVideoParent = videoParent;
-        mVideoParent.setOnClickListener(this);
-        ButterKnife.bind(this, videoParent);
-
-        VideoManager.addVideoOnAttachStateChangeListener(mVideoParent, this);
+        super(UIUtils.inflate(R.layout.module_detail_layout_top_video, videoParent, false));
+        ButterKnife.bind(this, itemView);
+//        VideoManager.addVideoOnAttachStateChangeListener(mVideoParent, this);
     }
+
     public void bind(DraftDetailBean data) {
         mData = data;
-        Glide.with((Activity) mVideoParent.getContext()).load(mData.getTitleBackgroundImage())
-                .crossFade()
-                .placeholder(R.drawable.ic_load_error)
-                .error(R.drawable.ic_load_error)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE) // 缓存原始资源，解决Gif加载慢
+        GlideApp.with((Activity) mVideoParent.getContext()).load(mData.getArticle_pic())
+                .placeholder(R.drawable.module_detail_load_error)
+                .error(R.drawable.module_detail_load_error)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE) // 缓存原始资源，解决Gif加载慢
                 .into(mIvImage);
     }
 
 
-    @Override
+    @OnClick({})
     public void onClick(View v) {
         if (v == mVideoParent) {
-            VideoManager.get().play(mVideoParent, mData.getLinkUrl(),
-                    ExtraEntity.createBuild()
-                            .setTitle(mData.getTitle())
-                            .setDuration(mData.getVideoDuration())
-                            .setSize(mData.getVideoSize())
-                            .setShareUrl(mData.getShareUrl())
-                            .setId((int) mData.getId())
-                            .setSummary(mData.getSummary())
-                            .build()
-            );
+//            VideoManager.get().play(mVideoParent, mData.getVideo_url(),
+//                    ExtraEntity.createBuild()
+//                            .setTitle(mData.getList_title())
+//                            .setDuration(mData.getVideo_duration())
+//                            .setSize(mData.getVideoSize())
+//                            .setShareUrl(mData.getUri_scheme())
+//                            .setId((int) mData.getId())
+//                            .build()
+//            );
         }
     }
 
@@ -72,5 +73,10 @@ public class NewsDetailVideoHolder implements View.OnClickListener, View
     @Override
     public void onViewDetachedFromWindow(View v) {
         mIvTypeVideo.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void bindView() {
+
     }
 }

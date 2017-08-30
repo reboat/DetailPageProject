@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lly_reporter"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/bc_f5f5f5">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="106dp"
+        android:layout_height="139dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="9dp"
+        android:background="@mipmap/me_qq_btn"/>
+
+    <LinearLayout
+        android:id="@+id/ly_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_avatar"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@+id/iv_avatar"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="left"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_14sp"
+            android:textStyle="bold"
+            tools:text="车俊"/>
+
+        <TextView
+            android:id="@+id/tv_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="?attr/tc_999999"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="浙江省委书记"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_avatar"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_content"
+        android:layout_marginRight="26dp"
+        android:drawableRight="@drawable/module_detail_comment"
+        android:gravity="center"
+        android:textColor="?attr/tc_484848"
+        tools:text="更多"/>
+
+</RelativeLayout>
+

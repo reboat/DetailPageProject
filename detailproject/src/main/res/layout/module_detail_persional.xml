@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/lly_reporter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bc_f5f5f5">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="106dp"
+            android:layout_height="139dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="9dp"
+            tools:src="@mipmap/me_qq_btn"/>
+
+        <LinearLayout
+            android:id="@+id/ly_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_avatar"
+            android:layout_marginLeft="2dp"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center"
+                android:textColor="?attr/tc_484848"
+                android:textSize="@dimen/ts_14sp"
+                android:textStyle="bold"
+                tools:text="车俊"/>
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="9dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:textColor="?attr/tc_999999"
+                android:textSize="@dimen/ts_11sp"
+                tools:text="男"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ly_name"
+            android:layout_marginRight="26dp"
+            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/iv_avatar"
+            android:ellipsize="end"
+            android:lineSpacingExtra="6dp"
+            android:maxLines="3"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="时间节点和较大精力了发生的好了去基本都是肯定 拉京东方家世界发酵素浪费，啊框架使得卡萨丁。看JHDkwj到了"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginRight="26dp"
+            android:drawableRight="@drawable/module_detail_comment"
+            android:gravity="center"
+            android:textColor="?attr/tc_484848"
+            tools:text="更多"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/nsv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="212dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:layoutMode="clipBounds"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="13dp"
+            android:background="@color/dc_dddddd"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </LinearLayout>
+
+</LinearLayout>

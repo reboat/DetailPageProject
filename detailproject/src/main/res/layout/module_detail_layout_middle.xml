@@ -3,181 +3,141 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="?attr/bc_202124"
               android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="15.5dp"
-        android:layout_marginRight="15.5dp"
-        android:layout_marginTop="45dp"
-        />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/iv_integral"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="19dp"
-        android:outlineProvider="bounds"
-        android:src="@mipmap/ic_detail_integral"/>
-
-    <TextView
-        android:id="@+id/tv_integral"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:minHeight="32dp"
-        android:textSize="@dimen/ts_14sp"/>
-
     <LinearLayout
-        android:id="@+id/ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="38dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="恭喜您已阅读完全文！"
-            android:textSize="@dimen/ts_14sp"/>
-
-        <Button
-            android:id="@+id/btn_login"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="42dp"
-            android:layout_height="20dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:padding="0dp"
-            android:text="登录"
-            android:textSize="@dimen/ts_12sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="领取奖励积分"
-            android:textSize="@dimen/ts_14sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="136dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:paddingTop="20dp">
-
-        <ImageView
-            android:id="@+id/iv_fabulous"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitXY"
-            android:src="@drawable/sl_detail_fabulous"/>
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_margin="17dp"
-        android:background="@drawable/bg_border_news_detail_column">
-
-        <TextView
-            android:id="@+id/tv_column_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|center_vertical"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="2"
-            android:maxWidth="150dp"
-            android:paddingLeft="22dp"
-            android:paddingRight="22dp"
-            android:textSize="@dimen/ts_16sp"
-            tools:text="杭州动动帮"/>
-
-        <TextView
-            android:id="@+id/tv_subscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="20dp"
-            android:foreground="?android:attr/actionBarItemBackground"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="3dp"
-            android:text="订阅"
-            android:textSize="@dimen/ts_12sp"/>
-
-    </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_author"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:letterSpacing="0.1"
-            android:lineSpacingExtra="8sp"
-            android:text="作者"
-            android:textSize="@dimen/ts_20sp"
-            android:textStyle="bold"/>
+        >
 
         <View
-            android:layout_width="60dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="0.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="17.5dp"
+            android:layout_weight="1"
+            android:background="?attr/bc_dddddd"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:letterSpacing="0.1"
-            android:text="Author"
-            android:textSize="@dimen/ts_12sp"/>
+            android:background="?attr/bc_dddddd"
+            android:paddingLeft="21.5dp"
+            android:paddingRight="21.5dp"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="分享至"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_author"
+        <View
             android:layout_width="wrap_content"
-            android:layout_height="98dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"/>
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="17.5dp"
+            android:layout_weight="1"
+            android:background="?attr/bc_dddddd"/>
+
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_related"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gridlist"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="25dp"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/indicator_color_fdc247"
-        android:drawablePadding="10dp"
-        android:gravity="center"
-        android:letterSpacing="0.25"
-        android:text="相关推荐"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="?attr/bc_e2e2e2"/>
+
+    <!--频道-->
+    <RelativeLayout
+        android:id="@+id/ry_channel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bc_ffffff"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/tv_channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15.5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:ellipsize="end"
+            android:lineSpacingExtra="5sp"
+            android:maxLines="2"
+            android:maxWidth="150dp"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="杭州频道"/>
+
+        <TextView
+            android:id="@+id/tv_channel_subscribe"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/module_detail_subscribe_red_left"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:gravity="center"
+            android:paddingBottom="7.5dp"
+            android:paddingTop="7.5dp"
+            android:textColor="?attr/tc_f44b50"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="去看"/>
+
+    </RelativeLayout>
+    <!--订阅-->
+    <RelativeLayout
+        android:id="@+id/ry_subscribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="?attr/bc_ffffff"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:id="@+id/tv_column_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15.5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:ellipsize="end"
+            android:lineSpacingExtra="5sp"
+            android:maxLines="2"
+            android:maxWidth="150dp"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="麻辣快评"/>
+
+        <TextView
+            android:id="@+id/tv_column_subscribe"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/module_detail_subscribe_red_left"
+            android:foreground="?android:attr/actionBarItemBackground"
+            android:gravity="center"
+            android:paddingBottom="7.5dp"
+            android:paddingTop="7.5dp"
+            android:textColor="?attr/tc_f44b50"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="订阅"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

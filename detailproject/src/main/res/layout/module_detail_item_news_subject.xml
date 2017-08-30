@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="?attr/selectableItemBackground"
+              android:orientation="vertical"
+              android:paddingTop="10dp">
+
+    <com.aliya.view.ratio.RatioFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ratio_w2h="16:9">
+
+        <ImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_dark"/>
+
+    </com.aliya.view.ratio.RatioFrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--状态标签-->
+        <TextView
+            android:id="@+id/tv_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_title"
+            android:layout_centerVertical="true"
+            android:background="?attr/border_f44b50_r10"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:minHeight="18dp"
+            android:minWidth="50dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="?attr/tc_f44b50"
+            android:textSize="@dimen/ts_11sp"
+            tools:text="专题"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:layout_toRightOf="@+id/tv_tag"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="国家主席习近平在伦敦白金汉宫出席英国女王伊王啥叫框架和看看大舅看阿卡家是打开的好看加点啥觉得安居客打赏的卡萨丁"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="14.5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_11sp"
+        tools:text="7233万阅读"/>
+
+</LinearLayout>

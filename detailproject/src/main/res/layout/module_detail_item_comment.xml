@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
@@ -10,23 +12,9 @@
 
     <android.support.v4.widget.CircleImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="26dp"
-        android:layout_height="26dp"
-        android:src="@mipmap/default_avatar_icon"/>
-
-    <TextView
-        android:id="@+id/tv_thumb_up"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignBottom="@id/iv_avatar"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@id/iv_avatar"
-        android:drawableLeft="@drawable/sl_comment_thumb_up"
-        android:drawablePadding="7dp"
-        android:gravity="center_vertical"
-        android:text="1000"
-        android:textColor="@color/sl_comment_thumb_up_tv"
-        android:textSize="@dimen/ts_12sp"/>
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        tools:src="@mipmap/default_avatar_icon"/>
 
     <TextView
         android:id="@+id/tv_name"
@@ -34,55 +22,109 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_avatar"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@id/tv_thumb_up"
         android:layout_toRightOf="@id/iv_avatar"
         android:gravity="top|left"
         android:includeFontPadding="false"
         android:maxLines="1"
-        android:text="你好"
-        android:textSize="@dimen/ts_12sp"/>
+        android:textColor="?attr/tc_4d95fa"
+        android:textSize="@dimen/ts_12sp"
+        tools:text="你好"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="35.5dp"
+        android:layout_marginTop="9dp"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:ellipsize="end"
+        android:gravity="left|bottom"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="3sp"
+        android:maxLines="3"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_10sp"
+        tools:text="卡死搭建的空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的"/>
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/iv_avatar"
+        android:layout_below="@+id/tv_content"
         android:layout_marginLeft="10dp"
-        android:layout_toLeftOf="@id/tv_thumb_up"
+        android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/iv_avatar"
-        android:gravity="left|bottom"
+        android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1"
         android:text="2016-09-01 21:20"
-        android:textSize="@dimen/ts_10sp"/>
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_10sp"
+        tools:text="2016-09-01 21:20"/>
+
+    <TextView
+        android:id="@+id/tv_thumb_up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_time"
+        android:layout_below="@+id/tv_content"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/tv_time"
+        android:drawableLeft="@drawable/sl_comment_thumb_up"
+        android:drawablePadding="7dp"
+        android:gravity="bottom"
+        android:textColor="@color/sl_comment_thumb_up_tv"
+        android:textSize="@dimen/ts_12sp"
+        tools:text="1000"/>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_time"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_content"
+        android:layout_marginRight="11.5dp"
+        android:gravity="bottom"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_11sp"
+        android:visibility="gone"
+        tools:text="删除"/>
 
     <LinearLayout
+        android:id="@+id/ly_comment_reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/iv_avatar"
+        android:layout_below="@id/tv_time"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="11dp"
         android:layout_toRightOf="@id/iv_avatar"
         android:orientation="vertical"
+        android:background="@drawable/border_f5f5f5"
+        android:visibility="gone"
         >
 
         <com.zjrb.coreprojectlibrary.ui.widget.ExpandableTextView
-            android:id="@+id/tv_comment_content"
+            android:id="@+id/tv_src"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
-            android:textColor="?attr/tc_3b424c"
-            android:textSize="@dimen/ts_16sp"/>
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_16sp"
+            tools:text="手动加卡是的空间啊觉得"/>
 
         <TextView
-            android:id="@+id/tv_open"
+            android:id="@+id/tv_comment_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="@dimen/ts_12sp"/>
+            android:textColor="?attr/tc_4d95fa"
+            android:textSize="@dimen/ts_12sp"
+            tools:text=" 加上大家啊打电视剧卡机大净空法师了；维护费好办法啊手机部分撒娇弗利萨就发"/>
 
     </LinearLayout>
-
 </RelativeLayout>

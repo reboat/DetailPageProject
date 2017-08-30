@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">detailProject</string>
-    <string name="string_comment_hint">写评论…</string>
-    <string name="label_comment">评论</string>
-    <string name="tip_original">原创</string>
-    <string name="say_two_words">我说两句…</string>
+    <string name="module_detail_comment_hint">写评论…</string>
+    <string name="module_detail_label_comment">评论</string>
+    <string name="module_detail_tip_original">原创</string>
+    <string name="module_detail_say_words">我说两句…</string>
+    <string name="module_detail_get_integral">恭喜获得%1$d积分，读完赢更多哦!</string>
+    <string name="module_detail_topic_label">专题</string>
+    <string name="module_detail_comment_window_hint">我来说两句（评论内容不少于5个字）</string>
+    <string name="module_detail_label_persional">官员详情</string>
+    <string name="module_detail_save_pic">保存图片</string>
+    <string name="module_detail_save_cancel">取消</string>
 </resources>

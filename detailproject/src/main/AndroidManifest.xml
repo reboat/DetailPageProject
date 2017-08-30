@@ -1,16 +1,132 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
           package="com.zjrb.zjxw.detailproject"
->
-
-    <application android:allowBackup="true"
-                 android:label="@string/app_name"
-                 android:supportsRtl="true"
     >
 
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
         <activity
-            android:name=".NewsDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:name=".comment.CommentActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/CommentActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".comment.CommentWindowActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/CommentWindowActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".nomaldetail.NewsDetailActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/NewsDetailActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".photodetail.AtlasDetailActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/AtlasDetailActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".persionaldetail.PersionalDetailActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/PersionalDetailActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".persionaldetail.PersionalListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/PersionalListActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".subjectdetail.NewsTopicActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/NewsTopicActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".subjectdetail.TopicListActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/TopicListActivity"
+                    android:scheme="@string/data_scheme"/>
+            </intent-filter>
+        </activity>
 
     </application>
 

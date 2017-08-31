@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class PersionalListAdapter extends BaseRecyclerAdapter {
 
-    private static Integer TYPE_PERSIONAL_DETAIL = -1;
-    private static Integer TYPE_NOMAL = 0;
+    public static int TYPE_PERSIONAL_DETAIL = -1;
+    public static int TYPE_NOMAL = 0;
 
     public PersionalListAdapter(List data) {
         super(data);
@@ -59,13 +59,11 @@ public class PersionalListAdapter extends BaseRecyclerAdapter {
 
     @Override
     public int getAbsItemViewType(int position) {
-        Object o = datas.get(position);
-        if (TYPE_PERSIONAL_DETAIL == o) {
+        if (((OfficalArticlesBean) datas.get(position)).getType() == -1) {
             return TYPE_PERSIONAL_DETAIL;
-        } else if (TYPE_NOMAL == o) {
+        } else {
             return TYPE_NOMAL;
         }
-        return super.getAbsItemViewType(position);
     }
 
 }

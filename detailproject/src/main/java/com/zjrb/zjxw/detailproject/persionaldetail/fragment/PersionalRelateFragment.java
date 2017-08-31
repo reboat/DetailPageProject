@@ -26,6 +26,7 @@ import com.zjrb.zjxw.detailproject.eventBus.PersionalInfoTabEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -124,7 +125,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                //TODO  WLJ 进入详情页
+                BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
             }
         });
     }
@@ -224,6 +225,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      */
     @Override
     public void onItemClick(View itemView, int position) {
-
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
     }
 }

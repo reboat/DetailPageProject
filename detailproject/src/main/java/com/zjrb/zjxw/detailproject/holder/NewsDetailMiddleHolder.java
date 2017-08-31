@@ -76,6 +76,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
     @Override
     public void bindView() {
+        itemView.setOnClickListener(null);
         mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
@@ -118,7 +119,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         mAdapter = new DetailShareAdapter(mListData);
         mAdapter.setOnItemClickListener(this);
-        mAdapter.setData(mListData);
+//        mAdapter.setData(mListData);
         mRecyleView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

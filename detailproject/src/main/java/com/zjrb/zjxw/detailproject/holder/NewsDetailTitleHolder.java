@@ -50,7 +50,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     @Override
     public void bindView() {
-        itemView.setClickable(false);
+        itemView.setOnClickListener(null);
         if (mData.getArticle_pic() == null || !mData.getArticle_pic().isEmpty()) {
             mPfTitlePic.setVisibility(View.GONE);
         } else {

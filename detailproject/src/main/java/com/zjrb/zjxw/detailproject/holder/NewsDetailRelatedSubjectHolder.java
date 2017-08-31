@@ -15,6 +15,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedSubjectAdapter;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,9 +57,13 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
         }
     }
 
+    /**
+     * @param itemView
+     * @param position
+     * 跳转详情页
+     */
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ 进入专题
-//        mData.getRelated_subjects().get(position)
+        BizUtils.jumpToDetailActivity(mData, position);
     }
 }

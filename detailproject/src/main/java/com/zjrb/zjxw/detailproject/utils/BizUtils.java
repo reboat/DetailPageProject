@@ -14,11 +14,17 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.utils.T;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * 业务相关的逻辑处理工具
@@ -26,24 +32,6 @@ import java.math.BigDecimal;
  * create time:2017/7/28  上午11:18
  */
 public class BizUtils {
-
-    public static void setDocType(int docType, TextView tv, String tag) {
-        if (tv == null) return;
-        if (TextUtils.isEmpty(tag) || "无".equals(tag.trim())) {
-            tv.setVisibility(View.INVISIBLE);
-            return;
-        }
-        String tagName = tag.trim();
-        tv.setText(tagName);
-        tv.setVisibility(View.VISIBLE);
-//        if ("突发".equals(tagName)) {
-//            tv.setTextColor(UIUtils.getColor(R.color.border_ed2e0f));
-//            tv.setBackgroundResource(R.drawable.bg_border_corners_50dp_ed2e0f);
-//        } else {
-//            tv.setTextColor(UIUtils.getColor(R.color.border_ea925d));
-//            tv.setBackgroundResource(R.drawable.bg_border_corners_50dp_ea925d);
-//        }
-    }
 
     /**
      * 设置评论开关
@@ -76,67 +64,6 @@ public class BizUtils {
         }
     }
 
-    /**
-     * 文章条目点击跳转
-     */
-    public static void articleItemClickJump(Fragment fragment, DraftDetailBean bean) {
-//        if (ClickTracker.isDoubleClick()) return;
-//        Intent intent = null;
-//        if (bean != null) {
-//            intent = getArticleIntent(bean.getDoc_type(), bean.getId(), bean.getMetaDataId(),
-//                    bean.getList_title(), bean.getWeb_link());
-//        }
-//        if (intent != null) {
-//            fragment.startActivity(intent);
-//        }
-    }
-
-    /**
-     * 文章条目点击跳转
-     */
-    public static void articleItemClickJump(Activity activity, DraftDetailBean bean) {
-//        if (ClickTracker.isDoubleClick()) return;
-//        Intent intent = null;
-//        if (bean != null) {
-//            intent = getArticleIntent(bean.getDoc_type(), bean.getId(), bean.getMetaDataId(),
-//                    bean.getList_title(), bean.getWeb_link());
-//        }
-//        if (intent != null) {
-//            activity.startActivity(intent);
-//        }
-    }
-
-
-    /**
-     * 获取文章跳转 Intent
-     */
-    public static Intent getArticleIntent(int docType, int id, int mlfId, String title, String
-            linkUrl) {
-        Intent intent = null;
-
-//        switch (docType) {
-//            case type.NONE: // 外链 此时docType字段后台没给，默认为0
-//                intent = BrowserActivity.getIntent(linkUrl, title);
-//                break;
-//            case type.NEWS: // 新闻
-//                intent = NewsDetailActivity.getIntent(id, mlfId);
-//                break;
-//            case type.ATLAS: // 图集
-//                intent = AtlasDetailActivity.getIntent(id, mlfId);
-//                break;
-//            case type.TOPIC: // 专题
-//                intent = NewsTopicActivity.getIntent(id, NewsTopicAdapter.FROM_TYPE_NEWS, mlfId);
-//                break;
-//            case type.LINK: // 链接稿
-//            case type.LIVE: // 直播稿
-//                intent = LinkDraftActivity.getIntent(id, linkUrl, title, mlfId);
-//                break;
-//            case type.VIDEO://视频稿
-//                intent = NewsDetailActivity.getIntent(id, linkUrl, mlfId);
-//                break;
-//        }
-        return intent;
-    }
 
     /**
      * 设置文章浅读积分获取文字
@@ -292,6 +219,80 @@ public class BizUtils {
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
+    /**
+     * @param mData
+     * @param position 根据doc_type跳转到相应的详情页
+     */
+    public static void jumpToDetailActivity(DraftDetailBean mData, int position) {
+        if (mData.getDoc_type() == 2) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .appendQueryParameter(Key.VIDEO_PATH, mData.getVideo_url())
+                    .build(), 0);
+            //链接
+        } else if (mData.getDoc_type() == 3) {
+
+            //图集
+        } else if (mData.getDoc_type() == 4) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .build(), 0);
+
+            //专题
+        } else if (mData.getDoc_type() == 5) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .build(), 0);
+
+            //活动
+        } else if (mData.getDoc_type() == 6) {
+
+        }
+    }
+
+    /**
+     * @param mData
+     * @param position 根据doc_type跳转到相应的详情页
+     */
+    public static void jumpToDetailActivity2(SubjectItemBean mData, int position) {
+        if (mData.getDoc_type() == 2) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .appendQueryParameter(Key.VIDEO_PATH, mData.getVideo_url())
+                    .build(), 0);
+            //链接
+        } else if (mData.getDoc_type() == 3) {
+
+            //图集
+        } else if (mData.getDoc_type() == 4) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .build(), 0);
+
+            //专题
+        } else if (mData.getDoc_type() == 5) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .build(), 0);
+
+            //活动
+        } else if (mData.getDoc_type() == 6) {
+
+        }
+    }
+
 
 //    /**
 //     * 处理Splash数据
@@ -321,43 +322,6 @@ public class BizUtils {
 //
 //    }
 
-    /**
-     * 处理外部信息跳转
-     *
-     * @param context Context
-     * @param uri     Uri
-     */
-    public static void handleOuterArticle(Context context, Uri uri) {
-        if (context == null || uri == null) return;
-
-        int docType = 0;
-        int id = -1;
-        try {
-            docType = Integer.parseInt(uri.getQueryParameter(article.DOC_TYPE));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            id = Integer.parseInt(uri.getQueryParameter(article.ID));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        int mlfId = -1;
-        try {
-            mlfId = Integer.parseInt(uri.getQueryParameter(article.MLFID));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        if (-1 != id && -1 != mlfId) {
-            Intent intent = BizUtils.getArticleIntent(docType, id, mlfId,
-                    uri.getQueryParameter(article.TITLE),
-                    uri.getQueryParameter(article.LINK_URL));
-            if (intent != null) {
-                context.startActivity(intent);
-            }
-        }
-    }
 
     /**
      * 评论权限相关信息
@@ -381,19 +345,4 @@ public class BizUtils {
         public static final int XFHS = 2;
     }
 
-    private static final class article {
-
-        public static final String DOC_TYPE = "doc_type";
-
-        public static final String ID = "id";
-
-        public static final String MLFID = "mlfid";
-
-        public static final String TITLE = "title";
-
-        public static final String LINK_URL = "link_url";
-
-        public static final String BLUR_URL = "blur_url";
-
-    }
 }

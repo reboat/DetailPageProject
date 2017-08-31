@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  * create time:2017/8/29  下午9:32
  */
 
-public class HeaderTopicHolder extends PageItem implements OnItemClickListener{
+public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
 
 
     @BindView(R2.id.iv_news_topic_banner)
@@ -66,10 +66,9 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener{
     }
 
     /**
-     * @param draftTopicBean
-     * 初始化头数据
+     * @param draftTopicBean 初始化头数据
      */
-    public void initData(DraftDetailBean draftTopicBean){
+    public void initData(DraftDetailBean draftTopicBean) {
         if (mChannelItemAdapter != null) {
             mChannelItemAdapter = new TopicDetailChannelAdapter(draftTopicBean.getSubject_groups());
             mChannelItemAdapter.setOnItemClickListener(this);
@@ -112,6 +111,7 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener{
 
     @Override
     public void onItemClick(View itemView, int position) {
+        //TODO  WLJ  滚动到项管group
 
     }
 }

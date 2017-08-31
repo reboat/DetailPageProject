@@ -34,6 +34,7 @@ import com.zjrb.coreprojectlibrary.common.biz.TouchSlopHelper;
 import com.zjrb.coreprojectlibrary.common.listener.AbsAnimatorListener;
 import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
 import com.zjrb.coreprojectlibrary.domain.base.ResultCode;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareBean;
 import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.coreprojectlibrary.ui.widget.load.LoadViewHolder;
@@ -44,7 +45,6 @@ import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.diver.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
@@ -517,12 +517,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
-//                    ARouter.getInstance().build("/module/detail/CommentActivity")
-//                            .withInt(Key.ARTICLE_ID, mArticleId)
-//                            .withInt(Key.COUNT, 0)
-//                            .withInt(Key.COMMENT_SET, mNewsDetail.getComment_level())
-//                            .withInt(Key.MLF_ID, mlfId)
-//                            .navigation();
+                //进入评论列表页面
+                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getId()))
+                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getMlf_id()))
+                        .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mNewsDetail.getComment_level()))
+                        .appendQueryParameter(Key.TITLE, mNewsDetail.getList_title())
+                        .build(), 0);
             }
 
         } else if (view.getId() == R.id.menu_prised) {
@@ -532,12 +534,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getComment_level())) {
-//                    ARouter.getInstance().build("/module/detail/CommentWindowActivity")
-//                            .withInt(Key.ARTICLE_ID, mArticleId)
-//                            .withBoolean(Key.BOOL_TAG, false)
-//                            .withInt(Key.MLF_ID, mlfId)
-//                            .navigation();
-//                    overridePendingTransition(0, 0); // 关闭动画
+                //进入评论编辑页面(不针对某条评论)
+                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getId()))
+                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getMlf_id()))
+                        .build(), 0);
                 return;
             }
         }
@@ -625,9 +627,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if (mAdapter.getData().get(position) instanceof DraftDetailBean) {
-            BizUtils.articleItemClickJump(this, (DraftDetailBean) mAdapter.getData().get(position));
-        }
     }
 }
 

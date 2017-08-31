@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,12 +10,15 @@ import android.widget.TextView;
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
 import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedNewsAdapter;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +29,7 @@ import butterknife.ButterKnife;
  * create time:2017/7/28  下午12:28
  */
 
-public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements OnItemClickListener{
+public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements OnItemClickListener {
     @BindView(R2.id.rv_content)
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_related)
@@ -55,8 +59,16 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
         }
     }
 
+    /**
+     * 详情页相关新闻点击进入详情页
+     * 普通详情页/专题/图集/话题/链接
+     * 2-9分别代表普通、链接、图集、专题、话题、活动、直播、视频
+     *
+     * @param itemView
+     * @param position
+     */
     @Override
     public void onItemClick(View itemView, int position) {
-
+        BizUtils.jumpToDetailActivity(mData, position);
     }
 }

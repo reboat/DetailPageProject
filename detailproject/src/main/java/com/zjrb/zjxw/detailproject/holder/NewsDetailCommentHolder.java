@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
@@ -18,6 +19,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +31,10 @@ import butterknife.OnClick;
  * create time:2017/7/28  下午12:28
  */
 
-public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements OnItemClickListener{
+public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements OnItemClickListener {
 
+    @BindView(R2.id.ly_hot_comment)
+    LinearLayout mLyHotContainer;
     @BindView(R2.id.tv_related)
     TextView mText;
     @BindView(R2.id.rv_content)
@@ -50,11 +54,18 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        adapter = new CommentAdapter(mData.getHot_comments());
-        adapter.setOnItemClickListener(this);
-        mRecyleView.setAdapter(adapter);
+        if (mData != null && mData.getHot_comments() != null && mData.getHot_comments().size() > 0) {
+            adapter = new CommentAdapter(mData.getHot_comments());
+            adapter.setOnItemClickListener(this);
+            mRecyleView.setAdapter(adapter);
+        } else {
+            mLyHotContainer.setVisibility(View.GONE);
+        }
     }
 
+    /**
+     * @param view 点击进入评论列表
+     */
     @OnClick({R2.id.tv_more})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -69,8 +80,19 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     }
 
+    /**
+     * @param itemView
+     * @param position 点击开始评论
+     */
     @Override
     public void onItemClick(View itemView, int position) {
-
+        if (BizUtils.isCanComment(UIUtils.getActivity(), mData.getComment_level())) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .appendQueryParameter(Key.PARENT_ID, mData.getHot_comments().get(position).getParent_id())
+                    .build(), 0);
+        }
     }
 }

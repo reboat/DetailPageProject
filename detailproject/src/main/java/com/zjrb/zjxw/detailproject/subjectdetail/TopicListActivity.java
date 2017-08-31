@@ -15,15 +15,14 @@ import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
 import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
 import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
 import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
-import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.coreprojectlibrary.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
-import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.TopicListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
@@ -180,8 +179,13 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
         return list.get(list.size() - 1).getId();
     }
 
+    /**
+     * @param itemView
+     * @param position 点击专题列表
+     *                 跳转到所类型有详情页
+     */
     @Override
     public void onItemClick(View itemView, int position) {
-
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
     }
 }

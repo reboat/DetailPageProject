@@ -1,20 +1,16 @@
 package com.zjrb.zjxw.detailproject.subjectdetail.holder;
 
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
+import com.zjrb.coreprojectlibrary.common.glide.GlideApp;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +21,7 @@ import butterknife.ButterKnife;
  * @author a_liYa
  * @date 2017/7/7 15:33.
  */
-public class NewsTopicHolder extends BaseRecyclerViewHolder {
+public class NewsTopicHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 
     @BindView(R2.id.iv_picture)
     ImageView mIvPicture;
@@ -36,8 +32,6 @@ public class NewsTopicHolder extends BaseRecyclerViewHolder {
     @BindView(R2.id.tv_other)
     TextView mTvOther;
 
-    private String keyword;
-
     public NewsTopicHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_item_news_topic, parent, false));
         ButterKnife.bind(this, itemView);
@@ -45,24 +39,24 @@ public class NewsTopicHolder extends BaseRecyclerViewHolder {
 
     @Override
     public void bindView() {
-        highLightKeyword();
+        initData();
     }
 
-    private void highLightKeyword() {
-
-        String str = "KTV风暴KTV";
-        SpannableString sp = new SpannableString(str);
-
-        Pattern p = Pattern.compile("KTV");
-        Matcher m = p.matcher(str);
-
-        while (m.find()) {
-            int start = m.start();
-            int end = m.end();
-            sp.setSpan(new ForegroundColorSpan(Color.parseColor("#f44b50")), start, end,
-                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
+            if (!mData.getList_pics().get(0).isEmpty()) {
+                GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+            } else {
+                mIvPicture.setVisibility(View.GONE);
+            }
         }
-        mTvTitle.setText(sp);
+        mTvTag.setText(mData.getList_tag());
+        mTvTitle.setText(mData.getList_title());
+        mTvOther.setText(mData.getRead_count());
+
     }
 
 }

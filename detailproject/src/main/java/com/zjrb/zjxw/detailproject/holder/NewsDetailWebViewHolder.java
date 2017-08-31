@@ -63,9 +63,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.addOnLayoutChangeListener(this);
     }
 
+    /**
+     * 如需要动态加载css,可直接传入url
+     */
     @Override
     public void bindView() {
-        itemView.setClickable(false);
+        itemView.setOnClickListener(null);
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;

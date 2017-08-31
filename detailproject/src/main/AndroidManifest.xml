@@ -37,9 +37,11 @@
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
+        <!--保持在栈顶-->
         <activity
             android:name=".nomaldetail.NewsDetailActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 

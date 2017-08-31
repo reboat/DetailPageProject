@@ -34,7 +34,7 @@ public class NewsDetailTitleVideoHolder extends BaseRecyclerViewHolder<DraftDeta
 
     @Override
     public void bindView() {
-        itemView.setClickable(false);
+        itemView.setOnClickListener(null);
         mTvTitle.setText(mData.getList_title());
         String other = BizUtils.formatPageViews(mData.getRead_count(), mData.getDoc_type())
                 + "  " + TimeUtils.getFriendlyTime(mData.getPublished_at());

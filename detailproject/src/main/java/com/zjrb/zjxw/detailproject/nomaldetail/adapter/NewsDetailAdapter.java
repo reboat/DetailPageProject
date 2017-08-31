@@ -82,7 +82,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         } else if (viewType == VIEW_TYPE_COMMENT) {
             return new NewsDetailCommentHolder(parent);
         }
-        return new NewsDetailArticleGeneralViewHolder(parent);
+        return null;
     }
 
     @Override

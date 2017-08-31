@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
 import com.zjrb.coreprojectlibrary.common.glide.GlideApp;
-import com.zjrb.coreprojectlibrary.common.listener.IOnItemClickListener;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -23,7 +22,7 @@ import butterknife.ButterKnife;
  * @author a_liYa
  * @date 2017/7/7 15:33.
  */
-public class NewsVideoHolder extends BaseRecyclerViewHolder<SubjectItemBean> implements IOnItemClickListener<SubjectItemBean> {
+public class NewsVideoHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 
     @BindView(R2.id.iv_picture)
     ImageView mIvPicture;
@@ -114,11 +113,6 @@ public class NewsVideoHolder extends BaseRecyclerViewHolder<SubjectItemBean> imp
         } else {
             mTvPrise.setVisibility(View.GONE);
         }
-
-    }
-
-    @Override
-    public void onItemClick(View itemView, int position, SubjectItemBean data) {
 
     }
 }

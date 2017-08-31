@@ -13,6 +13,7 @@ import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
 import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
 import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
 import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.widget.ExpandableTextView;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.coreprojectlibrary.utils.T;
@@ -27,6 +28,7 @@ import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -163,13 +165,18 @@ public class NewsTopicActivity extends BaseActivity implements
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        //点击专题详情页列表
+        //点击跳转详情页(所有类型)
         if (mAdapter.getData().get(position) instanceof SubjectItemBean) {
-            //进入文章详情页
+            SubjectItemBean b = (SubjectItemBean) mAdapter.getData().get(position);
+            BizUtils.jumpToDetailActivity2(b, position);
         } else if (mAdapter.getData().get(position) instanceof SubjectNewsBean.GroupArticlesBean) {
-            //进入更多
+            //进入专题更多列表
             if (((SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position)).getArticleList().size() >= 3) {
-                //进入专题更多列表
+                SubjectNewsBean.GroupArticlesBean b = (SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position);
+                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(b.getGroupId()))
+                        .build(), 0);
             }
         }
 

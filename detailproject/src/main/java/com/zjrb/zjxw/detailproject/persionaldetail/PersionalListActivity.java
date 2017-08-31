@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +14,17 @@ import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
 import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
 import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
 import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
 import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.coreprojectlibrary.utils.T;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
@@ -86,7 +91,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                             initAdapter();
                         }
                         mRecycler.setAdapter(mAdapter);
-//                        mAdapter.setupData(list);
+                        mAdapter.setupData(list);
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -120,6 +125,13 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     }
 
+
+    //官员稿件测试地址
+    private String uri1 = "10.100.60.98:9000";// 开发环境
+    private String uri2 = "10.100.60.93:9000";// 测试环境
+    private String uri3 = "zj.zjol.com.cn";// 正式环境
+    private String uri4 = "m.8531.cn";//		正式环境2
+
     /**
      * 初始化适配器
      * 如果禁言，则不允许弹出评论框
@@ -130,7 +142,41 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                //TODO WLJ 进入详情页
+                if (list != null && list.get(position) != null && list.size() > 0) {
+                    OfficalArticlesBean b = (OfficalArticlesBean) mAdapter.getData(position);
+                    String uri = b.getUrl();
+                    int type = b.getType();
+                    int officalId = b.getOfficalId();
+                    //进入官员详情页
+                    if (type == PersionalListAdapter.TYPE_PERSIONAL_DETAIL) {
+                        Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+                                .buildUpon()
+                                .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(officalId))
+                                .build(), 0);
+                    } else {
+                        if (uri != null && !uri.isEmpty()) {
+                            //普通稿件
+                            if ((uri.contains(uri1) ||
+                                    uri.contains(uri2) ||
+                                    uri.contains(uri3) ||
+                                    uri.contains(uri4))) {
+                                Uri u = Uri.parse(uri);
+                                //稿件ID
+                                String articleId = u.getQueryParameter(Key.ARTICLE_ID);
+                                if (!articleId.isEmpty()) {
+                                    Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+                                            .buildUpon()
+                                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                                            .build(), 0);
+                                }
+                            } else {//链接稿/直播
+
+                            }
+                        }
+
+                    }
+
+                }
             }
         });
     }

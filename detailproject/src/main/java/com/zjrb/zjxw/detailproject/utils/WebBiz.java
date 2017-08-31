@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.text.TextUtils;
 
+import com.zjrb.coreprojectlibrary.db.ThemeMode;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -149,10 +150,9 @@ public class WebBiz {
 
                 // 夜间模式点击应在遮罩层
                 //TODO  WLJ
-//                if (isNeedOnClick && !UiModeManager.get().isNightMode()) {
-//                    node.attr("onClick", "imageBrowse(" + index + ")");
-//                }
-//
+                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+                    node.attr("onClick", "imageBrowse(" + index + ")");
+                }
 //                UiModeManager.get().fitUiModeForImgTag(node, isNeedOnClick, index);
             }
         }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ScrollView;
+
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -43,7 +44,7 @@ import butterknife.ButterKnife;
  * create time:2017/7/17  上午10:14
  */
 public class ImagePreviewFragment extends BaseFragment implements PhotoViewAttacher
-        .OnViewTapListener, View.OnLongClickListener{
+        .OnViewTapListener, View.OnLongClickListener {
 
     @BindView(R2.id.iv_pre_image)
     PhotoView mIvPreImage;
@@ -51,6 +52,7 @@ public class ImagePreviewFragment extends BaseFragment implements PhotoViewAttac
     FrameLayout containerImagePreview;
     @BindView(R2.id.liv_loading)
     LoadingIndicatorView mLivLoading;
+
     private PhotoViewAttacher mAttacher;
     private String mUrl;
     private boolean isTapClose = false;
@@ -91,14 +93,8 @@ public class ImagePreviewFragment extends BaseFragment implements PhotoViewAttac
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.module_detail_image_preview, container, false);
         ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
         init();
+        return view;
     }
 
 
@@ -196,6 +192,9 @@ public class ImagePreviewFragment extends BaseFragment implements PhotoViewAttac
         return false;
     }
 
+    /**
+     * @param url 下载图片
+     */
     private void download(String url) {
         DownloadUtil.get()
                 .setDir(PathUtil.getImagePath())

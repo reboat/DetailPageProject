@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,13 +9,11 @@ import android.widget.TextView;
 
 import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
 import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
-import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedNewsAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 

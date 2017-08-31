@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * 专题列表适配器
  *
- * @author a_liYa
- * @date 2017/7/6 14:40.
+ * Created by wanglinjie.
+ * create time:2017/8/26  上午9:14
  */
 public class TopicListAdapter extends BaseRecyclerAdapter {
 

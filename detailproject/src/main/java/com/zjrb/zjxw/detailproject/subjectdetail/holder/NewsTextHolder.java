@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
 /**
  * 新闻列表 - 纯文字类型 - 上标题，下阅读、赞
  *
- * @author a_liYa
- * @date 2017/7/7 15:33.
+ * Created by wanglinjie.
+ * create time:2017/8/9  下午21:16
  */
 public class NewsTextHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 

@@ -21,8 +21,8 @@ import butterknife.ButterKnife;
 /**
  * 新闻列表 - 活动/话题 类型 - 上图中间文字下时间
  *
- * @author a_liYa
- * @date 2017/7/7 21:16.
+ * Created by wanglinjie.
+ * create time:2017/8/9  下午21:16
  */
 public class NewsActivityHolder extends BaseRecyclerViewHolder<SubjectItemBean>{
     @BindView(R2.id.rf_img_container)

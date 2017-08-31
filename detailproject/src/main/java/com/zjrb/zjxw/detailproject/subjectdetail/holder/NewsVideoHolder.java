@@ -19,8 +19,8 @@ import butterknife.ButterKnife;
 /**
  * 新闻列表 - 视频类型
  *
- * @author a_liYa
- * @date 2017/7/7 15:33.
+ * Created by wanglinjie.
+ * create time:2017/8/9  下午21:16
  */
 public class NewsVideoHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 

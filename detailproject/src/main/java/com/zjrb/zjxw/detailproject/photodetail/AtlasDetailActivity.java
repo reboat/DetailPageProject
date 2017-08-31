@@ -153,6 +153,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
      */
     private void fillData(DraftDetailBean atlasDetailEntity) {
         mData = atlasDetailEntity;
+        //设置数据
         if (atlasDetailEntity != null) {
             if (atlasDetailEntity.getAlbum_image_list() != null && !atlasDetailEntity.getAlbum_image_list().isEmpty()) {
                 mAtlasList = atlasDetailEntity.getAlbum_image_list();

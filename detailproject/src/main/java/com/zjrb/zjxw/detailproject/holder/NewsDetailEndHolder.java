@@ -20,8 +20,8 @@ import butterknife.ButterKnife;
 /**
  * 新闻详情页 - 底部 - ViewHolder
  *
- * @author a_liYa
- * @date 2017/5/15 15:39.
+ * Created by wanglinjie.
+ * create time:2017/7/28  下午12:28
  */
 public class NewsDetailEndHolder extends BaseRecyclerViewHolder<Object> implements View
         .OnAttachStateChangeListener, View.OnTouchListener {

@@ -14,9 +14,8 @@ import butterknife.ButterKnife;
 
 /**
  * 官员holder2(纯文本)
- *
- * @author a_liYa
- * @date 2017/7/7 15:33.
+ * Created by wanglinjie.
+ * create time:2017/8/17  上午10:14
  */
 public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesBean> {
 

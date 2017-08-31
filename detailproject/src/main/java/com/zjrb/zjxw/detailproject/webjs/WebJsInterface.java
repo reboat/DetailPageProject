@@ -31,8 +31,7 @@ public class WebJsInterface {
     }
 
     /**
-     * @param index
-     * 选择图片
+     * @param index 选择图片
      */
     @JavascriptInterface
     public void imageBrowse(int index) {

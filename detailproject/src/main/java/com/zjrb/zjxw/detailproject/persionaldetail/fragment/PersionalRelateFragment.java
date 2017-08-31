@@ -37,6 +37,8 @@ import butterknife.ButterKnife;
 
 /**
  * 官员相关新闻fragment
+ * Created by wanglinjie.
+ * create time:2017/8/27  上午10:14
  */
 public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh.OnRefreshListener, LoadMoreListener<OfficalDetailBean>, OnItemClickListener {
 

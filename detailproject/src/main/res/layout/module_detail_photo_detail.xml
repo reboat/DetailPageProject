@@ -149,7 +149,7 @@
                 />
 
             <ImageView
-                android:id="@+id/menu_collected"
+                android:id="@+id/menu_prised"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/menu_collected"
+                android:layout_toLeftOf="@id/menu_prised"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"

@@ -15,17 +15,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.coreprojectlibrary.api.callback.APICallBack;
 import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
 import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
 import com.zjrb.coreprojectlibrary.common.listener.IOnImageTapListener;
 import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
+import com.zjrb.coreprojectlibrary.nav.Nav;
 import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareBean;
 import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.coreprojectlibrary.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.coreprojectlibrary.ui.widget.photoview.HackyViewPager;
 import com.zjrb.coreprojectlibrary.utils.T;
+import com.zjrb.coreprojectlibrary.utils.UIUtils;
 import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -90,6 +93,8 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     ImageView mIvBack;
     @BindView(R2.id.iv_share)
     ImageView mIvShare;
+    @BindView(R2.id.menu_comment)
+    ImageView mIvComment;
 
     public int mArticleId = -1;
     public int mlfId = -1;
@@ -128,7 +133,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this,"").getView();
+        return TopBarFactory.createDefault(view, this, "").getView();
     }
 
 
@@ -143,12 +148,20 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 
     }
 
+    /**
+     * @param atlasDetailEntity 获取图集详情页数据
+     */
     private void fillData(DraftDetailBean atlasDetailEntity) {
         mData = atlasDetailEntity;
-        mAtlasList = atlasDetailEntity.getAlbum_image_list();
-        mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getComment_count()));
-        mMenuPrised.setSelected(atlasDetailEntity.isFollowed());
-        BizUtils.setCommentSet(mTvComment, mData.getComment_level());
+        if (atlasDetailEntity != null) {
+            if (atlasDetailEntity.getAlbum_image_list() != null && !atlasDetailEntity.getAlbum_image_list().isEmpty()) {
+                mAtlasList = atlasDetailEntity.getAlbum_image_list();
+            }
+            mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getComment_count()));
+            mMenuPrised.setSelected(atlasDetailEntity.isFollowed());
+            BizUtils.setCommentSet(mTvComment, mData.getComment_level());
+        }
+        //设置图片列表
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             List<String> imgs = new ArrayList<>(mAtlasList.size());
             for (AlbumImageListBean entity : mAtlasList) {
@@ -174,41 +187,47 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             .menu_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        switch (view.getId()) {
-            case R2.id.iv_back:
-                finish();
-                break;
-            case R2.id.iv_share:
-                share();
-                break;
-            case R2.id.tv_comment: // 开启评论窗口
-                if (mData != null && BizUtils.isCanComment(this, mData.getComment_level())) {
-//                    ARouter.getInstance().build("/module/detail/CommentWindowActivity")
-//                            .withInt(Key.ARTICLE_ID, mArticleId)
-//                            .withBoolean(Key.COUNT, false)
-//                            .withInt(Key.MLF_ID, mlfId)
-//                            .navigation();
-//                    overridePendingTransition(0, 0); // 关闭动画
-                    return;
-                }
-                break;
-            case R2.id.menu_comment: // mFloorBar - 查看评论
-                if (mData != null) {
-//                    ARouter.getInstance().build("/module/detail/CommentActivity")
-//                            .withInt(Key.ARTICLE_ID, mArticleId)
-//                            .withInt(Key.COUNT, 0)
-//                            .withInt(Key.COMMENT_SET, mData.getComment_level())
-//                            .withInt(Key.MLF_ID, mlfId)
-//                            .navigation();
+        click(view.getId());
+    }
 
+    /**
+     * 点击事件
+     */
+    private void click(int id) {
+        //返回
+        if (id == R.id.iv_back) {
+            finish();
+            //分享
+        } else if (id == R.id.iv_share) {
+            share();
+            //评论框
+        } else if (id == R.id.tv_comment) {
+            if (mData != null && BizUtils.isCanComment(this, mData.getComment_level())) {
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                        .buildUpon()
+                        .build(), 0);
+                return;
+            }
+            //评论列表
+        } else if (id == R.id.menu_comment) {
+            if (mData != null) {
+                if (BizUtils.isCanComment(this, mData.getComment_level())) {
+                    Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                            .buildUpon()
+                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                            .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getComment_level()))
+                            .appendQueryParameter(Key.TITLE, mData.getList_title())
+                            .build(), 0);
                 }
-                break;
-            case R2.id.menu_prised: // mFloorBar - 点赞
-                fabulous();
-                break;
-            case R2.id.menu_share: // mFloorBar - 分享
-                share();
-                break;
+
+            }
+            //点赞
+        } else if (id == R.id.menu_prised) {
+            fabulous();
+            //分享
+        } else if (id == R.id.menu_share) {
+            share();
         }
     }
 

@@ -90,7 +90,7 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
             bannerNewsTopic.setVisibility(View.GONE);
         } else {
             bannerNewsTopic.setVisibility(View.VISIBLE);
-            GlideApp.with(ivNewsTopicBanner).load(backPicUrl).into(ivNewsTopicBanner);
+            GlideApp.with(ivNewsTopicBanner).load(backPicUrl).centerCrop().into(ivNewsTopicBanner);
         }
         if (TextUtils.isEmpty(subjectFocusImg)) {
             pfPicContainer.setVisibility(View.GONE);

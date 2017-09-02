@@ -42,9 +42,10 @@ public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     public void bind(DraftDetailBean data) {
         mData = data;
-        GlideApp.with((Activity) mVideoParent.getContext()).load(mData.getArticle_pic())
+        GlideApp.with(mIvImage).load(mData.getArticle_pic())
                 .placeholder(R.drawable.module_detail_load_error)
                 .error(R.drawable.module_detail_load_error)
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE) // 缓存原始资源，解决Gif加载慢
                 .into(mIvImage);
     }

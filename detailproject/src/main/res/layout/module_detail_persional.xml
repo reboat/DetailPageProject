@@ -20,6 +20,7 @@
             android:layout_height="139dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="9dp"
+            android:scaleType="fitXY"
             tools:src="@mipmap/me_qq_btn"/>
 
         <LinearLayout

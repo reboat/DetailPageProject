@@ -60,7 +60,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/tc_484848"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             tools:src="@mipmap/default_avatar_icon"/>
 
         <ImageView
@@ -71,7 +71,7 @@
             android:layout_marginRight="4.5dp"
             android:layout_weight="1"
             android:background="?attr/tc_484848"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             tools:src="@mipmap/default_avatar_icon"/>
 
         <ImageView
@@ -80,7 +80,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/tc_484848"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             tools:src="@mipmap/default_avatar_icon"/>
 
     </com.aliya.view.ratio.RatioLinearLayout>

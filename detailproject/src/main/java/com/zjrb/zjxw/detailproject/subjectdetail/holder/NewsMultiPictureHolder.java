@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.aliya.view.ratio.RatioLinearLayout;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -68,17 +69,17 @@ public class NewsMultiPictureHolder extends BaseRecyclerViewHolder<SubjectItemBe
         //多图
         if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
             if (!mData.getList_pics().get(0).isEmpty()) {
-                GlideApp.with(mIv1).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIv1);
+                GlideApp.with(mIv1).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mIv1);
             } else {
                 mIv1.setVisibility(View.GONE);
             }
             if (!mData.getList_pics().get(1).isEmpty()) {
-                GlideApp.with(mIv2).load(mData.getList_pics().get(1)).placeholder(R.mipmap.ic_launcher).into(mIv2);
+                GlideApp.with(mIv2).load(mData.getList_pics().get(1)).centerCrop().placeholder(PH.zheSmall()).into(mIv2);
             } else {
                 mIv2.setVisibility(View.GONE);
             }
             if (!mData.getList_pics().get(2).isEmpty()) {
-                GlideApp.with(mIv3).load(mData.getList_pics().get(2)).placeholder(R.mipmap.ic_launcher).into(mIv3);
+                GlideApp.with(mIv3).load(mData.getList_pics().get(2)).centerCrop().placeholder(PH.zheSmall()).into(mIv3);
             } else {
                 mIv3.setVisibility(View.GONE);
             }

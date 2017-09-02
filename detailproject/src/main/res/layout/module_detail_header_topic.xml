@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/iv_news_topic_banner"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/module_detail_load_error"
             app:iv_maskColor="@color/bc_66000000"
             app:layout_aspectRatio="293%"

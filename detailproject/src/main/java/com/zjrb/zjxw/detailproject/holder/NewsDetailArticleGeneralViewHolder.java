@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -52,7 +53,7 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
         //TODO  WLJ 默认图片
         //多图
         if (mData.getList_pics() != null && !mData.getList_pics().get(0).isEmpty()) {
-            GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+            GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().into(mIvPicture);
         }
 
         //阅读量

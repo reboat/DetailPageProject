@@ -124,9 +124,10 @@ public class ImagePreviewFragment extends BaseFragment implements PhotoViewAttac
         }
         mLivLoading.setVisibility(View.VISIBLE);
 
-        GlideApp.with(ImagePreviewFragment.this)
+        GlideApp.with(mIvPreImage)
                 .load(mUrl)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE) // 缓存原始资源，解决Gif加载慢
+                .centerCrop()
                 .listener(new RequestListener() {
 
                     @Override

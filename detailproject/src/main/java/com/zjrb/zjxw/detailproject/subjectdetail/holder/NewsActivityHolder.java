@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 
 /**
  * 新闻列表 - 活动/话题 类型 - 上图中间文字下时间
- *
+ * <p>
  * Created by wanglinjie.
  * create time:2017/8/9  下午21:16
  */
@@ -56,7 +57,7 @@ public class NewsActivityHolder extends BaseRecyclerViewHolder<SubjectItemBean> 
      */
     private void initActivity() {
         //活动图片
-        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheBig()).into(mIvPicture);
         //活动状态 0未开始，1进行中，2已结束
         //TODO  WLJ
         if (mData.getActivity_status() == 0) {
@@ -87,7 +88,7 @@ public class NewsActivityHolder extends BaseRecyclerViewHolder<SubjectItemBean> 
      */
     private void initTopic() {
         //话题图片
-            GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheBig()).into(mIvPicture);
 
         //话题状态
         if (mData.getTopic_status() == 0) {

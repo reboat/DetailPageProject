@@ -126,7 +126,7 @@ public class PersionalDetailActivity extends BaseActivity {
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像
-            GlideApp.with(ivAvatar).load(bean.getList_pic()).into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getList_pic()).centerCrop().into(ivAvatar);
             //姓名
             tvName.setText(bean.getName());
             //性别
@@ -196,7 +196,7 @@ public class PersionalDetailActivity extends BaseActivity {
         //传递官员详情页相关新闻
         Bundle bundlePersionalRelate = BundleHelper.creatBundle(Key
                 .FRAGMENT_ARGS, PersionalRelateFragment.TYPE_NEWS);
-        bundlePersionalRelate.putSerializable(Key.OFFICIAL_ID,official_id);
+        bundlePersionalRelate.putSerializable(Key.OFFICIAL_ID, official_id);
         bundlePersionalRelate.putSerializable(Key.FRAGMENT_PERSIONAL_RELATER, bean);
         pagerAdapter.addTabInfo(PersionalRelateFragment.class, "相关新闻", bundlePersionalRelate);
 

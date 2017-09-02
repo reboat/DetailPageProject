@@ -17,7 +17,9 @@
             android:id="@+id/iv_picture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/background_dark"/>
+            android:background="@android:color/background_dark"
+            android:scaleType="fitXY"
+            tools:src="@mipmap/module_core_me_qq_btn"/>
 
     </com.aliya.view.ratio.RatioFrameLayout>
 

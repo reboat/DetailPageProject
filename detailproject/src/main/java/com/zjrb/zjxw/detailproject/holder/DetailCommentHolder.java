@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.ui.widget.ExpandableTextView;
 import com.zjrb.core.utils.StringUtils;
@@ -71,7 +72,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         mTvCommentContent.setMaxLines(Integer.MAX_VALUE);
         mThumb.setText(mData.getLike_count() + "");
         mThumb.setSelected(mData.isLiked() == true);
-        GlideApp.with(mImg).load(mData.getPortrait_url()).into(mImg);
+        GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
 
     }
 

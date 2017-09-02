@@ -9,14 +9,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zjrb.coreprojectlibrary.ui.widget.photoview.PhotoView
+    <com.zjrb.core.ui.widget.photoview.PhotoView
         android:id="@+id/iv_pre_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name" />
 </FrameLayout>
 
-<com.zjrb.coreprojectlibrary.ui.widget.load.LoadingIndicatorView
+<com.zjrb.core.ui.widget.load.LoadingIndicatorView
     android:id="@+id/liv_loading"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:background="@android:color/background_dark"
         app:ratio_w2h="117:78"
+        android:scaleType="fitXY"
         tools:src="@mipmap/default_avatar_icon"/>
 
     <TextView

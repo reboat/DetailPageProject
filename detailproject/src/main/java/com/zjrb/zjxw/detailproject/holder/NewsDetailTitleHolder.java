@@ -54,7 +54,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (mData.getArticle_pic() == null || !mData.getArticle_pic().isEmpty()) {
             mPfTitlePic.setVisibility(View.GONE);
         } else {
-            GlideApp.with(mIvTopBg).load(mData.getArticle_pic()).into(mIvTopBg);
+            GlideApp.with(mIvTopBg).load(mData.getArticle_pic()).centerCrop().into(mIvTopBg);
         }
         mTvTitle.setText(mData.getList_title());
         mTvReporter.setText(TimeUtils.getTime(mData.getPublished_at(), C.DATE_FORMAT_1));

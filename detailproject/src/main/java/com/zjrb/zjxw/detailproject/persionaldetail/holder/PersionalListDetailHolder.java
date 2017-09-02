@@ -43,7 +43,7 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalArt
 
     @Override
     public void bindView() {
-        GlideApp.with(mIvAvatar).load(mData.getPhoto()).placeholder(R.mipmap.ic_launcher).into(mIvAvatar);
+        GlideApp.with(mIvAvatar).load(mData.getPhoto()).centerCrop().into(mIvAvatar);
         mTvName.setText(mData.getName());
         mTvJob.setText(mData.getJob());
     }

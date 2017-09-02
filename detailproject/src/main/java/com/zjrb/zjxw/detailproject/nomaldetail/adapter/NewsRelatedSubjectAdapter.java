@@ -54,7 +54,7 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
             if (mData.getPic().isEmpty()) {
                 mContainer.setVisibility(View.GONE);
             } else {
-                GlideApp.with(mImg).load(mData.getPic()).into(mImg);
+                GlideApp.with(mImg).load(mData.getPic()).centerCrop().into(mImg);
             }
         }
     }

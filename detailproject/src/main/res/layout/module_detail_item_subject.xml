@@ -14,7 +14,7 @@
         android:layout_height="78dp"
         android:layout_alignParentLeft="true"
         android:foreground="@drawable/module_detail_image_mask"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         app:iv_maskColor="@color/dc_f5f5f5_night"/>
 
     <TextView

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zjrb.coreprojectlibrary.ui.widget.photoview.HackyViewPager
+    <com.zjrb.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

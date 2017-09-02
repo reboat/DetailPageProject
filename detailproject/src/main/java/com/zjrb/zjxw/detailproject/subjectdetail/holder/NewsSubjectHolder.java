@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -49,7 +50,7 @@ public class NewsSubjectHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
     @Override
     public void bindView() {
         //图片
-        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mIvPicture);
         //标题
         mTvTitle.setText(mData.getList_title());
         //状态标签

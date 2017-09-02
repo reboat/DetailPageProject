@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 
 /**
  * 新闻列表 - 视频类型
- *
+ * <p>
  * Created by wanglinjie.
  * create time:2017/8/9  下午21:16
  */
@@ -75,7 +76,7 @@ public class NewsVideoHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
             }
         }
         //视频图片
-        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(R.mipmap.ic_launcher).into(mIvPicture);
+        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheBig()).into(mIvPicture);
         mTvTitle.setText(mData.getList_title());
         //状态标签
         if (mData.getList_tag() != null && !mData.getList_tag().isEmpty()) {

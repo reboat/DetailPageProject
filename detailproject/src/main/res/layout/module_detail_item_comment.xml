@@ -10,10 +10,11 @@
                 android:paddingRight="15dp"
                 android:paddingTop="13dp">
 
-    <android.support.v4.widget.CircleImageView
+    <com.zjrb.core.ui.widget.CircleImageView
         android:id="@+id/iv_avatar"
         android:layout_width="36dp"
         android:layout_height="36dp"
+        android:scaleType="fitXY"
         tools:src="@mipmap/default_avatar_icon"/>
 
     <TextView

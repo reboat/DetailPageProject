@@ -17,19 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
-import com.zjrb.coreprojectlibrary.api.callback.APICallBack;
-import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
-import com.zjrb.coreprojectlibrary.common.listener.IOnImageTapListener;
-import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
-import com.zjrb.coreprojectlibrary.nav.Nav;
-import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareBean;
-import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.coreprojectlibrary.ui.anim.viewpager.DepthPageTransformer;
-import com.zjrb.coreprojectlibrary.ui.widget.photoview.HackyViewPager;
-import com.zjrb.coreprojectlibrary.utils.T;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
-import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
+import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.listener.IOnImageTapListener;
+import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
+import com.zjrb.core.ui.widget.photoview.HackyViewPager;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
@@ -52,7 +52,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zjrb.coreprojectlibrary.utils.UIUtils.getContext;
 
 /**
  * 图集详情页
@@ -353,21 +352,21 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
         new DraftPraiseTask(new APICallBack<BaseInnerData>() {
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getContext(), "点赞失败");
+                T.showShort(UIUtils.getContext(), "点赞失败");
             }
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
                 switch (baseInnerData.getResultCode()) {
                     case 0:
-                        T.showShort(getContext(), "点赞成功");
+                        T.showShort(UIUtils.getContext(), "点赞成功");
                         mData.setLiked(true);
                         break;
                     case 1:
-                        T.showShort(getContext(), "点赞失败");
+                        T.showShort(UIUtils.getContext(), "点赞失败");
                         break;
                     case 10004:
-                        T.showShort(getContext(), "您已点赞");
+                        T.showShort(UIUtils.getContext(), "您已点赞");
                         break;
                 }
             }

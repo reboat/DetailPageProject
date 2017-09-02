@@ -2,8 +2,8 @@ package com.zjrb.zjxw.detailproject.comment.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;

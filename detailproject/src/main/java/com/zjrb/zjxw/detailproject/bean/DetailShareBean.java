@@ -3,7 +3,7 @@ package com.zjrb.zjxw.detailproject.bean;
 import android.support.annotation.NonNull;
 
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
+import com.zjrb.core.domain.base.BaseInnerData;
 
 /**
  * 详情页内分享bean

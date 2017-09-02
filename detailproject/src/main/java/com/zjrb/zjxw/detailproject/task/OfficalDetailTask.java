@@ -1,10 +1,9 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 
 /**
  * 官员详情 - Task

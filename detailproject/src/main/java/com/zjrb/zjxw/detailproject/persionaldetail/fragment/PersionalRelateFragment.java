@@ -7,17 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
-import com.zjrb.coreprojectlibrary.common.base.BaseFragment;
-import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
-import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
-import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
-import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
-import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
-import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.coreprojectlibrary.utils.T;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -124,12 +124,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     private void initAdapter() {
         mAdapter.setHeaderRefresh(refresh.getItemView());
         mAdapter.setFooterLoadMore(more.getItemView());
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
-            }
-        });
+        mAdapter.setOnItemClickListener(this);
     }
 
     /**

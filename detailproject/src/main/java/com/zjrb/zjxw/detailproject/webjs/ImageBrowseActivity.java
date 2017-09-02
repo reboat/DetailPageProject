@@ -9,9 +9,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.TextView;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.ui.anim.viewpager.DepthPageTransformer;
-import com.zjrb.coreprojectlibrary.ui.widget.photoview.HackyViewPager;
+import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
+import com.zjrb.core.ui.widget.photoview.HackyViewPager;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;

@@ -7,7 +7,8 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zjrb.coreprojectlibrary.ui.UmengUtils.BaseBottomDialogFragment;
+
+import com.zjrb.core.ui.UmengUtils.BaseBottomDialogFragment;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 

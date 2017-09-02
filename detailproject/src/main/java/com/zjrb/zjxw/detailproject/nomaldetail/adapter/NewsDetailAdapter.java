@@ -3,14 +3,13 @@ package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
-import com.zjrb.coreprojectlibrary.common.permission.IPermissionOperate;
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.permission.IPermissionOperate;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;

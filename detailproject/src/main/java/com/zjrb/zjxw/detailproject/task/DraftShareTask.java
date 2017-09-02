@@ -1,9 +1,8 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.coreprojectlibrary.api.base.APIPostTask;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
-import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
+import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftShareBean;
 
 /**

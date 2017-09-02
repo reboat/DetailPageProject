@@ -5,7 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.webkit.JavascriptInterface;
 
-import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
+import com.zjrb.core.utils.click.ClickTracker;
+
 
 /**
  * JavascriptInterface

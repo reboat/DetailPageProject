@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.bean;
 
-import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
+
+import com.zjrb.core.domain.base.BaseInnerData;
 
 /**
  * 详情页相关专题

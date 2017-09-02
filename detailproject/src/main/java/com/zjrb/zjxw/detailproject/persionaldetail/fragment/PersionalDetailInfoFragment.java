@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseFragment;
-import com.zjrb.coreprojectlibrary.utils.T;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;

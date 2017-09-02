@@ -2,8 +2,9 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.text.TextUtils;
 
-import com.zjrb.coreprojectlibrary.db.ThemeMode;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+
+import com.zjrb.core.db.ThemeMode;
+import com.zjrb.core.utils.UIUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

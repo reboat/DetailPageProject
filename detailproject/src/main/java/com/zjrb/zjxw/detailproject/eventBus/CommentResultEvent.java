@@ -1,7 +1,7 @@
 package com.zjrb.zjxw.detailproject.eventBus;
 
 
-import com.zjrb.coreprojectlibrary.domain.eventbus.EventBase;
+import com.zjrb.core.domain.eventbus.EventBase;
 
 /**
  * 评论个数回调事件

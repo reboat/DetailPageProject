@@ -1,8 +1,8 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.coreprojectlibrary.api.base.APIGetTask;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 
 /**

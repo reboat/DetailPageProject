@@ -4,9 +4,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 新闻专题列表 Adapter(支持所有类型 图文，纯文字，多图，视频，话题，直播)

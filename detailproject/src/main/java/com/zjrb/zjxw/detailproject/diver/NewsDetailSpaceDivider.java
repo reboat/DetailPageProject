@@ -6,8 +6,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.zjrb.coreprojectlibrary.ui.widget.divider.AbsSpaceDivider;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.ui.widget.divider.AbsSpaceDivider;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
 

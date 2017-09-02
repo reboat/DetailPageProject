@@ -6,11 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.aliya.view.ratio.RatioFrameLayout;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
-import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
-import com.zjrb.coreprojectlibrary.common.glide.GlideApp;
-import com.zjrb.coreprojectlibrary.common.listener.IOnItemClickListener;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
@@ -24,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/8/9  下午21:16
  */
-public class NewsActivityHolder extends BaseRecyclerViewHolder<SubjectItemBean>{
+public class NewsActivityHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
     @BindView(R2.id.rf_img_container)
     RatioFrameLayout mContainer;
     @BindView(R2.id.iv_picture)

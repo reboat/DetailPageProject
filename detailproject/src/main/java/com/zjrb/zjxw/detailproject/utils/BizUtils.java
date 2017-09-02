@@ -14,14 +14,13 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
-import com.zjrb.coreprojectlibrary.nav.Nav;
-import com.zjrb.coreprojectlibrary.utils.T;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 
 import java.math.BigDecimal;
 import java.util.Objects;

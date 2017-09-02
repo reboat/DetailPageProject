@@ -3,9 +3,9 @@ package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;

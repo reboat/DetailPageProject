@@ -2,8 +2,8 @@ package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerAdapter;
-import com.zjrb.coreprojectlibrary.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHolder;

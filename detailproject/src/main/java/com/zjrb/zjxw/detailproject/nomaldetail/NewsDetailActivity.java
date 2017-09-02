@@ -26,22 +26,22 @@ import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
-import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
-import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
-import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
-import com.zjrb.coreprojectlibrary.common.biz.TouchSlopHelper;
-import com.zjrb.coreprojectlibrary.common.listener.AbsAnimatorListener;
-import com.zjrb.coreprojectlibrary.domain.base.BaseInnerData;
-import com.zjrb.coreprojectlibrary.domain.base.ResultCode;
-import com.zjrb.coreprojectlibrary.nav.Nav;
-import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareBean;
-import com.zjrb.coreprojectlibrary.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.coreprojectlibrary.ui.widget.load.LoadViewHolder;
-import com.zjrb.coreprojectlibrary.utils.NetUtils;
-import com.zjrb.coreprojectlibrary.utils.T;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
-import com.zjrb.coreprojectlibrary.utils.click.ClickTracker;
+import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.listener.AbsAnimatorListener;
+import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.core.domain.base.ResultCode;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
+import com.zjrb.core.utils.NetUtils;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -65,7 +65,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.zjrb.coreprojectlibrary.utils.UIUtils.getContext;
+import static com.zjrb.core.utils.UIUtils.getContext;
+
 
 /**
  * 普通详情页
@@ -220,7 +221,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     private void loadData() {
         if (mArticleId == -1) return;
-        //TODO  TEST
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {

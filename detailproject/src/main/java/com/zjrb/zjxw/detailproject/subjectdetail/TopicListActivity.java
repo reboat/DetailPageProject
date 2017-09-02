@@ -8,17 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.coreprojectlibrary.api.callback.APIExpandCallBack;
-import com.zjrb.coreprojectlibrary.api.callback.LoadingCallBack;
-import com.zjrb.coreprojectlibrary.common.base.BaseActivity;
-import com.zjrb.coreprojectlibrary.common.base.adapter.OnItemClickListener;
-import com.zjrb.coreprojectlibrary.common.base.page.LoadMore;
-import com.zjrb.coreprojectlibrary.common.base.toolbar.TopBarFactory;
-import com.zjrb.coreprojectlibrary.common.listener.LoadMoreListener;
-import com.zjrb.coreprojectlibrary.ui.holder.FooterLoadMore;
-import com.zjrb.coreprojectlibrary.ui.holder.HeaderRefresh;
-import com.zjrb.coreprojectlibrary.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.coreprojectlibrary.utils.T;
+import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
@@ -146,7 +146,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
 
 
     private long lastMinPublishTime = 0;
-    ;
 
     @Override
     public void onLoadMoreSuccess(SubjectListBean data, LoadMore loadMore) {

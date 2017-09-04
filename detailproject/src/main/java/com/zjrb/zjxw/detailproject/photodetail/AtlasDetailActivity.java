@@ -167,6 +167,10 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             for (AlbumImageListBean entity : mAtlasList) {
                 imgs.add(entity.getImage_url());
             }
+            //添加更多图集索引
+            if (imgs.size() > 0) {
+                imgs.add("");
+            }
 
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());

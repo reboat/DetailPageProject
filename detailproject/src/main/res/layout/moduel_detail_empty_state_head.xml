@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/bc_202124"
+    >
+
+    <TextView
+        android:id="@+id/tv_empty_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:drawableLeft="@mipmap/default_avatar_icon"
+        android:gravity="center|left"
+        tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容"/>
+
+</RelativeLayout>

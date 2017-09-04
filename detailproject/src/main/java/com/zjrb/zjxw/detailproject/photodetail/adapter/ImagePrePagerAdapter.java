@@ -4,13 +4,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-
 import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
 
 import java.util.List;
 
 /**
- * 图片预览 ViewPager 适配器
+ * 图片预览 ViewPager 适配器，图集需要展示更多图集
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
@@ -30,6 +29,10 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        //最后一张是更多图集
+        if (mDatas.size() > 1 && (position == mDatas.size() - 1)) {
+//            return
+        }
         return ImagePreviewFragment.newInstance(
                 new ImagePreviewFragment.ParamsEntity.Builder()
                         .setUrl(mDatas.get(position))

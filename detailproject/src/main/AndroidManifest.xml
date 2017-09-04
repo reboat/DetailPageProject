@@ -40,8 +40,8 @@
         <!--保持在栈顶-->
         <activity
             android:name=".nomaldetail.NewsDetailActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -56,6 +56,7 @@
         </activity>
         <activity
             android:name=".photodetail.AtlasDetailActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -101,6 +102,7 @@
         </activity>
         <activity
             android:name=".subjectdetail.NewsTopicActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

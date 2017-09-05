@@ -13,12 +13,8 @@ import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +31,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
 
     private ImageMoreAdapter mAdapter;
     private ListSpaceDivider diver;
-    private static List<RelatedNewsBean> mList;
+    private static DraftDetailBean mBean;
 
     /**
      * 创建实例
@@ -44,7 +40,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     public static ImageMoreFragment newInstance(DraftDetailBean bean) {
         ImageMoreFragment fragment = new ImageMoreFragment();
-        mList = bean.getRelated_news();
+        mBean = bean;
         return fragment;
     }
 
@@ -78,7 +74,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      * 如果禁言，则不允许弹出评论框
      */
     private void initAdapter() {
-        mAdapter = new ImageMoreAdapter(mList);
+        mAdapter = new ImageMoreAdapter(mBean.getRelated_news());
         mAdapter.setOnItemClickListener(this);
         lvNotice.setAdapter(mAdapter);
     }
@@ -90,6 +86,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
+        BizUtils.jumpToDetailActivity((DraftDetailBean) mAdapter.getData().get(position), position);
     }
 }

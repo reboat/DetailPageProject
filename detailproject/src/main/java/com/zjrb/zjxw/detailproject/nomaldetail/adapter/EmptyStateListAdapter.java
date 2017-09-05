@@ -12,7 +12,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 
 import java.util.List;
 
@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
  */
 
 public class EmptyStateListAdapter extends BaseRecyclerAdapter {
-
     /**
      * 构造方法
      *
@@ -45,7 +44,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
     }
 
 
-    static class EmptyStateHolder extends BaseRecyclerViewHolder<RelatedNewsBean> {
+    static class EmptyStateHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 
         @BindView(R2.id.iv_pic)
         ImageView mImg;
@@ -59,8 +58,10 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            GlideApp.with(mImg).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).into(mImg);
-            mTitle.setText(mData.getTitle());
+            if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
+                //无图片时用占位图
+                GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
+            }
         }
     }
 }

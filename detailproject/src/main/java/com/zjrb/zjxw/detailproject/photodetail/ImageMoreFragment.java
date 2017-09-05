@@ -12,9 +12,13 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,15 +35,22 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
 
     private ImageMoreAdapter mAdapter;
     private ListSpaceDivider diver;
+    private static List<RelatedNewsBean> mList;
+
+    /**
+     * 创建实例
+     *
+     * @return 实例对象
+     */
+    public static ImageMoreFragment newInstance(DraftDetailBean bean) {
+        ImageMoreFragment fragment = new ImageMoreFragment();
+        mList = bean.getRelated_news();
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mIndex = getArguments().getInt(Key.FRAGMENT_ARGS);
-//            list = ((OfficalDetailBean) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_RELATER)).getArticle_list();
-//            official_id = getArguments().getInt(Key.OFFICIAL_ID);
-//        }
     }
 
     @Override
@@ -59,6 +70,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
         diver = new ListSpaceDivider(32, 0, false);
         lvNotice.addItemDecoration(diver);
+        initAdapter();
     }
 
     /**
@@ -66,46 +78,11 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      * 如果禁言，则不允许弹出评论框
      */
     private void initAdapter() {
-//        mAdapter = new PersionalRelateNewsAdapter(list);
+        mAdapter = new ImageMoreAdapter(mList);
         mAdapter.setOnItemClickListener(this);
         lvNotice.setAdapter(mAdapter);
     }
 
-
-//    private void initData() {
-//        new OfficalDetailTask(new APIExpandCallBack<OfficalDetailBean>() {
-//
-//            @Override
-//            public void onSuccess(OfficalDetailBean data) {
-//                if (data == null) {
-//                    return;
-//                }
-//                if (data.getResultCode() == 0) {//成功
-//                    list = data.getArticle_list();
-//                    if (list != null) {
-//                        if (mAdapter == null) {
-//                            mAdapter = new PersionalRelateNewsAdapter(list);
-//                            initAdapter();
-//                        }
-//                        lvNotice.setAdapter(mAdapter);
-//                        mAdapter.setData(list);
-//                        mAdapter.notifyDataSetChanged();
-//                    }
-//                } else {
-//                    T.showShort(getContext(), data.getResultMsg());
-//                }
-//            }
-//
-//            @Override
-//            public void onError(String errMsg, int errCode) {
-//                T.showShort(getContext(), errMsg);
-//            }
-//
-//            @Override
-//            public void onAfter() {
-//            }
-//        }).setTag(this).exe(official_id + "", "", "20");
-//    }
 
     /**
      * @param itemView

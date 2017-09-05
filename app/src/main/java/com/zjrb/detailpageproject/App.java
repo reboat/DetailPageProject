@@ -3,8 +3,8 @@ package com.zjrb.detailpageproject;
 import android.app.Application;
 
 import com.aliya.uimode.UiModeManager;
-import com.zjrb.coreprojectlibrary.db.ThemeMode;
-import com.zjrb.coreprojectlibrary.utils.UIUtils;
+import com.zjrb.core.db.ThemeMode;
+import com.zjrb.core.utils.UIUtils;
 
 public class App extends Application {
 

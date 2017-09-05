@@ -1,13 +1,17 @@
 package com.zjrb.zjxw.detailproject.photodetail.adapter;
 
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 
 import java.util.List;
 
@@ -32,10 +36,13 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         return new ImageMoreHolder(parent);
     }
 
-    static class ImageMoreHolder extends BaseRecyclerViewHolder {
+    /**
+     * 更多图集使用相关新闻bean
+     */
+    static class ImageMoreHolder extends BaseRecyclerViewHolder<RelatedNewsBean> {
 
         @BindView(R2.id.iv_image)
-        TextView mIvImage;
+        ImageView mIvImage;
         @BindView(R2.id.tv_title)
         TextView mTvTitle;
 
@@ -46,7 +53,11 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-
+            if (mData.getPic() != null && !mData.getPic().isEmpty()) {
+                //无图片时用占位图
+                GlideApp.with(mIvImage).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).into(mIvImage);
+            }
+            mTvTitle.setText(mData.getTitle());
         }
     }
 

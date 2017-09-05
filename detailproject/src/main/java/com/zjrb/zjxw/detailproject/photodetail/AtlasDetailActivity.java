@@ -120,12 +120,8 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (intent.hasExtra(Key.ARTICLE_ID)) {
                 mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            }
-            if (intent.hasExtra(Key.MLF_ID)) {
                 mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-            }
         }
     }
 
@@ -175,7 +171,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
 
-            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), imgs));
+            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
 
             mTvIndex.setText(String.valueOf(mIndex + 1));
             mTvTottleNum.setText(String.valueOf(mAtlasList.size()));

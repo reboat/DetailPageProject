@@ -104,6 +104,17 @@ public class APIManager {
          */
         public static final String GET_CID = "/app/v0/user/updateClientId";
 
+        /**
+         * 获取sessionId
+         */
+        public static final String GET_SESSIONID = "/api/account/init";
+
+
+        /**
+         * 获取评论列表
+         */
+        public static final String GET_CHANNEL_LIST = "/api/article/channel_list";
+
 
     }
 

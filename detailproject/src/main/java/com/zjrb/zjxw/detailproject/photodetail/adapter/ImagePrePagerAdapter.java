@@ -4,9 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.photodetail.ImageMoreFragment;
 import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
-
-import java.util.List;
 
 /**
  * 图片预览 ViewPager 适配器，图集需要展示更多图集
@@ -15,27 +15,27 @@ import java.util.List;
  */
 public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<String> mDatas;
+    private DraftDetailBean mBean;
 
-    public ImagePrePagerAdapter(FragmentManager fm, List<String> fileList) {
+    public ImagePrePagerAdapter(FragmentManager fm, DraftDetailBean bean) {
         super(fm);
-        this.mDatas = fileList;
+        this.mBean = bean;
     }
 
     @Override
     public int getCount() {
-        return mDatas == null ? 0 : mDatas.size();
+        return mBean == null ? 0 : mBean.getAlbum_image_count();
     }
 
     @Override
     public Fragment getItem(int position) {
-        //最后一张是更多图集
-        if (mDatas.size() > 1 && (position == mDatas.size() - 1)) {
-//            return
+        //最后一张是更多图集,需要参数传入
+        if (mBean.getAlbum_image_count() > 1 && (position == mBean.getAlbum_image_count() - 1)) {
+            return ImageMoreFragment.newInstance(mBean);
         }
         return ImagePreviewFragment.newInstance(
                 new ImagePreviewFragment.ParamsEntity.Builder()
-                        .setUrl(mDatas.get(position))
+                        .setUrl(mBean.getAlbum_image_list().get(position).getImage_url())
                         .build()
         );
     }

@@ -75,9 +75,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (intent.hasExtra(Key.GROUP_ID)) {
                 group_id = Integer.parseInt(data.getQueryParameter(Key.GROUP_ID));
-            }
         }
     }
 

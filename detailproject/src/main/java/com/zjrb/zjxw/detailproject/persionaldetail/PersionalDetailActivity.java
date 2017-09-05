@@ -89,9 +89,7 @@ public class PersionalDetailActivity extends BaseActivity {
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (intent.hasExtra(Key.OFFICIAL_ID)) {
                 official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
-            }
         }
     }
 

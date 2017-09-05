@@ -137,24 +137,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (intent.hasExtra(Key.ARTICLE_ID)) {
-                articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            }
-            if (intent.hasExtra(Key.MLF_ID)) {
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-            }
-            if (intent.hasExtra(Key.COMMENT_SET)) {
-                commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
-            }
-            if (intent.hasExtra(Key.TITLE)) {
-                title = data.getQueryParameter(Key.TITLE);
-            }
-            if (intent.hasExtra(Key.PARENT_ID)) {
-                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
-            }
-            if (intent.hasExtra(Key.FROM_TYPE)) {
-                isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
-            }
+            articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
+            title = data.getQueryParameter(Key.TITLE);
+            parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
+            isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
         }
     }
 

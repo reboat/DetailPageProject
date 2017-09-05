@@ -91,12 +91,8 @@ public class NewsTopicActivity extends BaseActivity implements
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (intent.hasExtra(Key.ARTICLE_ID)) {
                 mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            }
-            if (intent.hasExtra(Key.MLF_ID)) {
                 mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-            }
         }
     }
 

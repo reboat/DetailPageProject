@@ -111,10 +111,15 @@ public class APIManager {
 
 
         /**
-         * 获取评论列表
+         * 获取频道(撤稿)列表
          */
         public static final String GET_CHANNEL_LIST = "/api/article/channel_list";
 
+
+        /**
+         * 详情页
+         */
+        public static final String NEWS_DETAIL = "/api/article/detail";
 
     }
 

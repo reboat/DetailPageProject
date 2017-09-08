@@ -5,11 +5,13 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,6 +38,7 @@ import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
@@ -62,6 +65,8 @@ import butterknife.OnClick;
 public class AtlasDetailActivity extends BaseActivity implements IOnImageTapListener, ViewPager
         .OnPageChangeListener, View.OnTouchListener {
 
+    @BindView(R2.id.activity_atlas_detail)
+    FrameLayout mContainer;
     @BindView(R2.id.view_pager)
     HackyViewPager mViewPager;
     @BindView(R2.id.tv_title)
@@ -120,8 +125,8 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
         }
     }
 
@@ -150,12 +155,12 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
         mData = atlasDetailEntity;
         //设置数据
         if (atlasDetailEntity != null) {
-            if (atlasDetailEntity.getAlbum_image_list() != null && !atlasDetailEntity.getAlbum_image_list().isEmpty()) {
-                mAtlasList = atlasDetailEntity.getAlbum_image_list();
+            if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
-            mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getComment_count()));
-            mMenuPrised.setSelected(atlasDetailEntity.isFollowed());
-            BizUtils.setCommentSet(mTvComment, mData.getComment_level());
+            mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
+            mMenuPrised.setSelected(atlasDetailEntity.getArticle().isFollowed());
+            BizUtils.setCommentSet(mTvComment, mData.getArticle().getComment_level());
         }
         //设置图片列表
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
@@ -175,7 +180,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 
             mTvIndex.setText(String.valueOf(mIndex + 1));
             mTvTottleNum.setText(String.valueOf(mAtlasList.size()));
-            mTvTitle.setText(atlasDetailEntity.getList_title());
+            mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
             AlbumImageListBean entity = mAtlasList.get(mIndex);
             mTvContent.setText(entity.getDescription());
         }
@@ -202,7 +207,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             share();
             //评论框
         } else if (id == R.id.tv_comment) {
-            if (mData != null && BizUtils.isCanComment(this, mData.getComment_level())) {
+            if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
                 Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                         .buildUpon()
                         .build(), 0);
@@ -211,13 +216,13 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             //评论列表
         } else if (id == R.id.menu_comment) {
             if (mData != null) {
-                if (BizUtils.isCanComment(this, mData.getComment_level())) {
+                if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
                     Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                             .buildUpon()
-                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
-                            .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getComment_level()))
-                            .appendQueryParameter(Key.TITLE, mData.getList_title())
+                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
+                            .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
+                            .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
                             .build(), 0);
                 }
 
@@ -242,12 +247,12 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 //            title = UIUtils.getAppName();
 //            content = mData.getList_title();
 //        } else {
-        title = mData.getList_title();
+        title = mData.getArticle().getList_title();
 //            content = mData.getSummary();
 //        }
         //TODO WLJ logo
         String logoUrl = "http://10.200.76.17/images/24hlogo.png";//APIManager.endpoint.SHARE_24_LOGO_URL;
-        String targetUrl = mData.getUrl();
+        String targetUrl = mData.getArticle().getUrl();
         if (shareUtils == null)
             shareUtils = new UmengShareUtils();
 
@@ -284,8 +289,8 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     public void onEvent(CommentResultEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (mData != null && event.getData() > 0) {
-            mData.setComment_count(mData.getComment_count() + event.getData());
-            mTvCommentsNum.setText(BizUtils.formatComments(mData.getComment_count()));
+            mData.getArticle().setComment_count(mData.getArticle().getComment_count() + event.getData());
+            mTvCommentsNum.setText(BizUtils.formatComments(mData.getArticle().getComment_count()));
         }
     }
 
@@ -345,7 +350,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     // 点赞
     private void fabulous() {
         if (mData == null) return;
-        if (mData.isLiked()) {
+        if (mData.getArticle().isLiked()) {
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
             return;
         }
@@ -360,7 +365,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
                 switch (baseInnerData.getResultCode()) {
                     case 0:
                         T.showShort(UIUtils.getContext(), "点赞成功");
-                        mData.setLiked(true);
+                        mData.getArticle().setLiked(true);
                         break;
                     case 1:
                         T.showShort(UIUtils.getContext(), "点赞失败");
@@ -371,6 +376,15 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
                 }
             }
         }).setTag(this).exe(mArticleId);
+    }
+
+    /**
+     * 显示撤稿页面
+     */
+    private void showEmptyNewsDetail() {
+        mContainer.removeAllViews();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mData.getArticle().getColumn_id()))).commit();
     }
 
 }

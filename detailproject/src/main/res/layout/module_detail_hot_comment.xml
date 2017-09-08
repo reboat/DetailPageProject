@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               xmlns:tools="http://schemas.android.com/tools"
               android:id="@+id/ly_hot_comment"
               android:orientation="vertical">
@@ -43,8 +43,9 @@
         android:gravity="center"
         android:textSize="@dimen/ts_14sp"
         android:lineSpacingExtra="5sp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:textColor="?attr/tc_484848"
+        android:layout_marginBottom="24dp"
         tools:text="点击查看更多"/>
 
 </LinearLayout>

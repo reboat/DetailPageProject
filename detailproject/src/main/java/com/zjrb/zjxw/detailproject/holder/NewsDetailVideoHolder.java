@@ -28,8 +28,8 @@ public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     @BindView(R2.id.iv_image)
     ImageView mIvImage;
-    @BindView(R2.id.iv_type_video)
-    ImageView mIvTypeVideo;
+//    @BindView(R2.id.iv_type_video)
+//    ImageView mIvTypeVideo;
 
     private ViewGroup mVideoParent;
     private DraftDetailBean mData;
@@ -42,7 +42,7 @@ public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     public void bind(DraftDetailBean data) {
         mData = data;
-        GlideApp.with(mIvImage).load(mData.getArticle_pic())
+        GlideApp.with(mIvImage).load(mData.getArticle().getArticle_pic())
                 .placeholder(R.drawable.module_detail_load_error)
                 .error(R.drawable.module_detail_load_error)
                 .centerCrop()
@@ -68,12 +68,12 @@ public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     @Override
     public void onViewAttachedToWindow(View v) {
-        mIvTypeVideo.setVisibility(View.GONE);
+//        mIvTypeVideo.setVisibility(View.GONE);
     }
 
     @Override
     public void onViewDetachedFromWindow(View v) {
-        mIvTypeVideo.setVisibility(View.VISIBLE);
+//        mIvTypeVideo.setVisibility(View.VISIBLE);
     }
 
     @Override

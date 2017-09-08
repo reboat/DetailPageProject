@@ -48,7 +48,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     /**
      * 栏目id
      */
-    private int column_id;
+    private String column_id;
 
     private EmptyStateListAdapter adapter;
     /**
@@ -60,9 +60,25 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private FooterLoadMore more;
 
+    /**
+     * 创建实例
+     *
+     * @return 实例对象
+     */
+    public static EmptyStateFragment newInstance(String columnId) {
+        EmptyStateFragment fragment = new EmptyStateFragment();
+        Bundle args = new Bundle();
+        args.putString(Key.COLUMN_ID, columnId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            column_id = getArguments().getString(Key.COLUMN_ID);
+        }
     }
 
     @Override
@@ -83,7 +99,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            column_id = Integer.parseInt(data.getQueryParameter(Key.COLUMN_ID));
+            column_id = data.getQueryParameter(Key.COLUMN_ID);
         }
     }
 

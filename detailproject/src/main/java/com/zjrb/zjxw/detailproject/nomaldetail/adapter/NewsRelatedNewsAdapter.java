@@ -51,7 +51,7 @@ public class NewsRelatedNewsAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            GlideApp.with(mImg).load(mData.getPic()).centerCrop().into(mImg);
+            GlideApp.with(mImg).load(mData.getPic()).placeholder(R.mipmap.me_qq_btn).centerCrop().into(mImg);
             mTitle.setText(mData.getTitle());
         }
     }

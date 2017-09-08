@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
-import android.support.percent.PercentFrameLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,8 +38,6 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
     static class SubjectNewsHolder extends BaseRecyclerViewHolder<RelatedSubjectsBean> {
 
-        @BindView(R2.id.pf_container)
-        PercentFrameLayout mContainer;
         @BindView(R2.id.iv_subject)
         ImageView mImg;
 
@@ -51,8 +48,8 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            if (mData.getPic().isEmpty()) {
-                mContainer.setVisibility(View.GONE);
+            if (mData.getPic() != null && mData.getPic().isEmpty()) {
+                mImg.setVisibility(View.GONE);
             } else {
                 GlideApp.with(mImg).load(mData.getPic()).centerCrop().into(mImg);
             }

@@ -25,9 +25,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/bc_dddddd"
             android:paddingLeft="21.5dp"
             android:paddingRight="21.5dp"
+            android:text="@string/module_detail_share_to"
             android:textSize="@dimen/ts_14sp"
             tools:text="分享至"/>
 
@@ -62,6 +62,7 @@
         android:id="@+id/ry_channel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
         android:background="?attr/bc_ffffff"
         android:visibility="gone"
         >
@@ -94,6 +95,7 @@
             android:paddingBottom="7.5dp"
             android:paddingTop="7.5dp"
             android:textColor="?attr/tc_f44b50"
+            android:text="@string/module_detail_to_see"
             android:textSize="@dimen/ts_11sp"
             tools:text="去看"/>
 
@@ -105,6 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="?attr/bc_ffffff"
+        android:layout_marginBottom="17dp"
         android:visibility="gone"
         >
 
@@ -120,6 +123,7 @@
             android:lineSpacingExtra="5sp"
             android:maxLines="2"
             android:maxWidth="150dp"
+            android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_14sp"
             tools:text="麻辣快评"/>
 

@@ -11,6 +11,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.UserBiz;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
+import com.zjrb.zjxw.detailproject.global.Key;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -48,13 +49,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }).setTag(this).exe();
     }
 
+
+//    mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+//    mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+//    mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_text:
                 Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                         .buildUpon()
-//                        .appendQueryParameter(Key.LOGIN_TYPE, Key.Value.LOGIN_RESET_TYPE)
+                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
+                        .appendQueryParameter(Key.MLF_ID,"12653")
+                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
                         .build(), 0);
 
                 break;

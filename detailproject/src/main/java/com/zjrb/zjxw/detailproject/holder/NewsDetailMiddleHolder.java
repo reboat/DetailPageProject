@@ -12,7 +12,6 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.permission.IPermissionOperate;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -38,8 +37,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener,
-        NewsDetailAdapter.IBindSubscribe, OnItemClickListener {
+        View.OnAttachStateChangeListener, OnItemClickListener {
     @BindView(R2.id.gridlist)
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
@@ -68,10 +66,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     private UmengShareUtils umengShareUtils;
 
 
-    public NewsDetailMiddleHolder(ViewGroup parent, IPermissionOperate permissionOp) {
+    public NewsDetailMiddleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_middle, parent, false));
         ButterKnife.bind(this, itemView);
-        this.permissionOp = permissionOp;
     }
 
     @Override
@@ -82,17 +79,20 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 LinearLayoutManager.HORIZONTAL, false));
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
-        if (!mData.getColumn_id().isEmpty()) {
+
+        //栏目名称
+        if (mData.getArticle().getColumn_id() > 0) {
             mRySubscribe.setVisibility(View.VISIBLE);
-            mTvColumnName.setText(mData.getColumn_name());
+            mTvColumnName.setText(mData.getArticle().getColumn_name());
         }
 
-        if (!mData.getChannel_id().isEmpty()) {
+        //频道名称
+        if (!mData.getArticle().getChannel_id().isEmpty()) {
             mRyChannel.setVisibility(View.VISIBLE);
-            mTvChannelName.setText(mData.getChannel_name());
+            mTvChannelName.setText(mData.getArticle().getChannel_name());
+            mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "订阅");
         }
         initShareBean();
-        bindSubscribe();
         if (umengShareUtils == null)
             umengShareUtils = new UmengShareUtils();
 
@@ -119,7 +119,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         mAdapter = new DetailShareAdapter(mListData);
         mAdapter.setOnItemClickListener(this);
-//        mAdapter.setData(mListData);
         mRecyleView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -132,7 +131,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
             if (view.getId() == R.id.tv_column_subscribe) {
-                if (!mData.isColumn_subscribed()) {
+                if (!mData.getArticle().isColumn_subscribed()) {
                     callback.onOptSubscribe();
                 }
             } else {
@@ -151,21 +150,16 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     }
 
     @Override
-    public void bindSubscribe() {
-        mTvColumnSubscribe.setText(mData.isColumn_subscribed() ? "已订阅" : "订阅");
-    }
-
-    @Override
     public void onItemClick(View itemView, int position) {
-        umengShareUtils.startShare(
-                UmengShareBean.getInstance()
-                        .setTitle(mData.getList_title())
-                        .setTextContent(mData.getContent())
-                        .setImgUri(mData.getArticle_pic())
-                        .setTargetUrl(mData.getUrl())
-                        .setPlatform(mListData.get(position).getPlatform())
-                ,
-                permissionOp
-        );
+        //TODO  WLJ  分享
+//        umengShareUtils.startShare(
+//                UmengShareBean.getInstance()
+//                        .setTitle(mData.getArticle().getList_title())
+//                        .setTextContent(mData.getArticle().getContent())
+//                        .setImgUri(mData.getArticle().getArticle_pic())
+//                        .setTargetUrl(mData.getArticle().getUrl())
+//                        .setPlatform(mListData.get(position).getPlatform())
+//                ,
+//        );
     }
 }

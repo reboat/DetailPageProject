@@ -70,16 +70,16 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
      */
     public void initData(DraftDetailBean draftTopicBean) {
         if (mChannelItemAdapter != null) {
-            mChannelItemAdapter = new TopicDetailChannelAdapter(draftTopicBean.getSubject_groups());
+            mChannelItemAdapter = new TopicDetailChannelAdapter(draftTopicBean.getArticle().getSubject_groups());
             mChannelItemAdapter.setOnItemClickListener(this);
         }
 //        mChannelItemAdapter.setData(draftTopicBean.getSubject_groups());
         rvHead.setAdapter(mChannelItemAdapter);
 
-        tvTitle.setText(draftTopicBean.getList_title());
-        String summary = draftTopicBean.getSubject_summary();
-        String backPicUrl = draftTopicBean.getArticle_pic();
-        String subjectFocusImg = draftTopicBean.getSubject_focus_image();
+        tvTitle.setText(draftTopicBean.getArticle().getList_title());
+        String summary = draftTopicBean.getArticle().getSubject_summary();
+        String backPicUrl = draftTopicBean.getArticle().getArticle_pic();
+        String subjectFocusImg = draftTopicBean.getArticle().getSubject_focus_image();
         if (TextUtils.isEmpty(summary)) {
             tvSummary.setVisibility(View.GONE);
         } else {
@@ -95,17 +95,17 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
         if (TextUtils.isEmpty(subjectFocusImg)) {
             pfPicContainer.setVisibility(View.GONE);
         } else {
-            GlideApp.with(ivTopicPic).load(draftTopicBean.getSubject_focus_image())
+            GlideApp.with(ivTopicPic).load(draftTopicBean.getArticle().getSubject_focus_image())
                     .placeholder(PH.zheBig())
                     .centerCrop()
                     .into(ivTopicPic);
         }
 
-        if (TextUtils.isEmpty(draftTopicBean.getSubject_summary())) {
+        if (TextUtils.isEmpty(draftTopicBean.getArticle().getSubject_summary())) {
             tvTitle2.setVisibility(View.GONE);
         } else {
             tvTitle2.setVisibility(View.VISIBLE);
-            tvTitle2.setText(draftTopicBean.getSubject_summary());
+            tvTitle2.setText(draftTopicBean.getArticle().getSubject_summary());
         }
     }
 

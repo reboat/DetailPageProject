@@ -72,7 +72,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
-        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getContent()) ? "" : mData.getContent(),
+        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent()) ? "" : mData.getArticle().getContent(),
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
                     public void callBack(String[] imgSrcs) {

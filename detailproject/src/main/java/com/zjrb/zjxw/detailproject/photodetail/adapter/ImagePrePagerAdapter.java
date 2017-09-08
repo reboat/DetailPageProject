@@ -24,18 +24,18 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return mBean == null ? 0 : mBean.getAlbum_image_count();
+        return mBean == null ? 0 : mBean.getArticle().getAlbum_image_count();
     }
 
     @Override
     public Fragment getItem(int position) {
         //最后一张是更多图集,需要参数传入
-        if (mBean.getAlbum_image_count() > 1 && (position == mBean.getAlbum_image_count() - 1)) {
+        if (mBean.getArticle().getAlbum_image_count() > 1 && (position == mBean.getArticle().getAlbum_image_count() - 1)) {
             return ImageMoreFragment.newInstance(mBean);
         }
         return ImagePreviewFragment.newInstance(
                 new ImagePreviewFragment.ParamsEntity.Builder()
-                        .setUrl(mBean.getAlbum_image_list().get(position).getImage_url())
+                        .setUrl(mBean.getArticle().getAlbum_image_list().get(position).getImage_url())
                         .build()
         );
     }

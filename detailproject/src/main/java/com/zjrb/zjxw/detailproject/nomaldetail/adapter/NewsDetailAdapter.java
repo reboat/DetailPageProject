@@ -1,11 +1,11 @@
 package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.permission.IPermissionOperate;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -18,6 +18,7 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleVideoHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,18 +52,17 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
     public static final int NO_POSITION = -1;
     private int mMiddleHolderPosition = NO_POSITION;
     private int mWebViewHolderPosition = NO_POSITION;
-    private IPermissionOperate permissionOp;
 
     /**
      * true:视频
      * false:非视频
      */
     private boolean isVideoType;
+    private boolean isShowAll; // true：已经显示全部
 
-    public NewsDetailAdapter(List datas, boolean isVideoType, IPermissionOperate mPermissionOp) {
+    public NewsDetailAdapter(List datas, boolean isVideoType) {
         super(datas);
         this.isVideoType = isVideoType;
-        this.permissionOp = mPermissionOp;
     }
 
     @Override
@@ -73,12 +73,12 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             return new NewsDetailWebViewHolder(parent);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
-            return new NewsDetailMiddleHolder(parent, permissionOp);
+            return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
             return new NewsDetailRelatedSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
             return new NewsDetailRelatedNewsHolder(parent);
-        } else if (viewType == VIEW_TYPE_COMMENT) {
+        } else if(viewType == VIEW_TYPE_COMMENT){
             return new NewsDetailCommentHolder(parent);
         }
         return null;
@@ -86,6 +86,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
 
     @Override
     public int getAbsItemViewType(int position) {
+        Log.v("","WLJ,position="+position);
         if (position == 0) {
             return VIEW_TYPE_TOP;
         } else if (position == 1) {
@@ -132,35 +133,35 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             super.onBindViewHolder(holder, position, payloads);
     }
 
+
     /**
      * 显示全部
      */
     public void showAll() {
+        if (isShowAll) return;
+        isShowAll = true;
         int oldSize = datas.size();
-        DraftDetailBean detailBean = (DraftDetailBean) datas.get(0);
-        datas.add(detailBean);
+        //添加标题头
+//        DraftDetailBean detailBean = (DraftDetailBean) datas.get(0);
+
         //添加相关专题
-        List<RelatedSubjectsBean> subjectList = detailBean.getRelated_subjects();
-        if (subjectList != null) {
-            for (int i = 0; i < subjectList.size(); i++) {
-                datas.add(subjectList.get(i));
-            }
-        }
-        //添加相关新闻
-        List<RelatedNewsBean> articles = detailBean.getRelated_news();
-        if (articles != null) {
-            for (int i = 0; i < articles.size(); i++) {
-                datas.add(articles.get(i));
-            }
-        }
-        //添加热门评论
-        List<HotCommentsBean> hotCommentsBeen = detailBean.getHot_comments();
-        if (hotCommentsBeen != null) {
-            for (int i = 0; i < hotCommentsBeen.size(); i++) {
-                datas.add(hotCommentsBeen.get(i));
-            }
-        }
-        datas.add(null);
+//        List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
+//        if (subjectList != null && subjectList.size() > 0) {
+//            datas.addAll(subjectList);
+//        }
+
+//        //添加相关新闻
+//        List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
+//        if (articles != null && articles.size() > 0) {
+//            datas.addAll(articles);
+//        }
+//
+//        //添加热门评论
+//        List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
+//        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+//            datas.addAll(hotCommentsBeen);
+//        }
+//        datas.add(null);
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

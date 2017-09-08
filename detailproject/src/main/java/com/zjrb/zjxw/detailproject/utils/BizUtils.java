@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zjrb.core.nav.Nav;
@@ -148,8 +149,8 @@ public class BizUtils {
             return pvValue;
         }
         switch (docType) {
-            case DraftDetailBean.type.VIDEO:
-            case DraftDetailBean.type.LIVE:
+            case DraftDetailBean.ArticleBean.type.VIDEO:
+            case DraftDetailBean.ArticleBean.type.LIVE:
                 pvValue += "播放";
                 break;
             default:
@@ -223,34 +224,34 @@ public class BizUtils {
      * @param position 根据doc_type跳转到相应的详情页
      */
     public static void jumpToDetailActivity(DraftDetailBean mData, int position) {
-        if (mData.getDoc_type() == 2) {
+        if (mData.getArticle().getDoc_type() == 2) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
-                    .appendQueryParameter(Key.VIDEO_PATH, mData.getVideo_url())
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
+                    .appendQueryParameter(Key.VIDEO_PATH, mData.getArticle().getVideo_url())
                     .build(), 0);
             //链接
-        } else if (mData.getDoc_type() == 3) {
+        } else if (mData.getArticle().getDoc_type() == 3) {
 
             //图集
-        } else if (mData.getDoc_type() == 4) {
+        } else if (mData.getArticle().getDoc_type() == 4) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
 
             //专题
-        } else if (mData.getDoc_type() == 5) {
+        } else if (mData.getArticle().getDoc_type() == 5) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
 
             //活动
-        } else if (mData.getDoc_type() == 6) {
+        } else if (mData.getArticle().getDoc_type() == 6) {
 
         }
     }

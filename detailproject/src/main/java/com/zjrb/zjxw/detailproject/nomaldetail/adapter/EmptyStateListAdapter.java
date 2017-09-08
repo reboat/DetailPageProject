@@ -46,10 +46,12 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
 
     static class EmptyStateHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
 
-        @BindView(R2.id.iv_pic)
-        ImageView mImg;
-        @BindView(R2.id.tv_title)
-        TextView mTitle;
+//        @BindView(R2.id.iv_pic)
+//        ImageView mImg;
+//        @BindView(R2.id.tv_title)
+//        TextView mTitle;
+@BindView(R2.id.iv_subject)
+ImageView mImg;
 
         public EmptyStateHolder(View itemView) {
             super(itemView);
@@ -58,10 +60,10 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
-                //无图片时用占位图
-                GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
-            }
+//            if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
+//                //无图片时用占位图
+//                GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
+//            }
         }
     }
 }

@@ -17,9 +17,13 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,21 +50,107 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
     public NewsDetailCommentHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_hot_comment, parent, false));
         ButterKnife.bind(this, itemView);
+        initView();
+    }
+
+    private void initView(){
+        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+                LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                LinearLayoutManager.VERTICAL, false));
-        if (mData != null && mData.getHot_comments() != null && mData.getHot_comments().size() > 0) {
-            adapter = new CommentAdapter(mData.getHot_comments());
-            adapter.setOnItemClickListener(this);
-            mRecyleView.setAdapter(adapter);
-        } else {
-            mLyHotContainer.setVisibility(View.GONE);
-        }
+        List<HotCommentsBean> list = mockTest();
+        mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
+        mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));
+        adapter = new CommentAdapter(list);
+        adapter.setOnItemClickListener(this);
+        mRecyleView.setAdapter(adapter);
+
+
+
+//        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+//        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+//                LinearLayoutManager.VERTICAL, false));
+//        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
+//            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
+//            adapter.setOnItemClickListener(this);
+//            mRecyleView.setAdapter(adapter);
+//        } else {
+//            mLyHotContainer.setVisibility(View.GONE);
+//        }
+    }
+
+    private List<HotCommentsBean> mockTest(){
+        List<HotCommentsBean> list = new ArrayList<>();
+        HotCommentsBean b = new HotCommentsBean();
+        b.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
+        b.setLike_count(9999999);
+        b.setLiked(true);
+        b.setNick_name("周公");
+        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b.setParent_like_count(9999999);
+        b.setParent_liked(true);
+        b.setNick_name("周公");
+        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b.setParent_like_count(9999999);
+        b.setParent_liked(true);
+        HotCommentsBean b1 = new HotCommentsBean();
+        b1.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
+        b1.setLike_count(9999999);
+        b1.setLiked(true);
+        b1.setNick_name("周公");
+        b1.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b1.setParent_like_count(9999999);
+        b1.setParent_liked(true);
+        b1.setNick_name("周公");
+        b1.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b1.setParent_like_count(9999999);
+        b1.setParent_liked(true);
+        HotCommentsBean b2 = new HotCommentsBean();
+        b2.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
+        b2.setLike_count(9999999);
+        b2.setLiked(true);
+        b2.setNick_name("周公");
+        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b2.setParent_like_count(9999999);
+        b2.setParent_liked(true);
+        b2.setNick_name("周公");
+        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b2.setParent_like_count(9999999);
+        b2.setParent_liked(true);
+        HotCommentsBean b3 = new HotCommentsBean();
+        b3.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
+        b3.setLike_count(9999999);
+        b3.setLiked(true);
+        b3.setNick_name("周公");
+        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b3.setParent_like_count(9999999);
+        b3.setParent_liked(true);
+        b3.setNick_name("周公");
+        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b3.setParent_like_count(9999999);
+        b3.setParent_liked(true);
+        HotCommentsBean b4 = new HotCommentsBean();
+        b4.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
+        b4.setLike_count(9999999);
+        b4.setLiked(true);
+        b4.setNick_name("周公");
+        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b4.setParent_like_count(9999999);
+        b4.setParent_liked(true);
+        b4.setNick_name("周公");
+        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
+        b4.setParent_like_count(9999999);
+        b4.setParent_liked(true);
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        return list;
     }
 
     /**
@@ -72,10 +162,10 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         if (view.getId() == R.id.tv_more) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
-                    .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getComment_level()))
-                    .appendQueryParameter(Key.TITLE, mData.getList_title())
+                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
+                    .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
+                    .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
                     .build(), 0);
         }
     }
@@ -86,13 +176,13 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        if (BizUtils.isCanComment(UIUtils.getActivity(), mData.getComment_level())) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                    .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
-                    .appendQueryParameter(Key.PARENT_ID, mData.getHot_comments().get(position).getParent_id())
-                    .build(), 0);
-        }
+//        if (BizUtils.isCanComment(UIUtils.getActivity(), mData.getArticle().getComment_level())) {
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                    .buildUpon()
+//                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+//                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
+//                    .appendQueryParameter(Key.PARENT_ID, mData.getArticle().getHot_comments().get(position).getParent_id())
+//                    .build(), 0);
+//        }
     }
 }

@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.subjectdetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -91,8 +93,8 @@ public class NewsTopicActivity extends BaseActivity implements
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
         }
     }
 
@@ -138,10 +140,10 @@ public class NewsTopicActivity extends BaseActivity implements
 
         //专题详情页列表
         if (mAdapter != null) {
-            mAdapter = new NewsTopicAdapter(bean.getSubject_groups());
+            mAdapter = new NewsTopicAdapter(bean.getArticle().getSubject_groups());
             mAdapter.setOnItemClickListener(this);
         }
-        mAdapter.setupData(draftTopicBean.getSubject_groups());
+        mAdapter.setupData(draftTopicBean.getArticle().getSubject_groups());
         mAdapter.addHeaderView(headHolder.getItemView());
         mRvContent.setAdapter(mAdapter);
     }
@@ -211,5 +213,14 @@ public class NewsTopicActivity extends BaseActivity implements
     @Override
     public void onLineCount(int lineCount, int maxLines) {
 
+    }
+
+    /**
+     * 显示撤稿页面
+     */
+    private void showEmptyNewsDetail() {
+        lyContainer.removeAllViews();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(bean.getArticle().getColumn_id()))).commit();
     }
 }

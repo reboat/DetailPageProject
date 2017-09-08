@@ -28,6 +28,5 @@
         android:maxLines="1"
         android:textColor="?attr/tc_484848"
         android:textSize="11sp"
-        android:lineSpacingExtra="8sp"
         tools:text="QQ空间"/>
 </RelativeLayout>

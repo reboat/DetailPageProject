@@ -10,6 +10,11 @@
     <string name="module_detail_label_persional">官员详情</string>
     <string name="module_detail_save_pic">保存图片</string>
     <string name="module_detail_save_cancel">取消</string>
+    <string name="module_detail_share_to">分享至</string>
+    <string name="module_detail_realated_news_tip">相关新闻</string>
+    <string name="module_detail_to_see">去看</string>
+    <string name="module_detail_hot_comment">热门评论</string>
+    <string name="module_detail_more_comment">点击查看更多评论</string>
     <string name="module_detail_revoke">很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容</string>
 
 </resources>

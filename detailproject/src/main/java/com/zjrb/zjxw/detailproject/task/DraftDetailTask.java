@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 获取详情页
@@ -22,12 +23,11 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("id", params[0]);
+        put("id", "739652");
     }
 
     @Override
     protected String getApi() {
-        return "";
-//            return APIManager.endpoint.DRAFT_DETAIL;
+        return APIManager.endpoint.NEWS_DETAIL;
     }
 }

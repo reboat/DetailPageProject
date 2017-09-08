@@ -1,26 +1,27 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,9 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.biz.TouchSlopHelper;
-import com.zjrb.core.common.listener.AbsAnimatorListener;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.domain.base.ResultCode;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.T;
@@ -45,7 +43,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.diver.NewsDetailSpaceDivider;
+import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
@@ -75,6 +73,10 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, OnItemClickListener {
+
+    public int mArticleId = -1;
+    public int mlfId = -1;
+    public String mVideoPath = "";
     @BindView(R2.id.iv_image)
     ImageView mIvImage;
     @BindView(R2.id.iv_type_video)
@@ -84,7 +86,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
     @BindView(R2.id.tv_comment)
-    TextView mTvComment;
+    EditText mTvComment;
     @BindView(R2.id.fl_comment)
     FrameLayout mFlComment;
     @BindView(R2.id.menu_comment)
@@ -99,10 +101,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     FitWindowsFrameLayout mFloorBar;
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
-
-    public int mArticleId = -1;
-    public int mlfId = -1;
-    public String mVideoPath = "";
+    @BindView(R2.id.ly_container)
+    LinearLayout mContainer;
     /**
      * 上下滑动超出范围处理
      */
@@ -132,6 +132,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         return super.dispatchTouchEvent(ev);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,15 +149,15 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-                mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
+            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
+            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
         }
     }
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        return TopBarFactory.createDefault(view, this, "详情页").getView();
     }
 
     /**
@@ -166,7 +167,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.addItemDecoration(new NewsDetailSpaceDivider());
+//        mRvContent.addItemDecoration(new NewsDetailSpaceDivider());
         if (!TextUtils.isEmpty(mVideoPath)) {
             initVideo();
         }
@@ -178,7 +179,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 初始化视频
      */
     private void initVideo() {
-        mVideoContainer.setVisibility(View.VISIBLE);
+        mVideoContainer.setVisibility(View.GONE);
 //        mVideoManager = VideoManager.get();
         if (!NetUtils.isAvailable()) {
             T.showShort(getContext(), "网络不可用");
@@ -218,6 +219,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
+                Log.v("", "WLJ,XXXXXXXXX");
                 fillData(draftDetailBean);
             }
 
@@ -230,7 +232,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onAfter() {
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad()).exe(mArticleId);
+        }).setTag(this).exe(mArticleId);
     }
 
     @Override
@@ -242,10 +244,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
     }
 
+
+
+    /**
+     * @param data 填充详情页数据
+     */
     private void fillData(DraftDetailBean data) {
 
         mNewsDetail = data;
-
 //        if (!data.isSucceed()) {
 //            if (data.getResultCode() == ResultCode.DRAFT_NOT_EXIST) { //  文章已删除
 //                mFlContent.setVisibility(View.GONE);
@@ -277,38 +283,46 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 //            mVideoHolder.bind(data);
 //        }
 
-
         List datas = new ArrayList<>();
-        //TODO WLJ 添加5次数据
+        //TODO WLJ 添加6次数据
         datas.add(data);
         datas.add(data);
         datas.add(data);
+        //TODO  WLJ 添加相关专题
         datas.add(data);
+//        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
+//            datas.add(data);
+//        }
         datas.add(data);
-        if (mAdapter != null) {
-            mAdapter = new NewsDetailAdapter(datas,
-                    mNewsDetail.getDoc_type() == DraftDetailBean.type.VIDEO, this);
-            mAdapter.setOnItemClickListener(this);
-        }
-        mRvContent.setAdapter(mAdapter);
-        mMenuPrised.setSelected(data.isLiked());
-        if (data.getComment_count() <= 0) {
-            mTvCommentsNum.setVisibility(View.GONE);
-        } else {
-            if (data.getComment_count() < 9999) {
-                mTvCommentsNum.setText(data.getComment_count() + "");
-            } else if (data.getComment_count() > 9999) {
-                mTvCommentsNum.setText(BizUtils.numFormat(data.getComment_count(), 10000, 1) + "");
-            }
-        }
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getComment_level());
+//        if (data.getArticle().getRelated_news() != null && data.getArticle().getRelated_news().size() > 0) {
+//            datas.add(data);
+//
+//        }
+        datas.add(data);
+//        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
+//            datas.add(data);
+//        }
+        mRvContent.setAdapter(mAdapter = new NewsDetailAdapter(datas,
+                mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO));
+        mAdapter.setOnItemClickListener(this);
+
+//        mMenuPrised.setSelected(data.getArticle().isLiked());
+//        if (data.getArticle().getComment_count() <= 0) {
+//            mTvCommentsNum.setVisibility(View.GONE);
+//        } else {
+//            if (data.getArticle().getComment_count() < 9999) {
+//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
+//            } else if (data.getArticle().getComment_count() > 9999) {
+//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
+//            }
+//        }
+        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
 
 //        if (data.getPoints() > 0) {
 //            showShallowRead(data.getPoints());
 //        }
 
     }
-
 
     // 浅读领取积分TextView
     private TextView mTvShallow;
@@ -338,67 +352,67 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 .module_detail_layout_integral_float, null);
         windowManager.addView(mTvShallow, wmParams);
         BizUtils.setGetIntegralText(mTvShallow, integral);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                perShallowAnim();
-            }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                perShallowAnim();
+//            }
+//        });
     }
 
-    /**
-     * 执行浅读积分动画
-     */
-    private void perShallowAnim() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int radius = mTvShallow.getWidth() / 2;
-            Animator showAnimator = ViewAnimationUtils.createCircularReveal(
-                    mTvShallow, mTvShallow.getWidth() / 2, 0,
-                    0, radius);
-            showAnimator.setDuration(300);
-            Animator fadeAnimator = ViewAnimationUtils.createCircularReveal(
-                    mTvShallow, mTvShallow.getWidth() / 2, 0,
-                    radius, 0);
-            fadeAnimator.setDuration(300);
-
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.play(fadeAnimator).after(3000).after(showAnimator);
-            animatorSet.addListener(new AbsAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    try {
-                        mTvShallow.setVisibility(View.GONE);
-                        getWindowManager().removeView(mTvShallow);
-                        mTvShallow = null;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            animatorSet.start();
-        } else {
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet
-                    .play(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y, 0,
-                            -mTvShallow.getHeight()).setDuration(300))
-                    .after(3000)
-                    .after(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y,
-                            -mTvShallow.getHeight(), 0).setDuration(300));
-            animatorSet.addListener(new AbsAnimatorListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    try {
-                        mTvShallow.setVisibility(View.GONE);
-                        getWindowManager().removeView(mTvShallow);
-                        mTvShallow = null;
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            animatorSet.start();
-        }
-    }
+//    /**
+//     * 执行浅读积分动画
+//     */
+//    private void perShallowAnim() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            int radius = mTvShallow.getWidth() / 2;
+//            Animator showAnimator = ViewAnimationUtils.createCircularReveal(
+//                    mTvShallow, mTvShallow.getWidth() / 2, 0,
+//                    0, radius);
+//            showAnimator.setDuration(300);
+//            Animator fadeAnimator = ViewAnimationUtils.createCircularReveal(
+//                    mTvShallow, mTvShallow.getWidth() / 2, 0,
+//                    radius, 0);
+//            fadeAnimator.setDuration(300);
+//
+//            AnimatorSet animatorSet = new AnimatorSet();
+//            animatorSet.play(fadeAnimator).after(3000).after(showAnimator);
+//            animatorSet.addListener(new AbsAnimatorListener() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    try {
+//                        mTvShallow.setVisibility(View.GONE);
+//                        getWindowManager().removeView(mTvShallow);
+//                        mTvShallow = null;
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//            animatorSet.start();
+//        } else {
+//            AnimatorSet animatorSet = new AnimatorSet();
+//            animatorSet
+//                    .play(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y, 0,
+//                            -mTvShallow.getHeight()).setDuration(300))
+//                    .after(3000)
+//                    .after(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y,
+//                            -mTvShallow.getHeight(), 0).setDuration(300));
+//            animatorSet.addListener(new AbsAnimatorListener() {
+//                @Override
+//                public void onAnimationEnd(Animator animation) {
+//                    try {
+//                        mTvShallow.setVisibility(View.GONE);
+//                        getWindowManager().removeView(mTvShallow);
+//                        mTvShallow = null;
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//            animatorSet.start();
+//        }
+//    }
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
@@ -431,7 +445,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 switch (baseInnerData.getResultCode()) {
                     case ResultCode.SUCCEED:
                         T.showShort(getBaseContext(), "订阅成功");
-                        mNewsDetail.setColumn_subscribed(true);
+                        mNewsDetail.getArticle().setColumn_subscribed(true);
                         break;
                     default:
                         T.showShort(getBaseContext(), baseInnerData.getResultMsg());
@@ -444,12 +458,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 mAdapter.updateSubscribeInfo();
             }
 
-        }).setTag(this).exe(mNewsDetail.getColumn_id());
+        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id());
     }
 
     @Override
     public void onOptPageFinished() { // WebView页面加载完毕
-        mAdapter.showAll();
+//        mAdapter.showAll();
     }
 
     /**
@@ -467,7 +481,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     public void onOptFabulous() {
         // 点赞
-        if (mNewsDetail.isLiked()) {
+        if (mNewsDetail.getArticle().isLiked()) {
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
             return;
         }
@@ -484,14 +498,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     case ResultCode.SUCCEED:
                         T.showShort(getBaseContext(), "点赞成功");
                         if (mNewsDetail != null) {
-                            mNewsDetail.setLiked(true);
+                            mNewsDetail.getArticle().setLiked(true);
                         }
                         break;
                     case ResultCode.FAILED:
                         T.showShort(getBaseContext(), "点赞失败");
                         break;
                     case ResultCode.HAS_PRAISED:
-                        mNewsDetail.setLiked(false);
+                        mNewsDetail.getArticle().setLiked(false);
                         T.showShort(getBaseContext(), "您已点赞");
                         break;
                 }
@@ -514,63 +528,63 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 //进入评论列表页面
                 Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getId()))
-                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getMlf_id()))
-                        .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mNewsDetail.getComment_level()))
-                        .appendQueryParameter(Key.TITLE, mNewsDetail.getList_title())
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getArticle().getId()))
+                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
+                        .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mNewsDetail.getArticle().getComment_level()))
+                        .appendQueryParameter(Key.TITLE, mNewsDetail.getArticle().getList_title())
                         .build(), 0);
             }
 
         } else if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
         } else if (view.getId() == R.id.menu_share) {
-            share();
+//            share();
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
-                    BizUtils.isCanComment(this, mNewsDetail.getComment_level())) {
+                    BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
                 //进入评论编辑页面(不针对某条评论)
                 Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getId()))
-                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getMlf_id()))
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getArticle().getId()))
+                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
                         .build(), 0);
                 return;
             }
         }
     }
 
-    //友盟分享
-    private UmengShareUtils shareUtils;
-
-    // 分享方法
-    private void share() {
-        if (mNewsDetail == null) return;
-
-        String title, content, logoUrl, targetUrl;
-
-        title = mNewsDetail.getList_title();
-//        content = TextUtils.isEmpty(mNewsDetail.getSummary()) ? C.SHARE_SLOGAN : mNewsDetail
-//                .getSummary();
-        if (TextUtils.isEmpty(mNewsDetail.getArticle_pic())) {
-            logoUrl = "";//APIManager.endpoint.SHARE_24_LOGO_URL;
-        } else {
-            logoUrl = mNewsDetail.getArticle_pic();
-        }
-        targetUrl = mNewsDetail.getUrl();
-        if (shareUtils == null)
-            shareUtils = new UmengShareUtils();
-
-        shareUtils.startShare(
-                UmengShareBean.getInstance()
-                        .setTitle(title)
-//                        .setTextContent(content)
-                        .setImgUri(logoUrl)
-                        .setTargetUrl(targetUrl)
-                        .setPlatform(null)
-                ,
-                this
-        );
-    }
+//    //友盟分享
+//    private UmengShareUtils shareUtils;
+//
+//    // 分享方法
+//    private void share() {
+//        if (mNewsDetail == null) return;
+//
+//        String title, content, logoUrl, targetUrl;
+//
+//        title = mNewsDetail.getList_title();
+////        content = TextUtils.isEmpty(mNewsDetail.getSummary()) ? C.SHARE_SLOGAN : mNewsDetail
+////                .getSummary();
+//        if (TextUtils.isEmpty(mNewsDetail.getArticle_pic())) {
+//            logoUrl = "";//APIManager.endpoint.SHARE_24_LOGO_URL;
+//        } else {
+//            logoUrl = mNewsDetail.getArticle_pic();
+//        }
+//        targetUrl = mNewsDetail.getUrl();
+//        if (shareUtils == null)
+//            shareUtils = new UmengShareUtils();
+//
+//        shareUtils.startShare(
+//                UmengShareBean.getInstance()
+//                        .setTitle(title)
+////                        .setTextContent(content)
+//                        .setImgUri(logoUrl)
+//                        .setTargetUrl(targetUrl)
+//                        .setPlatform(null)
+//                ,
+//                this
+//        );
+//    }
 
 
     @Override
@@ -604,9 +618,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (shareUtils != null) {
-            shareUtils.initResult(requestCode, resultCode, data);
-        }
+//        if (shareUtils != null) {
+//            shareUtils.initResult(requestCode, resultCode, data);
+//        }
     }
 
 
@@ -614,13 +628,22 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     public void onEvent(CommentResultEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (mNewsDetail != null && event.getData() > 0) {
-            mNewsDetail.setComment_count(mNewsDetail.getComment_count() + event.getData());
-            mTvCommentsNum.setText(BizUtils.formatComments(mNewsDetail.getComment_count()));
+            mNewsDetail.getArticle().setComment_count(mNewsDetail.getArticle().getComment_count() + event.getData());
+            mTvCommentsNum.setText(BizUtils.formatComments(mNewsDetail.getArticle().getComment_count()));
         }
     }
 
     @Override
     public void onItemClick(View itemView, int position) {
+    }
+
+    /**
+     * 显示撤稿页面
+     */
+    private void showEmptyNewsDetail() {
+        mContainer.removeAllViews();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mNewsDetail.getArticle().getColumn_id()))).commit();
     }
 }
 

@@ -14,8 +14,12 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedSubjectAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,28 +43,67 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     public NewsDetailRelatedSubjectHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_subject_news, parent, false));
         ButterKnife.bind(this, itemView);
+        initView();
     }
+
+    private void initView() {
+        mRecyleView.addItemDecoration(new ListSpaceDivider(20, 0, false));
+        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+                LinearLayoutManager.VERTICAL, false));
+    }
+
+
+    /** mock数据
+     * @return
+     */
+    private List<RelatedSubjectsBean> mockText() {
+        List<RelatedSubjectsBean> list = new ArrayList<>();
+        RelatedSubjectsBean b1 = new RelatedSubjectsBean();
+        b1.setPic("12");
+        RelatedSubjectsBean b2 = new RelatedSubjectsBean();
+        b2.setPic("12");
+        RelatedSubjectsBean b3 = new RelatedSubjectsBean();
+        b3.setPic("12");
+        RelatedSubjectsBean b4 = new RelatedSubjectsBean();
+        b4.setPic("12");
+        RelatedSubjectsBean b5 = new RelatedSubjectsBean();
+        b5.setPic("12");
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        list.add(b5);
+
+        return list;
+    }
+
 
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        if (mData == null || mData.getRelated_subjects() == null || mData.getRelated_subjects().isEmpty()) {
-            lyContainer.setVisibility(View.GONE);
-        } else {
-            tvRelated.setText("推荐专题");
-            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                    LinearLayoutManager.VERTICAL, false));
-            adapter = new NewsRelatedSubjectAdapter(mData.getRelated_subjects());
-            adapter.setOnItemClickListener(this);
-            mRecyleView.setAdapter(adapter);
-        }
+        List<RelatedSubjectsBean> list = mockText();
+        tvRelated.setText("推荐专题");
+        adapter = new NewsRelatedSubjectAdapter(list);
+        adapter.setOnItemClickListener(this);
+        mRecyleView.setAdapter(adapter);
+
+        //TODO  WLJ
+//        if (mData == null || mData.getArticle().getRelated_subjects() == null || mData.getArticle().getRelated_subjects().isEmpty()) {
+//            lyContainer.setVisibility(View.GONE);
+//        } else {
+//            tvRelated.setText("推荐专题");
+//            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+//            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+//                    LinearLayoutManager.VERTICAL, false));
+//            adapter = new NewsRelatedSubjectAdapter(mData.getArticle().getRelated_subjects());
+//            adapter.setOnItemClickListener(this);
+//            mRecyleView.setAdapter(adapter);
+//        }
     }
 
     /**
      * @param itemView
-     * @param position
-     * 跳转详情页
+     * @param position 跳转详情页
      */
     @Override
     public void onItemClick(View itemView, int position) {

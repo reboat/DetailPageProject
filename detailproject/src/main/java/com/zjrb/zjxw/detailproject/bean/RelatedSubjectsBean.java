@@ -1,15 +1,13 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
  * 详情页相关专题
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:12
  */
 
-public class RelatedSubjectsBean extends BaseInnerData {
+public class RelatedSubjectsBean {
     private int id;
     private String title;
     private String pic;

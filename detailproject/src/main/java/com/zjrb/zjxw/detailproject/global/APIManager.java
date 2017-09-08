@@ -121,6 +121,8 @@ public class APIManager {
          */
         public static final String NEWS_DETAIL = "/api/article/detail";
 
+        public static final String COMMENT_LIST = "/api/comment/list";
+
     }
 
 }

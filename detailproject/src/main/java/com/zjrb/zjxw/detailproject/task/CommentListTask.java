@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 文章评论列表 Task
@@ -32,7 +33,6 @@ public class CommentListTask extends APIGetTask<CommentRefreshBean> {
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.ARTICLE_COMMENT_LIST;
+        return APIManager.endpoint.COMMENT_LIST;
     }
 }

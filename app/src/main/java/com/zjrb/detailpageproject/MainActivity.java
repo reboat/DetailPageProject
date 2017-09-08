@@ -58,13 +58,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_text:
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
+//                        .appendQueryParameter(Key.MLF_ID,"12653")
+//                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
+//                        .build(), 0);
+
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                         .buildUpon()
                         .appendQueryParameter(Key.ARTICLE_ID, "65427")
                         .appendQueryParameter(Key.MLF_ID,"12653")
-                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
+                        .appendQueryParameter(Key.TITLE,"骄傲啥啥啥是骄傲啥事安静地王大厦的描述发")
+                        .appendQueryParameter(Key.COMMENT_SET,"1")
+                        .appendQueryParameter(Key.PARENT_ID,"2324")
+                        .appendQueryParameter(Key.PARENT_ID,"true")
                         .build(), 0);
-
                 break;
         }
     }

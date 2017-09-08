@@ -220,7 +220,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             @Override
             public void onAfter() {
             }
-        }).setTag(this).exe(articleId, lastMinPublishTime + "", "20");
+        }).setTag(this).exe(articleId, "", "20");
     }
 
     @OnClick({R2.id.tv_comment})

@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -51,7 +52,7 @@ public class NewsRelatedNewsAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            GlideApp.with(mImg).load(mData.getPic()).placeholder(R.mipmap.me_qq_btn).centerCrop().into(mImg);
+            GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheSmall()).centerCrop().into(mImg);
             mTitle.setText(mData.getTitle());
         }
     }

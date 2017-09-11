@@ -140,6 +140,9 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         }
     }
 
+    /**
+     * 下拉刷新
+     */
     private void initData() {
         new OfficalDetailTask(new APIExpandCallBack<OfficalDetailBean>() {
 
@@ -156,7 +159,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                             initAdapter();
                         }
                         lvNotice.setAdapter(mAdapter);
-                        mAdapter.setData(list);
+//                        mAdapter.setData(list);
                         mAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -222,6 +225,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position));
     }
 }

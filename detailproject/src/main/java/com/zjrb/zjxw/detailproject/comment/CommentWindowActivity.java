@@ -37,10 +37,23 @@ import butterknife.OnClick;
 
 public class CommentWindowActivity extends BaseActivity implements
         TextWatcher, View.OnTouchListener {
-    public int articleId = -1;
-    public int mlfId = -1;
-    public int parentId = -1;
-    public boolean isFromCommentAct = false;
+    /**
+     * 稿件ID
+     */
+    private String articleId;
+    /**
+     * 被回复ID
+     */
+    private String parentId;
+    /**
+     * 回复内容
+     */
+    private String content;
+
+    /**
+     * 被回复人
+     */
+    private String nickName;
 
     @BindView(R2.id.iv_close_window)
     ImageView ivCloseWindow;
@@ -54,6 +67,8 @@ public class CommentWindowActivity extends BaseActivity implements
     FrameLayout fyCommentContent;
     @BindView(R2.id.activity_comment_window)
     RelativeLayout activityCommentWindow;
+    @BindView(R2.id.tv_replay)
+    TextView mTvReplay;
 
     /**
      * 评论内容
@@ -68,7 +83,7 @@ public class CommentWindowActivity extends BaseActivity implements
         ButterKnife.bind(this);
         getIntentData(getIntent());
         initOnclick();
-        initEditText();
+        initView();
     }
 
     /**
@@ -77,10 +92,18 @@ public class CommentWindowActivity extends BaseActivity implements
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
-                isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
+            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
+                articleId = data.getQueryParameter(Key.ARTICLE_ID);
+            }
+            if (data.getQueryParameter(Key.PARENT_ID) != null) {
+                parentId = data.getQueryParameter(Key.PARENT_ID);
+            }
+            if (data.getQueryParameter(Key.CONENT) != null) {
+                content = data.getQueryParameter(Key.CONENT);
+            }
+            if (data.getQueryParameter(Key.REPLAYER) != null) {
+                nickName = data.getQueryParameter(Key.REPLAYER);
+            }
         }
     }
 
@@ -88,10 +111,17 @@ public class CommentWindowActivity extends BaseActivity implements
     /**
      * 初始化编辑框
      */
-    private void initEditText() {
+    private void initView() {
         String content = SPHelper.get().get(Key.ARTICLE_COMMENT_EDITING, "");
         etInputComment.setText(content);
         etInputComment.setSelection(content.length());
+        ivCloseWindow.setImageResource(R.mipmap.module_detail_comment_close);
+        ivSendComment.setImageResource(R.mipmap.module_detail_comment_send_disclick);
+        if (!nickName.isEmpty()) {
+            mTvReplay.setText(getString(R.string.module_detail_replay_to) + nickName);
+        } else {
+            mTvReplay.setText(getString(R.string.module_detail_send_comment));
+        }
     }
 
     @Override
@@ -109,6 +139,9 @@ public class CommentWindowActivity extends BaseActivity implements
         activityCommentWindow.setOnTouchListener(this);
     }
 
+    /**
+     * 是否正在提交评论
+     */
     private boolean submiting;
 
     @OnClick({R2.id.iv_send_comment, R2.id.iv_close_window})
@@ -126,25 +159,28 @@ public class CommentWindowActivity extends BaseActivity implements
 
     /**
      * @param content 提交评论
+     *                parentId:被回复的评论ID
      */
     private void submitComment(String content) {
-        new CommentSubmitTask(new APIExpandCallBack<BaseInnerData>() {
+        if (!articleId.isEmpty() && !parentId.isEmpty() && !content.isEmpty()) {
+            new CommentSubmitTask(new APIExpandCallBack<BaseInnerData>() {
 
-            @Override
-            public void onSuccess(BaseInnerData stateBean) {
-                handlerResult(stateBean);
-            }
+                @Override
+                public void onSuccess(BaseInnerData stateBean) {
+                    handlerResult(stateBean);
+                }
 
-            @Override
-            public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
-            }
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    T.showShort(getBaseContext(), errMsg);
+                }
 
-            @Override
-            public void onAfter() {
-                submiting = false;
-            }
-        }).setTag(this).exe(articleId, content, parentId);
+                @Override
+                public void onAfter() {
+                    submiting = false;
+                }
+            }).setTag(this).exe(articleId, content, parentId);
+        }
     }
 
     /**
@@ -154,11 +190,9 @@ public class CommentWindowActivity extends BaseActivity implements
         if (stateBean.getResultCode() == 0) {
             T.showShort(getBaseContext(), "评论成功");
             setResult(RESULT_OK);
-            if (!isFromCommentAct) {
-                Nav.with(CommentWindowActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
-                        .buildUpon()
-                        .build(), RESULT_OK);
-            }
+            Nav.with(CommentWindowActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                    .buildUpon()
+                    .build(), RESULT_OK);
             finish();
         } else {
             T.showShort(getBaseContext(), stateBean.getResultMsg());
@@ -170,6 +204,12 @@ public class CommentWindowActivity extends BaseActivity implements
 
     }
 
+    /**
+     * @param s
+     * @param start
+     * @param before
+     * @param count
+     */
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.length() > 0 && s.length() <= 250) {

@@ -121,7 +121,31 @@ public class APIManager {
          */
         public static final String NEWS_DETAIL = "/api/article/detail";
 
+        /**
+         * 评论列表
+         */
         public static final String COMMENT_LIST = "/api/comment/list";
+
+        /**
+         * 评论点赞
+         */
+        public static final String COMMENT_PRISE = "/api/comment/like";
+
+        /**
+         * 删除评论
+         */
+        public static final String COMMENT_DELETE = "/api/comment/delete";
+
+        /**
+         * 官员详情
+         */
+        public static final String OFFICAL_DETAIL = "/api/officer/info";
+
+
+        /**
+         * 所有官员列表
+         */
+        public static final String OFFICAL_LIST = "/api/officer/list";
 
     }
 

@@ -183,6 +183,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position), position);
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position));
     }
 }

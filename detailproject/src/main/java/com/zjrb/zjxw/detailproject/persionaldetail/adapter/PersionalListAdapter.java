@@ -9,6 +9,7 @@ import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHolder;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalTextHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,8 +22,12 @@ public class PersionalListAdapter extends BaseRecyclerAdapter {
     public static int TYPE_PERSIONAL_DETAIL = -1;
     public static int TYPE_NOMAL = 0;
 
-    public PersionalListAdapter(List data) {
-        super(data);
+//    public PersionalListAdapter(List data) {
+//        super(data);
+//    }
+
+    public PersionalListAdapter() {
+        super(new ArrayList<OfficalArticlesBean>());
     }
 
     /**
@@ -34,7 +39,7 @@ public class PersionalListAdapter extends BaseRecyclerAdapter {
             for (OfficalListBean.OfficerListBean group : groupList) {
                 OfficalArticlesBean bean = new OfficalArticlesBean();
                 bean.setOfficalId(group.getId());
-                bean.setPhoto(group.getPhoto());
+                bean.setPhoto(group.getList_pic());
                 bean.setName(group.getName());
                 bean.setJob(group.getTitle());
                 bean.setType(TYPE_PERSIONAL_DETAIL);

@@ -186,7 +186,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) adapter.getData().get(position), position);
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) adapter.getData().get(position));
     }
 
     @Override

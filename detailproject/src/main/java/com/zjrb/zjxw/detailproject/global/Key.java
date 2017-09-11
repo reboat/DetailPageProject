@@ -99,9 +99,13 @@ public final class Key {
      */
     public static final String TITLE = "title";
     /**
-     * 标题
+     * 内容
      */
     public static final String CONENT = "content";
+    /**
+     * 被回复人
+     */
+    public static final String REPLAYER = "replayer";
     /**
      * 次数
      */

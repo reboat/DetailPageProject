@@ -49,7 +49,7 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
     /**
      * 初始化
      */
-    private void initView(){
+    private void initView() {
         mRecyleView.addItemDecoration(new ListSpaceDivider(20, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
@@ -76,22 +76,22 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
 //        }
     }
 
-    private List<RelatedNewsBean> mockTest(){
+    private List<RelatedNewsBean> mockTest() {
         List<RelatedNewsBean> list = new ArrayList<>();
         RelatedNewsBean b = new RelatedNewsBean();
-        b.setPic("");
+        b.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         b.setTitle("标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1标题1");
         RelatedNewsBean b1 = new RelatedNewsBean();
-        b1.setPic("");
+        b1.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         b1.setTitle("标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2标题2");
         RelatedNewsBean b2 = new RelatedNewsBean();
-        b2.setPic("");
+        b2.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         b2.setTitle("标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3标题3");
         RelatedNewsBean b3 = new RelatedNewsBean();
-        b3.setPic("");
+        b3.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         b3.setTitle("标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4标题4");
         RelatedNewsBean b4 = new RelatedNewsBean();
-        b4.setPic("");
+        b4.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         b4.setTitle("标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5标题5");
         list.add(b);
         list.add(b1);
@@ -111,6 +111,6 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity(mData, position);
+        BizUtils.jumpToDetailActivity(mData);
     }
 }

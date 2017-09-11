@@ -36,6 +36,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
@@ -148,6 +149,55 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 
     }
 
+    private List<AlbumImageListBean> mockTest() {
+        List<AlbumImageListBean> list = new ArrayList<>();
+        AlbumImageListBean b = new AlbumImageListBean();
+        b.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        AlbumImageListBean b1 = new AlbumImageListBean();
+        b1.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b1.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        AlbumImageListBean b2 = new AlbumImageListBean();
+        b2.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b2.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        AlbumImageListBean b3 = new AlbumImageListBean();
+        b3.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b3.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        AlbumImageListBean b4 = new AlbumImageListBean();
+        b4.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b4.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        AlbumImageListBean b5 = new AlbumImageListBean();
+        b5.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
+        b5.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        list.add(b5);
+        return list;
+    }
+
+    private List<RelatedNewsBean> MockTest2() {
+        List<RelatedNewsBean> list = new ArrayList<>();
+        RelatedNewsBean b = new RelatedNewsBean();
+        b.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        RelatedNewsBean b1 = new RelatedNewsBean();
+        b1.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        RelatedNewsBean b2 = new RelatedNewsBean();
+        b2.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        RelatedNewsBean b3 = new RelatedNewsBean();
+        b3.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        RelatedNewsBean b4 = new RelatedNewsBean();
+        b4.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        return list;
+    }
+
     /**
      * @param atlasDetailEntity 获取图集详情页数据
      */
@@ -158,23 +208,30 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
+            //TODO  WLJ TEST
+            mAtlasList = mockTest();
             mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
             mMenuPrised.setSelected(atlasDetailEntity.getArticle().isFollowed());
             BizUtils.setCommentSet(mTvComment, mData.getArticle().getComment_level());
         }
         //设置图片列表
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
-            List<String> imgs = new ArrayList<>(mAtlasList.size());
-            for (AlbumImageListBean entity : mAtlasList) {
-                imgs.add(entity.getImage_url());
-            }
-            //添加更多图集索引
-            if (imgs.size() > 0) {
-                imgs.add("");
-            }
+//            List<String> imgs = new ArrayList<>(mAtlasList.size());
+//            for (AlbumImageListBean entity : mAtlasList) {
+//                imgs.add(entity.getImage_url());
+//            }
+//            //添加更多图集索引
+//            if (imgs.size() > 0) {
+//                imgs.add("");
+//            }
 
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
+            //TODO  WLJ test
+            mAtlasList.add(new AlbumImageListBean());
+            atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
+            atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
+            atlasDetailEntity.getArticle().setRelated_news(MockTest2());
 
             mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
 

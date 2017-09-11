@@ -1,21 +1,14 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.EditText;
@@ -43,7 +36,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
@@ -74,7 +66,13 @@ import static com.zjrb.core.utils.UIUtils.getContext;
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, OnItemClickListener {
 
+    /**
+     * 稿件ID
+     */
     public int mArticleId = -1;
+    /**
+     * 媒立方ID
+     */
     public int mlfId = -1;
     public String mVideoPath = "";
     @BindView(R2.id.iv_image)
@@ -111,7 +109,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 详情页数据
      */
     private DraftDetailBean mNewsDetail;
-
     /**
      * 详情页适配器
      */
@@ -150,7 +147,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
             mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
             mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
         }
     }
@@ -167,11 +163,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-//        mRvContent.addItemDecoration(new NewsDetailSpaceDivider());
         if (!TextUtils.isEmpty(mVideoPath)) {
             initVideo();
         }
-
         loadData();
     }
 
@@ -203,23 +197,13 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
     /**
-     * 初始化过度动画
-     */
-    private void initTransition() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ViewCompat.setTransitionName(mVideoContainer, Key.VIDEO_SHARED_VIEW_NAME);
-        }
-    }
-
-    /**
      * 请求详情页数据
      */
     private void loadData() {
-        if (mArticleId == -1) return;
+        if (mArticleId < 0) return;
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                Log.v("", "WLJ,XXXXXXXXX");
                 fillData(draftDetailBean);
             }
 
@@ -227,11 +211,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
             }
-
-            @Override
-            public void onAfter() {
-            }
-
         }).setTag(this).exe(mArticleId);
     }
 
@@ -243,7 +222,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             return replaceLoad(mFlContent);
         }
     }
-
 
 
     /**
@@ -306,124 +284,35 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO));
         mAdapter.setOnItemClickListener(this);
 
-//        mMenuPrised.setSelected(data.getArticle().isLiked());
-//        if (data.getArticle().getComment_count() <= 0) {
-//            mTvCommentsNum.setVisibility(View.GONE);
-//        } else {
-//            if (data.getArticle().getComment_count() < 9999) {
-//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-//            } else if (data.getArticle().getComment_count() > 9999) {
-//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-//            }
-//        }
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
-
-//        if (data.getPoints() > 0) {
-//            showShallowRead(data.getPoints());
-//        }
-
-    }
-
-    // 浅读领取积分TextView
-    private TextView mTvShallow;
-
-    /**
-     * 展示获取浅读积分
-     */
-    private void showShallowRead(int integral) {
-
-        if (isDestroyed()) {
-            return;
+        mMenuPrised.setSelected(data.getArticle().isLiked());
+        if (data.getArticle().getComment_count() <= 0) {
+            mTvCommentsNum.setVisibility(View.GONE);
+        } else {
+            if (data.getArticle().getComment_count() < 9999) {
+                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
+            } else if (data.getArticle().getComment_count() > 9999) {
+                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
+            }
         }
-
-        WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.TYPE_APPLICATION,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSPARENT);
-
-        //获取的是LocalWindowManager对象
-        WindowManager windowManager = getWindowManager();
-        wmParams.gravity = Gravity.TOP;
-        wmParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-        wmParams.height = UIUtils.dip2px(30);
-
-        mTvShallow = (TextView) getLayoutInflater().inflate(R.layout
-                .module_detail_layout_integral_float, null);
-        windowManager.addView(mTvShallow, wmParams);
-        BizUtils.setGetIntegralText(mTvShallow, integral);
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                perShallowAnim();
-//            }
-//        });
+        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
-
-//    /**
-//     * 执行浅读积分动画
-//     */
-//    private void perShallowAnim() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            int radius = mTvShallow.getWidth() / 2;
-//            Animator showAnimator = ViewAnimationUtils.createCircularReveal(
-//                    mTvShallow, mTvShallow.getWidth() / 2, 0,
-//                    0, radius);
-//            showAnimator.setDuration(300);
-//            Animator fadeAnimator = ViewAnimationUtils.createCircularReveal(
-//                    mTvShallow, mTvShallow.getWidth() / 2, 0,
-//                    radius, 0);
-//            fadeAnimator.setDuration(300);
-//
-//            AnimatorSet animatorSet = new AnimatorSet();
-//            animatorSet.play(fadeAnimator).after(3000).after(showAnimator);
-//            animatorSet.addListener(new AbsAnimatorListener() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    try {
-//                        mTvShallow.setVisibility(View.GONE);
-//                        getWindowManager().removeView(mTvShallow);
-//                        mTvShallow = null;
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//            animatorSet.start();
-//        } else {
-//            AnimatorSet animatorSet = new AnimatorSet();
-//            animatorSet
-//                    .play(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y, 0,
-//                            -mTvShallow.getHeight()).setDuration(300))
-//                    .after(3000)
-//                    .after(ObjectAnimator.ofFloat(mTvShallow, View.TRANSLATION_Y,
-//                            -mTvShallow.getHeight(), 0).setDuration(300));
-//            animatorSet.addListener(new AbsAnimatorListener() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    try {
-//                        mTvShallow.setVisibility(View.GONE);
-//                        getWindowManager().removeView(mTvShallow);
-//                        mTvShallow = null;
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//            animatorSet.start();
-//        }
-//    }
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
+    /**
+     * @param isUp 控制底部floorBar
+     */
     @Override
-    public void onTouchSlop(boolean isUp) { // 控制底部floorBar
+    public void onTouchSlop(boolean isUp) {
         int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
         mFloorBar.animate().setInterpolator(mInterpolator)
                 .setDuration(200)
                 .translationY(translationY);
     }
 
+    /**
+     * @return 获取底部栏间距
+     */
     private int getFloorBarMarginBottom() {
         int marginBottom = 0;
         final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
@@ -463,7 +352,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     @Override
     public void onOptPageFinished() { // WebView页面加载完毕
-//        mAdapter.showAll();
+        mAdapter.showAll();
     }
 
     /**
@@ -510,11 +399,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         break;
                 }
             }
-
-            @Override
-            public void onAfter() {
-//                mAdapter.updateFabulousInfo();
-            }
         }).setTag(this).exe(mArticleId);
     }
 
@@ -538,7 +422,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
         } else if (view.getId() == R.id.menu_share) {
-//            share();
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
@@ -552,39 +435,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
         }
     }
-
-//    //友盟分享
-//    private UmengShareUtils shareUtils;
-//
-//    // 分享方法
-//    private void share() {
-//        if (mNewsDetail == null) return;
-//
-//        String title, content, logoUrl, targetUrl;
-//
-//        title = mNewsDetail.getList_title();
-////        content = TextUtils.isEmpty(mNewsDetail.getSummary()) ? C.SHARE_SLOGAN : mNewsDetail
-////                .getSummary();
-//        if (TextUtils.isEmpty(mNewsDetail.getArticle_pic())) {
-//            logoUrl = "";//APIManager.endpoint.SHARE_24_LOGO_URL;
-//        } else {
-//            logoUrl = mNewsDetail.getArticle_pic();
-//        }
-//        targetUrl = mNewsDetail.getUrl();
-//        if (shareUtils == null)
-//            shareUtils = new UmengShareUtils();
-//
-//        shareUtils.startShare(
-//                UmengShareBean.getInstance()
-//                        .setTitle(title)
-////                        .setTextContent(content)
-//                        .setImgUri(logoUrl)
-//                        .setTargetUrl(targetUrl)
-//                        .setPlatform(null)
-//                ,
-//                this
-//        );
-//    }
 
 
     @Override
@@ -618,9 +468,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (shareUtils != null) {
-//            shareUtils.initResult(requestCode, resultCode, data);
-//        }
     }
 
 
@@ -635,6 +482,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     @Override
     public void onItemClick(View itemView, int position) {
+        //TODO  WLJ  无需操作
     }
 
     /**

@@ -4,6 +4,8 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.zjxw.detailproject.bean.CommentPriseBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 评论点赞
@@ -11,8 +13,8 @@ import com.zjrb.core.domain.base.BaseInnerData;
  * create time:2017/7/28  上午11:18
  */
 
-public class CommentPraiseTask extends APIPostTask<BaseInnerData> {
-    public CommentPraiseTask(LoadingCallBack<BaseInnerData> callBack) {
+public class CommentPraiseTask extends APIPostTask<CommentPriseBean> {
+    public CommentPraiseTask(LoadingCallBack<CommentPriseBean> callBack) {
         super(callBack);
     }
 
@@ -22,12 +24,11 @@ public class CommentPraiseTask extends APIPostTask<BaseInnerData> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("comment_id", params[0]);
+        put("comment_id", "59b2458ed795400852356dba");
     }
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.ARTICLE_COMMENT_PRAISE;
+        return APIManager.endpoint.COMMENT_PRISE;
     }
 }

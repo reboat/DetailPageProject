@@ -1,15 +1,13 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
  * 图集
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
 
-public class AlbumImageListBean extends BaseInnerData {
+public class AlbumImageListBean {
     private String image_url;
     private String description;
 

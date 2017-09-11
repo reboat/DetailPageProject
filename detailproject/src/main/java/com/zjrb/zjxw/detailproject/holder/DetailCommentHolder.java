@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,14 +11,21 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.CommentPriseBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
+import com.zjrb.zjxw.detailproject.global.Key;
+import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +37,8 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> {
+    @BindView(R2.id.ly_replay)
+    RelativeLayout mLayReplay;
     @BindView(R2.id.ry_container)
     RelativeLayout mLaycontainer;
     @BindView(R2.id.iv_avatar)
@@ -53,20 +63,18 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     //原评论者
     @BindView(R2.id.tv_comment_src)
     TextView mTvCommentSrc;
-    //收起/打开评论
-//    @BindView(R2.id.tv_open)
-//    TextView mTvOpen;
 
-    private String[] openStrs = {"显示完整评论", "收起评论"};
+    private String articleId;
 
-    public DetailCommentHolder(View itemView) {
+    public DetailCommentHolder(View itemView, String articleId) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-//        mTvCommentContent.setOnLineCountListener(this);
+        this.articleId = articleId;
     }
 
     @Override
     public void bindView() {
+        mDelete.setVisibility(View.VISIBLE);
         mContent.setText(mData.getContent());
         mName.setText(mData.getNick_name());
         mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd HH:mm:ss"));
@@ -78,27 +86,42 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_thumb_up})
+    @OnClick({R2.id.tv_thumb_up, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply})
     public void onClick(View view) {
         //点赞
         if (view.getId() == R.id.tv_thumb_up) {
             praiseComment(mData.getId());
+        } else if (view.getId() == R.id.tv_delete) {
+            deleteComment(mData.getId());
+            //回复评论者
+        } else if (view.getId() == R.id.ly_replay) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, articleId+"")
+                    .appendQueryParameter(Key.CONENT, mData.getContent()+"")
+                    .appendQueryParameter(Key.PARENT_ID, mData.getId()+"")
+                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name()+"")
+                    .build(), 0);
+            //回复回复者
+        } else {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ARTICLE_ID, articleId+"")
+                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content()+"")
+                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id()+"")
+                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name()+"")
+                    .build(), 0);
         }
-//        else {
-//            //点击打开评论
-//            mTvCommentContent.setMaxLines(Integer.MAX_VALUE);
-//            mTvCommentContent.setText(openStrs[1]);
-//        }
     }
 
     /**
-     * @param id 评论id
-     *           评论点赞
+     * @param comment_id 评论id
+     *                   评论点赞
      */
-    private void praiseComment(String id) {
-        new CommentPraiseTask(new APIExpandCallBack<BaseInnerData>() {
+    private void praiseComment(String comment_id) {
+        new CommentPraiseTask(new APIExpandCallBack<CommentPriseBean>() {
             @Override
-            public void onSuccess(BaseInnerData stateBean) {
+            public void onSuccess(CommentPriseBean stateBean) {
                 if (stateBean == null) {
                     return;
                 }
@@ -116,18 +139,34 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             public void onError(String errMsg, int errCode) {
                 T.showShort(itemView.getContext(), errMsg);
             }
-        }).setTag(UIUtils.getActivity()).exe(id);
+        }).setTag(UIUtils.getActivity()).exe(comment_id);
     }
 
-//    @Override
-//    public void onLineCount(int lineCount, int maxLines) {
-//        if (mTvCommentContent == null || mTvCommentContent == null) return;
-//
-//        if (lineCount > 3 && maxLines != 3) {
-//            mTvCommentContent.setText(openStrs[1]);
-//            mTvCommentContent.setVisibility(View.VISIBLE);
-//        } else if (lineCount < 3) {
-//            mTvCommentContent.setVisibility(View.GONE);
-//        }
-//    }
+    /**
+     * 删除评论
+     *
+     * @param comment_id
+     */
+    private void deleteComment(String comment_id) {
+        new CommentDeleteTask(new APIExpandCallBack<BaseInnerData>() {
+            @Override
+            public void onSuccess(BaseInnerData stateBean) {
+                if (stateBean == null) {
+                    return;
+                }
+                if (stateBean.getResultCode() == 0) {
+                    EventBus.getDefault().postSticky(new CommentDeleteEvent());
+                } else {
+                    T.showShort(itemView.getContext(), stateBean.getResultMsg());
+                }
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                EventBus.getDefault().postSticky(new CommentDeleteEvent());
+                T.showShort(itemView.getContext(), errMsg);
+            }
+        }).setTag(UIUtils.getActivity()).exe(comment_id);
+    }
+
 }

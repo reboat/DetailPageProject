@@ -21,6 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_margin="9dp"
             android:scaleType="fitXY"
+            android:background="#ff0"
             tools:src="@mipmap/me_qq_btn"/>
 
         <LinearLayout
@@ -81,6 +82,7 @@
             android:drawableRight="@drawable/module_detail_comment"
             android:gravity="center"
             android:textColor="?attr/tc_484848"
+            android:text="@string/module_detail_offical_more"
             tools:text="更多"/>
 
     </RelativeLayout>

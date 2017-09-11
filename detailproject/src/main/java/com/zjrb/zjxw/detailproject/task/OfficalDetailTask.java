@@ -1,31 +1,36 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
+import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 官员详情 - Task
  * Created by wanglinjie.
  * create time:2017/7/28  上午11:18
  */
-public class OfficalDetailTask extends APIPostTask<OfficalDetailBean> {
+public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
 
     public OfficalDetailTask(LoadingCallBack<OfficalDetailBean> callBack) {
         super(callBack);
     }
 
+    /**
+     * @param params 参数
+     *               start:上一次请求最后一条新闻的ID
+     */
     @Override
     protected void onSetupParams(Object... params) {
-        put("id", params[0]);
+        put("id", "5");
         put("start", params[1]);
         put("size", params[2]);
     }
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.DRAFT_PRAISEL;
+        return APIManager.endpoint.OFFICAL_DETAIL;
     }
 }

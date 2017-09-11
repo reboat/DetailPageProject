@@ -42,8 +42,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
 
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
-    //点赞
-//    public static final String PAYLOADS_FABULOUS = "update_fabulous";
     //恢复
     public static final String PAYLOADS_RESUME = "on_resume";
     //暂停
@@ -86,7 +84,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
 
     @Override
     public int getAbsItemViewType(int position) {
-        Log.v("","WLJ,position="+position);
         if (position == 0) {
             return VIEW_TYPE_TOP;
         } else if (position == 1) {

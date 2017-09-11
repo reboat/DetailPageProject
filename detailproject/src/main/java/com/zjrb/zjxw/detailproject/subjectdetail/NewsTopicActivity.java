@@ -166,7 +166,7 @@ public class NewsTopicActivity extends BaseActivity implements
         //点击跳转详情页(所有类型)
         if (mAdapter.getData().get(position) instanceof SubjectItemBean) {
             SubjectItemBean b = (SubjectItemBean) mAdapter.getData().get(position);
-            BizUtils.jumpToDetailActivity2(b, position);
+            BizUtils.jumpToDetailActivity2(b);
         } else if (mAdapter.getData().get(position) instanceof SubjectNewsBean.GroupArticlesBean) {
             //进入专题更多列表
             if (((SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position)).getArticleList().size() >= 3) {

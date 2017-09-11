@@ -20,9 +20,11 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="10dp"
+            tools:src="@mipmap/module_detail_comment_close"
             />
 
         <TextView
+            android:id="@+id/tv_replay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -36,6 +38,7 @@
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
+            tools:src="@mipmap/module_detail_comment_send_disclick"
             />
 
     </RelativeLayout>

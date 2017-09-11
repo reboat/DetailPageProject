@@ -27,14 +27,13 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
     }
 
     public void setupData(List<OfficalDetailBean.OfficerBean.ResumesBean> groupList) {
-        datas.clear();
         if (groupList != null) {
             for (int i = 0; i < groupList.size(); i++) {
                 OfficalDetailBean.OfficerBean.ResumesBean bean = new OfficalDetailBean.OfficerBean.ResumesBean();
                 if (i == 0) {
                     bean.setSameYear(false);
                 }
-                //与下一个元素比较是否是同一年
+//                与下一个元素比较是否是同一年
                 if (groupList.size() > (++i)) {
                     if (String.valueOf(bean.getYear()).equals(String.valueOf(groupList.get(i + 1).getYear()))) {
                         groupList.get(i + 1).setSameYear(true);
@@ -79,8 +78,8 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            mTvYear.setText(mData.getYear());
-            mTvMonth.setText(mData.getMonth());
+            mTvYear.setText(mData.getYear()+"");
+            mTvMonth.setText(mData.getMonth()+"");
             mTvPersionalInfo.setText("[" + mData.getLocation() + "] " + mData.getTitle());
 
         }

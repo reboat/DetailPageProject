@@ -1,12 +1,15 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -17,8 +20,6 @@ import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalTrackAdapter;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +40,8 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     public static final int TYPE_INFO = 1;
     private static int mIndex = -1;
     private PersionalTrackAdapter mAdapter;
-    private List<OfficalDetailBean.OfficerBean.ResumesBean> groupList;
+
+    private OfficalDetailBean bean;
 
 
     @Override
@@ -47,7 +49,7 @@ public class PersionalDetailInfoFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mIndex = getArguments().getInt(Key.FRAGMENT_ARGS);
-            groupList = (List<OfficalDetailBean.OfficerBean.ResumesBean>) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_INFO);
+            bean = (OfficalDetailBean) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_INFO);
         }
     }
 
@@ -57,17 +59,22 @@ public class PersionalDetailInfoFragment extends BaseFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.module_detail_fragment_persional_info, container, false);
         ButterKnife.bind(this, v);
-        initView();
+        initView(v);
         return v;
     }
 
     /**
      * 初始化适配器
      */
-    private void initView() {
-        mAdapter = new PersionalTrackAdapter(groupList);
-        mAdapter.setupData(groupList);
+    private void initView(View v) {
+        mAdapter = new PersionalTrackAdapter(bean.getOfficer().getResumes());
+//        mAdapter.setupData(bean.getOfficer().getResumes());
+        ListSpaceDivider diver;
+        lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        diver = new ListSpaceDivider(0, 0, false);
+        lvNotice.addItemDecoration(diver);
         lvNotice.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -78,9 +85,9 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         T.showShort(UIUtils.getContext(), "当前tab1_index=" + mIndex);
-        if (isVisibleToUser) {
-            EventBus.getDefault().postSticky(new PersionalDetailTabEvent());
-        }
+//        if (isVisibleToUser) {
+//            EventBus.getDefault().postSticky(new PersionalDetailTabEvent());
+//        }
 
     }
 

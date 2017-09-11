@@ -221,9 +221,9 @@ public class BizUtils {
 
     /**
      * @param mData
-     * @param position 根据doc_type跳转到相应的详情页
+     * 根据doc_type跳转到相应的详情页
      */
-    public static void jumpToDetailActivity(DraftDetailBean mData, int position) {
+    public static void jumpToDetailActivity(DraftDetailBean mData) {
         if (mData.getArticle().getDoc_type() == 2) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                     .buildUpon()
@@ -258,9 +258,9 @@ public class BizUtils {
 
     /**
      * @param mData
-     * @param position 根据doc_type跳转到相应的详情页
+     * 根据doc_type跳转到相应的详情页
      */
-    public static void jumpToDetailActivity2(SubjectItemBean mData, int position) {
+    public static void jumpToDetailActivity2(SubjectItemBean mData) {
         if (mData.getDoc_type() == 2) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                     .buildUpon()

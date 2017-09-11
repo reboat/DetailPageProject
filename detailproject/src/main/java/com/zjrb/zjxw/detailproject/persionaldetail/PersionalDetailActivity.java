@@ -24,6 +24,7 @@ import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.eventBus.PersionalDetailTabEvent;
 import com.zjrb.zjxw.detailproject.eventBus.PersionalInfoTabEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
@@ -35,6 +36,9 @@ import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,8 +93,113 @@ public class PersionalDetailActivity extends BaseActivity {
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
+            official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
         }
+    }
+
+    private List<SubjectItemBean> mockTest() {
+        List<SubjectItemBean> list = new ArrayList<>();
+        SubjectItemBean b = new SubjectItemBean();
+        b.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b.setList_title("标题1");
+        SubjectItemBean b1 = new SubjectItemBean();
+        b1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b1.setList_title("标题1");
+        SubjectItemBean b2 = new SubjectItemBean();
+        b2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b2.setList_title("标题1");
+        SubjectItemBean b3 = new SubjectItemBean();
+        b3.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b3.setList_title("标题1");
+        SubjectItemBean b4 = new SubjectItemBean();
+        b4.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b4.setList_title("标题1");
+        SubjectItemBean b5 = new SubjectItemBean();
+        b5.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b5.setList_title("标题1");
+        SubjectItemBean b6 = new SubjectItemBean();
+        b6.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b6.setList_title("标题1");
+        SubjectItemBean b7 = new SubjectItemBean();
+        b7.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b7.setList_title("标题1");
+        SubjectItemBean b8 = new SubjectItemBean();
+        b8.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b8.setList_title("标题1");
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        list.add(b5);
+        list.add(b6);
+        list.add(b7);
+        list.add(b8);
+        return list;
+    }
+
+    private OfficalDetailBean.OfficerBean mockTest2() {
+        OfficalDetailBean.OfficerBean officer = new OfficalDetailBean.OfficerBean();
+        List<OfficalDetailBean.OfficerBean.ResumesBean> resumes = new ArrayList<>();
+        OfficalDetailBean.OfficerBean.ResumesBean b = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b.setLocation("浙江");
+        b.setMonth(8);
+        b.setSameYear(false);
+        b.setTitle("省委书记");
+        b.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b1 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b1.setLocation("浙江");
+        b1.setMonth(8);
+        b1.setSameYear(false);
+        b1.setTitle("省委书记");
+        b1.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b2 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b2.setLocation("浙江");
+        b2.setMonth(8);
+        b2.setSameYear(false);
+        b2.setTitle("省委书记");
+        b2.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b3 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b3.setLocation("浙江");
+        b3.setMonth(8);
+        b3.setSameYear(false);
+        b3.setTitle("省委书记");
+        b3.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b4 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b4.setLocation("浙江");
+        b4.setMonth(8);
+        b4.setSameYear(false);
+        b4.setTitle("省委书记");
+        b4.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b5 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b5.setLocation("浙江");
+        b5.setMonth(8);
+        b5.setSameYear(false);
+        b5.setTitle("省委书记");
+        b5.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b6 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b6.setLocation("浙江");
+        b6.setMonth(8);
+        b6.setSameYear(false);
+        b6.setTitle("省委书记");
+        b6.setYear(2014);
+        OfficalDetailBean.OfficerBean.ResumesBean b7 = new OfficalDetailBean.OfficerBean.ResumesBean();
+        b7.setLocation("浙江");
+        b7.setMonth(8);
+        b7.setSameYear(false);
+        b7.setTitle("省委书记");
+        b7.setYear(2014);
+        resumes.add(b);
+        resumes.add(b1);
+        resumes.add(b2);
+        resumes.add(b3);
+        resumes.add(b4);
+        resumes.add(b5);
+        resumes.add(b6);
+        resumes.add(b7);
+        officer.setResumes(resumes);
+        return officer;
+
     }
 
     /**
@@ -109,10 +218,6 @@ public class PersionalDetailActivity extends BaseActivity {
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
             }
-
-            @Override
-            public void onAfter() {
-            }
         }).setTag(this).exe(official_id + "", "", "");
     }
 
@@ -121,10 +226,12 @@ public class PersionalDetailActivity extends BaseActivity {
      */
     private void initView(OfficalDetailBean b) {
         bean = b;
+        bean.setArticle_list(mockTest());
+        bean.setOfficer(mockTest2());
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像
-            GlideApp.with(ivAvatar).load(bean.getList_pic()).centerCrop().into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getList_pic()).circleCrop().into(ivAvatar);
             //姓名
             tvName.setText(bean.getName());
             //性别
@@ -157,24 +264,24 @@ public class PersionalDetailActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(EventBase event) {
-        if (event instanceof PersionalInfoTabEvent) {
-            EventBus.getDefault().removeStickyEvent(event);
-            tv1.setText("相关新闻");
-            tv1.setTextColor(getResources().getColor(R.color.bc_ffffff));
-            tv2.setTextColor(getResources().getColor(R.color.bc_f44b50));
-            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_left);
-            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_right);
-        }
-
-        //切换到历史求助页面
-        if (event instanceof PersionalDetailTabEvent) {
-            EventBus.getDefault().removeStickyEvent(event);
-            tv2.setText("个人履历");
-            tv2.setTextColor(getResources().getColor(R.color.bc_ffffff));
-            tv1.setTextColor(getResources().getColor(R.color.bc_f44b50));
-            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_right);
-            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_left);
-        }
+//        if (event instanceof PersionalInfoTabEvent) {
+//            EventBus.getDefault().removeStickyEvent(event);
+//            tv1.setText("相关新闻");
+//            tv1.setTextColor(getResources().getColor(R.color.bc_ffffff));
+//            tv2.setTextColor(getResources().getColor(R.color.bc_f44b50));
+//            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_left);
+//            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_right);
+//        }
+//
+//        //切换到历史求助页面
+//        if (event instanceof PersionalDetailTabEvent) {
+//            EventBus.getDefault().removeStickyEvent(event);
+//            tv2.setText("个人履历");
+//            tv2.setTextColor(getResources().getColor(R.color.bc_ffffff));
+//            tv1.setTextColor(getResources().getColor(R.color.bc_f44b50));
+//            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_right);
+//            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_left);
+//        }
 
     }
 
@@ -201,7 +308,7 @@ public class PersionalDetailActivity extends BaseActivity {
         //传递官员详情页履历
         Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(Key
                 .FRAGMENT_ARGS, PersionalDetailInfoFragment.TYPE_INFO);
-        bundlePersionalDetailInfo.putSerializable(Key.FRAGMENT_PERSIONAL_INFO, bean.getOfficer());
+        bundlePersionalDetailInfo.putSerializable(Key.FRAGMENT_PERSIONAL_INFO, bean);
         pagerAdapter.addTabInfo(PersionalDetailInfoFragment.class, "任职履历", bundlePersionalDetailInfo);
 
         viewpager.setAdapter(pagerAdapter);

@@ -59,15 +59,15 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     private List<RelatedSubjectsBean> mockText() {
         List<RelatedSubjectsBean> list = new ArrayList<>();
         RelatedSubjectsBean b1 = new RelatedSubjectsBean();
-        b1.setPic("12");
+        b1.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         RelatedSubjectsBean b2 = new RelatedSubjectsBean();
-        b2.setPic("12");
+        b2.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         RelatedSubjectsBean b3 = new RelatedSubjectsBean();
-        b3.setPic("12");
+        b3.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         RelatedSubjectsBean b4 = new RelatedSubjectsBean();
-        b4.setPic("12");
+        b4.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         RelatedSubjectsBean b5 = new RelatedSubjectsBean();
-        b5.setPic("12");
+        b5.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         list.add(b1);
         list.add(b2);
         list.add(b3);
@@ -107,6 +107,6 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity(mData, position);
+        BizUtils.jumpToDetailActivity(mData);
     }
 }

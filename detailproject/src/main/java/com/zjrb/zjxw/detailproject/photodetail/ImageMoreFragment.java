@@ -64,8 +64,8 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     private void initView(View v) {
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
-        diver = new ListSpaceDivider(32, 0, false);
-        lvNotice.addItemDecoration(diver);
+//        diver = new ListSpaceDivider(32, 0, false);
+//        lvNotice.addItemDecoration(diver);
         initAdapter();
     }
 
@@ -86,6 +86,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity((DraftDetailBean) mAdapter.getData().get(position), position);
+        BizUtils.jumpToDetailActivity((DraftDetailBean) mAdapter.getData().get(position));
     }
 }

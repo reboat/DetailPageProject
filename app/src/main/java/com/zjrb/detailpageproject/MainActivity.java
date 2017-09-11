@@ -81,14 +81,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.MLF_ID,"12653")
 //                        .build(), 0);
 
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
-                        .build(), 0);
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalListActivity")
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
 //                        .build(), 0);
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalListActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
+                        .build(), 0);
 
 
 

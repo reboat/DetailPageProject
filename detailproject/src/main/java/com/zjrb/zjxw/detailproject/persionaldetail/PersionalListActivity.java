@@ -83,7 +83,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
         //官员1
         OfficalListBean.OfficerListBean b = new OfficalListBean.OfficerListBean();
-        b.setTitle("标题1");
+        b.setName("老板");
+        b.setTitle("省委书记");
         b.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         //官员1文章
         List<OfficalArticlesBean> mlist = new ArrayList<>();
@@ -103,7 +104,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
         //官员2
         OfficalListBean.OfficerListBean b1 = new OfficalListBean.OfficerListBean();
-        b1.setTitle("标题1");
+        b1.setName("老板");
+        b1.setTitle("省委书记");
         b1.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         //官员2文章
         List<OfficalArticlesBean> mlist1 = new ArrayList<>();
@@ -123,7 +125,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
         //官员3
         OfficalListBean.OfficerListBean b2 = new OfficalListBean.OfficerListBean();
-        b2.setTitle("标题1");
+        b2.setName("老板");
+        b2.setTitle("省委书记");
         b2.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         //官员3文章
         List<OfficalArticlesBean> mlist2 = new ArrayList<>();
@@ -143,7 +146,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
         //官员4
         OfficalListBean.OfficerListBean b3 = new OfficalListBean.OfficerListBean();
-        b3.setTitle("标题1");
+        b3.setName("老板");
+        b3.setTitle("省委书记");
         b3.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         //官员4文章
         List<OfficalArticlesBean> mlist3 = new ArrayList<>();
@@ -163,7 +167,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
         //官员5
         OfficalListBean.OfficerListBean b4 = new OfficalListBean.OfficerListBean();
-        b4.setTitle("标题1");
+        b4.setName("老板");
+        b4.setTitle("省委书记");
         b4.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         //官员5文章
         List<OfficalArticlesBean> mlist4 = new ArrayList<>();
@@ -323,7 +328,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     @Override
     public void onLoadMoreSuccess(OfficalListBean data, LoadMore loadMore) {
         if (data != null) {
-            List<OfficalListBean.OfficerListBean> list = data.getOfficer_list();
+            List<OfficalListBean.OfficerListBean> list = mockTest();//data.getOfficer_list();
             if (list != null && list.size() > 0) {
                 lastOfficalId = getLastOfficalId(list);
             }

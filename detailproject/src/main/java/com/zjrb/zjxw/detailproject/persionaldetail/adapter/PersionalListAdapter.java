@@ -22,10 +22,6 @@ public class PersionalListAdapter extends BaseRecyclerAdapter {
     public static int TYPE_PERSIONAL_DETAIL = -1;
     public static int TYPE_NOMAL = 0;
 
-//    public PersionalListAdapter(List data) {
-//        super(data);
-//    }
-
     public PersionalListAdapter() {
         super(new ArrayList<OfficalArticlesBean>());
     }

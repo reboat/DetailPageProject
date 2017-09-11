@@ -22,11 +22,11 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder;
 import com.zjrb.core.common.listener.IOnImageTapListener;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
 import com.zjrb.core.utils.T;
@@ -37,7 +37,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
-import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
@@ -101,13 +100,11 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     @BindView(R2.id.menu_comment)
     ImageView mIvComment;
 
-    public int mArticleId = -1;
-    public int mlfId = -1;
+    public String mArticleId = "";
 
     private int mIndex;
     private List<AlbumImageListBean> mAtlasList;
     private DraftDetailBean mData;
-    public static final int REQUEST_CODE = 0x001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,24 +123,36 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            if (data.getQueryParameter(Key.ARTICLE_ID) != null && !data.getQueryParameter(Key.ARTICLE_ID).isEmpty()) {
+                mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
+            }
         }
     }
 
 
+    private DefaultTopBarHolder topBar;
+
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        topBar = TopBarFactory.createDefault(view, this, "");
+        return topBar.getView();
     }
 
 
+    /**
+     * 获取图集数据
+     */
     private void loadData() {
         //获取详情页
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
                 fillData(atlasDetailEntity);
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShort(getBaseContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad()).exe(mArticleId);
 
@@ -261,7 +270,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             finish();
             //分享
         } else if (id == R.id.iv_share) {
-            share();
+//            share();
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
@@ -289,45 +298,46 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
             fabulous();
             //分享
         } else if (id == R.id.menu_share) {
-            share();
+//            share();
         }
     }
 
     //友盟分享
-    private UmengShareUtils shareUtils;
+//    private UmengShareUtils shareUtils;
+//
+//    private void share() {
+//        if (mData == null) return;
+//
+//        String title, content;
+////        if (TextUtils.isEmpty(mData.getSummary())) {
+////            title = UIUtils.getAppName();
+////            content = mData.getList_title();
+////        } else {
+//        title = mData.getArticle().getList_title();
+////            content = mData.getSummary();
+////        }
+//        //TODO WLJ logo
+//        String logoUrl = "http://10.200.76.17/images/24hlogo.png";//APIManager.endpoint.SHARE_24_LOGO_URL;
+//        String targetUrl = mData.getArticle().getUrl();
+//        if (shareUtils == null)
+//            shareUtils = new UmengShareUtils();
+//
+//        UmengShareBean instance = UmengShareBean.getInstance();
+////        instance.setArticleId(mArticleId);
+//        instance.setTitle(title);
+////        instance.setTextContent(content);
+//        instance.setImgUri(logoUrl);
+//        instance.setTargetUrl(targetUrl);
+//        shareUtils.startShare(instance, this);
+//    }
 
-    private void share() {
-        if (mData == null) return;
-
-        String title, content;
-//        if (TextUtils.isEmpty(mData.getSummary())) {
-//            title = UIUtils.getAppName();
-//            content = mData.getList_title();
-//        } else {
-        title = mData.getArticle().getList_title();
-//            content = mData.getSummary();
-//        }
-        //TODO WLJ logo
-        String logoUrl = "http://10.200.76.17/images/24hlogo.png";//APIManager.endpoint.SHARE_24_LOGO_URL;
-        String targetUrl = mData.getArticle().getUrl();
-        if (shareUtils == null)
-            shareUtils = new UmengShareUtils();
-
-        UmengShareBean instance = UmengShareBean.getInstance();
-//        instance.setArticleId(mArticleId);
-        instance.setTitle(title);
-//        instance.setTextContent(content);
-        instance.setImgUri(logoUrl);
-        instance.setTargetUrl(targetUrl);
-        shareUtils.startShare(instance, this);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (shareUtils != null) {
-            shareUtils.initResult(requestCode, resultCode, data);
-        }
+//        if (shareUtils != null) {
+//            shareUtils.initResult(requestCode, resultCode, data);
+//        }
     }
 
     @Override
@@ -343,12 +353,19 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(CommentResultEvent event) {
+    public void onEvent(EventBase event) {
         EventBus.getDefault().removeStickyEvent(event);
-        if (mData != null && event.getData() > 0) {
-            mData.getArticle().setComment_count(mData.getArticle().getComment_count() + event.getData());
-            mTvCommentsNum.setText(BizUtils.formatComments(mData.getArticle().getComment_count()));
-        }
+//        if(event instanceof AtlasDetailLastPageEvent){
+//            if(((AtlasDetailLastPageEvent) event).getData().equals("true")){
+//                topBar.setTopBarText(getString(R.string.module_detail_more_image));
+//            }else{
+//                topBar.setTopBarText("");
+//            }
+//        }
+//        if (mData != null && event.getData() > 0) {
+//            mData.getArticle().setComment_count(mData.getArticle().getComment_count() + event.getData());
+//            mTvCommentsNum.setText(BizUtils.formatComments(mData.getArticle().getComment_count()));
+//        }
     }
 
     /**
@@ -389,14 +406,26 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
         mTvContent.scrollTo(0, 0);
     }
 
+    /**
+     * @param position 设置顶部topbar标题
+     */
+    private void setTopTitle(int position) {
+        if (mAtlasList != null && !mAtlasList.isEmpty()) {
+            if (position == (mAtlasList.size() - 1)) {
+                topBar.setTopBarText(getString(R.string.module_detail_more_image));
+            } else {
+                topBar.setTopBarText("");
+            }
+        }
+    }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        setTopTitle(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override
@@ -404,7 +433,7 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
         return true;
     }
 
-    // 点赞
+    //稿件点赞
     private void fabulous() {
         if (mData == null) return;
         if (mData.getArticle().isLiked()) {

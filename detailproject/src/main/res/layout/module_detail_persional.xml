@@ -22,7 +22,7 @@
             android:layout_margin="9dp"
             android:scaleType="fitXY"
             android:background="#ff0"
-            tools:src="@mipmap/me_qq_btn"/>
+            tools:src="@mipmap/ic_launcher"/>
 
         <LinearLayout
             android:id="@+id/ly_name"
@@ -79,7 +79,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_content"
             android:layout_marginRight="26dp"
-            android:drawableRight="@drawable/module_detail_comment"
+            android:drawableRight="@mipmap/module_detail_offical_more"
             android:gravity="center"
             android:textColor="?attr/tc_484848"
             android:text="@string/module_detail_offical_more"
@@ -99,7 +99,7 @@
             android:layout_width="212dp"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:layout_margin="2dp"
+            android:layout_marginTop="24dp"
             android:layoutMode="clipBounds"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"

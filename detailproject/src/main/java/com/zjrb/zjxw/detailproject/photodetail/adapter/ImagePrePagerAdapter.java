@@ -5,8 +5,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.AtlasDetailLastPageEvent;
 import com.zjrb.zjxw.detailproject.photodetail.ImageMoreFragment;
 import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * 图片预览 ViewPager 适配器，图集需要展示更多图集
@@ -24,22 +27,20 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 7;
-//        return mBean == null ? 0 : mBean.getArticle().getAlbum_image_count();
+        return mBean == null ? 0 : mBean.getArticle().getAlbum_image_count();
     }
 
     @Override
     public Fragment getItem(int position) {
         //最后一张是更多图集,需要参数传入
-        return ImageMoreFragment.newInstance(mBean);
-//        if (mBean.getArticle().getAlbum_image_count() > 1 && (position == mBean.getArticle().getAlbum_image_count())) {
-//            return ImageMoreFragment.newInstance(mBean);
-//        }
-//        return ImagePreviewFragment.newInstance(
-//                new ImagePreviewFragment.ParamsEntity.Builder()
-//                        .setUrl(mBean.getArticle().getAlbum_image_list().get(position).getImage_url())
-//                        .build()
-//        );
+        if (mBean.getArticle().getAlbum_image_count() > 1 && (position == (mBean.getArticle().getAlbum_image_count() - 1))) {
+            return ImageMoreFragment.newInstance(mBean);
+        }
+        return ImagePreviewFragment.newInstance(
+                new ImagePreviewFragment.ParamsEntity.Builder()
+                        .setUrl(mBean.getArticle().getAlbum_image_list().get(position).getImage_url())
+                        .build()
+        );
     }
 
 }

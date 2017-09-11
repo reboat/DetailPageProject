@@ -25,8 +25,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.eventBus.PersionalDetailTabEvent;
-import com.zjrb.zjxw.detailproject.eventBus.PersionalInfoTabEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoFragment;
@@ -48,7 +46,8 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class PersionalDetailActivity extends BaseActivity {
+public class PersionalDetailActivity extends BaseActivity implements ViewPager
+        .OnPageChangeListener {
     @BindView(R2.id.iv_avatar)
     ImageView ivAvatar;
     @BindView(R2.id.tv_name)
@@ -83,6 +82,7 @@ public class PersionalDetailActivity extends BaseActivity {
         setContentView(R.layout.module_detail_persional);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        viewpager.addOnPageChangeListener(this);
         //先加载数据
         loadData();
     }
@@ -100,31 +100,34 @@ public class PersionalDetailActivity extends BaseActivity {
     private List<SubjectItemBean> mockTest() {
         List<SubjectItemBean> list = new ArrayList<>();
         SubjectItemBean b = new SubjectItemBean();
-        b.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        List<String> list_pics = new ArrayList<>();
+        list_pics.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+
+        b.setList_pics(list_pics);
         b.setList_title("标题1");
         SubjectItemBean b1 = new SubjectItemBean();
-        b1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b1.setList_pics(list_pics);
         b1.setList_title("标题1");
         SubjectItemBean b2 = new SubjectItemBean();
-        b2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b2.setList_pics(list_pics);
         b2.setList_title("标题1");
         SubjectItemBean b3 = new SubjectItemBean();
-        b3.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b3.setList_pics(list_pics);
         b3.setList_title("标题1");
         SubjectItemBean b4 = new SubjectItemBean();
-        b4.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b4.setList_pics(list_pics);
         b4.setList_title("标题1");
         SubjectItemBean b5 = new SubjectItemBean();
-        b5.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b5.setList_pics(list_pics);
         b5.setList_title("标题1");
         SubjectItemBean b6 = new SubjectItemBean();
-        b6.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b6.setList_pics(list_pics);
         b6.setList_title("标题1");
         SubjectItemBean b7 = new SubjectItemBean();
-        b7.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b7.setList_pics(list_pics);
         b7.setList_title("标题1");
         SubjectItemBean b8 = new SubjectItemBean();
-        b8.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b8.setList_pics(list_pics);
         b8.setList_title("标题1");
         list.add(b);
         list.add(b1);
@@ -140,6 +143,10 @@ public class PersionalDetailActivity extends BaseActivity {
 
     private OfficalDetailBean.OfficerBean mockTest2() {
         OfficalDetailBean.OfficerBean officer = new OfficalDetailBean.OfficerBean();
+        officer.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        officer.setGender("女");
+        officer.setDescription("骄傲多少点击和是大概几十个福克斯就发货速度就发国剧盛典发过火加深对父控件是费时间的发个的工号圣诞节回复该框架是复健科还是的覆盖卡萨丁胫腓骨框架使得规范开始就待物安稳搭框架打开大家啊大数据大会解散了的嘎屎大颗是多少开发v");
+        officer.setName("宁");
         List<OfficalDetailBean.OfficerBean.ResumesBean> resumes = new ArrayList<>();
         OfficalDetailBean.OfficerBean.ResumesBean b = new OfficalDetailBean.OfficerBean.ResumesBean();
         b.setLocation("浙江");
@@ -326,19 +333,45 @@ public class PersionalDetailActivity extends BaseActivity {
                 tv1.setText(pagerAdapter.getPageTitle(i));
                 tab.setCustomView(v1);
                 ViewParent parent = v1.getParent();
-                ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_subscribe_red_left);
+                ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_left);
             } else {
                 v2 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
                         viewpager, false);
                 tv2 = (TextView) v2.findViewById(R.id.tv_item_tab_score_title);
                 tv2.setText(pagerAdapter.getPageTitle(i));
+                tv2.setTextColor(getResources().getColor(R.color.tc_f44b50));
                 tab.setCustomView(v2);
                 ViewParent parent = v2.getParent();
-                ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_subscribe_red_right);
+                ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
             }
 
         }
 
     }
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (position == 0) {
+            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_left);
+            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
+            tv1.setTextColor(getResources().getColor(R.color.tc_ffffff));
+            tv2.setTextColor(getResources().getColor(R.color.tc_f44b50));
+        } else {
+            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_left_stroke);
+            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right);
+            tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
+            tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

@@ -58,7 +58,7 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
 
         //阅读量
         if (mData.getRead_count() == 0) {
-            mTvTitle.setVisibility(View.GONE);
+            mTvRead.setVisibility(View.GONE);
         } else if (mData.getRead_count() > 0 && mData.getRead_count() <= 9999) {
             mTvRead.setText(mData.getRead_count() + "阅读");
         } else if (mData.getComment_count() > 9999 && mData.getComment_count() <= 99999999) {

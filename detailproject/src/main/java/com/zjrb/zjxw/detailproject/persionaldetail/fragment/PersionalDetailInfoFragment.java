@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +14,8 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.PersionalDetailTabEvent;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalTrackAdapter;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +63,8 @@ public class PersionalDetailInfoFragment extends BaseFragment {
      * 初始化适配器
      */
     private void initView(View v) {
-        mAdapter = new PersionalTrackAdapter(bean.getOfficer().getResumes());
-//        mAdapter.setupData(bean.getOfficer().getResumes());
+        mAdapter = new PersionalTrackAdapter();
+        mAdapter.setupData(bean.getOfficer().getResumes());
         ListSpaceDivider diver;
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
         diver = new ListSpaceDivider(0, 0, false);

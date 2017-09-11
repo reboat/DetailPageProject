@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,20 +24,22 @@ import butterknife.ButterKnife;
  */
 public class PersionalTrackAdapter extends BaseRecyclerAdapter {
 
-    public PersionalTrackAdapter(List data) {
-        super(data);
+
+    public PersionalTrackAdapter() {
+        super(new ArrayList<OfficalDetailBean.OfficerBean.ResumesBean>());
     }
 
     public void setupData(List<OfficalDetailBean.OfficerBean.ResumesBean> groupList) {
+        datas.clear();
         if (groupList != null) {
             for (int i = 0; i < groupList.size(); i++) {
-                OfficalDetailBean.OfficerBean.ResumesBean bean = new OfficalDetailBean.OfficerBean.ResumesBean();
+                OfficalDetailBean.OfficerBean.ResumesBean bean = groupList.get(i);
                 if (i == 0) {
                     bean.setSameYear(false);
                 }
-//                与下一个元素比较是否是同一年
-                if (groupList.size() > (++i)) {
-                    if (String.valueOf(bean.getYear()).equals(String.valueOf(groupList.get(i + 1).getYear()))) {
+                //如果没有到最后一位
+                if (groupList.size() > 1 && i < (groupList.size() - 1)) {
+                    if (bean.getYear() == groupList.get(i + 1).getYear()) {
                         groupList.get(i + 1).setSameYear(true);
                     } else {
                         groupList.get(i + 1).setSameYear(false);
@@ -78,8 +82,16 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            mTvYear.setText(mData.getYear()+"");
-            mTvMonth.setText(mData.getMonth()+"");
+            if(!mData.isSameYear()){
+                mTvYear.setText(mData.getYear() + "年");
+            }else{
+                mTvYear.setVisibility(View.GONE);
+            }
+            if(mData.getMonth() < 10){
+                mTvMonth.setText("0"+mData.getMonth() + "月");
+            }else{
+                mTvMonth.setText(mData.getMonth() + "月");
+            }
             mTvPersionalInfo.setText("[" + mData.getLocation() + "] " + mData.getTitle());
 
         }

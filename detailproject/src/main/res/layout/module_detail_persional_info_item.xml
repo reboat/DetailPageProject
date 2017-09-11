@@ -9,25 +9,29 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="56.5dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/tv_year"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
+            android:textColor="@color/tc_484848"
+            android:textSize="@dimen/ts_11sp"
             tools:text="2017年"/>
 
         <TextView
             android:id="@+id/tv_month"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
+            android:textColor="@color/tc_999999"
+            android:textSize="@dimen/ts_10sp"
             tools:text="4月"/>
 
     </LinearLayout>
@@ -61,10 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="55dp"
+        android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
-        android:paddingBottom="20dp"
         tools:text="浙江省委书记"/>
 
 </LinearLayout>

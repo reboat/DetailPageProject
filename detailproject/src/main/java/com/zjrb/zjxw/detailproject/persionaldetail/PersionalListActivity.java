@@ -321,7 +321,9 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     private int lastOfficalId = 0;
 
-    /**加载更多
+    /**
+     * 加载更多
+     *
      * @param data
      * @param loadMore
      */
@@ -332,14 +334,16 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
             if (list != null && list.size() > 0) {
                 lastOfficalId = getLastOfficalId(list);
             }
-            mAdapter.addData(list, true);
+            mAdapter.setupData(list);
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
     }
 
+
     /**
      * 加载更多每次加载3条
+     *
      * @param callback 官员列表每次下发20条
      */
     @Override

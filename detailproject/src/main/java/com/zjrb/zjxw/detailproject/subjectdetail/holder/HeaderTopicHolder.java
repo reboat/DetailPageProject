@@ -4,6 +4,7 @@ import android.support.percent.PercentFrameLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,7 +20,10 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.TopicDetailChannelAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,8 +38,6 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
 
     @BindView(R2.id.iv_news_topic_banner)
     ImageView ivNewsTopicBanner;
-    @BindView(R2.id.banner_news_topic)
-    PercentFrameLayout bannerNewsTopic;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_summary)
@@ -51,25 +53,70 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
     @BindView(R2.id.pf_pic_container)
     PercentFrameLayout pfPicContainer;
 
+    private boolean isOpen = false;
     /**
      * 专题频道适配器
      */
     private TopicDetailChannelAdapter mChannelItemAdapter;
 
+    private DraftDetailBean bean;
+
     public HeaderTopicHolder(ViewGroup parent) {
         super(inflate(R.layout.module_detail_header_topic, parent, false));
         ButterKnife.bind(this, itemView);
         //频道名称
-        rvHead.addItemDecoration(new GridSpaceDivider(0));
+        rvHead.addItemDecoration(new GridSpaceDivider(13));
         GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 4);
         rvHead.setLayoutManager(managerFollow);
+    }
+
+    private void initView(final DraftDetailBean draftTopicBean) {
+        if (draftTopicBean != null) {
+            isOpen = draftTopicBean.getArticle().isOpen();
+        }
+        tvColumnDetailDescriptionIndicator.setText(itemView.getContext().getString(R.string.module_detail_text_down));
+        tvColumnDetailDescriptionIndicator.setCompoundDrawables(itemView.getContext().getResources().getDrawable(R.drawable.module_detail_text_down), null, null, null);
+        tvSummary.setText(draftTopicBean.getArticle().getSummary());
+        tvSummary.setOnLineCountListener(new ExpandableTextView.OnLineCountListener() {
+            @Override
+            public void onLineCount(int lineCount, int maxLines) {
+                if (lineCount > 3) {
+                    if (isOpen) {
+                        tvColumnDetailDescriptionIndicator.setCompoundDrawables(itemView.getContext().getResources().getDrawable(R.drawable.module_detail_text_down), null, null, null);
+                    } else {
+                        tvColumnDetailDescriptionIndicator.setCompoundDrawables(itemView.getContext().getResources().getDrawable(R.drawable.module_detail_text_up), null, null, null);
+                    }
+                } else if (lineCount <= 3 && maxLines != 3) {
+                    if (isOpen) {
+                        tvColumnDetailDescriptionIndicator.setCompoundDrawables(itemView.getContext().getResources().getDrawable(R.drawable.module_detail_text_down), null, null, null);
+                    } else {
+                        tvColumnDetailDescriptionIndicator.setCompoundDrawables(itemView.getContext().getResources().getDrawable(R.drawable.module_detail_text_up), null, null, null);
+                    }
+                }
+            }
+        });
+        tvColumnDetailDescriptionIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    tvColumnDetailDescriptionIndicator.setText(itemView.getContext().getString(R.string.module_detail_text_up));
+                    tvSummary.setMaxLines(Integer.MAX_VALUE);
+                } else {
+                    tvColumnDetailDescriptionIndicator.setText(itemView.getContext().getString(R.string.module_detail_text_down));
+                    tvSummary.setMaxLines(3);
+                }
+            }
+        });
     }
 
     /**
      * @param draftTopicBean 初始化头数据
      */
     public void initData(DraftDetailBean draftTopicBean) {
-        if (mChannelItemAdapter != null) {
+        bean = draftTopicBean;
+        initView(draftTopicBean);
+        if (mChannelItemAdapter == null) {
             mChannelItemAdapter = new TopicDetailChannelAdapter(draftTopicBean.getArticle().getSubject_groups());
             mChannelItemAdapter.setOnItemClickListener(this);
         }
@@ -77,7 +124,7 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
         rvHead.setAdapter(mChannelItemAdapter);
 
         tvTitle.setText(draftTopicBean.getArticle().getList_title());
-        String summary = draftTopicBean.getArticle().getSubject_summary();
+        String summary = draftTopicBean.getArticle().getSummary();
         String backPicUrl = draftTopicBean.getArticle().getArticle_pic();
         String subjectFocusImg = draftTopicBean.getArticle().getSubject_focus_image();
         if (TextUtils.isEmpty(summary)) {
@@ -87,9 +134,8 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
             tvSummary.setText(summary);
         }
         if (TextUtils.isEmpty(backPicUrl)) {
-            bannerNewsTopic.setVisibility(View.GONE);
+            ivNewsTopicBanner.setVisibility(View.GONE);
         } else {
-            bannerNewsTopic.setVisibility(View.VISIBLE);
             GlideApp.with(ivNewsTopicBanner).load(backPicUrl).centerCrop().into(ivNewsTopicBanner);
         }
         if (TextUtils.isEmpty(subjectFocusImg)) {
@@ -101,17 +147,17 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
                     .into(ivTopicPic);
         }
 
-        if (TextUtils.isEmpty(draftTopicBean.getArticle().getSubject_summary())) {
+        if (TextUtils.isEmpty(draftTopicBean.getArticle().getSummary())) {
             tvTitle2.setVisibility(View.GONE);
         } else {
             tvTitle2.setVisibility(View.VISIBLE);
-            tvTitle2.setText(draftTopicBean.getArticle().getSubject_summary());
+            tvTitle2.setText(draftTopicBean.getArticle().getSummary());
         }
     }
 
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  滚动到项管group
-
+        //TODO  WLJ  滚动到相关group
+        EventBus.getDefault().postSticky(new ChannelItemClickEvent(bean.getArticle().getSubject_groups().get(position).getGroupId()));
     }
 }

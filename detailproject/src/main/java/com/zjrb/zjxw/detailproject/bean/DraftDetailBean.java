@@ -80,6 +80,7 @@ public class DraftDetailBean extends BaseInnerData {
     }
 
     public static class ArticleBean {
+        private boolean isOpen;
         private int id;
         private int mlf_id;
         private String list_title;
@@ -115,11 +116,11 @@ public class DraftDetailBean extends BaseInnerData {
         private String video_url;
         private int video_duration;
         private double video_size;
-        private long topic_date_begin;
+        private long topic_date_start;
         private long topic_date_end;
         private String subject_focus_url;
         private String subject_focus_image;
-        private String subject_summary;
+        private String summary;
         private String subject_pic;
         private boolean followed;
         private boolean column_subscribed;
@@ -127,6 +128,16 @@ public class DraftDetailBean extends BaseInnerData {
         private boolean like_enabled;
         private boolean liked;
         private List<String> list_pics;
+        private String subject_focus_decription;
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
+
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -462,12 +473,12 @@ public class DraftDetailBean extends BaseInnerData {
             this.video_size = video_size;
         }
 
-        public long getTopic_date_begin() {
-            return topic_date_begin;
+        public long getTopic_date_start() {
+            return topic_date_start;
         }
 
-        public void setTopic_date_begin(long topic_date_begin) {
-            this.topic_date_begin = topic_date_begin;
+        public void setTopic_date_start(long topic_date_start) {
+            this.topic_date_start = topic_date_start;
         }
 
         public long getTopic_date_end() {
@@ -494,12 +505,12 @@ public class DraftDetailBean extends BaseInnerData {
             this.subject_focus_image = subject_focus_image;
         }
 
-        public String getSubject_summary() {
-            return subject_summary;
+        public String getSummary() {
+            return summary;
         }
 
-        public void setSubject_summary(String subject_summary) {
-            this.subject_summary = subject_summary;
+        public void setSummary(String summary) {
+            this.summary = summary;
         }
 
         public String getSubject_pic() {
@@ -612,6 +623,14 @@ public class DraftDetailBean extends BaseInnerData {
 
         public void setRelated_subjects(List<RelatedSubjectsBean> related_subjects) {
             this.related_subjects = related_subjects;
+        }
+
+        public String getSubject_focus_decription() {
+            return subject_focus_decription;
+        }
+
+        public void setSubject_focus_decription(String subject_focus_decription) {
+            this.subject_focus_decription = subject_focus_decription;
         }
 
         /**

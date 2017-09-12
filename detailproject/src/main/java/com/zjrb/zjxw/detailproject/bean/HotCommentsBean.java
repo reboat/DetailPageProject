@@ -50,6 +50,8 @@ public class HotCommentsBean extends BaseInnerData {
     private String parent_account_id;
     private String parent_portrait_url;
     private boolean parent_liked;
+    private int account_type;
+    private int parent_account_type;
 
     public String getId() {
         return id;
@@ -193,5 +195,21 @@ public class HotCommentsBean extends BaseInnerData {
 
     public void setParent_liked(boolean parent_liked) {
         this.parent_liked = parent_liked;
+    }
+
+    public int getAccount_type() {
+        return account_type;
+    }
+
+    public void setAccount_type(int account_type) {
+        this.account_type = account_type;
+    }
+
+    public int getParent_account_type() {
+        return parent_account_type;
+    }
+
+    public void setParent_account_type(int parent_account_type) {
+        this.parent_account_type = parent_account_type;
     }
 }

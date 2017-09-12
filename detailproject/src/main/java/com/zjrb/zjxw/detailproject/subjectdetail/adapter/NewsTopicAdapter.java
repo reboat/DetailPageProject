@@ -18,10 +18,12 @@ import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsSubjectHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsTextHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsVideoHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 新闻专题列表 Adapter(支持所有类型 图文，纯文字，多图，视频，话题，直播)
@@ -46,8 +48,8 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
     //专题
     public static final int TYPE_SUBJECT = 6;
 
-    public NewsTopicAdapter(List data) {
-        super(data);
+    public NewsTopicAdapter() {
+        super(new ArrayList<SubjectNewsBean.GroupArticlesBean>());
     }
 
     /**
@@ -56,7 +58,8 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
     public void setupData(List<SubjectNewsBean.GroupArticlesBean> groupList) {
         datas.clear();
         if (groupList != null) {
-            for (SubjectNewsBean.GroupArticlesBean group : groupList) {
+            for (int i = 0; i < groupList.size(); i++) {
+                SubjectNewsBean.GroupArticlesBean group = groupList.get(i);
                 SubjectItemBean bean = new SubjectItemBean();
                 bean.setList_title(group.getGroupName());
                 if (group.getArticleList() != null && !group.getArticleList().isEmpty()) {
@@ -64,11 +67,25 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
                 } else {
                     bean.setSize(0);
                 }
+                bean.setPosition(i);
                 bean.setId(group.getGroupId());
                 bean.setDoc_type(-1);
                 datas.add(bean);
                 datas.addAll(group.getArticleList());
             }
+//            for (SubjectNewsBean.GroupArticlesBean group : groupList) {
+//                SubjectItemBean bean = new SubjectItemBean();
+//                bean.setList_title(group.getGroupName());
+//                if (group.getArticleList() != null && !group.getArticleList().isEmpty()) {
+//                    bean.setSize(group.getArticleList().size());
+//                } else {
+//                    bean.setSize(0);
+//                }
+//                bean.setId(group.getGroupId());
+//                bean.setDoc_type(-1);
+//                datas.add(bean);
+//                datas.addAll(group.getArticleList());
+//            }
             notifyDataSetChanged();
         }
     }
@@ -105,7 +122,6 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
         //组名
         SubjectItemBean b = (SubjectItemBean) datas.get(position);
         if (b.getDoc_type() == -1) {
-            b.setPosition(position);
             return TYPE_GROUP;
             //纯文字
         } else if (b.getList_style() == 1) {
@@ -153,8 +169,18 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
             tvGroupName.setText(mData.getList_title());
             if (mData.getSize() >= 3) {
                 tvMore.setVisibility(View.VISIBLE);
+                tvMore.setText(itemView.getContext().getString(R.string.module_detail_offical_more));
             }
         }
+
+        @OnClick({R2.id.tv_more})
+        public void onClick(View v) {
+            if (v.getId() == R.id.tv_more) {
+                //TODO WLJ 跳转到专题列表
+            }
+
+        }
+
     }
 
 }

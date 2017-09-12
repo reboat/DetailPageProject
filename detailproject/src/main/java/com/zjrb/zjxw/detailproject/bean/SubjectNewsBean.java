@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * create time:2017/8/1  下午5:24
  */
 
-public class SubjectNewsBean extends BaseInnerData {
+public class SubjectNewsBean {
 
     private List<GroupArticlesBean> group_articles;
 

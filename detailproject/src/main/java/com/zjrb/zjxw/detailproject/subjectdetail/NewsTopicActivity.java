@@ -15,7 +15,6 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.widget.ExpandableTextView;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -36,6 +35,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -45,8 +47,7 @@ import butterknife.ButterKnife;
  * create time:2017/7/25  上午11:24
  */
 
-public class NewsTopicActivity extends BaseActivity implements
-        ExpandableTextView.OnLineCountListener, OnItemClickListener {
+public class NewsTopicActivity extends BaseActivity implements OnItemClickListener {
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
     @BindView(R2.id.ly_container)
@@ -61,11 +62,7 @@ public class NewsTopicActivity extends BaseActivity implements
     /**
      * 稿件ID
      */
-    public int mArticleId = -1;
-    /**
-     * 媒立方ID
-     */
-    public int mlfId = -1;
+    private String mArticleId = "";
 
     /**
      * 专题详情页数据
@@ -93,9 +90,113 @@ public class NewsTopicActivity extends BaseActivity implements
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            if (data.getQueryParameter(Key.ARTICLE_ID) != null && !data.getQueryParameter(Key.ARTICLE_ID).isEmpty()) {
+                mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
+            }
         }
+    }
+
+
+    private DraftDetailBean mockTest2() {
+        DraftDetailBean b = new DraftDetailBean();
+        DraftDetailBean.ArticleBean a = new DraftDetailBean.ArticleBean();
+        a.setOpen(false);
+        a.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        a.setList_title("说的科技时代会计核算地方就看水电费是肯德基发货速度就复健科水电费收款方");
+        a.setSummary("框架按时间旷达科技阿斯达你阿卡家到那家卡萨的尼桑卡机发布啦发链接开始打放假啊啥大部分爱神的箭发神经的发布好的部分啊数据恢复就好sad吧房间号是房间号是发啥大部分啊是否被加深对房间号卡上饭卡圣诞节发布圣诞节开发别介啊卡水电费阿贾克斯饭卡加深对饭卡刷简单和放假阿斯达发斯蒂芬阿斯蒂芬建行卡都是放假卡上放假卡上大饭卡刷就饭卡刷就大富科技按时父控件是饭卡圣诞节和饭卡刷的回复把框架阿斯达饭卡圣诞节发");
+        a.setSubject_focus_image("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b.setArticle(a);
+        return b;
+    }
+
+
+    private List<SubjectNewsBean.GroupArticlesBean> mockTest() {
+        List<SubjectNewsBean.GroupArticlesBean> subject_groups = new ArrayList<>();
+        SubjectNewsBean.GroupArticlesBean group_articles = new SubjectNewsBean.GroupArticlesBean();
+        group_articles.setGroupId(1);
+        group_articles.setGroupName("标题1");
+
+        List<SubjectItemBean> list = new ArrayList<>();
+        SubjectItemBean b = new SubjectItemBean();
+        b.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b.setList_title("子标题1");
+        SubjectItemBean b1 = new SubjectItemBean();
+        b1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b1.setList_title("子标题1");
+        SubjectItemBean b2 = new SubjectItemBean();
+        b2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b2.setList_title("子标题1");
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        group_articles.setArticleList(list);
+
+        SubjectNewsBean.GroupArticlesBean group_articles1 = new SubjectNewsBean.GroupArticlesBean();
+        group_articles1.setGroupId(2);
+        group_articles1.setGroupName("标题2");
+
+        List<SubjectItemBean> list1 = new ArrayList<>();
+        SubjectItemBean bb = new SubjectItemBean();
+        bb.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bb.setList_title("子标题2");
+        SubjectItemBean bb1 = new SubjectItemBean();
+        bb1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bb1.setList_title("子标题2");
+        SubjectItemBean bb2 = new SubjectItemBean();
+        bb2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bb2.setList_title("子标题2");
+        list1.add(bb);
+        list1.add(bb1);
+        list1.add(bb2);
+        group_articles1.setArticleList(list1);
+
+
+        SubjectNewsBean.GroupArticlesBean group_articles2 = new SubjectNewsBean.GroupArticlesBean();
+        group_articles2.setGroupId(3);
+        group_articles2.setGroupName("标题3");
+
+        List<SubjectItemBean> list2 = new ArrayList<>();
+        SubjectItemBean bbb = new SubjectItemBean();
+        bbb.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbb.setList_title("子标题3");
+        SubjectItemBean bbb1 = new SubjectItemBean();
+        bbb1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbb1.setList_title("子标题3");
+        SubjectItemBean bbb2 = new SubjectItemBean();
+        bbb2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbb2.setList_title("子标题3");
+        list2.add(bbb);
+        list2.add(bbb1);
+        list2.add(bbb2);
+        group_articles2.setArticleList(list2);
+
+
+        SubjectNewsBean.GroupArticlesBean group_articles3 = new SubjectNewsBean.GroupArticlesBean();
+        group_articles3.setGroupId(4);
+        group_articles3.setGroupName("标题4");
+
+        List<SubjectItemBean> list3 = new ArrayList<>();
+        SubjectItemBean bbbb = new SubjectItemBean();
+        bbbb.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbbb.setList_title("子标题3");
+        SubjectItemBean bbbb1 = new SubjectItemBean();
+        bbbb1.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbbb1.setList_title("子标题3");
+        SubjectItemBean bbbb2 = new SubjectItemBean();
+        bbbb2.setArticle_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        bbbb2.setList_title("子标题3");
+        list3.add(bbbb);
+        list3.add(bbbb1);
+        list3.add(bbbb2);
+        group_articles3.setArticleList(list3);
+
+        subject_groups.add(group_articles);
+        subject_groups.add(group_articles1);
+        subject_groups.add(group_articles2);
+        subject_groups.add(group_articles3);
+
+        return subject_groups;
+
     }
 
     /**
@@ -105,22 +206,22 @@ public class NewsTopicActivity extends BaseActivity implements
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                if (draftDetailBean == null) {
-                    return;
-                } else {
-                    bean = draftDetailBean;
-                    fillData(draftDetailBean);
-                }
+                bean = draftDetailBean;
+                bean = mockTest2();
+                bean.getArticle().setSubject_groups(mockTest());
+                fillData(bean);
 
+//                if (draftDetailBean == null) {
+//                    return;
+//                } else {
+//                    bean = draftDetailBean;
+//                    fillData(draftDetailBean);
+//                }
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
-            }
-
-            @Override
-            public void onAfter() {
             }
 
         }).setTag(this).exe(mArticleId);
@@ -139,11 +240,18 @@ public class NewsTopicActivity extends BaseActivity implements
         headHolder.initData(draftTopicBean);
 
         //专题详情页列表
-        if (mAdapter != null) {
-            mAdapter = new NewsTopicAdapter(bean.getArticle().getSubject_groups());
+
+        if (mAdapter == null) {
+            mAdapter = new NewsTopicAdapter();
             mAdapter.setOnItemClickListener(this);
         }
-        mAdapter.setupData(draftTopicBean.getArticle().getSubject_groups());
+        mAdapter.setupData(mockTest());
+
+//        if (mAdapter != null) {
+//            mAdapter = new NewsTopicAdapter(bean.getArticle().getSubject_groups());
+//            mAdapter.setOnItemClickListener(this);
+//        }
+//        mAdapter.setupData(draftTopicBean.getArticle().getSubject_groups());
         mAdapter.addHeaderView(headHolder.getItemView());
         mRvContent.setAdapter(mAdapter);
     }
@@ -198,20 +306,17 @@ public class NewsTopicActivity extends BaseActivity implements
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(ChannelItemClickEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
-        SubjectNewsBean.GroupArticlesBean b = event.getData();
-        if (b != null && mRvContent != null && mAdapter != null && mAdapter.getData().size() > 0) {
-            for (SubjectItemBean bean : b.getArticleList()) {
-                if (bean.getDoc_type() == -1 && bean.getId() == b.getGroupId()) {
-                    mRvContent.scrollToPosition(bean.getPosition());
+        if (mAdapter.datas != null && !mAdapter.datas.isEmpty()) {
+            for (SubjectItemBean bean : (List<SubjectItemBean>) mAdapter.datas) {
+                if (bean.getId() == event.getType()) {
+                    if (mAdapter.datas.size() >= (bean.getPosition() + 1)) {
+                        ((LinearLayoutManager) mRvContent.getLayoutManager()).scrollToPositionWithOffset(bean.getPosition() + 1, 0);
+                        ((LinearLayoutManager) mRvContent.getLayoutManager()).setStackFromEnd(true);
+                    }
+                    break;
                 }
             }
-
-
         }
-    }
-
-    @Override
-    public void onLineCount(int lineCount, int maxLines) {
 
     }
 

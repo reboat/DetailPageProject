@@ -80,6 +80,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      */
     private PersionalRelateNewsAdapter mAdapter;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

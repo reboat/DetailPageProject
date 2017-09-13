@@ -67,25 +67,15 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
                 } else {
                     bean.setSize(0);
                 }
-                bean.setPosition(i);
                 bean.setId(group.getGroupId());
                 bean.setDoc_type(-1);
                 datas.add(bean);
                 datas.addAll(group.getArticleList());
             }
-//            for (SubjectNewsBean.GroupArticlesBean group : groupList) {
-//                SubjectItemBean bean = new SubjectItemBean();
-//                bean.setList_title(group.getGroupName());
-//                if (group.getArticleList() != null && !group.getArticleList().isEmpty()) {
-//                    bean.setSize(group.getArticleList().size());
-//                } else {
-//                    bean.setSize(0);
-//                }
-//                bean.setId(group.getGroupId());
-//                bean.setDoc_type(-1);
-//                datas.add(bean);
-//                datas.addAll(group.getArticleList());
-//            }
+
+            for (int i = 0; i < datas.size(); i++) {
+                ((SubjectItemBean) datas.get(i)).setPosition(i);
+            }
             notifyDataSetChanged();
         }
     }

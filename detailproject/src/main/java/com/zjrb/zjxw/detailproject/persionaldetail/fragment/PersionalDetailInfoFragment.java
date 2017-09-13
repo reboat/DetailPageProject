@@ -39,7 +39,6 @@ public class PersionalDetailInfoFragment extends BaseFragment {
 
     private OfficalDetailBean bean;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,5 +85,4 @@ public class PersionalDetailInfoFragment extends BaseFragment {
 //        }
 
     }
-
 }

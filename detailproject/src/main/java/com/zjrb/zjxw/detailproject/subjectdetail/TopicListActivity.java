@@ -139,7 +139,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
             @Override
             public void onAfter() {
             }
-        }).setTag(this).exe(group_id, "", "20");
+        }).setTag(this).exe(group_id+"", "", "20");
     }
 
 

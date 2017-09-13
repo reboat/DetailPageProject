@@ -53,6 +53,11 @@ public class HotCommentsBean extends BaseInnerData {
     private int account_type;
     private int parent_account_type;
 
+    /**
+     * 是否是自己的评论
+     */
+    private boolean own;
+
     public String getId() {
         return id;
     }
@@ -211,5 +216,13 @@ public class HotCommentsBean extends BaseInnerData {
 
     public void setParent_account_type(int parent_account_type) {
         this.parent_account_type = parent_account_type;
+    }
+
+    public boolean isOwn() {
+        return own;
+    }
+
+    public void setOwn(boolean own) {
+        this.own = own;
     }
 }

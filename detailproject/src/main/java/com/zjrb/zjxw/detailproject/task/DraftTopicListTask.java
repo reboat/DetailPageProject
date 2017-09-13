@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 稿件专题分组列表 - Task
@@ -25,15 +26,12 @@ public class DraftTopicListTask extends APIPostTask<SubjectListBean> {
     @Override
     protected void onSetupParams(Object... params) {
         put("group_id", params[0]);
-        if (!params[1].equals("")) {
-            put("start", params[1]);
-        }
+        put("start", params[1]);
         put("size", params[2]);
     }
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.DRAFT_DETAIL;
+        return APIManager.endpoint.SUBJECT_LIST;
     }
 }

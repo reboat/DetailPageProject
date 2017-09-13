@@ -147,6 +147,12 @@ public class APIManager {
          */
         public static final String OFFICAL_LIST = "/api/officer/list";
 
+        /**
+         * 获取专题列表
+         */
+        public static final String SUBJECT_LIST = "/api/article/subject_group_list";
+
+
     }
 
 }

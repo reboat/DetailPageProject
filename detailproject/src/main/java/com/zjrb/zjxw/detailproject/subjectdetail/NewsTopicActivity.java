@@ -320,6 +320,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
 
     }
 
+
     /**
      * 显示撤稿页面
      */

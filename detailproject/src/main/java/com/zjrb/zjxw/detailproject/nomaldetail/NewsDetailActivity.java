@@ -64,7 +64,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, OnItemClickListener {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener {
 
     /**
      * 稿件ID
@@ -223,7 +223,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
     }
 
-
     /**
      * @param data 填充详情页数据
      */
@@ -282,7 +281,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 //        }
         mRvContent.setAdapter(mAdapter = new NewsDetailAdapter(datas,
                 mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO));
-        mAdapter.setOnItemClickListener(this);
+//        mAdapter.setOnItemClickListener(this);
 
         mMenuPrised.setSelected(data.getArticle().isLiked());
         if (data.getArticle().getComment_count() <= 0) {
@@ -480,10 +479,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
     }
 
-    @Override
-    public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  无需操作
-    }
+//    @Override
+//    public void onItemClick(View itemView, int position) {
+//        //TODO  WLJ  无需操作
+//    }
 
     /**
      * 显示撤稿页面

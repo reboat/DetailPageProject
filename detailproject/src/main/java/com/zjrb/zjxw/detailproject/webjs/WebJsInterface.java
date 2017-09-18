@@ -3,9 +3,13 @@ package com.zjrb.zjxw.detailproject.webjs;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.zjrb.core.utils.click.ClickTracker;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

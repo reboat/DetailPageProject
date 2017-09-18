@@ -45,12 +45,8 @@ public class BottomSaveDialogFragment extends BaseBottomDialogFragment {
     public void onClick(View v) {
         if (mDialog != null) mDialog.dismiss();
         if (mListener == null) return;
-        switch (v.getId()) {
-            case R2.id.tv_save:
-                mListener.onSave();
-                break;
-            case R2.id.tv_cancel:
-                break;
+        if(v.getId() == R.id.tv_save){
+            mListener.onSave();
         }
     }
 

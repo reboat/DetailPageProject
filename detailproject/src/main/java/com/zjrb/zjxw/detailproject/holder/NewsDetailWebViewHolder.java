@@ -119,12 +119,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 WebView.HitTestResult hitTestResult = view.getHitTestResult();
-                // 重定向
-//                if (hitTestResult != null && TextUtils.isEmpty(hitTestResult.getExtra())) {
-//                    view.loadUrl(url);
-//                } else { // 点击跳转
-//                itemView.getContext().startActivity(BrowserActivity.getIntent(url, ""));
-//                }
                 return true;
             }
 

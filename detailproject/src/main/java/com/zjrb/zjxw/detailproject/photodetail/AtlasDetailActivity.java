@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.photodetail;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder;
-import com.zjrb.core.common.listener.IOnImageTapListener;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.nav.Nav;
@@ -62,7 +59,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 
-public class AtlasDetailActivity extends BaseActivity implements IOnImageTapListener, ViewPager
+public class AtlasDetailActivity extends BaseActivity implements ViewPager
         .OnPageChangeListener, View.OnTouchListener {
 
     @BindView(R2.id.activity_atlas_detail)
@@ -368,32 +365,32 @@ public class AtlasDetailActivity extends BaseActivity implements IOnImageTapList
 //        }
     }
 
-    /**
-     * 图片轻触回调
-     */
-    @Override
-    public void onImageTap(View view) {
-        mContainerBottom.clearAnimation();
-        mContainerTop.clearAnimation();
-        AnimatorSet animatorSet = new AnimatorSet();
-        if (mContainerBottom.getAlpha() == 0) {
-            animatorSet.playTogether(
-                    createAnimator(mContainerBottom, 0, 1),
-                    createAnimator(mContainerTop, 0, 1)
-            );
-        } else {
-            animatorSet.playTogether(
-                    createAnimator(mContainerBottom, 1, 0),
-                    createAnimator(mContainerTop, 1, 0)
-            );
-        }
-        animatorSet.setDuration(100);
-        animatorSet.start();
-    }
+//    /**
+//     * 图片轻触回调
+//     */
+//    @Override
+//    public void onImageTap(View view) {
+//        mContainerBottom.clearAnimation();
+//        mContainerTop.clearAnimation();
+//        AnimatorSet animatorSet = new AnimatorSet();
+//        if (mContainerBottom.getAlpha() == 0) {
+//            animatorSet.playTogether(
+//                    createAnimator(mContainerBottom, 0, 1),
+//                    createAnimator(mContainerTop, 0, 1)
+//            );
+//        } else {
+//            animatorSet.playTogether(
+//                    createAnimator(mContainerBottom, 1, 0),
+//                    createAnimator(mContainerTop, 1, 0)
+//            );
+//        }
+//        animatorSet.setDuration(100);
+//        animatorSet.start();
+//    }
 
-    private ObjectAnimator createAnimator(View view, int start, int end) {
-        return ObjectAnimator.ofFloat(view, "alpha", start, end);
-    }
+//    private ObjectAnimator createAnimator(View view, int start, int end) {
+//        return ObjectAnimator.ofFloat(view, "alpha", start, end);
+//    }
 
 
     @Override

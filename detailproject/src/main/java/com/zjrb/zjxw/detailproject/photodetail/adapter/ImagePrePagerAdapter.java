@@ -4,12 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.zjrb.core.ui.fragment.ImagePreviewFragment;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.AtlasDetailLastPageEvent;
 import com.zjrb.zjxw.detailproject.photodetail.ImageMoreFragment;
-import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
-
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * 图片预览 ViewPager 适配器，图集需要展示更多图集
@@ -37,9 +34,7 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
             return ImageMoreFragment.newInstance(mBean);
         }
         return ImagePreviewFragment.newInstance(
-                new ImagePreviewFragment.ParamsEntity.Builder()
-                        .setUrl(mBean.getArticle().getAlbum_image_list().get(position).getImage_url())
-                        .build()
+                mBean.getArticle().getAlbum_image_list().get(position).getImage_url()
         );
     }
 

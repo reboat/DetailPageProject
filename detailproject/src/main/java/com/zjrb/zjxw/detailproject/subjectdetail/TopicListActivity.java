@@ -28,6 +28,7 @@ import com.zjrb.zjxw.detailproject.subjectdetail.adapter.TopicListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +58,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getIntentData(getIntent());
         setContentView(R.layout.module_detail_topic_list);
         ButterKnife.bind(this);
         init();
@@ -64,10 +66,18 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        return TopBarFactory.createDefault(view, this, list_title != null ? list_title : "").getView();
     }
 
+    /**
+     * 专题分组id
+     */
     private int group_id = 0;
+
+    /**
+     * 专题列表标题
+     */
+    private String list_title;
 
     /**
      * @param intent 获取传递数据
@@ -75,7 +85,8 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-                group_id = Integer.parseInt(data.getQueryParameter(Key.GROUP_ID));
+            group_id = Integer.parseInt(data.getQueryParameter(Key.GROUP_ID));
+            list_title = data.getQueryParameter(Key.TITLE);
         }
     }
 
@@ -84,7 +95,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      * 初始化
      */
     private void init() {
-        getIntentData(getIntent());
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
         refresh = new HeaderRefresh(mRecycler);
@@ -106,7 +116,65 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
     /**
      * 专题列表数据
      */
-    private List<SubjectListBean.ArticleListBean> list;
+    private List<SubjectItemBean> list;
+
+    //mock测试数据
+    private List<SubjectItemBean> mockData() {
+        List<SubjectItemBean> list = new ArrayList<>();
+
+        SubjectItemBean b = new SubjectItemBean();
+        List<String> l = new ArrayList<>();
+        l.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b.setList_pics(l);
+        b.setList_title("文章1");
+
+        SubjectItemBean b1 = new SubjectItemBean();
+        List<String> l1 = new ArrayList<>();
+        l1.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b1.setList_pics(l1);
+        b1.setList_title("文章2");
+
+        SubjectItemBean b2 = new SubjectItemBean();
+        List<String> l2 = new ArrayList<>();
+        l2.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b2.setList_pics(l2);
+        b2.setList_title("文章3");
+
+        SubjectItemBean b3 = new SubjectItemBean();
+        List<String> l3 = new ArrayList<>();
+        l3.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b3.setList_pics(l3);
+        b3.setList_title("文章4");
+
+
+        SubjectItemBean b4 = new SubjectItemBean();
+        List<String> l4 = new ArrayList<>();
+        l4.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b4.setList_pics(l4);
+        b4.setList_title("文章5");
+
+        SubjectItemBean b5 = new SubjectItemBean();
+        List<String> l5 = new ArrayList<>();
+        l5.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b5.setList_pics(l5);
+        b5.setList_title("文章6");
+
+        SubjectItemBean b6 = new SubjectItemBean();
+        List<String> l6 = new ArrayList<>();
+        l6.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
+        b6.setList_pics(l6);
+        b6.setList_title("文章7");
+
+        list.add(b);
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        list.add(b5);
+        list.add(b6);
+
+        return list;
+    }
 
     private void loadData() {
         new DraftTopicListTask(new APIExpandCallBack<SubjectListBean>() {
@@ -116,12 +184,11 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                     return;
                 }
                 if (bean.getResultCode() == 0) {
-                    list = bean.getArticle_list();
+                    list = mockData();//bean.getArticle_list();
                     if (list != null) {
                         if (mAdapter == null) {
                             mAdapter = new TopicListAdapter(list);
                             initAdapter();
-                            mRecycler.setAdapter(mAdapter);
                         }
                         mRecycler.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
@@ -136,21 +203,21 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 T.showShort(getBaseContext(), errMsg);
             }
 
-            @Override
-            public void onAfter() {
-            }
-        }).setTag(this).exe(group_id+"", "", "20");
+        }).setTag(this).exe(group_id + "", "", "20");
     }
 
 
-    private long lastMinPublishTime = 0;
+    /**
+     * 上次请求的最后一条新闻的ID
+     */
+    private long lastNewsId = 0;
 
     @Override
     public void onLoadMoreSuccess(SubjectListBean data, LoadMore loadMore) {
         if (data != null) {
-            List<SubjectListBean.ArticleListBean> list = data.getArticle_list();
+            List<SubjectItemBean> list = data.getArticle_list();
             if (list != null && list.size() > 0) {
-                lastMinPublishTime = getLastMinPublishTime(list);
+                lastNewsId = getLastNewsId(list);
             }
             mAdapter.addData(list, true);
         } else {
@@ -160,7 +227,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
 
     @Override
     public void onLoadMore(LoadingCallBack<SubjectListBean> callback) {
-        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastMinPublishTime, "20");
+        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId, "20");
     }
 
     @Override
@@ -172,7 +239,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      * @param list
      * @return 获取最后一条的时间戳
      */
-    private long getLastMinPublishTime(List<SubjectListBean.ArticleListBean> list) {
+    private long getLastNewsId(List<SubjectItemBean> list) {
         return list.get(list.size() - 1).getId();
     }
 

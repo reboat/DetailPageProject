@@ -4,6 +4,7 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
@@ -54,6 +55,8 @@ public class TopicListAdapter extends BaseRecyclerAdapter {
             return new NewsVideoHolder(viewGroup);
         } else if (viewType == TYPE_MULTI) {
             return new NewsMultiPictureHolder(viewGroup);
+        }else if(viewType == TYPE_SUBJECT){
+            return new NewsTopicHolder(viewGroup);
         }
 
         return new NewsDetailArticleGeneralViewHolder(viewGroup);
@@ -62,7 +65,7 @@ public class TopicListAdapter extends BaseRecyclerAdapter {
     @Override
     public int getAbsItemViewType(int position) {
         //组名
-        SubjectListBean.ArticleListBean b = (SubjectListBean.ArticleListBean) datas.get(position);
+        SubjectItemBean b = (SubjectItemBean) datas.get(position);
         if (b.getDoc_type() == 2) {
             return TYPE_NOMAL;
             //纯文字

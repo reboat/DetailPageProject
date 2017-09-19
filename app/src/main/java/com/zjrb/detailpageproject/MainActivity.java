@@ -58,11 +58,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_text:
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
+//                        .appendQueryParameter(Key.MLF_ID,"12653")
+//                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
+//                        .build(), 0);
+
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
-                        .appendQueryParameter(Key.MLF_ID,"12653")
-                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
+                        .appendQueryParameter(Key.GROUP_ID, "5")
+                        .appendQueryParameter(Key.TITLE, "各地实践")
                         .build(), 0);
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")

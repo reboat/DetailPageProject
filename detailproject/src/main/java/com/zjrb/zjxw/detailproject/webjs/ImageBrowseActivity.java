@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
@@ -22,9 +21,15 @@ import com.zjrb.core.ui.widget.photoview.HackyViewPager;
 import com.zjrb.core.utils.DownloadUtil;
 import com.zjrb.core.utils.PathUtil;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 图片浏览 Activity
@@ -33,22 +38,24 @@ import java.util.List;
  * Intent ikey = new Intent(getActivity(), ImageBrowseActivity.class);
  * ikey.putExtra(ImageBrowseActivity.EXTRA_IMAGE_URLS, new String[]{});
  * ikey.putExtra(ImageBrowseActivity.EXTRA_IMAGE_INDEX, 0); // 从0开始
- *
- * @author a_liYa
- * @date 16/8/4 下午5:05.
+ * <p>
+ * Created by wanglinjie.
+ * create time:2017/9/19  上午11:34
  */
-public class ImageBrowseActivity extends BaseActivity implements View.OnClickListener {
+public class ImageBrowseActivity extends BaseActivity {
 
     private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
 
-    private String viewpager_indicator = "%1$d/%2$d";
+    @BindView(R2.id.pager)
+    HackyViewPager mPager;
+    @BindView(R2.id.indicator)
+    TextView indicator;
 
-    private HackyViewPager mPager;
+    private String viewpager_indicator = "%1$d/%2$d";
     private int pagerPosition;
-    private TextView indicator;
-    private ImageView mIvDownLoad;
+    private ImagePagerAdapter mAdapter;
 
     public static Intent newIntent(Context ctx, String[] urls, int index) {
         Intent intent = new Intent(ctx, ImageBrowseActivity.class);
@@ -58,23 +65,38 @@ public class ImageBrowseActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    private ImagePagerAdapter mAdapter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_image_browse);
+        ButterKnife.bind(this);
 
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         String[] urls = getIntent().getStringArrayExtra(EXTRA_IMAGE_URLS);
-        mPager = (HackyViewPager) findViewById(R.id.pager);
+        initPage(savedInstanceState, urls);
+    }
+
+    /**
+     * 保存当前页面position
+     *
+     * @param outState
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_POSITION, mPager.getCurrentItem());
+    }
+
+    /**
+     * 初始化页面适配器
+     *
+     * @param savedInstanceState
+     * @param urls
+     */
+    private void initPage(Bundle savedInstanceState, String[] urls) {
         mAdapter = new ImagePagerAdapter(
                 getSupportFragmentManager(), urls);
         mPager.setPageTransformer(true, new DepthPageTransformer());
         mPager.setAdapter(mAdapter);
-        indicator = (TextView) findViewById(R.id.indicator);
-        mIvDownLoad = (ImageView) findViewById(R.id.iv_download);
-        mIvDownLoad.setOnClickListener(this);
 
         CharSequence text = String.format(viewpager_indicator, 1, mPager
                 .getAdapter().getCount());
@@ -105,16 +127,10 @@ public class ImageBrowseActivity extends BaseActivity implements View.OnClickLis
         mPager.setCurrentItem(pagerPosition);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putInt(STATE_POSITION, mPager.getCurrentItem());
-    }
 
-    @Override
-    public void onClick(View v) {
-        loadImage(pagerPosition);
-    }
-
+    /**
+     * 图片适配器
+     */
     private class ImagePagerAdapter extends FragmentStatePagerAdapter {
 
         public String[] fileList;
@@ -142,8 +158,17 @@ public class ImageBrowseActivity extends BaseActivity implements View.OnClickLis
         super.onBackPressed();
     }
 
+    @OnClick({R2.id.iv_download})
+    public void onClick(View v) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (v.getId() == R.id.iv_download) {
+            loadImage(pagerPosition);
+        }
+    }
 
-    /**加载图片
+    /**
+     * 加载图片
+     *
      * @param position
      */
     public void loadImage(final int position) {
@@ -157,7 +182,7 @@ public class ImageBrowseActivity extends BaseActivity implements View.OnClickLis
                     PermissionManager.get().request(ImageBrowseActivity.this, new IPermissionCallBack() {
                         @Override
                         public void onGranted(boolean isAlreadyDef) {
-                            T.showShort(ImageBrowseActivity.this,"当前下载第 "+position+" 张图片");
+                            T.showShort(ImageBrowseActivity.this, "当前下载第 " + position + " 张图片");
                             String url = mAdapter.fileList[position];
                             download(url);
                         }

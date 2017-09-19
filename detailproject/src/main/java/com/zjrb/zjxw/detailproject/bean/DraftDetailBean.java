@@ -193,6 +193,17 @@ public class DraftDetailBean extends BaseInnerData {
 
         private List<RelatedSubjectsBean> related_subjects;
 
+
+        /**
+         * 话题互动列表
+         */
+        private List<TopicCommentListBean> topic_comment_list;
+
+        /**
+         * 话题互动精选
+         */
+        private List<TopicCommentSelectBean> topic_comment_select;
+
         public int getId() {
             return id;
         }
@@ -631,6 +642,22 @@ public class DraftDetailBean extends BaseInnerData {
 
         public void setSubject_focus_decription(String subject_focus_decription) {
             this.subject_focus_decription = subject_focus_decription;
+        }
+
+        public List<TopicCommentSelectBean> getTopic_comment_select() {
+            return topic_comment_select;
+        }
+
+        public void setTopic_comment_select(List<TopicCommentSelectBean> topic_comment_select) {
+            this.topic_comment_select = topic_comment_select;
+        }
+
+        public List<TopicCommentListBean> getTopic_comment_list() {
+            return topic_comment_list;
+        }
+
+        public void setTopic_comment_list(List<TopicCommentListBean> topic_comment_list) {
+            this.topic_comment_list = topic_comment_list;
         }
 
         /**

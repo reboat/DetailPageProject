@@ -18,11 +18,16 @@ import android.widget.Toast;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.permission.IPermissionCallBack;
+import com.zjrb.core.common.permission.Permission;
+import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
+import com.zjrb.core.utils.DownloadUtil;
+import com.zjrb.core.utils.PathUtil;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -37,6 +42,7 @@ import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.webjs.BottomSaveDialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -150,6 +156,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
+                //设置下载按钮
+                if(atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()){
+                    mIvDownLoad.setVisibility(View.VISIBLE);
+                }else{
+                    mIvDownLoad.setVisibility(View.GONE);
+                }
+
                 fillData(atlasDetailEntity);
             }
 
@@ -302,9 +315,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //分享
         } else if (id == R.id.menu_share) {
 //            share();
-            //收藏
-        } else if (id == R.id.iv_top_collect) {
-            //
+            //下载
+        } else if (id == R.id.iv_top_download) {
+            loadImage(mIndex);
         }
     }
 
@@ -411,13 +424,32 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvContent.setText(entity.getDescription());
         mTvContent.scrollTo(0, 0);
 
+        //文案显示
         if (position == (mAtlasList.size() - 1)) {
             mLyContainer.setVisibility(View.GONE);
             mTvContent.setVisibility(View.GONE);
-        }else{
+        } else {
             mLyContainer.setVisibility(View.VISIBLE);
             mTvContent.setVisibility(View.VISIBLE);
         }
+
+        //下载按钮
+        if (mAtlasList != null && !mAtlasList.isEmpty()) {
+            if (mAtlasList.get(position) != null && !mAtlasList.get(position).equals("")) {
+                if(mIvDownLoad.getVisibility() == View.GONE){
+                    mIvDownLoad.setVisibility(View.VISIBLE);
+                }
+            } else {
+                if(mIvDownLoad.getVisibility() == View.VISIBLE){
+                    mIvDownLoad.setVisibility(View.GONE);
+                }
+            }
+        } else {
+            if(mIvDownLoad.getVisibility() == View.VISIBLE){
+                mIvDownLoad.setVisibility(View.GONE);
+            }
+        }
+
 
     }
 
@@ -430,7 +462,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setVisibility(View.VISIBLE);
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
-            }else{
+            } else {
                 mTvTitleTop.setVisibility(View.GONE);
             }
         }
@@ -480,6 +512,71 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }).setTag(this).exe(mArticleId);
     }
+
+    /**
+     * 加载图片
+     *
+     * @param position
+     */
+    public void loadImage(final int position) {
+        BottomSaveDialogFragment dialogFragment = new BottomSaveDialogFragment();
+        dialogFragment.setSaveListener(new BottomSaveDialogFragment.OnSaveDialogClickListener() {
+            @Override
+            public void onSave() {
+                try {
+                    if (mAtlasList == null || mAtlasList.size() < position || mAtlasList.get(position).equals(""))
+                        return;
+                    PermissionManager.get().request(AtlasDetailActivity.this, new IPermissionCallBack() {
+                        @Override
+                        public void onGranted(boolean isAlreadyDef) {
+                            T.showShort(AtlasDetailActivity.this, "当前下载第 " + position + " 张图片");
+                            String url = mAtlasList.get(position).getImage_url();
+                            download(url);
+                        }
+
+                        @Override
+                        public void onDenied(List<String> neverAskPerms) {
+                            PermissionManager.showAdvice(AtlasDetailActivity.this, "保存图片需要开启存储权限");
+                        }
+
+                        @Override
+                        public void onElse(List<String> deniedPerms, List<String> neverAskPerms) {
+
+                        }
+                    }, Permission.STORAGE_WRITE);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        dialogFragment.show(getSupportFragmentManager(), "BottomSaveDialogFragment");
+    }
+
+    /**
+     * @param url 下载图片
+     */
+    private void download(String url) {
+        DownloadUtil.get()
+                .setDir(PathUtil.getImagePath())
+                .setListener(new DownloadUtil.OnDownloadListener() {
+                    @Override
+                    public void onLoading(int progress) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String path) {
+                        T.showShort(AtlasDetailActivity.this, "保存成功");
+                    }
+
+                    @Override
+                    public void onFail(String err) {
+                        T.showShort(AtlasDetailActivity.this, "保存失败");
+                    }
+                })
+                .download(url);
+    }
+
 
     /**
      * 显示撤稿页面

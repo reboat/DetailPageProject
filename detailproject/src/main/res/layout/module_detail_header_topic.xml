@@ -83,6 +83,7 @@
         android:fitsSystemWindows="true"
         android:scrollbars="vertical"/>
 
+    <!--专题焦点图-->
     <android.support.percent.PercentFrameLayout
         android:id="@+id/pf_pic_container"
         android:layout_width="match_parent"

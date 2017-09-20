@@ -14,10 +14,13 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -28,6 +31,7 @@ import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
+import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
@@ -40,6 +44,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 新闻专题 详情页面
@@ -79,9 +84,15 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
         loadData();
     }
 
+    /**
+     * topbar
+     */
+    private DefaultTopBarHolder1 topHolder;
+
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        topHolder = TopBarFactory.createDefault1(view, this);
+        return topHolder.getView();
     }
 
     /**
@@ -96,6 +107,171 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
         }
     }
 
+    /**
+     * 初始化专题详情页头部和列表信息
+     */
+    private void initView() {
+        //显示topbar收藏和分享按钮
+        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getCollectView(), View.VISIBLE);
+        //专题列表
+        mRvContent.setLayoutManager(new LinearLayoutManager(this));
+        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
+    }
+
+    /**
+     * @param itemView
+     * @param *专题详情页item点击事件
+     */
+    @Override
+    public void onItemClick(View itemView, int position) {
+        //点击跳转详情页(所有类型)
+        if (mAdapter.getData().get(position) instanceof SubjectItemBean) {
+            SubjectItemBean b = (SubjectItemBean) mAdapter.getData().get(position);
+            BizUtils.jumpToDetailActivity2(b);
+        } else if (mAdapter.getData().get(position) instanceof SubjectNewsBean.GroupArticlesBean) {
+            //进入专题更多列表
+            if (((SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position)).getArticleList().size() >= 3) {
+                SubjectNewsBean.GroupArticlesBean b = (SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position);
+                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(b.getGroupId()))
+                        .build(), 0);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * @param event 点击channel 滚动到相关位置
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(ChannelItemClickEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (mAdapter.datas != null && !mAdapter.datas.isEmpty()) {
+            for (SubjectItemBean bean : (List<SubjectItemBean>) mAdapter.datas) {
+                if (bean.getId() == event.getType()) {
+                    if (mAdapter.datas.size() >= (bean.getPosition() + 1)) {
+                        ((LinearLayoutManager) mRvContent.getLayoutManager()).scrollToPositionWithOffset(bean.getPosition() + 1, 0);
+                        ((LinearLayoutManager) mRvContent.getLayoutManager()).setStackFromEnd(true);
+                    }
+                    break;
+                }
+            }
+        }
+
+    }
+
+
+    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect})
+    public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (view.getId() == R.id.iv_share) {
+            T.showShort(NewsTopicActivity.this, "分享");
+        } else {
+            //收藏
+            newsTopicCollect();
+        }
+    }
+
+    /**
+     * 加载专题数据
+     */
+    private void loadData() {
+        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+            @Override
+            public void onSuccess(DraftDetailBean draftDetailBean) {
+                bean = draftDetailBean;
+                bean = mockTest2();
+                bean.getArticle().setSubject_groups(mockTest());
+                fillData(bean);
+
+//                if (draftDetailBean == null) {
+//                    return;
+//                } else {
+//                    bean = draftDetailBean;
+//                    fillData(draftDetailBean);
+//                }
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShort(getBaseContext(), errMsg);
+            }
+
+        }).setTag(this).exe(mArticleId);
+    }
+
+    /**
+     * 头holder
+     */
+    private HeaderTopicHolder headHolder;
+
+    /**
+     * @param draftTopicBean 填充数据
+     */
+    private void fillData(DraftDetailBean draftTopicBean) {
+        headHolder = new HeaderTopicHolder(mRvContent);
+        headHolder.initData(draftTopicBean);
+
+        //专题详情页列表
+
+        if (mAdapter == null) {
+            mAdapter = new NewsTopicAdapter();
+            mAdapter.setOnItemClickListener(this);
+        }
+        mAdapter.setupData(mockTest());
+
+//        if (mAdapter != null) {
+//            mAdapter = new NewsTopicAdapter(bean.getArticle().getSubject_groups());
+//            mAdapter.setOnItemClickListener(this);
+//        }
+//        mAdapter.setupData(draftTopicBean.getArticle().getSubject_groups());
+        mAdapter.addHeaderView(headHolder.getItemView());
+        mRvContent.setAdapter(mAdapter);
+    }
+
+    /**
+     * 专题收藏
+     */
+    private void newsTopicCollect() {
+        new DraftCollectTask(new APIExpandCallBack<BaseInnerData>() {
+
+            @Override
+            public void onSuccess(BaseInnerData baseInnerData) {
+                //TODO  WLJ  少图片
+                topHolder.getCollectView().setImageResource(R.mipmap.module_detail_collect_night);
+                T.showShort(getBaseContext(), "收藏成功");
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShort(getBaseContext(), "收藏失败");
+            }
+
+        }).setTag(this).exe(mArticleId);
+    }
+
+    /**
+     * 显示撤稿页面
+     */
+    private void showEmptyNewsDetail() {
+        lyContainer.removeAllViews();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(bean.getArticle().getColumn_id()))).commit();
+    }
 
     private DraftDetailBean mockTest2() {
         DraftDetailBean b = new DraftDetailBean();
@@ -197,136 +373,5 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
 
         return subject_groups;
 
-    }
-
-    /**
-     * 加载专题数据
-     */
-    private void loadData() {
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
-            @Override
-            public void onSuccess(DraftDetailBean draftDetailBean) {
-                bean = draftDetailBean;
-                bean = mockTest2();
-                bean.getArticle().setSubject_groups(mockTest());
-                fillData(bean);
-
-//                if (draftDetailBean == null) {
-//                    return;
-//                } else {
-//                    bean = draftDetailBean;
-//                    fillData(draftDetailBean);
-//                }
-            }
-
-            @Override
-            public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
-            }
-
-        }).setTag(this).exe(mArticleId);
-    }
-
-    /**
-     * 头holder
-     */
-    private HeaderTopicHolder headHolder;
-
-    /**
-     * @param draftTopicBean 填充数据
-     */
-    private void fillData(DraftDetailBean draftTopicBean) {
-        headHolder = new HeaderTopicHolder(mRvContent);
-        headHolder.initData(draftTopicBean);
-
-        //专题详情页列表
-
-        if (mAdapter == null) {
-            mAdapter = new NewsTopicAdapter();
-            mAdapter.setOnItemClickListener(this);
-        }
-        mAdapter.setupData(mockTest());
-
-//        if (mAdapter != null) {
-//            mAdapter = new NewsTopicAdapter(bean.getArticle().getSubject_groups());
-//            mAdapter.setOnItemClickListener(this);
-//        }
-//        mAdapter.setupData(draftTopicBean.getArticle().getSubject_groups());
-        mAdapter.addHeaderView(headHolder.getItemView());
-        mRvContent.setAdapter(mAdapter);
-    }
-
-    /**
-     * 初始化专题详情页头部和列表信息
-     */
-    private void initView() {
-        //专题列表
-        mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
-    }
-
-    /**
-     * @param itemView
-     * @param *专题详情页item点击事件
-     */
-    @Override
-    public void onItemClick(View itemView, int position) {
-        //点击跳转详情页(所有类型)
-        if (mAdapter.getData().get(position) instanceof SubjectItemBean) {
-            SubjectItemBean b = (SubjectItemBean) mAdapter.getData().get(position);
-            BizUtils.jumpToDetailActivity2(b);
-        } else if (mAdapter.getData().get(position) instanceof SubjectNewsBean.GroupArticlesBean) {
-            //进入专题更多列表
-            if (((SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position)).getArticleList().size() >= 3) {
-                SubjectNewsBean.GroupArticlesBean b = (SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position);
-                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(b.getGroupId()))
-                        .build(), 0);
-            }
-        }
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * @param event 点击channel 滚动到相关位置
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(ChannelItemClickEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (mAdapter.datas != null && !mAdapter.datas.isEmpty()) {
-            for (SubjectItemBean bean : (List<SubjectItemBean>) mAdapter.datas) {
-                if (bean.getId() == event.getType()) {
-                    if (mAdapter.datas.size() >= (bean.getPosition() + 1)) {
-                        ((LinearLayoutManager) mRvContent.getLayoutManager()).scrollToPositionWithOffset(bean.getPosition() + 1, 0);
-                        ((LinearLayoutManager) mRvContent.getLayoutManager()).setStackFromEnd(true);
-                    }
-                    break;
-                }
-            }
-        }
-
-    }
-
-
-    /**
-     * 显示撤稿页面
-     */
-    private void showEmptyNewsDetail() {
-        lyContainer.removeAllViews();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(bean.getArticle().getColumn_id()))).commit();
     }
 }

@@ -12,7 +12,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 
 import java.util.List;
 
@@ -43,15 +43,15 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
 
     }
 
+    /**
+     * 撤稿适配器
+     */
+    static class EmptyStateHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> {
 
-    static class EmptyStateHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
-
-//        @BindView(R2.id.iv_pic)
-//        ImageView mImg;
-//        @BindView(R2.id.tv_title)
-//        TextView mTitle;
-@BindView(R2.id.iv_subject)
-ImageView mImg;
+        @BindView(R2.id.tv_title)
+        TextView mTitle;
+        @BindView(R2.id.iv_pic)
+        ImageView mImg;
 
         public EmptyStateHolder(View itemView) {
             super(itemView);
@@ -60,10 +60,12 @@ ImageView mImg;
 
         @Override
         public void bindView() {
-//            if (mData.getList_pics() != null && !mData.getList_pics().isEmpty()) {
-//                //无图片时用占位图
-//                GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
-//            }
+            //占位图，如无图片，则显示占位图
+            GlideApp.with(mImg).load(mData.getList_pic()).centerCrop().placeholder(PH.zheSmall()).into(mImg);
+            //标题
+            if (mData.getList_title() != null && !mData.getList_title().isEmpty()) {
+                mTitle.setText(mData.getList_title());
+            }
         }
     }
 }

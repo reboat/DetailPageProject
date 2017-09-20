@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+<TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_empty_states"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
-
-    <TextView
-        android:id="@+id/tv_empty_states"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:drawableLeft="@mipmap/default_avatar_icon"
-        android:gravity="center|left"
-        tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容"/>
-
-</RelativeLayout>
+    android:background="#a4a3a3"
+    android:drawableLeft="@mipmap/module_detail_draft_delete"
+    android:drawablePadding="10dp"
+    android:gravity="center|left"
+    android:paddingBottom="15dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="15dp"
+    android:textColor="#ffffff"
+    android:textSize="@dimen/ts_14sp"
+    tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容"/>

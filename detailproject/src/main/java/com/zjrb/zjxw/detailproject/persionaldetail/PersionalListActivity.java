@@ -70,7 +70,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        return TopBarFactory.createDefault(view, this, "政情").getView();
     }
 
     /**
@@ -89,7 +89,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         //官员1文章
         List<OfficalArticlesBean> mlist = new ArrayList<>();
         OfficalArticlesBean bb = new OfficalArticlesBean();
-        bb.setTitle("子标题1");
+        bb.setTitle("子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1子标题1");
         bb.setPhoto("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
         OfficalArticlesBean bb1 = new OfficalArticlesBean();
         bb1.setTitle("子标题1");

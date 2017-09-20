@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+    >
 
     <ImageView
         android:id="@+id/iv_image"
@@ -21,10 +23,10 @@
         android:layout_marginTop="3dp"
         android:ellipsize="end"
         android:lineSpacingExtra="2dp"
-        android:textColor="?attr/tc_ffffff"
         android:maxLines="2"
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
+        android:textColor="?attr/tc_ffffff"
         tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全"/>
 
 </RelativeLayout>

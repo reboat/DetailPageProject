@@ -16,6 +16,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
@@ -123,9 +124,14 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         super.onSaveInstanceState(outState);
     }
 
+
+    private DefaultTopBarHolder1 topHolder;
+
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        return topHolder.getView();
     }
 
     /**
@@ -297,7 +303,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                             initAdapter();
                         }
                         mRvContent.setAdapter(mCommentAdapter);
-                        mCommentAdapter.setData(commentList);
                         mCommentAdapter.notifyDataSetChanged();
                     }
                 } else {
@@ -365,7 +370,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == C.request.COMMENT_WINDOW) {
-                // 增量更新
                 requestData();
             }
         }

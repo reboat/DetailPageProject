@@ -1,9 +1,9 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIPostTask;
+import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.zjxw.detailproject.bean.ChannelBean;
+import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
@@ -12,24 +12,21 @@ import com.zjrb.zjxw.detailproject.global.APIManager;
  * create time:2017/7/28  上午11:18
  */
 
-public class GetChannelListTask extends APIPostTask<ChannelBean> {
-    public GetChannelListTask(LoadingCallBack<ChannelBean> callBack) {
+public class DraftRankListTask extends APIGetTask<DraftHotTopNewsBean> {
+    public DraftRankListTask(LoadingCallBack<DraftHotTopNewsBean> callBack) {
         super(callBack);
     }
 
     /**
      * @param params column_id:栏目id(int)
-     *               do_subscribe:订阅/取消订阅(boolean)
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("channel_id", params[0]);
-        put("start", params[1]);
-        put("size", params[1]);
+        put("channel_id", "739716");
     }
 
     @Override
     protected String getApi() {
-        return APIManager.endpoint.GET_CHANNEL_LIST;
+        return APIManager.endpoint.GET_RANK_LIST;
     }
 }

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.BundleHelper;
 import com.zjrb.core.domain.eventbus.EventBase;
@@ -93,7 +94,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
+            if (data.getQueryParameter(Key.OFFICIAL_ID) != null) {
+                official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
+            }
         }
     }
 
@@ -218,14 +221,13 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 initView(data);
-                init();
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
             }
-        }).setTag(this).exe(official_id + "", "", "");
+        }).setTag(this).exe(official_id + "");
     }
 
     /**
@@ -240,18 +242,28 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             //头像
             GlideApp.with(ivAvatar).load(bean.getList_pic()).circleCrop().into(ivAvatar);
             //姓名
-            tvName.setText(bean.getName());
+            if (bean.getName() != null && !bean.getName().isEmpty()) {
+                tvName.setText(bean.getName());
+            }
             //性别
-            tvSex.setText(bean.getGender());
+            if (bean.getGender() != null && !bean.getGender().isEmpty()) {
+                tvSex.setText(bean.getGender());
+            }
             //描述
-            tvContent.setText(bean.getDescription());
+            if (bean.getDescription() != null && !bean.getDescription().isEmpty()) {
+                tvContent.setText(bean.getDescription());
+            }
+            init();
         }
     }
 
+    private DefaultTopBarHolder1 topbarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        topbarHolder = TopBarFactory.createDefault1(view, this);
+        topbarHolder.setViewVisible(topbarHolder.getShareView(), View.VISIBLE);
+        return topbarHolder.getView();
     }
 
 

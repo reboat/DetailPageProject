@@ -6,6 +6,12 @@ package com.zjrb.zjxw.detailproject.global;
  */
 
 public final class C {
+
+    /**
+     * 官员详情每页请求条数
+     */
+    public static final int PAGE_SIZE_OFFICAL = 10;
+
     /**
      * 夜间模式css - 路径
      */

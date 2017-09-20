@@ -6,6 +6,7 @@ import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+import com.zjrb.zjxw.detailproject.global.C;
 
 /**
  * 所有官员列表 - Task
@@ -24,7 +25,7 @@ public class OfficalListTask extends APIGetTask<OfficalListBean> {
     @Override
     protected void onSetupParams(Object... params) {
         put("start", "5");
-        put("size", params[1]);
+        put("size", C.PAGE_SIZE_OFFICAL);
     }
 
     @Override

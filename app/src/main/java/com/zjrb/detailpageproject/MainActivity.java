@@ -64,12 +64,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.MLF_ID,"12653")
 //                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
 //                        .build(), 0);
-
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.GROUP_ID, "5")
-                        .appendQueryParameter(Key.TITLE, "各地实践")
-                        .build(), 0);
+////
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.GROUP_ID, "5")
+//                        .appendQueryParameter(Key.TITLE, "各地实践")
+//                        .build(), 0);
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
 //                        .buildUpon()
@@ -81,11 +81,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.PARENT_ID,"true")
 //                        .build(), 0);
 
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ARTICLE_ID, "739652")
-//                        .appendQueryParameter(Key.MLF_ID,"12653")
-//                        .build(), 0);
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ARTICLE_ID, "739652")
+                        .appendQueryParameter(Key.MLF_ID,"12653")
+                        .build(), 0);
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
 //                        .buildUpon()

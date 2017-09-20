@@ -74,15 +74,32 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     @Override
     public void bindView() {
-        mDelete.setVisibility(View.VISIBLE);
-        mContent.setText(mData.getContent());
-        mName.setText(mData.getNick_name());
+        //是否是自己发布的评论
+        if (mData.isOwn()) {
+            mDelete.setVisibility(View.VISIBLE);
+        }
+        //回复者的评论
+        if (mData.getContent() != null && !mData.getContent().isEmpty()) {
+            mContent.setText(mData.getContent());
+        }
+        //回复者昵称
+        if (mData.getNick_name() != null && !mData.getNick_name().isEmpty()) {
+            mName.setText(mData.getNick_name());
+        }
+
         mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd HH:mm:ss"));
-        mTvCommentContent.setText(mData.getParent_content());
+        //我的评论
+        if (mData.getParent_content() != null && !mData.getParent_content().isEmpty()) {
+            mTvCommentContent.setText(mData.getParent_content());
+        }
+
         mThumb.setText(mData.getLike_count() + "");
         mThumb.setSelected(mData.isLiked() == true);
         GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
-        mTvCommentSrc.setText(mData.getParent_nick_name());
+        //我的昵称
+        if (mData.getParent_nick_name() != null && !mData.getParent_nick_name().isEmpty()) {
+            mTvCommentSrc.setText(mData.getParent_nick_name());
+        }
 
     }
 
@@ -97,19 +114,19 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else if (view.getId() == R.id.ly_replay) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, articleId+"")
-                    .appendQueryParameter(Key.CONENT, mData.getContent()+"")
-                    .appendQueryParameter(Key.PARENT_ID, mData.getId()+"")
-                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name()+"")
+                    .appendQueryParameter(Key.ARTICLE_ID, articleId + "")
+                    .appendQueryParameter(Key.CONENT, mData.getContent() + "")
+                    .appendQueryParameter(Key.PARENT_ID, mData.getId() + "")
+                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name() + "")
                     .build(), 0);
             //回复回复者
         } else {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, articleId+"")
-                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content()+"")
-                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id()+"")
-                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name()+"")
+                    .appendQueryParameter(Key.ARTICLE_ID, articleId + "")
+                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content() + "")
+                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id() + "")
+                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name() + "")
                     .build(), 0);
         }
     }

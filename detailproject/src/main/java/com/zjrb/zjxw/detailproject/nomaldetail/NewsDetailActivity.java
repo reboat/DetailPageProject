@@ -22,8 +22,8 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.domain.base.ResultCode;
@@ -151,15 +151,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
     }
 
+
+    /**
+     * topbar
+     */
+    private DefaultTopBarHolder1 topHolder;
+
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "详情页").getView();
+        topHolder = TopBarFactory.createDefault1(view, this);
+        return topHolder.getView();
     }
 
     /**
      * 初始化/拉取数据
      */
     private void init() {
+        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
@@ -204,7 +212,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                fillData(draftDetailBean);
+                mNewsDetail = draftDetailBean;
+                showEmptyNewsDetail();
+//                fillData(draftDetailBean);
             }
 
             @Override
@@ -432,6 +442,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .build(), 0);
                 return;
             }
+        }else if(view.getId() == R.id.iv_share){
+            T.showShortNow(NewsDetailActivity.this,"分享");
         }
     }
 

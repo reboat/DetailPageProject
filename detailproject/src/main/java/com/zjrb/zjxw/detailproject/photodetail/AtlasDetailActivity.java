@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +18,6 @@ import android.widget.Toast;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.nav.Nav;
@@ -96,6 +93,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     ImageView mIvShare;
     @BindView(R2.id.menu_comment)
     ImageView mIvComment;
+    @BindView(R2.id.tv_top_bar_title)
+    TextView mTvTitleTop;
+    @BindView(R2.id.iv_top_download)
+    ImageView mIvDownLoad;
+    @BindView(R2.id.ly_tip_contain)
+    RelativeLayout mLyContainer;
+
 
     public String mArticleId = "";
 
@@ -127,13 +131,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
 
-    private DefaultTopBarHolder topBar;
-
-    @Override
-    protected View onCreateTopBar(ViewGroup view) {
-        topBar = TopBarFactory.createDefault(view, this, "");
-        return topBar.getView();
-    }
+//    private DefaultTopBarHolder1 topBar;
+//
+//    @Override
+//    protected View onCreateTopBar(ViewGroup view) {
+//        topBar = TopBarFactory.createDefault1(view, this);
+//        topBar.setViewVisible(topBar.getShareView(), View.VISIBLE);
+//        topBar.setContainerABG();
+//        return topBar.getView();
+//    }
 
 
     /**
@@ -252,7 +258,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_back, R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_share})
+            .menu_share, R2.id.iv_top_download})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -296,6 +302,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //分享
         } else if (id == R.id.menu_share) {
 //            share();
+            //收藏
+        } else if (id == R.id.iv_top_collect) {
+            //
         }
     }
 
@@ -401,6 +410,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         AlbumImageListBean entity = mAtlasList.get(position);
         mTvContent.setText(entity.getDescription());
         mTvContent.scrollTo(0, 0);
+
+        if (position == (mAtlasList.size() - 1)) {
+            mLyContainer.setVisibility(View.GONE);
+            mTvContent.setVisibility(View.GONE);
+        }else{
+            mLyContainer.setVisibility(View.VISIBLE);
+            mTvContent.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**
@@ -409,9 +427,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void setTopTitle(int position) {
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (position == (mAtlasList.size() - 1)) {
-                topBar.setTopBarText(getString(R.string.module_detail_more_image));
-            } else {
-                topBar.setTopBarText("");
+                mTvTitleTop.setVisibility(View.VISIBLE);
+                mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
+                mTvTitleTop.setText(getString(R.string.module_detail_more_image));
+            }else{
+                mTvTitleTop.setVisibility(View.GONE);
             }
         }
     }

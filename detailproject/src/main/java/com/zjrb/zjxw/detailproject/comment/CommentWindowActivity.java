@@ -48,7 +48,7 @@ public class CommentWindowActivity extends BaseActivity implements
     /**
      * 回复内容
      */
-    private String content;
+//    private String content;
 
     /**
      * 被回复人
@@ -98,9 +98,9 @@ public class CommentWindowActivity extends BaseActivity implements
             if (data.getQueryParameter(Key.PARENT_ID) != null) {
                 parentId = data.getQueryParameter(Key.PARENT_ID);
             }
-            if (data.getQueryParameter(Key.CONENT) != null) {
-                content = data.getQueryParameter(Key.CONENT);
-            }
+//            if (data.getQueryParameter(Key.CONENT) != null) {
+//                content = data.getQueryParameter(Key.CONENT);
+//            }
             if (data.getQueryParameter(Key.REPLAYER) != null) {
                 nickName = data.getQueryParameter(Key.REPLAYER);
             }
@@ -117,7 +117,7 @@ public class CommentWindowActivity extends BaseActivity implements
         etInputComment.setSelection(content.length());
         ivCloseWindow.setImageResource(R.mipmap.module_detail_comment_close);
         ivSendComment.setImageResource(R.mipmap.module_detail_comment_send_disclick);
-        if (!nickName.isEmpty()) {
+        if (nickName != null && !nickName.isEmpty()) {
             mTvReplay.setText(getString(R.string.module_detail_replay_to) + nickName);
         } else {
             mTvReplay.setText(getString(R.string.module_detail_send_comment));

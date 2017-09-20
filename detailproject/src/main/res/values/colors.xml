@@ -35,7 +35,7 @@
     <color name="tc_4d95fa">#4d95fa</color>
     <color name="tc_4682c5">#4682c5</color>
     <color name="bc_f0f0f0">#ffffff</color>
-
+    <color name="bc_00000000">#00000000</color>
 
 
     <!--夜间颜色-->

@@ -2,10 +2,10 @@ package com.zjrb.zjxw.detailproject.task;
 
 
 import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+import com.zjrb.zjxw.detailproject.global.C;
 
 /**
  * 官员详情 - Task
@@ -25,8 +25,10 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
     @Override
     protected void onSetupParams(Object... params) {
         put("id", "5");
-        put("start", params[1]);
-        put("size", params[2]);
+        if (params.length > 1) {
+            put("start", params[1]);
+        }
+        put("size", C.PAGE_SIZE_OFFICAL);
     }
 
     @Override

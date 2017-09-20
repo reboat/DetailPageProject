@@ -109,12 +109,10 @@ public class APIManager {
          */
         public static final String GET_SESSIONID = "/api/account/init";
 
-
         /**
          * 获取频道(撤稿)列表
          */
-        public static final String GET_CHANNEL_LIST = "/api/article/channel_list";
-
+        public static final String GET_RANK_LIST = "/api/article/rank_list";
 
         /**
          * 详情页
@@ -151,6 +149,11 @@ public class APIManager {
          * 获取专题列表
          */
         public static final String SUBJECT_LIST = "/api/article/subject_group_list";
+
+        /**
+         * 稿件收藏
+         */
+        public static final String DRAFT_COLLECT = "/api/article/collect";
 
 
     }

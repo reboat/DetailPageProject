@@ -85,7 +85,6 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         T.showShort(UIUtils.getContext(), "当前tab1_index=" + mIndex);
 //        if (isVisibleToUser) {
-//            EventBus.getDefault().postSticky(new PersionalDetailTabEvent());
 //        }
 
     }

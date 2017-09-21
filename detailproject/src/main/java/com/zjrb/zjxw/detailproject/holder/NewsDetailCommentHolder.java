@@ -64,7 +64,7 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
         mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));
 //        adapter = new CommentAdapter(mData.getArticle().getHot_comments(),String.valueOf(mData.getArticle().getId()));
-        adapter = new CommentAdapter(mockTest(),"739652");
+        adapter = new CommentAdapter(mockTest(), "739652");
         mRecyleView.setAdapter(adapter);
 
 
@@ -169,7 +169,8 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         if (view.getId() == R.id.tv_more) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
                     .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
                     .build(), 0);

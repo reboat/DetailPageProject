@@ -131,7 +131,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else if (view.getId() == R.id.ly_replay) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, articleId + "")
+                    .appendQueryParameter(Key.ID, articleId)
                     .appendQueryParameter(Key.CONENT, mData.getContent() + "")
                     .appendQueryParameter(Key.PARENT_ID, mData.getId() + "")
                     .appendQueryParameter(Key.REPLAYER, mData.getNick_name() + "")
@@ -140,7 +140,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, articleId + "")
+                    .appendQueryParameter(Key.ID, articleId)
                     .appendQueryParameter(Key.MLF_ID, mData.getParent_content() + "")
                     .appendQueryParameter(Key.PARENT_ID, mData.getParent_id() + "")
                     .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name() + "")
@@ -193,7 +193,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
-                EventBus.getDefault().postSticky(new CommentDeleteEvent());
                 T.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);

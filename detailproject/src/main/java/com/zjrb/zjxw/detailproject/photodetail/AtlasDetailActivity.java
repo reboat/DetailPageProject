@@ -22,7 +22,6 @@ import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.domain.base.BaseInnerData;
-import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
@@ -44,18 +43,12 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.webjs.BottomSaveDialogFragment;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.zjrb.zjxw.detailproject.utils.BizUtils.comment.JY;
 
 
 /**
@@ -132,8 +125,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
+            if (data.getQueryParameter(Key.ID) != null) {
+                mArticleId = data.getQueryParameter(Key.ID);
             }
         }
     }
@@ -303,7 +296,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
                     Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                             .buildUpon()
-                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                            .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
                             .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                             .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
                             .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
@@ -360,61 +353,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 //            shareUtils.initResult(requestCode, resultCode, data);
 //        }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(EventBase event) {
-        EventBus.getDefault().removeStickyEvent(event);
-//        if(event instanceof AtlasDetailLastPageEvent){
-//            if(((AtlasDetailLastPageEvent) event).getData().equals("true")){
-//                topBar.setTopBarText(getString(R.string.module_detail_more_image));
-//            }else{
-//                topBar.setTopBarText("");
-//            }
-//        }
-//        if (mData != null && event.getData() > 0) {
-//            mData.getArticle().setComment_count(mData.getArticle().getComment_count() + event.getData());
-//            mTvCommentsNum.setText(BizUtils.formatComments(mData.getArticle().getComment_count()));
-//        }
-    }
-
-//    /**
-//     * 图片轻触回调
-//     */
-//    @Override
-//    public void onImageTap(View view) {
-//        mContainerBottom.clearAnimation();
-//        mContainerTop.clearAnimation();
-//        AnimatorSet animatorSet = new AnimatorSet();
-//        if (mContainerBottom.getAlpha() == 0) {
-//            animatorSet.playTogether(
-//                    createAnimator(mContainerBottom, 0, 1),
-//                    createAnimator(mContainerTop, 0, 1)
-//            );
-//        } else {
-//            animatorSet.playTogether(
-//                    createAnimator(mContainerBottom, 1, 0),
-//                    createAnimator(mContainerTop, 1, 0)
-//            );
-//        }
-//        animatorSet.setDuration(100);
-//        animatorSet.start();
-//    }
-
-//    private ObjectAnimator createAnimator(View view, int start, int end) {
-//        return ObjectAnimator.ofFloat(view, "alpha", start, end);
-//    }
 
 
     @Override

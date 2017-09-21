@@ -69,7 +69,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     /**
      * 稿件ID
      */
-    public int mArticleId = -1;
+    public String mArticleId;
     /**
      * 媒立方ID
      */
@@ -140,14 +140,19 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         init();
     }
 
+
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            mArticleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
+            if (data.getQueryParameter(Key.ID) != null) {
+                mArticleId = data.getQueryParameter(Key.ID);
+            }
+            if (data.getQueryParameter(Key.VIDEO_PATH) != null) {
+                mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
+            }
         }
     }
 
@@ -208,7 +213,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 请求详情页数据
      */
     private void loadData() {
-        if (mArticleId < 0) return;
+        if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -425,7 +430,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 //进入评论列表页面
                 Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getArticle().getId()))
+                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
                         .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
                         .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mNewsDetail.getArticle().getComment_level()))
                         .appendQueryParameter(Key.TITLE, mNewsDetail.getArticle().getList_title())
@@ -441,7 +446,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 //进入评论编辑页面(不针对某条评论)
                 Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mNewsDetail.getArticle().getId()))
+                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
                         .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
                         .build(), 0);
                 return;

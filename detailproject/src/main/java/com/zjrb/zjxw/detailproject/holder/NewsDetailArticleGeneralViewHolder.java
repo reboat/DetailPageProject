@@ -46,13 +46,12 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
         if (mData.getList_title() != null) {
             mTvTitle.setText(mData.getList_title());
         }
-        //标签状态
+        //标签状态(可以为空)
         if (mData.getList_tag() != null && !mData.getList_tag().isEmpty()) {
             mTvFlag.setText(mData.getList_tag());
         } else {
             mTvFlag.setVisibility(View.GONE);
         }
-        //TODO  WLJ 默认图片
         //多图
         GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(PH.zheSmall()).centerCrop().into(mIvPicture);
 

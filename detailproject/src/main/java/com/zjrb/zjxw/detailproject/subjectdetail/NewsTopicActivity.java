@@ -103,8 +103,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
+            if (data.getQueryParameter(Key.ID) != null) {
+                mArticleId = data.getQueryParameter(Key.ID);
             }
         }
     }
@@ -134,7 +134,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
                 SubjectNewsBean.GroupArticlesBean b = (SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position);
                 Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(b.getGroupId()))
+                        .appendQueryParameter(Key.ID, String.valueOf(b.getGroupId()))
                         .build(), 0);
             }
         }

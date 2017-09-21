@@ -3,40 +3,40 @@
           package="com.zjrb.zjxw.detailproject"
     >
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <!-- umeng permission start -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
     <!-- umeng permission end -->
 
 
     <!-- 高德地图权限 -->
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
         android:allowBackup="true"
@@ -73,6 +73,7 @@
             </intent-filter>
         </activity>
         <!--保持在栈顶-->
+        <!--普通详情页-->
         <activity
             android:name=".nomaldetail.NewsDetailActivity"
             android:launchMode="singleTop"
@@ -82,13 +83,21 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-
+                <!--普通详情页-->
                 <data
-                    android:host="www.8531.cn"
-                    android:path="/detail/NewsDetailActivity"
+                    android:host="zj.zjol.com.cn"
+                    android:path="/news.html"
                     android:scheme="@string/data_scheme"/>
+                <!--视频详情页-->
+                <data
+                    android:host="zj.zjol.com.cn"
+                    android:path="/video.html"
+                    android:scheme="@string/data_scheme"/>
+
             </intent-filter>
         </activity>
+
+        <!--图集-->
         <activity
             android:name=".photodetail.AtlasDetailActivity"
             android:launchMode="singleTop"
@@ -100,8 +109,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
-                    android:path="/detail/AtlasDetailActivity"
+                    android:host="zj.zjol.com.cn"
+                    android:path="/album.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
@@ -135,6 +144,8 @@
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
+
+        <!--专题详情页-->
         <activity
             android:name=".subjectdetail.NewsTopicActivity"
             android:launchMode="singleTop"
@@ -146,8 +157,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
-                    android:path="/detail/NewsTopicActivity"
+                    android:host="zj.zjol.com.cn"
+                    android:path="/subject.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
@@ -166,7 +177,7 @@
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
-
+        <!--活动详情页-->
         <activity
             android:name=".topic.ActivityTopicActivity"
             android:screenOrientation="portrait">
@@ -177,8 +188,8 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
-                    android:path="/detail/ActivityTopicActivity"
+                    android:host="zj.zjol.com.cn"
+                    android:path="/topic.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>

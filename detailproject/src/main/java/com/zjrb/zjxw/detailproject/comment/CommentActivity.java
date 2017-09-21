@@ -71,7 +71,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     /**
      * 文章id
      */
-    public int articleId = -1;
+    public String articleId;
     /**
      * 媒立方id
      */
@@ -82,10 +82,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     public int commentSet = -1;
 
-    /**
-     * 父评论id
-     */
-    public int parentId = 0;
+//    /**
+//     * 父评论id
+//     */
+//    public int parentId = 0;
     /**
      * 是否来自评论页
      */
@@ -125,6 +125,9 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
 
+    /**
+     * 顶部topbar
+     */
     private DefaultTopBarHolder1 topHolder;
 
     @Override
@@ -147,11 +150,26 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            articleId = Integer.parseInt(data.getQueryParameter(Key.ARTICLE_ID));
-            mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
-            commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
-            title = data.getQueryParameter(Key.TITLE);
-            parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
+            //稿件ID
+            if (data.getQueryParameter(Key.ID) != null) {
+                articleId = data.getQueryParameter(Key.ID);
+            }
+            //媒立方ID
+            if (data.getQueryParameter(Key.MLF_ID) != null) {
+                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            }
+            //评论等级
+            if (data.getQueryParameter(Key.COMMENT_SET) != null) {
+                commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
+            }
+            //标题
+            if (data.getQueryParameter(Key.TITLE) != null) {
+                title = data.getQueryParameter(Key.TITLE);
+            }
+            //作者评论
+//            if (data.getQueryParameter(Key.PARENT_ID) != null) {
+//                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
+//            }
             isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
         }
     }
@@ -187,10 +205,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     tvComment.setVisibility(View.VISIBLE);
                     Nav.with(CommentActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                             .buildUpon()
-                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                            .appendQueryParameter(Key.ID, articleId)
                             .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                             .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                            .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
+//                            .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
                             .build(), RESULT_OK);
                 }
             }
@@ -300,9 +318,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     if (mCommentAdapter == null) {
                         mCommentAdapter = new CommentAdapter(commentList);
                         initAdapter();
+                        mRvContent.setAdapter(mCommentAdapter);
+                    } else {
+                        mCommentAdapter.setData(commentList);
+                        mCommentAdapter.notifyDataSetChanged();
                     }
-                    mRvContent.setAdapter(mCommentAdapter);
-                    mCommentAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -311,7 +331,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(articleId, "");
+        }).setTag(this).exe(articleId);
     }
 
     @OnClick({R2.id.tv_comment})
@@ -322,10 +342,9 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 tvComment.setVisibility(View.VISIBLE);
                 Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                         .buildUpon()
-                        .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                        .appendQueryParameter(Key.ID, articleId)
                         .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                         .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                        .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
                         .build(), RESULT_OK);
             }
         }
@@ -389,10 +408,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         if (BizUtils.isCanComment(this, commentSet)) {
             Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                    .appendQueryParameter(Key.ID, articleId)
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                     .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                    .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
+                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
                     .build(), 0);
         }
 
@@ -410,7 +429,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
     //最后刷新时间
-    private long lastMinPublishTime = 0;
+    private long lastMinPublishTime;
 
     /**
      * @param data
@@ -418,12 +437,16 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     @Override
     public void onLoadMoreSuccess(CommentRefreshBean data, LoadMore loadMore) {
-        if (data != null) {
+        if (data != null && data.getComments() != null) {
             List<HotCommentsBean> commentList = data.getComments();
-            if (commentList != null && commentList.size() > 0) {
+            if (commentList.size() > 0) {
                 lastMinPublishTime = getLastMinPublishTime(commentList);//获取最后的刷新时间
             }
             mCommentAdapter.addData(commentList, true);
+            if (commentList.size() < C.PAGE_SIZE) {
+                loadMore.setState(LoadMore.TYPE_NO_MORE);
+            }
+
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
@@ -434,7 +457,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     @Override
     public void onLoadMore(LoadingCallBack callback) {
-        new CommentListTask(callback).setTag(this).exe(articleId, lastMinPublishTime, "20");
+        new CommentListTask(callback).setTag(this).exe(articleId, lastMinPublishTime == 0 ? null : lastMinPublishTime);
     }
 
     /**

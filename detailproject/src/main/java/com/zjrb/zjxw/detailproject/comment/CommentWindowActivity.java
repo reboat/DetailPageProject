@@ -86,8 +86,8 @@ public class CommentWindowActivity extends BaseActivity implements
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
-                articleId = data.getQueryParameter(Key.ARTICLE_ID);
+            if (data.getQueryParameter(Key.ID) != null) {
+                articleId = data.getQueryParameter(Key.ID);
             }
             if (data.getQueryParameter(Key.PARENT_ID) != null) {
                 parentId = data.getQueryParameter(Key.PARENT_ID);
@@ -117,7 +117,8 @@ public class CommentWindowActivity extends BaseActivity implements
 
     @Override
     public void finish() {
-        SPHelper.get().put(Key.ARTICLE_COMMENT_EDITING, mContent.trim()).commit(); // 缓存数据
+        //缓存评论内容
+        SPHelper.get().put(Key.ARTICLE_COMMENT_EDITING, mContent.trim()).commit();
         super.finish();
         overridePendingTransition(0, 0);
     }

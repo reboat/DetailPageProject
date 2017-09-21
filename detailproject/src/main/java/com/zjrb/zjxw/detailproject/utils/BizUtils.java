@@ -164,7 +164,7 @@ public class BizUtils {
         if (mData.getArticle().getDoc_type() == 2) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .appendQueryParameter(Key.VIDEO_PATH, mData.getArticle().getVideo_url())
                     .build(), 0);
@@ -175,7 +175,7 @@ public class BizUtils {
         } else if (mData.getArticle().getDoc_type() == 4) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
 
@@ -183,7 +183,7 @@ public class BizUtils {
         } else if (mData.getArticle().getDoc_type() == 5) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
 
@@ -200,7 +200,7 @@ public class BizUtils {
         if (mData.getDoc_type() == 2) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
                     .appendQueryParameter(Key.VIDEO_PATH, mData.getVideo_url())
                     .build(), 0);
@@ -211,7 +211,7 @@ public class BizUtils {
         } else if (mData.getDoc_type() == 4) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
                     .build(), 0);
 
@@ -219,7 +219,7 @@ public class BizUtils {
         } else if (mData.getDoc_type() == 5) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
                     .buildUpon()
-                    .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(mData.getId()))
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
                     .build(), 0);
 

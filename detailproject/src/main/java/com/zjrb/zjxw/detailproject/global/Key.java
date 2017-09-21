@@ -8,6 +8,10 @@ package com.zjrb.zjxw.detailproject.global;
 
 public final class Key {
     /**
+     * id - 新闻列表传过来的id
+     */
+    public static final String ID = "id";
+    /**
      * Fragment - 参数传递
      */
     public static final String FRAGMENT_ARGS = "fragment_args";
@@ -30,11 +34,10 @@ public final class Key {
      * 官员ID
      */
     public static final String OFFICIAL_ID = "official_id";
-    /**
-     * 文章ID
-     */
-    public static final String ARTICLE_ID = "article_id";
 
+    /**
+     * 分组ID
+     */
     public static final String GROUP_ID = "group_id";
     /**
      * 文章MLFID

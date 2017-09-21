@@ -285,7 +285,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                     if (type == PersionalListAdapter.TYPE_PERSIONAL_DETAIL) {
                         Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                                 .buildUpon()
-                                .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(officalId))
+                                .appendQueryParameter(Key.ID, String.valueOf(officalId))
                                 .build(), 0);
                     } else {
                         if (uri != null && !uri.isEmpty()) {
@@ -296,11 +296,11 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                                     uri.contains(uri4))) {
                                 Uri u = Uri.parse(uri);
                                 //稿件ID
-                                String articleId = u.getQueryParameter(Key.ARTICLE_ID);
+                                String articleId = u.getQueryParameter(Key.ID);
                                 if (!articleId.isEmpty()) {
                                     Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
                                             .buildUpon()
-                                            .appendQueryParameter(Key.ARTICLE_ID, String.valueOf(articleId))
+                                            .appendQueryParameter(Key.ID, String.valueOf(articleId))
                                             .build(), 0);
                                 }
                             } else {//链接稿/直播

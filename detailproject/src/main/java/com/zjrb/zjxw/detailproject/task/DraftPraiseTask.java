@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 稿件点赞 - Task
@@ -17,8 +18,7 @@ public class DraftPraiseTask extends APIPostTask<BaseInnerData> {
     }
 
     /**
-     * @param params
-     * id:稿件id(int)
+     * @param params id:稿件id(int)
      */
     @Override
     protected void onSetupParams(Object... params) {
@@ -27,7 +27,6 @@ public class DraftPraiseTask extends APIPostTask<BaseInnerData> {
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.DRAFT_PRAISEL;
+        return APIManager.endpoint.DRAFT_LIKE;
     }
 }

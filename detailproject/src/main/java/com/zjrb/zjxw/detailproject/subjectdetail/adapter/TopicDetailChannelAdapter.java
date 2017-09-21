@@ -46,7 +46,9 @@ public final class TopicDetailChannelAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            tv_channel_name.setText(mData.getGroupName());
+            if(mData.getGroupName() != null){
+                tv_channel_name.setText(mData.getGroupName());
+            }
         }
     }
 

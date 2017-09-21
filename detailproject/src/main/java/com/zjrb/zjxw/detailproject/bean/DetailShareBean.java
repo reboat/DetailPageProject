@@ -4,12 +4,14 @@ import android.support.annotation.NonNull;
 
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.io.Serializable;
+
 /**
  * 详情页内分享bean
  * Created by wanglinjie.
  * create time:2017/7/21  下午4:20
  */
-public final class DetailShareBean {
+public final class DetailShareBean implements Serializable {
     //图片ID
     public int resId;
     //文字描述

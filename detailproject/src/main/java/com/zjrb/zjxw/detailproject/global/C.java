@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.global;
 
 /**
+ * 全局常量
  * Created by wanglinjie.
  * create time:2017/8/22  下午2:00
  */

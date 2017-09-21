@@ -156,7 +156,9 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //分组标签不可点击
-            tvGroupName.setText(mData.getList_title());
+            if(mData.getList_title() != null){
+                tvGroupName.setText(mData.getList_title());
+            }
             if (mData.getSize() >= 3) {
                 tvMore.setVisibility(View.VISIBLE);
                 tvMore.setText(itemView.getContext().getString(R.string.module_detail_offical_more));

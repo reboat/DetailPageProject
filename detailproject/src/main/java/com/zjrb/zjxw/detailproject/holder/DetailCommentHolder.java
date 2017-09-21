@@ -63,7 +63,12 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     //原评论者
     @BindView(R2.id.tv_comment_src)
     TextView mTvCommentSrc;
+    @BindView(R2.id.tv_delete_tip)
+    TextView mTvDeleteTip;
 
+    /**
+     * 稿件id
+     */
     private String articleId;
 
     public DetailCommentHolder(View itemView, String articleId) {
@@ -78,26 +83,38 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         if (mData.isOwn()) {
             mDelete.setVisibility(View.VISIBLE);
         }
+
+        //评论已删除
+        if (mData.getStatus() == 3) {
+            mTvDeleteTip.setVisibility(View.VISIBLE);
+            mTvCommentContent.setVisibility(View.GONE);
+            mTvCommentSrc.setVisibility(View.GONE);
+            mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
+        }
+
         //回复者的评论
-        if (mData.getContent() != null && !mData.getContent().isEmpty()) {
+        if (mData.getContent() != null) {
             mContent.setText(mData.getContent());
         }
         //回复者昵称
-        if (mData.getNick_name() != null && !mData.getNick_name().isEmpty()) {
+        if (mData.getNick_name() != null) {
             mName.setText(mData.getNick_name());
         }
 
         mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd HH:mm:ss"));
         //我的评论
-        if (mData.getParent_content() != null && !mData.getParent_content().isEmpty()) {
+        if (mData.getParent_content() != null) {
             mTvCommentContent.setText(mData.getParent_content());
         }
 
+        //点赞次数和是否已点赞
         mThumb.setText(mData.getLike_count() + "");
         mThumb.setSelected(mData.isLiked() == true);
+        //回复者头像
         GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
+
         //我的昵称
-        if (mData.getParent_nick_name() != null && !mData.getParent_nick_name().isEmpty()) {
+        if (mData.getParent_nick_name() != null) {
             mTvCommentSrc.setText(mData.getParent_nick_name());
         }
 
@@ -142,14 +159,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 if (stateBean == null) {
                     return;
                 }
-                if (stateBean.getResultCode() == 0) {
-                    BizUtils.switchSelectorAnim(mThumb, true);//设置点赞动画
-                    mThumb.setSelected(true);
-                    mData.setLike_count((mData.getLike_count() + 1));
-                    mThumb.setText(mData.getLike_count() + "");
-                } else {
-                    T.showShort(itemView.getContext(), stateBean.getResultMsg());
-                }
+                BizUtils.switchSelectorAnim(mThumb, true);//设置点赞动画
+                mThumb.setSelected(true);
+                mData.setLike_count((mData.getLike_count() + 1));
+                mThumb.setText(mData.getLike_count() + "");
             }
 
             @Override

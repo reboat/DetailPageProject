@@ -10,7 +10,7 @@ import java.util.List;
  * create time:2017/8/24  下午8:58
  */
 
-public class OfficalDetailBean {
+public class OfficalDetailBean implements  Serializable{
 
     /**
      * id : 1

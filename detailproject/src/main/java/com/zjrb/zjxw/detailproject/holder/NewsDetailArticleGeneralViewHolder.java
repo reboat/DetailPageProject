@@ -43,7 +43,9 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
     @Override
     public void bindView() {
         //标题
-        mTvTitle.setText(mData.getList_title());
+        if (mData.getList_title() != null) {
+            mTvTitle.setText(mData.getList_title());
+        }
         //标签状态
         if (mData.getList_tag() != null && !mData.getList_tag().isEmpty()) {
             mTvFlag.setText(mData.getList_tag());
@@ -52,9 +54,7 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
         }
         //TODO  WLJ 默认图片
         //多图
-        if (mData.getList_pics() != null && !mData.getList_pics().get(0).isEmpty()) {
-            GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).centerCrop().into(mIvPicture);
-        }
+        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(PH.zheSmall()).centerCrop().into(mIvPicture);
 
         //阅读量
         if (mData.getRead_count() == 0) {

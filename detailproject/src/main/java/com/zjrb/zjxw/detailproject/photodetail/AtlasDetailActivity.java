@@ -55,6 +55,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.zjrb.zjxw.detailproject.utils.BizUtils.comment.JY;
+
 
 /**
  * 图集详情页
@@ -130,23 +132,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ARTICLE_ID) != null && !data.getQueryParameter(Key.ARTICLE_ID).isEmpty()) {
+            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
                 mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
             }
         }
     }
-
-
-//    private DefaultTopBarHolder1 topBar;
-//
-//    @Override
-//    protected View onCreateTopBar(ViewGroup view) {
-//        topBar = TopBarFactory.createDefault1(view, this);
-//        topBar.setViewVisible(topBar.getShareView(), View.VISIBLE);
-//        topBar.setContainerABG();
-//        return topBar.getView();
-//    }
-
 
     /**
      * 获取图集数据
@@ -157,9 +147,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
                 //设置下载按钮
-                if(atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()){
+                if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                     mIvDownLoad.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mIvDownLoad.setVisibility(View.GONE);
                 }
 
@@ -168,6 +158,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onError(String errMsg, int errCode) {
+                //TODO WLJ 撤稿处理
                 T.showShort(getBaseContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad()).exe(mArticleId);
@@ -235,8 +226,19 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
             //TODO  WLJ TEST
             mAtlasList = mockTest();
-            mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
-            mMenuPrised.setSelected(atlasDetailEntity.getArticle().isFollowed());
+            //评论数量
+            if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
+                mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
+            } else {
+                mTvCommentsNum.setVisibility(View.GONE);
+            }
+
+            //是否已点赞
+            if (atlasDetailEntity.getArticle().isLike_enabled()) {
+                mMenuPrised.setSelected(atlasDetailEntity.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
             BizUtils.setCommentSet(mTvComment, mData.getArticle().getComment_level());
         }
         //设置图片列表
@@ -424,6 +426,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvContent.setText(entity.getDescription());
         mTvContent.scrollTo(0, 0);
 
+        //更多图集
+        setTopTitle(position);
+
         //文案显示
         if (position == (mAtlasList.size() - 1)) {
             mLyContainer.setVisibility(View.GONE);
@@ -436,16 +441,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         //下载按钮
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (mAtlasList.get(position) != null && !mAtlasList.get(position).equals("")) {
-                if(mIvDownLoad.getVisibility() == View.GONE){
+                if (mIvDownLoad.getVisibility() == View.GONE) {
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 }
+                //更多图集不需要显示下载图标
+                if (position == (mAtlasList.size() - 1) && mIvDownLoad.getVisibility() == View.VISIBLE) {
+                    mIvDownLoad.setVisibility(View.GONE);
+                }
             } else {
-                if(mIvDownLoad.getVisibility() == View.VISIBLE){
+                if (mIvDownLoad.getVisibility() == View.VISIBLE) {
                     mIvDownLoad.setVisibility(View.GONE);
                 }
             }
         } else {
-            if(mIvDownLoad.getVisibility() == View.VISIBLE){
+            if (mIvDownLoad.getVisibility() == View.VISIBLE) {
                 mIvDownLoad.setVisibility(View.GONE);
             }
         }
@@ -470,7 +479,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        setTopTitle(position);
     }
 
     @Override

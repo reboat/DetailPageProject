@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.task;
 
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.common.global.C;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
@@ -28,7 +29,7 @@ public class CommentListTask extends APIGetTask<CommentRefreshBean> {
     protected void onSetupParams(Object... params) {
         put("channel_article_id", params[0]);
         put("start",params[1]);
-        put("size",params[2]);
+        put("size", C.PAGE_SIZE);
     }
 
     @Override

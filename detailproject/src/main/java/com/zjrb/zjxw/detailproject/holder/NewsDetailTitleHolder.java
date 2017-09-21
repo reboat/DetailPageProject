@@ -12,12 +12,14 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 新闻详情页title - ViewHolder
@@ -37,39 +39,38 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     TextView mTvColumnName;
     @BindView(R2.id.top_container)
     RelativeLayout mTopContainer;
-
     @BindView(R2.id.tv_time)
     TextView mTvTime;
 
     public NewsDetailTitleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_top, parent, false));
         ButterKnife.bind(this, itemView);
-//        mTopContainer.addOnLayoutChangeListener(this);
     }
 
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        //顶部焦点图
+
+        //顶部焦点图(可以不填写)
         if (mData.getArticle().getArticle_pic() == null || mData.getArticle().getArticle_pic().isEmpty()) {
             mIvTopBg.setVisibility(View.GONE);
         } else {
             GlideApp.with(mIvTopBg).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvTopBg);
         }
-        //标题
-        if (mData.getArticle().getList_title() != null && !mData.getArticle().getList_title().isEmpty()) {
+
+        //标题(必填)
+        if (mData.getArticle().getList_title() != null) {
             mTvTitle.setText(mData.getArticle().getList_title());
-        } else {
-            mTvTitle.setVisibility(View.GONE);
         }
-        //记者
+
+        //记者(发稿允许不填写)
         if (mData.getArticle().getAuthor() != null && !mData.getArticle().getAuthor().isEmpty()) {
             mTvReporter.setText(mData.getArticle().getAuthor());
         } else {
             mTvReporter.setVisibility(View.GONE);
         }
 
-        //稿件发布时间/栏目名称
+        //稿件发布时间/栏目名称(发稿允许不填写)
         if (mData.getArticle().getColumn_name() != null && !mData.getArticle().getColumn_name().isEmpty()) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "|");
             mTvColumnName.setText(mData.getArticle().getColumn_name());
@@ -79,17 +80,12 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
     }
 
-    //TODO  WLJ
-//    @Override
-//    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft,
-//                               int oldTop, int oldRight, int oldBottom) {
-//        if (v == mTopContainer) {
-//            ViewGroup.LayoutParams lp = mIvTopBg.getLayoutParams();
-//            if (lp.height != bottom - top) {
-//                lp.height = bottom - top;
-//                mIvTopBg.requestLayout();
-//            }
-//        }
-//    }
+    @OnClick({R2.id.tv_column_name})
+    public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (view.getId() == R.id.tv_column_name) {
+            //TODO  WLJ  进入频道列表页面
+        }
+    }
 
 }

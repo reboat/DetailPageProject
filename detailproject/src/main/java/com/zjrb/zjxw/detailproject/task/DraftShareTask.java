@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftShareBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 稿件分享
@@ -17,8 +18,7 @@ public class DraftShareTask extends APIPostTask<DraftShareBean> {
     }
 
     /**
-     * @param params
-     * timestamp:时间戳(long)
+     * @param params timestamp:时间戳(long)
      */
     @Override
     protected void onSetupParams(Object... params) {
@@ -27,7 +27,6 @@ public class DraftShareTask extends APIPostTask<DraftShareBean> {
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.COLUMN_SUBSCRIBE;
+        return APIManager.endpoint.DRAFT_SHARE;
     }
 }

@@ -1,12 +1,14 @@
 package com.zjrb.zjxw.detailproject.bean;
 
+import java.io.Serializable;
+
 /**
  * 评论点赞bean
  * Created by wanglinjie.
  * create time:2017/9/8  下午4:46
  */
 
-public class CommentPriseBean {
+public class CommentPriseBean implements Serializable {
 
     /**
      * obtained : 5

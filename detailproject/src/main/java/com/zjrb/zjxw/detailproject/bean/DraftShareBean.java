@@ -1,13 +1,15 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
+
 /**
  * 分享积分bean
  * Created by wanglinjie.
  * create time:2017/8/26  下午2:41
  */
 
-public class DraftShareBean {
+public class DraftShareBean implements Serializable {
 
     /**
      * obtained : 5

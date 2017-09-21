@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
@@ -30,8 +30,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     RecyclerView lvNotice;
 
     private ImageMoreAdapter mAdapter;
-    private ListSpaceDivider diver;
-    private static DraftDetailBean mBean;
+    private DraftDetailBean mBean;
 
     /**
      * 创建实例
@@ -40,13 +39,18 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     public static ImageMoreFragment newInstance(DraftDetailBean bean) {
         ImageMoreFragment fragment = new ImageMoreFragment();
-        mBean = bean;
+        Bundle args = new Bundle();
+        args.putSerializable(Key.FRAGMENT_ARGS, bean);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mBean = (DraftDetailBean) getArguments().getSerializable(Key.FRAGMENT_ARGS);
+        }
     }
 
     @Override
@@ -64,8 +68,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     private void initView(View v) {
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
-//        diver = new ListSpaceDivider(32, 0, false);
-//        lvNotice.addItemDecoration(diver);
         initAdapter();
     }
 

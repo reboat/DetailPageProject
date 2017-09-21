@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.permission.IPermissionOperate;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -58,11 +57,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     private List<DetailShareBean> mListData;
     private DetailShareAdapter mAdapter;
-
-    /**
-     * 分享需要写入权限
-     */
-    private IPermissionOperate permissionOp;
     private UmengShareUtils umengShareUtils;
 
 
@@ -80,18 +74,26 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
 
-        //栏目名称
+        //栏目已关联
         if (mData.getArticle().getColumn_id() > 0) {
             mRySubscribe.setVisibility(View.VISIBLE);
-            mTvColumnName.setText(mData.getArticle().getColumn_name());
+            if (mData.getArticle().getColumn_name() != null) {
+                mTvColumnName.setText(mData.getArticle().getColumn_name());
+            }
+            mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "订阅");
+        } else {
+            mRySubscribe.setVisibility(View.GONE);
         }
 
         //频道名称
-        if (!mData.getArticle().getChannel_id().isEmpty()) {
+        if (mData.getArticle().getChannel_id() != null && !mData.getArticle().getChannel_id().isEmpty()) {
             mRyChannel.setVisibility(View.VISIBLE);
             mTvChannelName.setText(mData.getArticle().getChannel_name());
-            mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "订阅");
+        } else {
+            mRyChannel.setVisibility(View.GONE);
         }
+
+        //初始化分享
         initShareBean();
         if (umengShareUtils == null)
             umengShareUtils = new UmengShareUtils();
@@ -116,14 +118,16 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             mListData.add(new DetailShareBean(R.mipmap.me_sina_btn, "新浪微博", SHARE_MEDIA.SINA));
         }
 
-
         mAdapter = new DetailShareAdapter(mListData);
         mAdapter.setOnItemClickListener(this);
         mRecyleView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
-
+    /**
+     * @param view
+     * 频道订阅/栏目  点击
+     */
     @OnClick({R2.id.tv_column_subscribe, R2.id.tv_channel_subscribe})
     public void onViewClicked(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -131,6 +135,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
             if (view.getId() == R.id.tv_column_subscribe) {
+                //如果未订阅
                 if (!mData.getArticle().isColumn_subscribed()) {
                     callback.onOptSubscribe();
                 }

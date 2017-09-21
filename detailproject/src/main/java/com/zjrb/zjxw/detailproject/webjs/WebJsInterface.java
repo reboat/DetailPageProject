@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * JavascriptInterface
  *
- * @author a_liYa
- * @date 2017/4/5 16:41.
+ * Created by wanglinjie.
+ * create time:2017/9/19  上午11:34
  */
 public class WebJsInterface {
 
@@ -51,6 +51,8 @@ public class WebJsInterface {
             mContext.startActivity(intent);
         }
     }
+
+    //TODO WLJ 添加所有的JS本地方法
 
     public void setImgSrcs(String[] imgSrcs) {
         mImgSrcs = imgSrcs;

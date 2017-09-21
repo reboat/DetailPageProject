@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 提交文章评论
@@ -26,12 +27,13 @@ public class CommentSubmitTask extends APIPostTask<BaseInnerData> {
     protected void onSetupParams(Object... params) {
         put("channel_article_id", params[0]);
         put("content", params[1]);
-        put("parent_id", params[2]);
+        if(params[2] != null){
+            put("parent_id", params[2]);
+        }
     }
 
     @Override
     protected String getApi() {
-        return null;
-//        return APIManager.endpoint.ARTICLE_COMMENT;
+        return APIManager.endpoint.COMMENT_SUBMIT;
     }
 }

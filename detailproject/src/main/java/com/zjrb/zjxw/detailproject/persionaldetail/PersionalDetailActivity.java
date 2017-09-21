@@ -19,8 +19,8 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.db.BundleHelper;
-import com.zjrb.core.domain.eventbus.EventBase;
 import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -31,10 +31,6 @@ import com.zjrb.zjxw.detailproject.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoFragment;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -237,20 +233,22 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         bean = b;
         bean.setArticle_list(mockTest());
         bean.setOfficer(mockTest2());
+        //TODO  WLJ else怎么显示
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
+            //TODO WLJ 是否需要占位图
             //头像
-            GlideApp.with(ivAvatar).load(bean.getList_pic()).circleCrop().into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getList_pic()).placeholder(PH.zheSmall()).circleCrop().into(ivAvatar);
             //姓名
-            if (bean.getName() != null && !bean.getName().isEmpty()) {
+            if (bean.getName() != null) {
                 tvName.setText(bean.getName());
             }
             //性别
-            if (bean.getGender() != null && !bean.getGender().isEmpty()) {
+            if (bean.getGender() != null) {
                 tvSex.setText(bean.getGender());
             }
             //描述
-            if (bean.getDescription() != null && !bean.getDescription().isEmpty()) {
+            if (bean.getDescription() != null) {
                 tvContent.setText(bean.getDescription());
             }
             init();
@@ -270,38 +268,12 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(EventBase event) {
-//        if (event instanceof PersionalInfoTabEvent) {
-//            EventBus.getDefault().removeStickyEvent(event);
-//            tv1.setText("相关新闻");
-//            tv1.setTextColor(getResources().getColor(R.color.bc_ffffff));
-//            tv2.setTextColor(getResources().getColor(R.color.bc_f44b50));
-//            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_left);
-//            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_right);
-//        }
-//
-//        //切换到历史求助页面
-//        if (event instanceof PersionalDetailTabEvent) {
-//            EventBus.getDefault().removeStickyEvent(event);
-//            tv2.setText("个人履历");
-//            tv2.setTextColor(getResources().getColor(R.color.bc_ffffff));
-//            tv1.setTextColor(getResources().getColor(R.color.bc_f44b50));
-//            ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.border_persional_detail_tab_right);
-//            ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_subscribe_red_left);
-//        }
-
     }
 
 

@@ -181,7 +181,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/sl_atlas_detail_collected"
+                android:src="@drawable/module_detail_news_prise"
                 />
 
             <ImageView

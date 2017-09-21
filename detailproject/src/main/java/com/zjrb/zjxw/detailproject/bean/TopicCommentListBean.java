@@ -1,12 +1,14 @@
 package com.zjrb.zjxw.detailproject.bean;
 
+import java.io.Serializable;
+
 /**
  * 话题互动评论列表
  * Created by wanglinjie.
  * create time:2017/9/19  上午11:34
  */
 
-public class TopicCommentListBean {
+public class TopicCommentListBean implements Serializable {
 
     /**
      * id : 597ad67b2c1d4007315ce9b1

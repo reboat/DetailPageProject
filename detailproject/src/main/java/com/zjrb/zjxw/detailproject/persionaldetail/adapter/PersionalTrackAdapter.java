@@ -82,17 +82,29 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
+            //任职年份
             if(!mData.isSameYear()){
                 mTvYear.setText(mData.getYear() + "年");
             }else{
                 mTvYear.setVisibility(View.GONE);
             }
+
+            //任职月份
             if(mData.getMonth() < 10){
                 mTvMonth.setText("0"+mData.getMonth() + "月");
             }else{
                 mTvMonth.setText(mData.getMonth() + "月");
             }
-            mTvPersionalInfo.setText("[" + mData.getLocation() + "] " + mData.getTitle());
+
+            //官员地点
+            if(mData.getLocation() != null){
+                mTvPersionalInfo.setText("[" + mData.getLocation() + "] ");
+            }
+
+            //官员职务
+            if(mData.getTitle() != null ){
+                mTvPersionalInfo.append(mData.getTitle());
+            }
 
         }
     }

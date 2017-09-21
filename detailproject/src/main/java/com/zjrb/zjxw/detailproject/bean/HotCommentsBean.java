@@ -1,13 +1,15 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
+
 /**
  * 热门评论
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:13
  */
 
-public class HotCommentsBean {
+public class HotCommentsBean implements Serializable {
 
     /**
      * id : 597ad67b2c1d4007315ce9b1

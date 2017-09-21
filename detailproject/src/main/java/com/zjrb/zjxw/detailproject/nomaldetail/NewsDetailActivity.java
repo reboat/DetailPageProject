@@ -336,6 +336,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptSubscribe() {
+        //如果频道未订阅
         new ColumnSubscribeTask(new APIExpandCallBack<BaseInnerData>() {
 
             @Override
@@ -356,7 +357,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 mAdapter.updateSubscribeInfo();
             }
 
-        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id());
+        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
+
     }
 
     @Override
@@ -369,6 +371,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptClickColumn() {
+        //TODO  WLJ 进入栏目列表
 //        ARouter.getInstance().build("/module/detail/ColumnDetailActivity")
 //                .withString(Key.COLUMN_ID, mNewsDetail.getColumn_id().toString())
 //                .navigation();
@@ -392,6 +395,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
+                //TODO WLJ ERRORCODE
                 switch (baseInnerData.getResultCode()) {
                     case ResultCode.SUCCEED:
                         T.showShort(getBaseContext(), "点赞成功");
@@ -442,8 +446,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .build(), 0);
                 return;
             }
-        }else if(view.getId() == R.id.iv_share){
-            T.showShortNow(NewsDetailActivity.this,"分享");
+        } else if (view.getId() == R.id.iv_share) {
+            T.showShortNow(NewsDetailActivity.this, "分享");
         }
     }
 

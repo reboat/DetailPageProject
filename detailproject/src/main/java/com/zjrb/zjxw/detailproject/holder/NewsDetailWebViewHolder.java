@@ -65,6 +65,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     /**
      * 如需要动态加载css,可直接传入url
+     * 新增接口拉取css和js
      */
     @Override
     public void bindView() {

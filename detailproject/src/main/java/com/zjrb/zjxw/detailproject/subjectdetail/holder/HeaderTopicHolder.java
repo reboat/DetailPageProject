@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.PageItem;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
 import com.zjrb.core.ui.widget.ExpandableTextView;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
@@ -60,6 +59,9 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
 
     private DraftDetailBean bean;
 
+    /**
+     * @param parent 专题详情页头布局
+     */
     public HeaderTopicHolder(ViewGroup parent) {
         super(inflate(R.layout.module_detail_header_topic, parent, false));
         ButterKnife.bind(this, itemView);
@@ -113,6 +115,9 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
      * @param draftTopicBean 初始化头数据
      */
     public void initData(DraftDetailBean draftTopicBean) {
+        if (draftTopicBean == null || draftTopicBean.getArticle() == null) {
+            return;
+        }
         bean = draftTopicBean;
         initView(draftTopicBean);
         if (mChannelItemAdapter == null) {
@@ -122,35 +127,50 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener {
 //        mChannelItemAdapter.setData(draftTopicBean.getSubject_groups());
         rvHead.setAdapter(mChannelItemAdapter);
 
-        tvTitle.setText(draftTopicBean.getArticle().getList_title());
+        String title = draftTopicBean.getArticle().getList_title();
         String summary = draftTopicBean.getArticle().getSummary();
         String backPicUrl = draftTopicBean.getArticle().getArticle_pic();
         String subjectFocusImg = draftTopicBean.getArticle().getSubject_focus_image();
-        if (TextUtils.isEmpty(summary)) {
+        String subjectDecription = draftTopicBean.getArticle().getSubject_focus_decription();
+
+        //标题不能为空
+        if (title != null) {
+            tvTitle.setText(draftTopicBean.getArticle().getList_title());
+        }
+
+        //摘要可以为空
+        if (summary == null || TextUtils.isEmpty(summary)) {
             tvSummary.setVisibility(View.GONE);
         } else {
             tvSummary.setVisibility(View.VISIBLE);
             tvSummary.setText(summary);
         }
-        if (TextUtils.isEmpty(backPicUrl)) {
+
+        //题图可以为空
+        if (backPicUrl == null || TextUtils.isEmpty(backPicUrl)) {
             ivNewsTopicBanner.setVisibility(View.GONE);
         } else {
-            GlideApp.with(ivNewsTopicBanner).load(backPicUrl).centerCrop().into(ivNewsTopicBanner);
+            GlideApp.with(ivNewsTopicBanner).
+                    load(backPicUrl).
+                    centerCrop().
+                    into(ivNewsTopicBanner);
         }
-        if (TextUtils.isEmpty(subjectFocusImg)) {
+
+        //专题焦点图可以为空
+        if (subjectFocusImg == null || TextUtils.isEmpty(subjectFocusImg)) {
             pfPicContainer.setVisibility(View.GONE);
         } else {
-            GlideApp.with(ivTopicPic).load(draftTopicBean.getArticle().getSubject_focus_image())
-                    .placeholder(PH.zheBig())
+            GlideApp.with(ivTopicPic).load(subjectFocusImg)
                     .centerCrop()
                     .into(ivTopicPic);
         }
 
-        if (TextUtils.isEmpty(draftTopicBean.getArticle().getSummary())) {
+        //专题焦点图摘要可以为空
+        if (subjectDecription == null || TextUtils.isEmpty(subjectDecription)) {
             tvTitle2.setVisibility(View.GONE);
         } else {
             tvTitle2.setVisibility(View.VISIBLE);
-            tvTitle2.setText(draftTopicBean.getArticle().getSummary());
+            tvTitle2.setText(subjectDecription);
         }
     }
 

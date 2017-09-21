@@ -15,22 +15,6 @@
         app:ratio_w2h="3:2"
         tools:src="@mipmap/ic_detail_integral"/>
 
-    <!--<android.support.percent.PercentFrameLayout-->
-    <!--android:id="@+id/banner_news_topic"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:visibility="visible">-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_top_bg"-->
-    <!--android:scaleType="fitXY"-->
-    <!--android:src="@drawable/module_detail_load_error"-->
-    <!--app:iv_maskColor="@color/bc_66000000"-->
-    <!--app:layout_aspectRatio="150%"-->
-    <!--app:layout_widthPercent="100%"/>-->
-    <!--</android.support.percent.PercentFrameLayout>-->
-
-
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fit_top_layout"
         android:layout_width="match_parent"
@@ -54,14 +38,12 @@
             android:textColor="?attr/tc_000000"
             android:textSize="@dimen/ts_22sp"
             tools:text="浙商银行程度分行紧急启动抗震救灾工作"/>
-
+        <!--新闻来源全部显示-->
         <TextView
             android:id="@+id/tv_reporter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:textColor="?attr/tc_999999"
             android:textSize="@dimen/ts_10sp"
             tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰"/>

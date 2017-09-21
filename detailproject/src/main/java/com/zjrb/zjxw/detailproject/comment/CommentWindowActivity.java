@@ -37,24 +37,6 @@ import butterknife.OnClick;
 
 public class CommentWindowActivity extends BaseActivity implements
         TextWatcher, View.OnTouchListener {
-    /**
-     * 稿件ID
-     */
-    private String articleId;
-    /**
-     * 被回复ID
-     */
-    private String parentId;
-    /**
-     * 回复内容
-     */
-//    private String content;
-
-    /**
-     * 被回复人
-     */
-    private String nickName;
-
     @BindView(R2.id.iv_close_window)
     ImageView ivCloseWindow;
     @BindView(R2.id.iv_send_comment)
@@ -70,6 +52,18 @@ public class CommentWindowActivity extends BaseActivity implements
     @BindView(R2.id.tv_replay)
     TextView mTvReplay;
 
+    /**
+     * 稿件ID
+     */
+    private String articleId;
+    /**
+     * 被回复ID
+     */
+    private String parentId;
+    /**
+     * 被回复人
+     */
+    private String nickName;
     /**
      * 评论内容
      */
@@ -98,9 +92,6 @@ public class CommentWindowActivity extends BaseActivity implements
             if (data.getQueryParameter(Key.PARENT_ID) != null) {
                 parentId = data.getQueryParameter(Key.PARENT_ID);
             }
-//            if (data.getQueryParameter(Key.CONENT) != null) {
-//                content = data.getQueryParameter(Key.CONENT);
-//            }
             if (data.getQueryParameter(Key.REPLAYER) != null) {
                 nickName = data.getQueryParameter(Key.REPLAYER);
             }
@@ -162,7 +153,7 @@ public class CommentWindowActivity extends BaseActivity implements
      *                parentId:被回复的评论ID
      */
     private void submitComment(String content) {
-        if (!articleId.isEmpty() && !parentId.isEmpty() && !content.isEmpty()) {
+        if (articleId != null && !articleId.isEmpty() && content != null && !content.isEmpty()) {
             new CommentSubmitTask(new APIExpandCallBack<BaseInnerData>() {
 
                 @Override
@@ -205,6 +196,8 @@ public class CommentWindowActivity extends BaseActivity implements
     }
 
     /**
+     * 评论文本输入监听
+     *
      * @param s
      * @param start
      * @param before
@@ -212,7 +205,7 @@ public class CommentWindowActivity extends BaseActivity implements
      */
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (s.length() > 0 && s.length() <= 250) {
+        if (s.length() > 0 && s.length() <= 249) {
             ivSendComment.setEnabled(true);
             tvCommentNum.setText(s.length() + "/ 250");
         } else {

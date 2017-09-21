@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * create time:2017/8/1  下午9:14
  */
 
-public class SubjectItemBean {
+public class SubjectItemBean implements Serializable {
     /**
      * id : 123456
      * mlf_id : 12346788

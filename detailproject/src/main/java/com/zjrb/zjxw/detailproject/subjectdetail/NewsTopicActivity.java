@@ -92,6 +92,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getCollectView(), View.VISIBLE);
         return topHolder.getView();
     }
 
@@ -101,7 +103,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ARTICLE_ID) != null && !data.getQueryParameter(Key.ARTICLE_ID).isEmpty()) {
+            if (data.getQueryParameter(Key.ARTICLE_ID) != null) {
                 mArticleId = data.getQueryParameter(Key.ARTICLE_ID);
             }
         }
@@ -111,9 +113,6 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
      * 初始化专题详情页头部和列表信息
      */
     private void initView() {
-        //显示topbar收藏和分享按钮
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
-        topHolder.setViewVisible(topHolder.getCollectView(), View.VISIBLE);
         //专题列表
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
@@ -179,6 +178,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.iv_share) {
+            //TODO WLJ 分享
             T.showShort(NewsTopicActivity.this, "分享");
         } else {
             //收藏
@@ -223,6 +223,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
      * @param draftTopicBean 填充数据
      */
     private void fillData(DraftDetailBean draftTopicBean) {
+        if (draftTopicBean == null) return;
+        //TODO WLJ 空态页面
         headHolder = new HeaderTopicHolder(mRvContent);
         headHolder.initData(draftTopicBean);
 

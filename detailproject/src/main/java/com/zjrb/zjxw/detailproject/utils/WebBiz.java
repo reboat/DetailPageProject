@@ -150,7 +150,7 @@ public class WebBiz {
                 }
 
                 // 夜间模式点击应在遮罩层
-                //TODO  WLJ
+                //TODO  WLJ  将图片点击事件替换成我们的打开图片
                 if (isNeedOnClick && !ThemeMode.isNightMode()) {
                     node.attr("onClick", "imageBrowse(" + index + ")");
                 }

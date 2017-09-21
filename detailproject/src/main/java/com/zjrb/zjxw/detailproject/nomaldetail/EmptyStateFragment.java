@@ -17,11 +17,9 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,18 +183,14 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                 if (bean == null) {
                     return;
                 }
-                if (bean.getResultCode() == 0) {//成功
-                    article_list = mockTest().getArticle_list();//bean.getArticle_list();
-                    if (article_list != null) {
-                        if (adapter == null) {
-                            adapter = new EmptyStateListAdapter(article_list);
-                            initAdapter();
-                        }
-                        lvNotice.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                article_list = mockTest().getArticle_list();//bean.getArticle_list();
+                if (article_list != null) {
+                    if (adapter == null) {
+                        adapter = new EmptyStateListAdapter(article_list);
+                        initAdapter();
                     }
-                } else {
-                    T.showShort(UIUtils.getContext(), bean.getResultMsg());
+                    lvNotice.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
             }
 

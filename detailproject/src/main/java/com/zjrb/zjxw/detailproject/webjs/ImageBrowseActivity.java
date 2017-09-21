@@ -58,6 +58,7 @@ public class ImageBrowseActivity extends BaseActivity {
     private ImagePagerAdapter mAdapter;
 
     public static Intent newIntent(Context ctx, String[] urls, int index) {
+        //TODO WLJ 使用路由跳转
         Intent intent = new Intent(ctx, ImageBrowseActivity.class);
         intent.putExtra(ImageBrowseActivity.EXTRA_IMAGE_URLS, urls);
         intent.putExtra(ImageBrowseActivity.EXTRA_IMAGE_INDEX, index);
@@ -93,6 +94,7 @@ public class ImageBrowseActivity extends BaseActivity {
      * @param urls
      */
     private void initPage(Bundle savedInstanceState, String[] urls) {
+        if (urls == null || urls.length == 0) return;
         mAdapter = new ImagePagerAdapter(
                 getSupportFragmentManager(), urls);
         mPager.setPageTransformer(true, new DepthPageTransformer());

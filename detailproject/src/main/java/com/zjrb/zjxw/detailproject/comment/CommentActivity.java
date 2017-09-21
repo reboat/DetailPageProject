@@ -295,18 +295,14 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 if (commentRefreshBean == null) {
                     return;
                 }
-                if (commentRefreshBean.getResultCode() == 0) {//成功
-                    commentList = mockText();//commentRefreshBean.getComments();
-                    if (commentList != null) {
-                        if (mCommentAdapter == null) {
-                            mCommentAdapter = new CommentAdapter(commentList);
-                            initAdapter();
-                        }
-                        mRvContent.setAdapter(mCommentAdapter);
-                        mCommentAdapter.notifyDataSetChanged();
+                commentList = mockText();//commentRefreshBean.getComments();
+                if (commentList != null) {
+                    if (mCommentAdapter == null) {
+                        mCommentAdapter = new CommentAdapter(commentList);
+                        initAdapter();
                     }
-                } else {
-                    T.showShort(getBaseContext(), commentRefreshBean.getResultMsg());
+                    mRvContent.setAdapter(mCommentAdapter);
+                    mCommentAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -315,7 +311,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(articleId, "", "20");
+        }).setTag(this).exe(articleId, "");
     }
 
     @OnClick({R2.id.tv_comment})

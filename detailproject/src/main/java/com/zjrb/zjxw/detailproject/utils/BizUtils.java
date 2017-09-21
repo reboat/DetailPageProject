@@ -1,18 +1,13 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.Animator;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.zjrb.core.nav.Nav;
@@ -24,7 +19,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 
 /**
  * 业务相关的逻辑处理工具
@@ -63,28 +57,6 @@ public class BizUtils {
                 return true;
         }
     }
-
-
-    /**
-     * 设置文章浅读积分获取文字
-     */
-    public static TextView setGetIntegralText(TextView tvIntegral, int integral) {
-        String string = tvIntegral.getContext().getString(R.string.module_detail_get_integral, integral);
-        String valueOf = String.valueOf(integral);
-        String[] split = string.split(valueOf);
-        SpannableString styledText = new SpannableString(string);
-        styledText.setSpan(new TextAppearanceSpan(tvIntegral.getContext(), R.style.TextStyle14sp),
-                0, split[0].length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        styledText.setSpan(new TextAppearanceSpan(tvIntegral.getContext(), R.style.TextStyle24sp),
-                split[0].length(), split[0].length() + valueOf.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        styledText.setSpan(new TextAppearanceSpan(tvIntegral.getContext(), R.style.TextStyle14sp),
-                split[0].length() + valueOf.length(), string.length(),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        tvIntegral.setText(styledText, TextView.BufferType.SPANNABLE);
-        return tvIntegral;
-    }
-
 
     /**
      * 统一执行选择器切换动画
@@ -137,40 +109,6 @@ public class BizUtils {
     }
 
     /**
-     * 格式化浏览量
-     *
-     * @param pv      浏览量
-     * @param docType docType
-     * @return 返回格式化后的字符串 (xx阅读/播放)
-     */
-    public static String formatPageViews(int pv, int docType) {
-        String pvValue = String.valueOf(pv);
-        if (docType < 0) {
-            return pvValue;
-        }
-        switch (docType) {
-            case DraftDetailBean.ArticleBean.type.VIDEO:
-            case DraftDetailBean.ArticleBean.type.LIVE:
-                pvValue += "播放";
-                break;
-            default:
-                pvValue += "阅读";
-
-        }
-        return pvValue;
-    }
-
-    /**
-     * 格式化浏览量
-     *
-     * @param pv 浏览量
-     * @return 返回格式化后的字符串
-     */
-    public static String formatPageViews(int pv) {
-        return formatPageViews(pv, -1);
-    }
-
-    /**
      * 格式化评论量
      *
      * @param comments 评论次数
@@ -220,8 +158,7 @@ public class BizUtils {
     }
 
     /**
-     * @param mData
-     * 根据doc_type跳转到相应的详情页
+     * @param mData 根据doc_type跳转到相应的详情页
      */
     public static void jumpToDetailActivity(DraftDetailBean mData) {
         if (mData.getArticle().getDoc_type() == 2) {
@@ -257,8 +194,7 @@ public class BizUtils {
     }
 
     /**
-     * @param mData
-     * 根据doc_type跳转到相应的详情页
+     * @param mData 根据doc_type跳转到相应的详情页
      */
     public static void jumpToDetailActivity2(SubjectItemBean mData) {
         if (mData.getDoc_type() == 2) {
@@ -294,40 +230,10 @@ public class BizUtils {
     }
 
 
-//    /**
-//     * 处理Splash数据
-//     *
-//     * @param context Context
-//     * @param data    SplashBean
-//     */
-//    public static void handleSplashData(Context context, SplashBean data) {
-//        if (data == null || context == null) {
-//            return;
-//        }
-//        switch (data.getType()) {
-//            case 0: // 稿件
-//                Intent intent = BizUtils.getArticleIntent(data.getDocType(),
-//                        data.getArticleId(), data.getMetaDataId(), "", data.getLinkUrl());
-//                if (intent != null) {
-//                    context.startActivity(intent);
-//                }
-//                break;
-//            case 1:
-//                if (!TextUtils.isEmpty(data.getLinkUrl())) {
-//                    //外部链接
-//                    context.startActivity(BrowserActivity.getIntent(data.getLinkUrl(), ""));
-//                }
-//                break;
-//        }
-//
-//    }
-
-
     /**
      * 评论权限相关信息
-     *
-     * @author a_liYa
-     * @date 2017/1/4 上午10:13.
+     * Created by wanglinjie.
+     * create time:2017/7/28  上午11:18
      */
     //0 禁止评论 1 先审后发 2 先发后审
     public static final class comment {

@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * create time:2017/9/19  下午3:31
  */
 
-public class DraftHotTopNewsBean {
+public class DraftHotTopNewsBean implements Serializable {
 
     private List<HotNewsBean> article_list;
 

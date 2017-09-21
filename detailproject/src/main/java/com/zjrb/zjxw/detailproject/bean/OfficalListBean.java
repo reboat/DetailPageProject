@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * create time:2017/8/18  下午4:49
  */
 
-public class OfficalListBean {
+public class OfficalListBean implements Serializable {
     /**
      * id : 1
      * name : 车俊

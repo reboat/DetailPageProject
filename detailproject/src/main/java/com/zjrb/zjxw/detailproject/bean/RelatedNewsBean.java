@@ -1,13 +1,15 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
+
 /**
  * 详情页相关新闻
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:12
  */
 
-public class RelatedNewsBean {
+public class RelatedNewsBean implements Serializable {
     private int id;
     private String title;
     private String pic;

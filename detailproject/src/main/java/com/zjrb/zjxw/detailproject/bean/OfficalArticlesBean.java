@@ -1,13 +1,15 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
+
 /**
  * 所有官员列表新闻bean
  * Created by wanglinjie.
  * create time:2017/8/21  上午9:22
  */
 
-public class OfficalArticlesBean {
+public class OfficalArticlesBean implements Serializable {
     private int type;
     private int officalId;
     private String job;

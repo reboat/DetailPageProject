@@ -44,6 +44,11 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
 
     @BindView(R2.id.lv_notice)
     RecyclerView mRecycler;
+
+
+    /**
+     * 专题列表适配器
+     */
     private TopicListAdapter mAdapter;
 
     /**
@@ -180,6 +185,9 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
         return list;
     }
 
+    /**
+     * 加载专题分组列表
+     */
     private void loadData() {
         new DraftTopicListTask(new APIExpandCallBack<SubjectListBean>() {
             @Override
@@ -187,18 +195,14 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 if (bean == null) {
                     return;
                 }
-                if (bean.getResultCode() == 0) {
-                    list = mockData();//bean.getArticle_list();
-                    if (list != null) {
-                        if (mAdapter == null) {
-                            mAdapter = new TopicListAdapter(list);
-                            initAdapter();
-                        }
-                        mRecycler.setAdapter(mAdapter);
-                        mAdapter.notifyDataSetChanged();
+                list = mockData();//bean.getArticle_list();
+                if (list != null) {
+                    if (mAdapter == null) {
+                        mAdapter = new TopicListAdapter(list);
+                        initAdapter();
                     }
-                } else {
-                    T.showShort(getBaseContext(), bean.getResultMsg());
+                    mRecycler.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -207,7 +211,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(group_id + "", "", "20");
+        }).setTag(this).exe(group_id + "");
     }
 
 
@@ -216,6 +220,10 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     private long lastNewsId = 0;
 
+    /**
+     * @param data
+     * @param loadMore 加载更多成功
+     */
     @Override
     public void onLoadMoreSuccess(SubjectListBean data, LoadMore loadMore) {
         if (data != null) {
@@ -229,11 +237,17 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
         }
     }
 
+    /**
+     * @param callback 加载更多
+     */
     @Override
     public void onLoadMore(LoadingCallBack<SubjectListBean> callback) {
         new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId, "20");
     }
 
+    /**
+     * 下拉刷新
+     */
     @Override
     public void onRefresh() {
         loadData();
@@ -254,6 +268,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onItemClick(View itemView, int position) {
+        //TODO WLJ 进入详情页
         BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position));
     }
 }

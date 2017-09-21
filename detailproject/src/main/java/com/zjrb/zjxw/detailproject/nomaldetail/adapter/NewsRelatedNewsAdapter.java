@@ -26,8 +26,8 @@ import butterknife.ButterKnife;
  */
 public class NewsRelatedNewsAdapter extends BaseRecyclerAdapter {
 
-    public NewsRelatedNewsAdapter(List been) {
-        super(been);
+    public NewsRelatedNewsAdapter(List list) {
+        super(list);
     }
 
     @Override
@@ -38,6 +38,9 @@ public class NewsRelatedNewsAdapter extends BaseRecyclerAdapter {
 
     }
 
+    /**
+     * 相关新闻holder
+     */
     static class SubjectNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean> {
 
         @BindView(R2.id.iv_pic)
@@ -53,7 +56,9 @@ public class NewsRelatedNewsAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheSmall()).centerCrop().into(mImg);
-            mTitle.setText(mData.getTitle());
+            if(mData.getTitle() != null){
+                mTitle.setText(mData.getTitle());
+            }
         }
     }
 

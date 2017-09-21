@@ -4,6 +4,7 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.domain.base.BaseInnerData;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
  * 频道订阅
@@ -28,7 +29,6 @@ public class ColumnSubscribeTask extends APIPostTask<BaseInnerData> {
 
     @Override
     protected String getApi() {
-        return "";
-//        return APIManager.endpoint.COLUMN_SUBSCRIBE;
+        return APIManager.endpoint.COLUMN_SUBSCRIBE;
     }
 }

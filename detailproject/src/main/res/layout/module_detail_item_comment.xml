@@ -113,6 +113,16 @@
         >
 
         <TextView
+            android:id="@+id/tv_delete_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="17dp"
+            android:layout_marginTop="17dp"
+            android:visibility="gone"
+            tools:text="评论已删除"/>
+
+        <TextView
             android:id="@+id/tv_comment_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

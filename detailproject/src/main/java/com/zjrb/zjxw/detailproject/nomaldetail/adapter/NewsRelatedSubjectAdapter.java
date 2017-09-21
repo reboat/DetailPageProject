@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -48,11 +49,8 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            if (mData.getPic() != null && mData.getPic().isEmpty()) {
-                mImg.setVisibility(View.GONE);
-            } else {
-                GlideApp.with(mImg).load(mData.getPic()).centerCrop().into(mImg);
-            }
+            //TODO 容错 有跳转链接却没有图片地址
+            GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheBig()).centerCrop().into(mImg);
         }
     }
 

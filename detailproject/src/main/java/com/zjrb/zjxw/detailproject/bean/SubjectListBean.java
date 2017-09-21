@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * create time:2017/8/24  下午7:44
  */
 
-public class SubjectListBean {
+public class SubjectListBean implements Serializable {
 
     private List<SubjectItemBean> article_list;
 

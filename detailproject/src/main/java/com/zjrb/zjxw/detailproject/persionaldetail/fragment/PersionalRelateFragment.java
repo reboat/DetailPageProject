@@ -105,6 +105,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * @param v 初始化适配器
      */
     private void initView(View v) {
+        //TODO  WLJ  空态
         mAdapter = new PersionalRelateNewsAdapter(list);
         lvNotice.setAdapter(mAdapter);
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -152,19 +153,15 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 if (data == null) {
                     return;
                 }
-                if (data.getResultCode() == 0) {//成功
-                    list = data.getArticle_list();
-                    if (list != null) {
-                        if (mAdapter == null) {
-                            mAdapter = new PersionalRelateNewsAdapter(list);
-                            initAdapter();
-                        }
-                        lvNotice.setAdapter(mAdapter);
-//                        mAdapter.setData(list);
-                        mAdapter.notifyDataSetChanged();
+                list = data.getArticle_list();
+                if (list != null) {
+                    if (mAdapter == null) {
+                        mAdapter = new PersionalRelateNewsAdapter(list);
+                        initAdapter();
                     }
-                } else {
-                    T.showShort(getContext(), data.getResultMsg());
+                    lvNotice.setAdapter(mAdapter);
+//                        mAdapter.setData(list);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -172,11 +169,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
-
-            @Override
-            public void onAfter() {
-            }
-        }).setTag(this).exe(official_id + "", "", "20");
+        }).setTag(this).exe(official_id + "");
     }
 
     /**
@@ -201,7 +194,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      */
     @Override
     public void onLoadMore(LoadingCallBack<OfficalDetailBean> callback) {
-        new OfficalDetailTask(callback).setTag(this).exe(official_id, lastMinPublishTime, "20");
+        new OfficalDetailTask(callback).setTag(this).exe(official_id, lastMinPublishTime);
     }
 
     /**

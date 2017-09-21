@@ -1,14 +1,12 @@
 package com.zjrb.zjxw.detailproject.bean;
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
  * 评论点赞bean
  * Created by wanglinjie.
  * create time:2017/9/8  下午4:46
  */
 
-public class CommentPriseBean extends BaseInnerData {
+public class CommentPriseBean {
 
     /**
      * obtained : 5

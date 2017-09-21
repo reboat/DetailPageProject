@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.bean;
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.util.List;
 
 /**
@@ -10,7 +8,7 @@ import java.util.List;
  * create time:2017/9/19  下午3:31
  */
 
-public class DraftHotTopNewsBean extends BaseInnerData {
+public class DraftHotTopNewsBean {
 
     private List<HotNewsBean> article_list;
 

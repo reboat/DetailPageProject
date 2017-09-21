@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * create time:2017/7/21  下午4:20
  */
 
-public class CommentRefreshBean extends BaseInnerData {
+public class CommentRefreshBean {
 
 
     /**

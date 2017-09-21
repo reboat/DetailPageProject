@@ -1,15 +1,13 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
  * 热门评论
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:13
  */
 
-public class HotCommentsBean extends BaseInnerData {
+public class HotCommentsBean {
 
     /**
      * id : 597ad67b2c1d4007315ce9b1

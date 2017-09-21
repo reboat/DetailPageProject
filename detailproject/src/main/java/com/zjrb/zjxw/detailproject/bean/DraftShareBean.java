@@ -1,14 +1,13 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
+ * 分享积分bean
  * Created by wanglinjie.
  * create time:2017/8/26  下午2:41
  */
 
-public class DraftShareBean extends BaseInnerData {
+public class DraftShareBean {
 
     /**
      * obtained : 5

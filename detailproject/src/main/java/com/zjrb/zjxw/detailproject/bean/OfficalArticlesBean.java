@@ -1,15 +1,13 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 /**
  * 所有官员列表新闻bean
  * Created by wanglinjie.
  * create time:2017/8/21  上午9:22
  */
 
-public class OfficalArticlesBean extends BaseInnerData {
+public class OfficalArticlesBean {
     private int type;
     private int officalId;
     private String job;

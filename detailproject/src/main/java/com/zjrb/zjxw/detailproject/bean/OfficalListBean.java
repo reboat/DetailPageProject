@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * create time:2017/8/18  下午4:49
  */
 
-public class OfficalListBean extends BaseInnerData {
+public class OfficalListBean {
     /**
      * id : 1
      * name : 车俊

@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.util.List;
 
 /**
@@ -11,7 +9,7 @@ import java.util.List;
  * create time:2017/7/17  上午9:57
  */
 
-public class DraftDetailBean extends BaseInnerData {
+public class DraftDetailBean {
     /**
      * id : 123456
      * mlf_id : 12346788

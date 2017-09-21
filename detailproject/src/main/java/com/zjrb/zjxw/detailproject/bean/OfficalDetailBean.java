@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseInnerData;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +10,7 @@ import java.util.List;
  * create time:2017/8/24  下午8:58
  */
 
-public class OfficalDetailBean extends BaseInnerData {
+public class OfficalDetailBean {
 
     /**
      * id : 1
@@ -90,7 +88,7 @@ public class OfficalDetailBean extends BaseInnerData {
     /**
      * 官员详情个人履历
      */
-    public static class OfficerBean implements Serializable{
+    public static class OfficerBean implements Serializable {
         private int id;
         private String name;
         private String gender;

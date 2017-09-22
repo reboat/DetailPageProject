@@ -25,8 +25,8 @@ import butterknife.ButterKnife;
  */
 public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
-    public NewsRelatedSubjectAdapter(List been) {
-        super(been);
+    public NewsRelatedSubjectAdapter(List list) {
+        super(list);
     }
 
     @Override
@@ -49,7 +49,6 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            //TODO 容错 有跳转链接却没有图片地址
             GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheBig()).centerCrop().into(mImg);
         }
     }

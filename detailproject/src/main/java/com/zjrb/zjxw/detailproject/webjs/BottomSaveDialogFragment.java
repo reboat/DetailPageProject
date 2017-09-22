@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.zjrb.core.ui.UmengUtils.BaseBottomDialogFragment;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -41,11 +40,14 @@ public class BottomSaveDialogFragment extends BaseBottomDialogFragment {
         return mDialog;
     }
 
+    /**
+     * @param v 图片保存和取消
+     */
     @OnClick({R2.id.tv_save, R2.id.tv_cancel})
     public void onClick(View v) {
         if (mDialog != null) mDialog.dismiss();
         if (mListener == null) return;
-        if(v.getId() == R.id.tv_save){
+        if (v.getId() == R.id.tv_save) {
             mListener.onSave();
         }
     }
@@ -54,6 +56,9 @@ public class BottomSaveDialogFragment extends BaseBottomDialogFragment {
         this.mListener = listener;
     }
 
+    /**
+     * 保存图片回调
+     */
     public interface OnSaveDialogClickListener {
         void onSave();
     }

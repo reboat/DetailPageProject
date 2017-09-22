@@ -76,6 +76,9 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      * 如果禁言，则不允许弹出评论框
      */
     private void initAdapter() {
+        //TODO WLJ 空态页面
+        if (mBean == null || mBean.getArticle() == null || mBean.getArticle().getRelated_news() == null || mBean.getArticle().getRelated_news().isEmpty())
+            return;
         mAdapter = new ImageMoreAdapter(mBean.getArticle().getRelated_news());
         mAdapter.setOnItemClickListener(this);
         lvNotice.setAdapter(mAdapter);

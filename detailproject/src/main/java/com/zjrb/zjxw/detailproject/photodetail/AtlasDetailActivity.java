@@ -139,18 +139,24 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
+                //TODO WLJ 显示空态页面
+                if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
+                        || atlasDetailEntity.getArticle().getAlbum_image_list() == null
+                        || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) return;
+
                 //设置下载按钮
                 if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 } else {
                     mIvDownLoad.setVisibility(View.GONE);
                 }
-
                 fillData(atlasDetailEntity);
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
+                //TODO WLJ TEST
+                showEmptyNewsDetail();
                 //TODO WLJ 撤稿处理
                 T.showShort(getBaseContext(), errMsg);
             }
@@ -272,6 +278,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         click(view.getId());
     }
 
+
+//    public String articleId;
+//    public int mlfId = -1;
+//    public int commentSet = -1;
+//    public boolean isFromCommentAct = false;
+//    public String title;
+
     /**
      * 点击事件
      */
@@ -285,8 +298,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
                         .buildUpon()
+                        .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
                         .build(), 0);
                 return;
             }
@@ -443,6 +457,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
+                //TODO WLJ 返回值判定
                 switch (baseInnerData.getResultCode()) {
                     case 0:
                         T.showShort(UIUtils.getContext(), "点赞成功");

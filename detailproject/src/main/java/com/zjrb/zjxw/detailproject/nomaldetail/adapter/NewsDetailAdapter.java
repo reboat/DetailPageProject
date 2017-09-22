@@ -1,15 +1,10 @@
 package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
@@ -18,18 +13,17 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleVideoHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 新闻详情页Adapter
+ * 普通新闻详情页Adapter
  * Created by wanglinjie.
  * create time:2017/7/10  下午5:39
  */
 public class NewsDetailAdapter extends BaseRecyclerAdapter {
     //顶部标题，视频等
     public static final int VIEW_TYPE_TOP = 1;
-    //网页
+    //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
     //订阅 频道
     public static final int VIEW_TYPE_MIDDLE = 3;
@@ -76,7 +70,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             return new NewsDetailRelatedSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
             return new NewsDetailRelatedNewsHolder(parent);
-        } else if(viewType == VIEW_TYPE_COMMENT){
+        } else if (viewType == VIEW_TYPE_COMMENT) {
             return new NewsDetailCommentHolder(parent);
         }
         return null;
@@ -162,6 +156,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
+    /**
+     * 刷新订阅部分item
+     */
     public void updateSubscribeInfo() {
         notifyItemChanged(0, PAYLOADS_SUBSCRIBE);
         if (mMiddleHolderPosition != NO_POSITION) {
@@ -170,12 +167,18 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
 
     }
 
+    /**
+     * webview恢复监听
+     */
     public void onWebViewResume() {
         if (mWebViewHolderPosition != NO_POSITION) {
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_RESUME);
         }
     }
 
+    /**
+     * webview暂停监听
+     */
     public void onWebViewPause() {
         if (mWebViewHolderPosition != NO_POSITION) {
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
@@ -190,6 +193,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         void bindSubscribe();
     }
 
+    /**
+     * 视频生命周期监听
+     */
     public interface ILifecycle {
 
         void onResume();
@@ -218,6 +224,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
          * 点击栏目操作
          */
         void onOptClickColumn();
+
+        /**
+         * 点击频道操作
+         */
+        void onOptClickChannel();
 
     }
 

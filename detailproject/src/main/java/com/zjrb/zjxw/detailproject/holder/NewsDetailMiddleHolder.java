@@ -56,6 +56,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      * 分享数据列表
      */
     private List<DetailShareBean> mListData;
+    /**
+     * 分享适配器
+     */
     private DetailShareAdapter mAdapter;
     private UmengShareUtils umengShareUtils;
 
@@ -74,7 +77,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
 
-        //栏目已关联
+        //栏目已关联(栏目id>0即表示频道有关联内容)
         if (mData.getArticle().getColumn_id() > 0) {
             mRySubscribe.setVisibility(View.VISIBLE);
             if (mData.getArticle().getColumn_name() != null) {
@@ -125,21 +128,24 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     }
 
     /**
-     * @param view
-     * 频道订阅/栏目  点击
+     * @param view 频道订阅/栏目  点击
      */
-    @OnClick({R2.id.tv_column_subscribe, R2.id.tv_channel_subscribe})
+    @OnClick({R2.id.tv_column_subscribe, R2.id.ry_subscribe, R2.id.ry_channel})
     public void onViewClicked(View view) {
         if (ClickTracker.isDoubleClick()) return;
         NewsDetailAdapter.CommonOptCallBack callback;
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
+            //频道订阅
             if (view.getId() == R.id.tv_column_subscribe) {
-                //如果未订阅
                 if (!mData.getArticle().isColumn_subscribed()) {
                     callback.onOptSubscribe();
                 }
+                //进入频道详情页
+            } else if (view.getId() == R.id.ry_channel) {
+                callback.onOptClickChannel();
             } else {
+                //进入栏目详情页
                 callback.onOptClickColumn();
             }
         }
@@ -156,7 +162,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  分享
+        //TODO  WLJ  打开分享
 //        umengShareUtils.startShare(
 //                UmengShareBean.getInstance()
 //                        .setTitle(mData.getArticle().getList_title())

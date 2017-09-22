@@ -53,7 +53,9 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     }
 
 
-    /** mock数据
+    /**
+     * mock数据
+     *
      * @return
      */
     private List<RelatedSubjectsBean> mockText() {
@@ -107,6 +109,8 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity(mData);
+        if (mData != null) {
+            BizUtils.jumpToDetailActivity(mData);
+        }
     }
 }

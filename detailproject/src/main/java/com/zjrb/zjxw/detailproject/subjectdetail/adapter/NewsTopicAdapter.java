@@ -1,16 +1,19 @@
 package com.zjrb.zjxw.detailproject.subjectdetail.adapter;
 
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsMultiPictureHolder;
@@ -156,7 +159,7 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //分组标签不可点击
-            if(mData.getList_title() != null){
+            if (mData.getList_title() != null) {
                 tvGroupName.setText(mData.getList_title());
             }
             if (mData.getSize() >= 3) {
@@ -168,7 +171,11 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
         @OnClick({R2.id.tv_more})
         public void onClick(View v) {
             if (v.getId() == R.id.tv_more) {
-                //TODO WLJ 跳转到专题列表
+                Nav.with(itemView.getContext()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.GROUP_ID, String.valueOf(mData.getId()))
+                        .appendQueryParameter(Key.TITLE, mData.getList_title())
+                        .build(), 0);
             }
 
         }

@@ -93,6 +93,11 @@
                     android:host="zj.zjol.com.cn"
                     android:path="/video.html"
                     android:scheme="@string/data_scheme"/>
+                <!--活动详情页-->
+                <data
+                    android:host="zj.zjol.com.cn"
+                    android:path="/activity.html"
+                    android:scheme="@string/data_scheme"/>
 
             </intent-filter>
         </activity>

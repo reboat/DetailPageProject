@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -30,11 +28,12 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
 
+    private ListSpaceDivider diver;
+
     /**
      * 任职履历
      */
     public static final int TYPE_INFO = 1;
-    private static int mIndex = -1;
     private PersionalTrackAdapter mAdapter;
 
     private OfficalDetailBean bean;
@@ -43,7 +42,6 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mIndex = getArguments().getInt(Key.FRAGMENT_ARGS);
             bean = (OfficalDetailBean) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_INFO);
         }
     }
@@ -68,24 +66,10 @@ public class PersionalDetailInfoFragment extends BaseFragment {
             return;
         }
         mAdapter.setupData(bean.getOfficer().getResumes());
-        ListSpaceDivider diver;
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
         diver = new ListSpaceDivider(0, 0, false);
         lvNotice.addItemDecoration(diver);
         lvNotice.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * @param isVisibleToUser isVisibleToUser:false 不可见
-     *                        isVisibleToUser:true  可见
-     *                        切换操作,可以进行UI操作
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        T.showShort(UIUtils.getContext(), "当前tab1_index=" + mIndex);
-//        if (isVisibleToUser) {
-//        }
-
     }
 }

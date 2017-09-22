@@ -3,9 +3,6 @@ package com.zjrb.zjxw.detailproject.utils;
 import android.animation.Animator;
 import android.content.Context;
 import android.net.Uri;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.TextAppearanceSpan;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
@@ -13,7 +10,6 @@ import android.widget.TextView;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
-import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
@@ -158,37 +154,61 @@ public class BizUtils {
     }
 
     /**
+     * 2-9分别代表普通、链接、图集、专题、话题、活动、直播、视频
+     *
      * @param mData 根据doc_type跳转到相应的详情页
      */
     public static void jumpToDetailActivity(DraftDetailBean mData) {
+        //普通
         if (mData.getArticle().getDoc_type() == 2) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/news.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
-                    .appendQueryParameter(Key.VIDEO_PATH, mData.getArticle().getVideo_url())
                     .build(), 0);
             //链接
         } else if (mData.getArticle().getDoc_type() == 3) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/link.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
 
             //图集
         } else if (mData.getArticle().getDoc_type() == 4) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/album.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
-
             //专题
         } else if (mData.getArticle().getDoc_type() == 5) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/topic.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
                     .build(), 0);
 
             //活动
         } else if (mData.getArticle().getDoc_type() == 6) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/activity.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
+            //话题
+        } else if (mData.getArticle().getDoc_type() == 7) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/topic.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
+            //直播稿
+        } else if (mData.getArticle().getDoc_type() == 8) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/live.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
+            //视频稿
+        } else if (mData.getArticle().getDoc_type() == 9) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/video.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
 
         }
     }
@@ -197,34 +217,56 @@ public class BizUtils {
      * @param mData 根据doc_type跳转到相应的详情页
      */
     public static void jumpToDetailActivity2(SubjectItemBean mData) {
+        //普通
         if (mData.getDoc_type() == 2) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/news.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
-                    .appendQueryParameter(Key.VIDEO_PATH, mData.getVideo_url())
                     .build(), 0);
             //链接
         } else if (mData.getDoc_type() == 3) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/link.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
+                    .build(), 0);
 
             //图集
         } else if (mData.getDoc_type() == 4) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/album.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
                     .build(), 0);
-
             //专题
         } else if (mData.getDoc_type() == 5) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/topic.html")
                     .buildUpon()
                     .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getMlf_id()))
                     .build(), 0);
 
             //活动
         } else if (mData.getDoc_type() == 6) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/activity.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
+                    .build(), 0);
+            //话题
+        } else if (mData.getDoc_type() == 7) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/topic.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
+                    .build(), 0);
+            //直播稿
+        } else if (mData.getDoc_type() == 8) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/live.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
+                    .build(), 0);
+            //视频稿
+        } else if (mData.getDoc_type() == 9) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("https://zj.zjol.com.cn/video.html")
+                    .buildUpon()
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getId()))
+                    .build(), 0);
 
         }
     }

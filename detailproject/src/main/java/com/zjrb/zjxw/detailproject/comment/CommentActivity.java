@@ -411,7 +411,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     .appendQueryParameter(Key.ID, articleId)
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                     .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
+                    .appendQueryParameter(Key.PARENT_ID,commentList.get(position).getParent_id() )
                     .build(), 0);
         }
 

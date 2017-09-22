@@ -53,12 +53,14 @@ public class ImageBrowseActivity extends BaseActivity {
     @BindView(R2.id.indicator)
     TextView indicator;
 
+    /**
+     * 图片页码指示器
+     */
     private String viewpager_indicator = "%1$d/%2$d";
     private int pagerPosition;
     private ImagePagerAdapter mAdapter;
 
     public static Intent newIntent(Context ctx, String[] urls, int index) {
-        //TODO WLJ 使用路由跳转
         Intent intent = new Intent(ctx, ImageBrowseActivity.class);
         intent.putExtra(ImageBrowseActivity.EXTRA_IMAGE_URLS, urls);
         intent.putExtra(ImageBrowseActivity.EXTRA_IMAGE_INDEX, index);

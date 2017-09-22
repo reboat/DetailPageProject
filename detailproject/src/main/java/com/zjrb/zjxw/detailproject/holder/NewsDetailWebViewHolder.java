@@ -69,6 +69,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void bindView() {
+        if (mData.getArticle().getContent() == null) return;
         itemView.setOnClickListener(null);
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
@@ -91,6 +92,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
+        //注入支持的本地方法
         mWebJsInterface = new WebJsInterface(itemView.getContext());
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 

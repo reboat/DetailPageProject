@@ -53,11 +53,12 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            if (mData.getPic() != null && !mData.getPic().isEmpty()) {
-                //无图片时用占位图
-                GlideApp.with(mIvImage).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).into(mIvImage);
+            //无图片时用占位图
+            GlideApp.with(mIvImage).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).into(mIvImage);
+            //文案
+            if (mData.getTitle() != null) {
+                mTvTitle.setText(mData.getTitle());
             }
-            mTvTitle.setText(mData.getTitle());
         }
     }
 

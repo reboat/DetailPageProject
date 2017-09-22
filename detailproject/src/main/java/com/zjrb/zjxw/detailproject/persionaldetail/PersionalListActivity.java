@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -62,6 +64,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getIntentData(getIntent());
         setContentView(R.layout.module_detail_topic_list);
         ButterKnife.bind(this);
         init();
@@ -70,7 +73,24 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "政情").getView();
+        return TopBarFactory.createDefault(view, this, offical_title).getView();
+    }
+
+    /**
+     * 官员列表标题
+     */
+    private String offical_title;
+
+    /**
+     * @param intent 获取传递数据
+     */
+    private void getIntentData(Intent intent) {
+        if (intent != null && intent.getData() != null) {
+            Uri data = intent.getData();
+            if (data.getQueryParameter(Key.OFFICAL_TITLE) != null) {
+                offical_title = data.getQueryParameter(Key.OFFICAL_TITLE);
+            }
+        }
     }
 
     /**
@@ -195,15 +215,20 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     }
 
     private void testInit(List<OfficalListBean.OfficerListBean> list) {
-        list = mockTest();//data.getOfficer_list();
+        //TODO WLJ 正式打开
+//        if (commentRefreshBean == null) {
+//            return;
+//        }
+        list = mockTest();//commentRefreshBean.getComments();
         if (list != null) {
             if (mAdapter == null) {
                 mAdapter = new PersionalListAdapter();
-                mAdapter.setupData(list);
                 initAdapter();
+                mRecycler.setAdapter(mAdapter);
+            } else {
+                mAdapter.setData(list);
+                mAdapter.notifyDataSetChanged();
             }
-            mRecycler.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -218,6 +243,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 if (data == null) {
                     return;
                 }
+                //TODO WLJ 测试数据
                 testInit(mockTest());
 //                if (data.getResultCode() == 0) {//成功
 //                    list = mockTest();//data.getOfficer_list();
@@ -237,12 +263,12 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //WLJ  TEST
+                //TODO WLJ TEST
                 testInit(mockTest());
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe("5", "5");
+        }).setTag(this).exe();
 
     }
 
@@ -329,12 +355,17 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     @Override
     public void onLoadMoreSuccess(OfficalListBean data, LoadMore loadMore) {
-        if (data != null) {
-            List<OfficalListBean.OfficerListBean> list = mockTest();//data.getOfficer_list();
-            if (list != null && list.size() > 0) {
+        if (data != null && data.getOfficer_list() != null) {
+            List<OfficalListBean.OfficerListBean> list = mockTest();
+            if (list.size() > 0) {
+                //获取最后的刷新ID
                 lastOfficalId = getLastOfficalId(list);
             }
-            mAdapter.setupData(list);
+            mAdapter.addData(list, true);
+            if (list.size() < C.PAGE_SIZE) {
+                loadMore.setState(LoadMore.TYPE_NO_MORE);
+            }
+
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
@@ -348,7 +379,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     @Override
     public void onLoadMore(LoadingCallBack<OfficalListBean> callback) {
-        new OfficalListTask(callback).setTag(this).exe(lastOfficalId + "", "3");
+        new OfficalListTask(callback).setTag(this).exe(lastOfficalId + "");
     }
 
     /**
@@ -356,7 +387,14 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     @Override
     public void onRefresh() {
-        loadData();
+        mRecycler.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+                loadData();
+            }
+        });
+
     }
 
     /**

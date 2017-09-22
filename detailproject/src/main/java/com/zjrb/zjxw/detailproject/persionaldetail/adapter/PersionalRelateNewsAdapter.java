@@ -22,6 +22,7 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
+//TODO WLJ 支持所有的类型
 public class PersionalRelateNewsAdapter extends BaseRecyclerAdapter {
 
     //普通

@@ -50,7 +50,9 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
-            tv_title.setText(mData.getContent());
+            if (mData.getContent() != null) {
+                tv_title.setText(mData.getContent());
+            }
             iv_img.setImageResource(mData.getResId());
         }
     }

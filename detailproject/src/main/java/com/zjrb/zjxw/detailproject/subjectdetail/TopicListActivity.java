@@ -14,6 +14,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
@@ -77,7 +78,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
     /**
      * 专题分组id
      */
-    private int group_id = 0;
+    private String group_id;
 
     /**
      * 专题列表标题
@@ -91,7 +92,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
             if (data.getQueryParameter(Key.GROUP_ID) != null) {
-                group_id = Integer.parseInt(data.getQueryParameter(Key.GROUP_ID));
+                group_id = data.getQueryParameter(Key.GROUP_ID);
             }
             if (data.getQueryParameter(Key.TITLE) != null) {
                 list_title = data.getQueryParameter(Key.TITLE);
@@ -195,15 +196,18 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 if (bean == null) {
                     return;
                 }
-                list = mockData();//bean.getArticle_list();
+                list = mockData();//commentRefreshBean.getComments();
                 if (list != null) {
                     if (mAdapter == null) {
                         mAdapter = new TopicListAdapter(list);
                         initAdapter();
+                        mRecycler.setAdapter(mAdapter);
+                    } else {
+                        mAdapter.setData(list);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mRecycler.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
                 }
+
             }
 
             @Override
@@ -211,14 +215,14 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(group_id + "");
+        }).setTag(this).exe(group_id);
     }
 
 
     /**
      * 上次请求的最后一条新闻的ID
      */
-    private long lastNewsId = 0;
+    private long lastNewsId;
 
     /**
      * @param data
@@ -226,12 +230,16 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onLoadMoreSuccess(SubjectListBean data, LoadMore loadMore) {
-        if (data != null) {
+        if (data != null && data.getArticle_list() != null) {
             List<SubjectItemBean> list = data.getArticle_list();
-            if (list != null && list.size() > 0) {
+            if (list.size() > 0) {
                 lastNewsId = getLastNewsId(list);
             }
             mAdapter.addData(list, true);
+            if (list.size() < C.PAGE_SIZE) {
+                loadMore.setState(LoadMore.TYPE_NO_MORE);
+            }
+
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
@@ -242,7 +250,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onLoadMore(LoadingCallBack<SubjectListBean> callback) {
-        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId, "20");
+        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId);
     }
 
     /**
@@ -250,7 +258,13 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onRefresh() {
-        loadData();
+        mRecycler.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+                loadData();
+            }
+        });
     }
 
     /**

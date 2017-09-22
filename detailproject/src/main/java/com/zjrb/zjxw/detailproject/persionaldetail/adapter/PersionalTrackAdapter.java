@@ -63,6 +63,9 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
     }
 
 
+    /**
+     * 官员履历Holder
+     */
     static class OfficalTrackHolder extends BaseRecyclerViewHolder<OfficalDetailBean.OfficerBean.ResumesBean> {
 
         /**

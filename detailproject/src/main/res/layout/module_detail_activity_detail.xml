@@ -133,7 +133,7 @@
                     app:iv_maskColor="@color/module_detail_comment_night"/>
 
                 <ImageView
-                    android:id="@+id/menu_share"
+                    android:id="@+id/menu_setting"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:layout_centerVertical="true"

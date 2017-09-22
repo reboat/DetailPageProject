@@ -17,9 +17,11 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,21 +73,10 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.module_detail_fragment_persional_info, container, false);
         ButterKnife.bind(this, v);
-//        getIntentData(getActivity().getIntent());
         initView();
         loadData();
         return v;
     }
-
-//    /**
-//     * @param intent 获取传递数据
-//     */
-//    private void getIntentData(Intent intent) {
-//        if (intent != null && intent.getData() != null) {
-//            Uri data = intent.getData();
-//            column_id = data.getQueryParameter(Key.COLUMN_ID);
-//        }
-//    }
 
     /**
      * 显示撤稿文案
@@ -183,14 +174,16 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                 if (bean == null) {
                     return;
                 }
-                article_list = mockTest().getArticle_list();//bean.getArticle_list();
+                article_list = mockTest().getArticle_list();//commentRefreshBean.getComments();
                 if (article_list != null) {
                     if (adapter == null) {
                         adapter = new EmptyStateListAdapter(article_list);
                         initAdapter();
+                        lvNotice.setAdapter(adapter);
+                    } else {
+                        adapter.setData(article_list);
+                        adapter.notifyDataSetChanged();
                     }
-                    lvNotice.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -218,7 +211,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     @Override
     public void onItemClick(View itemView, int position) {
-//        BizUtils.jumpToDetailActivity2((SubjectItemBean) adapter.getData().get(position));
+        BizUtils.jumpToDetailActivity2((SubjectItemBean) adapter.getData().get(position));
     }
 
 }

@@ -111,6 +111,8 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity(mData);
+        if(mData != null){
+            BizUtils.jumpToDetailActivity(mData);
+        }
     }
 }

@@ -67,7 +67,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     /**
      * 官员ID
      */
-    public int official_id = -1;
+    public String official_id;
 
     private TabPagerAdapterImpl pagerAdapter;
     private OfficalDetailBean bean;
@@ -91,7 +91,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
             if (data.getQueryParameter(Key.OFFICIAL_ID) != null) {
-                official_id = Integer.parseInt(data.getQueryParameter(Key.OFFICIAL_ID));
+                official_id = data.getQueryParameter(Key.OFFICIAL_ID);
             }
         }
     }
@@ -223,7 +223,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
             }
-        }).setTag(this).exe(official_id + "");
+        }).setTag(this).exe(official_id);
     }
 
     /**
@@ -236,7 +236,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         //TODO  WLJ else怎么显示
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
-            //TODO WLJ 是否需要占位图
             //头像
             GlideApp.with(ivAvatar).load(bean.getList_pic()).placeholder(PH.zheSmall()).circleCrop().into(ivAvatar);
             //姓名

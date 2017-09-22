@@ -70,10 +70,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 稿件ID
      */
     public String mArticleId;
-    /**
-     * 媒立方ID
-     */
-    public int mlfId = -1;
+    //视频地址
     public String mVideoPath = "";
     @BindView(R2.id.iv_image)
     ImageView mIvImage;
@@ -93,8 +90,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.menu_share)
-    ImageView mMenuShare;
+    @BindView(R2.id.menu_setting)
+    ImageView mMenuSetting;
     @BindView(R2.id.floor_bar)
     FitWindowsFrameLayout mFloorBar;
     @BindView(R2.id.fl_content)
@@ -346,6 +343,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
+                //TODO WLJ 错误码处理
                 switch (baseInnerData.getResultCode()) {
                     case ResultCode.SUCCEED:
                         T.showShort(getBaseContext(), "订阅成功");
@@ -377,9 +375,18 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     public void onOptClickColumn() {
         //TODO  WLJ 进入栏目列表
-//        ARouter.getInstance().build("/module/detail/ColumnDetailActivity")
-//                .withString(Key.COLUMN_ID, mNewsDetail.getColumn_id().toString())
-//                .navigation();
+        Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/detail")
+                .buildUpon()
+                .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                .build(), 0);
+    }
+
+    /**
+     * 进入频道详情页
+     */
+    @Override
+    public void onOptClickChannel() {
+        //TODO WLJ 频道详情页
     }
 
     /**
@@ -400,7 +407,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ ERRORCODE
+                //TODO WLJ 错误码处理
                 switch (baseInnerData.getResultCode()) {
                     case ResultCode.SUCCEED:
                         T.showShort(getBaseContext(), "点赞成功");
@@ -421,7 +428,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
 
-    @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_share,
+    @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -439,7 +446,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
         } else if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
-        } else if (view.getId() == R.id.menu_share) {
+        } else if (view.getId() == R.id.menu_setting) {
+            //TODO  WLJ  打开设置按钮
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
@@ -499,11 +507,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             mTvCommentsNum.setText(BizUtils.formatComments(mNewsDetail.getArticle().getComment_count()));
         }
     }
-
-//    @Override
-//    public void onItemClick(View itemView, int position) {
-//        //TODO  WLJ  无需操作
-//    }
 
     /**
      * 显示撤稿页面

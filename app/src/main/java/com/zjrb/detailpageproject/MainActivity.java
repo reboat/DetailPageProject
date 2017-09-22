@@ -71,15 +71,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.TITLE, "各地实践")
 //                        .build(), 0);
 
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, "739652")
-                        .appendQueryParameter(Key.MLF_ID,"12653")
-                        .appendQueryParameter(Key.TITLE,"骄傲啥啥啥是骄傲啥事安静地王大厦的描述发")
-                        .appendQueryParameter(Key.COMMENT_SET,"1")
-                        .appendQueryParameter(Key.PARENT_ID,"2324")
-                        .appendQueryParameter(Key.PARENT_ID,"true")
-                        .build(), 0);
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ID, "739652")
+//                        .appendQueryParameter(Key.MLF_ID,"12653")
+//                        .appendQueryParameter(Key.TITLE,"骄傲啥啥啥是骄傲啥事安静地王大厦的描述发")
+//                        .appendQueryParameter(Key.COMMENT_SET,"1")
+//                        .appendQueryParameter(Key.PARENT_ID,"2324")
+//                        .appendQueryParameter(Key.PARENT_ID,"true")
+//                        .build(), 0);
 //
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")
 //                        .buildUpon()
@@ -87,10 +87,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.MLF_ID,"12653")
 //                        .build(), 0);
 
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
-//                        .build(), 0);
+                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
+                        .build(), 0);
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalListActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")

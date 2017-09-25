@@ -1,104 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fl_content"
+
+    <com.aliya.view.fitsys.FitWindowsRecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/bc_202124">
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical"
+        app:fitType="bottom"/>
 
-        <com.aliya.view.fitsys.FitWindowsRecyclerView
-            android:id="@+id/recyclerView"
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
+        android:id="@+id/floor_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
+        app:fitType="bottom">
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:fitsSystemWindows="true"
-            android:scrollbars="vertical"
-            app:fitType="bottom"/>
+            android:layout_height="0.5dp"
+            android:background="#dddddd"/>
 
-        <com.aliya.view.fitsys.FitWindowsFrameLayout
-            android:id="@+id/floor_bar"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:fitsSystemWindows="true"
-            app:fitType="bottom">
+            android:background="?attr/bc_191919"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            >
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#dddddd"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/bc_191919"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
+            <FrameLayout
+                android:id="@+id/fl_comment"
+                android:layout_width="230dp"
+                android:layout_height="35dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/module_detail_comment_edit"
                 >
 
-                <FrameLayout
-                    android:id="@+id/fl_comment"
-                    android:layout_width="230dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/module_detail_comment_edit"
-                    >
-
-                    <EditText
-                        android:id="@+id/tv_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:drawableLeft="@mipmap/module_detail_commentedit_left"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical|left"
-                        android:paddingLeft="20dp"
-                        android:text="@string/module_detail_comment_hint"
-                        android:textColor="?attr/tc_484848"
-                        android:textColorHint="?attr/tc_999999"
-                        android:textSize="@dimen/ts_14sp"/>
-
-                </FrameLayout>
-
-
-                <ImageView
-                    android:id="@+id/menu_prised"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_toLeftOf="@+id/menu_setting"
+                <EditText
+                    android:id="@+id/tv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/module_detail_news_prise"
-                    app:iv_maskColor="@color/module_detail_comment_night"/>
+                    android:drawableLeft="@mipmap/module_detail_commentedit_left"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="20dp"
+                    android:text="@string/module_detail_comment_hint"
+                    android:textColor="?attr/tc_484848"
+                    android:textColorHint="?attr/tc_999999"
+                    android:textSize="@dimen/ts_14sp"/>
 
-                <ImageView
-                    android:id="@+id/menu_setting"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@mipmap/module_detail_ic_more"
-                    app:iv_maskColor="@color/module_detail_comment_night"/>
-            </RelativeLayout>
-        </com.aliya.view.fitsys.FitWindowsFrameLayout>
+            </FrameLayout>
 
-    </FrameLayout>
+
+            <ImageView
+                android:id="@+id/menu_prised"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/menu_setting"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/module_detail_news_prise"
+                app:iv_maskColor="@color/module_detail_comment_night"/>
+
+            <ImageView
+                android:id="@+id/menu_setting"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@mipmap/module_detail_ic_more"
+                app:iv_maskColor="@color/module_detail_comment_night"/>
+        </RelativeLayout>
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         app:contentInsetStart="0dp">
 
         <RelativeLayout
@@ -134,7 +130,7 @@
     </android.support.v7.widget.Toolbar>
 
     <include
-        android:id="@+id/ll_fixed_title"
+        android:id="@+id/ll_fixed"
         layout="@layout/module_detail_activity_title"
         android:visibility="invisible"/>
 </RelativeLayout>

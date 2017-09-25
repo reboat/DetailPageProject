@@ -27,6 +27,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
@@ -136,6 +137,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 // 因为加载的是html文本，所以onPageStart时机比较合适
                 if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
                     ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
+                            .onOptPageFinished();
+                } else if (itemView.getContext() instanceof ActivityTopicAdapter.CommonOptCallBack) {
+                    ((ActivityTopicAdapter.CommonOptCallBack) itemView.getContext())
                             .onOptPageFinished();
                 }
             }

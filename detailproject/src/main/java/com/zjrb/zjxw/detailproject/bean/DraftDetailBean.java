@@ -129,6 +129,8 @@ public class DraftDetailBean implements Serializable {
         private List<String> list_pics;
         private String subject_focus_decription;
 
+        private String column_logo;
+
         public boolean isOpen() {
             return isOpen;
         }
@@ -657,6 +659,14 @@ public class DraftDetailBean implements Serializable {
 
         public void setTopic_comment_list(List<TopicCommentListBean> topic_comment_list) {
             this.topic_comment_list = topic_comment_list;
+        }
+
+        public String getColumn_logo() {
+            return column_logo;
+        }
+
+        public void setColumn_logo(String column_logo) {
+            this.column_logo = column_logo;
         }
 
         /**

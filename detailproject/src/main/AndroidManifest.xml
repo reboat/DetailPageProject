@@ -83,6 +83,10 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="www.8531.cn"
+                    android:path="/detail/NewsDetailActivity"
+                    android:scheme="@string/data_scheme"/>
                 <!--普通详情页-->
                 <data
                     android:host="zj.zjol.com.cn"
@@ -194,7 +198,7 @@
 
                 <data
                     android:host="zj.zjol.com.cn"
-                    android:path="/topic.html"
+                    android:path="/detail/ActivityTopicActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>

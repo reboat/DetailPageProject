@@ -215,8 +215,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 mNewsDetail = draftDetailBean;
-                showEmptyNewsDetail();
-//                fillData(draftDetailBean);
+//                showEmptyNewsDetail();
+                fillData(draftDetailBean);
             }
 
             @Override

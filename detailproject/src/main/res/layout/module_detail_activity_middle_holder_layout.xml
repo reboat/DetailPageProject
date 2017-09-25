@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ry_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:background="?attr/bc_202124"
+    >
+
+    <ImageView
+        android:id="@+id/iv_column_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:scaleType="fitXY"
+        app:ratio_w2h="1:1"
+        tools:src="@mipmap/module_detail_activity_host"/>
+
+    <TextView
+        android:id="@+id/tv_column_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="11dp"
+        android:layout_toRightOf="@+id/iv_column_logo"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:ellipsize="end"
+        android:lineSpacingExtra="5sp"
+        android:maxLines="2"
+        android:maxWidth="150dp"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="麻辣快评"/>
+
+    <TextView
+        android:id="@+id/tv_column_subscribe"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/module_detail_subscribe_red_left"
+        android:foreground="?android:attr/actionBarItemBackground"
+        android:gravity="center"
+        android:paddingBottom="7.5dp"
+        android:paddingTop="7.5dp"
+        android:textColor="?attr/tc_f44b50"
+        android:textSize="@dimen/ts_11sp"
+        tools:text="订阅"/>
+
+
+</RelativeLayout>

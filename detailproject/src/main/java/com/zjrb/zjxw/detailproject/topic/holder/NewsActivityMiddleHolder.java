@@ -1,0 +1,107 @@
+package com.zjrb.zjxw.detailproject.topic.holder;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * 新闻详情页中间内容
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:14
+ */
+public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
+        View.OnAttachStateChangeListener, OnItemClickListener {
+    @BindView(R2.id.tv_column_name)
+    TextView mTvColumnName;
+    @BindView(R2.id.tv_column_subscribe)
+    TextView mTvColumnSubscribe;
+    @BindView(R2.id.iv_column_logo)
+    ImageView mIvColumnLogo;
+    @BindView(R2.id.ry_container)
+    RelativeLayout mContainer;
+
+    public NewsActivityMiddleHolder(ViewGroup parent) {
+        super(UIUtils.inflate(R.layout.module_detail_activity_middle_holder_layout, parent, false));
+        ButterKnife.bind(this, itemView);
+    }
+
+    @Override
+    public void bindView() {
+        itemView.setOnClickListener(null);
+        itemView.removeOnAttachStateChangeListener(this);
+        itemView.addOnAttachStateChangeListener(this);
+        //栏目LOGO
+        GlideApp.with(mIvColumnLogo).load(mData.getArticle().getColumn_logo()).placeholder(PH.zheSmall()).centerCrop().into(mIvColumnLogo);
+
+        //栏目名
+        if (mData.getArticle().getColumn_name() != null) {
+            mTvColumnName.setText(mData.getArticle().getColumn_name());
+        }
+
+        //是否已订阅
+        mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "未订阅");
+    }
+
+
+    /**
+     * @param view 频道订阅/栏目  点击
+     */
+    @OnClick({R2.id.ry_container, R2.id.tv_column_subscribe})
+    public void onViewClicked(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        ActivityTopicAdapter.CommonOptCallBack callback;
+        if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+            callback = (ActivityTopicAdapter.CommonOptCallBack) itemView.getContext();
+            //栏目订阅
+            if (view.getId() == R.id.tv_column_subscribe) {
+                if (!mData.getArticle().isColumn_subscribed()) {
+                    callback.onOptSubscribe();
+                }
+            } else {
+                //进入栏目详情页
+                callback.onOptClickColumn();
+            }
+        }
+    }
+
+
+    @Override
+    public void onViewAttachedToWindow(View v) {
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(View v) {
+    }
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        //TODO  WLJ  打开分享
+//        umengShareUtils.startShare(
+//                UmengShareBean.getInstance()
+//                        .setTitle(mData.getArticle().getList_title())
+//                        .setTextContent(mData.getArticle().getContent())
+//                        .setImgUri(mData.getArticle().getArticle_pic())
+//                        .setTargetUrl(mData.getArticle().getUrl())
+//                        .setPlatform(mListData.get(position).getPlatform())
+//                ,
+//        );
+    }
+}

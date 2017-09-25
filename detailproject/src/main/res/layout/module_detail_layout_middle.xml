@@ -5,7 +5,6 @@
               android:layout_height="wrap_content"
               android:background="?attr/bc_202124"
               android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +12,6 @@
         android:gravity="center"
         android:orientation="horizontal"
         >
-
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
@@ -21,7 +19,6 @@
             android:layout_weight="1"
             android:background="?attr/bc_dddddd"
             />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,17 +27,13 @@
             android:text="@string/module_detail_share_to"
             android:textSize="@dimen/ts_14sp"
             tools:text="分享至"/>
-
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
             android:layout_marginLeft="17.5dp"
             android:layout_weight="1"
             android:background="?attr/bc_dddddd"/>
-
-
     </LinearLayout>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gridlist"
         android:layout_width="match_parent"
@@ -48,7 +41,6 @@
         android:layout_gravity="center"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="20dp"/>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -56,7 +48,6 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:background="?attr/bc_e2e2e2"/>
-
     <!--频道-->
     <RelativeLayout
         android:id="@+id/ry_channel"
@@ -66,7 +57,6 @@
         android:background="?attr/bc_ffffff"
         android:visibility="gone"
         >
-
         <TextView
             android:id="@+id/tv_channel_name"
             android:layout_width="wrap_content"
@@ -82,7 +72,6 @@
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_14sp"
             tools:text="杭州频道"/>
-
         <TextView
             android:id="@+id/tv_channel_subscribe"
             android:layout_width="55dp"
@@ -98,7 +87,6 @@
             android:text="@string/module_detail_to_see"
             android:textSize="@dimen/ts_11sp"
             tools:text="去看"/>
-
     </RelativeLayout>
     <!--订阅-->
     <RelativeLayout
@@ -110,7 +98,6 @@
         android:layout_marginBottom="17dp"
         android:visibility="gone"
         >
-
         <TextView
             android:id="@+id/tv_column_name"
             android:layout_width="wrap_content"
@@ -126,7 +113,6 @@
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_14sp"
             tools:text="麻辣快评"/>
-
         <TextView
             android:id="@+id/tv_column_subscribe"
             android:layout_width="55dp"
@@ -141,7 +127,5 @@
             android:textColor="?attr/tc_f44b50"
             android:textSize="@dimen/ts_11sp"
             tools:text="订阅"/>
-
     </RelativeLayout>
-
 </LinearLayout>

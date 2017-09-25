@@ -52,7 +52,7 @@ public class DraftHotTopNewsBean implements Serializable {
         private int id;
         private String list_title;
         private int list_style;
-        private String list_pic;
+        private List<String> list_pics;
         private String list_tag;
         private int doc_type;
         private int read_count;
@@ -71,6 +71,14 @@ public class DraftHotTopNewsBean implements Serializable {
         private int comment_level;
         private boolean like_enabled;
         private String web_link;
+
+        public List<String> getList_pics() {
+            return list_pics;
+        }
+
+        public void setList_pics(List<String> list_pics) {
+            this.list_pics = list_pics;
+        }
 
         public int getId() {
             return id;
@@ -96,13 +104,6 @@ public class DraftHotTopNewsBean implements Serializable {
             this.list_style = list_style;
         }
 
-        public String getList_pic() {
-            return list_pic;
-        }
-
-        public void setList_pic(String list_pic) {
-            this.list_pic = list_pic;
-        }
 
         public String getList_tag() {
             return list_tag;

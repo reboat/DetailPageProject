@@ -61,7 +61,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //占位图，如无图片，则显示占位图
-            GlideApp.with(mImg).load(mData.getList_pic()).centerCrop().placeholder(PH.zheSmall()).into(mImg);
+            GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
             //标题
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());

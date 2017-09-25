@@ -60,9 +60,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.tv_text:
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsDetailActivity")
 //                        .buildUpon()
-//                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
-//                        .appendQueryParameter(Key.MLF_ID,"12653")
-//                        .appendQueryParameter(Key.VIDEO_PATH,"http//www.baidu.com")
+//                        .appendQueryParameter(Key.ID, "65427")
 //                        .build(), 0);
 ////
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
@@ -87,10 +85,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.MLF_ID,"12653")
 //                        .build(), 0);
 
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
-                        .build(), 0);
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalDetailActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
+//                        .build(), 0);
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/PersionalListActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
@@ -103,6 +101,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()
 //                        .build(), 0);
+
+                Nav.with(this).to(Uri.parse("http://zj.zjol.com.cn/detail/ActivityTopicActivity")
+                        .buildUpon()
+                        .appendQueryParameter(Key.ID, "65427")
+                        .build(), 0);
+
 
                 break;
         }

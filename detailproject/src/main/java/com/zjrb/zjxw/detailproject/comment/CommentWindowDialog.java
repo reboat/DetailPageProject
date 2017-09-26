@@ -28,6 +28,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.task.CommentSubmitTask;
 
@@ -85,12 +86,12 @@ public class CommentWindowDialog extends BaseDialogFragment implements
      *
      * @return 实例对象
      */
-    public static CommentWindowDialog newInstance() {
+    public static CommentWindowDialog newInstance(CommentDialogBean bean) {
         CommentWindowDialog fragment = new CommentWindowDialog();
         Bundle args = new Bundle();
-        args.putSerializable(Key.ID, "6151");
-        args.putSerializable(Key.PARENT_ID, "7272");
-        args.putSerializable(Key.REPLAYER, "加号撒");
+        args.putSerializable(Key.ID, bean.getId());
+        args.putSerializable(Key.PARENT_ID, bean.getParent_id());
+        args.putSerializable(Key.REPLAYER, bean.getReplayer());
         fragment.setArguments(args);
         return fragment;
     }
@@ -116,15 +117,25 @@ public class CommentWindowDialog extends BaseDialogFragment implements
         return dialog;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        initWindow();
+    }
+
     /**
      * 设置底部弹出框的窗口样式
      */
     private void initWindow() {
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.BOTTOM;
-        wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        window.setAttributes(wlp);
+        if (getDialog() == null) return;
+        Window window = getDialog().getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams wlp = window.getAttributes();
+            wlp.gravity = Gravity.BOTTOM;
+            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            window.setAttributes(wlp);
+        }
+
     }
 
 

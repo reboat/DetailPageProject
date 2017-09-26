@@ -28,6 +28,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
@@ -245,7 +246,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         if (v.getId() == R.id.tv_comment) {
             if (BizUtils.isCanComment(this, commentSet)) {
                 tvComment.setVisibility(View.VISIBLE);
-                CommentWindowDialog.newInstance().show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.ID, articleId)

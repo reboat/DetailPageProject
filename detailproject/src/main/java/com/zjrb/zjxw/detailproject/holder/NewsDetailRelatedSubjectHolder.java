@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,17 +10,15 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedSubjectAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,54 +52,20 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     }
 
 
-    /**
-     * mock数据
-     *
-     * @return
-     */
-    private List<RelatedSubjectsBean> mockText() {
-        List<RelatedSubjectsBean> list = new ArrayList<>();
-        RelatedSubjectsBean b1 = new RelatedSubjectsBean();
-        b1.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        RelatedSubjectsBean b2 = new RelatedSubjectsBean();
-        b2.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        RelatedSubjectsBean b3 = new RelatedSubjectsBean();
-        b3.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        RelatedSubjectsBean b4 = new RelatedSubjectsBean();
-        b4.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        RelatedSubjectsBean b5 = new RelatedSubjectsBean();
-        b5.setPic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-
-        return list;
-    }
-
-
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        List<RelatedSubjectsBean> list = mockText();
-        tvRelated.setText("推荐专题");
-        adapter = new NewsRelatedSubjectAdapter(list);
-        adapter.setOnItemClickListener(this);
-        mRecyleView.setAdapter(adapter);
-
-        //TODO  WLJ
-//        if (mData == null || mData.getArticle().getRelated_subjects() == null || mData.getArticle().getRelated_subjects().isEmpty()) {
-//            lyContainer.setVisibility(View.GONE);
-//        } else {
-//            tvRelated.setText("推荐专题");
-//            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-//            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-//                    LinearLayoutManager.VERTICAL, false));
-//            adapter = new NewsRelatedSubjectAdapter(mData.getArticle().getRelated_subjects());
-//            adapter.setOnItemClickListener(this);
-//            mRecyleView.setAdapter(adapter);
-//        }
+        if (mData == null || mData.getArticle().getRelated_subjects() == null || mData.getArticle().getRelated_subjects().isEmpty()) {
+            lyContainer.setVisibility(View.GONE);
+        } else {
+            tvRelated.setText("推荐专题");
+            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+                    LinearLayoutManager.VERTICAL, false));
+            adapter = new NewsRelatedSubjectAdapter(mData.getArticle().getRelated_subjects());
+            adapter.setOnItemClickListener(this);
+            mRecyleView.setAdapter(adapter);
+        }
     }
 
     /**
@@ -110,7 +75,11 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     @Override
     public void onItemClick(View itemView, int position) {
         if (mData != null) {
-            BizUtils.jumpToDetailActivity(mData);
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
+                    .buildUpon()
+                    .appendQueryParameter(Key.VIDEO_PATH, mData.getArticle().getVideo_url())//视频地址
+                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .build(), 0);
         }
     }
 }

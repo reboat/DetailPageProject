@@ -23,7 +23,7 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("id", "739652");
+        put("id", params[0]);
     }
 
     @Override

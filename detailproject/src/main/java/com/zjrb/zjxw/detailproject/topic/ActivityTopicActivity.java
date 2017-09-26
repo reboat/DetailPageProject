@@ -454,6 +454,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     }
 
 
+    /**
+     * 底部评论框显示动画
+     */
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
     /**

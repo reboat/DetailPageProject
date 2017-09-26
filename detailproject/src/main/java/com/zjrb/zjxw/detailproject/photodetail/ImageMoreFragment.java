@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.photodetail;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,13 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,6 +93,12 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity((DraftDetailBean) mAdapter.getData().get(position));
+        if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getUrl())
+                    .buildUpon()
+                    .appendQueryParameter(Key.VIDEO_PATH, ((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getVideo_url())//视频地址
+                    .appendQueryParameter(Key.ID, String.valueOf(((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getId()))
+                    .build(), 0);
+        }
     }
 }

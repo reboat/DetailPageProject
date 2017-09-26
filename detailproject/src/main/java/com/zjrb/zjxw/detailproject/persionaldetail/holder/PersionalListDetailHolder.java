@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -17,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 官员列表详情holder1
+ * 官员列表头部详情holder1
  * Created by wanglinjie.
  * create time:2017/7/28  下午12:28
  */
@@ -43,11 +44,12 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalArt
 
     @Override
     public void bindView() {
-        GlideApp.with(mIvAvatar).load(mData.getPhoto()).centerCrop().into(mIvAvatar);
-        if(mData.getName() != null){
+        //需要显示占位图
+        GlideApp.with(mIvAvatar).load(mData.getPhoto()).placeholder(PH.zheSmall()).centerCrop().into(mIvAvatar);
+        if (mData.getName() != null) {
             mTvName.setText(mData.getName());
         }
-        if(mData.getJob() != null){
+        if (mData.getJob() != null) {
             mTvJob.setText(mData.getJob());
         }
     }

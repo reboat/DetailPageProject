@@ -82,6 +82,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                         mWebJsInterface.setImgSrcs(imgSrcs);
                     }
                 });
+        //TODO WLJ  服务器如果有返回则使用服务器
         String htmlResult = String.format(htmlCode, uiModeCssUri, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }

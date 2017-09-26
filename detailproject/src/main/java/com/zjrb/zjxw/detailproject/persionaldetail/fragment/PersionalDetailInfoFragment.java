@@ -60,11 +60,11 @@ public class PersionalDetailInfoFragment extends BaseFragment {
      * 初始化适配器
      */
     private void initView(View v) {
-        mAdapter = new PersionalTrackAdapter();
-        //TODO WLJ 显示空态
+        //TODO WLJ 显示空态页面
         if (bean == null || bean.getOfficer() == null || bean.getOfficer().getResumes() == null || bean.getOfficer().getResumes().isEmpty()) {
             return;
         }
+        mAdapter = new PersionalTrackAdapter();
         mAdapter.setupData(bean.getOfficer().getResumes());
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
         diver = new ListSpaceDivider(0, 0, false);

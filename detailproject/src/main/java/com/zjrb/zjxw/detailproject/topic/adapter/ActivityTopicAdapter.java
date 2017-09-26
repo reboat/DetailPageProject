@@ -20,7 +20,7 @@ import java.util.List;
  * create time:2017/7/10  下午5:39
  */
 public class ActivityTopicAdapter extends BaseRecyclerAdapter {
-    //顶部标题，视频等
+    //顶部标题
     public static final int VIEW_TYPE_TOP = 1;
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;

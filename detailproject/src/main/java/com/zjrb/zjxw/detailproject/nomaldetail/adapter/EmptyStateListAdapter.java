@@ -45,6 +45,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
 
     /**
      * 撤稿适配器
+     * 样式与相关新闻一致，图文/纯文
      */
     static class EmptyStateHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> {
 

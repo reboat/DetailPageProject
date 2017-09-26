@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -23,7 +25,6 @@ import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -83,7 +84,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private TextView emptyText;
     /**
-     * 头布局
+     * 头部布局
      */
     private View head;
 
@@ -111,59 +112,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     private List<DraftHotTopNewsBean.HotNewsBean> article_list;
 
 
-    private DraftHotTopNewsBean mockTest() {
-        DraftHotTopNewsBean bean = new DraftHotTopNewsBean();
-        List<DraftHotTopNewsBean.HotNewsBean> list = new ArrayList<>();
-
-        DraftHotTopNewsBean.HotNewsBean b = new DraftHotTopNewsBean.HotNewsBean();
-        b.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b1 = new DraftHotTopNewsBean.HotNewsBean();
-        b1.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b2 = new DraftHotTopNewsBean.HotNewsBean();
-        b2.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b3 = new DraftHotTopNewsBean.HotNewsBean();
-        b3.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b4 = new DraftHotTopNewsBean.HotNewsBean();
-        b4.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b5 = new DraftHotTopNewsBean.HotNewsBean();
-        b5.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b6 = new DraftHotTopNewsBean.HotNewsBean();
-        b6.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b7 = new DraftHotTopNewsBean.HotNewsBean();
-        b7.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b8 = new DraftHotTopNewsBean.HotNewsBean();
-        b8.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b9 = new DraftHotTopNewsBean.HotNewsBean();
-        b9.setList_title("热门1");
-
-        DraftHotTopNewsBean.HotNewsBean b10 = new DraftHotTopNewsBean.HotNewsBean();
-        b10.setList_title("热门1");
-//        b10.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        list.add(b6);
-        list.add(b7);
-        list.add(b8);
-        list.add(b9);
-        list.add(b10);
-        bean.setArticle_list(list);
-        return bean;
-    }
-
     /**
      * 获取频道热门列表
      */
@@ -174,7 +122,8 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                 if (bean == null) {
                     return;
                 }
-                article_list = mockTest().getArticle_list();//commentRefreshBean.getComments();
+                //TODO WLJ 需要显示空态页面
+                article_list = bean.getArticle_list();
                 if (article_list != null) {
                     if (adapter == null) {
                         adapter = new EmptyStateListAdapter(article_list);
@@ -189,17 +138,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //TODO  WLJ  TEST
-                article_list = mockTest().getArticle_list();//bean.getArticle_list();
-                if (article_list != null) {
-                    if (adapter == null) {
-                        adapter = new EmptyStateListAdapter(article_list);
-                        initAdapter();
-                    }
-                    lvNotice.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-
                 T.showShort(UIUtils.getContext(), errMsg);
             }
         }).setTag(this).exe(column_id);
@@ -211,7 +149,14 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) adapter.getData().get(position));
+        if(adapter.getData() != null && !adapter.getData().isEmpty()){
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) adapter.getData().get(position)).getUrl())
+                    .buildUpon()
+                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) adapter.getData().get(position)).getVideo_url())//视频地址
+                    .appendQueryParameter(Key.ID, String.valueOf(((SubjectItemBean) adapter.getData().get(position)).getId()))
+                    .build(), 0);
+        }
+
     }
 
 }

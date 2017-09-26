@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,7 +35,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
@@ -43,7 +43,6 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.webjs.BottomSaveDialogFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -155,62 +154,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //TODO WLJ TEST
-                showEmptyNewsDetail();
-                //TODO WLJ 撤稿处理
                 T.showShort(getBaseContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad()).exe(mArticleId);
 
-    }
-
-    private List<AlbumImageListBean> mockTest() {
-        List<AlbumImageListBean> list = new ArrayList<>();
-        AlbumImageListBean b = new AlbumImageListBean();
-        b.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        AlbumImageListBean b1 = new AlbumImageListBean();
-        b1.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b1.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        AlbumImageListBean b2 = new AlbumImageListBean();
-        b2.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b2.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        AlbumImageListBean b3 = new AlbumImageListBean();
-        b3.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b3.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        AlbumImageListBean b4 = new AlbumImageListBean();
-        b4.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b4.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        AlbumImageListBean b5 = new AlbumImageListBean();
-        b5.setDescription("结婚的就好的骄傲和是的空间啊圣诞节拉黑啊我挂号费就好发酵素发sjaf jks dfJ fjhsd fdsh  开始看老大说的奥迪");
-        b5.setImage_url("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        return list;
-    }
-
-    private List<RelatedNewsBean> MockTest2() {
-        List<RelatedNewsBean> list = new ArrayList<>();
-        RelatedNewsBean b = new RelatedNewsBean();
-        b.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        RelatedNewsBean b1 = new RelatedNewsBean();
-        b1.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        RelatedNewsBean b2 = new RelatedNewsBean();
-        b2.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        RelatedNewsBean b3 = new RelatedNewsBean();
-        b3.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        RelatedNewsBean b4 = new RelatedNewsBean();
-        b4.setPic("http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg");
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        return list;
     }
 
     /**
@@ -223,8 +170,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
-            //TODO  WLJ TEST
-            mAtlasList = mockTest();
+            mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             //评论数量
             if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
                 mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
@@ -242,25 +188,16 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
         //设置图片列表
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
-//            List<String> imgs = new ArrayList<>(mAtlasList.size());
-//            for (AlbumImageListBean entity : mAtlasList) {
-//                imgs.add(entity.getImage_url());
-//            }
-//            //添加更多图集索引
-//            if (imgs.size() > 0) {
-//                imgs.add("");
-//            }
-
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
-            //TODO  WLJ test
             mAtlasList.add(new AlbumImageListBean());
+            //设置图片count
             atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
             atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
-            atlasDetailEntity.getArticle().setRelated_news(MockTest2());
-
+            atlasDetailEntity.getArticle().setRelated_news(mData.getArticle().getRelated_news());
             mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
 
+            //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1));
             mTvTottleNum.setText(String.valueOf(mAtlasList.size()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
@@ -279,12 +216,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
 
-//    public String articleId;
-//    public int mlfId = -1;
-//    public int commentSet = -1;
-//    public boolean isFromCommentAct = false;
-//    public String title;
-
     /**
      * 点击事件
      */
@@ -294,6 +225,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             finish();
             //分享
         } else if (id == R.id.iv_share) {
+            //TODO WLJ 分享
 //            share();
             //评论框
         } else if (id == R.id.tv_comment) {
@@ -323,6 +255,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             fabulous();
             //分享
         } else if (id == R.id.menu_share) {
+            //TODO WLJ 分享
 //            share();
             //下载
         } else if (id == R.id.iv_top_download) {
@@ -392,7 +325,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
         //下载按钮
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
-            if (mAtlasList.get(position) != null && !mAtlasList.get(position).equals("")) {
+            if (!TextUtils.isEmpty(mAtlasList.get(position).getImage_url())) {
                 if (mIvDownLoad.getVisibility() == View.GONE) {
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 }
@@ -490,7 +423,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     PermissionManager.get().request(AtlasDetailActivity.this, new IPermissionCallBack() {
                         @Override
                         public void onGranted(boolean isAlreadyDef) {
-                            T.showShort(AtlasDetailActivity.this, "当前下载第 " + position + " 张图片");
+                            T.showShort(AtlasDetailActivity.this, "当前下载第 " + (position + 1) + " 张图片");
                             String url = mAtlasList.get(position).getImage_url();
                             download(url);
                         }

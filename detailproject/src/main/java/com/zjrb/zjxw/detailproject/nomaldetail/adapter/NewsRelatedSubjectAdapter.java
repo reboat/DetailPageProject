@@ -49,6 +49,7 @@ public class NewsRelatedSubjectAdapter extends BaseRecyclerAdapter {
 
         @Override
         public void bindView() {
+            //TODO WLJ 相关专题需要显示占位图
             GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheBig()).centerCrop().into(mImg);
         }
     }

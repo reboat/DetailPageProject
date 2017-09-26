@@ -98,9 +98,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         //初始化分享
         initShareBean();
-        if (umengShareUtils == null)
+        if (umengShareUtils == null) {
             umengShareUtils = new UmengShareUtils();
-
+        }
     }
 
     /**

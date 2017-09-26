@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class PersionalListAdapter extends BaseRecyclerAdapter {
 
+    //全部跳转到链接稿
     public static int TYPE_PERSIONAL_DETAIL = -1;
     public static int TYPE_NOMAL = 0;
 

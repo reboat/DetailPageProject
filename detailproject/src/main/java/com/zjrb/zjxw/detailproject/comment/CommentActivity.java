@@ -23,6 +23,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -41,7 +42,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -82,10 +82,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     public int commentSet = -1;
 
-//    /**
-//     * 父评论id
-//     */
-//    public int parentId = 0;
     /**
      * 是否来自评论页
      */
@@ -138,6 +134,16 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
     /**
+     * 加载中
+     * @return
+     */
+    @Override
+    public LoadViewHolder replaceLoad() {
+        return replaceLoad(activityComment);
+    }
+
+
+    /**
      * 设置评论等级(禁言)
      */
     private void initState() {
@@ -166,10 +172,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             if (data.getQueryParameter(Key.TITLE) != null) {
                 title = data.getQueryParameter(Key.TITLE);
             }
-            //作者评论
-//            if (data.getQueryParameter(Key.PARENT_ID) != null) {
-//                parentId = Integer.parseInt(data.getQueryParameter(Key.PARENT_ID));
-//            }
             isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
         }
     }
@@ -178,10 +180,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      * 初始化评论界面数据
      */
     private void initData() {
-        tvHot.setText(getString(R.string.module_detail_new_comment));
-        if (title != null && !title.isEmpty()) {
-            tvTitle.setText(title);
-        }
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
         //添加刷新头
@@ -196,6 +194,13 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      * 如果禁言，则不允许弹出评论框
      */
     private void initAdapter() {
+        //初始化标题
+        tvHot.setText(getString(R.string.module_detail_new_comment));
+        if (title != null && !title.isEmpty()) {
+            tvTitle.setText(title);
+        }
+
+        //初始化适配器
         mCommentAdapter.setHeaderRefresh(refresh.getItemView());
         mCommentAdapter.setFooterLoadMore(more.getItemView());
         mCommentAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -208,99 +213,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                             .appendQueryParameter(Key.ID, articleId)
                             .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                             .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-//                            .appendQueryParameter(Key.PARENT_ID, String.valueOf(parentId))
                             .build(), RESULT_OK);
                 }
             }
         });
-    }
-
-    /**
-     * test
-     *
-     * @return
-     */
-    private List<HotCommentsBean> mockText() {
-        List<HotCommentsBean> list = new ArrayList<>();
-        HotCommentsBean b = new HotCommentsBean();
-        b.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b.setLike_count(9999999);
-        b.setLiked(true);
-        b.setNick_name("周公");
-        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b.setParent_like_count(9999999);
-        b.setParent_liked(true);
-        b.setParent_nick_name("周公");
-        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b.setParent_like_count(9999999);
-        b.setParent_liked(true);
-        HotCommentsBean b2 = new HotCommentsBean();
-        b2.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b2.setLike_count(9999999);
-        b2.setLiked(true);
-        b2.setNick_name("周公");
-        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b2.setParent_like_count(9999999);
-        b2.setParent_liked(true);
-        b2.setParent_nick_name("周公");
-        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b2.setParent_like_count(9999999);
-        b2.setParent_liked(true);
-        HotCommentsBean b3 = new HotCommentsBean();
-        b3.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b3.setLike_count(9999999);
-        b3.setLiked(true);
-        b3.setNick_name("周公");
-        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b3.setParent_like_count(9999999);
-        b3.setParent_liked(true);
-        b3.setParent_nick_name("周公");
-        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b3.setParent_like_count(9999999);
-        b3.setParent_liked(true);
-        HotCommentsBean b4 = new HotCommentsBean();
-        b4.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b4.setLike_count(9999999);
-        b4.setLiked(true);
-        b4.setNick_name("周公");
-        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b4.setParent_like_count(9999999);
-        b4.setParent_liked(true);
-        b4.setParent_nick_name("周公");
-        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b4.setParent_like_count(9999999);
-        b4.setParent_liked(true);
-        HotCommentsBean b5 = new HotCommentsBean();
-        b5.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b5.setLike_count(9999999);
-        b5.setLiked(true);
-        b5.setNick_name("周公");
-        b5.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b5.setParent_like_count(9999999);
-        b5.setParent_liked(true);
-        b5.setParent_nick_name("周公");
-        b5.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b5.setParent_like_count(9999999);
-        b5.setParent_liked(true);
-        HotCommentsBean b6 = new HotCommentsBean();
-        b6.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b6.setLike_count(9999999);
-        b6.setLiked(true);
-        b6.setNick_name("周公");
-        b6.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b6.setParent_like_count(9999999);
-        b6.setParent_liked(true);
-        b6.setParent_nick_name("周公");
-        b6.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b6.setParent_like_count(9999999);
-        b6.setParent_liked(true);
-        list.add(b);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        list.add(b6);
-        return list;
     }
 
     /**
@@ -313,7 +229,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 if (commentRefreshBean == null) {
                     return;
                 }
-                commentList = mockText();//commentRefreshBean.getComments();
+                commentList = commentRefreshBean.getComments();
+                //TODO WLJ 设置空态页面
                 if (commentList != null) {
                     if (mCommentAdapter == null) {
                         mCommentAdapter = new CommentAdapter(commentList);
@@ -323,6 +240,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                         mCommentAdapter.setData(commentList);
                         mCommentAdapter.notifyDataSetChanged();
                     }
+                } else {
+                    activityComment.setVisibility(View.GONE);
                 }
             }
 
@@ -411,7 +330,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     .appendQueryParameter(Key.ID, articleId)
                     .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
                     .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                    .appendQueryParameter(Key.PARENT_ID,commentList.get(position).getParent_id() )
+                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
                     .build(), 0);
         }
 

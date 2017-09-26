@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +15,12 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -25,7 +28,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import java.util.List;
 
@@ -97,7 +99,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * @param v 初始化适配器
      */
     private void initView(View v) {
-        //TODO  WLJ  空态
+        //TODO  WLJ  空态页面
         if (list != null || list.isEmpty()) return;
         mAdapter = new PersionalRelateNewsAdapter(list);
         lvNotice.setAdapter(mAdapter);
@@ -130,11 +132,11 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
             @Override
             public void onSuccess(OfficalDetailBean bean) {
-                //TODO WLJ 打开
+                //TODO WLJ 显示空态页面
                 if (bean == null) {
                     return;
                 }
-                list = bean.getArticle_list();//commentRefreshBean.getComments();
+                list = bean.getArticle_list();
                 if (list != null) {
                     if (mAdapter == null) {
                         mAdapter = new PersionalRelateNewsAdapter(list);
@@ -166,7 +168,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 lastID = getLastID(list);//获取最后的刷新时间
             }
             mAdapter.addData(list, true);
-            //终止上拉加载
             if (list.size() < C.PAGE_SIZE) {
                 loadMore.setState(LoadMore.TYPE_NO_MORE);
             }
@@ -214,7 +215,11 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position));
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
+                    .buildUpon()
+                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
+                    .appendQueryParameter(Key.ID, String.valueOf(((SubjectItemBean) mAdapter.getData().get(position)).getId()))
+                    .build(), 0);
         }
     }
 }

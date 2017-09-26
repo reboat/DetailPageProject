@@ -29,7 +29,6 @@ import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -103,106 +102,22 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        List<HotCommentsBean> list = mockTest();
+        //互动
         mText.setText(itemView.getContext().getString(R.string.module_detail_interact));
         mMore.setVisibility(View.GONE);
-//        adapter = new CommentAdapter(mData.getArticle().getHot_comments(),String.valueOf(mData.getArticle().getId()));
-        adapter = new CommentAdapter(mockTest(), "739652");
-        initAdapter();
-        mRecyleView.setAdapter(adapter);
 
-
-//        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-//        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-//                LinearLayoutManager.VERTICAL, false));
-//        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
-//            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
-//            adapter.setOnItemClickListener(this);
-//            mRecyleView.setAdapter(adapter);
-//        } else {
-//            mLyHotContainer.setVisibility(View.GONE);
-//        }
+        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
+                LinearLayoutManager.VERTICAL, false));
+        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
+            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
+            initAdapter();
+            mRecyleView.setAdapter(adapter);
+        } else {
+            mLyHotContainer.setVisibility(View.GONE);
+        }
     }
 
-    private List<HotCommentsBean> mockTest() {
-        List<HotCommentsBean> list = new ArrayList<>();
-        HotCommentsBean b = new HotCommentsBean();
-        b.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b.setLike_count(9999999);
-        b.setLiked(true);
-        b.setNick_name("周公");
-        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b.setParent_like_count(9999999);
-        b.setParent_liked(true);
-        b.setParent_nick_name("周公");
-        b.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b.setPortrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b.setParent_portrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b.setParent_like_count(9999999);
-        b.setParent_liked(true);
-        HotCommentsBean b1 = new HotCommentsBean();
-        b1.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b1.setLike_count(9999999);
-        b1.setLiked(true);
-        b1.setNick_name("周公");
-        b1.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b1.setParent_like_count(9999999);
-        b1.setParent_liked(true);
-        b1.setParent_nick_name("周公");
-        b1.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b1.setParent_like_count(9999999);
-        b1.setParent_liked(true);
-        b1.setPortrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b1.setParent_portrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        HotCommentsBean b2 = new HotCommentsBean();
-        b2.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b2.setLike_count(9999999);
-        b2.setLiked(true);
-        b2.setNick_name("周公");
-        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b2.setParent_like_count(9999999);
-        b2.setParent_liked(true);
-        b2.setParent_nick_name("周公");
-        b2.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b2.setParent_like_count(9999999);
-        b2.setParent_liked(true);
-        b2.setPortrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b2.setParent_portrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        HotCommentsBean b3 = new HotCommentsBean();
-        b3.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b3.setLike_count(9999999);
-        b3.setLiked(true);
-        b3.setNick_name("周公");
-        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b3.setParent_like_count(9999999);
-        b3.setParent_liked(true);
-        b3.setParent_nick_name("周公");
-        b3.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b3.setParent_like_count(9999999);
-        b3.setParent_liked(true);
-        b3.setPortrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b3.setParent_portrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        HotCommentsBean b4 = new HotCommentsBean();
-        b4.setContent("评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1评论1");
-        b4.setLike_count(9999999);
-        b4.setLiked(true);
-        b4.setNick_name("周公");
-        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b4.setParent_like_count(9999999);
-        b4.setParent_liked(true);
-        b4.setParent_nick_name("周公");
-        b4.setParent_content("父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论父评论");
-        b4.setParent_like_count(9999999);
-        b4.setParent_liked(true);
-        b4.setPortrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b4.setParent_portrait_url("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        return list;
-    }
 
     /**
      * @param view 点击进入评论列表
@@ -261,6 +176,9 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
      * @return 获取最后一次刷新的时间戳
      */
     private long getLastMinPublishTime(List<HotCommentsBean> commentList) {
-        return commentList.get(commentList.size() - 1).getCreated_at();
+        if (commentList != null && !commentList.isEmpty()) {
+            return commentList.get(commentList.size() - 1).getCreated_at();
+        }
+        return 0;
     }
 }

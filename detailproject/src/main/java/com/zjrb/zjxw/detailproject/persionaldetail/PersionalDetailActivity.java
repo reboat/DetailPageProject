@@ -25,21 +25,17 @@ import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoFragment;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 官员履历
+ * 官员详情页
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
@@ -96,118 +92,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
-    private List<SubjectItemBean> mockTest() {
-        List<SubjectItemBean> list = new ArrayList<>();
-        SubjectItemBean b = new SubjectItemBean();
-        List<String> list_pics = new ArrayList<>();
-        list_pics.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-
-        b.setList_pics(list_pics);
-        b.setList_title("标题1");
-        SubjectItemBean b1 = new SubjectItemBean();
-        b1.setList_pics(list_pics);
-        b1.setList_title("标题1");
-        SubjectItemBean b2 = new SubjectItemBean();
-        b2.setList_pics(list_pics);
-        b2.setList_title("标题1");
-        SubjectItemBean b3 = new SubjectItemBean();
-        b3.setList_pics(list_pics);
-        b3.setList_title("标题1");
-        SubjectItemBean b4 = new SubjectItemBean();
-        b4.setList_pics(list_pics);
-        b4.setList_title("标题1");
-        SubjectItemBean b5 = new SubjectItemBean();
-        b5.setList_pics(list_pics);
-        b5.setList_title("标题1");
-        SubjectItemBean b6 = new SubjectItemBean();
-        b6.setList_pics(list_pics);
-        b6.setList_title("标题1");
-        SubjectItemBean b7 = new SubjectItemBean();
-        b7.setList_pics(list_pics);
-        b7.setList_title("标题1");
-        SubjectItemBean b8 = new SubjectItemBean();
-        b8.setList_pics(list_pics);
-        b8.setList_title("标题1");
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        list.add(b6);
-        list.add(b7);
-        list.add(b8);
-        return list;
-    }
-
-    private OfficalDetailBean.OfficerBean mockTest2() {
-        OfficalDetailBean.OfficerBean officer = new OfficalDetailBean.OfficerBean();
-        officer.setList_pic("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        officer.setGender("女");
-        officer.setDescription("骄傲多少点击和是大概几十个福克斯就发货速度就发国剧盛典发过火加深对父控件是费时间的发个的工号圣诞节回复该框架是复健科还是的覆盖卡萨丁胫腓骨框架使得规范开始就待物安稳搭框架打开大家啊大数据大会解散了的嘎屎大颗是多少开发v");
-        officer.setName("宁");
-        List<OfficalDetailBean.OfficerBean.ResumesBean> resumes = new ArrayList<>();
-        OfficalDetailBean.OfficerBean.ResumesBean b = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b.setLocation("浙江");
-        b.setMonth(8);
-        b.setSameYear(false);
-        b.setTitle("省委书记");
-        b.setYear(2014);
-        OfficalDetailBean.OfficerBean.ResumesBean b1 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b1.setLocation("浙江");
-        b1.setMonth(8);
-        b1.setSameYear(false);
-        b1.setTitle("省委书记");
-        b1.setYear(2014);
-        OfficalDetailBean.OfficerBean.ResumesBean b2 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b2.setLocation("浙江");
-        b2.setMonth(8);
-        b2.setSameYear(false);
-        b2.setTitle("省委书记");
-        b2.setYear(2012);
-        OfficalDetailBean.OfficerBean.ResumesBean b3 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b3.setLocation("浙江");
-        b3.setMonth(8);
-        b3.setSameYear(false);
-        b3.setTitle("省委书记");
-        b3.setYear(2011);
-        OfficalDetailBean.OfficerBean.ResumesBean b4 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b4.setLocation("浙江");
-        b4.setMonth(8);
-        b4.setSameYear(false);
-        b4.setTitle("省委书记");
-        b4.setYear(2009);
-        OfficalDetailBean.OfficerBean.ResumesBean b5 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b5.setLocation("浙江");
-        b5.setMonth(8);
-        b5.setSameYear(false);
-        b5.setTitle("省委书记");
-        b5.setYear(2008);
-        OfficalDetailBean.OfficerBean.ResumesBean b6 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b6.setLocation("浙江");
-        b6.setMonth(8);
-        b6.setSameYear(false);
-        b6.setTitle("省委书记");
-        b6.setYear(2008);
-        OfficalDetailBean.OfficerBean.ResumesBean b7 = new OfficalDetailBean.OfficerBean.ResumesBean();
-        b7.setLocation("浙江");
-        b7.setMonth(8);
-        b7.setSameYear(false);
-        b7.setTitle("省委书记");
-        b7.setYear(2008);
-        resumes.add(b);
-        resumes.add(b1);
-        resumes.add(b2);
-        resumes.add(b3);
-        resumes.add(b4);
-        resumes.add(b5);
-        resumes.add(b6);
-        resumes.add(b7);
-        officer.setResumes(resumes);
-        return officer;
-
-    }
-
     /**
      * 加载数据
      */
@@ -231,9 +115,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      */
     private void initView(OfficalDetailBean b) {
         bean = b;
-        bean.setArticle_list(mockTest());
-        bean.setOfficer(mockTest2());
-        //TODO  WLJ else怎么显示
+        bean.setArticle_list(b.getArticle_list());
+        bean.setOfficer(b.getOfficer());
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像

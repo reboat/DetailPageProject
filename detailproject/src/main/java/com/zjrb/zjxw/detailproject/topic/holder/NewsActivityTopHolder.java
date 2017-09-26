@@ -17,16 +17,13 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 新闻详情页中间内容
+ * 话题详情页顶部holder
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
@@ -46,17 +43,12 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public LinearLayout mLlFixedTitle;
     @BindView(R2.id.ll_cover)
     FrameLayout mLlCover;
-    /**
-     * 分享数据列表
-     */
-    private List<DetailShareBean> mListData;
 
     public NewsActivityTopHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_activity_top, parent, false));
         ButterKnife.bind(this, itemView);
         mColor484848 = ContextCompat.getColor(itemView.getContext(), R.color.color_484848);
     }
-
 
     /**
      * 文字颜色渐变
@@ -124,7 +116,7 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //主持人
-        if (mData.getArticle().getTopic_hosts() != null) {
+        if (mData.getArticle().getTopic_hosts() != null && !mData.getArticle().getTopic_hosts().isEmpty()) {
             mTvHost.setText("主持人：");
             for (String host :
                     mData.getArticle().getTopic_hosts()) {
@@ -133,7 +125,7 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //嘉宾
-        if (mData.getArticle().getTopic_guests() != null) {
+        if (mData.getArticle().getTopic_guests() != null && !mData.getArticle().getTopic_guests().isEmpty()) {
             mTvGuest.setText("嘉宾：");
             for (String guest :
                     mData.getArticle().getTopic_guests()) {

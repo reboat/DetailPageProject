@@ -19,7 +19,7 @@ public class OfficalListTask extends APIGetTask<OfficalListBean> {
     }
 
     /**
-     * @param params start:官员id
+     * @param params start:分页起始ID
      */
     @Override
     protected void onSetupParams(Object... params) {

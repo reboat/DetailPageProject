@@ -162,15 +162,19 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
             if (mData.getList_title() != null) {
                 tvGroupName.setText(mData.getList_title());
             }
+            //显示是否有更多相关专题
             if (mData.getSize() >= 3) {
                 tvMore.setVisibility(View.VISIBLE);
                 tvMore.setText(itemView.getContext().getString(R.string.module_detail_offical_more));
+            } else {
+                tvMore.setVisibility(View.GONE);
             }
         }
 
         @OnClick({R2.id.tv_more})
         public void onClick(View v) {
             if (v.getId() == R.id.tv_more) {
+                //进入专题列表
                 Nav.with(itemView.getContext()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
                         .buildUpon()
                         .appendQueryParameter(Key.GROUP_ID, String.valueOf(mData.getId()))

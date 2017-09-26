@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.StringUtils;
@@ -82,6 +83,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //是否是自己发布的评论
         if (mData.isOwn()) {
             mDelete.setVisibility(View.VISIBLE);
+        } else {
+            mDelete.setVisibility(View.GONE);
         }
 
         //评论已删除
@@ -90,33 +93,40 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvCommentContent.setVisibility(View.GONE);
             mTvCommentSrc.setVisibility(View.GONE);
             mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
+        } else {//显示正常评论
+            mTvDeleteTip.setVisibility(View.GONE);
+            mTvCommentContent.setVisibility(View.VISIBLE);
+            //我的评论
+            if (mData.getParent_content() != null) {
+                mTvCommentContent.setText(mData.getParent_content());
+            }
+            mTvCommentSrc.setVisibility(View.VISIBLE);
+            //我的昵称
+            if (mData.getParent_nick_name() != null) {
+                mTvCommentSrc.setText(mData.getParent_nick_name());
+            }
         }
 
         //回复者的评论
         if (mData.getContent() != null) {
             mContent.setText(mData.getContent());
         }
+
         //回复者昵称
         if (mData.getNick_name() != null) {
             mName.setText(mData.getNick_name());
         }
 
+        //TODO WLJ 时间显示
         mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd HH:mm:ss"));
-        //我的评论
-        if (mData.getParent_content() != null) {
-            mTvCommentContent.setText(mData.getParent_content());
-        }
 
-        //点赞次数和是否已点赞
+        //点赞次数
         mThumb.setText(mData.getLike_count() + "");
+        //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
-        //回复者头像
-        GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
+        //回复者头像(显示默认头像)
+        GlideApp.with(mImg).load(mData.getPortrait_url()).placeholder(PH.zheSmall()).centerCrop().into(mImg);
 
-        //我的昵称
-        if (mData.getParent_nick_name() != null) {
-            mTvCommentSrc.setText(mData.getParent_nick_name());
-        }
 
     }
 
@@ -124,7 +134,12 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     public void onClick(View view) {
         //点赞
         if (view.getId() == R.id.tv_thumb_up) {
-            praiseComment(mData.getId());
+            if (!mData.isLiked()) {
+                praiseComment(mData.getId());
+            } else {
+                //已点赞
+                T.showShortNow(itemView.getContext(), itemView.getContext().getString(R.string.module_detail_you_have_liked));
+            }
         } else if (view.getId() == R.id.tv_delete) {
             deleteComment(mData.getId());
             //回复评论者
@@ -167,6 +182,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
+                //TODO WLJ 未登录则跳转到登录页面
                 T.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);

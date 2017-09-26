@@ -16,10 +16,12 @@ import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
@@ -27,9 +29,7 @@ import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.TopicListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -128,64 +128,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     private List<SubjectItemBean> list;
 
-    //mock测试数据
-    private List<SubjectItemBean> mockData() {
-        List<SubjectItemBean> list = new ArrayList<>();
-
-        SubjectItemBean b = new SubjectItemBean();
-        List<String> l = new ArrayList<>();
-        l.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b.setList_pics(l);
-        b.setList_title("文章1");
-
-        SubjectItemBean b1 = new SubjectItemBean();
-        List<String> l1 = new ArrayList<>();
-        l1.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b1.setList_pics(l1);
-        b1.setList_title("文章2");
-
-        SubjectItemBean b2 = new SubjectItemBean();
-        List<String> l2 = new ArrayList<>();
-        l2.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b2.setList_pics(l2);
-        b2.setList_title("文章3");
-
-        SubjectItemBean b3 = new SubjectItemBean();
-        List<String> l3 = new ArrayList<>();
-        l3.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b3.setList_pics(l3);
-        b3.setList_title("文章4");
-
-
-        SubjectItemBean b4 = new SubjectItemBean();
-        List<String> l4 = new ArrayList<>();
-        l4.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b4.setList_pics(l4);
-        b4.setList_title("文章5");
-
-        SubjectItemBean b5 = new SubjectItemBean();
-        List<String> l5 = new ArrayList<>();
-        l5.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b5.setList_pics(l5);
-        b5.setList_title("文章6");
-
-        SubjectItemBean b6 = new SubjectItemBean();
-        List<String> l6 = new ArrayList<>();
-        l6.add("http://stc.zjol.com.cn/g1/M00015BCggSBFRpu3iABgN_AADQ1ouTCEs234.png?width=226&height=226");
-        b6.setList_pics(l6);
-        b6.setList_title("文章7");
-
-        list.add(b);
-        list.add(b1);
-        list.add(b2);
-        list.add(b3);
-        list.add(b4);
-        list.add(b5);
-        list.add(b6);
-
-        return list;
-    }
-
     /**
      * 加载专题分组列表
      */
@@ -196,7 +138,8 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 if (bean == null) {
                     return;
                 }
-                list = mockData();//commentRefreshBean.getComments();
+                //TODO WLJ 空态页面
+                list = bean.getArticle_list();
                 if (list != null) {
                     if (mAdapter == null) {
                         mAdapter = new TopicListAdapter(list);
@@ -250,7 +193,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onLoadMore(LoadingCallBack<SubjectListBean> callback) {
-        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId);
+        new DraftTopicListTask(callback).setTag(this).exe(group_id, lastNewsId == 0 ? null : lastNewsId + "");
     }
 
     /**
@@ -269,7 +212,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
 
     /**
      * @param list
-     * @return 获取最后一条的时间戳
+     * @return 获取最后一条新闻的ID
      */
     private long getLastNewsId(List<SubjectItemBean> list) {
         return list.get(list.size() - 1).getId();
@@ -282,7 +225,14 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO WLJ 进入详情页
-        BizUtils.jumpToDetailActivity2((SubjectItemBean) mAdapter.getData().get(position));
+        if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
+            if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
+                Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
+                        .buildUpon()
+                        .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
+                        .appendQueryParameter(Key.ID, String.valueOf(((SubjectItemBean) mAdapter.getData().get(position)).getId()))
+                        .build(), 0);
+            }
+        }
     }
 }

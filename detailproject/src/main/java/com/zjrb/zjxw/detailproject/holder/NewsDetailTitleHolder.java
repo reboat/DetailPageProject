@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -52,9 +53,10 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         itemView.setOnClickListener(null);
 
         //顶部焦点图(可以不填写)
-        if (mData.getArticle().getArticle_pic() == null || mData.getArticle().getArticle_pic().isEmpty()) {
+        if (TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
             mIvTopBg.setVisibility(View.GONE);
         } else {
+            mIvTopBg.setVisibility(View.VISIBLE);
             GlideApp.with(mIvTopBg).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvTopBg);
         }
 
@@ -64,14 +66,15 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //记者(发稿允许不填写)
-        if (mData.getArticle().getAuthor() != null && !mData.getArticle().getAuthor().isEmpty()) {
+        if (!TextUtils.isEmpty(mData.getArticle().getAuthor())) {
+            mTvReporter.setVisibility(View.VISIBLE);
             mTvReporter.setText(mData.getArticle().getAuthor());
         } else {
             mTvReporter.setVisibility(View.GONE);
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (mData.getArticle().getColumn_name() != null && !mData.getArticle().getColumn_name().isEmpty()) {
+        if (!TextUtils.isEmpty(mData.getArticle().getColumn_name())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "|");
             mTvColumnName.setText(mData.getArticle().getColumn_name());
         } else {

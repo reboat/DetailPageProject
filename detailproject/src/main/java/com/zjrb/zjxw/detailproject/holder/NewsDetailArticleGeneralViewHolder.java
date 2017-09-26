@@ -48,6 +48,7 @@ public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<S
         }
         //标签状态(可以为空)
         if (mData.getList_tag() != null && !mData.getList_tag().isEmpty()) {
+            mTvFlag.setVisibility(View.VISIBLE);
             mTvFlag.setText(mData.getList_tag());
         } else {
             mTvFlag.setVisibility(View.GONE);

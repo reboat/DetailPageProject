@@ -24,7 +24,7 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("id", "5");
+        put("id", params[0]);
         //下拉刷新默认不传时间戳
         if (params.length > 1) {
             put("start", params[1]);

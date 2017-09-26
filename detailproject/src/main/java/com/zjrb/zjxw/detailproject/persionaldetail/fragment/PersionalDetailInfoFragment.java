@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -27,6 +28,8 @@ public class PersionalDetailInfoFragment extends BaseFragment {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
 
     private ListSpaceDivider diver;
 
@@ -60,8 +63,9 @@ public class PersionalDetailInfoFragment extends BaseFragment {
      * 初始化适配器
      */
     private void initView(View v) {
-        //TODO WLJ 显示空态页面
         if (bean == null || bean.getOfficer() == null || bean.getOfficer().getResumes() == null || bean.getOfficer().getResumes().isEmpty()) {
+            mViewExise.setVisibility(View.VISIBLE);
+            lvNotice.setVisibility(View.GONE);
             return;
         }
         mAdapter = new PersionalTrackAdapter();

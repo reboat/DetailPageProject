@@ -138,7 +138,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 if (bean == null) {
                     return;
                 }
-                //TODO WLJ 空态页面
                 list = bean.getArticle_list();
                 if (list != null) {
                     if (mAdapter == null) {
@@ -158,7 +157,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(group_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(group_id);
     }
 
 

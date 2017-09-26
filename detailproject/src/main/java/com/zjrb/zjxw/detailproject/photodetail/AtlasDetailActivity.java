@@ -35,6 +35,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
@@ -99,6 +100,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     ImageView mIvDownLoad;
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
 
 
     public String mArticleId = "";
@@ -138,7 +141,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
-                //TODO WLJ 显示空态页面
                 if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
                         || atlasDetailEntity.getArticle().getAlbum_image_list() == null
                         || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) return;
@@ -154,9 +156,16 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                //图集撤稿
+                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    showEmptyNewsDetail();
+                } else {
+                    mViewExise.setVisibility(View.VISIBLE);
+                    mViewPager.setVisibility(View.GONE);
+                    mContainerBottom.setVisibility(View.GONE);
+                }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad()).exe(mArticleId);
+        }).setTag(this).exe(mArticleId);
 
     }
 
@@ -390,19 +399,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ 返回值判定
-                switch (baseInnerData.getResultCode()) {
-                    case 0:
-                        T.showShort(UIUtils.getContext(), "点赞成功");
-                        mData.getArticle().setLiked(true);
-                        break;
-                    case 1:
-                        T.showShort(UIUtils.getContext(), "点赞失败");
-                        break;
-                    case 10004:
-                        T.showShort(UIUtils.getContext(), "您已点赞");
-                        break;
-                }
+                T.showShort(UIUtils.getContext(), baseInnerData.getResultMsg());
             }
         }).setTag(this).exe(mArticleId);
     }

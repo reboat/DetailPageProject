@@ -105,7 +105,6 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                     return;
                 }
                 list = data.getOfficer_list();
-                //TODO WLJ 设置空态页面
                 if (list != null) {
                     if (mAdapter == null) {
                         mAdapter = new PersionalListAdapter();
@@ -124,7 +123,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe();
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe();
 
     }
 

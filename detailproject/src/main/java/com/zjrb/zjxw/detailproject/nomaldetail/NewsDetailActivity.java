@@ -37,6 +37,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
+import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -98,6 +99,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     FrameLayout mFlContent;
     @BindView(R2.id.ly_container)
     LinearLayout mContainer;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
     /**
      * 上下滑动超出范围处理
      */
@@ -214,14 +217,21 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
+                if(draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
-//                showEmptyNewsDetail();
                 fillData(draftDetailBean);
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                //撤稿
+                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    showEmptyNewsDetail();
+                } else {
+                    //别的错误
+                    mFlContent.setVisibility(View.GONE);
+                    mViewExise.setVisibility(View.VISIBLE);
+                }
             }
         }).setTag(this).exe(mArticleId);
     }
@@ -273,28 +283,30 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 //        }
 
         List datas = new ArrayList<>();
-        //TODO WLJ 添加6次数据
+        //头
         datas.add(data);
+        //web
         datas.add(data);
+        //middle
         datas.add(data);
-        //TODO  WLJ 添加相关专题
-        datas.add(data);
-//        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
-//            datas.add(data);
-//        }
-        datas.add(data);
-//        if (data.getArticle().getRelated_news() != null && data.getArticle().getRelated_news().size() > 0) {
-//            datas.add(data);
-//
-//        }
-        datas.add(data);
-//        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
-//            datas.add(data);
-//        }
-        mRvContent.setAdapter(mAdapter = new NewsDetailAdapter(datas,
-                mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO));
-//        mAdapter.setOnItemClickListener(this);
+        //相关专题
+        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
+            datas.add(data);
+        }
+        //相关新闻
+        if (data.getArticle().getRelated_news() != null && data.getArticle().getRelated_news().size() > 0) {
+            datas.add(data);
 
+        }
+        //热门评论
+        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
+            datas.add(data);
+        }
+        mAdapter = new NewsDetailAdapter(datas,
+                mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO);
+        mRvContent.setAdapter(mAdapter);
+
+        //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
         if (data.getArticle().getComment_count() <= 0) {
             mTvCommentsNum.setVisibility(View.GONE);
@@ -305,6 +317,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
             }
         }
+        //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
 
@@ -343,16 +356,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ 错误码处理
-                switch (baseInnerData.getResultCode()) {
-                    case ResultCode.SUCCEED:
-                        T.showShort(getBaseContext(), "订阅成功");
-                        mNewsDetail.getArticle().setColumn_subscribed(true);
-                        break;
-                    default:
-                        T.showShort(getBaseContext(), baseInnerData.getResultMsg());
-                        break;
-                }
+                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
             }
 
             @Override
@@ -407,29 +411,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ 错误码处理
-                switch (baseInnerData.getResultCode()) {
-                    case ResultCode.SUCCEED:
-                        T.showShort(getBaseContext(), "点赞成功");
-                        if (mNewsDetail != null) {
-                            mNewsDetail.getArticle().setLiked(true);
-                        }
-                        break;
-                    case ResultCode.FAILED:
-                        T.showShort(getBaseContext(), "点赞失败");
-                        break;
-                    case ResultCode.HAS_PRAISED:
-                        mNewsDetail.getArticle().setLiked(false);
-                        T.showShort(getBaseContext(), "您已点赞");
-                        break;
-                }
+                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
             }
         }).setTag(this).exe(mArticleId);
     }
 
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment})
+            R2.id.tv_comment, R2.id.view_exise})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_comment) {
@@ -461,6 +450,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
         } else if (view.getId() == R.id.iv_share) {
             T.showShortNow(NewsDetailActivity.this, "分享");
+        } else if (view.getId() == R.id.view_exise) {
+            loadData();
         }
     }
 

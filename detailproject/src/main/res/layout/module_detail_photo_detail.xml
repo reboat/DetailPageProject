@@ -7,6 +7,47 @@
              android:layout_height="match_parent"
     >
 
+    <!--错误页面-->
+    <LinearLayout
+        android:id="@+id/view_exise"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/iv_exise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="118dp"
+            android:src="?attr/module_core_ic_global_failed"
+            />
+
+        <TextView
+            android:id="@+id/tv_exise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_exise"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:text="加载失败"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_exise"
+            android:layout_centerHorizontal="true"
+            android:padding="3dp"
+            android:text="点击屏幕重试"
+            android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_11sp"/>
+
+    </LinearLayout>
+
     <com.zjrb.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
@@ -65,8 +106,8 @@
                 android:id="@+id/iv_top_download"
                 android:layout_width="42dp"
                 android:layout_height="@dimen/toolbar_normal_height"
-                android:layout_toLeftOf="@+id/iv_share"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/iv_share"
                 android:scaleType="center"
                 android:src="@mipmap/module_detail_image_download"
                 android:visibility="gone"
@@ -238,5 +279,4 @@
             android:fitsSystemWindows="true"
             app:fitType="bottom"/>
     </LinearLayout>
-
 </FrameLayout>

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
@@ -13,6 +14,7 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleVideoHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,6 +53,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
      */
     private boolean isVideoType;
     private boolean isShowAll; // true：已经显示全部
+
+    public NewsDetailAdapter() {
+        super(new ArrayList<DraftDetailBean>());
+    }
 
     public NewsDetailAdapter(List datas, boolean isVideoType) {
         super(datas);

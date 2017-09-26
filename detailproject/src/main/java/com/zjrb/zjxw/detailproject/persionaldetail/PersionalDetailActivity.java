@@ -59,6 +59,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     ViewPager viewpager;
     @BindView(R2.id.nsv)
     LinearLayout nsv;
+    @BindView(R2.id.ly_container)
+    LinearLayout mLyContailer;
 
     /**
      * 官员ID
@@ -100,6 +102,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onSuccess(OfficalDetailBean data) {
+                if(data == null) return;
                 initView(data);
             }
 
@@ -107,7 +110,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
             }
-        }).setTag(this).exe(official_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mLyContailer)).exe(official_id);
     }
 
     /**

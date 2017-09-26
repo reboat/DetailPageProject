@@ -159,6 +159,7 @@ public class CommentWindowActivity extends BaseActivity implements
 
                 @Override
                 public void onSuccess(BaseInnerData stateBean) {
+                    if(stateBean == null) return;
                     handlerResult(stateBean);
                 }
 

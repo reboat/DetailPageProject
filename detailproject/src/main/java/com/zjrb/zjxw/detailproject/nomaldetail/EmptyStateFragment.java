@@ -23,7 +23,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import java.util.List;
 
@@ -122,7 +121,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                 if (bean == null) {
                     return;
                 }
-                //TODO WLJ 需要显示空态页面
                 article_list = bean.getArticle_list();
                 if (article_list != null) {
                     if (adapter == null) {
@@ -140,7 +138,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
             public void onError(String errMsg, int errCode) {
                 T.showShort(UIUtils.getContext(), errMsg);
             }
-        }).setTag(this).exe(column_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(column_id);
     }
 
     /**
@@ -149,7 +147,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        if(adapter.getData() != null && !adapter.getData().isEmpty()){
+        if (adapter.getData() != null && !adapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) adapter.getData().get(position)).getUrl())
                     .buildUpon()
                     .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) adapter.getData().get(position)).getVideo_url())//视频地址

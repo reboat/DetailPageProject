@@ -23,7 +23,6 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -134,16 +133,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
     /**
-     * 加载中
-     * @return
-     */
-    @Override
-    public LoadViewHolder replaceLoad() {
-        return replaceLoad(activityComment);
-    }
-
-
-    /**
      * 设置评论等级(禁言)
      */
     private void initState() {
@@ -250,7 +239,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).exe(articleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(activityComment)).exe(articleId);
     }
 
     @OnClick({R2.id.tv_comment})

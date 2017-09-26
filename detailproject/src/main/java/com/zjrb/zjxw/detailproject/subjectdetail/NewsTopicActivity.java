@@ -27,13 +27,13 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
+import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,6 +56,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     RecyclerView mRvContent;
     @BindView(R2.id.ly_container)
     LinearLayout lyContainer;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
 
 
     /**
@@ -198,7 +200,6 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                //TODO  WLJ 显示空态页面
                 if (draftDetailBean == null) {
                     return;
                 } else {
@@ -209,7 +210,13 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                //专题撤稿
+                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    showEmptyNewsDetail();
+                } else {//其余页面
+                    mViewExise.setVisibility(View.VISIBLE);
+                    mRvContent.setVisibility(View.GONE);
+                }
             }
 
         }).setTag(this).exe(mArticleId);
@@ -246,7 +253,6 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO  WLJ  少图片
                 topHolder.getCollectView().setImageResource(R.mipmap.module_detail_collect_night);
                 T.showShort(getBaseContext(), "收藏成功");
             }

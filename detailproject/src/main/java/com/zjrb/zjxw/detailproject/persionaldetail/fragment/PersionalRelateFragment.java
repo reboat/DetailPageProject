@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LoadingCallBack;
@@ -43,6 +44,8 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
 
     /**
      * 相关新闻标识
@@ -99,8 +102,11 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * @param v 初始化适配器
      */
     private void initView(View v) {
-        //TODO  WLJ  空态页面
-        if (list != null || list.isEmpty()) return;
+        if (list != null || list.isEmpty()) {
+            mViewExise.setVisibility(View.VISIBLE);
+            mViewExise.setVisibility(View.GONE);
+            return;
+        }
         mAdapter = new PersionalRelateNewsAdapter(list);
         lvNotice.setAdapter(mAdapter);
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
@@ -132,7 +138,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
             @Override
             public void onSuccess(OfficalDetailBean bean) {
-                //TODO WLJ 显示空态页面
                 if (bean == null) {
                     return;
                 }
@@ -153,7 +158,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
-        }).setTag(this).exe(official_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(official_id);
     }
 
     /**

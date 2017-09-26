@@ -40,6 +40,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -94,6 +95,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     LinearLayout mLlFixedTitle;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
+    @BindView(R2.id.view_exise)
+    LinearLayout mViewExise;
 
     private ActivityTopicAdapter adapter;
     /**
@@ -356,6 +359,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
+                if (draftDetailBean == null) return;
+
                 mNewsDetail = draftDetailBean;
                 fillData(draftDetailBean);
                 initRectleView(!TextUtils.isEmpty(draftDetailBean.getArticle().getArticle_pic()) ? true : false);
@@ -363,7 +368,15 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                //话题撤稿
+                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    showEmptyNewsDetail();
+                } else {
+                    mViewExise.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                    mFloorBar.setVisibility(View.GONE);
+                    mLlFixedTitle.setVisibility(View.GONE);
+                }
             }
         }).setTag(this).exe(mArticleId);
     }
@@ -491,16 +504,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ 错误码处理
-                switch (baseInnerData.getResultCode()) {
-                    case ResultCode.SUCCEED:
-                        T.showShort(getBaseContext(), "订阅成功");
-                        mNewsDetail.getArticle().setColumn_subscribed(true);
-                        break;
-                    default:
-                        T.showShort(getBaseContext(), baseInnerData.getResultMsg());
-                        break;
-                }
+                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+                mNewsDetail.getArticle().setColumn_subscribed(true);
             }
 
             @Override
@@ -538,26 +543,14 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), "点赞失败");
+                T.showShort(getBaseContext(), errMsg);
             }
 
             @Override
             public void onSuccess(BaseInnerData baseInnerData) {
-                //TODO WLJ 错误码处理
-                switch (baseInnerData.getResultCode()) {
-                    case ResultCode.SUCCEED:
-                        T.showShort(getBaseContext(), "点赞成功");
-                        if (mNewsDetail != null) {
-                            mNewsDetail.getArticle().setLiked(true);
-                        }
-                        break;
-                    case ResultCode.FAILED:
-                        T.showShort(getBaseContext(), "点赞失败");
-                        break;
-                    case ResultCode.HAS_PRAISED:
-                        mNewsDetail.getArticle().setLiked(false);
-                        T.showShort(getBaseContext(), "您已点赞");
-                        break;
+                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+                if (mNewsDetail != null) {
+                    mNewsDetail.getArticle().setLiked(true);
                 }
             }
         }).setTag(this).exe(mArticleId);

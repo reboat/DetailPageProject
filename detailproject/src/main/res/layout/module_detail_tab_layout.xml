@@ -9,6 +9,6 @@
     android:gravity="center"
     android:orientation="vertical"
     android:textSize="@dimen/ts_14sp"
-    android:textColor="#ffffff"
+    android:textColor="?attr/tc_ffffff"
     tools:text="相关新闻"
     />

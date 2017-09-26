@@ -10,6 +10,6 @@
 
     <stroke
         android:width="0.5dp"
-        android:color="@color/bc_f44b50"/>
+        android:color="?attr/tc_f44b50"/>
 
 </shape>

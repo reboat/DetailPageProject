@@ -39,6 +39,10 @@
         <item name="bc_e2e2e2">@color/bc_e2e2e2</item>
 
         <item name="dc_dddddd">@color/dc_dddddd</item>
+        <item name="bc_a4a3a3">@color/bc_a4a3a3</item>
+        <item name="tc_d2d2d2">@color/tc_d2d2d2</item>
+
+
 
     </style>
 
@@ -84,6 +88,8 @@
         <item name="bc_e2e2e2">@color/bc_e2e2e2_night</item>
 
         <item name="dc_dddddd">@color/dc_dddddd_night</item>
+        <item name="bc_a4a3a3">@color/tc_484848</item>
+        <item name="tc_d2d2d2">@color/tc_d2d2d2_night</item>
     </style>
 
 </resources>

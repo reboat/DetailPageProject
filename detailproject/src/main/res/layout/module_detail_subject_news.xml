@@ -23,6 +23,7 @@
         android:paddingTop="9dp"
         android:textSize="14sp"
         android:textStyle="bold"
+        android:textColor="?attr/tc_484848"
         tools:text="相关专题"/>
 
 

@@ -6,7 +6,7 @@
     android:id="@+id/tv_empty_states"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#a4a3a3"
+    android:background="?attr/bc_a4a3a3"
     android:drawableLeft="@mipmap/module_detail_draft_delete"
     android:drawablePadding="10dp"
     android:gravity="center|left"
@@ -14,6 +14,6 @@
     android:paddingLeft="40dp"
     android:paddingRight="40dp"
     android:paddingTop="15dp"
-    android:textColor="#ffffff"
+    android:textColor="?attr/tc_ffffff"
     android:textSize="@dimen/ts_14sp"
     tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容"/>

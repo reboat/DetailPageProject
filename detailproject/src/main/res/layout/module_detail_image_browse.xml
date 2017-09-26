@@ -22,8 +22,9 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="?attr/tc_ffffff"
+            android:textSize="18sp"
+            />
     </FrameLayout>
 
     <ImageView

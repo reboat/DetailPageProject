@@ -44,6 +44,10 @@
 
         <attr name="dc_dddddd" format="color|reference"/>
         <attr name="tc_ffffff" format="color|reference"/>
+        <!--a4a3a3 484848-->
+        <attr name="bc_a4a3a3" format="color|reference" />
+        <!--d2d2d2  5c5c5c-->
+        <attr name="tc_d2d2d2" format="color|reference" />
 
 
         <attr name="border_f44b50" format="reference"/>

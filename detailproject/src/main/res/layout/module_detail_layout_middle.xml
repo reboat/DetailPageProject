@@ -26,6 +26,7 @@
             android:paddingRight="21.5dp"
             android:text="@string/module_detail_share_to"
             android:textSize="@dimen/ts_14sp"
+            android:textColor="?attr/tc_999999"
             tools:text="分享至"/>
         <View
             android:layout_width="wrap_content"

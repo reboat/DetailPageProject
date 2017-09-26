@@ -163,7 +163,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
-                android:background="#dddddd"
+                android:background="?attr/dc_dddddd"
                 android:visibility="invisible"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>

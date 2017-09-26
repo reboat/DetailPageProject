@@ -145,6 +145,7 @@
                 android:paddingTop="10dp"
                 android:textSize="@dimen/ts_16sp"
                 android:textStyle="bold"
+                android:textColor="?attr/tc_ffffff"
                 tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发"/>
 
             <TextView

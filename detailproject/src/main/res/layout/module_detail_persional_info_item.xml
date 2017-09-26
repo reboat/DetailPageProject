@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
-            android:textColor="@color/tc_484848"
+            android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_11sp"
             tools:text="2017年"/>
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
-            android:textColor="@color/tc_999999"
+            android:textColor="?attr/tc_999999"
             android:textSize="@dimen/ts_10sp"
             tools:text="4月"/>
 
@@ -48,7 +48,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:background="#999999"/>
+            android:background="?attr/tc_999999"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -65,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="55dp"
+        android:textColor="?attr/tc_484848"
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"

@@ -31,7 +31,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.base.BaseInnerData;
-import com.zjrb.core.domain.base.ResultCode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
@@ -227,6 +226,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     /**
      * 滚动监听实现方法
+     * fuck 待优化
      */
     private void HeadScrollChild() {
         if (mToolbar.getHeight() == 0) {
@@ -557,7 +557,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment})
+            R2.id.tv_comment, R2.id.iv_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -578,6 +578,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             }
         } else if (view.getId() == R.id.iv_share) {
             T.showShortNow(ActivityTopicActivity.this, "分享");
+        } else if (view.getId() == R.id.iv_back) {
+            finish();
         }
     }
 

@@ -219,7 +219,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     return;
                 }
                 commentList = commentRefreshBean.getComments();
-                //TODO WLJ 设置空态页面
                 if (commentList != null) {
                     if (mCommentAdapter == null) {
                         mCommentAdapter = new CommentAdapter(commentList);
@@ -229,8 +228,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                         mCommentAdapter.setData(commentList);
                         mCommentAdapter.notifyDataSetChanged();
                     }
-                } else {
-                    activityComment.setVisibility(View.GONE);
                 }
             }
 
@@ -248,12 +245,13 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         if (v.getId() == R.id.tv_comment) {
             if (BizUtils.isCanComment(this, commentSet)) {
                 tvComment.setVisibility(View.VISIBLE);
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, articleId)
-                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-                        .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                        .build(), RESULT_OK);
+                CommentWindowDialog.newInstance().show(getSupportFragmentManager(), "CommentWindowDialog");
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ID, articleId)
+//                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+//                        .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+//                        .build(), RESULT_OK);
             }
         }
     }

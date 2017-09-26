@@ -182,7 +182,7 @@
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
-        <!--活动详情页-->
+        <!--话题详情页-->
         <activity
             android:name=".topic.ActivityTopicActivity"
             android:screenOrientation="portrait">
@@ -194,7 +194,7 @@
 
                 <data
                     android:host="zj.zjol.com.cn"
-                    android:path="/detail/ActivityTopicActivity"
+                    android:path="/topic.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>

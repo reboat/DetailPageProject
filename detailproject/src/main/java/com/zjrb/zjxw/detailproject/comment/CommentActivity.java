@@ -19,16 +19,16 @@ import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.nav.Nav;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
@@ -198,12 +198,13 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             public void onItemClick(View itemView, int position) {
                 if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
                     tvComment.setVisibility(View.VISIBLE);
-                    Nav.with(CommentActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                            .buildUpon()
-                            .appendQueryParameter(Key.ID, articleId)
-                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-                            .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                            .build(), RESULT_OK);
+                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
+//                    Nav.with(CommentActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                            .buildUpon()
+//                            .appendQueryParameter(Key.ID, articleId)
+//                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+//                            .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+//                            .build(), RESULT_OK);
                 }
             }
         });
@@ -247,12 +248,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             if (BizUtils.isCanComment(this, commentSet)) {
                 tvComment.setVisibility(View.VISIBLE);
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ID, articleId)
-//                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-//                        .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-//                        .build(), RESULT_OK);
             }
         }
     }
@@ -313,13 +308,14 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void onItemClick(View itemView, int position) {
         if (BizUtils.isCanComment(this, commentSet)) {
-            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                    .buildUpon()
-                    .appendQueryParameter(Key.ID, articleId)
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-                    .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
-                    .build(), 0);
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
+//            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                    .buildUpon()
+//                    .appendQueryParameter(Key.ID, articleId)
+//                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
+//                    .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
+//                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
+//                    .build(), 0);
         }
 
     }

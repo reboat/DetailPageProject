@@ -1,6 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,8 +11,9 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.domain.base.BaseInnerData;
-import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -21,7 +22,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentPriseBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -144,22 +144,24 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             deleteComment(mData.getId());
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                    .buildUpon()
-                    .appendQueryParameter(Key.ID, articleId)
-                    .appendQueryParameter(Key.CONENT, mData.getContent() + "")
-                    .appendQueryParameter(Key.PARENT_ID, mData.getId() + "")
-                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name() + "")
-                    .build(), 0);
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId,mData.getId(),mData.getNick_name())).show(((FragmentActivity)UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                    .buildUpon()
+//                    .appendQueryParameter(Key.ID, articleId)
+//                    .appendQueryParameter(Key.CONENT, mData.getContent() + "")
+//                    .appendQueryParameter(Key.PARENT_ID, mData.getId() + "")
+//                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name() + "")
+//                    .build(), 0);
             //回复回复者
         } else {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                    .buildUpon()
-                    .appendQueryParameter(Key.ID, articleId)
-                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content() + "")
-                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id() + "")
-                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name() + "")
-                    .build(), 0);
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId,mData.getParent_id(),mData.getParent_nick_name())).show(((FragmentActivity)UIUtils.getActivity()).getSupportFragmentManager(),"CommentWindowDialog");
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                    .buildUpon()
+//                    .appendQueryParameter(Key.ID, articleId)
+//                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content() + "")
+//                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id() + "")
+//                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name() + "")
+//                    .build(), 0);
         }
     }
 

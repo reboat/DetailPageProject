@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,8 +15,10 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -89,11 +92,12 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
             @Override
             public void onItemClick(View itemView, int position) {
                 if (BizUtils.isCanComment(itemView.getContext(), mData.getArticle().getComment_level())) {
-                    Nav.with(itemView.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                            .buildUpon()
-                            .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
-                            .build(), 0);
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+//                    Nav.with(itemView.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                            .buildUpon()
+//                            .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+//                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
+//                            .build(), 0);
                 }
             }
         });

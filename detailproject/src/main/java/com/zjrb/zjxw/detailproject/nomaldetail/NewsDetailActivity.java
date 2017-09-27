@@ -25,9 +25,10 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.domain.base.BaseInnerData;
-import com.zjrb.core.domain.base.ResultCode;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.T;
@@ -441,11 +442,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
                 //进入评论编辑页面(不针对某条评论)
-                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
-                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
-                        .build(), 0);
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
+//                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
+//                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
+//                        .build(), 0);
                 return;
             }
         } else if (view.getId() == R.id.iv_share) {

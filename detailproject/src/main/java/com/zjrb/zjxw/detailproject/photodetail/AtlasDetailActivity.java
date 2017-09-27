@@ -22,9 +22,11 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
 import com.zjrb.core.utils.DownloadUtil;
 import com.zjrb.core.utils.PathUtil;
@@ -239,10 +241,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
-                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                        .build(), 0);
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
+//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
+//                        .buildUpon()
+//                        .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+//                        .build(), 0);
                 return;
             }
             //评论列表

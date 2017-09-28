@@ -3,6 +3,7 @@ package com.zjrb.detailpageproject;
 import android.app.Application;
 
 import com.aliya.uimode.UiModeManager;
+import com.zjrb.core.common.base.BaseInit;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.UIUtils;
 

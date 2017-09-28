@@ -31,7 +31,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
@@ -502,11 +501,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     @Override
     public void onOptSubscribe() {
-        new ColumnSubscribeTask(new APIExpandCallBack<BaseInnerData>() {
+        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
-                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
                 mNewsDetail.getArticle().setColumn_subscribed(true);
             }
 
@@ -541,7 +540,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<BaseInnerData>() {
+        new DraftPraiseTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -549,8 +548,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             }
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
-                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(getBaseContext(), "点赞成功");
                 if (mNewsDetail != null) {
                     mNewsDetail.getArticle().setLiked(true);
                 }

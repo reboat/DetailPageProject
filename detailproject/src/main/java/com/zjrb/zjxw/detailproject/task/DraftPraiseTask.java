@@ -3,7 +3,6 @@ package com.zjrb.zjxw.detailproject.task;
 
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
@@ -11,9 +10,9 @@ import com.zjrb.zjxw.detailproject.global.APIManager;
  * Created by wanglinjie.
  * create time:2017/7/28  上午11:18
  */
-public class DraftPraiseTask extends APIPostTask<BaseInnerData> {
+public class DraftPraiseTask extends APIPostTask<Void> {
 
-    public DraftPraiseTask(LoadingCallBack<BaseInnerData> callBack) {
+    public DraftPraiseTask(LoadingCallBack<Void> callBack) {
         super(callBack);
     }
 

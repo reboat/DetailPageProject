@@ -24,7 +24,7 @@ public class OfficalListTask extends APIGetTask<OfficalListBean> {
     @Override
     protected void onSetupParams(Object... params) {
         if (params.length > 0) {
-            put("start", "5");
+            put("start", params[0]);
         }
         put("size", C.PAGE_SIZE_OFFICAL);
     }

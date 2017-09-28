@@ -15,7 +15,6 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
@@ -116,7 +115,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     private void initView() {
         //专题列表
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
+        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
     }
 
     /**
@@ -249,10 +248,10 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
      * 专题收藏
      */
     private void newsTopicCollect() {
-        new DraftCollectTask(new APIExpandCallBack<BaseInnerData>() {
+        new DraftCollectTask(new APIExpandCallBack<Void>() {
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
+            public void onSuccess(Void baseInnerData) {
                 topHolder.getCollectView().setImageResource(R.mipmap.module_detail_collect_night);
                 T.showShort(getBaseContext(), "收藏成功");
             }

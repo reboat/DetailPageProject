@@ -22,7 +22,7 @@ public class DraftRankListTask extends APIGetTask<DraftHotTopNewsBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("channel_id", "739716");
+        put("channel_id", params[0]);
     }
 
     @Override

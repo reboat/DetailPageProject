@@ -3,7 +3,6 @@ package com.zjrb.zjxw.detailproject.task;
 
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
@@ -12,8 +11,8 @@ import com.zjrb.zjxw.detailproject.global.APIManager;
  * create time:2017/7/28  上午11:18
  */
 
-public class ColumnSubscribeTask extends APIPostTask<BaseInnerData> {
-    public ColumnSubscribeTask(LoadingCallBack<BaseInnerData> callBack) {
+public class ColumnSubscribeTask extends APIPostTask<Void> {
+    public ColumnSubscribeTask(LoadingCallBack<Void> callBack) {
         super(callBack);
     }
 

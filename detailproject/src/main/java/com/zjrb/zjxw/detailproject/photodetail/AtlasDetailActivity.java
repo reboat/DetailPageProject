@@ -23,7 +23,6 @@ import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -394,15 +393,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APICallBack<BaseInnerData>() {
+        new DraftPraiseTask(new APICallBack<Void>() {
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(UIUtils.getContext(), "点赞失败");
             }
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
-                T.showShort(UIUtils.getContext(), baseInnerData.getResultMsg());
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(UIUtils.getContext(), "点赞成功");
             }
         }).setTag(this).exe(mArticleId);
     }

@@ -12,7 +12,6 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.T;
@@ -196,17 +195,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      * @param comment_id
      */
     private void deleteComment(String comment_id) {
-        new CommentDeleteTask(new APIExpandCallBack<BaseInnerData>() {
+        new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
-            public void onSuccess(BaseInnerData stateBean) {
+            public void onSuccess(Void stateBean) {
                 if (stateBean == null) {
                     return;
                 }
-                if (stateBean.getResultCode() == 0) {
                     EventBus.getDefault().postSticky(new CommentDeleteEvent());
-                } else {
-                    T.showShort(itemView.getContext(), stateBean.getResultMsg());
-                }
             }
 
             @Override

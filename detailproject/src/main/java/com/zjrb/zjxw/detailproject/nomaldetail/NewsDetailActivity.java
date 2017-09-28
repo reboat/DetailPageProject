@@ -26,7 +26,6 @@ import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.domain.base.BaseInnerData;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
@@ -218,7 +217,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                if(draftDetailBean == null) return;
+                if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 fillData(draftDetailBean);
             }
@@ -353,11 +352,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     public void onOptSubscribe() {
         //如果频道未订阅
-        new ColumnSubscribeTask(new APIExpandCallBack<BaseInnerData>() {
+        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
-                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
             }
 
             @Override
@@ -403,7 +402,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<BaseInnerData>() {
+        new DraftPraiseTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -411,8 +410,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
 
             @Override
-            public void onSuccess(BaseInnerData baseInnerData) {
-                T.showShort(getBaseContext(), baseInnerData.getResultMsg());
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(getBaseContext(), "点赞成功");
             }
         }).setTag(this).exe(mArticleId);
     }

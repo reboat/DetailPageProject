@@ -197,6 +197,7 @@ public class WebJsInterface {
 
     /**
      * 利用客户端进行数据Key-Value存储
+     *
      * @param type  0-内存存储，1-文件存储
      * @param key
      * @param value
@@ -209,6 +210,7 @@ public class WebJsInterface {
 
     /**
      * 利用客户端进行数据Key-Value取值
+     *
      * @param type
      * @param key
      * @param context

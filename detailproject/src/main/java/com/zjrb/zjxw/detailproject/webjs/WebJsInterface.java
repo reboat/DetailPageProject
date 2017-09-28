@@ -219,4 +219,44 @@ public class WebJsInterface {
     public void zjxw_js_getKeyValue(int type, String key, String context) {
     }
 
+    /**
+     * 弹出评论框，添加评论功能，客户端将评论结果传递给JS端
+     *
+     * @param newsId
+     * @param inputContent
+     */
+    @JavascriptInterface
+    public void zjxw_js_inputComment(String newsId, String inputContent) {
+//        jsCallInputComment(newsId, inputContent);
+    }
+
+    /**
+     * 同名方法不能映射成react method
+     *
+     * @param shareTitle   分享的标题
+     * @param shareSummary 分享的简介
+     * @param shareLink    分享的链接(可以为"")
+     * @param shareImage   分享的小图片(可以为"")
+     * @param uid          分享内容的id(分享内容的类型(可以为新闻/专题/活动的类型(0,4,7)，类型为string类型，非必填))
+     * @param uidType      分享内容的类型(可以为新闻/专题/活动的类型(0,4,7)，类型为int类型，非必填)
+     */
+    @JavascriptInterface
+    public void zjxw_js_reweet(String shareTitle, String shareSummary, String shareLink,
+                               String shareImage, String uid, int uidType) {
+//        jsReweet(shareTitle, shareSummary, shareLink, shareImage, uid, uidType);
+    }
+
+    /**
+     * 注意：这些参数中，都不能含有":"
+     * @param id      为alert的id(用以JS端区分接收，由JS端定义)
+     * @param title   选择框的标题
+     * @param msg     选择框的内容
+     * @param choice1 选择框的选项1
+     * @param choice2 选择框的选项2
+     */
+    @JavascriptInterface
+    public void zjxw_js_showAlert(String id, String title, String msg, String choice1, String choice2) {
+//        jsShowAlert(id, title, msg, choice1, choice2);
+    }
+
 }

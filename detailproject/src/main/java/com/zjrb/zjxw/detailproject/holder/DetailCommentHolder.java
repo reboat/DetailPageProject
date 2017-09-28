@@ -169,9 +169,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      *                   评论点赞
      */
     private void praiseComment(String comment_id) {
-        new CommentPraiseTask(new APIExpandCallBack<CommentPriseBean>() {
+        new CommentPraiseTask(new APIExpandCallBack<Void>() {
             @Override
-            public void onSuccess(CommentPriseBean stateBean) {
+            public void onSuccess(Void stateBean) {
                 if (stateBean == null) {
                     return;
                 }

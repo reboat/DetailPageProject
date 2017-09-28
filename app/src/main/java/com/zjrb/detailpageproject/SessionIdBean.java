@@ -1,13 +1,14 @@
 package com.zjrb.detailpageproject;
 
-import com.zjrb.core.domain.base.BaseInnerData;
+
+import java.io.Serializable;
 
 /**
  * Created by wanglinjie.
  * create time:2017/9/5  下午3:39
  */
 
-public class SessionIdBean extends BaseInnerData {
+public class SessionIdBean implements Serializable {
 
     /**
      * id : 5994f537aab7bc32347410b7

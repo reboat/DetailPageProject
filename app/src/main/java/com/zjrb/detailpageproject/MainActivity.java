@@ -39,11 +39,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(@NonNull SessionIdBean result) {
-                if (result.getResultCode() == 0) {
-                    UserBiz.get().setSessionId(result.getSession().getId());
-                } else {
-                    T.showShortNow(MainActivity.this, "未知错误");
-                }
+                UserBiz.get().setSessionId(result.getSession().getId());
 
             }
         }).setTag(this).exe();
@@ -71,11 +67,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Nav.with(this).to(Uri.parse("https://www.8531.cn/detail/CommentActivity")
                         .buildUpon()
                         .appendQueryParameter(Key.ID, "739652")
-                        .appendQueryParameter(Key.MLF_ID,"12653")
-                        .appendQueryParameter(Key.TITLE,"骄傲啥啥啥是骄傲啥事安静地王大厦的描述发")
-                        .appendQueryParameter(Key.COMMENT_SET,"1")
-                        .appendQueryParameter(Key.PARENT_ID,"2324")
-                        .appendQueryParameter(Key.PARENT_ID,"true")
+                        .appendQueryParameter(Key.MLF_ID, "12653")
+                        .appendQueryParameter(Key.TITLE, "骄傲啥啥啥是骄傲啥事安静地王大厦的描述发")
+                        .appendQueryParameter(Key.COMMENT_SET, "1")
+                        .appendQueryParameter(Key.PARENT_ID, "2324")
+                        .appendQueryParameter(Key.PARENT_ID, "true")
                         .build(), 0);
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/AtlasDetailActivity")

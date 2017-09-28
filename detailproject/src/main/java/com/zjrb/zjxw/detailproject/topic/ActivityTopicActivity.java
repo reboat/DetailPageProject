@@ -154,7 +154,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * head监听滚动 渐变
      */
     private void initView() {
-        mStatusBarHeight = UIUtils.getStatusBarHeight();
+        //TODO  WLJ
+        mStatusBarHeight = 40;//UIUtils.getStatusBarHeight();
         setSupportActionBar(mToolbar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏

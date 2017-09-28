@@ -99,7 +99,8 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
             params.width = UIUtils.getScreenW();
             params.height = UIUtils.getScreenH();
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                params.height -= UIUtils.getStatusBarHeight();
+                //TODO WLJ
+                params.height -= 40;//UIUtils.getStatusBarHeight();
             }
             mLlCover.setLayoutParams(params);
             GlideApp.with(mIvCover).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvCover);

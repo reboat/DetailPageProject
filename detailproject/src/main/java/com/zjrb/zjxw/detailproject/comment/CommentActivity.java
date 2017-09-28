@@ -171,7 +171,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
-        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getColor(R.color.dc_f5f5f5), true, true));
+        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);

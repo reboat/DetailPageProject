@@ -1,22 +1,23 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.Key;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,12 +35,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     TextView mTvTitle;
     @BindView(R2.id.tv_reporter)
     TextView mTvReporter;
-    @BindView(R2.id.fit_top_layout)
-    FitWindowsLinearLayout mFitTopLayout;
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
-    @BindView(R2.id.top_container)
-    RelativeLayout mTopContainer;
     @BindView(R2.id.tv_time)
     TextView mTvTime;
 
@@ -88,6 +85,11 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_column_name) {
             //TODO  WLJ  进入频道列表页面
+            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/subscribe")
+                    .buildUpon()
+                    .appendQueryParameter(Key.CHANNEL_NAME, mData.getArticle().getChannel_name())
+                    .appendQueryParameter(Key.CHANNEL_ID, mData.getArticle().getChannel_id())
+                    .build(), 0);
         }
     }
 

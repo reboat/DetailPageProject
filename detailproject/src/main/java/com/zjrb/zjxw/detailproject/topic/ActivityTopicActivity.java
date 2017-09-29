@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +31,8 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
@@ -49,6 +50,7 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,18 +71,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     FitWindowsRecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
     EditText mTvComment;
-    @BindView(R2.id.fl_comment)
-    FrameLayout mFlComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.menu_setting)
-    ImageView mMenuSetting;
     @BindView(R2.id.floor_bar)
     FitWindowsFrameLayout mFloorBar;
-    @BindView(R2.id.iv_back)
-    ImageView mIvBack;
-    @BindView(R2.id.iv_share)
-    ImageView mIvShare;
     @BindView(R2.id.v_toolbar_divider)
     View mVToolbarDivider;
     @BindView(R2.id.toolbar)
@@ -451,12 +445,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         datas.add(data);
         //订阅
         datas.add(data);
+
         //相关专题
-        datas.add(data);
-        //精选
-        datas.add(data);
+        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
+            datas.add(data);
+        }
+        //精选评论
+        if (data.getArticle().getTopic_comment_select() != null && data.getArticle().getTopic_comment_select().size() > 0) {
+            datas.add(data);
+
+        }
         //互动评论
-        datas.add(data);
+        if (data.getArticle().getTopic_comment_list() != null && data.getArticle().getTopic_comment_list().size() > 0) {
+            datas.add(data);
+        }
+
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
 
         mMenuPrised.setSelected(data.getArticle().isLiked());
@@ -500,6 +503,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         return marginBottom;
     }
 
+    /**
+     * 订阅操作
+     */
     @Override
     public void onOptSubscribe() {
         new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
@@ -524,6 +530,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         adapter.showAll();
     }
 
+    /**
+     * 进入栏目
+     */
     @Override
     public void onOptClickColumn() {
         Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/detail")
@@ -536,6 +545,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * 点赞操作
      */
     public void onOptFabulous() {
+        if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
@@ -545,17 +555,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                //用户未登录
+                if (errCode == ErrorCode.USER_NOT_LOGIN) {
+                    Nav.with(ActivityTopicActivity.this).toPath("/login/LoginActivity");
+                } else {
+                    T.showShort(getBaseContext(), "点赞失败");
+                }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
                 T.showShort(getBaseContext(), "点赞成功");
-                if (mNewsDetail != null) {
-                    mNewsDetail.getArticle().setLiked(true);
-                }
+                mNewsDetail.getArticle().setLiked(true);
+                mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).exe(mArticleId, true);
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
@@ -572,16 +586,17 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
-
-//                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
-//                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
-//                        .build(), 0);
                 return;
             }
         } else if (view.getId() == R.id.iv_share) {
-            T.showShortNow(ActivityTopicActivity.this, "分享");
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ?
+                            mNewsDetail.getArticle().getArticle_pic() : WebJsInterface.getInstance(this).getmImgSrcs()[0])
+                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
+                            WebJsInterface.getInstance(this).getHtmlText())
+                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.iv_back) {
             finish();
         }

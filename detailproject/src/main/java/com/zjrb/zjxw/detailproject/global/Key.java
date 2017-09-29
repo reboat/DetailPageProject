@@ -40,9 +40,19 @@ public final class Key {
      */
     public static final String MLF_ID = "mlf_id";
     /**
-     * 评论数
+     * 栏目ID
      */
     public static final String COLUMN_ID = "column_id";
+
+    /**
+     * 频道ID
+     */
+    public static final String CHANNEL_ID = "channel_id";
+
+    /**
+     * 频道名称
+     */
+    public static final String CHANNEL_NAME = "channel_name";
     /**
      * parentId
      */

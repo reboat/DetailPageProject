@@ -101,7 +101,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
         //注入支持的本地方法
-//        mWebJsInterface = new WebJsInterface(itemView.getContext());
         mWebJsInterface = WebJsInterface.getInstance(itemView.getContext());
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 

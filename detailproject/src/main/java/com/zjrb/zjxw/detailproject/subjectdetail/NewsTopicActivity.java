@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -16,6 +17,8 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -45,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 新闻专题 详情页面
+ * 新闻专题详情页面
  * Created by wanglinjie.
  * create time:2017/7/25  上午11:24
  */
@@ -184,8 +187,14 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.iv_share) {
-            //TODO WLJ 分享
-            T.showShort(NewsTopicActivity.this, "分享");
+            //TODO WLJ 分享 默认地址  默认图片之类???
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(!TextUtils.isEmpty(bean.getArticle().getArticle_pic()) ? bean.getArticle().getArticle_pic() : "")
+                    .setTextContent(!TextUtils.isEmpty(bean.getArticle().getSummary()) ? bean.getArticle().getSummary() :
+                            getString(R.string.module_detail_share_content_from))
+                    .setTitle(!TextUtils.isEmpty(bean.getArticle().getList_title()) ? bean.getArticle().getList_title() : getString(R.string.module_detail_share_content_from))
+                    .setTargetUrl(!TextUtils.isEmpty(bean.getArticle().getUrl()) ? bean.getArticle().getUrl() : ""));
         } else {
             //收藏
             newsTopicCollect();

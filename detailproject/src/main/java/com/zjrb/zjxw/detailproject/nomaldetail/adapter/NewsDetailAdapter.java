@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
@@ -139,26 +142,24 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         isShowAll = true;
         int oldSize = datas.size();
         //添加标题头
-//        DraftDetailBean detailBean = (DraftDetailBean) datas.get(0);
+        DraftDetailBean detailBean = (DraftDetailBean) datas.get(0);
 
         //添加相关专题
-//        List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
-//        if (subjectList != null && subjectList.size() > 0) {
-//            datas.addAll(subjectList);
-//        }
+        List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
+        if (subjectList != null && subjectList.size() > 0) {
+            datas.addAll(subjectList);
+        }
 
-//        //添加相关新闻
-//        List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
-//        if (articles != null && articles.size() > 0) {
-//            datas.addAll(articles);
-//        }
-//
-//        //添加热门评论
-//        List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
-//        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-//            datas.addAll(hotCommentsBeen);
-//        }
-//        datas.add(null);
+        //添加相关新闻
+        List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
+        if (articles != null && articles.size() > 0) {
+            datas.addAll(articles);
+        }
+        //添加热门评论
+        List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
+        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+            datas.addAll(hotCommentsBeen);
+        }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

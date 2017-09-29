@@ -39,7 +39,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void onSuccess(@NonNull SessionIdBean result) {
-                UserBiz.get().setSessionId(result.getSession().getId());
+//                UserBiz.get().setSession(result.getSession());
 
             }
         }).setTag(this).exe();

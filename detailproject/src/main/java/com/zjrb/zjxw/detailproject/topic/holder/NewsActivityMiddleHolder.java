@@ -1,15 +1,17 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -17,6 +19,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,8 +38,6 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
     TextView mTvColumnSubscribe;
     @BindView(R2.id.iv_column_logo)
     ImageView mIvColumnLogo;
-    @BindView(R2.id.ry_container)
-    RelativeLayout mContainer;
 
     public NewsActivityMiddleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_activity_middle_holder_layout, parent, false));
@@ -93,15 +94,15 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  打开分享
-//        umengShareUtils.startShare(
-//                UmengShareBean.getInstance()
-//                        .setTitle(mData.getArticle().getList_title())
-//                        .setTextContent(mData.getArticle().getContent())
-//                        .setImgUri(mData.getArticle().getArticle_pic())
-//                        .setTargetUrl(mData.getArticle().getUrl())
-//                        .setPlatform(mListData.get(position).getPlatform())
-//                ,
-//        );
+        //TODO  WLJ  打开分享  默认图片地址  默认内容??
+        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                .setSingle(true)
+                .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
+                        mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
+                        WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                .setTitle(mData.getArticle().getList_title())
+                .setTargetUrl(mData.getArticle().getUrl()));
+
     }
 }

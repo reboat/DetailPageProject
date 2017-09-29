@@ -394,12 +394,18 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     public void onOptClickChannel() {
         //TODO WLJ 频道详情页
+        Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/subscribe")
+                .buildUpon()
+                .appendQueryParameter(Key.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name())
+                .appendQueryParameter(Key.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id())
+                .build(), 0);
     }
 
     /**
      * 点赞操作
      */
     public void onOptFabulous() {
+        if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
             T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
@@ -420,6 +426,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onSuccess(Void baseInnerData) {
                 T.showShort(getBaseContext(), "点赞成功");
+                mNewsDetail.getArticle().setLiked(true);
+                mMenuPrised.setSelected(true);
             }
         }).setTag(this).exe(mArticleId, true);
     }
@@ -460,7 +468,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
                             WebJsInterface.getInstance(this).getHtmlText())
                     .setTitle(mNewsDetail.getArticle().getList_title())
-                    .setTargetUrl(mNewsDetail.getArticle().getWeb_link()));
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.view_exise) {
             loadData();
         }

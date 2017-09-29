@@ -64,9 +64,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     private DetailShareAdapter mAdapter;
 
-    private WebJsInterface mWebJsInterface;
-
-
     public NewsDetailMiddleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_middle, parent, false));
         ButterKnife.bind(this, itemView);
@@ -164,19 +161,21 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     /**
      * 分享点击
      *
-     * @param itemView .
-     * @param position .
+     * @param itemView
+     * @param position
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                .setSingle(true)
-                .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
-                        mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
-                        WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
-                .setTitle(mData.getArticle().getList_title())
-                .setPlatform(mListData.get(position).getPlatform())
-                .setTargetUrl(mData.getArticle().getWeb_link()));
+        if (mData != null && mData.getArticle() != null) {
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(true)
+                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
+                            mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
+                            WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                    .setTitle(!TextUtils.isEmpty(mData.getArticle().getList_title()) ? mData.getArticle().getList_title() : "")
+                    .setPlatform(mListData.get(position).getPlatform())
+                    .setTargetUrl(!TextUtils.isEmpty(mData.getArticle().getUrl()) ? mData.getArticle().getUrl() : ""));
+        }
     }
 }

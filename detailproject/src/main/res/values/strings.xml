@@ -30,5 +30,5 @@
     <string name="module_detail_you_have_liked">您已点赞</string>
     <string name="module_detail_comment_content_empty">评论内容不能为空</string>
     <string name="module_detail_revoke">很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容</string>
-
+    <string name="module_detail_share_content_from">来自浙江新闻客户端</string>
 </resources>

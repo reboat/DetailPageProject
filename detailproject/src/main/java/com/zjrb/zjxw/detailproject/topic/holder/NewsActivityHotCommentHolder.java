@@ -16,12 +16,8 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.global.Key;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,8 +39,6 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_more)
     TextView mMore;
-    @BindView(R2.id.tv_all)
-    TextView mTvAll;
 
     private CommentAdapter adapter;
 

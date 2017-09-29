@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.permission.IPermissionCallBack;
@@ -24,6 +23,8 @@ import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
@@ -83,18 +84,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     ImageView mMenuPrised;
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
-    @BindView(R2.id.fit_bottom_layout)
-    FitWindowsFrameLayout mFitBottomLayout;
-    @BindView(R2.id.fit_top_layout)
-    FitWindowsFrameLayout mFitTopLayout;
-    @BindView(R2.id.container_top)
-    LinearLayout mContainerTop;
-    @BindView(R2.id.iv_back)
-    ImageView mIvBack;
-    @BindView(R2.id.iv_share)
-    ImageView mIvShare;
-    @BindView(R2.id.menu_comment)
-    ImageView mIvComment;
     @BindView(R2.id.tv_top_bar_title)
     TextView mTvTitleTop;
     @BindView(R2.id.iv_top_download)
@@ -235,16 +224,19 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             finish();
             //分享
         } else if (id == R.id.iv_share) {
-            //TODO WLJ 分享
-//            share();
+            //TODO WLJ 分享  默认图片地址？？？默认标题???分享地址??
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(!TextUtils.isEmpty(mData.getArticle().getAlbum_image_list().get(0).getImage_url()) ? mData.getArticle().getAlbum_image_list().get(0).getImage_url() : "")
+                    .setTextContent(!TextUtils.isEmpty(mData.getArticle().getAlbum_image_list().get(0).getDescription()) ? mData.getArticle().getAlbum_image_list().get(0).getDescription() :
+                            getString(R.string.module_detail_share_content_from))
+                    .setTitle(!TextUtils.isEmpty(mData.getArticle().getList_title()) ? mData.getArticle().getList_title() : getString(R.string.module_detail_share_content_from))
+                    .setTargetUrl(!TextUtils.isEmpty(mData.getArticle().getUrl()) ? mData.getArticle().getUrl() : "")
+            );
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-//                        .build(), 0);
                 return;
             }
             //评论列表
@@ -266,7 +258,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             fabulous();
             //分享
         } else if (id == R.id.menu_share) {
-            //TODO WLJ 分享
+            //TODO WLJ 修改字体，夜间模式之类
 //            share();
             //下载
         } else if (id == R.id.iv_top_download) {
@@ -274,42 +266,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
-    //友盟分享
-//    private UmengShareUtils shareUtils;
-//
-//    private void share() {
-//        if (mData == null) return;
-//
-//        String title, content;
-////        if (TextUtils.isEmpty(mData.getSummary())) {
-////            title = UIUtils.getAppName();
-////            content = mData.getList_title();
-////        } else {
-//        title = mData.getArticle().getList_title();
-////            content = mData.getSummary();
-////        }
-//        //TODO WLJ logo
-//        String logoUrl = "http://10.200.76.17/images/24hlogo.png";//APIManager.endpoint.SHARE_24_LOGO_URL;
-//        String targetUrl = mData.getArticle().getUrl();
-//        if (shareUtils == null)
-//            shareUtils = new UmengShareUtils();
-//
-//        UmengShareBean instance = UmengShareBean.getInstance();
-////        instance.setArticleId(mArticleId);
-//        instance.setTitle(title);
-////        instance.setTextContent(content);
-//        instance.setImgUri(logoUrl);
-//        instance.setTargetUrl(targetUrl);
-//        shareUtils.startShare(instance, this);
-//    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (shareUtils != null) {
-//            shareUtils.initResult(requestCode, resultCode, data);
-//        }
+        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
     }
 
 
@@ -386,7 +347,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         return true;
     }
 
-    //稿件点赞
+    /**
+     * 稿件点赞
+     */
     private void fabulous() {
         if (mData == null) return;
         if (mData.getArticle().isLiked()) {
@@ -396,14 +359,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftPraiseTask(new APICallBack<Void>() {
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getContext(), "点赞失败");
+                if (errCode == ErrorCode.USER_NOT_LOGIN) {
+                    Nav.with(AtlasDetailActivity.this).toPath("/login/LoginActivity");
+                } else {
+                    T.showShort(UIUtils.getContext(), "点赞失败");
+                }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
                 T.showShort(UIUtils.getContext(), "点赞成功");
+                mData.getArticle().setLiked(true);
+                mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).exe(mArticleId, true);
     }
 
     /**
@@ -422,7 +391,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     PermissionManager.get().request(AtlasDetailActivity.this, new IPermissionCallBack() {
                         @Override
                         public void onGranted(boolean isAlreadyDef) {
-                            T.showShort(AtlasDetailActivity.this, "当前下载第 " + (position + 1) + " 张图片");
                             String url = mAtlasList.get(position).getImage_url();
                             download(url);
                         }

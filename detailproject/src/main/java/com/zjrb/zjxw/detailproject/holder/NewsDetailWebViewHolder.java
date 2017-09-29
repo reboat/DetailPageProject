@@ -81,6 +81,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     public void callBack(String[] imgSrcs) {
                         mWebJsInterface.setImgSrcs(imgSrcs);
                     }
+                }, new WebBiz.TextCallBack() {
+
+                    @Override
+                    public void callBack(String text) {
+                        mWebJsInterface.setHtmlText(text);
+                    }
                 });
         //TODO WLJ  服务器如果有返回则使用服务器
         String htmlResult = String.format(htmlCode, uiModeCssUri, htmlBody);
@@ -95,7 +101,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
         //注入支持的本地方法
-        mWebJsInterface = new WebJsInterface(itemView.getContext());
+//        mWebJsInterface = new WebJsInterface(itemView.getContext());
+        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext());
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 
         // 夜间模式

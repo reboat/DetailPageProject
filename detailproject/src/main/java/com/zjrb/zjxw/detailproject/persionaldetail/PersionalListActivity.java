@@ -104,6 +104,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 if (data == null) {
                     return;
                 }
+                more.setState(LoadMore.TYPE_IDLE);
                 list = data.getOfficer_list();
                 if (list != null) {
                     if (mAdapter == null) {
@@ -123,7 +124,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe();
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRecycler)).exe();
 
     }
 

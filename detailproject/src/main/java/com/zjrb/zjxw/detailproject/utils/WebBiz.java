@@ -34,16 +34,19 @@ public class WebBiz {
      * @param callBack
      * @return 处理过的Html Body内容
      */
-    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack) {
+    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack,TextCallBack textBack) {
 
         Document doc = Jsoup.parseBodyFragment(html);
-
         List<String> imgSrcs = parseImgTags(doc);
 
         parseVideoTags(doc);
 
         if (callBack != null) {
             callBack.callBack((imgSrcs.toArray(new String[imgSrcs.size()])));
+        }
+
+        if(textBack != null){
+            textBack.callBack(doc.text());
         }
 
         return doc.body().html();
@@ -197,10 +200,18 @@ public class WebBiz {
     }
 
 
+    /**
+     * 获取网页图集
+     */
     public interface ImgSrcsCallBack {
-
         void callBack(String[] imgSrcs);
+    }
 
+    /**
+     * 获取网页中的文本
+     */
+    public interface TextCallBack {
+        void callBack(String text);
     }
 
     /**

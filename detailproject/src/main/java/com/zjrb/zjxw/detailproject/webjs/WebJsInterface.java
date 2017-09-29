@@ -22,11 +22,29 @@ public class WebJsInterface {
 
     private String[] mImgSrcs;
 
-    public WebJsInterface(Context context) {
+    private String mText;
+
+    private volatile static WebJsInterface mInstance;
+
+    /**
+     * @return 单例获取初始化实例
+     */
+    public static WebJsInterface getInstance(Context mContext) {
+        if (mInstance == null) {
+            synchronized (WebJsInterface.class) {
+                if (mInstance == null) {
+                    mInstance = new WebJsInterface(mContext);
+                }
+            }
+        }
+        return mInstance;
+    }
+
+    private WebJsInterface(Context context) {
         mContext = context;
     }
 
-    public WebJsInterface(Context context, String[] imgSrcs) {
+    private WebJsInterface(Context context, String[] imgSrcs) {
         mContext = context;
         mImgSrcs = imgSrcs;
     }
@@ -48,10 +66,33 @@ public class WebJsInterface {
         }
     }
 
+
+    /**
+     * @param imgSrcs 获取网页图集
+     */
     public void setImgSrcs(String[] imgSrcs) {
         mImgSrcs = imgSrcs;
     }
 
+    /**
+     * @param text 获取网页文案
+     */
+    public void setHtmlText(String text) {
+        mText = text;
+    }
+
+    public String getHtmlText() {
+        return mText;
+    }
+
+    /**
+     * 获取详情页中的图片集合
+     *
+     * @return
+     */
+    public String[] getmImgSrcs() {
+        return mImgSrcs;
+    }
 
     /**
      * 图片选择框
@@ -248,6 +289,7 @@ public class WebJsInterface {
 
     /**
      * 注意：这些参数中，都不能含有":"
+     *
      * @param id      为alert的id(用以JS端区分接收，由JS端定义)
      * @param title   选择框的标题
      * @param msg     选择框的内容

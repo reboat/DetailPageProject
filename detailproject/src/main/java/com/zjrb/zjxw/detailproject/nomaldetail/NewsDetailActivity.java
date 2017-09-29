@@ -27,6 +27,8 @@ import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.NetUtils;
@@ -44,6 +46,7 @@ import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -406,19 +409,24 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), "点赞失败");
+                //用户未登录
+                if (errCode == ErrorCode.USER_NOT_LOGIN) {
+                    Nav.with(NewsDetailActivity.this).toPath("/login/LoginActivity");
+                } else {
+                    T.showShort(getBaseContext(), "点赞失败");
+                }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
                 T.showShort(getBaseContext(), "点赞成功");
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).exe(mArticleId, true);
     }
 
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.view_exise})
+            R2.id.tv_comment, R2.id.view_exise, R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_comment) {
@@ -442,15 +450,17 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
-//                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
-//                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
-//                        .build(), 0);
                 return;
             }
-        } else if (view.getId() == R.id.iv_share) {
-            T.showShortNow(NewsDetailActivity.this, "分享");
+        } else if (view.getId() == R.id.iv_top_share) {
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ?
+                            mNewsDetail.getArticle().getArticle_pic() : WebJsInterface.getInstance(this).getmImgSrcs()[0])
+                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
+                            WebJsInterface.getInstance(this).getHtmlText())
+                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getWeb_link()));
         } else if (view.getId() == R.id.view_exise) {
             loadData();
         }

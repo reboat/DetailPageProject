@@ -52,7 +52,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/detail/CommentActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -70,17 +70,17 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <!--普通详情页-->
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/news.html"
                     android:scheme="@string/data_scheme"/>
                 <!--视频详情页-->
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/video.html"
                     android:scheme="@string/data_scheme"/>
                 <!--活动详情页-->
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/activity.html"
                     android:scheme="@string/data_scheme"/>
 
@@ -99,7 +99,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/album.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -114,7 +114,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/detail/PersionalDetailActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -129,7 +129,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/detail/PersionalListActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -147,7 +147,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/subject.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -162,7 +162,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/detail/TopicListActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -178,7 +178,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="zj.zjol.com.cn"
+                    android:host="@string/data_host_zjol"
                     android:path="/topic.html"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
@@ -194,7 +194,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="www.8531.cn"
+                    android:host="@string/data_host"
                     android:path="/detail/ImageBrowseActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>

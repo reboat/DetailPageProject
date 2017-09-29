@@ -199,12 +199,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
                     tvComment.setVisibility(View.VISIBLE);
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-//                    Nav.with(CommentActivity.this).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                            .buildUpon()
-//                            .appendQueryParameter(Key.ID, articleId)
-//                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-//                            .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-//                            .build(), RESULT_OK);
                 }
             }
         });
@@ -220,6 +214,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 if (commentRefreshBean == null) {
                     return;
                 }
+                more.setState(LoadMore.TYPE_IDLE);
                 commentList = commentRefreshBean.getComments();
                 if (commentList != null) {
                     if (mCommentAdapter == null) {
@@ -238,7 +233,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad(activityComment)).exe(articleId);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(activityComment)).exe(articleId);
     }
 
     @OnClick({R2.id.tv_comment})

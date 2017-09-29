@@ -74,7 +74,7 @@ public class APIManager {
         /**
          * 稿件点赞
          */
-        public static final String DRAFT_LIKE = " /api/article/like";
+        public static final String DRAFT_LIKE = "/api/favorite/add_like";
 
         /**
          * 提交评论

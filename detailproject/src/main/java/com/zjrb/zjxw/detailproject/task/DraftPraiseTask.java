@@ -22,6 +22,7 @@ public class DraftPraiseTask extends APIPostTask<Void> {
     @Override
     protected void onSetupParams(Object... params) {
         put("id", params[0]);
+        put("action",params[1]);
     }
 
     @Override

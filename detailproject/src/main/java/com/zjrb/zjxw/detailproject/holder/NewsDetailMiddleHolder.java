@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -22,6 +24,7 @@ import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +63,8 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      * 分享适配器
      */
     private DetailShareAdapter mAdapter;
-    private UmengShareUtils umengShareUtils;
+
+    private WebJsInterface mWebJsInterface;
 
 
     public NewsDetailMiddleHolder(ViewGroup parent) {
@@ -98,9 +102,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         //初始化分享
         initShareBean();
-        if (umengShareUtils == null) {
-            umengShareUtils = new UmengShareUtils();
-        }
     }
 
     /**
@@ -114,8 +115,8 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         if (mListData == null) {
             mListData = new ArrayList<>();
-            mListData.add(new DetailShareBean(R.mipmap.me_wechat_btn, "微信好友", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean(R.mipmap.me_friend_btn, "朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
+            mListData.add(new DetailShareBean(R.mipmap.me_wechat_btn, "微信好友", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean(R.mipmap.me_qq_btn, "QQ好友", SHARE_MEDIA.QQ));
             mListData.add(new DetailShareBean(R.mipmap.me_space_btn, "QQ空间", SHARE_MEDIA.QZONE));
             mListData.add(new DetailShareBean(R.mipmap.me_sina_btn, "新浪微博", SHARE_MEDIA.SINA));
@@ -160,17 +161,22 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public void onViewDetachedFromWindow(View v) {
     }
 
+    /**
+     * 分享点击
+     *
+     * @param itemView .
+     * @param position .
+     */
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  打开分享
-//        umengShareUtils.startShare(
-//                UmengShareBean.getInstance()
-//                        .setTitle(mData.getArticle().getList_title())
-//                        .setTextContent(mData.getArticle().getContent())
-//                        .setImgUri(mData.getArticle().getArticle_pic())
-//                        .setTargetUrl(mData.getArticle().getUrl())
-//                        .setPlatform(mListData.get(position).getPlatform())
-//                ,
-//        );
+        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                .setSingle(true)
+                .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
+                        mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
+                        WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                .setTitle(mData.getArticle().getList_title())
+                .setPlatform(mListData.get(position).getPlatform())
+                .setTargetUrl(mData.getArticle().getWeb_link()));
     }
 }

@@ -141,6 +141,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 if (bean == null) {
                     return;
                 }
+                more.setState(LoadMore.TYPE_IDLE);
                 list = bean.getArticle_list();
                 if (list != null) {
                     if (mAdapter == null) {
@@ -158,7 +159,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(official_id);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(official_id);
     }
 
     /**

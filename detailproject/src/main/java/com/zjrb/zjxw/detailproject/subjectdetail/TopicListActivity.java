@@ -138,6 +138,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 if (bean == null) {
                     return;
                 }
+                more.setState(LoadMore.TYPE_IDLE);
                 list = bean.getArticle_list();
                 if (list != null) {
                     if (mAdapter == null) {
@@ -157,7 +158,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(group_id);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRecycler)).exe(group_id);
     }
 
 

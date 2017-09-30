@@ -18,10 +18,12 @@ public class DraftCollectTask extends APIPostTask<Void> {
 
     /**
      * @param params id:稿件id(int)
+     *               action:false 取消收藏  true:收藏
      */
     @Override
     protected void onSetupParams(Object... params) {
         put("id", params[0]);
+        put("action", params[1]);
     }
 
     @Override

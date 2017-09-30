@@ -65,7 +65,7 @@ public class APIManager {
         /**
          * 稿件收藏
          */
-        public static final String DRAFT_COLLECT = "/api/article/collect";
+        public static final String DRAFT_COLLECT = "/api/favorite/collect";
 
         /**
          * 频道订阅
@@ -74,17 +74,12 @@ public class APIManager {
         /**
          * 稿件点赞
          */
-        public static final String DRAFT_LIKE = "/api/favorite/add_like";
+        public static final String DRAFT_LIKE = "/api/favorite/like";
 
         /**
          * 提交评论
          */
-        public static final String  COMMENT_SUBMIT = "/api/comment/create";
-
-        /**
-         * 分享新闻
-         */
-        public static final String DRAFT_SHARE = "/api/collection/share_news";
+        public static final String COMMENT_SUBMIT = "/api/comment/create";
 
     }
 

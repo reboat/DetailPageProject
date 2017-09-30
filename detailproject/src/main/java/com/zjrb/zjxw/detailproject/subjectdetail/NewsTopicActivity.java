@@ -273,7 +273,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
                 T.showShort(getBaseContext(), "收藏失败");
             }
 
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).exe(mArticleId, !bean.getArticle().isFollowed());
     }
 
     /**

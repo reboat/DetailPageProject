@@ -195,6 +195,7 @@
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/module_detail_floor_bar_height"
+            android:background="?attr/bc_33ffffff"
             >
 
             <ImageView
@@ -223,7 +224,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/module_detail_news_prise"
+                android:src="@drawable/module_detail_atlas_prise"
                 />
 
             <ImageView

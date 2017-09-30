@@ -208,7 +208,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_back, R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_share, R2.id.iv_top_download})
+            .menu_setting, R2.id.iv_top_download})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -257,7 +257,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         } else if (id == R.id.menu_prised) {
             fabulous();
             //分享
-        } else if (id == R.id.menu_share) {
+        } else if (id == R.id.menu_setting) {
             //TODO WLJ 修改字体，夜间模式之类
 //            share();
             //下载

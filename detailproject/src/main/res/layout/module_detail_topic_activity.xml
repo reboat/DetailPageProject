@@ -73,7 +73,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/bc_191919"
+            android:background="?attr/bc_ffffff"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             >

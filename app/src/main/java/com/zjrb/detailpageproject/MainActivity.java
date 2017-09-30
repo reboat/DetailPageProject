@@ -8,11 +8,8 @@ import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.biz.UserBiz;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
-import com.zjrb.zjxw.detailproject.global.Key;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {

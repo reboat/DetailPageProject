@@ -9,7 +9,7 @@ import java.io.Serializable;
  * create time:2017/7/17  上午10:14
  */
 
-public class AlbumImageListBean implements Serializable{
+public class AlbumImageListBean implements Serializable {
     private String image_url;
     private String description;
 

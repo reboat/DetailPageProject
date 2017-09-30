@@ -1,7 +1,8 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import java.io.Serializable;
+import com.zjrb.core.domain.base.BaseData;
+
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * create time:2017/7/21  下午4:20
  */
 
-public class CommentRefreshBean implements Serializable {
+public class CommentRefreshBean extends BaseData {
 
 
     /**

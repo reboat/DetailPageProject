@@ -15,6 +15,7 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -26,7 +27,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
@@ -83,8 +83,8 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            list = ((OfficalDetailBean) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_RELATER)).getArticle_list();
-            official_id = getArguments().getString(Key.OFFICIAL_ID);
+            list = ((OfficalDetailBean) getArguments().getSerializable(IKey.FRAGMENT_PERSIONAL_RELATER)).getArticle_list();
+            official_id = getArguments().getString(IKey.OFFICIAL_ID);
         }
     }
 
@@ -223,7 +223,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
-                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
+                    .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
                     .build(), 0);
 
         }

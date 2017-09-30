@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalTrackAdapter;
 
 import butterknife.BindView;
@@ -45,7 +45,7 @@ public class PersionalDetailInfoFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bean = (OfficalDetailBean) getArguments().getSerializable(Key.FRAGMENT_PERSIONAL_INFO);
+            bean = (OfficalDetailBean) getArguments().getSerializable(IKey.FRAGMENT_PERSIONAL_INFO);
         }
     }
 

@@ -15,6 +15,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -26,8 +27,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
@@ -85,10 +84,9 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
-            Uri data = intent.getData();
-            if (data.getQueryParameter(Key.OFFICAL_TITLE) != null) {
-                offical_title = data.getQueryParameter(Key.OFFICAL_TITLE);
+        if (intent != null) {
+            if (intent.hasExtra(IKey.OFFICAL_TITLE)) {
+                offical_title = intent.getStringExtra(IKey.OFFICAL_TITLE);
             }
         }
     }
@@ -163,7 +161,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                         if (bundle == null) {
                             bundle = new Bundle();
                         }
-                        bundle.putInt(Key.OFFICIAL_ID, officalId);
+                        bundle.putInt(IKey.OFFICIAL_ID, officalId);
                         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/PersionalDetailActivity");
                     } else {
                         //支持跳转到所有的新闻详情页

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
@@ -38,7 +39,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -117,8 +117,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ID);
+            if (data.getQueryParameter(IKey.ID) != null) {
+                mArticleId = data.getQueryParameter(IKey.ID);
             }
         }
     }
@@ -249,10 +249,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     if (bundle == null) {
                         bundle = new Bundle();
                     }
-                    bundle.putInt(Key.ID, mData.getArticle().getId());
-                    bundle.putInt(Key.MLF_ID, mData.getArticle().getMlf_id());
-                    bundle.putInt(Key.COMMENT_SET, mData.getArticle().getComment_level());
-                    bundle.putString(Key.TITLE, mData.getArticle().getList_title());
+                    bundle.putInt(IKey.ID, mData.getArticle().getId());
+                    bundle.putInt(IKey.MLF_ID, mData.getArticle().getMlf_id());
+                    bundle.putInt(IKey.COMMENT_SET, mData.getArticle().getComment_level());
+                    bundle.putString(IKey.TITLE, mData.getArticle().getList_title());
                     Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
                 }
 
@@ -363,11 +363,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftPraiseTask(new APICallBack<Void>() {
             @Override
             public void onError(String errMsg, int errCode) {
-                if (errCode == ErrorCode.USER_NOT_LOGIN) {
-                    Nav.with(AtlasDetailActivity.this).toPath("/login/LoginActivity");
-                } else {
-                    T.showShort(UIUtils.getContext(), "点赞失败");
-                }
+                T.showShort(UIUtils.getContext(), "点赞失败");
             }
 
             @Override

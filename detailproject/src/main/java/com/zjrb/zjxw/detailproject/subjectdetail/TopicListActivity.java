@@ -15,6 +15,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -26,7 +27,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.TopicListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 
@@ -89,13 +89,12 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
-            Uri data = intent.getData();
-            if (data.getQueryParameter(Key.GROUP_ID) != null) {
-                group_id = data.getQueryParameter(Key.GROUP_ID);
+        if (intent != null) {
+            if (intent.hasExtra(IKey.GROUP_ID)) {
+                group_id = intent.getStringExtra(IKey.GROUP_ID);
             }
-            if (data.getQueryParameter(Key.TITLE) != null) {
-                list_title = data.getQueryParameter(Key.TITLE);
+            if (intent.hasExtra(IKey.TITLE)) {
+                list_title = intent.getStringExtra(IKey.TITLE);
             }
         }
     }
@@ -229,7 +228,7 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
             if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                         .buildUpon()
-                        .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
+                        .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
                         .build(), 0);
 
             }

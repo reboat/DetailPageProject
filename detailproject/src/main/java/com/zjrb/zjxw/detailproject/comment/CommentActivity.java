@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.comment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +17,7 @@ import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -34,7 +34,6 @@ import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
@@ -82,10 +81,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     public int commentSet = -1;
 
-    /**
-     * 是否来自评论页
-     */
-    public boolean isFromCommentAct = false;
     /**
      * 评论标题
      */
@@ -144,25 +139,20 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
-            Uri data = intent.getData();
-            //稿件ID
-            if (data.getQueryParameter(Key.ID) != null) {
-                articleId = data.getQueryParameter(Key.ID);
+        if (intent != null) {
+            if (intent.hasExtra(IKey.ID)) {
+                articleId = intent.getStringExtra(IKey.ID);
             }
-            //媒立方ID
-            if (data.getQueryParameter(Key.MLF_ID) != null) {
-                mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
+            if (intent.hasExtra(IKey.MLF_ID)) {
+                mlfId = intent.getIntExtra(IKey.MLF_ID, -1);
             }
-            //评论等级
-            if (data.getQueryParameter(Key.COMMENT_SET) != null) {
-                commentSet = Integer.parseInt(data.getQueryParameter(Key.COMMENT_SET));
+
+            if (intent.hasExtra(IKey.COMMENT_SET)) {
+                commentSet = intent.getIntExtra(IKey.COMMENT_SET, -1);
             }
-            //标题
-            if (data.getQueryParameter(Key.TITLE) != null) {
-                title = data.getQueryParameter(Key.TITLE);
+            if (intent.hasExtra(IKey.TITLE)) {
+                title = intent.getStringExtra(IKey.TITLE);
             }
-            isFromCommentAct = data.getBooleanQueryParameter(Key.FROM_TYPE, false);
         }
     }
 
@@ -304,13 +294,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     public void onItemClick(View itemView, int position) {
         if (BizUtils.isCanComment(this, commentSet)) {
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-//            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                    .buildUpon()
-//                    .appendQueryParameter(Key.ID, articleId)
-//                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mlfId))
-//                    .appendQueryParameter(Key.FROM_TYPE, String.valueOf(isFromCommentAct))
-//                    .appendQueryParameter(Key.PARENT_ID, commentList.get(position).getParent_id())
-//                    .build(), 0);
         }
 
     }

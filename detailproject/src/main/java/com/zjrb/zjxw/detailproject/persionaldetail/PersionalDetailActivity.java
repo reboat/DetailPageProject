@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -19,13 +18,13 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.db.BundleHelper;
 import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoFragment;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
@@ -86,10 +85,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
-            Uri data = intent.getData();
-            if (data.getQueryParameter(Key.OFFICIAL_ID) != null) {
-                official_id = data.getQueryParameter(Key.OFFICIAL_ID);
+        if (intent != null) {
+            if (intent.hasExtra(IKey.OFFICIAL_ID)) {
+                official_id = intent.getStringExtra(IKey.OFFICIAL_ID);
             }
         }
     }
@@ -102,7 +100,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
             @Override
             public void onSuccess(OfficalDetailBean data) {
-                if(data == null) return;
+                if (data == null) return;
                 initView(data);
             }
 
@@ -175,16 +173,16 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         pagerAdapter = new TabPagerAdapterImpl(getSupportFragmentManager(), this);
 
         //传递官员详情页相关新闻
-        Bundle bundlePersionalRelate = BundleHelper.creatBundle(Key
+        Bundle bundlePersionalRelate = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, PersionalRelateFragment.TYPE_NEWS);
-        bundlePersionalRelate.putSerializable(Key.OFFICIAL_ID, official_id);
-        bundlePersionalRelate.putSerializable(Key.FRAGMENT_PERSIONAL_RELATER, bean);
+        bundlePersionalRelate.putSerializable(IKey.OFFICIAL_ID, official_id);
+        bundlePersionalRelate.putSerializable(IKey.FRAGMENT_PERSIONAL_RELATER, bean);
         pagerAdapter.addTabInfo(PersionalRelateFragment.class, "相关新闻", bundlePersionalRelate);
 
         //传递官员详情页履历
-        Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(Key
+        Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, PersionalDetailInfoFragment.TYPE_INFO);
-        bundlePersionalDetailInfo.putSerializable(Key.FRAGMENT_PERSIONAL_INFO, bean);
+        bundlePersionalDetailInfo.putSerializable(IKey.FRAGMENT_PERSIONAL_INFO, bean);
         pagerAdapter.addTabInfo(PersionalDetailInfoFragment.class, "任职履历", bundlePersionalDetailInfo);
 
         viewpager.setAdapter(pagerAdapter);

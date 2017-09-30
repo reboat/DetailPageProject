@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
@@ -17,7 +18,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,8 +90,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putString(Key.CHANNEL_NAME, mData.getArticle().getChannel_name());
-            bundle.putString(Key.CHANNEL_ID, mData.getArticle().getChannel_id());
+            bundle.putString(IKey.CHANNEL_NAME, mData.getArticle().getChannel_name());
+            bundle.putString(IKey.CHANNEL_ID, mData.getArticle().getChannel_id());
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
         }
     }

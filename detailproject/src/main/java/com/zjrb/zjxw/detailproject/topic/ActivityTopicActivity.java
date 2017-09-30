@@ -29,6 +29,7 @@ import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -42,7 +43,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -138,8 +138,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ID);
+            if (data.getQueryParameter(IKey.ID) != null) {
+                mArticleId = data.getQueryParameter(IKey.ID);
             }
         }
     }
@@ -531,6 +531,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     }
 
     private Bundle bundle;
+
     /**
      * 进入栏目
      */
@@ -539,7 +540,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         if (bundle == null) {
             bundle = new Bundle();
         }
-        bundle.putInt(Key.ID, mNewsDetail.getArticle().getColumn_id());
+        bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
     }
 
@@ -558,11 +559,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             @Override
             public void onError(String errMsg, int errCode) {
                 //用户未登录
-                if (errCode == ErrorCode.USER_NOT_LOGIN) {
-                    Nav.with(ActivityTopicActivity.this).toPath("/login/LoginActivity");
-                } else {
-                    T.showShort(getBaseContext(), "点赞失败");
-                }
+                T.showShort(getBaseContext(), "点赞失败");
             }
 
             @Override

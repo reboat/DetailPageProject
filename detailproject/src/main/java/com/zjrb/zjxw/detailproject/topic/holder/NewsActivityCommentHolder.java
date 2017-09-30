@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +14,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
@@ -29,7 +29,6 @@ import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
@@ -130,10 +129,10 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putInt(Key.ID, mData.getArticle().getId());
-            bundle.putInt(Key.MLF_ID, mData.getArticle().getMlf_id());
-            bundle.putInt(Key.COMMENT_SET, mData.getArticle().getComment_level());
-            bundle.putString(Key.TITLE, mData.getArticle().getList_title());
+            bundle.putInt(IKey.ID, mData.getArticle().getId());
+            bundle.putInt(IKey.MLF_ID, mData.getArticle().getMlf_id());
+            bundle.putInt(IKey.COMMENT_SET, mData.getArticle().getComment_level());
+            bundle.putString(IKey.TITLE, mData.getArticle().getList_title());
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
         }
     }

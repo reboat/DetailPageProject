@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
@@ -17,7 +18,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.global.Key;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,10 +88,10 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putInt(Key.ID, mData.getArticle().getId());
-            bundle.putInt(Key.MLF_ID, mData.getArticle().getMlf_id());
-            bundle.putInt(Key.COMMENT_SET, mData.getArticle().getComment_level());
-            bundle.putString(Key.TITLE, mData.getArticle().getList_title());
+            bundle.putInt(IKey.ID, mData.getArticle().getId());
+            bundle.putInt(IKey.MLF_ID, mData.getArticle().getMlf_id());
+            bundle.putInt(IKey.COMMENT_SET, mData.getArticle().getComment_level());
+            bundle.putString(IKey.TITLE, mData.getArticle().getList_title());
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
         }
     }

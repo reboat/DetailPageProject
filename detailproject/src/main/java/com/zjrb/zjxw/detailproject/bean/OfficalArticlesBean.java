@@ -9,7 +9,7 @@ import java.io.Serializable;
  * create time:2017/8/21  上午9:22
  */
 
-public class OfficalArticlesBean implements Serializable {
+public class OfficalArticlesBean implements Serializable{
     private int type;
     private int officalId;
     private String job;

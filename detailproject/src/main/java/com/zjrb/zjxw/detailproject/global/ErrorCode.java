@@ -12,14 +12,4 @@ public final class ErrorCode {
      */
     public static final int DRAFFT_IS_NOT_EXISE = 30505;
 
-    /**
-     * 内容不存在
-     */
-    public static final int CONTENT_NOT_FOUND = 10010;
-
-    /**
-     * 用户未登录
-     */
-    public static final int USER_NOT_LOGIN = 50500;
-
 }

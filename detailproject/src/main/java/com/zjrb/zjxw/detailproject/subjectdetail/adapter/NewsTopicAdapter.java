@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.subjectdetail.adapter;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +7,13 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsMultiPictureHolder;
@@ -180,8 +179,8 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
                 if (bundle == null) {
                     bundle = new Bundle();
                 }
-                bundle.putInt(Key.GROUP_ID, mData.getId());
-                bundle.putString(Key.TITLE, mData.getList_title());
+                bundle.putInt(IKey.GROUP_ID, mData.getId());
+                bundle.putString(IKey.TITLE, mData.getList_title());
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/TopicListActivity");
 
             }

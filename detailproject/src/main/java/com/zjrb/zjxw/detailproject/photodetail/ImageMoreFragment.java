@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
 import butterknife.BindView;
@@ -43,7 +43,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public static ImageMoreFragment newInstance(DraftDetailBean bean) {
         ImageMoreFragment fragment = new ImageMoreFragment();
         Bundle args = new Bundle();
-        args.putSerializable(Key.FRAGMENT_ARGS, bean);
+        args.putSerializable(IKey.FRAGMENT_ARGS, bean);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mBean = (DraftDetailBean) getArguments().getSerializable(Key.FRAGMENT_ARGS);
+            mBean = (DraftDetailBean) getArguments().getSerializable(IKey.FRAGMENT_ARGS);
         }
     }
 
@@ -96,7 +96,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
-                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
+                    .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
                     .build(), 0);
 
         }

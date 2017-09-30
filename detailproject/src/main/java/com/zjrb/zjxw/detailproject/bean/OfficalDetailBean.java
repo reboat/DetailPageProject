@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import com.zjrb.core.domain.base.BaseData;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  * create time:2017/8/24  下午8:58
  */
 
-public class OfficalDetailBean implements  Serializable{
+public class OfficalDetailBean extends BaseData {
 
     /**
      * id : 1

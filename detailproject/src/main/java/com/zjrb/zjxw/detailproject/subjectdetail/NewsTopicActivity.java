@@ -16,6 +16,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
@@ -30,7 +31,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
@@ -106,8 +106,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ID);
+            if (data.getQueryParameter(IKey.ID) != null) {
+                mArticleId = data.getQueryParameter(IKey.ID);
             }
         }
     }
@@ -135,7 +135,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
             if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(b.getUrl())
                         .buildUpon()
-                        .appendQueryParameter(Key.VIDEO_PATH, b.getVideo_url())//视频地址
+                        .appendQueryParameter(IKey.VIDEO_PATH, b.getVideo_url())//视频地址
                         .build(), 0);
 
             }
@@ -146,7 +146,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
                 if (bundle == null) {
                     bundle = new Bundle();
                 }
-                bundle.putInt(Key.ID, b.getGroupId());
+                bundle.putInt(IKey.ID, b.getGroupId());
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/TopicListActivity");
             }
         }

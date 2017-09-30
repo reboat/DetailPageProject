@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
@@ -20,7 +21,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
 
@@ -54,7 +54,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public static EmptyStateFragment newInstance(String columnId) {
         EmptyStateFragment fragment = new EmptyStateFragment();
         Bundle args = new Bundle();
-        args.putString(Key.COLUMN_ID, columnId);
+        args.putString(IKey.COLUMN_ID, columnId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,7 +63,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            column_id = getArguments().getString(Key.COLUMN_ID);
+            column_id = getArguments().getString(IKey.COLUMN_ID);
         }
     }
 
@@ -150,7 +150,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) adapter.getData().get(position)).getUrl())
                     .buildUpon()
-                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) adapter.getData().get(position)).getVideo_url())//视频地址
+                    .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) adapter.getData().get(position)).getVideo_url())//视频地址
                     .build(), 0);
 
 

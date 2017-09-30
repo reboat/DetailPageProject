@@ -25,6 +25,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -40,7 +41,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -150,11 +150,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void getIntentData(Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(Key.ID) != null) {
-                mArticleId = data.getQueryParameter(Key.ID);
+            if (data.getQueryParameter(IKey.ID) != null) {
+                mArticleId = data.getQueryParameter(IKey.ID);
             }
-            if (data.getQueryParameter(Key.VIDEO_PATH) != null) {
-                mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
+            if (data.getQueryParameter(IKey.VIDEO_PATH) != null) {
+                mVideoPath = data.getQueryParameter(IKey.VIDEO_PATH);
             }
         }
     }
@@ -387,7 +387,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (bundle == null) {
             bundle = new Bundle();
         }
-        bundle.putInt(Key.ID, mNewsDetail.getArticle().getColumn_id());
+        bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
     }
 
@@ -400,8 +400,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (bundle == null) {
             bundle = new Bundle();
         }
-        bundle.putString(Key.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name());
-        bundle.putString(Key.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id());
+        bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name());
+        bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id());
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
     }
 
@@ -420,11 +420,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onError(String errMsg, int errCode) {
                 //用户未登录
-                if (errCode == ErrorCode.USER_NOT_LOGIN) {
-                    Nav.with(NewsDetailActivity.this).toPath("/login/LoginActivity");
-                } else {
-                    T.showShort(getBaseContext(), "点赞失败");
-                }
+                T.showShort(getBaseContext(), "点赞失败");
             }
 
             @Override
@@ -447,10 +443,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (bundle == null) {
                     bundle = new Bundle();
                 }
-                bundle.putInt(Key.ID, mNewsDetail.getArticle().getId());
-                bundle.putInt(Key.MLF_ID, mNewsDetail.getArticle().getMlf_id());
-                bundle.putInt(Key.COMMENT_SET, mNewsDetail.getArticle().getComment_level());
-                bundle.putString(Key.TITLE, mNewsDetail.getArticle().getList_title());
+                bundle.putInt(IKey.ID, mNewsDetail.getArticle().getId());
+                bundle.putInt(IKey.MLF_ID, mNewsDetail.getArticle().getMlf_id());
+                bundle.putInt(IKey.COMMENT_SET, mNewsDetail.getArticle().getComment_level());
+                bundle.putString(IKey.TITLE, mNewsDetail.getArticle().getList_title());
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
             }
 

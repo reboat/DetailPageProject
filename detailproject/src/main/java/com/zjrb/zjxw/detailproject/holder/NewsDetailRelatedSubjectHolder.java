@@ -10,15 +10,14 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsRelatedSubjectAdapter;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,8 +76,8 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
         if (mData != null) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
                     .buildUpon()
-                    .appendQueryParameter(Key.VIDEO_PATH, mData.getArticle().getVideo_url())//视频地址
-                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
+                    .appendQueryParameter(IKey.VIDEO_PATH, mData.getArticle().getVideo_url())//视频地址
+                    .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
                     .build(), 0);
         }
     }

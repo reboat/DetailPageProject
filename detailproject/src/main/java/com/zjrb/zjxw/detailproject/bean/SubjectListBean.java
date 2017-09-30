@@ -1,7 +1,8 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import java.io.Serializable;
+import com.zjrb.core.domain.base.BaseData;
+
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * create time:2017/8/24  下午7:44
  */
 
-public class SubjectListBean implements Serializable {
+public class SubjectListBean extends BaseData {
 
     private List<SubjectItemBean> article_list;
 

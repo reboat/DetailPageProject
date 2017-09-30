@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.subjectdetail.adapter;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -171,15 +172,18 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
             }
         }
 
+        private Bundle bundle;
         @OnClick({R2.id.tv_more})
         public void onClick(View v) {
             if (v.getId() == R.id.tv_more) {
                 //进入专题列表
-                Nav.with(itemView.getContext()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.GROUP_ID, String.valueOf(mData.getId()))
-                        .appendQueryParameter(Key.TITLE, mData.getList_title())
-                        .build(), 0);
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putInt(Key.GROUP_ID, mData.getId());
+                bundle.putString(Key.TITLE, mData.getList_title());
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/TopicListActivity");
+
             }
 
         }

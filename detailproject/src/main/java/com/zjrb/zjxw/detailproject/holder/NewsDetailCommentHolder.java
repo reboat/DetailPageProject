@@ -1,6 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -72,6 +72,12 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     }
 
+
+    /**
+     * 路由传参
+     */
+    private Bundle bundle;
+
     /**
      * @param view 点击进入评论列表
      */
@@ -79,13 +85,14 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_more) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
-                    .buildUpon()
-                    .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                    .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
-                    .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
-                    .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
-                    .build(), 0);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            bundle.putInt(Key.ID, mData.getArticle().getId());
+            bundle.putInt(Key.MLF_ID, mData.getArticle().getMlf_id());
+            bundle.putInt(Key.COMMENT_SET, mData.getArticle().getComment_level());
+            bundle.putString(Key.TITLE, mData.getArticle().getList_title());
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
         }
     }
 

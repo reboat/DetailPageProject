@@ -11,6 +11,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.UserBiz;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.global.Key;
 
 
@@ -50,10 +51,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //    mlfId = Integer.parseInt(data.getQueryParameter(Key.MLF_ID));
 //    mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
 
+    private Bundle bundle;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_text:
+//                if (bundle == null) {
+//                    bundle = new Bundle();
+//                }
+//                bundle.putInt(Key.ID, 739652);
+//                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com.cn/news.html");
+
                 Nav.with(this).to(Uri.parse("https://zj.zjol.com.cn/news.html?id=739652")
                         .buildUpon()
                         .build(), 0);

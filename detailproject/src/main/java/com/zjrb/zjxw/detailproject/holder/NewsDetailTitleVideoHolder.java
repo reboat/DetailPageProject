@@ -1,14 +1,12 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
@@ -83,16 +81,18 @@ public class NewsDetailTitleVideoHolder extends BaseRecyclerViewHolder<DraftDeta
         }
     }
 
+    private Bundle bundle;
     @OnClick({R2.id.tv_column_name})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_column_name) {
             //TODO  WLJ  进入频道列表页面
-            Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/subscribe")
-                    .buildUpon()
-                    .appendQueryParameter(Key.CHANNEL_NAME, mData.getArticle().getChannel_name())
-                    .appendQueryParameter(Key.CHANNEL_ID, mData.getArticle().getChannel_id())
-                    .build(), 0);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            bundle.putString(Key.CHANNEL_NAME, mData.getArticle().getChannel_name());
+            bundle.putString(Key.CHANNEL_ID, mData.getArticle().getChannel_id());
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
         }
     }
 

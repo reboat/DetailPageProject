@@ -215,6 +215,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
 
+    private Bundle bundle;
+
     /**
      * 点击事件
      */
@@ -243,13 +245,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         } else if (id == R.id.menu_comment) {
             if (mData != null) {
                 if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
-                    Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
-                            .buildUpon()
-                            .appendQueryParameter(Key.ID, String.valueOf(mData.getArticle().getId()))
-                            .appendQueryParameter(Key.MLF_ID, String.valueOf(mData.getArticle().getMlf_id()))
-                            .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mData.getArticle().getComment_level()))
-                            .appendQueryParameter(Key.TITLE, mData.getArticle().getList_title())
-                            .build(), 0);
+
+                    if (bundle == null) {
+                        bundle = new Bundle();
+                    }
+                    bundle.putInt(Key.ID, mData.getArticle().getId());
+                    bundle.putInt(Key.MLF_ID, mData.getArticle().getMlf_id());
+                    bundle.putInt(Key.COMMENT_SET, mData.getArticle().getComment_level());
+                    bundle.putString(Key.TITLE, mData.getArticle().getList_title());
+                    Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
                 }
 
             }

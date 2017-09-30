@@ -530,15 +530,17 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         adapter.showAll();
     }
 
+    private Bundle bundle;
     /**
      * 进入栏目
      */
     @Override
     public void onOptClickColumn() {
-        Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/detail")
-                .buildUpon()
-                .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                .build(), 0);
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putInt(Key.ID, mNewsDetail.getArticle().getColumn_id());
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
     }
 
     /**

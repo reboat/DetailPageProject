@@ -224,8 +224,8 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
                     .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
-                    .appendQueryParameter(Key.ID, String.valueOf(((SubjectItemBean) mAdapter.getData().get(position)).getId()))
                     .build(), 0);
+
         }
     }
 }

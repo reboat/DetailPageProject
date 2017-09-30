@@ -15,6 +15,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
@@ -93,11 +94,11 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getUrl())
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
-                    .appendQueryParameter(Key.VIDEO_PATH, ((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getVideo_url())//视频地址
-                    .appendQueryParameter(Key.ID, String.valueOf(((DraftDetailBean) mAdapter.getData().get(position)).getArticle().getId()))
+                    .appendQueryParameter(Key.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
                     .build(), 0);
+
         }
     }
 }

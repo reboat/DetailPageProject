@@ -121,6 +121,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
     }
 
+    private Bundle bundle;
+
     /**
      * @param itemView
      * @param *专题详情页item点击事件
@@ -134,17 +136,18 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(b.getUrl())
                         .buildUpon()
                         .appendQueryParameter(Key.VIDEO_PATH, b.getVideo_url())//视频地址
-                        .appendQueryParameter(Key.ID, String.valueOf(b.getId()))
                         .build(), 0);
+
             }
         } else if (mAdapter.getData().get(position) instanceof SubjectNewsBean.GroupArticlesBean) {
             //进入专题更多列表
             if (((SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position)).getArticleList().size() >= 3) {
                 SubjectNewsBean.GroupArticlesBean b = (SubjectNewsBean.GroupArticlesBean) mAdapter.getData().get(position);
-                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, String.valueOf(b.getGroupId()))
-                        .build(), 0);
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putInt(Key.ID, b.getGroupId());
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/TopicListActivity");
             }
         }
 

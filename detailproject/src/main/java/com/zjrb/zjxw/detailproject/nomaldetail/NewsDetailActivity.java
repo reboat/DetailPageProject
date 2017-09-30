@@ -376,16 +376,19 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mAdapter.showAll();
     }
 
+    private Bundle bundle;
+
     /**
      * 进入栏目列表页
      */
     @Override
     public void onOptClickColumn() {
         //TODO  WLJ 进入栏目列表
-        Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/detail")
-                .buildUpon()
-                .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                .build(), 0);
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putInt(Key.ID, mNewsDetail.getArticle().getColumn_id());
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
     }
 
     /**
@@ -394,11 +397,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     public void onOptClickChannel() {
         //TODO WLJ 频道详情页
-        Nav.with(UIUtils.getContext()).to(Uri.parse("http://www.8531.cn/subscription/subscribe")
-                .buildUpon()
-                .appendQueryParameter(Key.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name())
-                .appendQueryParameter(Key.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id())
-                .build(), 0);
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putString(Key.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name());
+        bundle.putString(Key.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id());
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
     }
 
     /**
@@ -440,13 +444,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
                 //进入评论列表页面
-                Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentActivity")
-                        .buildUpon()
-                        .appendQueryParameter(Key.ID, String.valueOf(mNewsDetail.getArticle().getId()))
-                        .appendQueryParameter(Key.MLF_ID, String.valueOf(mNewsDetail.getArticle().getMlf_id()))
-                        .appendQueryParameter(Key.COMMENT_SET, String.valueOf(mNewsDetail.getArticle().getComment_level()))
-                        .appendQueryParameter(Key.TITLE, mNewsDetail.getArticle().getList_title())
-                        .build(), 0);
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putInt(Key.ID, mNewsDetail.getArticle().getId());
+                bundle.putInt(Key.MLF_ID, mNewsDetail.getArticle().getMlf_id());
+                bundle.putInt(Key.COMMENT_SET, mNewsDetail.getArticle().getComment_level());
+                bundle.putString(Key.TITLE, mNewsDetail.getArticle().getList_title());
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
             }
 
         } else if (view.getId() == R.id.menu_prised) {

@@ -26,6 +26,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.global.Key;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
@@ -141,6 +142,8 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     }
 
+    private Bundle bundle;
+
     /**
      * 初始化适配器
      */
@@ -157,18 +160,19 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                     int officalId = b.getOfficalId();
                     //进入官员详情页
                     if (type == PersionalListAdapter.TYPE_PERSIONAL_DETAIL) {
-                        Nav.with(UIUtils.getActivity()).to(Uri.parse("www.8531.cn/detail/PersionalDetailActivity")
-                                .buildUpon()
-                                .appendQueryParameter(Key.OFFICIAL_ID, String.valueOf(officalId))
-                                .build(), 0);
+                        if (bundle == null) {
+                            bundle = new Bundle();
+                        }
+                        bundle.putInt(Key.OFFICIAL_ID, officalId);
+                        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/PersionalDetailActivity");
                     } else {
                         //支持跳转到所有的新闻详情页
                         if (uri != null && !uri.isEmpty()) {
                             Uri u = Uri.parse(uri);
                             Nav.with(UIUtils.getActivity()).to(u
                                     .buildUpon()
-                                    .appendQueryParameter(Key.ID, String.valueOf(u.getQueryParameter(Key.ID)))
                                     .build(), 0);
+
                         }
 
                     }

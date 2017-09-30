@@ -3,9 +3,19 @@ package com.zjrb.zjxw.detailproject.webjs;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.webkit.JavascriptInterface;
 
+import com.zjrb.core.api.APIManager;
+import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.common.biz.UserBiz;
+import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.AppUtils;
+import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 
 /**
@@ -127,15 +137,25 @@ public class WebJsInterface {
     public void zjxw_js_getLocationInfo() {
     }
 
+
+    private Bundle bundle;
+
     /**
      * 显示评论列表页面
      *
-     * @param newsId
-     * @param newsTitle
-     * @param newsType
+     * @param newsId    稿件ID
+     * @param newsTitle 新闻标题
+     * @param newsType  新闻或者活动的类型
      */
     @JavascriptInterface
     public void zjxw_js_showCommentList(String newsId, String newsTitle, int newsType) {
+
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putString(IKey.ID, newsId);
+        bundle.putString(IKey.TITLE, newsTitle);
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
     }
 
     /**
@@ -154,6 +174,19 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void zjxw_js_follow(String newsId, int type) {
+        new DraftCollectTask(new APIExpandCallBack<Void>() {
+
+            @Override
+            public void onSuccess(Void baseInnerData) {
+                T.showShort(UIUtils.getContext(), "收藏成功");
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShort(UIUtils.getContext(), "收藏失败");
+            }
+
+        }).setTag(this).exe(newsId, true);
     }
 
     /**
@@ -170,6 +203,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void zjxw_js_showTips(String msg) {
+        T.showShortNow(UIUtils.getContext(), msg);
     }
 
     /**
@@ -177,7 +211,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public String zjxw_js_getSessionID() {
-        return "";
+        return UserBiz.get().getSessionId();
     }
 
     /**
@@ -185,7 +219,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public String zjxw_js_getAccountID() {
-        return "";
+        return UserBiz.get().getAccountID();
     }
 
     /**
@@ -193,7 +227,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public String zjxw_js_getAppVersionCode() {
-        return "";
+        return String.valueOf(AppUtils.getVersionCode());
     }
 
     /**
@@ -201,7 +235,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public String zjxw_js_getScreenName() {
-        return "";
+        return UserBiz.get().getAccount().getNick_name();
     }
 
     /**
@@ -211,6 +245,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void zjxw_js_showZmallWeb(String param) {
+        Nav.with(UIUtils.getContext()).to(param);
     }
 
     /**
@@ -225,7 +260,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public boolean zjxw_js_isUserLogin() {
-        return true;
+        return UserBiz.get().isLoginUser();
     }
 
     /**
@@ -233,7 +268,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public String zjxw_js_getServerHost() {
-        return "";
+        return APIManager.getBaseUri();
     }
 
     /**

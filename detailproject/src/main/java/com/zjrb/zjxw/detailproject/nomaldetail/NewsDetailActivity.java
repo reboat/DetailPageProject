@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -206,7 +207,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = mNewsDetail.getArticle().getVideo_url();
+                mVideoPath = "https://v-cdn.zjol.com.cn/12345.mp4";//mNewsDetail.getArticle().getVideo_url();
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     initVideo();
                 }
@@ -327,8 +328,18 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     }
 
+
     @Override
-    public void onOptPageFinished() { // WebView页面加载完毕
+    public void finish() {
+        super.finish();
+        Log.v("","WLJ,11");
+    }
+
+    /**
+     * WebView加载完毕
+     */
+    @Override
+    public void onOptPageFinished() {
         mAdapter.showAll();
     }
 

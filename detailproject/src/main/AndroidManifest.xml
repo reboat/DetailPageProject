@@ -62,7 +62,8 @@
         <activity
             android:name=".nomaldetail.NewsDetailActivity"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 

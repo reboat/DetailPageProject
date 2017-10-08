@@ -217,7 +217,11 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onResume() {
-        EventBus.getDefault().register(this);
+        try {
+            EventBus.getDefault().register(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (mWebView != null) {
             mWebView.onResume();
         }

@@ -153,9 +153,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             if (data != null && data.getQueryParameter(IKey.ID) != null) {
                 mArticleId = data.getQueryParameter(IKey.ID);
             }
-            if (intent.hasExtra(IKey.VIDEO_PATH)) {
-                mVideoPath = intent.getStringExtra(IKey.VIDEO_PATH);
-            }
         }
     }
 
@@ -179,9 +176,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        if (!TextUtils.isEmpty(mVideoPath)) {
-            initVideo();
-        }
         loadData();
     }
 
@@ -211,6 +205,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
+                //"https://v-cdn.zjol.com.cn/12345.mp4";
+                mVideoPath = mNewsDetail.getArticle().getVideo_url();
+                if (!TextUtils.isEmpty(mVideoPath)) {
+                    initVideo();
+                }
                 fillData(mNewsDetail);
             }
 

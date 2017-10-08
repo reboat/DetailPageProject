@@ -228,7 +228,6 @@ public class TopicListActivity extends BaseActivity implements HeaderRefresh.OnR
             if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
                         .buildUpon()
-                        .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) mAdapter.getData().get(position)).getVideo_url())//视频地址
                         .build(), 0);
 
             }

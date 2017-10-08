@@ -135,7 +135,6 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
             if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(b.getUrl())
                         .buildUpon()
-                        .appendQueryParameter(IKey.VIDEO_PATH, b.getVideo_url())//视频地址
                         .build(), 0);
 
             }

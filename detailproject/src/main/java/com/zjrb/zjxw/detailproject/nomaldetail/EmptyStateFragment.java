@@ -150,7 +150,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) adapter.getData().get(position)).getUrl())
                     .buildUpon()
-                    .appendQueryParameter(IKey.VIDEO_PATH, ((SubjectItemBean) adapter.getData().get(position)).getVideo_url())//视频地址
                     .build(), 0);
 
 

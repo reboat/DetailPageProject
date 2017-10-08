@@ -83,7 +83,6 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
         if (mData != null) {
             Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
                     .buildUpon()
-                    .appendQueryParameter(IKey.VIDEO_PATH, mData.getArticle().getVideo_url())//视频地址
                     .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
                     .build(), 0);
 

@@ -35,6 +35,7 @@
             android:layout_marginTop="18dp"
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.1"
+            android:focusable="true"
             android:maxLines="2"
             android:textColor="?attr/tc_000000"
             android:textSize="@dimen/ts_22sp"

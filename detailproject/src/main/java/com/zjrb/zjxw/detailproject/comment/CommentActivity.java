@@ -111,10 +111,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getIntentData(getIntent());
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
         initState();
-        getIntentData(getIntent());
         initData();
     }
 

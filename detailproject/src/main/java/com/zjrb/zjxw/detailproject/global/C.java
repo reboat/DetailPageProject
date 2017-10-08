@@ -7,7 +7,6 @@ package com.zjrb.zjxw.detailproject.global;
  */
 
 public final class C {
-
     /**
      * 官员详情每页请求条数
      */

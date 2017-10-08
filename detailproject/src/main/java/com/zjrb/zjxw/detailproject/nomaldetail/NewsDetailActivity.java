@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -88,7 +87,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
     @BindView(R2.id.tv_comment)
-    EditText mTvComment;
+    TextView mTvComment;
     @BindView(R2.id.fl_comment)
     FrameLayout mFlComment;
     @BindView(R2.id.menu_comment)
@@ -149,13 +148,13 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
+        if (intent != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(IKey.ID) != null) {
+            if (data != null && data.getQueryParameter(IKey.ID) != null) {
                 mArticleId = data.getQueryParameter(IKey.ID);
             }
-            if (data.getQueryParameter(IKey.VIDEO_PATH) != null) {
-                mVideoPath = data.getQueryParameter(IKey.VIDEO_PATH);
+            if (intent.hasExtra(IKey.VIDEO_PATH)) {
+                mVideoPath = intent.getStringExtra(IKey.VIDEO_PATH);
             }
         }
     }
@@ -395,7 +394,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             R2.id.tv_comment, R2.id.view_exise, R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        //评论框
+        //评论列表
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
                 //进入评论列表页面
@@ -411,7 +410,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
-            //评论列表
+            //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {

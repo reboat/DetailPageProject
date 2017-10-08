@@ -20,15 +20,19 @@ import android.widget.TextView;
 
 import com.zjrb.core.R;
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.common.biz.SettingBiz;
+import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
-import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by HeYongchen on 2017/9/21.
@@ -134,7 +138,7 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
      * 弹框预览效果
      */
     private void initPreview() {
-        int size = SettingManager.getInstance().getArticleTextSize();
+        float size = SettingBiz.get().getHtmlFontScale();
         initArticleTextSize(size);
     }
 
@@ -143,24 +147,19 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
      *
      * @param textSize
      */
-    private void initArticleTextSize(int textSize) {
-        switch (textSize) {
-            case SettingManager.TextSize.LARGER:
-                rbBig.setChecked(true);
-                tvPreview.setTextSize(18);
-                break;
-            case SettingManager.TextSize.NORMAL:
-                rbNormal.setChecked(true);
-                tvPreview.setTextSize(14);
-                break;
-            case SettingManager.TextSize.SMALLER:
-                rbSmall.setChecked(true);
-                tvPreview.setTextSize(11);
-                break;
-            default:
-                rbNormal.setChecked(true);
-                tvPreview.setTextSize(14);
-                break;
+    private void initArticleTextSize(float textSize) {
+        if (textSize == C.FONT_SCALE_LARGE) {
+            rbBig.setChecked(true);
+            tvPreview.setScaleX(C.FONT_SCALE_LARGE);
+            tvPreview.setScaleY(C.FONT_SCALE_LARGE);
+        } else if (textSize == C.FONT_SCALE_STANDARD) {
+            rbNormal.setChecked(true);
+            tvPreview.setScaleX(C.FONT_SCALE_STANDARD);
+            tvPreview.setScaleY(C.FONT_SCALE_STANDARD);
+        } else {
+            rbSmall.setChecked(true);
+            tvPreview.setScaleX(C.FONT_SCALE_SMALL);
+            tvPreview.setScaleY(C.FONT_SCALE_SMALL);
         }
     }
 
@@ -184,7 +183,6 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
-            // TODO: 2017/9/22 跳转反馈问题页面
             Nav.with(UIUtils.getContext()).toPath("/feedback");
             dismissFragmentDialog();
 
@@ -216,20 +214,23 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        int size = 100;
         if (checkedId == R.id.rb_module_core_more_set_font_size_small) {
-            size = SettingManager.TextSize.SMALLER;
-            tvPreview.setTextSize(11);
+            tvPreview.setScaleX(C.FONT_SCALE_SMALL);
+            tvPreview.setScaleY(C.FONT_SCALE_SMALL);
+            SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_SMALL);
+            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_SMALL));
 
         } else if (checkedId == R.id.rb_module_core_more_set_font_size_normal) {
-            size = SettingManager.TextSize.NORMAL;
-            tvPreview.setTextSize(14);
+            tvPreview.setScaleX(C.FONT_SCALE_STANDARD);
+            tvPreview.setScaleY(C.FONT_SCALE_STANDARD);
+            SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_STANDARD);
+            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_STANDARD));
 
         } else if (checkedId == R.id.rb_module_core_more_set_font_size_big) {
-            size = SettingManager.TextSize.LARGER;
-            tvPreview.setTextSize(18);
-
+            tvPreview.setScaleX(C.FONT_SCALE_LARGE);
+            tvPreview.setScaleY(C.FONT_SCALE_LARGE);
+            SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_LARGE);
+            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_LARGE));
         }
-        SettingManager.getInstance().setArticleTextSize(size);
     }
 }

@@ -25,11 +25,16 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,6 +98,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 
+    private WebSettings settings;
+
     private void initWebView() {
         mWebView.setFocusable(false);
 
@@ -111,7 +118,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_ffffff));
         }
 
-        WebSettings settings = mWebView.getSettings();
+        settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true); // 启用支持javaScript
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 没网使用缓存
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 禁止横向滑动
@@ -199,8 +206,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         return (FrameLayout) ((BaseActivity) itemView.getContext()).getWindow().getDecorView();
     }
 
+
     @Override
     public void onResume() {
+        EventBus.getDefault().register(this);
         if (mWebView != null) {
             mWebView.onResume();
         }
@@ -208,8 +217,22 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onPause() {
+        EventBus.getDefault().unregister(this);
         if (mWebView != null) {
             mWebView.onPause();
+        }
+    }
+
+    /**
+     * @param event 删除评论后刷新列表
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onEvent(NewsDetailTextZoomEvent event) {
+        EventBus.getDefault().removeStickyEvent(event);
+        if (event != null && event.getData() > 0) {
+            //设置缩放比例
+            int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
+            settings.setTextZoom(zoom);
         }
     }
 
@@ -226,6 +249,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onViewAttachedToWindow(View v) {
+        onResume();
         if (v == itemView && itemView.getParent() instanceof RecyclerView) {
             ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
         }
@@ -233,6 +257,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onViewDetachedFromWindow(View v) {
+        onPause();
         if (v == itemView && itemView.getParent() instanceof RecyclerView) {
             ((RecyclerView) itemView.getParent()).removeOnScrollListener(mScrollListener);
         }

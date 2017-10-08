@@ -54,7 +54,8 @@
 
         <!--#33ffffff  #191919-->
         <attr name="bc_33ffffff" format="color|reference"/>
-
+        <!--#f4f5f6  #191919-->
+        <attr name="bc_f4f5f6" format="color|reference"/>
         <attr name="border_f44b50" format="reference"/>
         <attr name="border_f44b50_r10" format="reference"/>
         <attr name="border_999999_r10" format="reference"/>

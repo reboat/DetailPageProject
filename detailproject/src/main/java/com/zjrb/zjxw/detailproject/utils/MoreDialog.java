@@ -29,6 +29,7 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
@@ -181,6 +182,7 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
             dismissFragmentDialog();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
+            EventBus.getDefault().postSticky(new NewsDetailNightThemeEvent(!ThemeMode.isNightMode()));
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
             Nav.with(UIUtils.getContext()).toPath("/feedback");

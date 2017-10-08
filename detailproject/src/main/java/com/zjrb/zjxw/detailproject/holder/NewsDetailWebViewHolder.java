@@ -25,6 +25,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
@@ -77,6 +78,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     public void bindView() {
         if (mData.getArticle().getContent() == null) return;
         itemView.setOnClickListener(null);
+        setCssJSWebView();
+    }
+
+    /**
+     * 设置CSS和JS
+     */
+    private void setCssJSWebView() {
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
@@ -227,13 +235,19 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * @param event 删除评论后刷新列表
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(NewsDetailTextZoomEvent event) {
+    public void onEvent(Object event) {
         EventBus.getDefault().removeStickyEvent(event);
-        if (event != null && event.getData() > 0) {
-            //设置缩放比例
-            int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
-            settings.setTextZoom(zoom);
+        if (event != null) {
+            if (event instanceof NewsDetailTextZoomEvent) {
+                //设置缩放比例
+                int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
+                settings.setTextZoom(zoom);
+            } else if (event instanceof NewsDetailNightThemeEvent) {
+                //设置夜间模式
+                setCssJSWebView();
+            }
         }
+
     }
 
     // RecyclerView滚动监听

@@ -190,10 +190,11 @@ public class WebJsInterface {
     }
 
     /**
-     * 登录
+     * 登录跳转
      */
     @JavascriptInterface
     public void zjxw_js_login() {
+        Nav.with(UIUtils.getContext()).toPath("/login/LoginActivity");
     }
 
     /**

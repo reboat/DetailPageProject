@@ -50,6 +50,7 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
@@ -580,6 +581,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             onOptFabulous();
         } else if (view.getId() == R.id.menu_setting) {
             //TODO  WLJ  打开设置按钮
+            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {

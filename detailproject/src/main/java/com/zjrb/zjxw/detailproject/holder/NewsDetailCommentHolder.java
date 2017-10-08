@@ -88,11 +88,9 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putInt(IKey.ID, mData.getArticle().getId());
-            bundle.putInt(IKey.MLF_ID, mData.getArticle().getMlf_id());
-            bundle.putInt(IKey.COMMENT_SET, mData.getArticle().getComment_level());
-            bundle.putString(IKey.TITLE, mData.getArticle().getList_title());
+            bundle.putSerializable(IKey.NEWS_DETAIL,mData);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
+
         }
     }
 

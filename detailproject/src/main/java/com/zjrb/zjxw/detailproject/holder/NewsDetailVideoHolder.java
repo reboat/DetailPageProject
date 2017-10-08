@@ -36,18 +36,18 @@ public class NewsDetailVideoHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     public NewsDetailVideoHolder(ViewGroup videoParent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_top_video, videoParent, false));
-        ButterKnife.bind(this, itemView);
+//        ButterKnife.bind(this, itemView);
 //        VideoManager.addVideoOnAttachStateChangeListener(mVideoParent, this);
     }
 
     public void bind(DraftDetailBean data) {
-        mData = data;
-        GlideApp.with(mIvImage).load(mData.getArticle().getArticle_pic())
-                .placeholder(R.drawable.module_detail_load_error)
-                .error(R.drawable.module_detail_load_error)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE) // 缓存原始资源，解决Gif加载慢
-                .into(mIvImage);
+//        mData = data;
+//        GlideApp.with(mIvImage).load(mData.getArticle().getArticle_pic())
+//                .placeholder(R.drawable.module_detail_load_error)
+//                .error(R.drawable.module_detail_load_error)
+//                .centerCrop()
+//                .diskCacheStrategy(DiskCacheStrategy.RESOURCE) // 缓存原始资源，解决Gif加载慢
+//                .into(mIvImage);
     }
 
 

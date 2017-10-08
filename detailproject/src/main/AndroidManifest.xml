@@ -72,17 +72,17 @@
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/news.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
                 <!--视频详情页-->
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/video.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
                 <!--活动详情页-->
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/activity.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
 
             </intent-filter>
         </activity>
@@ -101,7 +101,7 @@
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/album.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
             </intent-filter>
         </activity>
         <activity
@@ -149,7 +149,7 @@
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/subject.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
             </intent-filter>
         </activity>
         <activity
@@ -180,7 +180,7 @@
                 <data
                     android:host="@string/data_host_zjol"
                     android:path="/topic.html"
-                    android:scheme="@string/data_scheme"/>
+                    android:scheme="@string/data_scheme_https"/>
             </intent-filter>
         </activity>
 

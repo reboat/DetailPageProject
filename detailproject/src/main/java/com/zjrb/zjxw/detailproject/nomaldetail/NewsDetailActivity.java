@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.player.PlayerManager;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -46,6 +47,7 @@ import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
@@ -116,8 +118,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 详情页适配器
      */
     private NewsDetailAdapter mAdapter;
-    //    private VideoManager mVideoManager;
-//    private NewsDetailVideoHolder mVideoHolder;
 
     /**
      * 处理上下移动监听
@@ -189,27 +189,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 初始化视频
      */
     private void initVideo() {
-        mVideoContainer.setVisibility(View.GONE);
-//        mVideoManager = VideoManager.get();
+        if (!TextUtils.isEmpty(mVideoPath)) {
+            mVideoContainer.setVisibility(View.VISIBLE);
+            PlayerManager.get().play(mVideoContainer, mVideoPath);
+        } else {
+            mVideoContainer.setVisibility(View.GONE);
+        }
+
         if (!NetUtils.isAvailable()) {
             T.showShort(getContext(), "网络不可用");
-        } else {
-//            if (mNewsDetail == null) {
-//                mVideoManager.play(mVideoContainer, mVideoPath);
-//            } else {
-//                mVideoManager.play(mVideoContainer, mNewsDetail.getWeb_link(),
-//                        ExtraEntity.createBuild()
-//                                .setTitle(mNewsDetail.getList_title())
-//                                .setDuration(mNewsDetail.getVideo_duration())
-//                                .setSize(mNewsDetail.getVideoSize())
-//                                .setShareUrl(mNewsDetail.getUri_scheme())
-//                                .setId(mArticleId)
-//                                .setSummary(mNewsDetail.getSummary())
-//                                .build()
-//                );
-//            }
         }
-//        mVideoHolder = new NewsDetailVideoHolder(mVideoContainer);
     }
 
     /**
@@ -222,7 +211,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
-                fillData(draftDetailBean);
+                fillData(mNewsDetail);
             }
 
             @Override
@@ -254,37 +243,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void fillData(DraftDetailBean data) {
 
         mNewsDetail = data;
-//        if (!data.isSucceed()) {
-//            if (data.getResultCode() == ResultCode.DRAFT_NOT_EXIST) { //  文章已删除
-//                mFlContent.setVisibility(View.GONE);
-//                if (mVideoContainer.getParent() != null
-//                        && mVideoContainer.getParent() instanceof ViewGroup) {
-//                    ((ViewGroup) mVideoContainer.getParent()).removeView(mVideoContainer);
-//                }
-//
-//                View notExistView = mVsNoExist.inflate();
-//                UIUtils.dispatchApplyWindowInsets(notExistView);
-//                notExistView.findViewById(R.id.fl_finish).setOnClickListener(this);
-//            }
-//            return;
-//        }
-
-//        if (data.getDoc_type() == DraftDetailBean.type.VIDEO) {
-//            if (TextUtils.isEmpty(mVideoPath)) {
-//                initVideo();
-//            } else {
-//                mVideoManager.setExtra(ExtraEntity.createBuild()
-//                        .setTitle(mNewsDetail.getList_title())
-//                        .setDuration(mNewsDetail.getVideo_duration())
-//                        .setSize(mNewsDetail.getVideoSize())
-//                        .setShareUrl(mNewsDetail.getUri_scheme())
-//                        .setId((int) mNewsDetail.getId())
-//                        .setSummary(mNewsDetail.getSummary())
-//                        .build());
-//            }
-//            mVideoHolder.bind(data);
-//        }
-
         List datas = new ArrayList<>();
         //头
         datas.add(data);
@@ -305,8 +263,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
             datas.add(data);
         }
-        mAdapter = new NewsDetailAdapter(datas,
-                mNewsDetail.getArticle().getDoc_type() == DraftDetailBean.ArticleBean.type.VIDEO);
+        mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
 
         //点赞数量
@@ -437,23 +394,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             R2.id.tv_comment, R2.id.view_exise, R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
+        //评论框
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
                 //进入评论列表页面
                 if (bundle == null) {
                     bundle = new Bundle();
                 }
-                bundle.putInt(IKey.ID, mNewsDetail.getArticle().getId());
-                bundle.putInt(IKey.MLF_ID, mNewsDetail.getArticle().getMlf_id());
-                bundle.putInt(IKey.COMMENT_SET, mNewsDetail.getArticle().getComment_level());
-                bundle.putString(IKey.TITLE, mNewsDetail.getArticle().getList_title());
+                bundle.putSerializable(IKey.NEWS_DETAIL, mNewsDetail);
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
             }
-
+            //点赞
         } else if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
+            //更多
         } else if (view.getId() == R.id.menu_setting) {
-            //TODO  WLJ  打开设置按钮
+            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
+            //评论列表
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&
                     BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
@@ -461,6 +418,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
                 return;
             }
+            //分享
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
@@ -470,11 +428,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                             WebJsInterface.getInstance(this).getHtmlText())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+            //重新加载
         } else if (view.getId() == R.id.view_exise) {
             loadData();
         }
     }
-
 
     @Override
     protected void onResume() {

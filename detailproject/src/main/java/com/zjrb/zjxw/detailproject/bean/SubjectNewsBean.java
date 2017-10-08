@@ -25,7 +25,7 @@ public class SubjectNewsBean implements Serializable {
     /**
      * 专题详情页分组数据
      */
-    public static class GroupArticlesBean {
+    public static class GroupArticlesBean implements  Serializable{
 
         private int group_id;
         private String group_name;

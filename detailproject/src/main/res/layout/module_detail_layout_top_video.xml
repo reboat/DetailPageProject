@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:background="?attr/bc_ffffff"
-              android:orientation="vertical"
-              android:padding="10dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/top_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_title"
+    <com.aliya.view.fitsys.FitWindowsLinearLayout
+        android:id="@+id/fit_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:ellipsize="end"
-        android:lineSpacingMultiplier="1.1"
-        android:maxLines="2"
-        android:textColor="?attr/tc_000000"
-        android:textSize="@dimen/ts_22sp"
-        tools:text="浙商银行程度分行紧急启动抗震救灾工作"/>
+        android:layout_below="@+id/ivGroup"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="9.5dp"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        app:fitType="top">
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.1"
+            android:maxLines="2"
+            android:textColor="?attr/tc_000000"
+            android:textSize="@dimen/ts_22sp"
+            tools:text="浙商银行程度分行紧急启动抗震救灾工作"/>
+        <!--新闻来源全部显示-->
+        <TextView
+            android:id="@+id/tv_reporter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/tc_999999"
+            android:textSize="@dimen/ts_10sp"
+            tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰"/>
+
+    </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
     <TextView
-        android:id="@+id/tv_reporter"
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ellipsize="end"
+        android:layout_below="@+id/fit_top_layout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center"
         android:maxLines="1"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
         android:textColor="?attr/tc_999999"
-        android:textSize="@dimen/ts_10sp"
-        tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰"/>
+        android:textSize="@dimen/ts_14sp"
+        tools:text="2017-05-16 14:24"/>
 
     <TextView
         android:id="@+id/tv_column_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fit_top_layout"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/tv_time"
         android:background="?attr/actionBarItemBackground"
         android:ellipsize="end"
         android:gravity="center"
         android:maxLines="1"
-        android:paddingBottom="6dp"
-        android:paddingTop="6dp"
-        android:textColor="?attr/tc_999999"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="?attr/tc_f44b50"
         android:textSize="@dimen/ts_14sp"
-        tools:text="2017-05-16 14:24 ｜杭州频道"/>
+        tools:text="杭州频道"/>
 
-
-</LinearLayout>
+</RelativeLayout>

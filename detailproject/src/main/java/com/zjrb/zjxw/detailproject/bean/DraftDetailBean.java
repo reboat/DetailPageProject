@@ -80,7 +80,7 @@ public class DraftDetailBean extends BaseData {
         this.article = article;
     }
 
-    public static class ArticleBean {
+    public static class ArticleBean implements  Serializable{
         private boolean isOpen;
         private int id;
         private int mlf_id;

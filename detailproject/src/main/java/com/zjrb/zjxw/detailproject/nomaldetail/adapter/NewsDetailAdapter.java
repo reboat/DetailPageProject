@@ -14,10 +14,8 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleVideoHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,27 +48,16 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
     private int mMiddleHolderPosition = NO_POSITION;
     private int mWebViewHolderPosition = NO_POSITION;
 
-    /**
-     * true:视频
-     * false:非视频
-     */
-    private boolean isVideoType;
     private boolean isShowAll; // true：已经显示全部
 
-    public NewsDetailAdapter() {
-        super(new ArrayList<DraftDetailBean>());
-    }
-
-    public NewsDetailAdapter(List datas, boolean isVideoType) {
+    public NewsDetailAdapter(List datas) {
         super(datas);
-        this.isVideoType = isVideoType;
     }
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
-            return isVideoType ?
-                    new NewsDetailTitleVideoHolder(parent) : new NewsDetailTitleHolder(parent);
+            return new NewsDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             return new NewsDetailWebViewHolder(parent);
         } else if (viewType == VIEW_TYPE_MIDDLE) {

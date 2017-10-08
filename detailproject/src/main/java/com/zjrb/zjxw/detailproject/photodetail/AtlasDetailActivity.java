@@ -44,6 +44,7 @@ import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.webjs.BottomSaveDialogFragment;
 
 import java.util.List;
@@ -249,10 +250,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     if (bundle == null) {
                         bundle = new Bundle();
                     }
-                    bundle.putInt(IKey.ID, mData.getArticle().getId());
-                    bundle.putInt(IKey.MLF_ID, mData.getArticle().getMlf_id());
-                    bundle.putInt(IKey.COMMENT_SET, mData.getArticle().getComment_level());
-                    bundle.putString(IKey.TITLE, mData.getArticle().getList_title());
+                    bundle.putSerializable(IKey.NEWS_DETAIL,mData);
                     Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
                 }
 
@@ -260,10 +258,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //点赞
         } else if (id == R.id.menu_prised) {
             fabulous();
-            //分享
+            //设置
         } else if (id == R.id.menu_setting) {
             //TODO WLJ 修改字体，夜间模式之类
-//            share();
+            MoreDialog.newInstance(mData).show(getSupportFragmentManager(), "MoreDialog");
             //下载
         } else if (id == R.id.iv_top_download) {
             loadImage(mIndex);

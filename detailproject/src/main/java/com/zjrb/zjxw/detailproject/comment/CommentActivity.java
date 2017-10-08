@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -20,6 +21,8 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -30,12 +33,14 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -100,6 +105,9 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     private List<HotCommentsBean> commentList;
 
+
+    private DraftDetailBean mNewsDetail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,18 +148,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      */
     private void getIntentData(Intent intent) {
         if (intent != null) {
-            if (intent.hasExtra(IKey.ID)) {
-                articleId = intent.getStringExtra(IKey.ID);
-            }
-            if (intent.hasExtra(IKey.MLF_ID)) {
-                mlfId = intent.getIntExtra(IKey.MLF_ID, -1);
-            }
-
-            if (intent.hasExtra(IKey.COMMENT_SET)) {
-                commentSet = intent.getIntExtra(IKey.COMMENT_SET, -1);
-            }
-            if (intent.hasExtra(IKey.TITLE)) {
-                title = intent.getStringExtra(IKey.TITLE);
+            if (intent.hasExtra(IKey.NEWS_DETAIL)) {
+                mNewsDetail = (DraftDetailBean) getIntent().getExtras().get(IKey.NEWS_DETAIL);
+                articleId = String.valueOf(mNewsDetail.getArticle().getId());
+                mlfId = mNewsDetail.getArticle().getMlf_id();
+                commentSet = mNewsDetail.getArticle().getComment_level();
+                title = mNewsDetail.getArticle().getList_title();
             }
         }
     }
@@ -234,6 +236,16 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 tvComment.setVisibility(View.VISIBLE);
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
+            //分享文章
+        } else if (v.getId() == R.id.iv_top_share) {
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ?
+                            mNewsDetail.getArticle().getArticle_pic() : WebJsInterface.getInstance(this).getmImgSrcs()[0])
+                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
+                            WebJsInterface.getInstance(this).getHtmlText())
+                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         }
     }
 

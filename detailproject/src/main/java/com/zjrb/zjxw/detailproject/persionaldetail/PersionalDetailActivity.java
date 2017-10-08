@@ -61,6 +61,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @BindView(R2.id.ly_container)
     LinearLayout mLyContailer;
 
+    //TODO WLJ  分享  链接？
     /**
      * 官员ID
      */

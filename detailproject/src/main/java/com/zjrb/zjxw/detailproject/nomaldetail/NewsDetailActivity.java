@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.aliya.player.PlayerManager;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
+import com.aliya.view.ratio.RatioFrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -83,7 +84,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.iv_type_video)
     ImageView mIvTypeVideo;
     @BindView(R2.id.video_container)
-    FrameLayout mVideoContainer;
+    RatioFrameLayout mVideoContainer;
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
     @BindView(R2.id.tv_comment)

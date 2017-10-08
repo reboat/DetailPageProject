@@ -49,10 +49,11 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <com.aliya.view.ratio.RatioFrameLayout
         android:id="@+id/video_container"
         android:layout_width="match_parent"
         android:layout_height="211dp"
+        app:ratio_w2h="16:9"
         android:visibility="gone">
 
         <ImageView
@@ -70,7 +71,7 @@
             android:scaleType="fitXY"
             android:src="@mipmap/module_detail_ic_video_player_start"/>
 
-    </FrameLayout>
+    </com.aliya.view.ratio.RatioFrameLayout>
 
     <FrameLayout
         android:id="@+id/fl_content"

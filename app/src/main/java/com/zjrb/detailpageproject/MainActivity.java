@@ -59,10 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                bundle.putInt(Key.ID, 739652);
 //                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com.cn/news.html");
 
-                Nav.with(this).to(Uri.parse("https://zj.zjol.com.cn/news.html?id=739652")
-                        .buildUpon()
-                        .build(), 0);
-////
+                Nav.with(this).to("http://10.200.70.86:8000/news.html?id=739652",0);
+//
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.GROUP_ID, "5")

@@ -80,27 +80,17 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     public String mArticleId;
     //视频地址
     public String mVideoPath = "";
-    @BindView(R2.id.iv_image)
-    ImageView mIvImage;
-    @BindView(R2.id.iv_type_video)
-    ImageView mIvTypeVideo;
     @BindView(R2.id.video_container)
     RatioFrameLayout mVideoContainer;
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
-    @BindView(R2.id.fl_comment)
-    FrameLayout mFlComment;
-    @BindView(R2.id.menu_comment)
-    ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.menu_setting)
-    ImageView mMenuSetting;
-    @BindView(R2.id.floor_bar)
+    @BindView(R2.id.ly_bottom_comment)
     FitWindowsFrameLayout mFloorBar;
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
@@ -208,7 +198,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = mNewsDetail.getArticle().getVideo_url();
+                mVideoPath = "https://v-cdn.zjol.com.cn/12345.mp4";//mNewsDetail.getArticle().getVideo_url();
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     initVideo();
                 }

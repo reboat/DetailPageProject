@@ -20,6 +20,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
+import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -50,7 +51,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         .OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
-    WebView mWebView;
+    ZBWebView mWebView;
     private WebJsInterface mWebJsInterface;
 
     /**

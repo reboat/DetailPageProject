@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:id="@+id/ly_container"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="?attr/bc_202124"
-              android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/fy_container"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="?attr/bc_ffffff"
+             android:fitsSystemWindows="true"
     >
 
     <!--错误页面-->
@@ -15,7 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView
@@ -49,50 +48,25 @@
 
     </LinearLayout>
 
-    <com.aliya.view.ratio.RatioFrameLayout
-        android:id="@+id/video_container"
-        android:layout_width="match_parent"
-        android:layout_height="211dp"
-        android:visibility="gone"
-        app:ratio_w2h="16:9">
-
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:foreground="@drawable/module_detail_fg_image_mask"
-            android:scaleType="fitXY" />
-
-        <ImageView
-            android:id="@+id/iv_type_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            android:src="@mipmap/module_detail_ic_video_player_start" />
-
-    </com.aliya.view.ratio.RatioFrameLayout>
-
     <FrameLayout
-        android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/bc_202124">
+        android:id="@+id/fy_webview_container">
 
-        <com.aliya.view.fitsys.FitWindowsRecyclerView
-            android:id="@+id/rv_content"
+        <com.zjrb.core.ui.widget.ZBWebView
+            android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:fitsSystemWindows="true"
-            android:scrollbars="vertical"
-            app:fitType="bottom" />
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/bc_mask" />
 
         <include
             android:id="@+id/ly_bottom_comment"
             layout="@layout/moduel_detail_bottom_comment" />
-
     </FrameLayout>
 
-</LinearLayout>
+</FrameLayout>

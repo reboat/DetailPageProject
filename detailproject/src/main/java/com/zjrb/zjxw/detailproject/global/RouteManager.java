@@ -41,4 +41,9 @@ public final class RouteManager {
      * 登录页
      */
     public static final  String LOGIN_ACTIVITY = "/login/LoginActivity";
+
+    /**
+     * 官员H5详情页
+     */
+    //TODO WLJ 链接??
 }

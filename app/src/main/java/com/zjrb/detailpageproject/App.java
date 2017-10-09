@@ -17,6 +17,6 @@ public class App extends Application {
         SettingManager.init(this);
         ThemeMode.initTheme(R.style.AppTheme, R.style.NightAppTheme);
         UiModeManager.init(this, R.styleable.SupportUiMode);
-
+        BaseInit.getInstance().init(this,"bianfeng");
     }
 }

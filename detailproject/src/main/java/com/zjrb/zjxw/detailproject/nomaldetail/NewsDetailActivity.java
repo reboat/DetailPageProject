@@ -27,7 +27,9 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -98,6 +100,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     LinearLayout mContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
+    @BindView(R2.id.iv_image)
+    ImageView mivVideoBG;
+
     /**
      * 上下滑动超出范围处理
      */
@@ -177,6 +182,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void initVideo() {
         if (!TextUtils.isEmpty(mVideoPath)) {
             mVideoContainer.setVisibility(View.VISIBLE);
+            GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
+                    .into(mivVideoBG);
             PlayerManager.get().play(mVideoContainer, mVideoPath);
         } else {
             mVideoContainer.setVisibility(View.GONE);
@@ -259,15 +266,15 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
         //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
-        if (data.getArticle().getComment_count() <= 0) {
-            mTvCommentsNum.setVisibility(View.GONE);
-        } else {
+        if (data.getArticle().getComment_count() > 0) {
+            mTvCommentsNum.setVisibility(View.VISIBLE);
             if (data.getArticle().getComment_count() < 9999) {
                 mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
             } else if (data.getArticle().getComment_count() > 9999) {
                 mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
             }
         }
+
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
@@ -385,7 +392,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.view_exise, R2.id.iv_top_share})
+            R2.id.tv_comment, R2.id.view_exise, R2.id.iv_top_share, R2.id.iv_type_video})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -423,6 +430,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //重新加载
         } else if (view.getId() == R.id.view_exise) {
             loadData();
+        } else if (view.getId() == R.id.iv_type_video) {
+            PlayerManager.get().play(mVideoContainer, mVideoPath);
         }
     }
 

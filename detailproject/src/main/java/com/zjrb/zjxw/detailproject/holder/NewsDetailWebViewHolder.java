@@ -51,7 +51,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         .OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
-    ZBWebView mWebView;
+    WebView mWebView;
     private WebJsInterface mWebJsInterface;
 
     /**

@@ -4,6 +4,18 @@ apply from: "${rootDir}/public.gradle"
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+
+    signingConfigs {
+            release {
+                keyAlias 'zhejiangnews'
+                keyPassword 'kIwfs16KsM'
+                storeFile file('/Users/wanglinjie/zb_android/ZhejiangDaily/qianming/zhejiangnews.keystore')
+                storePassword 'kIwfs16KsM'
+            }
+
+
+    }
+
     defaultConfig {
         applicationId "com.zjrb.detailpageproject"
         minSdkVersion 17
@@ -23,6 +35,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

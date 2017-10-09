@@ -15,7 +15,7 @@ public final class RouteManager {
     /**
      * 频道详情页
      */
-    public static final  String SUBSCRIBE_PATH = "/subscription/subscribe";
+    public static final String SUBSCRIBE_PATH = "/subscription/subscribe";
 
     /**
      * 栏目列表
@@ -30,7 +30,7 @@ public final class RouteManager {
     /**
      * 专题列表
      */
-    public static final  String TOPIC_LIST = "/detail/TopicListActivity";
+    public static final String TOPIC_LIST = "/detail/TopicListActivity";
 
     /**
      * 反馈
@@ -40,10 +40,5 @@ public final class RouteManager {
     /**
      * 登录页
      */
-    public static final  String LOGIN_ACTIVITY = "/login/LoginActivity";
-
-    /**
-     * 官员H5详情页
-     */
-    //TODO WLJ 链接??
+    public static final String LOGIN_ACTIVITY = "/login/LoginActivity";
 }

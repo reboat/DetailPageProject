@@ -195,9 +195,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
         //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
-        if (data.getArticle().getComment_count() <= 0) {
-            mTvCommentsNum.setVisibility(View.GONE);
-        } else {
+        if (data.getArticle().getComment_count() > 0) {
+            mTvCommentsNum.setVisibility(View.VISIBLE);
             if (data.getArticle().getComment_count() < 9999) {
                 mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
             } else if (data.getArticle().getComment_count() > 9999) {
@@ -211,7 +210,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment, R2.id.view_exise})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 

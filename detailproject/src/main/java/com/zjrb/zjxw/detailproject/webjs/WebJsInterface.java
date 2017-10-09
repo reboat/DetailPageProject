@@ -15,6 +15,7 @@ import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 
@@ -178,12 +179,12 @@ public class WebJsInterface {
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(UIUtils.getContext(), "收藏成功");
+                T.showShort(UIUtils.getContext(), UIUtils.getString(R.string.module_detail_collect_success));
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getContext(), "收藏失败");
+                T.showShort(UIUtils.getContext(), UIUtils.getString(R.string.module_detail_collect_failed));
             }
 
         }).setTag(this).exe(newsId, true);

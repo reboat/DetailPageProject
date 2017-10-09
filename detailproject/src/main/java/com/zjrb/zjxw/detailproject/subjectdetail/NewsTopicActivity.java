@@ -264,12 +264,12 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
             @Override
             public void onSuccess(Void baseInnerData) {
                 topHolder.getCollectView().setImageResource(R.mipmap.module_detail_collect_night);
-                T.showShort(getBaseContext(), "收藏成功");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), "收藏失败");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_failed));
             }
 
         }).setTag(this).exe(mArticleId, !bean.getArticle().isFollowed());

@@ -552,20 +552,19 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
-            T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
+            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
         new DraftPraiseTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //用户未登录
-                T.showShort(getBaseContext(), "点赞失败");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_failed));
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), "点赞成功");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }

@@ -9,6 +9,8 @@
     <string name="module_detail_comment_window_hint">我来说两句（评论内容不少于5个字）</string>
     <string name="module_detail_label_persional">官员详情</string>
     <string name="module_detail_save_pic">保存图片</string>
+    <string name="module_detail_save_success">保存成功</string>
+    <string name="module_detail_save_failed">保存失败</string>
     <string name="module_detail_subscribe_success">订阅成功</string>
     <string name="module_detail_save_cancel">取消</string>
     <string name="module_detail_share_to">分享至</string>
@@ -31,4 +33,10 @@
     <string name="module_detail_comment_content_empty">评论内容不能为空</string>
     <string name="module_detail_revoke">很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容</string>
     <string name="module_detail_share_content_from">来自浙江新闻客户端</string>
+    <string name="module_detail_no_network">网络不可用</string>
+    <string name="module_detail_prise_success">点赞成功</string>
+    <string name="module_detail_prise_failed">点赞失败</string>
+    <string name="module_detail_collect_success">收藏成功</string>
+    <string name="module_detail_collect_failed">收藏失败</string>
+    <string name="module_detail_no_speaking">您已被禁言</string>
 </resources>

@@ -223,12 +223,12 @@ public class ImageBrowseActivity extends BaseActivity {
 
                     @Override
                     public void onSuccess(String path) {
-                        T.showShort(ImageBrowseActivity.this, "保存成功");
+                        T.showShort(ImageBrowseActivity.this, getString(R.string.module_detail_collect_success));
                     }
 
                     @Override
                     public void onFail(String err) {
-                        T.showShort(ImageBrowseActivity.this, "保存失败");
+                        T.showShort(ImageBrowseActivity.this, getString(R.string.module_detail_collect_failed));
                     }
                 })
                 .download(url);

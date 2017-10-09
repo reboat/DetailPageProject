@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +21,7 @@ import com.aliya.player.PlayerManager;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.ratio.RatioFrameLayout;
+import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -192,7 +192,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
 
         if (!NetUtils.isAvailable()) {
-            T.showShort(getContext(), "网络不可用");
+            T.showShort(getContext(), getString(R.string.module_detail_no_network));
         }
     }
 
@@ -207,7 +207,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = "https://v-cdn.zjol.com.cn/12345.mp4";//mNewsDetail.getArticle().getVideo_url();
+                mVideoPath = mNewsDetail.getArticle().getVideo_url();
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     initVideo();
                 }
@@ -328,13 +328,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     }
 
-
-    @Override
-    public void finish() {
-        super.finish();
-        Log.v("","WLJ,11");
-    }
-
     /**
      * WebView加载完毕
      */
@@ -379,7 +372,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
-            T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
+            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
         new DraftPraiseTask(new APIExpandCallBack<Void>() {
@@ -387,12 +380,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onError(String errMsg, int errCode) {
                 //用户未登录
-                T.showShort(getBaseContext(), "点赞失败");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), "点赞成功");
+                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -475,6 +468,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
+
     }
 
 

@@ -7,6 +7,8 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.zjxw.detailproject.R;
 
 import java.math.BigDecimal;
 
@@ -41,7 +43,7 @@ public class BizUtils {
     public static boolean isCanComment(Context context, int set) {
         switch (set) {
             case comment.JY: // 评论未关闭，但用户被禁言
-                T.showShort(context, "您已被禁言");
+                T.showShort(context, UIUtils.getString(R.string.module_detail_no_speaking));
                 return false;
             default:
                 return true;

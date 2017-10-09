@@ -355,18 +355,18 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void fabulous() {
         if (mData == null) return;
         if (mData.getArticle().isLiked()) {
-            T.showNow(this, "您已点赞", Toast.LENGTH_SHORT);
+            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
         new DraftPraiseTask(new APICallBack<Void>() {
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getContext(), "点赞失败");
+                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_failed));
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(UIUtils.getContext(), "点赞成功");
+                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_success));
                 mData.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -425,12 +425,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
                     @Override
                     public void onSuccess(String path) {
-                        T.showShort(AtlasDetailActivity.this, "保存成功");
+                        T.showShort(AtlasDetailActivity.this, getString(R.string.module_detail_save_success));
                     }
 
                     @Override
                     public void onFail(String err) {
-                        T.showShort(AtlasDetailActivity.this, "保存失败");
+                        T.showShort(AtlasDetailActivity.this, getString(R.string.module_detail_save_failed));
                     }
                 })
                 .download(url);

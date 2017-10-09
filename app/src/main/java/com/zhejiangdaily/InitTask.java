@@ -1,4 +1,4 @@
-package com.zjrb.detailpageproject;
+package com.zhejiangdaily;
 
 import com.zjrb.core.api.base.APIPostTask;
 import com.zjrb.core.api.callback.LoadingCallBack;

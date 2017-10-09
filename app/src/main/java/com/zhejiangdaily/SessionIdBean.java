@@ -1,4 +1,4 @@
-package com.zjrb.detailpageproject;
+package com.zhejiangdaily;
 
 
 import java.io.Serializable;

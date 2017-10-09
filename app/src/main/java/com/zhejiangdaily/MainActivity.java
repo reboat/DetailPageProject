@@ -1,4 +1,4 @@
-package com.zjrb.detailpageproject;
+package com.zhejiangdaily;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

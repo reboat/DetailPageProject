@@ -3,7 +3,6 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -169,13 +168,11 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
-                            mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
-                            WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
-                    .setTitle(!TextUtils.isEmpty(mData.getArticle().getList_title()) ? mData.getArticle().getList_title() : "")
+                    .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                    .setTextContent(WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                    .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())
-                    .setTargetUrl(!TextUtils.isEmpty(mData.getArticle().getUrl()) ? mData.getArticle().getUrl() : ""));
+                    .setTargetUrl(mData.getArticle().getUrl()));
         }
     }
 }

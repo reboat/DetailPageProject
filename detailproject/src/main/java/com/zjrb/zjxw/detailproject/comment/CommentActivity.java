@@ -236,12 +236,19 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 tvComment.setVisibility(View.VISIBLE);
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
-            //分享文章
+            //分享文章(专题和话题取题图,没有则取logo)
         } else if (v.getId() == R.id.iv_top_share) {
+            String imgUrl;
+            if (mNewsDetail.getArticle().getDoc_type() == 5 || mNewsDetail.getArticle().getDoc_type() == 6) {
+                //取题图，否则为""
+                imgUrl = !TextUtils.isEmpty(mNewsDetail.getArticle().getArticle_pic()) ? mNewsDetail.getArticle().getArticle_pic() : "";
+            } else {
+                //取正文第一张图，否则为""
+                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this).getmImgSrcs()[0] : "";
+            }
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ?
-                            mNewsDetail.getArticle().getArticle_pic() : WebJsInterface.getInstance(this).getmImgSrcs()[0])
+                    .setImgUri(imgUrl)
                     .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
                             WebJsInterface.getInstance(this).getHtmlText())
                     .setTitle(mNewsDetail.getArticle().getList_title())

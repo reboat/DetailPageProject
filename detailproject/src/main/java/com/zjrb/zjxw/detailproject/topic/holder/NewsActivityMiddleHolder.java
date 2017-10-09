@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -94,13 +93,10 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void onItemClick(View itemView, int position) {
-        //TODO  WLJ  打开分享  默认图片地址  默认内容??
         UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                 .setSingle(true)
-                .setImgUri(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs().toString()) ?
-                        mData.getArticle().getArticle_pic() : WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(itemView.getContext()).getHtmlText()) ? "" :
-                        WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                .setTextContent(WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
                 .setTitle(mData.getArticle().getList_title())
                 .setTargetUrl(mData.getArticle().getUrl()));
 

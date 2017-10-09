@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -190,14 +189,12 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.iv_share) {
-            //TODO WLJ 分享 默认地址  默认图片之类???
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(!TextUtils.isEmpty(bean.getArticle().getArticle_pic()) ? bean.getArticle().getArticle_pic() : "")
-                    .setTextContent(!TextUtils.isEmpty(bean.getArticle().getSummary()) ? bean.getArticle().getSummary() :
-                            getString(R.string.module_detail_share_content_from))
-                    .setTitle(!TextUtils.isEmpty(bean.getArticle().getList_title()) ? bean.getArticle().getList_title() : getString(R.string.module_detail_share_content_from))
-                    .setTargetUrl(!TextUtils.isEmpty(bean.getArticle().getUrl()) ? bean.getArticle().getUrl() : ""));
+                    .setImgUri(bean.getArticle().getArticle_pic())
+                    .setTextContent(bean.getArticle().getSummary())
+                    .setTitle(bean.getArticle().getList_title())
+                    .setTargetUrl(bean.getArticle().getUrl()));
         } else {
             //收藏
             newsTopicCollect();

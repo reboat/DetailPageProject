@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -174,7 +173,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             //分享
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(!TextUtils.isEmpty(bean.getOfficer().getPhoto()) ? bean.getOfficer().getPhoto() : "")
+                    .setImgUri(bean.getOfficer().getPhoto())
                     .setTextContent(bean.getOfficer().getName())
                     .setTitle(getString(R.string.module_detail_share_content_from))
                     .setTargetUrl(bean.getOfficer().getUrl()));

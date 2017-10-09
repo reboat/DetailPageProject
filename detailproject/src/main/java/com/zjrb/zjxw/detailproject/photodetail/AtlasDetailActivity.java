@@ -228,14 +228,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             finish();
             //分享
         } else if (id == R.id.iv_share) {
-            //TODO WLJ 分享  默认图片地址？？？默认标题???分享地址??
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(!TextUtils.isEmpty(mData.getArticle().getAlbum_image_list().get(0).getImage_url()) ? mData.getArticle().getAlbum_image_list().get(0).getImage_url() : "")
-                    .setTextContent(!TextUtils.isEmpty(mData.getArticle().getAlbum_image_list().get(0).getDescription()) ? mData.getArticle().getAlbum_image_list().get(0).getDescription() :
-                            getString(R.string.module_detail_share_content_from))
-                    .setTitle(!TextUtils.isEmpty(mData.getArticle().getList_title()) ? mData.getArticle().getList_title() : getString(R.string.module_detail_share_content_from))
-                    .setTargetUrl(!TextUtils.isEmpty(mData.getArticle().getUrl()) ? mData.getArticle().getUrl() : "")
+                    .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
+                    .setTextContent(mData.getArticle().getAlbum_image_list().get(0).getDescription())
+                    .setTitle(mData.getArticle().getList_title())
+                    .setTargetUrl(mData.getArticle().getUrl())
             );
             //评论框
         } else if (id == R.id.tv_comment) {
@@ -251,7 +249,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     if (bundle == null) {
                         bundle = new Bundle();
                     }
-                    bundle.putSerializable(IKey.NEWS_DETAIL,mData);
+                    bundle.putSerializable(IKey.NEWS_DETAIL, mData);
                     Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
                 }
 

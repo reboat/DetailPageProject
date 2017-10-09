@@ -18,7 +18,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.zjrb.core.R;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.global.C;
@@ -28,6 +27,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;

@@ -1,16 +1,21 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.holder;
 
+import android.net.Uri;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 官员holder2(纯文本)
@@ -30,8 +35,23 @@ public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesB
 
     @Override
     public void bindView() {
-        if(mData.getTitle() != null){
+        if (mData.getTitle() != null) {
             mTvTitle.setText(mData.getTitle());
+        }
+    }
+
+    /**
+     * 点击跳转到链接稿
+     *
+     * @param view
+     */
+    @OnClick({R2.id.tv_title})
+    public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (view.getId() == R.id.tv_title) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getUrl())
+                    .buildUpon()
+                    .build(), 0);
         }
     }
 }

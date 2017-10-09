@@ -103,8 +103,9 @@ public class OfficalDetailBean extends BaseData {
         private long ccp_date;
         private long work_date;
         private String description;
-        private String photo;
-        private String list_pic;
+        private String photo;//官员详情页
+        private String list_pic;//所有官员列表
+        private String url;
         /**
          * year : 2017
          * month : 7
@@ -232,6 +233,14 @@ public class OfficalDetailBean extends BaseData {
 
         public void setResumes(List<ResumesBean> resumes) {
             this.resumes = resumes;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
         }
 
         /**

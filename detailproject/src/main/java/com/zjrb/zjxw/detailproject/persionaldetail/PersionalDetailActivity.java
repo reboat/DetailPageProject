@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,10 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.db.BundleHelper;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -32,6 +36,7 @@ import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 官员详情页
@@ -122,7 +127,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像
-            GlideApp.with(ivAvatar).load(bean.getList_pic()).placeholder(PH.zheSmall()).circleCrop().into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getPhoto()).placeholder(PH.zheSmall()).circleCrop().into(ivAvatar);
             //姓名
             if (bean.getName() != null) {
                 tvName.setText(bean.getName());
@@ -158,6 +163,22 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @OnClick({R2.id.lly_reporter, R2.id.iv_top_share})
+    public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (view.getId() == R.id.lly_reporter) {
+            //TODO WLJ 进入官员详情页H5
+        } else {
+            //分享
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setImgUri(!TextUtils.isEmpty(bean.getOfficer().getPhoto()) ? bean.getOfficer().getPhoto() : "")
+                    .setTextContent(bean.getOfficer().getName())
+                    .setTitle(getString(R.string.module_detail_share_content_from))
+                    .setTargetUrl(bean.getOfficer().getUrl()));
+        }
     }
 
 

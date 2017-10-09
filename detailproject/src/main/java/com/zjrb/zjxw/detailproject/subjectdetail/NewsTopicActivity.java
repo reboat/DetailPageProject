@@ -239,6 +239,9 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
      * @param draftTopicBean 填充数据
      */
     private void fillData(DraftDetailBean draftTopicBean) {
+        //显示UI
+        mViewExise.setVisibility(View.GONE);
+        mRvContent.setVisibility(View.VISIBLE);
         //添加专题详情页的头部holder
         headHolder = new HeaderTopicHolder(mRvContent);
         headHolder.initData(draftTopicBean);

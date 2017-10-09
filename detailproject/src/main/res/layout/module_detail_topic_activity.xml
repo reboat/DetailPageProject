@@ -32,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:text="加载失败"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_14sp"/>
+            android:textSize="@dimen/ts_14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
             android:padding="3dp"
             android:text="点击屏幕重试"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_11sp"/>
+            android:textSize="@dimen/ts_11sp" />
 
     </LinearLayout>
 
@@ -54,7 +54,7 @@
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
         android:scrollbars="vertical"
-        app:fitType="bottom"/>
+        app:fitType="bottom" />
 
     <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:id="@+id/floor_bar"
@@ -68,7 +68,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="#dddddd"/>
+            android:background="#dddddd" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 android:background="@drawable/module_detail_comment_edit"
                 >
 
-                <EditText
+                <TextView
                     android:id="@+id/tv_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -100,8 +100,7 @@
                     android:text="@string/module_detail_comment_hint"
                     android:textColor="?attr/tc_484848"
                     android:textColorHint="?attr/tc_999999"
-                    android:textSize="@dimen/ts_14sp"/>
-
+                    android:textSize="@dimen/ts_14sp" />
             </FrameLayout>
 
 
@@ -114,7 +113,7 @@
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/module_detail_news_prise"
-                app:iv_maskColor="@color/module_detail_comment_night"/>
+                app:iv_maskColor="@color/module_detail_comment_night" />
 
             <ImageView
                 android:id="@+id/menu_setting"
@@ -125,7 +124,7 @@
                 android:layout_marginRight="5dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@mipmap/module_detail_ic_more"
-                app:iv_maskColor="@color/module_detail_comment_night"/>
+                app:iv_maskColor="@color/module_detail_comment_night" />
         </RelativeLayout>
     </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
@@ -147,7 +146,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="7dp"
-                android:src="@mipmap/ic_top_bar_back_white"/>
+                android:src="@mipmap/ic_top_bar_back_white" />
 
             <ImageView
                 android:id="@+id/iv_share"
@@ -156,7 +155,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="7dp"
-                android:src="@mipmap/ic_detail_menu_share"/>
+                android:src="@mipmap/ic_detail_menu_share" />
 
             <View
                 android:id="@+id/v_toolbar_divider"
@@ -164,12 +163,12 @@
                 android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
                 android:background="?attr/dc_dddddd"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 
     <include
         android:id="@+id/ll_fixed"
         layout="@layout/module_detail_activity_title"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 </RelativeLayout>

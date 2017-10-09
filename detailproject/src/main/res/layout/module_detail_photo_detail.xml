@@ -34,7 +34,7 @@
             android:layout_marginTop="10dp"
             android:text="加载失败"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_14sp"/>
+            android:textSize="@dimen/ts_14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:padding="3dp"
             android:text="点击屏幕重试"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_11sp"/>
+            android:textSize="@dimen/ts_11sp" />
 
     </LinearLayout>
 
@@ -52,7 +52,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"/>
+        android:background="@android:color/black" />
 
     <!--顶部-->
     <LinearLayout
@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:fitType="top"/>
+            app:fitType="top" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:layout_centerInParent="true"
                 android:textColor="?attr/tc_ffffff"
                 android:visibility="gone"
-                tools:text="自定义ToolBar"/>
+                tools:text="自定义ToolBar" />
 
             <ImageView
                 android:id="@+id/iv_back"
@@ -143,10 +143,10 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
+                android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_16sp"
                 android:textStyle="bold"
-                android:textColor="?attr/tc_ffffff"
-                tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发"/>
+                tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发" />
 
             <TextView
                 android:id="@+id/tv_index"
@@ -188,7 +188,8 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:scrollbars="vertical"
-            android:textSize="@dimen/ts_14sp"/>
+            android:textSize="@dimen/ts_14sp" />
+
 
         <!--底部floorBar-->
         <RelativeLayout
@@ -249,7 +250,7 @@
                 android:layout_marginLeft="-12dp"
                 android:layout_marginTop="-3dp"
                 android:layout_toRightOf="@id/menu_comment"
-                android:textSize="@dimen/ts_11sp"/>
+                android:textSize="@dimen/ts_11sp" />
 
             <FrameLayout
                 android:layout_width="217dp"
@@ -266,11 +267,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:drawableLeft="@mipmap/me_qq_btn"
+                    android:drawableLeft="@mipmap/module_detail_commentedit_left"
+                    android:drawablePadding="10dp"
                     android:gravity="center_vertical|left"
-                    android:paddingLeft="10dp"
-                    android:textSize="@dimen/ts_14sp"
-                    tools:hint="写评论"/>
+                    android:paddingLeft="20dp"
+                    android:text="@string/module_detail_comment_hint"
+                    android:textColor="?attr/tc_484848"
+                    android:textColorHint="?attr/tc_999999"
+                    android:textSize="@dimen/ts_14sp" />
             </FrameLayout>
         </RelativeLayout>
 
@@ -279,6 +283,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:fitType="bottom"/>
+            app:fitType="bottom" />
     </LinearLayout>
 </FrameLayout>

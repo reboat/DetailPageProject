@@ -192,7 +192,9 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-
+        //显示UI
+        mWebViewContainer.setVisibility(View.VISIBLE);
+        mViewExise.setVisibility(View.GONE);
         //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
         if (data.getArticle().getComment_count() > 0) {

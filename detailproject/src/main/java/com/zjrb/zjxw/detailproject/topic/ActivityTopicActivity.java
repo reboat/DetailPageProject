@@ -439,6 +439,12 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      */
 
     private void fillData(DraftDetailBean data) {
+        //显示UI
+        mViewExise.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mFloorBar.setVisibility(View.VISIBLE);
+        mLlFixedTitle.setVisibility(View.VISIBLE);
+
         mNewsDetail = data;
         List datas = new ArrayList<>();
         //头

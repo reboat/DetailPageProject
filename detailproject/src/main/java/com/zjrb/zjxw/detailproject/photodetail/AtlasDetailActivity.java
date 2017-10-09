@@ -165,6 +165,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * @param atlasDetailEntity 获取图集详情页数据
      */
     private void fillData(DraftDetailBean atlasDetailEntity) {
+        //显示UI
+        mViewExise.setVisibility(View.GONE);
+        mViewPager.setVisibility(View.VISIBLE);
+        mContainerBottom.setVisibility(View.VISIBLE);
+
         mData = atlasDetailEntity;
         //设置数据
         if (atlasDetailEntity != null) {
@@ -259,7 +264,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             fabulous();
             //设置
         } else if (id == R.id.menu_setting) {
-            //TODO WLJ 修改字体，夜间模式之类
             MoreDialog.newInstance(mData).show(getSupportFragmentManager(), "MoreDialog");
             //下载
         } else if (id == R.id.iv_top_download) {

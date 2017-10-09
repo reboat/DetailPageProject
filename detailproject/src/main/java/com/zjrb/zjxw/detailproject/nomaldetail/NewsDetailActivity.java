@@ -239,6 +239,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
+        //显示UI
+        mFlContent.setVisibility(View.VISIBLE);
+        mViewExise.setVisibility(View.GONE);
 
         mNewsDetail = data;
         List datas = new ArrayList<>();

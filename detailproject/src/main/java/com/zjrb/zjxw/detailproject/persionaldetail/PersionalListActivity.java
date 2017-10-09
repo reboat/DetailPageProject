@@ -27,6 +27,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
@@ -162,7 +163,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                             bundle = new Bundle();
                         }
                         bundle.putInt(IKey.OFFICIAL_ID, officalId);
-                        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/PersionalDetailActivity");
+                        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.PERSIONAL_DETAIL);
                     } else {
                         //支持跳转到所有的新闻详情页
                         if (uri != null && !uri.isEmpty()) {

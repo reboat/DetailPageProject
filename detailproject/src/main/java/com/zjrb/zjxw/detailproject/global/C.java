@@ -13,10 +13,6 @@ public final class C {
     public static final int PAGE_SIZE_OFFICAL = 10;
 
     /**
-     * 夜间模式css - 路径
-     */
-    public static final String NIGHT_CSS_PATH = "css/night.css";
-    /**
      * html标准 - 路径
      */
     public static final String HTML_RULE_PATH = "html/html_standard_code.html";

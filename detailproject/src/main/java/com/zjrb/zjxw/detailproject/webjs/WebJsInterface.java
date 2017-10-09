@@ -16,6 +16,7 @@ import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 
@@ -156,7 +157,7 @@ public class WebJsInterface {
         }
         bundle.putString(IKey.ID, newsId);
         bundle.putString(IKey.TITLE, newsTitle);
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
     }
 
     /**
@@ -195,7 +196,7 @@ public class WebJsInterface {
      */
     @JavascriptInterface
     public void zjxw_js_login() {
-        Nav.with(UIUtils.getContext()).toPath("/login/LoginActivity");
+        Nav.with(UIUtils.getContext()).toPath(RouteManager.LOGIN_ACTIVITY);
     }
 
     /**

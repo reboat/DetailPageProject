@@ -143,23 +143,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId,mData.getId(),mData.getNick_name())).show(((FragmentActivity)UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                    .buildUpon()
-//                    .appendQueryParameter(Key.ID, articleId)
-//                    .appendQueryParameter(Key.CONENT, mData.getContent() + "")
-//                    .appendQueryParameter(Key.PARENT_ID, mData.getId() + "")
-//                    .appendQueryParameter(Key.REPLAYER, mData.getNick_name() + "")
-//                    .build(), 0);
             //回复回复者
         } else {
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId,mData.getParent_id(),mData.getParent_nick_name())).show(((FragmentActivity)UIUtils.getActivity()).getSupportFragmentManager(),"CommentWindowDialog");
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/detail/CommentWindowActivity")
-//                    .buildUpon()
-//                    .appendQueryParameter(Key.ID, articleId)
-//                    .appendQueryParameter(Key.MLF_ID, mData.getParent_content() + "")
-//                    .appendQueryParameter(Key.PARENT_ID, mData.getParent_id() + "")
-//                    .appendQueryParameter(Key.REPLAYER, mData.getParent_nick_name() + "")
-//                    .build(), 0);
         }
     }
 

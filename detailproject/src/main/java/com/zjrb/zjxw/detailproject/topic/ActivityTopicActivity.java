@@ -43,6 +43,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -542,7 +543,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             bundle = new Bundle();
         }
         bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COLUMN_LIST);
     }
 
     /**

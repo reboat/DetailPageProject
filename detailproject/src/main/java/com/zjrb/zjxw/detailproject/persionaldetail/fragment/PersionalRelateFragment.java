@@ -171,7 +171,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         if (data != null && data.getArticle_list() != null) {
             List<SubjectItemBean> list = data.getArticle_list();
             if (list.size() > 0) {
-                lastID = getLastID(list);//获取最后的刷新时间
+                lastID = getLastID(list);
             }
             mAdapter.addData(list, true);
             if (list.size() < C.PAGE_SIZE) {

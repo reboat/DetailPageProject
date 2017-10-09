@@ -18,6 +18,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,7 +93,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             }
             bundle.putString(IKey.CHANNEL_NAME, mData.getArticle().getChannel_name());
             bundle.putString(IKey.CHANNEL_ID, mData.getArticle().getChannel_id());
-            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
         }
     }
 

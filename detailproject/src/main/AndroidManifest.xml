@@ -71,19 +71,19 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <!--普通详情页-->
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/news.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
                 <!--视频详情页-->
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/video.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
                 <!--活动详情页-->
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/activity.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
 
             </intent-filter>
         </activity>
@@ -100,11 +100,12 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/album.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
+        <!--官员详情-->
         <activity
             android:name=".persionaldetail.PersionalDetailActivity"
             android:screenOrientation="portrait">
@@ -120,6 +121,7 @@
                     android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
+        <!--官员新闻列表-->
         <activity
             android:name=".persionaldetail.PersionalListActivity"
             android:screenOrientation="portrait">
@@ -148,11 +150,12 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/subject.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
+        <!--专题列表-->
         <activity
             android:name=".subjectdetail.TopicListActivity"
             android:screenOrientation="portrait">
@@ -179,12 +182,12 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="@string/data_host_zjol"
+                    android:host="@string/data_host_test"
                     android:path="/topic.html"
-                    android:scheme="@string/data_scheme_https"/>
+                    android:scheme="@string/data_scheme"/>
             </intent-filter>
         </activity>
-
+        <!--图集预览-->
         <activity
             android:name=".webjs.ImageBrowseActivity"
             android:screenOrientation="portrait">
@@ -195,7 +198,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
-                    android:host="@string/data_host"
+                    android:host="@string/data_host_test"
                     android:path="/detail/ImageBrowseActivity"
                     android:scheme="@string/data_scheme"/>
             </intent-filter>

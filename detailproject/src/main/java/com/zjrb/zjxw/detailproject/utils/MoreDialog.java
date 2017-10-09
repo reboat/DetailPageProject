@@ -31,6 +31,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import org.greenrobot.eventbus.EventBus;
@@ -185,7 +186,7 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
             EventBus.getDefault().postSticky(new NewsDetailNightThemeEvent(!ThemeMode.isNightMode()));
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
-            Nav.with(UIUtils.getContext()).toPath("/feedback");
+            Nav.with(UIUtils.getContext()).toPath(RouteManager.FEED_BACK);
             dismissFragmentDialog();
 
         } else if (i == R.id.btn_dialog_close) {

@@ -31,6 +31,7 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;
@@ -146,7 +147,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
                     bundle = new Bundle();
                 }
                 bundle.putInt(IKey.ID, b.getGroupId());
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/TopicListActivity");
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
             }
         }
 

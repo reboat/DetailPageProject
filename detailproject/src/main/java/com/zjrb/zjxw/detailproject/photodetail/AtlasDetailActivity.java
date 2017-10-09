@@ -39,6 +39,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -251,7 +252,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         bundle = new Bundle();
                     }
                     bundle.putSerializable(IKey.NEWS_DETAIL,mData);
-                    Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
+                    Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
                 }
 
             }

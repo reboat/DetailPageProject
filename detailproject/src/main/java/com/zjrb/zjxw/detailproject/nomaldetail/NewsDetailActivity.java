@@ -43,6 +43,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -348,7 +349,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             bundle = new Bundle();
         }
         bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/detail");
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COLUMN_LIST);
     }
 
     /**
@@ -362,7 +363,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
         bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name());
         bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/subscription/subscribe");
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
     }
 
     /**
@@ -405,7 +406,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     bundle = new Bundle();
                 }
                 bundle.putSerializable(IKey.NEWS_DETAIL, mNewsDetail);
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {

@@ -18,6 +18,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,7 +87,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
                 bundle = new Bundle();
             }
             bundle.putSerializable(IKey.NEWS_DETAIL,mData);
-            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath("/detail/CommentActivity");
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
 
         }
     }

@@ -26,7 +26,8 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder2;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
@@ -90,7 +91,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     ImageView mMenuPrised;
     @BindView(R2.id.menu_setting)
     ImageView mMenuSetting;
-    @BindView(R2.id.floor_bar)
+    @BindView(R2.id.ly_bottom_comment)
     FitWindowsFrameLayout mFloorBar;
     @BindView(R2.id.fy_container)
     FrameLayout mContainer;
@@ -117,6 +118,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         initIntent(savedInstanceState);
         getIntentData(getIntent());
         initWebView();
+        loadData();
         mWebView.loadUrl(mUrl);
 
     }
@@ -136,11 +138,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     /**
      * 顶部标题
      */
-    private DefaultTopBarHolder2 topBarHolder;
+    private DefaultTopBarHolder1 topBarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder.setViewVisible(topBarHolder.getRightText(), View.GONE);
+        topBarHolder = TopBarFactory.createDefault1(view, this);
         topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
         return topBarHolder.getView();
     }

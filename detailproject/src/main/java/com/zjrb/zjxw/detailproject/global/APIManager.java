@@ -81,6 +81,11 @@ public class APIManager {
          */
         public static final String COMMENT_SUBMIT = "/api/comment/create";
 
+        /**
+         * 文件上传
+         */
+        public static final String UPLOAD_PATH = "/api/file/upload";
+
     }
 
 }

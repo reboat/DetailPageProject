@@ -1,21 +1,15 @@
 package com.zjrb.zjxw.detailproject.link;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,39 +20,31 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder2;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
-import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.utils.WebBiz;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -90,7 +76,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     ImageView mMenuPrised;
     @BindView(R2.id.menu_setting)
     ImageView mMenuSetting;
-    @BindView(R2.id.floor_bar)
+    @BindView(R2.id.ly_bottom_comment)
     FitWindowsFrameLayout mFloorBar;
     @BindView(R2.id.fy_container)
     FrameLayout mContainer;
@@ -99,10 +85,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
 
-    private WebJsInterface mWebJsInterface;
-    private String mUrl;
     private WebSettings settings;
     private String mArticleId;
+    /**
+     * 上下滑动超出范围处理
+     */
+    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 详情页数据
      */
@@ -114,11 +102,19 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
-        initIntent(savedInstanceState);
         getIntentData(getIntent());
-        initWebView();
-        mWebView.loadUrl(mUrl);
+        init();
+        loadData();
 
+    }
+
+    /**
+     * 初始化滑动/webview
+     */
+    private void init() {
+        settings = mWebView.getSettings();
+        mTouchSlopHelper = new TouchSlopHelper();
+        mTouchSlopHelper.setOnTouchSlopListener(this);
     }
 
     /**
@@ -136,29 +132,14 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     /**
      * 顶部标题
      */
-    private DefaultTopBarHolder2 topBarHolder;
+    private DefaultTopBarHolder1 topBarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder.setViewVisible(topBarHolder.getRightText(), View.GONE);
+        topBarHolder = TopBarFactory.createDefault1(view, this);
         topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
+        topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.VISIBLE);
         return topBarHolder.getView();
-    }
-
-
-    private void initIntent(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            mUrl = savedInstanceState.getString(IKey.DATA);
-        }
-        if (TextUtils.isEmpty(mUrl)) {
-            Intent intent = getIntent();
-            if (intent != null) {
-                mUrl = intent.getStringExtra(IKey.DATA);
-                if (TextUtils.isEmpty(mUrl)) {
-                    mUrl = getIntent().getData().toString();
-                }
-            }
-        }
     }
 
     /**
@@ -195,6 +176,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         //显示UI
         mWebViewContainer.setVisibility(View.VISIBLE);
         mViewExise.setVisibility(View.GONE);
+
+        //显示标题展示WebView内容等
+        topBarHolder.getTitleView().setText(data.getArticle().getList_title());
+        mWebView.loadUrl(data.getArticle().getWeb_link());
+
         //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
         if (data.getArticle().getComment_count() > 0) {
@@ -205,6 +191,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
             }
         }
+
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
@@ -229,7 +216,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     .setSingle(false)
                     .setTextContent(getString(R.string.module_detail_share_content_from))
                     .setTitle("")
-                    .setTargetUrl(mUrl)
+                    .setTargetUrl(mNewsDetail.getArticle().getWeb_link())
             );
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
@@ -299,6 +286,13 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 分享回调
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -308,7 +302,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
 
     /**
-     * @param event 删除评论后刷新列表
+     * @param event 缩放字体
      */
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(Object event) {
@@ -318,153 +312,24 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 //设置缩放比例
                 int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
                 settings.setTextZoom(zoom);
-            } else if (event instanceof NewsDetailNightThemeEvent) {
-                //设置夜间模式
-                setCssJSWebView();
             }
         }
 
     }
 
-    /**
-     * 设置CSS和JS
-     */
-    private void setCssJSWebView() {
-        String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
-        String uiModeCssUri = ThemeMode.isNightMode()
-                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
-        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mNewsDetail.getArticle().getContent()) ? "" : mNewsDetail.getArticle().getContent(),
-                new WebBiz.ImgSrcsCallBack() {
-                    @Override
-                    public void callBack(String[] imgSrcs) {
-                        mWebJsInterface.setImgSrcs(imgSrcs);
-                    }
-                }, new WebBiz.TextCallBack() {
-
-                    @Override
-                    public void callBack(String text) {
-                        mWebJsInterface.setHtmlText(text);
-                    }
-                });
-        //TODO WLJ  服务器如果有返回则使用服务器
-        String htmlResult = String.format(htmlCode, uiModeCssUri, htmlBody);
-        mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
-    }
 
     /**
-     * 初始化webview
-     */
-    private void initWebView() {
-        mWebView.setFocusable(false);
-
-        // 隐藏到滚动条
-        mWebView.setVerticalScrollBarEnabled(false);
-        mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.setScrollContainer(false);
-        //注入支持的本地方法
-        mWebJsInterface = WebJsInterface.getInstance(this);
-        mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
-
-        // 夜间模式
-        if (ThemeMode.isNightMode()) {
-            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_202124_night));
-        } else {
-            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_ffffff));
-        }
-
-        settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true); // 启用支持javaScript
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 没网使用缓存
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 禁止横向滑动
-        settings.setDomStorageEnabled(true);//开启DOM storage API功能
-        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100)); // 字体缩放倍数
-        settings.setUseWideViewPort(true); // 视频全屏点击支持回调
-        settings.setLoadWithOverviewMode(true);
-        settings.setAllowFileAccess(true); // 允许访问文件
-
-        // WebView在安卓5.0之前默认允许其加载混合网络协议内容
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                WebView.HitTestResult hitTestResult = view.getHitTestResult();
-                return true;
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                // 因为加载的是html文本，所以onPageStart时机比较合适
-                if (BrowserLinkActivity.this instanceof NewsDetailAdapter.CommonOptCallBack) {
-                    ((NewsDetailAdapter.CommonOptCallBack) BrowserLinkActivity.this)
-                            .onOptPageFinished();
-                } else if (BrowserLinkActivity.this instanceof ActivityTopicAdapter.CommonOptCallBack) {
-                    ((ActivityTopicAdapter.CommonOptCallBack) BrowserLinkActivity.this)
-                            .onOptPageFinished();
-                }
-            }
-
-        });
-
-        mWebView.setWebChromeClient(new WebChromeClient() {
-
-            private FrameLayout container;
-            private View videoView;
-            private CustomViewCallback customViewCallback;
-
-            @Override
-            public void onShowCustomView(View view, CustomViewCallback callback) {
-                if (videoView != null) {
-                    callback.onCustomViewHidden();
-                    return;
-                }
-
-                FrameLayout decor = getDecorView();
-                BrowserLinkActivity.this
-                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                container = new WebFullScreenContainer(BrowserLinkActivity.this);
-                container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                decor.addView(container, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                videoView = view;
-                customViewCallback = callback;
-            }
-
-            @Override
-            public void onHideCustomView() {
-                if (videoView == null) {
-                    return;
-                }
-                BrowserLinkActivity.this
-                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                FrameLayout decor = getDecorView();
-                decor.removeView(container);
-                container = null;
-                videoView = null;
-                customViewCallback.onCustomViewHidden();
-                mWebView.setVisibility(View.VISIBLE);
-            }
-
-
-        });
-    }
-
-    /**
-     * 获取根布局
+     * 处理上下移动监听
      *
+     * @param ev
      * @return
      */
-    protected FrameLayout getDecorView() {
-        return (FrameLayout) getWindow().getDecorView();
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (mTouchSlopHelper != null)
+            mTouchSlopHelper.onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
-
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 

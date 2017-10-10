@@ -183,7 +183,7 @@
         </activity>
         <!--专题列表-->
         <activity
-            android:name=".subjectdetail.TopicListActivity"
+            android:name=".subjectdetail.SpecialListActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

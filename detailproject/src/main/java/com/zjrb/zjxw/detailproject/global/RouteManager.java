@@ -30,7 +30,7 @@ public final class RouteManager {
     /**
      * 专题列表
      */
-    public static final String TOPIC_LIST = "/detail/TopicListActivity";
+    public static final String TOPIC_LIST = "/detail/SpecialListActivity";
 
     /**
      * 反馈

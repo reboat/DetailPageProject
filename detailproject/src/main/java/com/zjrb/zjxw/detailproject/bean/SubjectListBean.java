@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.bean;
 
 
 import com.zjrb.core.domain.base.BaseData;
+import com.zjrb.daily.news.bean.ArticleItemBean;
 
 import java.util.List;
 
@@ -10,16 +11,15 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/8/24  下午7:44
  */
-
 public class SubjectListBean extends BaseData {
 
-    private List<SubjectItemBean> article_list;
+    private List<ArticleItemBean> article_list;
 
-    public List<SubjectItemBean> getArticle_list() {
+    public List<ArticleItemBean> getArticle_list() {
         return article_list;
     }
 
-    public void setArticle_list(List<SubjectItemBean> article_list) {
+    public void setArticle_list(List<ArticleItemBean> article_list) {
         this.article_list = article_list;
     }
 

@@ -12,7 +12,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
+public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<ArticleItemBean> {
     @BindView(R2.id.iv_picture)
     ImageView mIvPicture;
     @BindView(R2.id.tv_title)

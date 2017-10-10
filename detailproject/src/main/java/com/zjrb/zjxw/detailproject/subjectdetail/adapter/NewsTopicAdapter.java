@@ -12,7 +12,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
@@ -64,7 +64,7 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
         if (groupList != null) {
             for (int i = 0; i < groupList.size(); i++) {
                 SubjectNewsBean.GroupArticlesBean group = groupList.get(i);
-                SubjectItemBean bean = new SubjectItemBean();
+                ArticleItemBean bean = new ArticleItemBean();
                 bean.setList_title(group.getGroupName());
                 if (group.getArticleList() != null && !group.getArticleList().isEmpty()) {
                     bean.setSize(group.getArticleList().size());
@@ -78,7 +78,7 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
             }
 
             for (int i = 0; i < datas.size(); i++) {
-                ((SubjectItemBean) datas.get(i)).setPosition(i);
+                ((ArticleItemBean) datas.get(i)).setPosition(i);
             }
             notifyDataSetChanged();
         }
@@ -114,7 +114,7 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
     @Override
     public int getAbsItemViewType(int position) {
         //组名
-        SubjectItemBean b = (SubjectItemBean) datas.get(position);
+        ArticleItemBean b = (ArticleItemBean) datas.get(position);
         if (b.getDoc_type() == -1) {
             return TYPE_GROUP;
             //纯文字
@@ -145,7 +145,7 @@ public class NewsTopicAdapter extends BaseRecyclerAdapter {
     /**
      * 分组holder
      */
-    static class GroupViewHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
+    static class GroupViewHolder extends BaseRecyclerViewHolder<ArticleItemBean> {
 
         @BindView(R2.id.tv_group_name)
         TextView tvGroupName;

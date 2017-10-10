@@ -16,7 +16,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
 import butterknife.BindView;
@@ -94,7 +94,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
                     .build(), 0);
 

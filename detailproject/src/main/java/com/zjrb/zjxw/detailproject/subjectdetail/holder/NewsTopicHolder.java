@@ -11,7 +11,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/8/9  下午21:16
  */
-public class NewsTopicHolder extends BaseRecyclerViewHolder<SubjectItemBean> {
+public class NewsTopicHolder extends BaseRecyclerViewHolder<ArticleItemBean> {
 
     @BindView(R2.id.iv_picture)
     ImageView mIvPicture;

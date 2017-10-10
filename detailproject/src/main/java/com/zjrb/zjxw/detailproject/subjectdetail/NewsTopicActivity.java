@@ -26,7 +26,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
@@ -130,8 +130,8 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     @Override
     public void onItemClick(View itemView, int position) {
         //点击跳转详情页(所有类型)
-        if (mAdapter.getData().get(position) instanceof SubjectItemBean) {
-            SubjectItemBean b = (SubjectItemBean) mAdapter.getData().get(position);
+        if (mAdapter.getData().get(position) instanceof ArticleItemBean) {
+            ArticleItemBean b = (ArticleItemBean) mAdapter.getData().get(position);
             if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
                 Nav.with(UIUtils.getActivity()).to(Uri.parse(b.getUrl())
                         .buildUpon()
@@ -171,7 +171,7 @@ public class NewsTopicActivity extends BaseActivity implements OnItemClickListen
     public void onEvent(ChannelItemClickEvent event) {
         EventBus.getDefault().removeStickyEvent(event);
         if (mAdapter.datas != null && !mAdapter.datas.isEmpty()) {
-            for (SubjectItemBean bean : (List<SubjectItemBean>) mAdapter.datas) {
+            for (ArticleItemBean bean : (List<ArticleItemBean>) mAdapter.datas) {
                 if (bean.getId() == event.getType()) {
                     if (mAdapter.datas.size() >= (bean.getPosition() + 1)) {
                         ((LinearLayoutManager) mRvContent.getLayoutManager()).scrollToPositionWithOffset(bean.getPosition() + 1, 0);

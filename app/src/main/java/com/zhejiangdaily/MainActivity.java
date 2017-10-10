@@ -1,5 +1,6 @@
 package com.zhejiangdaily;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -7,8 +8,8 @@ import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
+import com.zjrb.zjxw.detailproject.subjectdetail.SpecialListActivity;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -58,8 +59,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                bundle.putInt(Key.ID, 739652);
 //                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com.cn/news.html");
 
-                Nav.with(this).to("http://10.200.70.86:8000/news.html?id=739652",0);
+//                Nav.with(this).to("http://10.200.70.86:8000/news.html?id=739652",0);
 //
+                startActivity(new Intent(this, SpecialListActivity.class));
+
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.GROUP_ID, "5")

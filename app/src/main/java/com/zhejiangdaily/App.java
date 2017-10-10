@@ -1,6 +1,6 @@
 package com.zhejiangdaily;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.aliya.uimode.UiModeManager;
 import com.zjrb.core.common.base.BaseInit;
@@ -8,7 +8,7 @@ import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     @Override
     public void onCreate() {

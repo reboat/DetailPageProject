@@ -26,6 +26,7 @@ import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;

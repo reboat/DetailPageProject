@@ -13,6 +13,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;

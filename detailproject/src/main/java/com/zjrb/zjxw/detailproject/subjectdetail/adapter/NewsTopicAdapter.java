@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;

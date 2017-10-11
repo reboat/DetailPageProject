@@ -11,6 +11,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;

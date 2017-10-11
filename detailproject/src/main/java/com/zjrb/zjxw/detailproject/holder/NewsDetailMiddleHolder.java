@@ -17,6 +17,7 @@ import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;

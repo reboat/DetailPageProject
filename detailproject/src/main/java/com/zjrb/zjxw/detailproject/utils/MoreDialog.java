@@ -22,6 +22,7 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;

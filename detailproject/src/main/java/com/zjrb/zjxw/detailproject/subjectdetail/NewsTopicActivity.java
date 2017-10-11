@@ -16,6 +16,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;

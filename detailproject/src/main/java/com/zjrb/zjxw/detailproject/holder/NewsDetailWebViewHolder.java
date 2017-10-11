@@ -22,6 +22,7 @@ import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;

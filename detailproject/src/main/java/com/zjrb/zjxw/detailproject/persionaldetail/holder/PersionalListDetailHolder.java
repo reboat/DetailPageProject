@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;

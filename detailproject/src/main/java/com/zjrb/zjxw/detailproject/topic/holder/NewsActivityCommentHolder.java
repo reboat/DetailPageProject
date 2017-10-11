@@ -15,6 +15,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;

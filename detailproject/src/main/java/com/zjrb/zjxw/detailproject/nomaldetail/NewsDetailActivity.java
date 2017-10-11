@@ -205,7 +205,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = "https://v-cdn.zjol.com.cn/12345.mp4";//mNewsDetail.getArticle().getVideo_url();
+                mVideoPath = mNewsDetail.getArticle().getVideo_url();
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     initVideo();
                 }
@@ -437,7 +437,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setImgUri(WebJsInterface.getInstance(this).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(this).getHtmlText())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
             //重新加载

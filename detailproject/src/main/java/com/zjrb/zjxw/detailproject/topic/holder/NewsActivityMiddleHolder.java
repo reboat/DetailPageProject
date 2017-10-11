@@ -96,7 +96,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
         UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                 .setSingle(true)
                 .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                .setTextContent(WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                .setTextContent(mData.getArticle().getSummary())
                 .setTitle(mData.getArticle().getList_title())
                 .setTargetUrl(mData.getArticle().getUrl()));
 

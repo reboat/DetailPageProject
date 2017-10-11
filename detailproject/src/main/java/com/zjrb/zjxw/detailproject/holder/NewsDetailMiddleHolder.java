@@ -169,7 +169,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
                     .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                    .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));

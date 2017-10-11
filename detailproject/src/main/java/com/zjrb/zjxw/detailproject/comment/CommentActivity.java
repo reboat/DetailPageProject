@@ -249,8 +249,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setImgUri(imgUrl)
-                    .setTextContent(TextUtils.isEmpty(WebJsInterface.getInstance(this).getHtmlText()) ? "" :
-                            WebJsInterface.getInstance(this).getHtmlText())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         }

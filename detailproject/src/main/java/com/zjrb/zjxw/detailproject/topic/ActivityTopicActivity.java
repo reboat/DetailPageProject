@@ -602,7 +602,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setImgUri(WebJsInterface.getInstance(this).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(this).getHtmlText())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.iv_back) {

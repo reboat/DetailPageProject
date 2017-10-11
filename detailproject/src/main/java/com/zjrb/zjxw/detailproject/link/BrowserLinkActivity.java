@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,16 +192,26 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         topBarHolder.getTitleView().setText(data.getArticle().getList_title());
         mWebView.loadUrl(url);
 
-        //点赞数量
-        mMenuPrised.setSelected(data.getArticle().isLiked());
-        if (data.getArticle().getComment_count() > 0) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            if (data.getArticle().getComment_count() < 9999) {
-                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-            } else if (data.getArticle().getComment_count() > 9999) {
-                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-            }
+        //是否点赞
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
         }
+
+        //评论数量
+        if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+            mTvCommentsNum.setVisibility(View.VISIBLE);
+            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+        }
+//        if (data.getArticle().getComment_count() > 0) {
+//            mTvCommentsNum.setVisibility(View.VISIBLE);
+//            if (data.getArticle().getComment_count() < 9999) {
+//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
+//            } else if (data.getArticle().getComment_count() > 9999) {
+//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
+//            }
+//        }
 
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());

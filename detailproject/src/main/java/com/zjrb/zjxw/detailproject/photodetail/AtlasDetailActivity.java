@@ -177,11 +177,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
             mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
+
             //评论数量
-            if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
-                mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
-            } else {
-                mTvCommentsNum.setVisibility(View.GONE);
+            if(!TextUtils.isEmpty(mData.getArticle().getComment_count_general())){
+                mTvCommentsNum.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
             }
 
             //是否已点赞

@@ -267,16 +267,26 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
 
-        //点赞数量
-        mMenuPrised.setSelected(data.getArticle().isLiked());
-        if (data.getArticle().getComment_count() > 0) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            if (data.getArticle().getComment_count() < 9999) {
-                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-            } else if (data.getArticle().getComment_count() > 9999) {
-                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-            }
+        //是否已点赞
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
         }
+
+        //大致评论数量
+        if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+            mTvCommentsNum.setVisibility(View.VISIBLE);
+            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+        }
+//        if (data.getArticle().getComment_count() > 0) {
+//            mTvCommentsNum.setVisibility(View.VISIBLE);
+//            if (data.getArticle().getComment_count() < 9999) {
+//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
+//            } else if (data.getArticle().getComment_count() > 9999) {
+//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
+//            }
+//        }
 
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());

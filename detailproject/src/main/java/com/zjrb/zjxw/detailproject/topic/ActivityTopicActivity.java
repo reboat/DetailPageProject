@@ -469,8 +469,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
-
-        mMenuPrised.setSelected(data.getArticle().isLiked());
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
+        }
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
 

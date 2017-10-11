@@ -96,6 +96,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private DraftDetailBean mNewsDetail;
 
+    /**
+     * 网页地址
+     */
+    private String url;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +157,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
+                if (mNewsDetail.getArticle().getDoc_type() == 3) {
+                    url = mNewsDetail.getArticle().getWeb_link();
+                } else if (mNewsDetail.getArticle().getDoc_type() == 8) {
+                    url = mNewsDetail.getArticle().getLive_url();
+                }
                 fillData(mNewsDetail);
             }
 
@@ -179,7 +189,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
         //显示标题展示WebView内容等
         topBarHolder.getTitleView().setText(data.getArticle().getList_title());
-        mWebView.loadUrl(data.getArticle().getWeb_link());
+        mWebView.loadUrl(url);
 
         //点赞数量
         mMenuPrised.setSelected(data.getArticle().isLiked());
@@ -216,7 +226,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     .setSingle(false)
                     .setTextContent(getString(R.string.module_detail_share_content_from))
                     .setTitle("")
-                    .setTargetUrl(mNewsDetail.getArticle().getWeb_link())
+                    .setTargetUrl(url)
             );
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {

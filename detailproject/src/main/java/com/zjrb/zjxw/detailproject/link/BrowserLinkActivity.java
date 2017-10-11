@@ -55,7 +55,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 链接稿 - 通用WebView - Activity
+ * 链接稿 - Activity
  * <p>
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14

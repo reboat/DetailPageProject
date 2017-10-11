@@ -53,11 +53,11 @@ public class WebJsInterface {
     }
 
     private WebJsInterface(Context context) {
-        mContext = context;
+        mContext = UIUtils.getApp();
     }
 
     private WebJsInterface(Context context, String[] imgSrcs) {
-        mContext = context;
+        mContext = UIUtils.getApp();
         mImgSrcs = imgSrcs;
     }
 

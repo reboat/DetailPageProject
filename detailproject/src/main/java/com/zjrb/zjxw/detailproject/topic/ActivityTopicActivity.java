@@ -43,7 +43,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -52,7 +51,6 @@ import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -601,7 +599,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this).getmImgSrcs()[0])
+                    .setImgUri(WebJsInterface.getInstance(this,null).getmImgSrcs()[0])
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));

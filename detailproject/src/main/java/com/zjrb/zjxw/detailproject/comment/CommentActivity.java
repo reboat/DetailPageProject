@@ -40,7 +40,6 @@ import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -244,7 +243,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 imgUrl = !TextUtils.isEmpty(mNewsDetail.getArticle().getArticle_pic()) ? mNewsDetail.getArticle().getArticle_pic() : "";
             } else {
                 //取正文第一张图，否则为""
-                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this).getmImgSrcs()[0] : "";
+                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this,null).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this,null).getmImgSrcs()[0] : "";
             }
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)

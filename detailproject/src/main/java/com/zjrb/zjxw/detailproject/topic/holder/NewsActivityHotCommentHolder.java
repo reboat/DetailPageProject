@@ -18,7 +18,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

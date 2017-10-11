@@ -14,7 +14,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsMultiPictureHolder;

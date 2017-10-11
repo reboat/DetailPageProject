@@ -27,7 +27,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 

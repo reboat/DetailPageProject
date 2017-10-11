@@ -31,7 +31,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import org.greenrobot.eventbus.EventBus;

@@ -29,7 +29,6 @@ import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 

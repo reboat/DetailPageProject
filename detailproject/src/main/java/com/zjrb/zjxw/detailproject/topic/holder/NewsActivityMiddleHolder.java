@@ -18,7 +18,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +94,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
     public void onItemClick(View itemView, int position) {
         UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                 .setSingle(true)
-                .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                .setImgUri(WebJsInterface.getInstance(itemView.getContext(),null).getmImgSrcs()[0])
                 .setTextContent(mData.getArticle().getSummary())
                 .setTitle(mData.getArticle().getList_title())
                 .setTargetUrl(mData.getArticle().getUrl()));

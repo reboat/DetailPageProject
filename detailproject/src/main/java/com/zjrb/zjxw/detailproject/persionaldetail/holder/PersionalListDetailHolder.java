@@ -16,7 +16,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

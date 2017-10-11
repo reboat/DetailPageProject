@@ -20,7 +20,6 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
-import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -32,7 +31,6 @@ import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -117,7 +115,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
         //注入支持的本地方法
-        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext());
+        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext(),mWebView);
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 
         // 夜间模式

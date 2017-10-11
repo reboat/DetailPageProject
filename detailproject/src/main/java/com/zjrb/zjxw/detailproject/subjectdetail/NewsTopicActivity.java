@@ -30,7 +30,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectNewsBean;
 import com.zjrb.zjxw.detailproject.eventBus.ChannelItemClickEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subjectdetail.adapter.NewsTopicAdapter;
 import com.zjrb.zjxw.detailproject.subjectdetail.holder.HeaderTopicHolder;

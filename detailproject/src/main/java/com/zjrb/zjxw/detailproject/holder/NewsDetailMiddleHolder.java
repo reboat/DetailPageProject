@@ -23,7 +23,6 @@ import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,7 +167,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
+                    .setImgUri(WebJsInterface.getInstance(itemView.getContext(),null).getmImgSrcs()[0])
                     .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())

@@ -1,0 +1,102 @@
+package com.zjrb.zjxw.detailproject.subject;
+
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.FrameLayout;
+
+import com.zjrb.core.common.base.OverlayViewHolder;
+import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
+import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
+import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
+
+import java.util.List;
+
+/**
+ * 专题悬浮助手
+ *
+ * @author a_liYa
+ * @date 2017/10/12 15:34.
+ */
+public class OverlayHelper extends RecyclerView.OnScrollListener {
+
+    private RecyclerView mRecyclerCopy;
+    private FrameLayout mGroupCopy;
+    private OverlayViewHolder mOverlayHolder;
+
+    private int mOverlayPosition = RecyclerView.NO_POSITION;
+
+    public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
+        mRecyclerCopy = recyclerCopy;
+        mGroupCopy = groupCopy;
+        SpecialAdapter adapter = (SpecialAdapter) recycler.getAdapter();
+        mOverlayHolder = adapter.onCreateOverlayViewHolder(recycler, 0);
+        mGroupCopy.addView(mOverlayHolder.itemView);
+        recycler.addOnScrollListener(this);
+    }
+
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        if (recyclerView.getAdapter() instanceof SpecialAdapter) {
+            SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
+            // 悬浮组名
+            int overlayPosition = RecyclerView.NO_POSITION;
+            LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstVisibleItemPosition = lm.findFirstVisibleItemPosition();
+            int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
+            for (int i = firstVisibleItemPosition; i < lastVisibleItemPosition; i++) {
+                int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
+                if (top <= mRecyclerCopy.getHeight()) {
+                    if (adapter.isOverlayViewType(adapter.cleanPosition(i))) {
+                        overlayPosition = adapter.cleanPosition(i);
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            if (overlayPosition == RecyclerView.NO_POSITION) {
+                List data = adapter.getData();
+                if (data != null) {
+                    int index = adapter.cleanPosition(firstVisibleItemPosition);
+                    while (--index >= 0) {
+                        if (adapter.isOverlayViewType(index)) {
+                            overlayPosition = index;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (overlayPosition != RecyclerView.NO_POSITION) {
+                mGroupCopy.setVisibility(View.VISIBLE);
+                if (mOverlayPosition != overlayPosition) {
+                    mOverlayPosition = overlayPosition;
+                    Object data = adapter.getData(mOverlayPosition);
+                    mOverlayHolder.setData(data);
+                    updateChannelTab(data);
+                }
+            } else {
+                mGroupCopy.setVisibility(View.GONE);
+                if (mOverlayPosition != RecyclerView.NO_POSITION) {
+                    mOverlayPosition = RecyclerView.NO_POSITION;
+                    updateChannelTab(null);
+                }
+            }
+        }
+    }
+
+    private void updateChannelTab(Object data) {
+        if (mRecyclerCopy.getAdapter() instanceof ChannelAdapter) {
+            ChannelAdapter adapter = (ChannelAdapter) mRecyclerCopy.getAdapter();
+            if (data instanceof SpecialGroupBean) {
+                adapter.setSelectedData((SpecialGroupBean) data);
+            } else {
+                adapter.setSelectedData(null);
+            }
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+}

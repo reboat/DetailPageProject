@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ly_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,16 +9,14 @@
         android:id="@+id/top_line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="?attr/dc_dddddd"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="?attr/dc_dddddd" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="0.5dp"
-        android:descendantFocusability="blocksDescendants"
-        app:layout_constraintTop_toBottomOf="@id/top_line" />
+        android:descendantFocusability="blocksDescendants" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,20 +33,15 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="5dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toTopOf="@id/recycler" />
+            android:visibility="gone" />
 
         <FrameLayout
             android:id="@+id/group_copy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/bc_ffffff"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/recycler_copy">
+            android:visibility="gone" />
 
-            <include layout="@layout/module_detail_special_group_name" />
-
-        </FrameLayout>
     </LinearLayout>
 
 </FrameLayout>

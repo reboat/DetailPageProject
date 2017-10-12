@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
 
+    private SpecialGroupBean mSelectedData;
+
     public ChannelAdapter(List<SpecialGroupBean> data) {
         super(data);
     }
@@ -27,7 +29,11 @@ public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
         return new ViewHolder(parent);
     }
 
-    static class ViewHolder extends BaseRecyclerViewHolder<SpecialGroupBean> {
+    public void setSelectedData(SpecialGroupBean data) {
+        mSelectedData = data;
+    }
+
+    class ViewHolder extends BaseRecyclerViewHolder<SpecialGroupBean> {
 
         private TextView tv_channel_name;
 
@@ -44,6 +50,7 @@ public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
                 name += "…";
             }
             tv_channel_name.setText(name);
+            tv_channel_name.setSelected(mSelectedData == mData);
         }
     }
 

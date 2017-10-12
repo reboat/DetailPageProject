@@ -1,15 +1,20 @@
 package com.zjrb.zjxw.detailproject.subject.adapter;
 
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.OverlayViewHolder;
+import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +59,24 @@ public class SpecialAdapter extends NewsBaseAdapter {
     }
 
     @Override
+    public OverlayViewHolder onCreateOverlayViewHolder(ViewGroup parent, int viewType) {
+        return new GroupViewHolder(parent);
+    }
+
+    @Override
     public int getAbsItemViewType(int position) {
         if (getData(position) instanceof SpecialGroupBean)
             return TYPE_GROUP;
         return super.getAbsItemViewType(position);
     }
 
-    static class GroupViewHolder extends BaseRecyclerViewHolder<SpecialGroupBean> {
+    @Override
+    public boolean isOverlayViewType(int position) {
+        return getAbsItemViewType(position) == TYPE_GROUP;
+    }
+
+    static class GroupViewHolder extends OverlayViewHolder<SpecialGroupBean> implements View
+            .OnClickListener {
 
         @BindView(R2.id.tv_group_name)
         TextView tvGroupName;
@@ -77,10 +93,19 @@ public class SpecialAdapter extends NewsBaseAdapter {
             tvGroupName.setText(mData.getGroup_name());
             // 显示是否有更多
             tvMore.setVisibility(!mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
-            itemView.setClickable(!mData.isGroup_has_more());
-            // TODO: 2017/10/11 别忘记取消取反
+            itemView.setOnClickListener(!mData.isGroup_has_more() ? this : null);
         }
 
+        @Override
+        public void onClick(View v) {
+            if (itemView == v && mData != null) {
+                //进入专题更多列表
+                Bundle bundle = new Bundle();
+                bundle.putInt(IKey.GROUP_ID, mData.getGroup_id());
+                bundle.putString(IKey.TITLE, mData.getGroup_name());
+                Nav.with(v.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
+            }
+        }
     }
 
 }

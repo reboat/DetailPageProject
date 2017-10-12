@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -16,7 +16,6 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -25,7 +24,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.type.DocType;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.test.CreateData;
-import com.zjrb.daily.news.test.CreateDataArticleList;
 import com.zjrb.daily.news.test.TagTest;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -33,7 +31,6 @@ import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderTopicHolder;
@@ -63,6 +60,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     ViewGroup lyContainer;
     @BindView(R2.id.recycler_copy)
     RecyclerView mRecyclerCopy;
+    @BindView(R2.id.group_copy)
+    FrameLayout mGroupCopy;
 
     private SpecialAdapter mAdapter;
 
@@ -70,11 +69,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      * 稿件ID
      */
     private String mArticleId = "";
-
-    /**
-     * 专题详情页数据
-     */
-    private DraftDetailBean bean;
+    private DraftDetailBean.ArticleBean mArticle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,27 +115,24 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         Object data = mAdapter.getData(position);
         if (data instanceof ArticleItemBean) {
             NewsUtils.itemClick(this, data);
-        } else if (data instanceof SpecialGroupBean) {
-            //进入专题更多列表
-            Bundle bundle = new Bundle();
-            bundle.putInt(IKey.GROUP_ID, ((SpecialGroupBean) data).getGroup_id());
-            bundle.putString(IKey.TITLE, ((SpecialGroupBean) data).getGroup_name());
-            Nav.with(this).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
         }
     }
 
     @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.iv_share) {
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setImgUri(bean.getArticle().getArticle_pic())
-                    .setTextContent(bean.getArticle().getSummary())
-                    .setTitle(bean.getArticle().getList_title())
-                    .setTargetUrl(bean.getArticle().getUrl()));
-        } else {
-            newsTopicCollect(); // 收藏
+
+        if (mArticle != null) {
+            if (view.getId() == R.id.iv_share) {
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setImgUri(mArticle.getArticle_pic())
+                        .setTextContent(mArticle.getSummary())
+                        .setTitle(mArticle.getList_title())
+                        .setTargetUrl(mArticle.getUrl()));
+            } else if (view.getId() == R.id.iv_top_collect) {
+                newsTopicCollect(); // 收藏
+            }
         }
     }
 
@@ -175,14 +167,14 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private void fillData(DraftDetailBean data) {
 
         // TODO: 2017/10/11 a_liYa mock
-        DraftDetailBean.ArticleBean article = data.getArticle();
-        article.setSummary
+        mArticle = data.getArticle();
+        mArticle.setSummary
                 ("习近平总书记党建新理念新思想新战略，是党中央治国理政新理念新思想新战略的核心组成部分，具有重要地位。学习贯彻党中央治国理政新理念新思想新战略，首先要把习近平总书记党建新理念新思想新战略学习好、领会好、贯彻好。");
-        article.setSubject_focus_decription("夏宝龙：奋力打好小城镇环境综合整治具体的啦了工作在开化东阳调研时强调化东阳调研时的啦强化东");
-        article.setSubject_focus_image(CreateData.getUrl());
-        article.setSubject_pic(CreateData.getUrl());
-        article.setSubject_focus_url("https://www.baidu.com");
-        List<SpecialGroupBean> subject_groups = article.getSubject_groups();
+        mArticle.setSubject_focus_decription("夏宝龙：奋力打好小城镇环境综合整治具体的啦了工作在开化东阳调研时强调化东阳调研时的啦强化东");
+        mArticle.setSubject_focus_image(CreateData.getUrl());
+        mArticle.setSubject_pic(CreateData.getUrl());
+        mArticle.setSubject_focus_url("https://www.baidu.com");
+        List<SpecialGroupBean> subject_groups = mArticle.getSubject_groups();
         Random random = new Random();
         for (SpecialGroupBean group : subject_groups) {
             List<ArticleItemBean> articleList = new ArrayList();
@@ -229,6 +221,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         mAdapter.addHeaderView(headHolder.getItemView());
         mAdapter.setOnItemClickListener(this);
         mRecycler.setAdapter(mAdapter);
+        new OverlayHelper(mRecycler, mRecyclerCopy, mGroupCopy);
     }
 
     /**
@@ -248,7 +241,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), getString(R.string.module_detail_collect_failed));
             }
 
-        }).setTag(this).exe(mArticleId, !bean.getArticle().isFollowed());
+        }).setTag(this).exe(mArticleId, !mArticle.isFollowed());
     }
 
     /**
@@ -257,22 +250,19 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private void showEmptyNewsDetail() {
         lyContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(bean.getArticle()
-                .getColumn_id()))).commit();
+        ft.add(R.id.ly_container,
+                EmptyStateFragment.newInstance(String.valueOf(mArticle.getColumn_id()))).commit();
     }
 
     @Override
     public void onClickChannel(SpecialGroupBean bean) {
         List data = mAdapter.getData();
-        if (data != null && bean != null) {
+        if (data != null && bean != null) { // 跳转到指定分组
             int index = data.indexOf(bean);
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerCopy.getHeight());
-//            mRecycler.scrollToPosition(index + mAdapter.getHeaderCount());
-            Log.e("TAG", "index " + index);
         }
-
     }
 
 }

@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.subject;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
@@ -42,24 +41,21 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
             // 悬浮组名
             int overlayPosition = RecyclerView.NO_POSITION;
+            int startPosition;
             LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
-            int firstVisibleItemPosition = lm.findFirstVisibleItemPosition();
+            int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
             int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
             for (int i = firstVisibleItemPosition; i < lastVisibleItemPosition; i++) {
                 int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
-                if (top <= mRecyclerCopy.getHeight()) {
-                    if (adapter.isOverlayViewType(adapter.cleanPosition(i))) {
-                        overlayPosition = adapter.cleanPosition(i);
-                        break;
-                    }
-                } else {
+                if (top > mRecyclerCopy.getHeight()) {
+                    startPosition = i;
                     break;
                 }
             }
-            if (overlayPosition == RecyclerView.NO_POSITION) {
+            if (startPosition != RecyclerView.NO_POSITION) {
                 List data = adapter.getData();
                 if (data != null) {
-                    int index = adapter.cleanPosition(firstVisibleItemPosition);
+                    int index = adapter.cleanPosition(startPosition);
                     while (--index >= 0) {
                         if (adapter.isOverlayViewType(index)) {
                             overlayPosition = index;

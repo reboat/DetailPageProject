@@ -18,13 +18,9 @@ import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.news.bean.type.DocType;
 import com.zjrb.daily.news.other.NewsUtils;
-import com.zjrb.daily.news.test.CreateData;
-import com.zjrb.daily.news.test.TagTest;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
@@ -37,9 +33,7 @@ import com.zjrb.zjxw.detailproject.subject.holder.HeaderTopicHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,7 +99,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      */
     private void initView() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new ListSpaceDivider(0.5f, R.attr.bc_f5f5f5, true));
+        mRecycler.addItemDecoration(new SpecialSpaceDivider(0.5f, R.attr.bc_dddddd));
     }
 
     @Override
@@ -159,60 +153,13 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }).setTag(this).exe(mArticleId);
     }
 
-    /**
-     * 头holder
-     */
     private HeaderTopicHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
 
-        // TODO: 2017/10/11 a_liYa mock
-        mArticle = data.getArticle();
-        mArticle.setSummary
-                ("习近平总书记党建新理念新思想新战略，是党中央治国理政新理念新思想新战略的核心组成部分，具有重要地位。学习贯彻党中央治国理政新理念新思想新战略，首先要把习近平总书记党建新理念新思想新战略学习好、领会好、贯彻好。");
-        mArticle.setSubject_focus_decription("夏宝龙：奋力打好小城镇环境综合整治具体的啦了工作在开化东阳调研时强调化东阳调研时的啦强化东");
-        mArticle.setSubject_focus_image(CreateData.getUrl());
-        mArticle.setSubject_pic(CreateData.getUrl());
-        mArticle.setSubject_focus_url("https://www.baidu.com");
-        List<SpecialGroupBean> subject_groups = mArticle.getSubject_groups();
-        Random random = new Random();
-        for (SpecialGroupBean group : subject_groups) {
-            List<ArticleItemBean> articleList = new ArrayList();
-            group.setGroup_articles(articleList);
-            for (int i = 0; i < 5; i++) {
-                ArticleItemBean bean = new ArticleItemBean();
-                bean.setDoc_type(i % 10);
-                bean.setList_style(i % 3 + 1);
-                switch (i % 3) {
-                    case 0:
-                        bean.setColumn_name("新闻眼");
-                        bean.setList_title("各方救援力量争分夺秒 救援一刻不停");
-                        break;
-                    case 1:
-                        bean.setColumn_name("文化");
-                        bean.setList_title("杭州丝绸现身一带一路杭州丝绸现高峰论谈会杭州丝绸峰论谈会峰");
-                        break;
-                    case 2:
-                        bean.setColumn_name("科技组");
-                        bean.setList_title("私享会投票：2015年电影大片哪部好看？网友都在期待中");
-                        break;
-                }
-                bean.setList_tag(TagTest.tag(i));
-                if (bean.getDoc_type() == DocType.LIVE) {
-                    bean.setList_tag("");
-                }
-
-                bean.setLike_count(random.nextInt(1000000));
-                bean.setRead_count(random.nextInt(1000000));
-
-                bean.setList_pics(CreateData.getList());
-
-                articleList.add(bean);
-            }
+        if (data != null) {
+            mArticle = data.getArticle();
         }
-
-        subject_groups.addAll(subject_groups);
-        subject_groups.addAll(subject_groups);
 
         //添加专题详情页的头部holder
         headHolder = new HeaderTopicHolder(mRecycler, mRecyclerCopy, this);

@@ -109,8 +109,8 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
         mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
+        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
+            adapter = new CommentAdapter(mData.getArticle().getHot_comments(), mRecyleView, String.valueOf(mData.getArticle().getId()));
             initAdapter();
             mRecyleView.setAdapter(adapter);
         } else {
@@ -120,6 +120,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
 
 
     private Bundle bundle;
+
     /**
      * @param view 点击进入评论列表
      */
@@ -130,7 +131,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putSerializable(IKey.NEWS_DETAIL,mData);
+            bundle.putSerializable(IKey.NEWS_DETAIL, mData);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
         }
     }

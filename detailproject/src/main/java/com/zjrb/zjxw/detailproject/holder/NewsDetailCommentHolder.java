@@ -63,10 +63,10 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
+        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
             mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
             mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
+            adapter = new CommentAdapter(mData.getArticle().getHot_comments(),mRecyleView,String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);
         } else {
             mLyHotContainer.setVisibility(View.GONE);

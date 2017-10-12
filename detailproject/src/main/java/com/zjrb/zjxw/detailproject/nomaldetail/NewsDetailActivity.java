@@ -261,7 +261,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
         }
         //热门评论
-        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
+        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().getComments().size() > 0) {
             datas.add(data);
         }
         mAdapter = new NewsDetailAdapter(datas);

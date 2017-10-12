@@ -11,19 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
@@ -35,7 +32,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
@@ -45,8 +41,6 @@ import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +53,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener, LoadMoreListener<CommentRefreshBean> {
+public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -96,14 +90,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      * 刷新头
      */
     private HeaderRefresh refresh;
-    /**
-     * 加载更多
-     */
-    private FooterLoadMore more;
-    /**
-     * 评论数据
-     */
-    private List<HotCommentsBean> commentList;
 
 
     private DraftDetailBean mNewsDetail;
@@ -167,34 +153,37 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
-        more = new FooterLoadMore(mRvContent, this);
         requestData();
     }
 
+
     /**
-     * 初始化适配器
-     * 如果禁言，则不允许弹出评论框
+     * adapte处理
+     *
+     * @param bean
      */
-    private void initAdapter() {
+    private void bindData(CommentRefreshBean bean) {
         //初始化标题
         tvHot.setText(getString(R.string.module_detail_new_comment));
         if (title != null && !title.isEmpty()) {
             tvTitle.setText(title);
         }
 
-        //初始化适配器
-        mCommentAdapter.setHeaderRefresh(refresh.getItemView());
-        mCommentAdapter.setFooterLoadMore(more.getItemView());
-        mCommentAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
-                    tvComment.setVisibility(View.VISIBLE);
-                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-                }
-            }
-        });
+        if (mCommentAdapter == null) {
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
+            mCommentAdapter.setHeaderRefresh(refresh.getItemView());
+            mCommentAdapter.setEmptyView(
+                    new EmptyPageHolder(mRvContent,
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                    ).itemView);
+            mCommentAdapter.setOnItemClickListener(this);
+            mRvContent.setAdapter(mCommentAdapter);
+        } else {
+            mCommentAdapter.setData(bean);
+            mCommentAdapter.notifyDataSetChanged();
+        }
     }
+
 
     /**
      * 下拉刷新取评论数据
@@ -203,21 +192,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         new CommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
-                if (commentRefreshBean == null) {
-                    return;
-                }
-                more.setState(LoadMore.TYPE_IDLE);
-                commentList = commentRefreshBean.getComments();
-                if (commentList != null) {
-                    if (mCommentAdapter == null) {
-                        mCommentAdapter = new CommentAdapter(commentList);
-                        initAdapter();
-                        mRvContent.setAdapter(mCommentAdapter);
-                    } else {
-                        mCommentAdapter.setData(commentList);
-                        mCommentAdapter.notifyDataSetChanged();
-                    }
-                }
+                bindData(commentRefreshBean);
             }
 
             @Override
@@ -225,8 +200,13 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 T.showShort(getBaseContext(), errMsg);
             }
 
+            @Override
+            public void onAfter() {
+                refresh.setRefreshing(false);
+            }
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(activityComment)).exe(articleId);
     }
+
 
     @OnClick({R2.id.tv_comment})
     public void onClick(View v) {
@@ -244,7 +224,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 imgUrl = !TextUtils.isEmpty(mNewsDetail.getArticle().getArticle_pic()) ? mNewsDetail.getArticle().getArticle_pic() : "";
             } else {
                 //取正文第一张图，否则为""
-                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this,null).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this,null).getmImgSrcs()[0] : "";
+                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this, null).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this, null).getmImgSrcs()[0] : "";
             }
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
@@ -310,7 +290,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if (BizUtils.isCanComment(this, commentSet)) {
+        if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
+            tvComment.setVisibility(View.VISIBLE);
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
         }
 
@@ -325,46 +306,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 requestData();
             }
         });
-    }
-
-    //最后刷新时间
-    private long lastMinPublishTime;
-
-    /**
-     * @param data
-     * @param loadMore 加载更多成功
-     */
-    @Override
-    public void onLoadMoreSuccess(CommentRefreshBean data, LoadMore loadMore) {
-        if (data != null && data.getComments() != null) {
-            List<HotCommentsBean> commentList = data.getComments();
-            if (commentList.size() > 0) {
-                lastMinPublishTime = getLastMinPublishTime(commentList);//获取最后的刷新时间
-            }
-            mCommentAdapter.addData(commentList, true);
-            if (commentList.size() < C.PAGE_SIZE) {
-                loadMore.setState(LoadMore.TYPE_NO_MORE);
-            }
-
-        } else {
-            loadMore.setState(LoadMore.TYPE_NO_MORE);
-        }
-    }
-
-    /**
-     * @param callback 加载更多操作
-     */
-    @Override
-    public void onLoadMore(LoadingCallBack callback) {
-        new CommentListTask(callback).setTag(this).exe(articleId, lastMinPublishTime == 0 ? null : lastMinPublishTime);
-    }
-
-    /**
-     * @param commentList
-     * @return 获取最后一次刷新的时间戳
-     */
-    private long getLastMinPublishTime(List<HotCommentsBean> commentList) {
-        return commentList.get(commentList.size() - 1).getCreated_at();
     }
 
 }

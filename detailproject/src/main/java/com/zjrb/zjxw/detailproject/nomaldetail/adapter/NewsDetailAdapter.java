@@ -143,10 +143,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             datas.addAll(articles);
         }
         //添加热门评论
-        List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
-        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-            datas.addAll(hotCommentsBeen);
+        if(detailBean.getArticle().getHot_comments() != null){
+            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments().getComments();
+            if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+                datas.addAll(hotCommentsBeen);
+            }
         }
+
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

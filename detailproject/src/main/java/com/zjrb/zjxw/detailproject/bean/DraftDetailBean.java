@@ -80,7 +80,7 @@ public class DraftDetailBean extends BaseData {
         this.article = article;
     }
 
-    public static class ArticleBean implements  Serializable{
+    public static class ArticleBean implements Serializable {
         private boolean isOpen;
         private int id;
         private int mlf_id;
@@ -157,6 +157,7 @@ public class DraftDetailBean extends BaseData {
          */
 
         private List<SubjectNewsBean.GroupArticlesBean> subject_groups;
+
         /**
          * id : 597ad67b2c1d4007315ce9b1
          * channel_article_id : 27
@@ -178,7 +179,9 @@ public class DraftDetailBean extends BaseData {
          * parent_portrait_url : https://www.baidu.com/s?rs1481483f05744f83a726e
          */
 
-        private List<HotCommentsBean> hot_comments;
+//        private List<HotCommentsBean> hot_comments;
+
+        private CommentRefreshBean hot_comments;
         /**
          * id : 12345
          * title : 相关新闻标题
@@ -615,13 +618,21 @@ public class DraftDetailBean extends BaseData {
             this.subject_groups = subject_groups;
         }
 
-        public List<HotCommentsBean> getHot_comments() {
+        public CommentRefreshBean getHot_comments() {
             return hot_comments;
         }
 
-        public void setHot_comments(List<HotCommentsBean> hot_comments) {
+        public void setHot_comments(CommentRefreshBean hot_comments) {
             this.hot_comments = hot_comments;
         }
+
+//        public List<HotCommentsBean> getHot_comments() {
+//            return hot_comments;
+//        }
+//
+//        public void setHot_comments(List<HotCommentsBean> hot_comments) {
+//            this.hot_comments = hot_comments;
+//        }
 
         public List<RelatedNewsBean> getRelated_news() {
             return related_news;

@@ -92,7 +92,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private void initView() {
         //添加头布局
-        head = UIUtils.inflate(R.layout.moduel_detail_empty_state_head);
+        head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
         emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));

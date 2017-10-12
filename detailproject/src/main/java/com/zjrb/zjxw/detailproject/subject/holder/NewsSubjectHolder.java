@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.subjectdetail.holder;
+package com.zjrb.zjxw.detailproject.subject.holder;
 
 import android.view.View;
 import android.view.ViewGroup;

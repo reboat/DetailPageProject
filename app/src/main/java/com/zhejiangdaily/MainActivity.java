@@ -1,6 +1,5 @@
 package com.zhejiangdaily;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -8,8 +7,8 @@ import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.T;
-import com.zjrb.zjxw.detailproject.subjectdetail.SpecialListActivity;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -38,7 +37,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onSuccess(@NonNull SessionIdBean result) {
 //                UserBiz.get().setSession(result.getSession());
-
             }
         }).setTag(this).exe();
     }
@@ -49,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //    mVideoPath = data.getQueryParameter(Key.VIDEO_PATH);
 
     private Bundle bundle;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -61,8 +60,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 //                Nav.with(this).to("http://10.200.70.86:8000/news.html?id=739652",0);
 //
-                startActivity(new Intent(this, SpecialListActivity.class));
-
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
 //                        .buildUpon()
 //                        .appendQueryParameter(Key.GROUP_ID, "5")
@@ -94,10 +91,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
 //                        .build(), 0);
 
-//                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/NewsTopicActivity")
-//                        .buildUpon()
-//                        .appendQueryParameter(Key.ARTICLE_ID, "65427")
-//                        .build(), 0);
+                Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=740345");
+
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()
 //                        .build(), 0);

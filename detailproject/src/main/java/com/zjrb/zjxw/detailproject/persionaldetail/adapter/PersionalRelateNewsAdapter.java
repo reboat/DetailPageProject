@@ -6,11 +6,11 @@ import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsMultiPictureHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsSubjectHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsTextHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsVideoHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsActivityHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsMultiPictureHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsSubjectHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsTextHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsVideoHolder;
 
 import java.util.List;
 

@@ -2,6 +2,10 @@
     <string name="app_name">detailProject</string>
     <!--TEST-->
     <string name="data_host_test">10.200.70.86</string>
+
+    <string name="data_detail_host">zj.zjol.com.cn</string>
+    <string name="data_detail_scheme">https</string>
+
     <string name="module_detail_comment_hint">写评论…</string>
     <string name="module_detail_label_comment">评论</string>
     <string name="module_detail_tip_original">原创</string>

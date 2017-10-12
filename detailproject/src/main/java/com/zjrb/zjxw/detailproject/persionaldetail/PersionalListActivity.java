@@ -65,7 +65,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentData(getIntent());
-        setContentView(R.layout.module_detail_topic_list);
+        setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
         loadData();

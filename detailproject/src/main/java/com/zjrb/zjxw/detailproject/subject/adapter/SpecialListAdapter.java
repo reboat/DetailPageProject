@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.subjectdetail.adapter;
+package com.zjrb.zjxw.detailproject.subject.adapter;
 
 import android.view.ViewGroup;
 

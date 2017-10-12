@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.subjectdetail;
+package com.zjrb.zjxw.detailproject.subject;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,16 +21,17 @@ import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
-import com.zjrb.zjxw.detailproject.subjectdetail.adapter.SpecialListAdapter;
+import com.zjrb.zjxw.detailproject.subject.adapter.SpecialListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 专题列表(支持所有列表类型)
- * Created by wanglinjie.
- * create time:2017/7/25  上午11:24
+ * 专题列表页面
+ *
+ * @author a_liYa
+ * @date 2017/10/11 上午9:39.
  */
 public class SpecialListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener,
         OnItemClickListener {
@@ -54,7 +55,7 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
     protected void onCreate(Bundle savedInstanceState) {
         getIntentData(getIntent());
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.module_detail_topic_list);
+        setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
     }

@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">detailProject</string>
     <!--TEST-->
-    <string name="data_host_test">10.200.70.86</string>
+    <string name="data_host_test1">10.200.70.86</string>
+    <string name="data_host_test">10.100.60.98</string>
 
     <string name="data_detail_host">zj.zjol.com.cn</string>
     <string name="data_detail_scheme">https</string>

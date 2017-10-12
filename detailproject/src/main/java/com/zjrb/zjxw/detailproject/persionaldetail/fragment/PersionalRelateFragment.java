@@ -10,15 +10,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
@@ -26,11 +23,11 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalSuperRelateAdapter;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +37,7 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/8/27  上午10:14
  */
-public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh.OnRefreshListener, LoadMoreListener<OfficalDetailBean>, OnItemClickListener {
+public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh.OnRefreshListener, OnItemClickListener {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
@@ -55,6 +52,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     /**
      * 相关新闻列表
      */
+    private OfficalDetailBean bean;
     private List<ArticleItemBean> list;
     /**
      * 官员ID
@@ -64,26 +62,18 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * 刷新头
      */
     private HeaderRefresh refresh;
-    /**
-     * 加载更多
-     */
-    private FooterLoadMore more;
-    /**
-     * 最后刷新的id
-     */
-    private int lastID;
 
     /**
      * 官员详情页相关新闻适配器
      */
-    private PersionalRelateNewsAdapter mAdapter;
+    private PersionalSuperRelateAdapter mAdapter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            list = ((OfficalDetailBean) getArguments().getSerializable(IKey.FRAGMENT_PERSIONAL_RELATER)).getArticle_list();
+            bean = (OfficalDetailBean) getArguments().getSerializable(IKey.FRAGMENT_PERSIONAL_RELATER);
             official_id = getArguments().getString(IKey.OFFICIAL_ID);
         }
     }
@@ -102,12 +92,12 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * @param v 初始化适配器
      */
     private void initView(View v) {
-        if (list != null || list.isEmpty()) {
+        if (bean != null || bean.getArticle_list().isEmpty()) {
             mViewExise.setVisibility(View.VISIBLE);
             mViewExise.setVisibility(View.GONE);
             return;
         }
-        mAdapter = new PersionalRelateNewsAdapter(list);
+        mAdapter = new PersionalSuperRelateAdapter(bean, lvNotice, official_id);
         lvNotice.setAdapter(mAdapter);
         lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
         diver = new ListSpaceDivider(32, 0, false);
@@ -115,8 +105,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         //添加刷新头
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
-        //添加上拉加载更多
-        more = new FooterLoadMore(lvNotice, this);
         initAdapter();
     }
 
@@ -126,8 +114,12 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      */
     private void initAdapter() {
         mAdapter.setHeaderRefresh(refresh.getItemView());
-        mAdapter.setFooterLoadMore(more.getItemView());
         mAdapter.setOnItemClickListener(this);
+        mAdapter = new PersionalSuperRelateAdapter(bean, lvNotice, official_id);
+        mAdapter.setEmptyView(
+                new EmptyPageHolder(lvNotice,
+                        EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                ).itemView);
     }
 
     /**
@@ -138,56 +130,31 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
             @Override
             public void onSuccess(OfficalDetailBean bean) {
-                if (bean == null) {
-                    return;
-                }
-                more.setState(LoadMore.TYPE_IDLE);
-                list = bean.getArticle_list();
-                if (list != null) {
-                    if (mAdapter == null) {
-                        mAdapter = new PersionalRelateNewsAdapter(list);
-                        initAdapter();
-                        lvNotice.setAdapter(mAdapter);
-                    } else {
-                        mAdapter.setData(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
+                bindData(bean);
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
+
+            @Override
+            public void onAfter() {
+                refresh.setRefreshing(false);
+            }
+
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(official_id);
     }
 
-    /**
-     * @param data
-     * @param loadMore 上拉加载更多成功
-     */
-    @Override
-    public void onLoadMoreSuccess(OfficalDetailBean data, LoadMore loadMore) {
-        if (data != null && data.getArticle_list() != null) {
-            List<ArticleItemBean> list = data.getArticle_list();
-            if (list.size() > 0) {
-                lastID = getLastID(list);
-            }
-            mAdapter.addData(list, true);
-            if (list.size() < C.PAGE_SIZE) {
-                loadMore.setState(LoadMore.TYPE_NO_MORE);
-            }
-        } else {
-            loadMore.setState(LoadMore.TYPE_NO_MORE);
-        }
-    }
 
     /**
-     * @param callback 上拉加载更多
+     * adapte处理
+     *
+     * @param bean
      */
-    @Override
-    public void onLoadMore(LoadingCallBack<OfficalDetailBean> callback) {
-        new OfficalDetailTask(callback).setTag(this).exe(official_id, lastID == 0 ? null : lastID);
+    private void bindData(OfficalDetailBean bean) {
+        mAdapter.setData(bean);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -204,14 +171,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         });
 
 
-    }
-
-    /**
-     * @param list
-     * @return 获取最后一次刷新的时间戳
-     */
-    private int getLastID(List<ArticleItemBean> list) {
-        return list.get(list.size() - 1).getId();
     }
 
     /**

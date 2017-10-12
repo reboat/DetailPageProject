@@ -72,7 +72,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     @BindView(R2.id.recyclerView)
     FitWindowsRecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
-    EditText mTvComment;
+    TextView mTvComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.floor_bar)

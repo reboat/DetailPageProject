@@ -290,6 +290,11 @@
                     android:host="@string/data_host_test"
                     android:path="/subject.html"
                     android:scheme="@string/data_scheme" />
+
+                <data
+                    android:host="@string/data_detail_host"
+                    android:path="/subject.html"
+                    android:scheme="@string/data_detail_scheme" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

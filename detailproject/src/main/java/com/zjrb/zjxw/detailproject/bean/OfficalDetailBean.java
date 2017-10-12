@@ -69,7 +69,7 @@ public class OfficalDetailBean extends BaseData {
      * topic_date_end : 1450000000000
      */
 
-    private List<SubjectItemBean> article_list;
+    private List<ArticleItemBean> article_list;
 
     public OfficerBean getOfficer() {
         return officer;
@@ -79,11 +79,11 @@ public class OfficalDetailBean extends BaseData {
         this.officer = officer;
     }
 
-    public List<SubjectItemBean> getArticle_list() {
+    public List<ArticleItemBean> getArticle_list() {
         return article_list;
     }
 
-    public void setArticle_list(List<SubjectItemBean> article_list) {
+    public void setArticle_list(List<ArticleItemBean> article_list) {
         this.article_list = article_list;
     }
 

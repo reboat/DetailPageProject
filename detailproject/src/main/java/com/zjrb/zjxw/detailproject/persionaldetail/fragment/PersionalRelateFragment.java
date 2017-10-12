@@ -26,7 +26,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
@@ -55,7 +55,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     /**
      * 相关新闻列表
      */
-    private List<SubjectItemBean> list;
+    private List<ArticleItemBean> list;
     /**
      * 官员ID
      */
@@ -169,7 +169,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     @Override
     public void onLoadMoreSuccess(OfficalDetailBean data, LoadMore loadMore) {
         if (data != null && data.getArticle_list() != null) {
-            List<SubjectItemBean> list = data.getArticle_list();
+            List<ArticleItemBean> list = data.getArticle_list();
             if (list.size() > 0) {
                 lastID = getLastID(list);
             }
@@ -210,7 +210,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * @param list
      * @return 获取最后一次刷新的时间戳
      */
-    private int getLastID(List<SubjectItemBean> list) {
+    private int getLastID(List<ArticleItemBean> list) {
         return list.get(list.size() - 1).getId();
     }
 
@@ -221,7 +221,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) mAdapter.getData().get(position)).getUrl())
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) mAdapter.getData().get(position)).getUrl())
                     .buildUpon()
                     .build(), 0);
 

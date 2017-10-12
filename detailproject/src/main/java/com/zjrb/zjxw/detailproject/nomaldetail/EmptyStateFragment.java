@@ -20,7 +20,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
 
@@ -92,7 +92,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private void initView() {
         //添加头布局
-        head = UIUtils.inflate(R.layout.moduel_detail_empty_state_head);
+        head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
         emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -148,7 +148,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onItemClick(View itemView, int position) {
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((SubjectItemBean) adapter.getData().get(position)).getUrl())
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) adapter.getData().get(position)).getUrl())
                     .buildUpon()
                     .build(), 0);
 

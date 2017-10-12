@@ -166,7 +166,7 @@
 
         <!--专题详情页-->
         <activity
-            android:name=".subjectdetail.NewsTopicActivity"
+            android:name=".subject.SpecialActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -176,14 +176,14 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/data_host_test"
+                    android:host="@string/data_detail_host"
                     android:path="/subject.html"
-                    android:scheme="@string/data_scheme" />
+                    android:scheme="@string/data_detail_scheme" />
             </intent-filter>
         </activity>
         <!--专题列表-->
         <activity
-            android:name=".subjectdetail.TopicListActivity"
+            android:name=".subject.SpecialListActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -193,7 +193,7 @@
 
                 <data
                     android:host="@string/data_host"
-                    android:path="/detail/TopicListActivity"
+                    android:path="/detail/SpecialListActivity"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>

@@ -4,13 +4,13 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailArticleGeneralViewHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsActivityHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsMultiPictureHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsSubjectHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsTextHolder;
-import com.zjrb.zjxw.detailproject.subjectdetail.holder.NewsVideoHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsActivityHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsMultiPictureHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsSubjectHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsTextHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.NewsVideoHolder;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class PersionalRelateNewsAdapter extends BaseRecyclerAdapter {
     @Override
     public int getAbsItemViewType(int position) {
         //纯文字
-        SubjectItemBean b = (SubjectItemBean) datas.get(position);
+        ArticleItemBean b = (ArticleItemBean) datas.get(position);
         if (b.getList_style() == 1) {
             return TYPE_TEXT;
             //图文

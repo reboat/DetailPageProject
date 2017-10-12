@@ -30,7 +30,7 @@ public class SubjectNewsBean implements Serializable {
         private int group_id;
         private String group_name;
 
-        private List<SubjectItemBean> articleList;
+        private List<ArticleItemBean> articleList;
 
         public int getGroupId() {
             return group_id;
@@ -48,11 +48,11 @@ public class SubjectNewsBean implements Serializable {
             this.group_name = groupName;
         }
 
-        public List<SubjectItemBean> getArticleList() {
+        public List<ArticleItemBean> getArticleList() {
             return articleList;
         }
 
-        public void setArticleList(List<SubjectItemBean> articleList) {
+        public void setArticleList(List<ArticleItemBean> articleList) {
             this.articleList = articleList;
         }
     }

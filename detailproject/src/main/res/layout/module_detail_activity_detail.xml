@@ -90,7 +90,7 @@
 
         <include
             android:id="@+id/ly_bottom_comment"
-            layout="@layout/moduel_detail_bottom_comment" />
+            layout="@layout/module_detail_bottom_comment" />
 
     </FrameLayout>
 

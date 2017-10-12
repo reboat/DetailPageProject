@@ -1,14 +1,10 @@
-package com.zjrb.zjxw.detailproject.holder;
+package com.zjrb.zjxw.detailproject.subject.holder;
 
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -19,46 +15,49 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 文章普通 item - ViewHolder （左边图片 - 右边文字）不可左滑删除
+ * 新闻列表 - 纯文字类型 - 上标题，下阅读、赞
+ *
  * Created by wanglinjie.
- * create time:2017/7/17  上午10:14
+ * create time:2017/8/9  下午21:16
  */
-public class NewsDetailArticleGeneralViewHolder extends BaseRecyclerViewHolder<ArticleItemBean> {
-    @BindView(R2.id.iv_picture)
-    ImageView mIvPicture;
+public class NewsTextHolder extends BaseRecyclerViewHolder<ArticleItemBean> {
+
     @BindView(R2.id.tv_title)
     TextView mTvTitle;
-    @BindView(R2.id.tv_flag)
-    TextView mTvFlag;
-    @BindView(R2.id.tv_prise)
+    @BindView(R2.id.tv_praise)
     TextView mTvPrise;
     @BindView(R2.id.tv_read)
     TextView mTvRead;
 
-    public NewsDetailArticleGeneralViewHolder(@NonNull ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_article_general_item, parent, false));
+    public NewsTextHolder(ViewGroup parent) {
+        super(UIUtils.inflate(R.layout.module_detail_item_news_text, parent, false));
         ButterKnife.bind(this, itemView);
     }
 
+   /* 阅读数规则
+    * • 观看数/阅读数为0则不显示数字和图标
+    * • 观看数/阅读数1~9999，直接显示具体数字
+    * • 观看数/阅读数10000~99999999显示为：1万~9999.9万，例：109000将显示为10.9万，109001将显示为10.9万+
+    * • 观看数/阅读数大于99999999显示为1.x亿
+    * */
+
+    /* 点赞数规则
+     * • 点赞数为0则不显示数字和图标
+     * • 点赞数1~9999，直接显示
+     * • 点赞数>9999，显示9999+
+     * • 点赞功能被关闭，则不显示数字和图标。
+     * */
     @Override
     public void bindView() {
         //标题
-        if (mData.getList_title() != null) {
+        if (mData.getList_title() != null && !mData.getList_title().isEmpty()) {
             mTvTitle.setText(mData.getList_title());
-        }
-        //标签状态(可以为空)
-        if (mData.getList_tag() != null && !mData.getList_tag().isEmpty()) {
-            mTvFlag.setVisibility(View.VISIBLE);
-            mTvFlag.setText(mData.getList_tag());
         } else {
-            mTvFlag.setVisibility(View.GONE);
+            mTvTitle.setVisibility(View.GONE);
         }
-        //多图
-        GlideApp.with(mIvPicture).load(mData.getList_pics().get(0)).placeholder(PH.zheSmall()).centerCrop().into(mIvPicture);
-
         //阅读量
         if (mData.getRead_count() == 0) {
-            mTvRead.setVisibility(View.GONE);
+            mTvTitle.setVisibility(View.GONE);
         } else if (mData.getRead_count() > 0 && mData.getRead_count() <= 9999) {
             mTvRead.setText(mData.getRead_count() + "阅读");
         } else if (mData.getComment_count() > 9999 && mData.getComment_count() <= 99999999) {

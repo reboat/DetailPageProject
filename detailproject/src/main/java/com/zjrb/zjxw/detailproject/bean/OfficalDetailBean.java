@@ -95,10 +95,10 @@ public class OfficalDetailBean extends BaseData {
         private String name;
         private String gender;
         private String hometown;
+        private String gender_text;
         private String nation;
         private String university;
         private String degree;
-        private String title;
         private long birthday;
         private long ccp_date;
         private long work_date;
@@ -106,6 +106,12 @@ public class OfficalDetailBean extends BaseData {
         private String photo;//官员详情页
         private String list_pic;//所有官员列表
         private String url;
+        private String current_location;
+        private String current_title;
+        private String top_title;
+        private String share_url;
+
+        private String detail_url;
         /**
          * year : 2017
          * month : 7
@@ -114,6 +120,58 @@ public class OfficalDetailBean extends BaseData {
          */
 
         private List<ResumesBean> resumes;
+
+        public String getDetail_url() {
+            return detail_url;
+        }
+
+        public void setDetail_url(String detail_url) {
+            this.detail_url = detail_url;
+        }
+
+        public String getShare_url() {
+            return share_url;
+        }
+
+        public void setShare_url(String share_url) {
+            this.share_url = share_url;
+        }
+
+        public String getTop_title() {
+            return top_title;
+        }
+
+        public void setTop_title(String top_title) {
+            this.top_title = top_title;
+        }
+
+
+        public String getCurrent_title() {
+            return current_title;
+        }
+
+        public void setCurrent_title(String current_title) {
+            this.current_title = current_title;
+        }
+
+
+        public String getCurrent_location() {
+            return current_location;
+        }
+
+        public void setCurrent_location(String current_location) {
+            this.current_location = current_location;
+        }
+
+
+        public String getGender_text() {
+            return gender_text;
+        }
+
+        public void setGender_text(String gender_text) {
+            this.gender_text = gender_text;
+        }
+
 
         public int getId() {
             return id;
@@ -169,14 +227,6 @@ public class OfficalDetailBean extends BaseData {
 
         public void setDegree(String degree) {
             this.degree = degree;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
         }
 
         public long getBirthday() {

@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
 //                        .build(), 0);
 
-                Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=740345");
+//                Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=740345");
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()

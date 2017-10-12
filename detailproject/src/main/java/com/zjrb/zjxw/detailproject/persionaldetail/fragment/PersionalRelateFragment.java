@@ -22,12 +22,12 @@ import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
-import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalSuperRelateAdapter;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
-import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalRelateNewsAdapter;
+import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalSuperRelateAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

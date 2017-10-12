@@ -8,8 +8,8 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectItemBean;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class PersionalSuperRelateAdapter extends PersionalRelateNewsAdapter impl
         setData(data != null ? data.getArticle_list() : null);
     }
 
-    public void addData(List<SubjectItemBean> data) {
+    public void addData(List<ArticleItemBean> data) {
         // 全量刷新
         addData(data, false);
         notifyDataSetChanged();
@@ -80,8 +80,8 @@ public class PersionalSuperRelateAdapter extends PersionalRelateNewsAdapter impl
             int count = 1;
             while (size - count >= 0) {
                 Object data = getData(size - count++);
-                if (data instanceof SubjectItemBean) {
-                    return ((SubjectItemBean) data).getId();
+                if (data instanceof ArticleItemBean) {
+                    return ((ArticleItemBean) data).getId();
                 }
             }
         }

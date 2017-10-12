@@ -9,17 +9,16 @@ android {
             release {
                 keyAlias 'zhejiangnews'
                 keyPassword 'kIwfs16KsM'
-                storeFile file('/Users/wanglinjie/zb_android/ZhejiangDaily/qianming/zhejiangnews.keystore')
+                storeFile file('./zhejiangnews.keystore')
                 storePassword 'kIwfs16KsM'
             }
-
-
     }
 
     defaultConfig {
         applicationId "com.zhejiangdaily"
         minSdkVersion 17
         targetSdkVersion 25
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

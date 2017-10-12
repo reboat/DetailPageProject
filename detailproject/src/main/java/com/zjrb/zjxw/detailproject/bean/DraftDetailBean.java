@@ -13,62 +13,6 @@ import java.util.List;
  */
 
 public class DraftDetailBean extends BaseData {
-    /**
-     * id : 123456
-     * mlf_id : 12346788
-     * list_title : 浙江省第十四次党代会胜利闭幕
-     * list_style : 1
-     * list_pics : ["http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg"]
-     * list_tag : 独家
-     * doc_type : 0
-     * read_count : 10000
-     * like_count : 10000
-     * comment_count : 10000
-     * read_count_general : 12万+
-     * like_count_general : 1万
-     * comment_count_general : 123
-     * channel_id : 507f191e810c19729de860ea
-     * channel_name : 头条
-     * column_id : 1
-     * column_name : 党代会风采
-     * sort_number : 12345678901234
-     * url : https://zj.zjol.com.cn/news/123456.html
-     * web_link : http://www.baidu.com
-     * author : 浙江新闻客户端记者 xxxx
-     * article_pic : http://www.zjol.com.cn/picture.jpg
-     * published_at : 14000000000
-     * content : BLAHBLAHBLAH
-     * album_image_count : 6
-     * album_image_list : [{"image_url":"http://www.zjol.com.cn/picture.jpg","description":"图集文字说明"}]
-     * activity_status : 0
-     * activity_date_begin : 1450000000000
-     * activity_date_end : 1450000000000
-     * activity_register_count : 10
-     * activity_announced : true
-     * live_type : 0
-     * live_status : 0
-     * live_url : https://live.zjol.com.cn
-     * video_url : https://v-cdn.zjol.com.cn/12345.mp4
-     * video_duration : 123
-     * video_size : 1.2312312312312313E37
-     * topic_date_begin : 1450000000000
-     * topic_date_end : 1450000000000
-     * topic_hosts : ["a","b","c"]
-     * topic_guests : ["a","b","c"]
-     * subject_focus_url : http://zj.zjol.com.cn/topic.html?id=123456
-     * subject_focus_image : http://www.baidu.com/logo.png
-     * subject_summary : 这是专题摘要，专题摘要
-     * subject_pic : http://www.baidu.com/logo.png
-     * subject_groups : [{"group_id":123456,"group_name":"事件发展","group_has_more":true,"group_articles":[{"id":123456,"mlf_id":12346788,"list_title":"浙江省第十四次党代会胜利闭幕","list_style":1,"list_pics":["http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg"],"list_tag":"独家","doc_type":0,"read_count":10000,"like_count":10000,"read_count_general":"12万+","like_count_general":"1万"}]},{"group_id":22222,"group_name":"事件结尾","group_has_more":true,"group_articles":[{"id":123456,"mlf_id":12346788,"list_title":"浙江省第十四次党代会胜利闭幕","list_style":1,"list_pics":["http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg"],"list_tag":"独家","doc_type":0,"read_count":10000,"like_count":10000}]}]
-     * followed : true
-     * column_subscribed : true
-     * comment_level : 0
-     * like_enabled : true
-     * liked : true
-     * hot_comments : [{"id":"597ad67b2c1d4007315ce9b1","channel_article_id":27,"content":"浙江","nick_name":"读者+4","created_at":1501222523000,"like_count":0,"account_id":"0596d77b9b2e3f43afc63ad5a","status":2,"liked":false,"portrait_url":"https://img6.bdstatic.com/img/image/smallpic/yangmixiaotugengxin.jpg","parent_id":"597ad67b2c1d4007315ce9b1","parent_content":"浙江","parent_nick_name":"读者+QONqts","parent_created_at":1501222523000,"parent_like_count":1,"parent_account_id":"59841424f9253e20e02c186c","parent_liked":false,"parent_portrait_url":"https://www.baidu.com/s?rs1481483f05744f83a726e"}]
-     * related_news : [{"id":12345,"title":"相关新闻标题","pic":"https://www.zjol.com.cn/picture.jpg","url":"https://zj.zjol.com.cn/news/123456.html"},{"id":12345,"title":"相关新闻标题","pic":"https://www.zjol.com.cn/picture.jpg","url":"https://zj.zjol.com.cn/news/123456.html"}]
-     * related_subjects : [{"id":12345,"title":"相关专题标题1","pic":"https://www.zjol.com.cn/picture.jpg","url":"https://zj.zjol.com.cn/subject/123456.html"},{"id":12345,"title":"相关专题标题2","pic":"https://www.zjol.com.cn/picture.jpg","url":"https://zj.zjol.com.cn/subject/123456.html"}]
-     */
 
     private ArticleBean article;
 
@@ -80,8 +24,8 @@ public class DraftDetailBean extends BaseData {
         this.article = article;
     }
 
-    public static class ArticleBean implements Serializable {
-        private boolean isOpen;
+    public static class ArticleBean implements  Serializable{
+
         private int id;
         private int mlf_id;
         private String list_title;
@@ -133,14 +77,6 @@ public class DraftDetailBean extends BaseData {
 
         private String column_logo;
 
-        public boolean isOpen() {
-            return isOpen;
-        }
-
-        public void setOpen(boolean open) {
-            isOpen = open;
-        }
-
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -149,15 +85,8 @@ public class DraftDetailBean extends BaseData {
         private List<AlbumImageListBean> album_image_list;
         private List<String> topic_hosts;
         private List<String> topic_guests;
-        /**
-         * group_id : 123456
-         * group_name : 事件发展
-         * group_has_more : true
-         * group_articles : [{"id":123456,"mlf_id":12346788,"list_title":"浙江省第十四次党代会胜利闭幕","list_style":1,"list_pics":["http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg","http://zjnews.zjol.com.cn/ztjj/ztddh/sddhmtbb/201706/W020170616654583491994.jpg"],"list_tag":"独家","doc_type":0,"read_count":10000,"like_count":10000,"read_count_general":"12万+","like_count_general":"1万"}]
-         */
 
-        private List<SubjectNewsBean.GroupArticlesBean> subject_groups;
-
+        private List<SpecialGroupBean> subject_groups;
         /**
          * id : 597ad67b2c1d4007315ce9b1
          * channel_article_id : 27
@@ -610,11 +539,11 @@ public class DraftDetailBean extends BaseData {
             this.topic_guests = topic_guests;
         }
 
-        public List<SubjectNewsBean.GroupArticlesBean> getSubject_groups() {
+        public List<SpecialGroupBean> getSubject_groups() {
             return subject_groups;
         }
 
-        public void setSubject_groups(List<SubjectNewsBean.GroupArticlesBean> subject_groups) {
+        public void setSubject_groups(List<SpecialGroupBean> subject_groups) {
             this.subject_groups = subject_groups;
         }
 

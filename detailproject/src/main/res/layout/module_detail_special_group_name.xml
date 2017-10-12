@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="27dp"
+    android:background="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/tv_group_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_14sp"
+        android:textStyle="bold"
+        tools:text="理论视野" />
+
+    <TextView
+        android:id="@+id/tv_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="5dp"
+        android:drawableRight="@mipmap/module_detail_offical_more"
+        android:text="更多"
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_11sp" />
+
+</FrameLayout>

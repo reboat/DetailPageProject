@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_channel_name"
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:background="?attr/module_detail_special_channel_bg"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:maxLines="1"
+    android:textColor="?attr/tc_484848"
+    android:textSize="@dimen/ts_14sp"
+    tools:text="治国理政" />

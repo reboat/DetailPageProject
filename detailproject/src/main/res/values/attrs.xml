@@ -59,6 +59,9 @@
         <attr name="border_f44b50" format="reference"/>
         <attr name="border_f44b50_r10" format="reference"/>
         <attr name="border_999999_r10" format="reference"/>
+
+        <attr name="module_detail_special_channel_bg" format="reference"/>
+
     </declare-styleable>
 
 </resources>

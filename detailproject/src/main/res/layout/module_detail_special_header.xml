@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><!--新闻专题详情页列表页眉-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/bc_ffffff"
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/iv_subject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="题图"
+        android:scaleType="fitXY"
+        android:src="@drawable/place_holder_zhe_big"
+        app:ratio_w2h="360:123" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.1"
+        android:padding="10dp"
+        android:textColor="?attr/tc_000000"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        tools:text="收到就好是电视剧多少大好时机第三季度手机号电视剧版惊世毒妃是费劲那吧 看卡萨丁设计费吧是否  " />
+
+    <TextView
+        android:id="@+id/tv_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:textColor="?attr/tc_999999"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="加深对建设电视剧搭框架卡拉翰是否来看看交互的斯凯方式复健科说服力加深对菲利克斯冯老师发胜多负少 防守打法地方是否水电费少妇群无法请问请问，王企鹅啊无法无法挖坟我的v💰发" />
+
+    <LinearLayout
+        android:id="@+id/layout_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/iv_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/module_detail_text_indicator"
+            app:iv_maskColor="@color/tc_484848_night" />
+
+        <TextView
+            android:id="@+id/tv_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_summary"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dp"
+            android:text="@string/module_detail_text_down"
+            android:textColor="?attr/tc_484848" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="5dp" />
+
+    <!--专题焦点图-->
+    <com.aliya.view.ratio.RatioFrameLayout
+        android:id="@+id/layout_focus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:ratio_w2h="360:178">
+
+        <ImageView
+            android:id="@+id/iv_focus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_focus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="?attr/bc_7f000000"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:paddingBottom="7dp"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:paddingTop="7dp"
+            android:textColor="?attr/tc_ffffff"
+            tools:text="夏宝龙：奋力打好小城镇环境综合整治的具体啦了工作在开化东阳调研时强调化东" />
+
+    </com.aliya.view.ratio.RatioFrameLayout>
+
+</LinearLayout>

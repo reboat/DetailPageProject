@@ -142,63 +142,6 @@
         </activity>
 
         <!--链接稿-->
-        <activity
-            android:name=".link.BrowserLinkActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:launchMode="singleTop"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--链接稿-->
-                <data
-                    android:host="@string/data_host_test"
-                    android:path="/link.html"
-                    android:scheme="@string/data_scheme"
-                    />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--直播稿-->
-                <data
-                    android:host="@string/data_host_test"
-                    android:path="/live.html"
-                    android:scheme="@string/data_scheme" />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--链接稿-->
-                <data
-                    android:host="@string/data_host_test1"
-                    android:path="/link.html"
-                    android:scheme="@string/data_scheme"
-                    />
-            </intent-filter>
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!--直播稿-->
-                <data
-                    android:host="@string/data_host_test1"
-                    android:path="/live.html"
-                    android:scheme="@string/data_scheme"
-                    />
-            </intent-filter>
-
-        </activity>
 
         <!--图集-->
         <activity

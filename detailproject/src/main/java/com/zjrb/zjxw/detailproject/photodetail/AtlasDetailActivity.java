@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
@@ -34,19 +35,18 @@ import com.zjrb.core.utils.PathUtil;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.BottomSaveDialogFragment;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.webjs.BottomSaveDialogFragment;
 
 import java.util.List;
 
@@ -177,11 +177,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
             mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
+
             //评论数量
-            if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
-                mTvCommentsNum.setText(BizUtils.formatComments(atlasDetailEntity.getArticle().getComment_count()));
-            } else {
-                mTvCommentsNum.setVisibility(View.GONE);
+            if(!TextUtils.isEmpty(mData.getArticle().getComment_count_general())){
+                mTvCommentsNum.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
             }
 
             //是否已点赞

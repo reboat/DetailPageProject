@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +19,9 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
-import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -32,7 +31,6 @@ import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,14 +52,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     WebView mWebView;
     private WebJsInterface mWebJsInterface;
 
-    /**
-     * WebView的高度
-     */
-    private int mWebViewHeight;
-    /**
-     * WebView滚动到屏幕内最大值（用于计算阅读百分比）
-     */
-    private int mWebViewMaxScroll;
+//    /**
+//     * WebView的高度
+//     */
+//    private int mWebViewHeight;
+//    /**
+//     * WebView滚动到屏幕内最大值（用于计算阅读百分比）
+//     */
+//    private int mWebViewMaxScroll;
 
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
@@ -117,7 +115,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
         //注入支持的本地方法
-        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext());
+        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext(),mWebView);
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
 
         // 夜间模式
@@ -256,35 +254,35 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     }
 
     // RecyclerView滚动监听
-    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
-
-        @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            mWebViewMaxScroll =
-                    Math.max(recyclerView.getHeight() - mWebView.getTop(), mWebViewHeight);
-        }
-
-    };
+//    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
+//
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            mWebViewMaxScroll =
+//                    Math.max(recyclerView.getHeight() - mWebView.getTop(), mWebViewHeight);
+//        }
+//
+//    };
 
     @Override
     public void onViewAttachedToWindow(View v) {
         onResume();
-        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
-            ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
-        }
+//        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+//            ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
+//        }
     }
 
     @Override
     public void onViewDetachedFromWindow(View v) {
         onPause();
-        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
-            ((RecyclerView) itemView.getParent()).removeOnScrollListener(mScrollListener);
-        }
+//        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+//            ((RecyclerView) itemView.getParent()).removeOnScrollListener(mScrollListener);
+//        }
     }
 
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int
             oldTop, int oldRight, int oldBottom) {
-        mWebViewHeight = bottom - top;
+//        mWebViewHeight = bottom - top;
     }
 }

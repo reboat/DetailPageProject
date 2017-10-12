@@ -30,6 +30,7 @@ import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -40,19 +41,18 @@ import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -205,7 +205,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
                 //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = "https://v-cdn.zjol.com.cn/12345.mp4";//mNewsDetail.getArticle().getVideo_url();
+                mVideoPath = mNewsDetail.getArticle().getVideo_url();
                 if (!TextUtils.isEmpty(mVideoPath)) {
                     initVideo();
                 }
@@ -261,22 +261,32 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
         }
         //热门评论
-        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
+        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().getComments().size() > 0) {
             datas.add(data);
         }
         mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
 
-        //点赞数量
-        mMenuPrised.setSelected(data.getArticle().isLiked());
-        if (data.getArticle().getComment_count() > 0) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            if (data.getArticle().getComment_count() < 9999) {
-                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-            } else if (data.getArticle().getComment_count() > 9999) {
-                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-            }
+        //是否已点赞
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
         }
+
+        //大致评论数量
+        if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+            mTvCommentsNum.setVisibility(View.VISIBLE);
+            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+        }
+//        if (data.getArticle().getComment_count() > 0) {
+//            mTvCommentsNum.setVisibility(View.VISIBLE);
+//            if (data.getArticle().getComment_count() < 9999) {
+//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
+//            } else if (data.getArticle().getComment_count() > 9999) {
+//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
+//            }
+//        }
 
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
@@ -426,8 +436,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(this).getHtmlText())
+                    .setImgUri(WebJsInterface.getInstance(this,null).getmImgSrcs()[0])
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
             //重新加载

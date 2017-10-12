@@ -40,11 +40,11 @@ dependencies {
     provided 'com.android.support:multidex:1.0.1'
     provided 'com.google.code.gson:gson:2.6.2'
     provided 'com.umeng.analytics:analytics:latest.integration'
-    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.aliya:fitwindow:0.1.4'
     compile 'org.jsoup:jsoup:1.10.2'
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':core-library')
-//    compile 'cn.daily.android:core-library:1.4.1-SNAPSHOT'
+//    compile 'cn.daily.android:core-library:1.4.7-SNAPSHOT'
     compile('com.aliya:android-player:0.1.4') {
         exclude group: 'com.android.support'
     }

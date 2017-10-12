@@ -17,13 +17,13 @@ import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,8 +168,8 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(WebJsInterface.getInstance(itemView.getContext()).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(itemView.getContext()).getHtmlText())
+                    .setImgUri(WebJsInterface.getInstance(itemView.getContext(),null).getmImgSrcs()[0])
+                    .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));

@@ -30,6 +30,7 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -39,11 +40,11 @@ import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -52,7 +53,6 @@ import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.webjs.WebJsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +72,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     @BindView(R2.id.recyclerView)
     FitWindowsRecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
-    EditText mTvComment;
+    TextView mTvComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.floor_bar)
@@ -469,8 +469,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
-
-        mMenuPrised.setSelected(data.getArticle().isLiked());
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
+        }
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
 
@@ -598,8 +601,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this).getmImgSrcs()[0])
-                    .setTextContent(WebJsInterface.getInstance(this).getHtmlText())
+                    .setImgUri(WebJsInterface.getInstance(this,null).getmImgSrcs()[0])
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.iv_back) {

@@ -22,6 +22,7 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
@@ -31,7 +32,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import org.greenrobot.eventbus.EventBus;

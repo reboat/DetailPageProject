@@ -11,6 +11,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
@@ -18,7 +19,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
@@ -18,7 +19,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,10 +63,10 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
         mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
+        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
             mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
             mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments());
+            adapter = new CommentAdapter(mData.getArticle().getHot_comments(),mRecyleView,String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);
         } else {
             mLyHotContainer.setVisibility(View.GONE);

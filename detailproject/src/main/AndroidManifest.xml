@@ -75,18 +75,70 @@
                     android:path="/news.html"
                     android:scheme="@string/data_scheme"
                     />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <!--视频详情页-->
                 <data
                     android:host="@string/data_host_test"
                     android:path="/video.html"
                     android:scheme="@string/data_scheme" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <!--活动详情页-->
                 <data
                     android:host="@string/data_host_test"
                     android:path="/activity.html"
                     android:scheme="@string/data_scheme" />
-
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--普通详情页-->
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/news.html"
+                    android:scheme="@string/data_scheme"
+                    />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--视频详情页-->
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/video.html"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--活动详情页-->
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/activity.html"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+
+
         </activity>
 
         <!--链接稿-->
@@ -106,12 +158,46 @@
                     android:path="/link.html"
                     android:scheme="@string/data_scheme"
                     />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
                 <!--直播稿-->
                 <data
                     android:host="@string/data_host_test"
                     android:path="/live.html"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--链接稿-->
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/link.html"
+                    android:scheme="@string/data_scheme"
+                    />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--直播稿-->
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/live.html"
+                    android:scheme="@string/data_scheme"
+                    />
+            </intent-filter>
+
         </activity>
 
         <!--图集-->
@@ -130,6 +216,19 @@
                     android:path="/album.html"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/album.html"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+
         </activity>
         <!--官员详情-->
         <activity
@@ -158,10 +257,22 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/data_host"
+                    android:host="@string/data_host_test"
                     android:path="/detail/PersionalListActivity"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host_test1"
+                    android:path="/detail/PersionalListActivity"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+
         </activity>
 
         <!--专题详情页-->
@@ -177,6 +288,17 @@
 
                 <data
                     android:host="@string/data_host_test"
+                    android:path="/subject.html"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host_test1"
                     android:path="/subject.html"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
@@ -212,11 +334,6 @@
                     android:path="/topic.html"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
-        </activity>
-        <!--图集预览-->
-        <activity
-            android:name=".webjs.ImageBrowseActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -224,8 +341,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/data_host_test"
-                    android:path="/detail/ImageBrowseActivity"
+                    android:host="@string/data_host_test1"
+                    android:path="/topic.html"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>

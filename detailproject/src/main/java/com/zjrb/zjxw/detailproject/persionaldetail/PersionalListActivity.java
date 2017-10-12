@@ -16,6 +16,7 @@ import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -27,7 +28,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 

@@ -21,6 +21,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.db.BundleHelper;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.T;
@@ -65,7 +66,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @BindView(R2.id.ly_container)
     LinearLayout mLyContailer;
 
-    //TODO WLJ  分享  链接？
     /**
      * 官员ID
      */
@@ -168,7 +168,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.lly_reporter) {
-            //TODO WLJ 进入官员详情页H5
+            //跳转到官员详情页H5
+            Nav.with(this).to(bean.getOfficer().getDetail_url());
         } else {
             //分享
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -176,7 +177,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                     .setImgUri(bean.getOfficer().getPhoto())
                     .setTextContent(bean.getOfficer().getName())
                     .setTitle(getString(R.string.module_detail_share_content_from))
-                    .setTargetUrl(bean.getOfficer().getUrl()));
+                    .setTargetUrl(bean.getOfficer().getShare_url()));
         }
     }
 

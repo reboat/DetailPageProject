@@ -272,7 +272,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     }
 
                     //主持人
-                    if (mNewsDetail.getArticle().getTopic_hosts() != null) {
+                    if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+                        if (mTvHost.getVisibility() == View.GONE) {
+                            mTvHost.setVisibility(View.VISIBLE);
+                        }
                         mTvHost.setText("主持人：");
                         for (String host :
                                 mNewsDetail.getArticle().getTopic_hosts()) {
@@ -281,7 +284,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     }
 
                     //嘉宾
-                    if (mNewsDetail.getArticle().getTopic_guests() != null) {
+                    if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+                        if (mTvGuest.getVisibility() == View.GONE) {
+                            mTvGuest.setVisibility(View.VISIBLE);
+                        }
                         mTvGuest.setText("嘉宾：");
                         for (String guest :
                                 mNewsDetail.getArticle().getTopic_guests()) {
@@ -318,7 +324,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 }
 
                 //主持人
-                if (mNewsDetail.getArticle().getTopic_hosts() != null) {
+                if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+                    if (mTvHost.getVisibility() == View.GONE) {
+                        mTvHost.setVisibility(View.VISIBLE);
+                    }
                     mTvHost.setText("主持人：");
                     for (String host :
                             mNewsDetail.getArticle().getTopic_hosts()) {
@@ -327,7 +336,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 }
 
                 //嘉宾
-                if (mNewsDetail.getArticle().getTopic_guests() != null) {
+                if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+                    if (mTvGuest.getVisibility() == View.GONE) {
+                        mTvGuest.setVisibility(View.VISIBLE);
+                    }
                     mTvGuest.setText("嘉宾：");
                     for (String guest :
                             mNewsDetail.getArticle().getTopic_guests()) {
@@ -413,7 +425,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             }
 
             //主持人
-            if (mNewsDetail.getArticle().getTopic_hosts() != null) {
+            if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+                if (mTvHost.getVisibility() == View.GONE) {
+                    mTvHost.setVisibility(View.VISIBLE);
+                }
                 mTvHost.setText("主持人：");
                 for (String host :
                         mNewsDetail.getArticle().getTopic_hosts()) {
@@ -422,7 +437,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             }
 
             //嘉宾
-            if (mNewsDetail.getArticle().getTopic_guests() != null) {
+            if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+                if (mTvGuest.getVisibility() == View.GONE) {
+                    mTvGuest.setVisibility(View.VISIBLE);
+                }
                 mTvGuest.setText("嘉宾：");
                 for (String guest :
                         mNewsDetail.getArticle().getTopic_guests()) {
@@ -452,7 +470,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         //webview
         datas.add(data);
         //订阅
-        datas.add(data);
+        if (!TextUtils.isEmpty(data.getArticle().getColumn_name())) {
+            datas.add(data);
+        }
 
         //相关专题
         if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
@@ -601,7 +621,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this,null).getmImgSrcs()[0])
+                    .setImgUri(WebJsInterface.getInstance(this, null).getmImgSrcs()[0])
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));

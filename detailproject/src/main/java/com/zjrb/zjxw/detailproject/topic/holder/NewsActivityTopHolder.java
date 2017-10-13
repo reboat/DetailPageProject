@@ -117,7 +117,8 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //主持人
-        if (mData.getArticle().getTopic_hosts() != null && !mData.getArticle().getTopic_hosts().isEmpty()) {
+        if (!mData.getArticle().isTopic_hostsEmpty()) {
+            mTvHost.setVisibility(View.VISIBLE);
             mTvHost.setText("主持人：");
             for (String host :
                     mData.getArticle().getTopic_hosts()) {
@@ -126,7 +127,8 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //嘉宾
-        if (mData.getArticle().getTopic_guests() != null && !mData.getArticle().getTopic_guests().isEmpty()) {
+        if (!mData.getArticle().isTopic_guestsEmpty()) {
+            mTvGuest.setVisibility(View.VISIBLE);
             mTvGuest.setText("嘉宾：");
             for (String guest :
                     mData.getArticle().getTopic_guests()) {

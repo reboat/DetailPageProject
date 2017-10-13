@@ -15,23 +15,26 @@
         android:id="@+id/tv_cover_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:maxLines="2"
-        android:textColor="?attr/tc_ffffff"
+        android:textColor="?attr/tc_484848"
         android:textSize="@dimen/ts_20sp"
-        tools:text="千年历史沿革畔邵伯古畔邵伯古史沿航拍中国大运河畔邵伯古镇史感受感受感受感受"/>
+        tools:text="千年历史沿革畔邵伯" />
 
     <TextView
         android:id="@+id/tv_host"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
-        android:layout_marginTop="13dp"
         android:drawableLeft="@mipmap/module_detail_activity_host"
         android:drawablePadding="3dp"
-        android:textColor="?attr/tc_d2d2d2"
+        android:padding="3dp"
+        android:textColor="?attr/tc_999999"
         android:textSize="@dimen/ts_13sp"
-        tools:text="主持人：小明"/>
+        android:visibility="gone"
+        tools:text="主持人：小明" />
 
     <TextView
         android:id="@+id/tv_guest"
@@ -39,7 +42,9 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/module_detail_activity_guest"
         android:drawablePadding="3dp"
-        android:textColor="?attr/tc_d2d2d2"
+        android:padding="3dp"
+        android:textColor="?attr/tc_999999"
         android:textSize="@dimen/ts_13sp"
-        tools:text="嘉宾：小明  豆包"/>
+        android:visibility="gone"
+        tools:text="嘉宾：小明  豆包" />
 </LinearLayout>

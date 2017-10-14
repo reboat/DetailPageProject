@@ -436,7 +436,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this,null).getmImgSrcs()[0])
+                    .setImgUri(WebJsInterface.getInstance(this,null).getFirstSrc())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));

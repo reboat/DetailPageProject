@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
@@ -58,7 +58,7 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
             lyContainer.setVisibility(View.GONE);
         } else {
             tvRelated.setText("推荐专题");
-            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+            mRecyleView.addItemDecoration(new ListSpaceDivider(10, 0, false));
             mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                     LinearLayoutManager.VERTICAL, false));
             adapter = new NewsRelatedSubjectAdapter(mData.getArticle().getRelated_subjects());
@@ -73,10 +73,9 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        if (mData != null) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
+        if (mData != null && !TextUtils.isEmpty(mData.getArticle().getRelated_subjects().get(position).getUri_scheme())) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getRelated_subjects().get(position).getUri_scheme())
                     .buildUpon()
-                    .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
                     .build(), 0);
         }
     }

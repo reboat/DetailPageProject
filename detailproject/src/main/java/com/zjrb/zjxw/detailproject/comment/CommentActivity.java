@@ -224,7 +224,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 imgUrl = !TextUtils.isEmpty(mNewsDetail.getArticle().getArticle_pic()) ? mNewsDetail.getArticle().getArticle_pic() : "";
             } else {
                 //取正文第一张图，否则为""
-                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this, null).getmImgSrcs().toString()) ? WebJsInterface.getInstance(this, null).getmImgSrcs()[0] : "";
+                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this, null).getFirstSrc()) ? WebJsInterface.getInstance(this, null).getFirstSrc() : "";
             }
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)

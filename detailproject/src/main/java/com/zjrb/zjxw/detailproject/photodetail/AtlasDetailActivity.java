@@ -179,7 +179,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
 
             //评论数量
-            if(!TextUtils.isEmpty(mData.getArticle().getComment_count_general())){
+            if (!TextUtils.isEmpty(mData.getArticle().getComment_count_general())) {
                 mTvCommentsNum.setVisibility(View.VISIBLE);
                 mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
             }
@@ -204,7 +204,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
 
             //设置图集标题和指示器
-            mTvIndex.setText(String.valueOf(mIndex + 1));
+            mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
             mTvTottleNum.setText(String.valueOf(mAtlasList.size()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
             AlbumImageListBean entity = mAtlasList.get(mIndex);
@@ -282,7 +282,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @Override
     public void onPageSelected(int position) {
         mIndex = position;
-        mTvIndex.setText(String.valueOf(mIndex + 1));
+        mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
         setSwipeBackEnable(0 == position);
         AlbumImageListBean entity = mAtlasList.get(position);
         mTvContent.setText(entity.getDescription());

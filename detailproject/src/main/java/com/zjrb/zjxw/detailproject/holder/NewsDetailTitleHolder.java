@@ -36,8 +36,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     TextView mTvTitle;
     @BindView(R2.id.tv_reporter)
     TextView mTvReporter;
-    @BindView(R2.id.tv_column_name)
-    TextView mTvColumnName;
+    @BindView(R2.id.tv_channel_name)
+    TextView mTvChannelName;
     @BindView(R2.id.tv_time)
     TextView mTvTime;
 
@@ -72,27 +72,27 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (!TextUtils.isEmpty(mData.getArticle().getColumn_name())) {
+        if (!TextUtils.isEmpty(mData.getArticle().getChannel_name())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "|");
-            mTvColumnName.setText(mData.getArticle().getColumn_name());
+            mTvChannelName.setText(mData.getArticle().getChannel_name());
         } else {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
-            mTvColumnName.setVisibility(View.GONE);
+            mTvChannelName.setVisibility(View.GONE);
         }
     }
 
     private Bundle bundle;
 
-    @OnClick({R2.id.tv_column_name})
+    @OnClick({R2.id.tv_channel_name})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.tv_column_name) {
+        if (view.getId() == R.id.tv_channel_name) {
             //TODO  WLJ  进入频道列表页面
             if (bundle == null) {
                 bundle = new Bundle();
             }
             bundle.putString(IKey.CHANNEL_NAME, mData.getArticle().getChannel_name());
-            bundle.putString(IKey.CHANNEL_ID, mData.getArticle().getChannel_id());
+            bundle.putString(IKey.ID, mData.getArticle().getChannel_id());
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
         }
     }

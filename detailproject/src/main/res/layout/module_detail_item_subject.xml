@@ -27,7 +27,6 @@
         android:layout_marginRight="17dp"
         android:layout_toRightOf="@id/iv_pic"
         android:ellipsize="end"
-        android:lineSpacingExtra="3dp"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
         android:textColor="?attr/tc_484848"

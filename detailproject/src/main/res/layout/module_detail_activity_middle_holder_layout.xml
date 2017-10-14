@@ -28,7 +28,7 @@
         android:layout_toRightOf="@+id/iv_column_logo"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:ellipsize="end"
-        android:lineSpacingExtra="5sp"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="2"
         android:maxWidth="150dp"
         android:textColor="?attr/tc_484848"

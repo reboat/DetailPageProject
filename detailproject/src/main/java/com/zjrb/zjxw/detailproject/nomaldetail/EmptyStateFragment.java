@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,8 +18,8 @@ import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
+import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
 
@@ -148,10 +147,10 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     @Override
     public void onItemClick(View itemView, int position) {
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) adapter.getData().get(position)).getUrl())
-                    .buildUpon()
-                    .build(), 0);
-
+            Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) adapter.getData().get(position)).getUrl());
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) adapter.getData().get(position)).getUrl())
+//                    .buildUpon()
+//                    .build(), 0);
 
         }
 

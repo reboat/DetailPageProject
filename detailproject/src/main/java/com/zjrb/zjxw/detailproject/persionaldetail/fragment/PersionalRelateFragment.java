@@ -180,9 +180,10 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) mAdapter.getData().get(position)).getUrl())
-                    .buildUpon()
-                    .build(), 0);
+            Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) mAdapter.getData().get(position)).getUrl());
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) mAdapter.getData().get(position)).getUrl())
+//                    .buildUpon()
+//                    .build(), 0);
 
         }
     }

@@ -22,7 +22,7 @@
             android:drawablePadding="12dp"
             android:gravity="center_vertical|left"
             android:letterSpacing="0.25"
-            android:lineSpacingExtra="5sp"
+            android:lineSpacingMultiplier="1.1"
             android:paddingBottom="9.5dp"
             android:paddingTop="9dp"
             android:textColor="?attr/tc_484848"

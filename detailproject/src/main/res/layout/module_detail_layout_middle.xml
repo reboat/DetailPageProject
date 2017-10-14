@@ -67,7 +67,7 @@
             android:layout_marginLeft="15.5dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:ellipsize="end"
-            android:lineSpacingExtra="5sp"
+            android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
             android:maxWidth="150dp"
             android:textColor="?attr/tc_484848"

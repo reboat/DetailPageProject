@@ -81,10 +81,11 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
     @Override
     public void onItemClick(View itemView, int position) {
         if (mData != null) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
-                    .buildUpon()
-                    .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
-                    .build(), 0);
+            Nav.with(UIUtils.getActivity()).to(mData.getArticle().getUrl());
+//            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
+//                    .buildUpon()
+//                    .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
+//                    .build(), 0);
 
         }
     }

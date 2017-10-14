@@ -45,7 +45,7 @@
             android:ellipsize="end"
             android:gravity="left|bottom"
             android:includeFontPadding="false"
-            android:lineSpacingExtra="3sp"
+            android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_10sp"

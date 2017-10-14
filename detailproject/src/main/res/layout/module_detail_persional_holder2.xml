@@ -10,7 +10,7 @@
     android:layout_marginLeft="12dp"
     android:layout_marginTop="14dp"
     android:maxLines="2"
-    android:lineSpacingExtra="2dp"
+    android:lineSpacingMultiplier="1.1"
     android:ellipsize="end"
     android:textColor="?attr/tc_484848"
     android:textSize="@dimen/ts_14sp"

@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="6dp"
-            android:lineSpacingExtra="3dp"
+            android:lineSpacingMultiplier="1.1"
             android:textColor="?attr/tc_999999"
             android:textSize="@dimen/ts_11sp"
             tools:text="浙江省委书记"/>

@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:lineSpacingExtra="6dp"
+        android:lineSpacingMultiplier="1.1"
         android:maxLines="2"
         android:textColor="?attr/tc_484848"
         android:textSize="@dimen/ts_14sp"

@@ -4,6 +4,7 @@
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/bc_202124"
                 android:orientation="vertical">
     <!--错误页面-->
     <LinearLayout
@@ -146,7 +147,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="7dp"
-                android:src="@mipmap/ic_top_bar_back_white" />
+                android:src="@mipmap/ic_top_bar_back_dark"
+                />
 
             <ImageView
                 android:id="@+id/iv_share"

@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -78,18 +79,18 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         itemView.addOnAttachStateChangeListener(this);
 
         //栏目已关联(栏目id>0即表示频道有关联内容)
-        if (mData.getArticle().getColumn_id() > 0) {
+        if (mData.getArticle().getColumn_id() > 0
+                && !TextUtils.isEmpty(mData.getArticle().getColumn_name())) {
             mRySubscribe.setVisibility(View.VISIBLE);
-            if (mData.getArticle().getColumn_name() != null) {
-                mTvColumnName.setText(mData.getArticle().getColumn_name());
-            }
+            mTvColumnName.setText(mData.getArticle().getColumn_name());
             mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "订阅");
         } else {
             mRySubscribe.setVisibility(View.GONE);
         }
 
         //频道名称
-        if (mData.getArticle().getChannel_id() != null && !mData.getArticle().getChannel_id().isEmpty()) {
+        if (!TextUtils.isEmpty(mData.getArticle().getChannel_id())
+                && !TextUtils.isEmpty(mData.getArticle().getChannel_name())) {
             mRyChannel.setVisibility(View.VISIBLE);
             mTvChannelName.setText(mData.getArticle().getChannel_name());
         } else {
@@ -165,10 +166,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        if (mData != null && mData.getArticle() != null) {
+        if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(WebJsInterface.getInstance(itemView.getContext(),null).getmImgSrcs()[0])
+                    .setImgUri(WebJsInterface.getInstance(itemView.getContext(), null).getFirstSrc())
                     .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())

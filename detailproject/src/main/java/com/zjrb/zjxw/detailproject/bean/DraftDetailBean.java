@@ -24,7 +24,7 @@ public class DraftDetailBean extends BaseData {
         this.article = article;
     }
 
-    public static class ArticleBean implements  Serializable{
+    public static class ArticleBean implements Serializable {
 
         private int id;
         private int mlf_id;
@@ -527,6 +527,14 @@ public class DraftDetailBean extends BaseData {
             return topic_hosts;
         }
 
+        public boolean isTopic_hostsEmpty() {
+            if (topic_hosts != null && topic_hosts.size() != 0 && !topic_hosts.get(0).isEmpty()) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         public void setTopic_hosts(List<String> topic_hosts) {
             this.topic_hosts = topic_hosts;
         }
@@ -537,6 +545,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setTopic_guests(List<String> topic_guests) {
             this.topic_guests = topic_guests;
+        }
+
+        public boolean isTopic_guestsEmpty() {
+            if (topic_guests != null && topic_guests.size() != 0 && !topic_guests.get(0).isEmpty()) {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         public List<SpecialGroupBean> getSubject_groups() {

@@ -52,7 +52,7 @@
     <com.aliya.view.ratio.RatioFrameLayout
         android:id="@+id/video_container"
         android:layout_width="match_parent"
-        android:layout_height="211dp"
+        android:layout_height="wrap_content"
         android:visibility="gone"
         app:ratio_w2h="16:9">
 

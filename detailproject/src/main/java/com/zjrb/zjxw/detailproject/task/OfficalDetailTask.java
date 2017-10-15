@@ -26,7 +26,7 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
     protected void onSetupParams(Object... params) {
         put("id", params[0]);
         //下拉刷新默认不传时间戳
-        if (params.length > 1) {
+        if (params.length > 1 && params[1] != null) {
             put("start", params[1]);
         }
         put("size", C.PAGE_SIZE_OFFICAL);

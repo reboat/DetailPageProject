@@ -17,15 +17,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
-import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
@@ -70,13 +68,13 @@ import butterknife.OnClick;
 public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
         ActivityTopicAdapter.CommonOptCallBack {
     @BindView(R2.id.recyclerView)
-    FitWindowsRecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.floor_bar)
-    FitWindowsFrameLayout mFloorBar;
+    FrameLayout mFloorBar;
     @BindView(R2.id.v_toolbar_divider)
     View mVToolbarDivider;
     @BindView(R2.id.toolbar)

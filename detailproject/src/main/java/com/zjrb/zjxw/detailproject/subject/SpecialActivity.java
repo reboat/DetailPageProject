@@ -29,7 +29,7 @@ import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
-import com.zjrb.zjxw.detailproject.subject.holder.HeaderTopicHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 
@@ -46,7 +46,7 @@ import butterknife.OnClick;
  * @date 2017/10/12 上午8:51.
  */
 public class SpecialActivity extends BaseActivity implements OnItemClickListener,
-        HeaderTopicHolder.OnClickChannelListener {
+        HeaderSpecialHolder.OnClickChannelListener {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -153,7 +153,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }).setTag(this).exe(mArticleId);
     }
 
-    private HeaderTopicHolder headHolder;
+    private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
 
@@ -162,7 +162,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
 
         //添加专题详情页的头部holder
-        headHolder = new HeaderTopicHolder(mRecycler, mRecyclerCopy, this);
+        headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);
         headHolder.setData(data);
         mAdapter = new SpecialAdapter(data);
         mAdapter.addHeaderView(headHolder.getItemView());

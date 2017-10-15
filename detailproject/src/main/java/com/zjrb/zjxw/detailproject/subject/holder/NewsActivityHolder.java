@@ -76,7 +76,7 @@ public class NewsActivityHolder extends BaseRecyclerViewHolder<ArticleItemBean> 
         }
 
         //活动时间
-        mTvTime.setText(mData.getActivity_date_begin() + "-" + mData.getActivity_date_end());
+        mTvTime.setText(mData.getActivity_start() + "-" + mData.getActivity_end());
 
         //活动人数
         mTvNum.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class NewsActivityHolder extends BaseRecyclerViewHolder<ArticleItemBean> 
         }
 
         //话题时间
-        mTvTime.setText(mData.getActivity_date_begin() + "-" + mData.getActivity_date_end());
+        mTvTime.setText(mData.getActivity_start() + "-" + mData.getActivity_end());
 
         //无话题人数
         mTvNum.setVisibility(View.GONE);

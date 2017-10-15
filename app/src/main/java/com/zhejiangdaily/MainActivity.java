@@ -1,15 +1,11 @@
 package com.zhejiangdaily;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.utils.T;
-
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -21,25 +17,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.tv_text);
         tv.setOnClickListener(this);
-        initTest();
-    }
-
-    /**
-     * 获取sessionId
-     */
-    private void initTest() {
-        new InitTask(new APIExpandCallBack<SessionIdBean>() {
-            @Override
-            public void onError(String errMsg, int errCode) {
-                T.showShortNow(MainActivity.this, "获取sessionId失败");
-            }
-
-            @Override
-            public void onSuccess(@NonNull SessionIdBean result) {
-//                UserBiz.get().setSession(result.getSession());
-
-            }
-        }).setTag(this).exe();
     }
 
 

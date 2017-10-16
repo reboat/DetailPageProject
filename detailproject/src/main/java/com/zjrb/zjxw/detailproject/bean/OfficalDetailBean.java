@@ -14,24 +14,6 @@ import java.util.List;
 
 public class OfficalDetailBean extends BaseData {
 
-    /**
-     * id : 1
-     * name : 车俊
-     * gender : 男
-     * hometown : 籍贯
-     * nation : 民族
-     * university : 毕业院校
-     * degree : 学历
-     * title : 省委书记
-     * birthday : 150000000000
-     * ccp_date : 150000000000
-     * work_date : 150000000000
-     * description : 官员简介说明
-     * photo : http://www.123123.com/photo.png
-     * list_pic : http://www.123123.com/photo.png
-     * resumes : [{"year":2017,"month":7,"location":"杭州","title":"职务"},{"year":2017,"month":6,"location":"杭州","title":"职务"}]
-     */
-
     private OfficerBean officer;
     /**
      * id : 123456

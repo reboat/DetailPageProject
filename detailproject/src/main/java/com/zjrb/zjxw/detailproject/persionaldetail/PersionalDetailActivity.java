@@ -61,8 +61,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     TabLayout tabLayout;
     @BindView(R2.id.viewpager)
     ViewPager viewpager;
-    @BindView(R2.id.nsv)
-    LinearLayout nsv;
     @BindView(R2.id.ly_container)
     LinearLayout mLyContailer;
 

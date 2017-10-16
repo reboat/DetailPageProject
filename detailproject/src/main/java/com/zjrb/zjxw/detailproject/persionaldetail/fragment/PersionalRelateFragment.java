@@ -1,7 +1,7 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.fragment;
 
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalSuperRelateAdapter;
+import com.zjrb.zjxw.detailproject.persionaldetail.adapter.OfficerRelatedNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
 import java.util.List;
@@ -37,7 +37,8 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2017/8/27  上午10:14
  */
-public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh.OnRefreshListener, OnItemClickListener {
+public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh
+        .OnRefreshListener, OnItemClickListener {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
@@ -48,7 +49,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * 相关新闻标识
      */
     public static final int TYPE_NEWS = 0;
-    private ListSpaceDivider diver;
     /**
      * 相关新闻列表
      */
@@ -66,14 +66,15 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     /**
      * 官员详情页相关新闻适配器
      */
-    private PersionalSuperRelateAdapter mAdapter;
+    private OfficerRelatedNewsAdapter mAdapter;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            bean = (OfficalDetailBean) getArguments().getSerializable(IKey.FRAGMENT_PERSIONAL_RELATER);
+            bean = (OfficalDetailBean) getArguments().getSerializable(IKey
+                    .FRAGMENT_PERSIONAL_RELATER);
             official_id = getArguments().getString(IKey.OFFICIAL_ID);
         }
     }
@@ -81,27 +82,26 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.module_detail_fragment_relate_news, container, false);
-        ButterKnife.bind(this, v);
-        initView(v);
-        return v;
+        return inflater.inflate(R.layout.module_detail_fragment_relate_news, container, false);
     }
 
-    /**
-     * @param v 初始化适配器
-     */
-    private void initView(View v) {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+        initView();
+    }
+
+    private void initView() {
         if (bean != null || bean.getArticle_list().isEmpty()) {
             mViewExise.setVisibility(View.VISIBLE);
             mViewExise.setVisibility(View.GONE);
             return;
         }
-        mAdapter = new PersionalSuperRelateAdapter(bean, lvNotice, official_id);
+        mAdapter = new OfficerRelatedNewsAdapter(bean, lvNotice, official_id);
         lvNotice.setAdapter(mAdapter);
-        lvNotice.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        diver = new ListSpaceDivider(32, 0, false);
-        lvNotice.addItemDecoration(diver);
+        lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
+        lvNotice.addItemDecoration(new ListSpaceDivider(0.5, R.attr.dc_dddddd, true));
         //添加刷新头
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
@@ -115,7 +115,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     private void initAdapter() {
         mAdapter.setHeaderRefresh(refresh.getItemView());
         mAdapter.setOnItemClickListener(this);
-        mAdapter = new PersionalSuperRelateAdapter(bean, lvNotice, official_id);
+        mAdapter = new OfficerRelatedNewsAdapter(bean, lvNotice, official_id);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(lvNotice,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -143,7 +143,8 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 refresh.setRefreshing(false);
             }
 
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(official_id);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad
+                (lvNotice)).exe(official_id);
     }
 
 
@@ -169,22 +170,14 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 initData();
             }
         });
-
-
     }
 
-    /**
-     * @param itemView
-     * @param position 相关新闻点击事件
-     */
     @Override
     public void onItemClick(View itemView, int position) {
-        if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) mAdapter.getData().get(position)).getUrl());
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) mAdapter.getData().get(position)).getUrl())
-//                    .buildUpon()
-//                    .build(), 0);
-
+        if (ClickTracker.isDoubleClick() || mAdapter == null) {
+            return;
         }
+        NewsUtils.itemClick(this, mAdapter.getData(position));
     }
+
 }

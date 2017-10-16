@@ -2,10 +2,8 @@ package com.zjrb.zjxw.detailproject.subject.holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
@@ -35,7 +33,7 @@ import butterknife.ButterKnife;
  * @author a_liYa
  * @date 2017/10/11 下午2:31.
  */
-public class HeaderTopicHolder extends PageItem implements OnItemClickListener, View
+public class HeaderSpecialHolder extends PageItem implements OnItemClickListener, View
         .OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
 
     @BindView(R2.id.iv_subject)
@@ -69,8 +67,8 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener, 
 
     public static final int MAX_DEFAULT_LINES = 3;
 
-    public HeaderTopicHolder(RecyclerView parent, RecyclerView copy,
-                             OnClickChannelListener listener) {
+    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy,
+                               OnClickChannelListener listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
         mCopy = copy;
@@ -210,6 +208,5 @@ public class HeaderTopicHolder extends PageItem implements OnItemClickListener, 
         void onClickChannel(SpecialGroupBean bean);
 
     }
-
 
 }

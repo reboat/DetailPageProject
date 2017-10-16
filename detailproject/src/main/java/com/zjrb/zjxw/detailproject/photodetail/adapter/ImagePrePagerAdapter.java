@@ -30,7 +30,8 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         //最后一张是更多图集,需要参数传入
-        if (mBean.getArticle().getAlbum_image_count() > 1 && (position == (mBean.getArticle().getAlbum_image_count() - 1))) {
+        if (mBean.getArticle().getRelated_news() != null && mBean.getArticle().getRelated_news().size() > 0
+                && mBean.getArticle().getAlbum_image_count() > 1 && (position == (mBean.getArticle().getAlbum_image_count() - 1))) {
             return ImageMoreFragment.newInstance(mBean);
         }
 

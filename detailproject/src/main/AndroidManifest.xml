@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.zjrb.zjxw.detailproject">
+          package="com.zjrb.zjxw.detailproject">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -65,8 +65,10 @@
                 <data android:host="@string/data_host" />
 
                 <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_test1" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 
@@ -92,15 +94,18 @@
                 <data android:host="@string/data_host" />
 
                 <!--以下测试 host -->
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_test1" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 
         <!--图集详情页-->
         <activity
             android:name=".photodetail.AtlasDetailActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -115,15 +120,18 @@
                 <data android:host="@string/data_host" />
 
                 <!--以下测试 host -->
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_test1" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 
         <!--专题详情页-->
         <activity
             android:name=".subject.SpecialActivity"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -138,14 +146,17 @@
                 <data android:host="@string/data_host" />
 
                 <!--以下测试 host -->
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_test1" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 
         <!--话题详情页-->
         <activity
-        android:name=".topic.ActivityTopicActivity" >
+            android:name=".topic.ActivityTopicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -160,14 +171,17 @@
                 <data android:host="@string/data_host" />
 
                 <!--以下测试 host -->
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_test1" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 
         <!--专题列表-->
         <activity
-            android:name=".subject.SpecialListActivity" >
+            android:name=".subject.SpecialListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -183,7 +197,7 @@
 
         <!--官员详情页-->
         <activity
-            android:name=".persionaldetail.PersionalDetailActivity" >
+            android:name=".persionaldetail.PersionalDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -199,7 +213,7 @@
 
         <!--官员新闻列表-->
         <activity
-            android:name=".persionaldetail.PersionalListActivity" >
+            android:name=".persionaldetail.PersionalListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -207,18 +221,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="@string/data_host_test"
-                    android:path="/detail/PersionalListActivity"
-                    android:scheme="@string/data_scheme" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/data_host_test1"
+                    android:host="@string/data_host"
                     android:path="/detail/PersionalListActivity"
                     android:scheme="@string/data_scheme" />
             </intent-filter>

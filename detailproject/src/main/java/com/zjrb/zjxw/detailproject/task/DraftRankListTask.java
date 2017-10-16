@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
+import android.text.TextUtils;
+
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
@@ -22,7 +24,9 @@ public class DraftRankListTask extends APIGetTask<DraftHotTopNewsBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("channel_id", params[0]);
+        if (!TextUtils.isEmpty(params[0].toString())) {
+            put("channel_id", params[0]);
+        }
     }
 
     @Override

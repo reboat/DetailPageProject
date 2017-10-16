@@ -41,7 +41,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     /**
      * 栏目id
      */
-    private String column_id;
+    private String channel_id;
 
     private EmptyStateListAdapter adapter;
 
@@ -53,7 +53,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public static EmptyStateFragment newInstance(String columnId) {
         EmptyStateFragment fragment = new EmptyStateFragment();
         Bundle args = new Bundle();
-        args.putString(IKey.COLUMN_ID, columnId);
+        args.putString(IKey.CHANNEL_ID, columnId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,7 +62,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            column_id = getArguments().getString(IKey.COLUMN_ID);
+            channel_id = getArguments().getString(IKey.CHANNEL_ID);
         }
     }
 
@@ -137,7 +137,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
             public void onError(String errMsg, int errCode) {
                 T.showShort(UIUtils.getContext(), errMsg);
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(column_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(channel_id);
     }
 
     /**
@@ -148,10 +148,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public void onItemClick(View itemView, int position) {
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) adapter.getData().get(position)).getUrl());
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse(((ArticleItemBean) adapter.getData().get(position)).getUrl())
-//                    .buildUpon()
-//                    .build(), 0);
-
         }
 
     }

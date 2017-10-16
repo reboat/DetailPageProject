@@ -196,18 +196,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
-            //添加更多图集
-            mAtlasList.add(new AlbumImageListBean());
-            //设置图片count
-            atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
-            atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
-            atlasDetailEntity.getArticle().setRelated_news(mData.getArticle().getRelated_news());
-            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
-
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
             mTvTottleNum.setText(String.valueOf(mData.getArticle().getAlbum_image_count()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
+            //添加更多图集(假如有相关新闻)
+            if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0) {
+                mAtlasList.add(new AlbumImageListBean());
+            }
+            //设置图片count
+            atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
+            atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
+//            atlasDetailEntity.getArticle().setRelated_news(mData.getArticle().getRelated_news());
+            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
+
             AlbumImageListBean entity = mAtlasList.get(mIndex);
             mTvContent.setText(entity.getDescription());
         }
@@ -290,10 +292,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvContent.scrollTo(0, 0);
 
         //更多图集
-        setTopTitle(position);
+        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0) {
+            setTopTitle(position);
+        }
 
         //文案显示
-        if (position == (mAtlasList.size() - 1)) {
+        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0 && position == (mAtlasList.size() - 1)) {
             mLyContainer.setVisibility(View.GONE);
             mTvContent.setVisibility(View.GONE);
         } else {
@@ -308,7 +312,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 }
                 //更多图集不需要显示下载图标
-                if (position == (mAtlasList.size() - 1) && mIvDownLoad.getVisibility() == View.VISIBLE) {
+                if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0
+                        && position == (mAtlasList.size() - 1) && mIvDownLoad.getVisibility() == View.VISIBLE) {
                     mIvDownLoad.setVisibility(View.GONE);
                 }
             } else {
@@ -444,10 +449,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     /**
      * 显示撤稿页面
      */
+    //TODO WLJ getColumn_id???
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mData.getArticle().getColumn_id()))).commit();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mData.getArticle().getChannel_id()))).commit();
     }
 
 }

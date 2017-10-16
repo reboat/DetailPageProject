@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -29,6 +27,7 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
@@ -36,23 +35,32 @@ import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import org.greenrobot.eventbus.EventBus;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
- * Created by HeYongchen on 2017/9/21.
+ * Created by wanglinjie on 2017/9/21.
  */
 
-public class MoreDialog extends BaseDialogFragment implements View.OnClickListener, RadioGroup.OnCheckedChangeListener {
+public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheckedChangeListener {
 
     protected Dialog dialog;
-    private RadioGroup rgSetFontSize;
-    private LinearLayout llCollect, llNight, llFeedBack;
-    private RadioButton rbSmall, rbNormal, rbBig;
-    private ImageView ivCollect, ivTheme, ivFeedBack;
-    private Button btnClose;
-    private TextView tvPreview;
-    private OnCollectClickListener onCollectClickListener;
+    @BindView(R2.id.iv_module_core_more_collect)
+    ImageView ivCollect;
+    @BindView(R2.id.rb_module_core_more_set_font_size_small)
+    RadioButton rbSmall;
+    @BindView(R2.id.rb_module_core_more_set_font_size_normal)
+    RadioButton rbNormal;
+    @BindView(R2.id.rb_module_core_more_set_font_size_big)
+    RadioButton rbBig;
+    @BindView(R2.id.rg_module_core_more_set_font_size)
+    RadioGroup rgSetFontSize;
+    @BindView(R2.id.tv_module_core_more_set_font_size_preview)
+    TextView tvPreview;
+
     private DraftDetailBean mBean;
 
-    private static final String TAG = "MoreDialog";
     /**
      * @return
      */
@@ -79,22 +87,7 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.BottomDialog);
         View view = View.inflate(getContext(), R.layout.module_core_dialog_more_layout, null);
-        rgSetFontSize = (RadioGroup) view.findViewById(R.id.rg_module_core_more_set_font_size);
-        rbSmall = (RadioButton) view.findViewById(R.id.rb_module_core_more_set_font_size_small);
-        rbNormal = (RadioButton) view.findViewById(R.id.rb_module_core_more_set_font_size_normal);
-        rbBig = (RadioButton) view.findViewById(R.id.rb_module_core_more_set_font_size_big);
-        llCollect = (LinearLayout) view.findViewById(R.id.ll_module_core_more_collect);
-        llNight = (LinearLayout) view.findViewById(R.id.ll_module_core_more_night);
-        llFeedBack = (LinearLayout) view.findViewById(R.id.ll_module_core_more_feed_back);
-        ivCollect = (ImageView) view.findViewById(R.id.iv_module_core_more_collect);
-        ivTheme = (ImageView) view.findViewById(R.id.iv_module_core_more_theme);
-        ivFeedBack = (ImageView) view.findViewById(R.id.iv_module_core_more_feed_back);
-        btnClose = (Button) view.findViewById(R.id.btn_dialog_close);
-        tvPreview = (TextView) view.findViewById(R.id.tv_module_core_more_set_font_size_preview);
-        llCollect.setOnClickListener(this);
-        llNight.setOnClickListener(this);
-        llFeedBack.setOnClickListener(this);
-        btnClose.setOnClickListener(this);
+        ButterKnife.bind(this, view);
         rgSetFontSize.setOnCheckedChangeListener(this);
         if (mBean.getArticle().isFollowed()) {
             ivCollect.getDrawable().setLevel(getResources().getInteger(R.integer.level_collect_on));
@@ -165,25 +158,21 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
         }
     }
 
-    public interface OnCollectClickListener {
-        void onClick(boolean collectState);
-    }
-
     @Override
     public void onStop() {
         super.onStop();
         dismissFragmentDialog();
     }
 
-    @Override
+    @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_night, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close})
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.ll_module_core_more_collect) {
             newsTopicCollect();
-            dismissFragmentDialog();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
             EventBus.getDefault().postSticky(new NewsDetailNightThemeEvent(!ThemeMode.isNightMode()));
+            dismissFragmentDialog();
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
             Nav.with(UIUtils.getContext()).toPath(RouteManager.FEED_BACK);
@@ -203,12 +192,15 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
             @Override
             public void onSuccess(Void baseInnerData) {
                 ivCollect.getDrawable().setLevel(getResources().getInteger(R.integer.level_collect_on));
-                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_collect_success));
+                T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_success));
+                dismissFragmentDialog();
+
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_collect_failed));
+                T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_failed));
+                dismissFragmentDialog();
             }
 
         }).setTag(this).exe(mBean.getArticle().getId(), !mBean.getArticle().isFollowed());
@@ -236,4 +228,5 @@ public class MoreDialog extends BaseDialogFragment implements View.OnClickListen
             EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_LARGE));
         }
     }
+
 }

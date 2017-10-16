@@ -50,7 +50,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
     }
 
     private void initView() {
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(0.5d, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }
@@ -62,9 +62,6 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
         mText.setText(itemView.getContext().getString(R.string.module_detail_useful_comment));
         mMore.setVisibility(View.GONE);
 
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                LinearLayoutManager.VERTICAL, false));
         if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
             adapter = new CommentAdapter(mData.getArticle().getHot_comments(),mRecyleView,String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);

@@ -174,7 +174,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
                     ).itemView);
             mCommentAdapter.setOnItemClickListener(this);
             mRvContent.setAdapter(mCommentAdapter);

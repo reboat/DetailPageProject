@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
@@ -38,10 +37,10 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
 
-    /**
-     * 栏目id
-     */
-    private String channel_id;
+//    /**
+//     * 栏目id
+//     */
+//    private String channel_id;
 
     private EmptyStateListAdapter adapter;
 
@@ -50,20 +49,20 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      *
      * @return 实例对象
      */
-    public static EmptyStateFragment newInstance(String columnId) {
+    public static EmptyStateFragment newInstance() {
         EmptyStateFragment fragment = new EmptyStateFragment();
-        Bundle args = new Bundle();
-        args.putString(IKey.CHANNEL_ID, columnId);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putString(IKey.CHANNEL_ID, columnId);
+//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            channel_id = getArguments().getString(IKey.CHANNEL_ID);
-        }
+//        if (getArguments() != null) {
+//            channel_id = getArguments().getString(IKey.CHANNEL_ID);
+//        }
     }
 
     @Override
@@ -109,7 +108,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
 
     private List<DraftHotTopNewsBean.HotNewsBean> article_list;
 
-
     /**
      * 获取频道热门列表
      */
@@ -137,7 +135,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
             public void onError(String errMsg, int errCode) {
                 T.showShort(UIUtils.getContext(), errMsg);
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe(channel_id);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe();
     }
 
     /**

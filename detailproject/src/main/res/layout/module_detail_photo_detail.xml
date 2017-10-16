@@ -196,6 +196,8 @@
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/module_detail_floor_bar_height"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:background="?attr/bc_33ffffff"
             >
 
@@ -248,7 +250,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@id/menu_comment"
                 android:layout_marginLeft="-12dp"
-                android:layout_marginTop="-3dp"
                 android:layout_toRightOf="@id/menu_comment"
                 android:visibility="gone"
                 android:textSize="@dimen/ts_11sp" />

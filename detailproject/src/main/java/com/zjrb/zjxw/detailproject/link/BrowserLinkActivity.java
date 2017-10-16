@@ -200,7 +200,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         }
 
         //评论数量
-        if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         }
@@ -384,7 +384,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mNewsDetail.getArticle().getColumn_id()))).commit();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
 
 }

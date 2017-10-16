@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -45,7 +44,7 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     }
 
     private void initView() {
-        mRecyleView.addItemDecoration(new ListSpaceDivider(20, 0, false));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(10, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }
@@ -58,9 +57,6 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
             lyContainer.setVisibility(View.GONE);
         } else {
             tvRelated.setText("推荐专题");
-            mRecyleView.addItemDecoration(new ListSpaceDivider(10, 0, false));
-            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                    LinearLayoutManager.VERTICAL, false));
             adapter = new NewsRelatedSubjectAdapter(mData.getArticle().getRelated_subjects());
             adapter.setOnItemClickListener(this);
             mRecyleView.setAdapter(adapter);

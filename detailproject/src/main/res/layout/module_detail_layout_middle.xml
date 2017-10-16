@@ -54,7 +54,7 @@
         android:id="@+id/ry_channel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="13dp"
         android:background="?attr/bc_ffffff"
         android:visibility="gone"
         >

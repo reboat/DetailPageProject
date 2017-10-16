@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
@@ -48,7 +46,7 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
      * 初始化
      */
     private void initView() {
-        mRecyleView.addItemDecoration(new ListSpaceDivider(20, 0, false));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(1f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }
@@ -60,9 +58,6 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
             lyContainer.setVisibility(View.GONE);
         } else {
             tvRelated.setText(itemView.getContext().getString(R.string.module_detail_realated_news_tip));
-            mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-            mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                    LinearLayoutManager.VERTICAL, false));
             adapter = new NewsRelatedNewsAdapter(mData.getArticle().getRelated_news());
             adapter.setOnItemClickListener(this);
             mRecyleView.setAdapter(adapter);
@@ -82,11 +77,6 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
     public void onItemClick(View itemView, int position) {
         if (mData != null) {
             Nav.with(UIUtils.getActivity()).to(mData.getArticle().getUrl());
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getUrl())
-//                    .buildUpon()
-//                    .appendQueryParameter(IKey.ID, String.valueOf(mData.getArticle().getId()))
-//                    .build(), 0);
-
         }
     }
 }

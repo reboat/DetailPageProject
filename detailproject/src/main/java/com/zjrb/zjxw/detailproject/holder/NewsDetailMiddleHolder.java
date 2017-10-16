@@ -44,8 +44,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
     TextView mTvChannelName;
-    @BindView(R2.id.tv_channel_subscribe)
-    TextView mTvChannelSubscribe;
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
     @BindView(R2.id.tv_column_subscribe)
@@ -72,9 +70,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
 

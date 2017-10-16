@@ -52,7 +52,7 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
      * 初始化recyleView
      */
     private void initView() {
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(1f, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }
@@ -60,9 +60,6 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                LinearLayoutManager.VERTICAL, false));
         if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
             mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
             mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));

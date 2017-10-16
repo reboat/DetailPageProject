@@ -453,7 +453,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mData.getArticle().getChannel_id()))).commit();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
 
 }

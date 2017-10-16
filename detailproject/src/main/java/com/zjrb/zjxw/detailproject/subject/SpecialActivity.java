@@ -198,7 +198,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         lyContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container,
-                EmptyStateFragment.newInstance(String.valueOf(mArticle.getColumn_id()))).commit();
+                EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

@@ -61,6 +61,7 @@
         <attr name="border_999999_r10" format="reference"/>
 
         <attr name="module_detail_special_channel_bg" format="reference"/>
+        <attr name="ic_comment_empty" format="reference"/>
 
     </declare-styleable>
 

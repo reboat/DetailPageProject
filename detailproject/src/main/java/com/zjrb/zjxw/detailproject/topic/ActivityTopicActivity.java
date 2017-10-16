@@ -634,6 +634,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance(String.valueOf(mNewsDetail.getArticle().getColumn_id()))).commit();
+        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
 }

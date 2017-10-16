@@ -77,7 +77,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
     private void initView() {
         mText.setText(itemView.getContext().getString(R.string.module_detail_interact));
         mTvAll.setVisibility(View.GONE);
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(0.5d, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
         more = new FooterLoadMore(mRecyleView, this);
@@ -106,9 +106,6 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
         mText.setText(itemView.getContext().getString(R.string.module_detail_interact));
         mMore.setVisibility(View.GONE);
 
-        mRecyleView.addItemDecoration(new ListSpaceDivider(32, 0, false));
-        mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
-                LinearLayoutManager.VERTICAL, false));
         if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
             adapter = new CommentAdapter(mData.getArticle().getHot_comments(), mRecyleView, String.valueOf(mData.getArticle().getId()));
             initAdapter();

@@ -33,6 +33,8 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
         if (mBean.getArticle().getAlbum_image_count() > 1 && (position == (mBean.getArticle().getAlbum_image_count() - 1))) {
             return ImageMoreFragment.newInstance(mBean);
         }
+
+        //普通图集
         return ImagePreviewFragment.newInstance(
                 mBean.getArticle().getAlbum_image_list().get(position).getImage_url()
         );

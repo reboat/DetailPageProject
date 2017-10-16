@@ -196,6 +196,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
+            //添加更多图集
             mAtlasList.add(new AlbumImageListBean());
             //设置图片count
             atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
@@ -205,7 +206,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
-            mTvTottleNum.setText(String.valueOf(mAtlasList.size()));
+            mTvTottleNum.setText(String.valueOf(mData.getArticle().getAlbum_image_count()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
             AlbumImageListBean entity = mAtlasList.get(mIndex);
             mTvContent.setText(entity.getDescription());

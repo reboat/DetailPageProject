@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
     >
 
     <ImageView
         android:id="@+id/iv_image"
-        android:layout_width="177dp"
-        android:layout_height="118dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/tc_484848"
         android:scaleType="fitXY"
-        tools:src="@mipmap/ic_launcher"/>
+        app:ratio_w2h="177:118"
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -27,6 +28,6 @@
         android:paddingBottom="3dp"
         android:paddingTop="3dp"
         android:textColor="?attr/tc_ffffff"
-        tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全"/>
+        tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全" />
 
 </RelativeLayout>

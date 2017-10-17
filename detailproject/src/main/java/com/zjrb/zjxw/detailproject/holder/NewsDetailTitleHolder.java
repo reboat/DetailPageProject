@@ -72,9 +72,9 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (!TextUtils.isEmpty(mData.getArticle().getChannel_name())) {
-            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "|");
-            mTvChannelName.setText(mData.getArticle().getChannel_name());
+        if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
+            mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
             mTvChannelName.setVisibility(View.GONE);

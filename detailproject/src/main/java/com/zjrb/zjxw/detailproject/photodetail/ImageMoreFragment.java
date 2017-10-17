@@ -11,10 +11,10 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
@@ -71,6 +71,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     private void initView(View v) {
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
+        lvNotice.addItemDecoration(new GridSpaceDivider(6));
         initAdapter();
     }
 

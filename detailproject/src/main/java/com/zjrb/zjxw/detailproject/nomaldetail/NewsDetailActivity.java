@@ -279,14 +279,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         }
-//        if (data.getArticle().getComment_count() > 0) {
-//            mTvCommentsNum.setVisibility(View.VISIBLE);
-//            if (data.getArticle().getComment_count() < 9999) {
-//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-//            } else if (data.getArticle().getComment_count() > 9999) {
-//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-//            }
-//        }
 
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
@@ -367,7 +359,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptClickChannel() {
-        //TODO WLJ 频道详情页
         if (bundle == null) {
             bundle = new Bundle();
         }

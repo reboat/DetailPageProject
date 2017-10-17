@@ -131,6 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
             android:gravity="center"
+            android:paddingBottom="10dp"
             >
 
             <TextView
@@ -139,7 +140,6 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:paddingBottom="10dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
@@ -157,19 +157,19 @@
                 android:layout_toLeftOf="@+id/tv_tottle_num"
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_20sp"
-                tools:text="1"
+                tools:text="1 /"
                 />
 
             <TextView
                 android:id="@+id/tv_tottle_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_title"
+                android:layout_alignBottom="@+id/tv_index"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="11dp"
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_12sp"
-                tools:text="/6"
+                tools:text="6"
                 />
 
 
@@ -188,7 +188,9 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:scrollbars="vertical"
-            android:textSize="@dimen/ts_14sp" />
+            android:textColor="?attr/tc_999999"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
 
 
         <!--底部floorBar-->
@@ -196,73 +198,20 @@
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/module_detail_floor_bar_height"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
             android:background="?attr/bc_33ffffff"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             >
 
-            <ImageView
-                android:id="@+id/menu_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="2dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:src="@mipmap/ic_more_atlas"
-                />
-
-            <ImageView
-                android:id="@+id/menu_prised"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/menu_setting"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:src="@drawable/module_detail_atlas_prise"
-                />
-
-            <ImageView
-                android:id="@+id/menu_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/menu_prised"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingBottom="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="5dp"
-                android:src="@mipmap/ic_atlas_detail_comment"
-                />
-
-            <TextView
-                android:id="@+id/tv_comments_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/menu_comment"
-                android:layout_marginLeft="-12dp"
-                android:layout_toRightOf="@id/menu_comment"
-                android:visibility="gone"
-                android:textSize="@dimen/ts_11sp" />
-
             <FrameLayout
-                android:layout_width="217dp"
-                android:layout_height="34dp"
+                android:id="@+id/fl_comment"
+                android:layout_width="230dp"
+                android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@id/menu_comment"
-                android:background="@drawable/module_detail_bg_atlas_say_words">
+                android:background="@drawable/module_detail_bg_atlas_say_words"
+                >
 
                 <TextView
                     android:id="@+id/tv_comment"
@@ -272,12 +221,64 @@
                     android:drawableLeft="@mipmap/module_detail_commentedit_left"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical|left"
+                    android:hint="@string/module_detail_comment_hint"
                     android:paddingLeft="20dp"
                     android:text="@string/module_detail_comment_hint"
                     android:textColor="?attr/tc_484848"
                     android:textColorHint="?attr/tc_999999"
                     android:textSize="@dimen/ts_14sp" />
+
             </FrameLayout>
+
+            <ImageView
+                android:id="@+id/menu_comment"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@id/fl_comment"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@mipmap/ic_atlas_detail_comment"
+                app:iv_maskColor="@color/module_detail_comment_night" />
+
+            <TextView
+                android:id="@+id/tv_comments_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/menu_comment"
+                android:layout_marginLeft="-12dp"
+                android:layout_toRightOf="@id/menu_comment"
+                android:background="@drawable/module_detail_comment_num"
+                android:paddingBottom="2dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp"
+                android:textColor="?attr/tc_ffffff"
+                android:textSize="@dimen/ts_10sp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/menu_prised"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/menu_comment"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/module_detail_atlas_prise"
+                app:iv_maskColor="@color/module_detail_comment_night" />
+
+            <ImageView
+                android:id="@+id/menu_setting"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/menu_prised"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@mipmap/ic_more_atlas"
+                app:iv_maskColor="@color/module_detail_comment_night" />
+
         </RelativeLayout>
 
         <com.aliya.view.fitsys.FitWindowsFrameLayout

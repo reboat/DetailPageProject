@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.bean;
 
 import com.zjrb.core.domain.base.BaseData;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -35,14 +36,73 @@ public class CommentRefreshBean extends BaseData {
      * parent_portrait_url : https://www.baidu.com/s?rsv_idx=1&wd=%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1&ie=utf-8&rsv_cq=mybatis+%E6%89%B9%E5%A4%84%E7%90%86&rsv_dl=0_right_recommends_merge_21180&euri=ac7ba1cfb121481483f05744f83a726e
      */
 
-    private List<HotCommentsBean> comments;
+    private List<HotCommentsBean> comment_list;
+
+    private ShareArtcleInfo share_article_info;
 
     public List<HotCommentsBean> getComments() {
-        return comments;
+        return comment_list;
     }
 
     public void setComments(List<HotCommentsBean> comments) {
-        this.comments = comments;
+        this.comment_list = comments;
     }
+
+    public ShareArtcleInfo getShare_article_info() {
+        return share_article_info;
+    }
+
+    public void setShare_article_info(ShareArtcleInfo share_article_info) {
+        this.share_article_info = share_article_info;
+    }
+
+
+    public static class ShareArtcleInfo implements Serializable {
+
+        /**
+         * list_title : 深论丨关注集体土地小步入市的后续问题
+         * summary :
+         * article_pic :
+         * url : http://10.100.60.98:9000/news.html?id=738982
+         */
+
+        private String list_title;
+        private String summary;
+        private String article_pic;
+        private String url;
+
+        public String getList_title() {
+            return list_title;
+        }
+
+        public void setList_title(String list_title) {
+            this.list_title = list_title;
+        }
+
+        public String getSummary() {
+            return summary;
+        }
+
+        public void setSummary(String summary) {
+            this.summary = summary;
+        }
+
+        public String getArticle_pic() {
+            return article_pic;
+        }
+
+        public void setArticle_pic(String article_pic) {
+            this.article_pic = article_pic;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+    }
+
 
 }

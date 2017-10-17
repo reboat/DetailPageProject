@@ -77,6 +77,10 @@ public class DraftDetailBean extends BaseData {
 
         private String column_logo;
 
+        private String source_channel_id;
+        private String source_channel_name;
+        private String channel_code;
+        private String source;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -625,6 +629,39 @@ public class DraftDetailBean extends BaseData {
 
         public void setColumn_logo(String column_logo) {
             this.column_logo = column_logo;
+        }
+
+
+        public String getSource_channel_id() {
+            return source_channel_id;
+        }
+
+        public void setSource_channel_id(String source_channel_id) {
+            this.source_channel_id = source_channel_id;
+        }
+
+        public String getSource_channel_name() {
+            return source_channel_name;
+        }
+
+        public void setSource_channel_name(String source_channel_name) {
+            this.source_channel_name = source_channel_name;
+        }
+
+        public String getChannel_code() {
+            return channel_code;
+        }
+
+        public void setChannel_code(String channel_code) {
+            this.channel_code = channel_code;
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
         }
 
         /**

@@ -24,9 +24,11 @@
         android:layout_marginTop="3dp"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.1"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:maxLines="2"
-        android:paddingBottom="3dp"
-        android:paddingTop="3dp"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
         android:textColor="?attr/tc_ffffff"
         tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全" />
 

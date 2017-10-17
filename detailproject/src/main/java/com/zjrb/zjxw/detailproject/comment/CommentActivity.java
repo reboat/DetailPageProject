@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -61,10 +62,14 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     TextView tvComment;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
+    @BindView(R2.id.tv_comment_num)
+    TextView tvCommentNum;
     @BindView(R2.id.tv_hot)
     TextView tvHot;
     @BindView(R2.id.activity_comment)
     RelativeLayout activityComment;
+    @BindView(R2.id.ly_reflash)
+    LinearLayout lyReflash;
 
     /**
      * 文章id
@@ -100,7 +105,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         getIntentData(getIntent());
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
-        initState();
+//        initState();
         initData();
     }
 
@@ -122,12 +127,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         return topHolder.getView();
     }
 
-    /**
-     * 设置评论等级(禁言)
-     */
-    private void initState() {
-        BizUtils.setCommentSet(tvComment, commentSet);
-    }
+//    /**
+//     * 设置评论等级(禁言)
+//     */
+//    private void initState() {
+//        BizUtils.setCommentSet(tvComment, commentSet);
+//    }
 
     /**
      * @param intent 获取传递数据
@@ -169,11 +174,16 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             tvTitle.setText(title);
         }
 
+        //评论数
+        if (mNewsDetail != null) {
+            tvCommentNum.setText(mNewsDetail.getArticle().getComment_count_general() + "条评论");
+        }
+
         if (mCommentAdapter == null) {
             mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
-                    new EmptyPageHolder(mRvContent,
+                    new EmptyPageHolder(activityComment,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
                     ).itemView);
             mCommentAdapter.setOnItemClickListener(this);
@@ -204,7 +214,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(activityComment)).exe(articleId);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
     }
 
 

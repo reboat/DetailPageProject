@@ -192,6 +192,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             @Override
             public void onSuccess(Void baseInnerData) {
                 ivCollect.getDrawable().setLevel(getResources().getInteger(R.integer.level_collect_on));
+                mBean.getArticle().setFollowed(true);
                 T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_success));
                 dismissFragmentDialog();
 

@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.holder;
 
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +14,6 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.core.utils.webjs.WebJsInterface;
@@ -84,10 +82,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         }
 
         //频道名称
-        if (!TextUtils.isEmpty(mData.getArticle().getChannel_id())
-                && !TextUtils.isEmpty(mData.getArticle().getChannel_name())) {
+        if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mRyChannel.setVisibility(View.VISIBLE);
-            mTvChannelName.setText(mData.getArticle().getChannel_name());
+            mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
             mRyChannel.setVisibility(View.GONE);
         }

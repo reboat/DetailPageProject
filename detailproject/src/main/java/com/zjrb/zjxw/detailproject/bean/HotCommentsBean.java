@@ -58,6 +58,11 @@ public class HotCommentsBean implements Serializable {
      */
     private boolean own;
 
+    /**
+     * 父评论是否本人评论
+     */
+    private boolean parent_own;
+
     public String getId() {
         return id;
     }
@@ -73,6 +78,15 @@ public class HotCommentsBean implements Serializable {
     public void setChannel_article_id(int channel_article_id) {
         this.channel_article_id = channel_article_id;
     }
+
+    public boolean isParent_own() {
+        return parent_own;
+    }
+
+    public void setParent_own(boolean parent_own) {
+        this.parent_own = parent_own;
+    }
+
 
     public String getContent() {
         return content;

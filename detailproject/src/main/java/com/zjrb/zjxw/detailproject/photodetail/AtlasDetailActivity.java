@@ -127,6 +127,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder.getContainerView().setVisibility(View.GONE);
         return topHolder.getView();
     }
 
@@ -352,10 +353,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void setTopTitle(int position) {
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (position == (mAtlasList.size() - 1)) {
+                topHolder.getContainerView().setVisibility(View.VISIBLE);
+                ryContainer.setVisibility(View.GONE);
                 mTvTitleTop.setVisibility(View.VISIBLE);
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
             } else {
+                topHolder.getContainerView().setVisibility(View.GONE);
+                ryContainer.setVisibility(View.VISIBLE);
                 mTvTitleTop.setVisibility(View.GONE);
             }
         }

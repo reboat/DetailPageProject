@@ -55,56 +55,6 @@
         android:background="@android:color/black" />
 
 
-    <RelativeLayout
-        android:id="@+id/ry_container"
-        android:layout_width="match_parent"
-        android:layout_height="61dp"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_top_bar_title"
-            style="@style/ToolbarTitle"
-            android:layout_centerInParent="true"
-            android:textColor="?attr/tc_ffffff"
-            android:visibility="gone"
-            tools:text="自定义ToolBar" />
-
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="42dp"
-            android:layout_height="@dimen/toolbar_normal_height"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:scaleType="center"
-            android:src="@mipmap/module_detail_back_topbar"
-            />
-
-        <ImageView
-            android:id="@+id/iv_share"
-            android:layout_width="42dp"
-            android:layout_height="@dimen/toolbar_normal_height"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:scaleType="center"
-            android:src="@mipmap/module_detail_share_atlas"
-            />
-
-        <ImageView
-            android:id="@+id/iv_top_download"
-            android:layout_width="42dp"
-            android:layout_height="@dimen/toolbar_normal_height"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/iv_share"
-            android:scaleType="center"
-            android:src="@mipmap/module_detail_image_download"
-            android:visibility="gone"
-            app:iv_maskColor="@android:color/transparent"
-            />
-    </RelativeLayout>
-
-
     <!--底部-->
     <LinearLayout
         android:id="@+id/container_bottom"
@@ -270,10 +220,10 @@
         </RelativeLayout>
 
         <!--<com.aliya.view.fitsys.FitWindowsFrameLayout-->
-            <!--android:id="@+id/fit_bottom_layout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--app:fitType="bottom" />-->
+        <!--android:id="@+id/fit_bottom_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:fitsSystemWindows="true"-->
+        <!--app:fitType="bottom" />-->
     </LinearLayout>
 </FrameLayout>

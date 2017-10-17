@@ -20,7 +20,7 @@ import android.widget.Toast;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder3;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.permission.IPermissionCallBack;
@@ -89,16 +89,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     ImageView mMenuPrised;
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
-    @BindView(R2.id.tv_top_bar_title)
-    TextView mTvTitleTop;
-    @BindView(R2.id.iv_top_download)
-    ImageView mIvDownLoad;
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
-    @BindView(R2.id.ry_container)
-    RelativeLayout ryContainer;
 
 
     public String mArticleId = "";
@@ -122,12 +116,16 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     /**
      * topbar
      */
-    private DefaultTopBarHolder1 topHolder;
+    private DefaultTopBarHolder3 topHolder;
+    private TextView mTvTitleTop;
+    private ImageView mIvDownLoad, mIvShare;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
-        topHolder.getContainerView().setVisibility(View.GONE);
+        topHolder = TopBarFactory.createDefault3(view, this);
+        mTvTitleTop = topHolder.getTitleView();
+        mIvDownLoad = topHolder.getDownView();
+        mIvShare = topHolder.getShareView();
         return topHolder.getView();
     }
 
@@ -234,7 +232,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
 
-    @OnClick({R2.id.iv_back, R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
+    @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
             .menu_setting, R2.id.iv_top_download})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -353,15 +351,28 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void setTopTitle(int position) {
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (position == (mAtlasList.size() - 1)) {
-                topHolder.getContainerView().setVisibility(View.VISIBLE);
-                ryContainer.setVisibility(View.GONE);
+                topHolder.getContainerView().setBackgroundResource(R.color.colorPrimaryDark);
                 mTvTitleTop.setVisibility(View.VISIBLE);
+                mIvShare.setVisibility(View.GONE);
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
             } else {
-                topHolder.getContainerView().setVisibility(View.GONE);
-                ryContainer.setVisibility(View.VISIBLE);
+                topHolder.getContainerView().setBackgroundResource(android.R.color.black);
                 mTvTitleTop.setVisibility(View.GONE);
+                mIvShare.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    /**
+     * 设置更多页切换时底部栏显示
+     */
+    private void setBottomBar(int position) {
+        if (mAtlasList != null && !mAtlasList.isEmpty()) {
+            if (position == (mAtlasList.size() - 1)) {
+
+            } else {
+
             }
         }
     }
@@ -470,7 +481,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     /**
      * 显示撤稿页面
      */
-    //TODO WLJ getColumn_id???
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

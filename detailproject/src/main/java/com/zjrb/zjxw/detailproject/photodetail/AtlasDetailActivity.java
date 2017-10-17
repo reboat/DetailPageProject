@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.toolbar.TopBarFactory;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.permission.IPermissionCallBack;
@@ -94,6 +97,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     RelativeLayout mLyContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
+    @BindView(R2.id.ry_container)
+    RelativeLayout ryContainer;
 
 
     public String mArticleId = "";
@@ -111,6 +116,18 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mFloorBar.setOnTouchListener(this);
         mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
         loadData();
+    }
+
+
+    /**
+     * topbar
+     */
+    private DefaultTopBarHolder1 topHolder;
+
+    @Override
+    protected View onCreateTopBar(ViewGroup view) {
+        topHolder = TopBarFactory.createDefault1(view, this);
+        return topHolder.getView();
     }
 
     /**
@@ -207,7 +224,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //设置图片count
             atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
             atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
-//            atlasDetailEntity.getArticle().setRelated_news(mData.getArticle().getRelated_news());
             mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
 
             AlbumImageListBean entity = mAtlasList.get(mIndex);
@@ -453,7 +469,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.activity_atlas_detail, EmptyStateFragment.newInstance()).commit();
     }
 
 }

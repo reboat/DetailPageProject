@@ -359,6 +359,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptClickChannel() {
+        //TODO WLJ 频道详情页
         if (bundle == null) {
             bundle = new Bundle();
         }
@@ -489,6 +490,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
+        topHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }

@@ -383,6 +383,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
+        topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }

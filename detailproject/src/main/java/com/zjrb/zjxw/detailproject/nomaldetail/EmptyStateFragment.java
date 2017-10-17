@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -37,10 +38,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
 
-//    /**
-//     * 栏目id
-//     */
-//    private String channel_id;
 
     private EmptyStateListAdapter adapter;
 
@@ -51,25 +48,19 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     public static EmptyStateFragment newInstance() {
         EmptyStateFragment fragment = new EmptyStateFragment();
-//        Bundle args = new Bundle();
-//        args.putString(IKey.CHANNEL_ID, columnId);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            channel_id = getArguments().getString(IKey.CHANNEL_ID);
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.module_detail_fragment_persional_info, container, false);
+        View v = inflater.inflate(R.layout.module_detail_fragment_empty, container, false);
         ButterKnife.bind(this, v);
         initView();
         loadData();
@@ -85,6 +76,8 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private View head;
 
+    private ImageView mIvshare;
+
     /**
      * 初始化控件
      */
@@ -94,8 +87,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
         emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
-        lvNotice.addItemDecoration(new ListSpaceDivider(2, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
-
+        lvNotice.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
     }
 
     /**

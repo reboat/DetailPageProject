@@ -24,9 +24,6 @@ public class DraftRankListTask extends APIGetTask<DraftHotTopNewsBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        if (!TextUtils.isEmpty(params[0].toString())) {
-            put("channel_id", params[0]);
-        }
     }
 
     @Override

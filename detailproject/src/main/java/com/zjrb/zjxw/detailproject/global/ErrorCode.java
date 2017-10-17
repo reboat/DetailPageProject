@@ -10,6 +10,6 @@ public final class ErrorCode {
     /**
      * 稿件不存在
      */
-    public static final int DRAFFT_IS_NOT_EXISE = 30505;
+    public static final int DRAFFT_IS_NOT_EXISE = 10010;
 
 }

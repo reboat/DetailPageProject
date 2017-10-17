@@ -1,23 +1,29 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="?attr/bc_ffffff">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ly_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="?attr/bc_202124"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+    >
 
-    <!--错误页面-->
     <LinearLayout
         android:id="@+id/view_exise"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/iv_exise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="118dp"
-            android:src="?attr/module_core_ic_global_failed" />
+            android:src="?attr/module_core_ic_global_failed"
+            />
 
         <TextView
             android:id="@+id/tv_exise"
@@ -43,11 +49,11 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lv_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"></android.support.v7.widget.RecyclerView>
-
-</FrameLayout>
-
+        >
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>
 

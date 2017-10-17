@@ -13,6 +13,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 
 import java.util.List;
 
@@ -26,6 +27,9 @@ import butterknife.ButterKnife;
  */
 
 public class EmptyStateListAdapter extends BaseRecyclerAdapter {
+    public static int TYPE_TEXT = -1;
+    public static int TYPE_NOMAL = 0;
+
     /**
      * 构造方法
      *
@@ -38,9 +42,25 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
             viewType) {
-        return new EmptyStateHolder(UIUtils.inflate(R.layout.module_detail_item_subject,
-                parent, false));
+        if (viewType == TYPE_NOMAL) {
+            return new EmptyStateHolder(UIUtils.inflate(R.layout.module_detail_item_subject,
+                    parent, false));
+        } else {
+            return new EmptyStateTextHolder(UIUtils.inflate(R.layout.module_detail_item_subject_text,
+                    parent, false));
+        }
 
+    }
+
+    @Override
+    public int getAbsItemViewType(int position) {
+        //纯文本
+        if (((DraftHotTopNewsBean.HotNewsBean) datas.get(position)).isList_pics_empty()) {
+            return TYPE_TEXT;
+        } else {
+            //图文/纯图
+            return TYPE_NOMAL;
+        }
     }
 
     /**
@@ -64,6 +84,27 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
             //占位图，如无图片，则显示占位图
             GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
             //标题
+            if (mData.getList_title() != null) {
+                mTitle.setText(mData.getList_title());
+            }
+        }
+    }
+
+    /**
+     * 相关新闻holder/纯文本
+     */
+    static class EmptyStateTextHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> {
+
+        @BindView(R2.id.tv_title)
+        TextView mTitle;
+
+        public EmptyStateTextHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void bindView() {
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());
             }

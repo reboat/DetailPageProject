@@ -1,5 +1,7 @@
 package com.zjrb.zjxw.detailproject.bean;
 
+import android.text.TextUtils;
+
 import com.zjrb.core.domain.base.BaseData;
 
 import java.util.List;
@@ -75,6 +77,19 @@ public class DraftHotTopNewsBean extends BaseData {
 
         public List<String> getList_pics() {
             return list_pics;
+        }
+
+        /**
+         * 判定list_pic是否为空
+         * @return  true:为空  false:不为空
+         */
+        public boolean isList_pics_empty(){
+            if(getList_pics() != null && getList_pics().size() > 0){
+                if(!TextUtils.isEmpty(getList_pics().get(0))){
+                    return false;
+                }
+            }
+            return true;
         }
 
         public void setList_pics(List<String> list_pics) {

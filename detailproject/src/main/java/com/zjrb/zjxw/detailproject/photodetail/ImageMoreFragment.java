@@ -60,7 +60,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.module_detail_fragment_relate_news, container, false);
+        View v = inflater.inflate(R.layout.module_detail_fragment_atlas_more, container, false);
         ButterKnife.bind(this, v);
         initView(v);
         return v;
@@ -96,7 +96,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
-
         }
     }
 }

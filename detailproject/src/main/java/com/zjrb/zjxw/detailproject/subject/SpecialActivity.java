@@ -117,7 +117,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (ClickTracker.isDoubleClick()) return;
 
         if (mArticle != null) {
-            if (view.getId() == R.id.iv_share) {
+            if (view.getId() == R.id.iv_top_share) {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setImgUri(mArticle.getArticle_pic())
@@ -179,7 +179,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                topHolder.getCollectView().setImageResource(R.mipmap.module_detail_collect_night);
+                //TODO WLJ 缺少一张点击后的图
+                topHolder.getCollectView().setImageResource(R.mipmap.module_detail_ic_collect_night);
                 T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
             }
 
@@ -196,6 +197,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      */
     private void showEmptyNewsDetail() {
         lyContainer.removeAllViews();
+        topHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container,
                 EmptyStateFragment.newInstance()).commit();

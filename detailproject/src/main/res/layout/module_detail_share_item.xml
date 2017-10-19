@@ -15,7 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6.5dp"
         android:scaleType="fitXY"
-        app:iv_maskColor="@color/dc_f5f5f5_night"
+        android:src="?attr/module_detail_share_friend"
+        app:iv_maskColor="@android:color/transparent"
         />
 
     <TextView

@@ -68,7 +68,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
     @BindView(R2.id.fl_comment)
-    FrameLayout mFlComment;
+    FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
@@ -198,14 +198,20 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mMenuPrised.setVisibility(View.GONE);
         }
 
-        //评论数量
-        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+        //禁止评论，隐藏评论框及评论按钮
+        if (data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+            mMenuComment.setVisibility(View.GONE);
+            mTvCommentsNum.setVisibility(View.GONE);
+        } else {
+            mFyContainer.setVisibility(View.VISIBLE);
+            mMenuComment.setVisibility(View.VISIBLE);
+            if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+                mTvCommentsNum.setVisibility(View.VISIBLE);
+            }
         }
 
-        //评论分级
-//        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
+
     }
 
 

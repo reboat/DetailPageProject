@@ -487,7 +487,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
-        
+
         //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
             mMenuPrised.setVisibility(View.VISIBLE);
@@ -600,7 +600,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
+                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -615,7 +615,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
         } else if (view.getId() == R.id.menu_setting) {
-            //TODO  WLJ  打开设置按钮
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null &&

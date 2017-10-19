@@ -259,7 +259,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
             mMenuComment.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setVisibility(View.VISIBLE);
         }
     }
 

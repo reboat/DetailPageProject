@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
@@ -53,7 +54,18 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
             if (mData.getContent() != null) {
                 tv_title.setText(mData.getContent());
             }
-            iv_img.setImageResource(mData.getResId());
+            if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+//                iv_img.setImageResource();
+            } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
+
+            } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
+
+            } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
+
+            } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
+
+            }
+
         }
     }
 }

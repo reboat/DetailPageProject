@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.player.PlayerManager;
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -52,10 +52,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +87,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsFrameLayout mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
     @BindView(R2.id.ly_container)
@@ -301,7 +297,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
             mMenuComment.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setVisibility(View.VISIBLE);
         }
     }
 

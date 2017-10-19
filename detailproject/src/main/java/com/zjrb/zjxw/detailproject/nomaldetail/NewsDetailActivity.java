@@ -13,7 +13,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,9 +97,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
     @BindView(R2.id.ly_container)
-    LinearLayout mContainer;
+    FrameLayout mContainer;
     @BindView(R2.id.view_exise)
-    LinearLayout mViewExise;
+    RelativeLayout mViewExise;
     @BindView(R2.id.iv_image)
     ImageView mivVideoBG;
 
@@ -275,7 +275,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
 
         //大致评论数量
-        if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         }
@@ -327,6 +327,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 mAdapter.updateSubscribeInfo();
             }
 
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShortNow(NewsDetailActivity.this, errMsg);
+            }
+
         }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
 
     }
@@ -346,12 +351,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptClickColumn() {
-        //TODO  WLJ 进入栏目列表
-        if (bundle == null) {
-            bundle = new Bundle();
-        }
-        bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COLUMN_LIST);
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
     }
 
     /**
@@ -428,7 +428,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this,null).getFirstSrc())
+                    .setImgUri(WebJsInterface.getInstance(this, null).getFirstSrc())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));

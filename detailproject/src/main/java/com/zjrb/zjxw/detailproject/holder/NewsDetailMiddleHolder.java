@@ -23,6 +23,7 @@ import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener {
+        View.OnAttachStateChangeListener, OnItemClickListener,NewsDetailAdapter.IBindSubscribe{
     @BindView(R2.id.gridlist)
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
@@ -67,7 +68,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
     @Override
     public void bindView() {
-        itemView.setOnClickListener(null);
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
 
@@ -76,7 +76,12 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 && !TextUtils.isEmpty(mData.getArticle().getColumn_name())) {
             mRySubscribe.setVisibility(View.VISIBLE);
             mTvColumnName.setText(mData.getArticle().getColumn_name());
-            mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "订阅");
+            //已订阅不显示入口
+            if(!mData.getArticle().isColumn_subscribed()){
+                mTvColumnSubscribe.setVisibility(View.VISIBLE);
+                mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
+            }
+
         } else {
             mRySubscribe.setVisibility(View.GONE);
         }
@@ -167,5 +172,13 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));
         }
+    }
+
+    /**
+     * 局部刷新订阅状态
+     */
+    @Override
+    public void bindSubscribe() {
+        mTvColumnSubscribe.setVisibility(View.GONE);
     }
 }

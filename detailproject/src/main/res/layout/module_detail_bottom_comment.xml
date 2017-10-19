@@ -76,7 +76,7 @@
             android:paddingTop="2dp"
             android:textSize="@dimen/ts_10sp"
             android:textColor="?attr/tc_ffffff"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/menu_prised"

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +27,6 @@ import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
@@ -64,12 +62,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     TextView tvTitle;
     @BindView(R2.id.tv_comment_num)
     TextView tvCommentNum;
-    @BindView(R2.id.tv_hot)
-    TextView tvHot;
+    //    @BindView(R2.id.tv_hot)
+//    TextView tvHot;
     @BindView(R2.id.activity_comment)
     RelativeLayout activityComment;
-    @BindView(R2.id.ly_reflash)
-    LinearLayout lyReflash;
+//    @BindView(R2.id.ly_reflash)
+//    LinearLayout lyReflash;
 
     /**
      * 文章id
@@ -105,8 +103,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         getIntentData(getIntent());
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
-//        initState();
         initData();
+        initHead();
     }
 
     @Override
@@ -126,13 +124,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         return topHolder.getView();
     }
-
-//    /**
-//     * 设置评论等级(禁言)
-//     */
-//    private void initState() {
-//        BizUtils.setCommentSet(tvComment, commentSet);
-//    }
 
     /**
      * @param intent 获取传递数据
@@ -163,27 +154,42 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
 
     /**
+     * 头部布局
+     */
+    private View head;
+    private TextView tvHot;
+
+    private void initHead() {
+        head = UIUtils.inflate(R.layout.module_detail_comment_head);
+        tvHot = (TextView) head.findViewById(R.id.tv_hot);
+    }
+
+    /**
      * adapte处理
      *
      * @param bean
      */
     private void bindData(CommentRefreshBean bean) {
         //初始化标题
+        mBean = bean;
         tvHot.setText(getString(R.string.module_detail_new_comment));
         if (title != null && !title.isEmpty()) {
             tvTitle.setText(title);
         }
 
         //评论数
-        if (mNewsDetail != null) {
+        if (mNewsDetail != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getComment_count_general())) {
             tvCommentNum.setText(mNewsDetail.getArticle().getComment_count_general() + "条评论");
+        } else {
+            tvCommentNum.setVisibility(View.GONE);
         }
 
         if (mCommentAdapter == null) {
             mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
+            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
-                    new EmptyPageHolder(activityComment,
+                    new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
                     ).itemView);
             mCommentAdapter.setOnItemClickListener(this);
@@ -194,6 +200,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
+
+    private CommentRefreshBean mBean;
 
     /**
      * 下拉刷新取评论数据
@@ -226,22 +234,17 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                 tvComment.setVisibility(View.VISIBLE);
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
-            //分享文章(专题和话题取题图,没有则取logo)
         } else if (v.getId() == R.id.iv_top_share) {
-            String imgUrl;
-            if (mNewsDetail.getArticle().getDoc_type() == 5 || mNewsDetail.getArticle().getDoc_type() == 6) {
-                //取题图，否则为""
-                imgUrl = !TextUtils.isEmpty(mNewsDetail.getArticle().getArticle_pic()) ? mNewsDetail.getArticle().getArticle_pic() : "";
-            } else {
-                //取正文第一张图，否则为""
-                imgUrl = !TextUtils.isEmpty(WebJsInterface.getInstance(this, null).getFirstSrc()) ? WebJsInterface.getInstance(this, null).getFirstSrc() : "";
+            CommentRefreshBean.ShareArtcleInfo bean = mBean.getShare_article_info();
+            if (bean != null) {
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setImgUri(mBean.getShare_article_info().getArticle_pic())
+                        .setTextContent(mBean.getShare_article_info().getSummary())
+                        .setTitle(mBean.getShare_article_info().getList_title())
+                        .setTargetUrl(mBean.getShare_article_info().getUrl()));
             }
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setImgUri(imgUrl)
-                    .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getList_title())
-                    .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+
         }
     }
 

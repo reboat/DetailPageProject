@@ -134,7 +134,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {
-//            datas.addAll(subjectList);
             datas.add(detailBean);
         }
 
@@ -143,19 +142,15 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
         if (articles != null && articles.size() > 0) {
             datas.add(detailBean);
-//            datas.addAll(articles);
         }
 
         //添加热门评论
         if(detailBean.getArticle().getHot_comments() != null){
             List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments().getComments();
             if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-//                datas.addAll(hotCommentsBeen);
                 datas.add(detailBean);
             }
         }
-//        datas.add(detailBean);
-
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

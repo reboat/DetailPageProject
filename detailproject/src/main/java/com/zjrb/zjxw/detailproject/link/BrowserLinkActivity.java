@@ -144,7 +144,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     protected View onCreateTopBar(ViewGroup view) {
         topBarHolder = TopBarFactory.createDefault1(view, this);
         topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
-        topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.VISIBLE);
+        topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.GONE);
         return topBarHolder.getView();
     }
 
@@ -189,7 +189,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mViewExise.setVisibility(View.GONE);
 
         //显示标题展示WebView内容等
-        topBarHolder.getTitleView().setText(data.getArticle().getList_title());
         mWebView.loadUrl(url);
 
         //是否点赞
@@ -204,14 +203,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         }
-//        if (data.getArticle().getComment_count() > 0) {
-//            mTvCommentsNum.setVisibility(View.VISIBLE);
-//            if (data.getArticle().getComment_count() < 9999) {
-//                mTvCommentsNum.setText(data.getArticle().getComment_count() + "");
-//            } else if (data.getArticle().getComment_count() > 9999) {
-//                mTvCommentsNum.setText(BizUtils.numFormat(data.getArticle().getComment_count(), 10000, 1) + "");
-//            }
-//        }
 
         //评论分级
         BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
@@ -236,7 +227,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setTextContent(getString(R.string.module_detail_share_content_from))
-                    .setTitle("")
+                    .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(url)
             );
         } else if (view.getId() == R.id.menu_comment) {

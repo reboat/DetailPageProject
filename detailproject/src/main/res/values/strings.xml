@@ -15,6 +15,7 @@
     <string name="module_detail_save_success">保存成功</string>
     <string name="module_detail_save_failed">保存失败</string>
     <string name="module_detail_subscribe_success">订阅成功</string>
+    <string name="module_detail_subscribe">订阅</string>
     <string name="module_detail_save_cancel">取消</string>
     <string name="module_detail_share_to">分享至</string>
     <string name="module_detail_realated_news_tip">相关新闻</string>

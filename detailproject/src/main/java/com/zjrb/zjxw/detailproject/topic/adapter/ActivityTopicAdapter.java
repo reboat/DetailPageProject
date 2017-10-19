@@ -121,21 +121,18 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {
             datas.add(detailBean);
-//            datas.addAll(subjectList);
         }
 
         //添加相关新闻
         List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
         if (articles != null && articles.size() > 0) {
             datas.add(detailBean);
-//            datas.addAll(articles);
         }
         //添加热门评论
         if (detailBean.getArticle().getHot_comments() != null) {
             List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments().getComments();
             if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
                 datas.add(detailBean);
-//                datas.addAll(hotCommentsBeen);
             }
         }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);

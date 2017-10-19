@@ -17,7 +17,6 @@ import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 
 import butterknife.BindView;
@@ -30,7 +29,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener {
+        View.OnAttachStateChangeListener, OnItemClickListener,ActivityTopicAdapter.IBindSubscribe {
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
     @BindView(R2.id.tv_column_subscribe)
@@ -45,7 +44,6 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void bindView() {
-        itemView.setOnClickListener(null);
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
         //栏目LOGO
@@ -57,9 +55,11 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
         }
 
         //是否已订阅
-        mTvColumnSubscribe.setText(mData.getArticle().isColumn_subscribed() ? "已订阅" : "未订阅");
+        if(!mData.getArticle().isColumn_subscribed()){
+            mTvColumnSubscribe.setVisibility(View.VISIBLE);
+            mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
+        }
     }
-
 
     /**
      * @param view 频道订阅/栏目  点击
@@ -68,7 +68,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
     public void onViewClicked(View view) {
         if (ClickTracker.isDoubleClick()) return;
         ActivityTopicAdapter.CommonOptCallBack callback;
-        if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+        if (itemView.getContext() instanceof ActivityTopicAdapter.CommonOptCallBack) {
             callback = (ActivityTopicAdapter.CommonOptCallBack) itemView.getContext();
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
@@ -100,5 +100,13 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
                 .setTitle(mData.getArticle().getList_title())
                 .setTargetUrl(mData.getArticle().getUrl()));
 
+    }
+
+    /**
+     * 局部刷新订阅状态
+     */
+    @Override
+    public void bindSubscribe() {
+        mTvColumnSubscribe.setVisibility(View.GONE);
     }
 }

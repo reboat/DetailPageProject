@@ -4,7 +4,9 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="?attr/bc_202124"
+              android:layout_marginBottom="17dp"
               android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,6 +14,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         >
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
@@ -19,36 +22,40 @@
             android:layout_weight="1"
             android:background="?attr/bc_dddddd"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="21.5dp"
             android:paddingRight="21.5dp"
             android:text="@string/module_detail_share_to"
-            android:textSize="@dimen/ts_14sp"
             android:textColor="?attr/tc_999999"
-            tools:text="分享至"/>
+            android:textSize="@dimen/ts_14sp"
+            tools:text="分享至" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
             android:layout_marginLeft="17.5dp"
             android:layout_weight="1"
-            android:background="?attr/bc_dddddd"/>
+            android:background="?attr/bc_dddddd" />
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/gridlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="12dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginBottom="17dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="?attr/bc_e2e2e2"/>
+        android:background="?attr/bc_e2e2e2" />
     <!--频道-->
     <RelativeLayout
         android:id="@+id/ry_channel"
@@ -58,6 +65,7 @@
         android:background="?attr/bc_ffffff"
         android:visibility="gone"
         >
+
         <TextView
             android:id="@+id/tv_channel_name"
             android:layout_width="wrap_content"
@@ -72,7 +80,8 @@
             android:maxWidth="150dp"
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_14sp"
-            tools:text="杭州频道"/>
+            tools:text="杭州频道" />
+
         <TextView
             android:id="@+id/tv_channel_subscribe"
             android:layout_width="55dp"
@@ -84,21 +93,22 @@
             android:gravity="center"
             android:paddingBottom="7.5dp"
             android:paddingTop="7.5dp"
-            android:textColor="?attr/tc_f44b50"
             android:text="@string/module_detail_to_see"
+            android:textColor="?attr/tc_f44b50"
             android:textSize="@dimen/ts_11sp"
-            tools:text="去看"/>
+            tools:text="去看" />
     </RelativeLayout>
     <!--订阅-->
     <RelativeLayout
         android:id="@+id/ry_subscribe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
         android:layout_marginTop="10dp"
         android:background="?attr/bc_ffffff"
-        android:layout_marginBottom="17dp"
         android:visibility="gone"
         >
+
         <TextView
             android:id="@+id/tv_column_name"
             android:layout_width="wrap_content"
@@ -113,7 +123,8 @@
             android:maxWidth="150dp"
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_14sp"
-            tools:text="麻辣快评"/>
+            tools:text="麻辣快评" />
+
         <TextView
             android:id="@+id/tv_column_subscribe"
             android:layout_width="55dp"
@@ -127,6 +138,7 @@
             android:paddingTop="7.5dp"
             android:textColor="?attr/tc_f44b50"
             android:textSize="@dimen/ts_11sp"
-            tools:text="订阅"/>
+            android:visibility="gone"
+            tools:text="订阅" />
     </RelativeLayout>
 </LinearLayout>

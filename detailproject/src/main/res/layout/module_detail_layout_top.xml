@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
+        android:layout_marginBottom="6dp"
         app:ratio_w2h="3:2"
         tools:src="@mipmap/ic_detail_integral" />
 
@@ -21,9 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_bg"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="9.5dp"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:layout_marginTop="5dp"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:fitType="top">
@@ -32,7 +33,6 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
             android:ellipsize="end"
             android:focusable="true"
             android:layout_gravity="center_horizontal"
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fit_top_layout"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="12.5dp"
         android:layout_marginRight="5dp"
         android:gravity="center"
         android:maxLines="1"

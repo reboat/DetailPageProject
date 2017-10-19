@@ -92,9 +92,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
     @BindView(R2.id.view_exise)
-    LinearLayout mViewExise;
+    RelativeLayout mViewExise;
 
 
+    /**
+     * 稿件IDid
+     */
     public String mArticleId = "";
 
     private int mIndex;
@@ -118,14 +121,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      */
     private DefaultTopBarHolder3 topHolder;
     private TextView mTvTitleTop;
-    private ImageView mIvDownLoad, mIvShare;
+    private ImageView mIvDownLoad;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault3(view, this);
         mTvTitleTop = topHolder.getTitleView();
         mIvDownLoad = topHolder.getDownView();
-        mIvShare = topHolder.getShareView();
         return topHolder.getView();
     }
 
@@ -139,6 +141,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mArticleId = data.getQueryParameter(IKey.ID);
             }
         }
+    }
+
+    private void test() {
+        mViewExise.setVisibility(View.VISIBLE);
+        mViewPager.setVisibility(View.GONE);
+        mContainerBottom.setVisibility(View.GONE);
     }
 
     /**
@@ -233,12 +241,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download})
+            .menu_setting, R2.id.iv_top_download, R2.id.view_exise})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
     }
-
 
     private Bundle bundle;
 
@@ -286,6 +293,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //下载
         } else if (id == R.id.iv_top_download) {
             loadImage(mIndex);
+        } else if (id == R.id.view_exise) {
+            loadData();
         }
     }
 
@@ -351,15 +360,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void setTopTitle(int position) {
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (position == (mAtlasList.size() - 1)) {
-                topHolder.getContainerView().setBackgroundResource(R.color.colorPrimaryDark);
                 mTvTitleTop.setVisibility(View.VISIBLE);
-                mIvShare.setVisibility(View.GONE);
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
             } else {
-                topHolder.getContainerView().setBackgroundResource(android.R.color.black);
                 mTvTitleTop.setVisibility(View.GONE);
-                mIvShare.setVisibility(View.VISIBLE);
             }
         }
     }

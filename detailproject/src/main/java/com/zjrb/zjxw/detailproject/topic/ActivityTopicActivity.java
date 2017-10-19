@@ -28,7 +28,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -36,7 +35,6 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
@@ -550,6 +548,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 adapter.updateSubscribeInfo();
             }
 
+            @Override
+            public void onError(String errMsg, int errCode) {
+                T.showShortNow(ActivityTopicActivity.this,errMsg);
+            }
+
         }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
 
     }
@@ -559,18 +562,14 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         adapter.showAll();
     }
 
-    private Bundle bundle;
+//    private Bundle bundle;
 
     /**
      * 进入栏目
      */
     @Override
     public void onOptClickColumn() {
-        if (bundle == null) {
-            bundle = new Bundle();
-        }
-        bundle.putInt(IKey.ID, mNewsDetail.getArticle().getColumn_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COLUMN_LIST);
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
     }
 
     /**

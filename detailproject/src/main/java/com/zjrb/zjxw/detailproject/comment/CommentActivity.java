@@ -32,13 +32,10 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -251,18 +248,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
-    /**
-     * @param event 删除评论后刷新列表
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(CommentDeleteEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event != null) {
-            requestData();
-        }
-    }
-
 
     /**
      * @param requestCode

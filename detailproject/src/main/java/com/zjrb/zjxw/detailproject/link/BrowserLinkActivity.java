@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -78,7 +78,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @BindView(R2.id.menu_setting)
     ImageView mMenuSetting;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsFrameLayout mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.fy_container)
     FrameLayout mContainer;
     @BindView(R2.id.fy_webview_container)
@@ -206,7 +206,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
             mMenuComment.setVisibility(View.VISIBLE);
-            if(!TextUtils.isEmpty(data.getArticle().getComment_count_general())){
+            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
                 mTvCommentsNum.setVisibility(View.VISIBLE);
             }
         }

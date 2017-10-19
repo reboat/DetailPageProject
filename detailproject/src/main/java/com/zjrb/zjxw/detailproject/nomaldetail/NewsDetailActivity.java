@@ -91,7 +91,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
     @BindView(R2.id.ly_container)
-    FrameLayout mContainer;
+    RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     RelativeLayout mViewExise;
     @BindView(R2.id.iv_image)
@@ -202,7 +202,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
-                //"https://v-cdn.zjol.com.cn/12345.mp4";
                 if (!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
                     initVideo(mNewsDetail.getArticle().getVideo_url());
                 }
@@ -236,11 +235,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-        //显示UI
-        mFlContent.setVisibility(View.VISIBLE);
-        mViewExise.setVisibility(View.GONE);
-
         mNewsDetail = data;
+        initViewState(mNewsDetail);
         List datas = new ArrayList<>();
         //头
         datas.add(data);
@@ -263,7 +259,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
         mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
-        initViewState(data);
 
     }
 
@@ -273,6 +268,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
+        mFlContent.setVisibility(View.VISIBLE);
+        mViewExise.setVisibility(View.GONE);
         //是否已点赞
         if (data.getArticle().isLike_enabled()) {
             mMenuPrised.setVisibility(View.VISIBLE);

@@ -20,12 +20,10 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
+import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,9 +163,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         new CommentPraiseTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
-                if (stateBean == null) {
-                    return;
-                }
                 BizUtils.switchSelectorAnim(mThumb, true);//设置点赞动画
                 mThumb.setSelected(true);
                 mData.setLike_count((mData.getLike_count() + 1));
@@ -176,7 +171,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //TODO WLJ 未登录则跳转到登录页面
                 T.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);
@@ -191,10 +185,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
-                if (stateBean == null) {
-                    return;
-                }
-                EventBus.getDefault().postSticky(new CommentDeleteEvent());
+                //TODO WLJ 需要增量更新吗
             }
 
             @Override

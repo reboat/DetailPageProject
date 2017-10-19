@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
@@ -55,15 +57,20 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 tv_title.setText(mData.getContent());
             }
             if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-//                iv_img.setImageResource();
+                GlideApp.with(iv_img).load(R.drawable.module_detail_share_friend).placeholder(PH.zheBig()).centerCrop()
+                        .into(iv_img);
             } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
-
+                GlideApp.with(iv_img).load(R.drawable.module_detail_share_wx).placeholder(PH.zheBig()).centerCrop()
+                        .into(iv_img);
             } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
-
+                GlideApp.with(iv_img).load(R.drawable.module_detail_share_qq).placeholder(PH.zheBig()).centerCrop()
+                        .into(iv_img);
             } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
-
+                GlideApp.with(iv_img).load(R.drawable.module_detail_share_qzone).placeholder(PH.zheBig()).centerCrop()
+                        .into(iv_img);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
-
+                GlideApp.with(iv_img).load(R.drawable.module_detail_share_wb).placeholder(PH.zheBig()).centerCrop()
+                        .into(iv_img);
             }
 
         }

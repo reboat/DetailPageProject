@@ -23,7 +23,6 @@ import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener,NewsDetailAdapter.IBindSubscribe{
+        View.OnAttachStateChangeListener, OnItemClickListener, NewsDetailAdapter.IBindSubscribe {
     @BindView(R2.id.gridlist)
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
@@ -77,7 +76,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             mRySubscribe.setVisibility(View.VISIBLE);
             mTvColumnName.setText(mData.getArticle().getColumn_name());
             //已订阅不显示入口
-            if(!mData.getArticle().isColumn_subscribed()){
+            if (!mData.getArticle().isColumn_subscribed()) {
                 mTvColumnSubscribe.setVisibility(View.VISIBLE);
                 mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
             }

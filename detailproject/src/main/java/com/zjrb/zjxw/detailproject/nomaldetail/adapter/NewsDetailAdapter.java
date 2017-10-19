@@ -66,10 +66,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             return new NewsDetailRelatedSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
             return new NewsDetailRelatedNewsHolder(parent);
-        } else if (viewType == VIEW_TYPE_COMMENT) {
+        } else{
             return new NewsDetailCommentHolder(parent);
         }
-        return null;
     }
 
     @Override
@@ -86,10 +85,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (position == 4) {
             return VIEW_TYPE_RELATE_NEWS;
-        } else if (position == 5) {
+        } else{
             return VIEW_TYPE_COMMENT;
         }
-        return super.getAbsItemViewType(position);
     }
 
     @Override

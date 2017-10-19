@@ -89,6 +89,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
+    @BindView(R2.id.fl_comment)
+    FrameLayout mFyContainer;
 
     private ActivityTopicAdapter adapter;
     /**
@@ -485,12 +487,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
+        
+        //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
             mMenuPrised.setVisibility(View.GONE);
         }
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
+
+        //是否允许评论
+        if (data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+        } else {
+            mFyContainer.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -550,7 +561,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShortNow(ActivityTopicActivity.this,errMsg);
+                T.showShortNow(ActivityTopicActivity.this, errMsg);
             }
 
         }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
@@ -561,8 +572,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     public void onOptPageFinished() {
         adapter.showAll();
     }
-
-//    private Bundle bundle;
 
     /**
      * 进入栏目

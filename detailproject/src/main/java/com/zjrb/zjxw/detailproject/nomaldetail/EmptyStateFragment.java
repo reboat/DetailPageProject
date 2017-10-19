@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -75,8 +74,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      * 头部布局
      */
     private View head;
-
-    private ImageView mIvshare;
 
     /**
      * 初始化控件

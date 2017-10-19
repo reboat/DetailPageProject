@@ -61,10 +61,9 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
             return new NewsDetailRelatedSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_BEAUT_COMMENT) {
             return new NewsActivityHotCommentHolder(parent);
-        } else if (viewType == VIEW_TYPE_COMMENT) {
+        } else {
             return new NewsActivityCommentHolder(parent);
         }
-        return null;
     }
 
     @Override
@@ -80,10 +79,9 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (position == 4) {
             return VIEW_TYPE_BEAUT_COMMENT;
-        } else if (position == 5) {
+        } else {
             return VIEW_TYPE_COMMENT;
         }
-        return super.getAbsItemViewType(position);
     }
 
     @Override

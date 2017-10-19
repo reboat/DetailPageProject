@@ -205,7 +205,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         }
 
         //评论分级
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
+//        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
     }
 
 

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/iv_column_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
@@ -38,20 +38,22 @@
 
     <TextView
         android:id="@+id/tv_column_subscribe"
-        android:layout_width="55dp"
+        android:layout_width="57dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/module_detail_subscribe_red_left"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/module_detail_activity_subscribe_red"
         android:foreground="?android:attr/actionBarItemBackground"
         android:gravity="center"
         android:paddingBottom="7.5dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
         android:paddingTop="7.5dp"
         android:textColor="?attr/tc_f44b50"
-        android:textSize="@dimen/ts_11sp"
-        android:visibility="gone"
+        android:textSize="@dimen/ts_14sp"
+        android:visibility="visible"
         tools:text="订阅" />
 
 

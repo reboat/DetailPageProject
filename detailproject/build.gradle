@@ -42,7 +42,7 @@ dependencies {
         exclude group: 'cn.daily.android'
     }
 
-    compile('com.aliya:android-player:0.1.4') {
+    compile('com.aliya:android-player:0.1.5') {
         exclude group: 'com.android.support'
     }
     compile butterknifeDeps.butterknife

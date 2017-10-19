@@ -39,11 +39,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tv_comment_num"
-        android:layout_marginBottom="37dp"
+        android:layout_above="@+id/fy_container"
         android:layout_marginTop="13dp" />
 
 
     <FrameLayout
+        android:id="@+id/fy_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

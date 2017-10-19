@@ -93,6 +93,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     RelativeLayout mLyContainer;
     @BindView(R2.id.view_exise)
     RelativeLayout mViewExise;
+    @BindView(R2.id.fl_comment)
+    FrameLayout mFyContainer;
+    @BindView(R2.id.menu_comment)
+    ImageView mMenuComment;
 
 
     /**
@@ -182,7 +186,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 }
             }
         }).setTag(this).exe(mArticleId);
-
     }
 
     /**
@@ -201,20 +204,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
             mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
-
-            //评论数量
-            if (!TextUtils.isEmpty(mData.getArticle().getComment_count_general())) {
-                mTvCommentsNum.setVisibility(View.VISIBLE);
-                mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
-            }
-
-            //是否已点赞
-            if (atlasDetailEntity.getArticle().isLike_enabled()) {
-                mMenuPrised.setSelected(atlasDetailEntity.getArticle().isLiked());
-            } else {
-                mMenuPrised.setVisibility(View.GONE);
-            }
-            BizUtils.setCommentSet(mTvComment, mData.getArticle().getComment_level());
+            initViewState(mData);
         }
         //设置图片列表
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
@@ -237,6 +227,40 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mTvContent.setText(entity.getDescription());
         }
 
+    }
+
+    /**
+     * 刷新底部栏状态
+     *
+     * @param data
+     */
+    private void initViewState(DraftDetailBean data) {
+        //评论数量
+        if (!TextUtils.isEmpty(mData.getArticle().getComment_count_general())) {
+            mTvCommentsNum.setVisibility(View.VISIBLE);
+            mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
+        } else {
+            mTvCommentsNum.setVisibility(View.GONE);
+        }
+
+        //是否已点赞
+        if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setVisibility(View.VISIBLE);
+            mMenuPrised.setSelected(data.getArticle().isLiked());
+        } else {
+            mMenuPrised.setVisibility(View.GONE);
+        }
+
+        //禁止评论，隐藏评论框及评论按钮
+        if (data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+            mMenuComment.setVisibility(View.GONE);
+            mTvCommentsNum.setVisibility(View.GONE);
+        } else {
+            mFyContainer.setVisibility(View.VISIBLE);
+            mMenuComment.setVisibility(View.VISIBLE);
+            mTvCommentsNum.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -365,19 +389,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
             } else {
                 mTvTitleTop.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    /**
-     * 设置更多页切换时底部栏显示
-     */
-    private void setBottomBar(int position) {
-        if (mAtlasList != null && !mAtlasList.isEmpty()) {
-            if (position == (mAtlasList.size() - 1)) {
-
-            } else {
-
             }
         }
     }

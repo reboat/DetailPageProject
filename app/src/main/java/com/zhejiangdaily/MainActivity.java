@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -17,6 +18,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.tv_text);
         tv.setOnClickListener(this);
+        findViewById(R.id.tv_ui_mode).setOnClickListener(this);
     }
 
 
@@ -34,7 +36,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                    bundle = new Bundle();
 //                }
 //                bundle.putInt(Key.ID, 739652);
-//                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com.cn/news.html");
+//                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com
+// .cn/news.html");
 
 //                Nav.with(this).to("http://10.200.70.86:8000/link.html?id=740555");
 //、
@@ -81,6 +84,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .build(), 0);
 
 
+                break;
+            case R.id.tv_ui_mode:
+                ThemeMode.setUiMode(!ThemeMode.isNightMode());
                 break;
         }
     }

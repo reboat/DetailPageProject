@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.subject.adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -90,10 +91,12 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
         @Override
         public void bindView() {
+            itemView.setClickable(false);
+            Log.e("TAG", "bindView " + mData.getGroup_name() + " - " + mData.isGroup_has_more());
             tvGroupName.setText(mData.getGroup_name());
             // 显示是否有更多
             tvMore.setVisibility(mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
-            itemView.setOnClickListener(!mData.isGroup_has_more() ? this : null);
+//            itemView.setOnClickListener(mData.isGroup_has_more() ? this : null);
         }
 
         @Override

@@ -166,8 +166,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         //初始化适配器
         if (mCommentAdapter == null) {
             mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
-            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
+            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
@@ -206,7 +206,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
 
-    @OnClick({R2.id.tv_comment})
+    @OnClick({R2.id.tv_comment,R2.id.iv_top_share})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {

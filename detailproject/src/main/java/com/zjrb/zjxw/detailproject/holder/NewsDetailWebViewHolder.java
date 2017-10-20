@@ -19,6 +19,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
+import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.webjs.WebJsInterface;
@@ -49,7 +50,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         .OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
-    WebView mWebView;
+    ZBWebView mWebView;
     private WebJsInterface mWebJsInterface;
 
 //    /**
@@ -115,9 +116,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
         //注入支持的本地方法
-        mWebJsInterface = WebJsInterface.getInstance(itemView.getContext(),mWebView);
+        mWebJsInterface = new WebJsInterface(itemView.getContext());
         mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
-
+        mWebJsInterface.setWebJsCallBack(mWebView);
         // 夜间模式
         if (ThemeMode.isNightMode()) {
             mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_202124_night));
@@ -126,19 +127,19 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         settings = mWebView.getSettings();
-        settings.setJavaScriptEnabled(true); // 启用支持javaScript
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 没网使用缓存
-        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 禁止横向滑动
-        settings.setDomStorageEnabled(true);//开启DOM storage API功能
-        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100)); // 字体缩放倍数
-        settings.setUseWideViewPort(true); // 视频全屏点击支持回调
-        settings.setLoadWithOverviewMode(true);
-        settings.setAllowFileAccess(true); // 允许访问文件
-
-        // WebView在安卓5.0之前默认允许其加载混合网络协议内容
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
+//        settings.setJavaScriptEnabled(true); // 启用支持javaScript
+//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 没网使用缓存
+//        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 禁止横向滑动
+//        settings.setDomStorageEnabled(true);//开启DOM storage API功能
+//        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100)); // 字体缩放倍数
+//        settings.setUseWideViewPort(true); // 视频全屏点击支持回调
+//        settings.setLoadWithOverviewMode(true);
+//        settings.setAllowFileAccess(true); // 允许访问文件
+//
+//        // WebView在安卓5.0之前默认允许其加载混合网络协议内容
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//        }
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                bundle.putInt(Key.ID, 739652);
 //                Nav.with(UIUtils.getContext()).setExtras(bundle).to("https://zj.zjol.com.cn/news.html");
 
-                Nav.with(this).to("http://10.200.70.86:8000/link.html?id=740555");
+//                Nav.with(this).to("http://10.200.70.86:8000/link.html?id=740555");
 //、
 //                Nav.with(this).to("http://10.200.70.86:8000/link.html?id=740302",0);
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/TopicListActivity")
@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
 //                        .build(), 0);
 
-//                Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=740345");
+                Nav.with(this).to("https://www.8531.cn/subject.html?id=740345");
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()

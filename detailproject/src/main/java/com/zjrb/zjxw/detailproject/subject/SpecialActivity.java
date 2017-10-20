@@ -136,8 +136,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private void loadData() {
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
-            public void onSuccess(DraftDetailBean draftDetailBean) {
-                fillData(draftDetailBean);
+            public void onSuccess(DraftDetailBean data) {
+                fillData(data);
             }
 
             @Override

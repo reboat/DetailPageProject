@@ -92,7 +92,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
         public void bindView() {
             tvGroupName.setText(mData.getGroup_name());
             // 显示是否有更多
-            tvMore.setVisibility(!mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
+            tvMore.setVisibility(mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
             itemView.setOnClickListener(!mData.isGroup_has_more() ? this : null);
         }
 

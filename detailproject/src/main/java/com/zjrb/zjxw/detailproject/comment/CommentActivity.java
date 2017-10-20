@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -49,14 +48,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
-    @BindView(R2.id.tv_comment)
-    TextView tvComment;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_comment_num)
     TextView tvCommentNum;
-    @BindView(R2.id.activity_comment)
-    RelativeLayout activityComment;
 
     /**
      * 文章id

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.uimode.utils.UiModeUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
@@ -57,20 +58,15 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 tv_title.setText(mData.getContent());
             }
             if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                GlideApp.with(iv_img).load(R.drawable.module_detail_share_friend).placeholder(PH.zheBig()).centerCrop()
-                        .into(iv_img);
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_friend);
             } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
-                GlideApp.with(iv_img).load(R.drawable.module_detail_share_wx).placeholder(PH.zheBig()).centerCrop()
-                        .into(iv_img);
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wx);
             } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
-                GlideApp.with(iv_img).load(R.drawable.module_detail_share_qq).placeholder(PH.zheBig()).centerCrop()
-                        .into(iv_img);
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qq);
             } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
-                GlideApp.with(iv_img).load(R.drawable.module_detail_share_qzone).placeholder(PH.zheBig()).centerCrop()
-                        .into(iv_img);
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qzone);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
-                GlideApp.with(iv_img).load(R.drawable.module_detail_share_wb).placeholder(PH.zheBig()).centerCrop()
-                        .into(iv_img);
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wb);
             }
 
         }

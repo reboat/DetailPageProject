@@ -290,21 +290,18 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             );
             //评论框
         } else if (id == R.id.tv_comment) {
-            if (mData != null && BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
+            if (mData != null) {
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
-                return;
             }
             //评论列表
         } else if (id == R.id.menu_comment) {
             if (mData != null) {
-                if (BizUtils.isCanComment(this, mData.getArticle().getComment_level())) {
 
-                    if (bundle == null) {
-                        bundle = new Bundle();
-                    }
-                    bundle.putSerializable(IKey.NEWS_DETAIL, mData);
-                    Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
+                if (bundle == null) {
+                    bundle = new Bundle();
                 }
+                bundle.putSerializable(IKey.NEWS_DETAIL, mData);
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
 
             }
             //点赞

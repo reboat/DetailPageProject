@@ -33,9 +33,6 @@ import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -218,10 +215,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
-            if (BizUtils.isCanComment(this, commentSet)) {
-                tvComment.setVisibility(View.VISIBLE);
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-            }
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             CommentRefreshBean.ShareArtcleInfo bean = mBean.getShare_article_info();
             if (bean != null) {
@@ -236,18 +230,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
 
     /**
      * @param requestCode
@@ -267,17 +249,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        tvComment.setVisibility(View.VISIBLE);
     }
 
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
-            tvComment.setVisibility(View.VISIBLE);
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-        }
-
+        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
     }
 
     @Override

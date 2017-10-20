@@ -617,11 +617,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.menu_setting) {
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
         } else if (view.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null &&
-                    BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
+            if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
-                return;
             }
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()

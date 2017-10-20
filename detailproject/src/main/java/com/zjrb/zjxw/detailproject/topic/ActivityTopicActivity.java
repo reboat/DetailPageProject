@@ -89,6 +89,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
+    @BindView(R2.id.fl_comment)
+    FrameLayout mFyContainer;
 
     private ActivityTopicAdapter adapter;
     /**
@@ -485,12 +487,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
+
+        //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
             mMenuPrised.setVisibility(View.GONE);
         }
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
+
+        //是否允许评论
+        if (data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+        } else {
+            mFyContainer.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -550,7 +561,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShortNow(ActivityTopicActivity.this,errMsg);
+                T.showShortNow(ActivityTopicActivity.this, errMsg);
             }
 
         }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
@@ -561,8 +572,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     public void onOptPageFinished() {
         adapter.showAll();
     }
-
-//    private Bundle bundle;
 
     /**
      * 进入栏目
@@ -591,7 +600,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
+                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -606,19 +615,16 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
         } else if (view.getId() == R.id.menu_setting) {
-            //TODO  WLJ  打开设置按钮
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
         } else if (view.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null &&
-                    BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
+            if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
-                return;
             }
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this, null).getFirstSrc())
+                    .setImgUri(new WebJsInterface(this).getFirstSrc())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));

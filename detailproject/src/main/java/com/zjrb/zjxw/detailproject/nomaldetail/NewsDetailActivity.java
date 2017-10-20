@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.player.PlayerManager;
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -45,7 +45,6 @@ import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -53,10 +52,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +75,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 稿件ID
      */
     public String mArticleId;
-    //视频地址
-    public String mVideoPath = "";
+
     @BindView(R2.id.video_container)
     RatioFrameLayout mVideoContainer;
     @BindView(R2.id.rv_content)
@@ -93,15 +87,19 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsFrameLayout mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
     @BindView(R2.id.ly_container)
-    FrameLayout mContainer;
+    RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     RelativeLayout mViewExise;
     @BindView(R2.id.iv_image)
     ImageView mivVideoBG;
+    @BindView(R2.id.fl_comment)
+    FrameLayout mFyContainer;
+    @BindView(R2.id.menu_comment)
+    ImageView mMenuComment;
 
     /**
      * 上下滑动超出范围处理
@@ -179,12 +177,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     /**
      * 初始化视频
      */
-    private void initVideo() {
-        if (!TextUtils.isEmpty(mVideoPath)) {
+    private void initVideo(String videoPath) {
+        if (!TextUtils.isEmpty(videoPath)) {
             mVideoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .into(mivVideoBG);
-            PlayerManager.get().play(mVideoContainer, mVideoPath);
+            PlayerManager.get().play(mVideoContainer, videoPath);
         } else {
             mVideoContainer.setVisibility(View.GONE);
         }
@@ -204,10 +202,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
                 mNewsDetail = draftDetailBean;
-                //"https://v-cdn.zjol.com.cn/12345.mp4";
-                mVideoPath = mNewsDetail.getArticle().getVideo_url();
-                if (!TextUtils.isEmpty(mVideoPath)) {
-                    initVideo();
+                if (!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
+                    initVideo(mNewsDetail.getArticle().getVideo_url());
                 }
                 fillData(mNewsDetail);
             }
@@ -228,7 +224,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     @Override
     public LoadViewHolder replaceLoad() {
-        if (TextUtils.isEmpty(mVideoPath)) {
+        if (TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
             return super.replaceLoad();
         } else { // 视频详情页
             return replaceLoad(mFlContent);
@@ -239,11 +235,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-        //显示UI
-        mFlContent.setVisibility(View.VISIBLE);
-        mViewExise.setVisibility(View.GONE);
-
         mNewsDetail = data;
+        initViewState(mNewsDetail);
         List datas = new ArrayList<>();
         //头
         datas.add(data);
@@ -267,8 +260,19 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
 
+    }
+
+    /**
+     * 刷新底部栏状态
+     *
+     * @param data
+     */
+    private void initViewState(DraftDetailBean data) {
+        mFlContent.setVisibility(View.VISIBLE);
+        mViewExise.setVisibility(View.GONE);
         //是否已点赞
         if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
             mMenuPrised.setVisibility(View.GONE);
@@ -278,11 +282,21 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+        } else {
+            mTvCommentsNum.setVisibility(View.GONE);
         }
 
-        //评论分级
-        BizUtils.setCommentSet(mTvComment, mNewsDetail.getArticle().getComment_level());
+        //禁止评论，隐藏评论框及评论按钮
+        if (data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+            mMenuComment.setVisibility(View.GONE);
+            mTvCommentsNum.setVisibility(View.GONE);
+        } else {
+            mFyContainer.setVisibility(View.VISIBLE);
+            mMenuComment.setVisibility(View.VISIBLE);
+        }
     }
+
 
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
@@ -359,12 +373,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     @Override
     public void onOptClickChannel() {
-        //TODO WLJ 频道详情页
         if (bundle == null) {
             bundle = new Bundle();
         }
-        bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getChannel_name());
-        bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getChannel_id());
+        bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getSource_channel_name());
+        bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getSource_channel_id());
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
     }
 
@@ -418,17 +431,15 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null &&
-                    BizUtils.isCanComment(this, mNewsDetail.getArticle().getComment_level())) {
+            if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
-                return;
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(WebJsInterface.getInstance(this, null).getFirstSrc())
+                    .setImgUri(new WebJsInterface(this).getFirstSrc())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
                     .setTitle(mNewsDetail.getArticle().getList_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
@@ -436,7 +447,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.view_exise) {
             loadData();
         } else if (view.getId() == R.id.iv_type_video) {
-            PlayerManager.get().play(mVideoContainer, mVideoPath);
+            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());
         }
     }
 
@@ -457,32 +468,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
 
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(CommentResultEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (mNewsDetail != null && event.getData() > 0) {
-            mNewsDetail.getArticle().setComment_count(mNewsDetail.getArticle().getComment_count() + event.getData());
-            mTvCommentsNum.setText(BizUtils.formatComments(mNewsDetail.getArticle().getComment_count()));
-        }
     }
 
     /**

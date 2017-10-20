@@ -23,7 +23,6 @@ import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener,NewsDetailAdapter.IBindSubscribe{
+        View.OnAttachStateChangeListener, OnItemClickListener, NewsDetailAdapter.IBindSubscribe {
     @BindView(R2.id.gridlist)
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
@@ -77,7 +76,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             mRySubscribe.setVisibility(View.VISIBLE);
             mTvColumnName.setText(mData.getArticle().getColumn_name());
             //已订阅不显示入口
-            if(!mData.getArticle().isColumn_subscribed()){
+            if (!mData.getArticle().isColumn_subscribed()) {
                 mTvColumnSubscribe.setVisibility(View.VISIBLE);
                 mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
             }
@@ -109,11 +108,11 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         if (mListData == null) {
             mListData = new ArrayList<>();
-            mListData.add(new DetailShareBean(R.mipmap.me_friend_btn, "朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
-            mListData.add(new DetailShareBean(R.mipmap.me_wechat_btn, "微信好友", SHARE_MEDIA.WEIXIN));
-            mListData.add(new DetailShareBean(R.mipmap.me_qq_btn, "QQ好友", SHARE_MEDIA.QQ));
-            mListData.add(new DetailShareBean(R.mipmap.me_space_btn, "QQ空间", SHARE_MEDIA.QZONE));
-            mListData.add(new DetailShareBean(R.mipmap.me_sina_btn, "新浪微博", SHARE_MEDIA.SINA));
+            mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
+            mListData.add(new DetailShareBean("微信好友", SHARE_MEDIA.WEIXIN));
+            mListData.add(new DetailShareBean("QQ好友", SHARE_MEDIA.QQ));
+            mListData.add(new DetailShareBean("QQ空间", SHARE_MEDIA.QZONE));
+            mListData.add(new DetailShareBean("新浪微博", SHARE_MEDIA.SINA));
         }
 
         mAdapter = new DetailShareAdapter(mListData);
@@ -166,7 +165,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(WebJsInterface.getInstance(itemView.getContext(), null).getFirstSrc())
+                    .setImgUri(new WebJsInterface(itemView.getContext()).getFirstSrc())
                     .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getList_title())
                     .setPlatform(mListData.get(position).getPlatform())

@@ -12,8 +12,9 @@
         android:id="@+id/iv_top_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
         android:layout_marginBottom="6dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
         app:ratio_w2h="3:2"
         tools:src="@mipmap/ic_detail_integral" />
 
@@ -33,11 +34,9 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:focusable="true"
             android:layout_gravity="center_horizontal"
+            android:focusable="true"
             android:lineSpacingMultiplier="1.1"
-            android:maxLines="2"
             android:textColor="?attr/tc_000000"
             android:textSize="@dimen/ts_22sp"
             tools:text="浙商银行程度家话sad爱神的箭爱打架阿卡丽的骄傲看了进的垃圾的辣椒水打赏大理石较大的" />

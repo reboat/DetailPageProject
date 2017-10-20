@@ -5,8 +5,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.uimode.utils.UiModeUtils;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
@@ -53,7 +57,18 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
             if (mData.getContent() != null) {
                 tv_title.setText(mData.getContent());
             }
-            iv_img.setImageResource(mData.getResId());
+            if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_friend);
+            } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wx);
+            } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qq);
+            } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qzone);
+            } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wb);
+            }
+
         }
     }
 }

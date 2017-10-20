@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener,ActivityTopicAdapter.IBindSubscribe {
+        View.OnAttachStateChangeListener, OnItemClickListener, ActivityTopicAdapter.IBindSubscribe {
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
     @BindView(R2.id.tv_column_subscribe)
@@ -55,7 +55,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
         }
 
         //是否已订阅
-        if(!mData.getArticle().isColumn_subscribed()){
+        if (!mData.getArticle().isColumn_subscribed()) {
             mTvColumnSubscribe.setVisibility(View.VISIBLE);
             mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
         }
@@ -95,7 +95,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
     public void onItemClick(View itemView, int position) {
         UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                 .setSingle(true)
-                .setImgUri(WebJsInterface.getInstance(itemView.getContext(),null).getFirstSrc())
+                .setImgUri(new WebJsInterface(itemView.getContext()).getFirstSrc())
                 .setTextContent(mData.getArticle().getSummary())
                 .setTitle(mData.getArticle().getList_title())
                 .setTargetUrl(mData.getArticle().getUrl()));

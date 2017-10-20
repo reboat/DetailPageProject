@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -32,14 +31,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
-import com.zjrb.zjxw.detailproject.eventBus.CommentDeleteEvent;
-import com.zjrb.zjxw.detailproject.eventBus.CommentResultEvent;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,18 +48,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
-    @BindView(R2.id.tv_comment)
-    TextView tvComment;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_comment_num)
     TextView tvCommentNum;
-    //    @BindView(R2.id.tv_hot)
-//    TextView tvHot;
-    @BindView(R2.id.activity_comment)
-    RelativeLayout activityComment;
-//    @BindView(R2.id.ly_reflash)
-//    LinearLayout lyReflash;
 
     /**
      * 文章id
@@ -104,7 +88,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
         initData();
-        initHead();
     }
 
     @Override
@@ -141,27 +124,23 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
     /**
+     * 头部布局
+     */
+    private View head;
+    private TextView tvHot;
+
+    /**
      * 初始化评论界面数据
      */
     private void initData() {
+        head = UIUtils.inflate(R.layout.module_detail_comment_head);
+        tvHot = (TextView) head.findViewById(R.id.tv_hot);
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
         requestData();
-    }
-
-
-    /**
-     * 头部布局
-     */
-    private View head;
-    private TextView tvHot;
-
-    private void initHead() {
-        head = UIUtils.inflate(R.layout.module_detail_comment_head);
-        tvHot = (TextView) head.findViewById(R.id.tv_hot);
     }
 
     /**
@@ -184,10 +163,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             tvCommentNum.setVisibility(View.GONE);
         }
 
+        //初始化适配器
         if (mCommentAdapter == null) {
             mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
-            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
+            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
@@ -226,14 +206,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
 
-    @OnClick({R2.id.tv_comment})
+    @OnClick({R2.id.tv_comment,R2.id.iv_top_share})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
-            if (BizUtils.isCanComment(this, commentSet)) {
-                tvComment.setVisibility(View.VISIBLE);
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-            }
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             CommentRefreshBean.ShareArtcleInfo bean = mBean.getShare_article_info();
             if (bean != null) {
@@ -245,30 +222,6 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                         .setTargetUrl(mBean.getShare_article_info().getUrl()));
             }
 
-        }
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    /**
-     * @param event 删除评论后刷新列表
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(CommentDeleteEvent event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event != null) {
-            requestData();
         }
     }
 
@@ -291,23 +244,12 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        tvComment.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void finish() {
-        EventBus.getDefault().postSticky(new CommentResultEvent());
-        super.finish();
     }
 
 
     @Override
     public void onItemClick(View itemView, int position) {
-        if (BizUtils.isCanComment(CommentActivity.this, commentSet)) {
-            tvComment.setVisibility(View.VISIBLE);
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
-        }
-
+        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
     }
 
     @Override

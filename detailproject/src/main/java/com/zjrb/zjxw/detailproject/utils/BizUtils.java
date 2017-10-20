@@ -35,20 +35,20 @@ public class BizUtils {
         }
     }
 
-    /**
-     * 是否可以评论
-     *
-     * @return true 可以评论
-     */
-    public static boolean isCanComment(Context context, int set) {
-        switch (set) {
-            case comment.JY: // 评论未关闭，但用户被禁言
-                T.showShort(context, UIUtils.getString(R.string.module_detail_no_speaking));
-                return false;
-            default:
-                return true;
-        }
-    }
+//    /**
+//     * 是否可以评论
+//     *
+//     * @return true 可以评论
+//     */
+//    public static boolean isCanComment(Context context, int set) {
+//        switch (set) {
+//            case comment.JY: // 评论未关闭，但用户被禁言
+//                T.showShort(context, UIUtils.getString(R.string.module_detail_no_speaking));
+//                return false;
+//            default:
+//                return true;
+//        }
+//    }
 
     /**
      * 统一执行选择器切换动画

@@ -51,11 +51,11 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         itemView.setOnClickListener(null);
 
         //顶部焦点图(可以不填写)
-        if (TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
-            mIvTopBg.setVisibility(View.GONE);
-        } else {
+        if (!TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
             mIvTopBg.setVisibility(View.VISIBLE);
             GlideApp.with(mIvTopBg).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvTopBg);
+        } else {
+            mIvTopBg.setVisibility(View.GONE);
         }
 
         //标题(必填)
@@ -63,12 +63,16 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             mTvTitle.setText(mData.getArticle().getList_title());
         }
 
-        //记者(发稿允许不填写)
-        if (!TextUtils.isEmpty(mData.getArticle().getAuthor())) {
-            mTvReporter.setVisibility(View.VISIBLE);
-            mTvReporter.setText(mData.getArticle().getAuthor());
-        } else {
+        //来源及记者(发稿允许不填写)
+        if (TextUtils.isEmpty(mData.getArticle().getSource()) && TextUtils.isEmpty(mData.getArticle().getAuthor())) {
             mTvReporter.setVisibility(View.GONE);
+        } else {
+            String source = mData.getArticle().getSource();
+            if (!TextUtils.isEmpty(source)) {
+                source += " ";
+            }
+            mTvReporter.setVisibility(View.VISIBLE);
+            mTvReporter.setText(source + mData.getArticle().getAuthor());
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
@@ -87,7 +91,6 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_channel_name) {
-            //TODO  WLJ  进入频道列表页面
             if (bundle == null) {
                 bundle = new Bundle();
             }

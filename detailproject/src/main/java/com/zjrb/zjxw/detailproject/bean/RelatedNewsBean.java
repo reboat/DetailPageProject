@@ -13,7 +13,7 @@ public class RelatedNewsBean implements Serializable {
     private int id;
     private String title;
     private String pic;
-    private String uri;
+    private String url;
 
     public int getId() {
         return id;
@@ -40,10 +40,10 @@ public class RelatedNewsBean implements Serializable {
     }
 
     public String getUri_scheme() {
-        return uri;
+        return url;
     }
 
-    public void setUri_scheme(String uri) {
-        this.uri = uri;
+    public void setUri_scheme(String url) {
+        this.url = url;
     }
 }

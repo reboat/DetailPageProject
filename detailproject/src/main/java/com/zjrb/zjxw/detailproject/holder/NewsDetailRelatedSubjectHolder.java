@@ -71,9 +71,6 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
     public void onItemClick(View itemView, int position) {
         if (mData != null && !TextUtils.isEmpty(mData.getArticle().getRelated_subjects().get(position).getUri_scheme())) {
             Nav.with(UIUtils.getActivity()).to(mData.getArticle().getRelated_subjects().get(position).getUri_scheme());
-//            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getArticle().getRelated_subjects().get(position).getUri_scheme())
-//                    .buildUpon()
-//                    .build(), 0);
         }
     }
 }

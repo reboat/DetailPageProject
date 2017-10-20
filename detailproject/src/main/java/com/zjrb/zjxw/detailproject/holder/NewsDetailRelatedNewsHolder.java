@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.holder;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -75,8 +76,8 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
      */
     @Override
     public void onItemClick(View itemView, int position) {
-        if (mData != null) {
-            Nav.with(UIUtils.getActivity()).to(mData.getArticle().getUrl());
+        if (mData != null && !TextUtils.isEmpty(mData.getArticle().getRelated_news().get(position).getUri_scheme())) {
+            Nav.with(UIUtils.getActivity()).to(mData.getArticle().getRelated_news().get(position).getUri_scheme());
         }
     }
 }

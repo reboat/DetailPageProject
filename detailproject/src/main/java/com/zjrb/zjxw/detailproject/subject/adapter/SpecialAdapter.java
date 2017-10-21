@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.subject.adapter;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -61,12 +59,6 @@ public class SpecialAdapter extends NewsBaseAdapter {
     }
 
     @Override
-    public boolean onAbsBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.e("TAG", "onAbsBindViewHolder " + holder.getClass().getSimpleName() + position);
-        return super.onAbsBindViewHolder(holder, position);
-    }
-
-    @Override
     public OverlayViewHolder onCreateOverlayViewHolder(ViewGroup parent, int viewType) {
         return new GroupViewHolder(parent);
     }
@@ -83,6 +75,12 @@ public class SpecialAdapter extends NewsBaseAdapter {
         return getAbsItemViewType(position) == TYPE_GROUP;
     }
 
+    /**
+     * 分组 ViewHolder
+     *
+     * @author a_liYa
+     * @date 2017/10/21 下午4:13.
+     */
     static class GroupViewHolder extends OverlayViewHolder<SpecialGroupBean> implements View
             .OnClickListener {
 

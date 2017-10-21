@@ -45,7 +45,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
             int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
-            for (int i = firstVisibleItemPosition; i < lastVisibleItemPosition; i++) {
+            for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
                 int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
                 if (top > mRecyclerCopy.getHeight()) {
                     startPosition = i;

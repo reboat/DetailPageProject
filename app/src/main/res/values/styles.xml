@@ -58,7 +58,7 @@
         <item name="border_f44b50_r10">@drawable/border_f44b50_r10</item>
         <item name="border_999999_r10">@drawable/border_999999_r10</item>
         <item name="border_subscribe">@drawable/border_subscribe</item>
-        <item name="border_e5e5e5">@drawable/border_e5e5e5</item>
+        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
 
         <item name="module_news_tc_white">@color/module_news_tc_white</item>
         <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag</item>
@@ -148,7 +148,7 @@
         <item name="border_f44b50_r10">@drawable/border_f44b50_r10_night</item>
         <item name="border_999999_r10">@drawable/border_999999_r10_night</item>
         <item name="border_subscribe">@drawable/border_subscribe_night</item>
-        <item name="border_e5e5e5">@drawable/border_e5e5e5_night</item>
+        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>
 
         <item name="module_news_tc_white">@color/module_news_tc_white_night</item>
         <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag_night</item>

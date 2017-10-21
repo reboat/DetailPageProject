@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.PageItem;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.nav.Nav;
@@ -44,8 +45,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     TextView tvSummary;
     @BindView(R2.id.tv_indicator)
     TextView mTvIndicator;
-    @BindView(R2.id.rv_head)
-    RecyclerView mRecycler;
+    @BindView(R2.id.recycler_tab)
+    RecyclerView mRecyclerTab;
     @BindView(R2.id.iv_focus)
     ImageView ivTopicPic;
     @BindView(R2.id.tv_focus)
@@ -58,7 +59,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     ImageView mIvIndicator;
 
     private boolean isOpen;
-    private RecyclerView mCopy;
+    private RecyclerView mRecyclerTabCopy;
 
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
@@ -71,28 +72,29 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                                OnClickChannelListener listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
-        mCopy = copy;
+        mRecyclerTabCopy = copy;
         mOnClickChannelListener = listener;
         initView();
         parent.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (mRecycler.getTop() + itemView.getTop() > 0
+                if (mRecyclerTab.getTop() + itemView.getTop() > 0
                         && itemView.getRootView() != itemView) {
-                    mCopy.setVisibility(View.GONE);
+                    mRecyclerTabCopy.setVisibility(View.GONE);
                 } else {
-                    mCopy.setVisibility(View.VISIBLE);
+                    if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1)
+                        mRecyclerTabCopy.setVisibility(View.VISIBLE);
                 }
             }
         });
     }
 
     private void initView() {
-        mRecycler.addItemDecoration(new GridSpaceDivider(12));
-        mCopy.addItemDecoration(new GridSpaceDivider(12));
+        mRecyclerTab.addItemDecoration(new GridSpaceDivider(12));
+        mRecyclerTabCopy.addItemDecoration(new GridSpaceDivider(12));
 
-        mRecycler.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
-        mCopy.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
+        mRecyclerTab.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
+        mRecyclerTabCopy.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
 
         tvSummary.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mLayoutIndicator.setOnClickListener(this);
@@ -110,11 +112,21 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         }
         mArticle = data.getArticle();
 
-        tvSummary.setText(mArticle.getSummary());
         mChannelAdapter = new ChannelAdapter(mArticle.getSubject_groups());
         mChannelAdapter.setOnItemClickListener(this);
-        mRecycler.setAdapter(mChannelAdapter);
-        mCopy.setAdapter(mChannelAdapter);
+        mRecyclerTab.setAdapter(mChannelAdapter);
+        mRecyclerTabCopy.setAdapter(mChannelAdapter);
+
+        if (mChannelAdapter == null || mChannelAdapter.getDataSize() < 2) {
+            mRecyclerTab.setVisibility(View.GONE);
+            mRecyclerTabCopy.setVisibility(View.GONE);
+        }
+
+        //题图可以为空
+        GlideApp.with(ivSubject).
+                load(mArticle.getSubject_pic())
+                .apply(AppGlideOptions.bigOptions())
+                .into(ivSubject);
 
         //标题不能为空
         tvTitle.setText(mArticle.getList_title());
@@ -125,18 +137,6 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         } else {
             tvSummary.setVisibility(View.VISIBLE);
             tvSummary.setText(mArticle.getSummary());
-        }
-
-        //题图可以为空
-        if (TextUtils.isEmpty(mArticle.getSubject_pic())) {
-            ivSubject.setVisibility(View.GONE);
-        } else {
-            GlideApp.with(ivSubject).
-                    load(mArticle.getSubject_pic())
-                    .placeholder(PH.zheBig())
-                    .error(PH.zheBig())
-                    .centerCrop()
-                    .into(ivSubject);
         }
 
         //专题焦点图可以为空
@@ -150,11 +150,11 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     .into(ivTopicPic);
 
             //专题焦点图摘要可以为空
-            if (TextUtils.isEmpty(mArticle.getSubject_focus_decription())) {
+            if (TextUtils.isEmpty(mArticle.getSubject_focus_description())) {
                 tvTitle2.setVisibility(View.GONE);
             } else {
                 tvTitle2.setVisibility(View.VISIBLE);
-                tvTitle2.setText(mArticle.getSubject_focus_decription());
+                tvTitle2.setText(mArticle.getSubject_focus_description());
             }
         }
     }

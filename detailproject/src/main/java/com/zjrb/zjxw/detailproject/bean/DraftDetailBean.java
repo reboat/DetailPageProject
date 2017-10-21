@@ -73,7 +73,7 @@ public class DraftDetailBean extends BaseData {
         private boolean like_enabled;
         private boolean liked;
         private List<String> list_pics;
-        private String subject_focus_decription;
+        private String subject_focus_description;
 
         private String column_logo;
 
@@ -599,12 +599,12 @@ public class DraftDetailBean extends BaseData {
             this.related_subjects = related_subjects;
         }
 
-        public String getSubject_focus_decription() {
-            return subject_focus_decription;
+        public String getSubject_focus_description() {
+            return subject_focus_description;
         }
 
-        public void setSubject_focus_decription(String subject_focus_decription) {
-            this.subject_focus_decription = subject_focus_decription;
+        public void setSubject_focus_description(String subject_focus_description) {
+            this.subject_focus_description = subject_focus_description;
         }
 
         public List<TopicCommentSelectBean> getTopic_comment_select() {

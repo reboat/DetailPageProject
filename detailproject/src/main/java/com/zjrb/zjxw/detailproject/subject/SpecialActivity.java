@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -130,9 +131,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
-    /**
-     * 加载专题数据
-     */
     private void loadData() {
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -150,13 +148,12 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
             }
 
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(mArticleId);
     }
 
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
-
         if (data != null) {
             mArticle = data.getArticle();
         }

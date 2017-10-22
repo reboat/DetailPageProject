@@ -66,7 +66,6 @@ public class DraftDetailBean extends BaseData {
         private String subject_focus_url;
         private String subject_focus_image;
         private String summary;
-        private String subject_pic;
         private boolean followed;
         private boolean column_subscribed;
         private int comment_level;
@@ -461,14 +460,6 @@ public class DraftDetailBean extends BaseData {
 
         public void setSummary(String summary) {
             this.summary = summary;
-        }
-
-        public String getSubject_pic() {
-            return subject_pic;
-        }
-
-        public void setSubject_pic(String subject_pic) {
-            this.subject_pic = subject_pic;
         }
 
         public boolean isFollowed() {

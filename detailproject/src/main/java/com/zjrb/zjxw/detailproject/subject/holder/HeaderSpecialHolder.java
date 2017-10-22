@@ -122,11 +122,17 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             mRecyclerTabCopy.setVisibility(View.GONE);
         }
 
+
         //题图可以为空
-        GlideApp.with(ivSubject).
-                load(mArticle.getSubject_pic())
-                .apply(AppGlideOptions.bigOptions())
-                .into(ivSubject);
+        if (TextUtils.isEmpty(mArticle.getArticle_pic())) {
+            ivSubject.setVisibility(View.GONE);
+        } else {
+            ivSubject.setVisibility(View.VISIBLE);
+            GlideApp.with(ivSubject).
+                    load(mArticle.getArticle_pic())
+                    .apply(AppGlideOptions.bigOptions())
+                    .into(ivSubject);
+        }
 
         //标题不能为空
         tvTitle.setText(mArticle.getList_title());

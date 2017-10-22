@@ -132,7 +132,6 @@
         <item name="dc_dddddd">@color/dc_dddddd_night</item>
         <item name="bc_a4a3a3">@color/tc_484848</item>
         <item name="tc_d2d2d2">@color/tc_d2d2d2_night</item>
-        <item name="bc_ffffff">@color/bc_191919</item>
         <item name="bc_33ffffff">@color/bc_191919</item>
         <item name="bc_f4f5f6">@color/bc_f4f5f6_night</item>
 

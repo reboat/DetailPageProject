@@ -20,7 +20,6 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;

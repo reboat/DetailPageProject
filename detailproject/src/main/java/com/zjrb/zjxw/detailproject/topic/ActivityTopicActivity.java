@@ -47,7 +47,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;

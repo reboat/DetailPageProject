@@ -15,6 +15,7 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
+import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
 
@@ -66,9 +67,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             return new NewsDetailRelatedSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
             return new NewsDetailRelatedNewsHolder(parent);
-        } else{
+        } else if (viewType == VIEW_TYPE_COMMENT) {
             return new NewsDetailCommentHolder(parent);
         }
+        return new NewsPlaceHolder(parent);
     }
 
     @Override
@@ -85,9 +87,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (position == 4) {
             return VIEW_TYPE_RELATE_NEWS;
-        } else{
+        } else if (position == 5) {
             return VIEW_TYPE_COMMENT;
         }
+        return 0;
     }
 
     @Override
@@ -143,8 +146,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         }
 
         //添加热门评论
-        if(detailBean.getArticle().getHot_comments() != null){
-            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments().getComments();
+        if (detailBean.getArticle().getHot_comments() != null) {
+            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
             if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
                 datas.add(detailBean);
             }

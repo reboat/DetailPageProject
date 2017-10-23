@@ -18,7 +18,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicCommentAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
     @BindView(R2.id.tv_more)
     TextView mMore;
 
-    private CommentAdapter adapter;
+    private TopicCommentAdapter adapter;
 
     public NewsActivityHotCommentHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_hot_comment, parent, false));
@@ -62,8 +62,8 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
         mText.setText(itemView.getContext().getString(R.string.module_detail_useful_comment));
         mMore.setVisibility(View.GONE);
 
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments(),mRecyleView,String.valueOf(mData.getArticle().getId()));
+        if (mData != null && mData.getArticle().getTopic_comment_select() != null && mData.getArticle().getTopic_comment_select().size() > 0) {
+            adapter = new TopicCommentAdapter(mData.getArticle().getTopic_comment_select(), String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);
         } else {
             mLyHotContainer.setVisibility(View.GONE);
@@ -72,6 +72,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
 
 
     private Bundle bundle;
+
     /**
      * @param view 点击进入评论列表
      */
@@ -83,7 +84,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putSerializable(IKey.NEWS_DETAIL,mData);
+            bundle.putSerializable(IKey.NEWS_DETAIL, mData);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
 
         }

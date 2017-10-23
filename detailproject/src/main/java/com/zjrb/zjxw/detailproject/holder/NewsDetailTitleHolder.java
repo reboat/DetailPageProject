@@ -94,8 +94,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putString(IKey.CHANNEL_NAME, mData.getArticle().getChannel_name());
-            bundle.putString(IKey.ID, mData.getArticle().getChannel_id());
+            bundle.putString(IKey.CHANNEL_NAME, mData.getArticle().getSource_channel_name());
+            bundle.putString(IKey.CHANNEL_ID, mData.getArticle().getSource_channel_id());
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
         }
     }

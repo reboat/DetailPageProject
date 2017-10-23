@@ -53,7 +53,7 @@
         android:paddingTop="7.5dp"
         android:textColor="?attr/tc_f44b50"
         android:textSize="@dimen/ts_14sp"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:text="订阅" />
 
 

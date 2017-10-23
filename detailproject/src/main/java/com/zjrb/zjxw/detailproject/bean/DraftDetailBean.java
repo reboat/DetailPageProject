@@ -111,9 +111,8 @@ public class DraftDetailBean extends BaseData {
          * parent_portrait_url : https://www.baidu.com/s?rs1481483f05744f83a726e
          */
 
-//        private List<HotCommentsBean> hot_comments;
+        private List<HotCommentsBean> hot_comments;
 
-        private CommentRefreshBean hot_comments;
         /**
          * id : 12345
          * title : 相关新闻标题
@@ -135,12 +134,12 @@ public class DraftDetailBean extends BaseData {
         /**
          * 话题互动列表
          */
-        private List<TopicCommentListBean> topic_comment_list;
+        private List<HotCommentsBean> topic_comment_list;
 
         /**
          * 话题互动精选
          */
-        private List<TopicCommentSelectBean> topic_comment_select;
+        private List<HotCommentsBean> topic_comment_select;
 
         public int getId() {
             return id;
@@ -558,21 +557,13 @@ public class DraftDetailBean extends BaseData {
             this.subject_groups = subject_groups;
         }
 
-        public CommentRefreshBean getHot_comments() {
+        public List<HotCommentsBean> getHot_comments() {
             return hot_comments;
         }
 
-        public void setHot_comments(CommentRefreshBean hot_comments) {
+        public void setHot_comments(List<HotCommentsBean> hot_comments) {
             this.hot_comments = hot_comments;
         }
-
-//        public List<HotCommentsBean> getHot_comments() {
-//            return hot_comments;
-//        }
-//
-//        public void setHot_comments(List<HotCommentsBean> hot_comments) {
-//            this.hot_comments = hot_comments;
-//        }
 
         public List<RelatedNewsBean> getRelated_news() {
             return related_news;
@@ -598,19 +589,19 @@ public class DraftDetailBean extends BaseData {
             this.subject_focus_description = subject_focus_description;
         }
 
-        public List<TopicCommentSelectBean> getTopic_comment_select() {
+        public List<HotCommentsBean> getTopic_comment_select() {
             return topic_comment_select;
         }
 
-        public void setTopic_comment_select(List<TopicCommentSelectBean> topic_comment_select) {
+        public void setTopic_comment_select(List<HotCommentsBean> topic_comment_select) {
             this.topic_comment_select = topic_comment_select;
         }
 
-        public List<TopicCommentListBean> getTopic_comment_list() {
+        public List<HotCommentsBean> getTopic_comment_list() {
             return topic_comment_list;
         }
 
-        public void setTopic_comment_list(List<TopicCommentListBean> topic_comment_list) {
+        public void setTopic_comment_list(List<HotCommentsBean> topic_comment_list) {
             this.topic_comment_list = topic_comment_list;
         }
 

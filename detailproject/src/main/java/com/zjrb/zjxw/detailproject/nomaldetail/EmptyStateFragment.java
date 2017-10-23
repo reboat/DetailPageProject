@@ -15,6 +15,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
@@ -133,6 +134,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     @Override
     public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) adapter.getData().get(position)).getUrl());
         }

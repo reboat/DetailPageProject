@@ -13,6 +13,7 @@ import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -95,6 +96,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      */
     @Override
     public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
         }

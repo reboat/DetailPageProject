@@ -91,6 +91,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                if (ClickTracker.isDoubleClick()) return;
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         });

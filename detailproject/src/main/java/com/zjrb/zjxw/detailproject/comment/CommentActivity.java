@@ -249,6 +249,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
         CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
     }
 

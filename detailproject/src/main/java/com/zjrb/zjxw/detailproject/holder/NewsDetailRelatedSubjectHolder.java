@@ -13,6 +13,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -69,6 +70,7 @@ public class NewsDetailRelatedSubjectHolder extends BaseRecyclerViewHolder<Draft
      */
     @Override
     public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
         if (mData != null && !TextUtils.isEmpty(mData.getArticle().getRelated_subjects().get(position).getUri_scheme())) {
             Nav.with(UIUtils.getActivity()).to(mData.getArticle().getRelated_subjects().get(position).getUri_scheme());
         }

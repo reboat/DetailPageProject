@@ -138,7 +138,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         init();
     }
 
-
     /**
      * @param intent 获取传递数据
      */

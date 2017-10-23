@@ -147,12 +147,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
-    private void test() {
-        mViewExise.setVisibility(View.VISIBLE);
-        mViewPager.setVisibility(View.GONE);
-        mContainerBottom.setVisibility(View.GONE);
-    }
-
     /**
      * 获取图集数据
      */

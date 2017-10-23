@@ -17,6 +17,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.ThemeMode;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
@@ -119,7 +120,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                WebView.HitTestResult hitTestResult = view.getHitTestResult();
+                if(!TextUtils.isEmpty(url)){
+                    Nav.with(itemView.getContext()).to(url);
+                }
                 return true;
             }
 

@@ -143,6 +143,14 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getIntentData(intent);
+        loadData();
+
+    }
+
     /**
      * head监听滚动 渐变
      */

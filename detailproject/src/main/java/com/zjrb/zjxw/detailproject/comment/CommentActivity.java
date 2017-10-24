@@ -31,6 +31,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
 import butterknife.BindView;
@@ -44,7 +45,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener {
+public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener,DetailCommentHolder.deleteCommentListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -144,10 +145,10 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
      * 初始化评论界面数据
      */
     private void initData() {
-        head = UIUtils.inflate(R.layout.module_detail_comment_head);
-        tvHot = (TextView) head.findViewById(R.id.tv_hot);
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
+        head = UIUtils.inflate(R.layout.module_detail_comment_head,mRvContent,false);
+        tvHot = (TextView) head.findViewById(R.id.tv_hot);
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
@@ -275,4 +276,8 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         });
     }
 
+    @Override
+    public void onDeleteComment() {
+        requestData();
+    }
 }

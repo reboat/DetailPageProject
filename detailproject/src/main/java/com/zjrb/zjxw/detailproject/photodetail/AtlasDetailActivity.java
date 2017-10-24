@@ -48,7 +48,6 @@ import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.List;
@@ -145,6 +144,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mArticleId = data.getQueryParameter(IKey.ID);
             }
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getIntentData(intent);
+        loadData();
+
     }
 
     /**
@@ -462,6 +469,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * @param url 下载图片
      */
     private void download(String url) {
+        //图片特殊处理
+        if (!TextUtils.isEmpty(url) && url.contains("?w=")) {
+            url = url.split("[?]")[0];
+        }
         DownloadUtil.get()
                 .setDir(PathUtil.getImagePath())
                 .setListener(new DownloadUtil.OnDownloadListener() {

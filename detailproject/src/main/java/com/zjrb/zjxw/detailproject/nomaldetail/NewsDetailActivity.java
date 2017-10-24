@@ -46,6 +46,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -69,7 +70,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener {
+        NewsDetailAdapter.CommonOptCallBack,View.OnClickListener, DetailCommentHolder.deleteCommentListener,NewsDetailAdapter.IUpdateComment {
 
     /**
      * 稿件ID
@@ -357,6 +358,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     }
 
+    @Override
+    public void updateComment() {
+
+    }
+
+    @Override
+    public void onDeleteComment(int position) {
+        mAdapter.updateCommentInfo(position);
+    }
+
     /**
      * WebView加载完毕
      */
@@ -490,6 +501,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
+
 }
 
 

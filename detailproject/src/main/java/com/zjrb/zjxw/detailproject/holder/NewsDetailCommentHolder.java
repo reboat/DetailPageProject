@@ -91,5 +91,4 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
 
         }
     }
-
 }

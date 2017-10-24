@@ -14,13 +14,13 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
-import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.CommentActivity;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -212,7 +212,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
-                ((CommentActivity)itemView.getContext()).onDeleteComment();
+                if (itemView.getContext() instanceof CommentActivity) {
+                    ((CommentActivity) itemView.getContext()).onDeleteComment(getAdapterPosition());
+                } else if (itemView.getContext() instanceof NewsDetailActivity) {
+                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(getAdapterPosition());
+                }
             }
 
             @Override
@@ -237,6 +241,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      */
     public interface deleteCommentListener {
 
-        void onDeleteComment();
+        void onDeleteComment(int position);
     }
 }

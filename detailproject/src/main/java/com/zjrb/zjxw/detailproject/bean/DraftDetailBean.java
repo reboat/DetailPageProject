@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import android.text.TextUtils;
+
 import com.zjrb.core.domain.base.BaseData;
 
 import java.io.Serializable;
@@ -29,6 +31,10 @@ public class DraftDetailBean extends BaseData {
         private int id;
         private int mlf_id;
         private String list_title;
+        /**
+         * 详情页标题
+         */
+        private String doc_title;
         private int list_style;
         private String list_tag;
         private int doc_type;
@@ -90,6 +96,27 @@ public class DraftDetailBean extends BaseData {
         private List<String> topic_guests;
 
         private List<SpecialGroupBean> subject_groups;
+
+        public boolean isTopic_comment_has_more() {
+            return topic_comment_has_more;
+        }
+
+        public void setTopic_comment_has_more(boolean topic_comment_has_more) {
+            this.topic_comment_has_more = topic_comment_has_more;
+        }
+
+        public String getDoc_title() {
+            return doc_title;
+        }
+
+        public void setDoc_title(String doc_title) {
+            this.doc_title = doc_title;
+        }
+
+        /**
+         * 话题互动评论精选是否有更多
+         */
+        private boolean topic_comment_has_more;
         /**
          * id : 597ad67b2c1d4007315ce9b1
          * channel_article_id : 27
@@ -503,6 +530,15 @@ public class DraftDetailBean extends BaseData {
 
         public List<String> getList_pics() {
             return list_pics;
+        }
+
+        public String getFirstPic() {
+            if (list_pics != null && list_pics.size() > 0) {
+                if (!TextUtils.isEmpty(list_pics.toString())) {
+                    return list_pics.get(0);
+                }
+            }
+            return "";
         }
 
         public void setList_pics(List<String> list_pics) {

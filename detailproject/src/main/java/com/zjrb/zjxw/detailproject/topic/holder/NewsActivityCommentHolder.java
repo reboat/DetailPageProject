@@ -163,7 +163,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
      */
     @Override
     public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
-        new CommentListTask(callback).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
+        new CommentListTask(callback,true).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
     }
 
     /**

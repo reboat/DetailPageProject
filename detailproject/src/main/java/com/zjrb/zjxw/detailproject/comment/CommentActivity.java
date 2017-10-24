@@ -81,6 +81,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
     private DraftDetailBean mNewsDetail;
 
+    /**
+     * 是否是精选列表
+     */
+    private boolean is_select_list = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,12 +119,18 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     private void getIntentData(Intent intent) {
         if (intent != null) {
             if (intent.hasExtra(IKey.NEWS_DETAIL)) {
-                mNewsDetail = (DraftDetailBean) getIntent().getExtras().get(IKey.NEWS_DETAIL);
+                mNewsDetail = (DraftDetailBean) intent.getExtras().get(IKey.NEWS_DETAIL);
                 articleId = String.valueOf(mNewsDetail.getArticle().getId());
                 mlfId = mNewsDetail.getArticle().getMlf_id();
                 commentSet = mNewsDetail.getArticle().getComment_level();
                 title = mNewsDetail.getArticle().getList_title();
             }
+
+            if (intent.hasExtra(IKey.IS_SELECT_LIST)) {
+                is_select_list = intent.getBooleanExtra(IKey.IS_SELECT_LIST, false);
+            }
+
+
         }
     }
 
@@ -165,7 +176,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId,is_select_list);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -202,11 +213,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
+        },is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
     }
 
 
-    @OnClick({R2.id.tv_comment,R2.id.iv_top_share})
+    @OnClick({R2.id.tv_comment, R2.id.iv_top_share})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {

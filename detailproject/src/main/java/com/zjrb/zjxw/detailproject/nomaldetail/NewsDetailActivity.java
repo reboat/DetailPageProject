@@ -438,9 +438,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(new WebJsInterface(this).getFirstSrc())
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
             //重新加载
         } else if (view.getId() == R.id.view_exise) {

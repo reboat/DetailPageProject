@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
@@ -85,6 +86,7 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
                 bundle = new Bundle();
             }
             bundle.putSerializable(IKey.NEWS_DETAIL, mData);
+            bundle.putBoolean(IKey.IS_SELECT_LIST, true);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
 
         }

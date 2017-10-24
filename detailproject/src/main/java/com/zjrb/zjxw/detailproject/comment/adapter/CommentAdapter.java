@@ -26,14 +26,16 @@ import java.util.List;
 public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListener<CommentRefreshBean> {
 
     private String articleId;
+    private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
 
 
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, String articleId) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, String articleId, boolean is_select_list) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         this.articleId = articleId;
+        this.is_select_list = is_select_list;
         setData(datas);
     }
 
@@ -76,7 +78,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     @Override
     public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
-        new CommentListTask(callback).setTag(this).exe(articleId, getLastOneTag());
+        new CommentListTask(callback, is_select_list).setTag(this).exe(articleId, getLastOneTag());
     }
 
     /**
@@ -89,7 +91,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
             while (size - count >= 0) {
                 Object data = getData(size - count++);
                 if (data instanceof HotCommentsBean) {
-                    return ((HotCommentsBean) data).getCreated_at();
+                    return ((HotCommentsBean) data).getSort_number();
                 }
             }
         }

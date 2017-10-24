@@ -14,9 +14,14 @@ import com.zjrb.zjxw.detailproject.global.APIManager;
  */
 public class CommentListTask extends APIGetTask<CommentRefreshBean> {
 
+    /**
+     * 是否是精选评论
+     */
+    private boolean is_select_list = false;
 
-    public CommentListTask(LoadingCallBack<CommentRefreshBean> callBack) {
+    public CommentListTask(LoadingCallBack<CommentRefreshBean> callBack, boolean is_select_list) {
         super(callBack);
+        this.is_select_list = is_select_list;
     }
 
     /**
@@ -35,6 +40,11 @@ public class CommentListTask extends APIGetTask<CommentRefreshBean> {
 
     @Override
     protected String getApi() {
-        return APIManager.endpoint.COMMENT_LIST;
+        if (is_select_list) {
+            return APIManager.endpoint.SELECT_LIST;
+        } else {
+            return APIManager.endpoint.COMMENT_LIST;
+        }
+
     }
 }

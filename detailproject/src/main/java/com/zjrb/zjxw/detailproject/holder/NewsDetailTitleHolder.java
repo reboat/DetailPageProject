@@ -59,8 +59,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //标题(必填)
-        if (mData.getArticle().getList_title() != null) {
-            mTvTitle.setText(mData.getArticle().getList_title());
+        if (mData.getArticle().getDoc_title() != null) {
+            mTvTitle.setText(mData.getArticle().getDoc_title());
         }
 
         //来源及记者(发稿允许不填写)

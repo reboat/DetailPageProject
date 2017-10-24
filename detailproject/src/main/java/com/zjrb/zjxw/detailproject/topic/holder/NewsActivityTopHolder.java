@@ -112,8 +112,8 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         FrameLayout.LayoutParams coverLp = (FrameLayout.LayoutParams) mLlFixedTitle.getLayoutParams();
         coverLp.gravity = Gravity.BOTTOM | Gravity.LEFT;
         mLlFixedTitle.setLayoutParams(coverLp);
-        if (mData.getArticle().getList_title() != null) {
-            mTvCoverTitle.setText(mData.getArticle().getList_title());
+        if (mData.getArticle().getDoc_title() != null) {
+            mTvCoverTitle.setText(mData.getArticle().getDoc_title());
         }
 
         //主持人

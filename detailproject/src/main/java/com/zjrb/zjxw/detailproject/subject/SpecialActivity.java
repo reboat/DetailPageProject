@@ -122,7 +122,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .setSingle(false)
                         .setImgUri(mArticle.getArticle_pic())
                         .setTextContent(mArticle.getSummary())
-                        .setTitle(mArticle.getList_title())
+                        .setTitle(mArticle.getDoc_title())
                         .setTargetUrl(mArticle.getUrl()));
             } else if (view.getId() == R.id.iv_top_collect) {
                 newsTopicCollect(); // 收藏

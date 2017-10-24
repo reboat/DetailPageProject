@@ -16,7 +16,6 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
@@ -166,9 +165,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(new WebJsInterface(itemView.getContext()).getFirstSrc())
+                    .setImgUri(mData.getArticle().getFirstPic())
                     .setTextContent(mData.getArticle().getSummary())
-                    .setTitle(mData.getArticle().getList_title())
+                    .setTitle(mData.getArticle().getDoc_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));
         }

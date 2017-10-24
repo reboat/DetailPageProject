@@ -38,6 +38,13 @@ public class APIManager {
         public static final String COMMENT_LIST = "/api/comment/list";
 
         /**
+         * 精选评论列表
+         */
+        public static final String SELECT_LIST = "/api/comment/topic_select_list";
+
+
+
+        /**
          * 评论点赞
          */
         public static final String COMMENT_PRISE = "/api/comment/like";

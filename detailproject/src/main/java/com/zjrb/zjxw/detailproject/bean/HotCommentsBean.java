@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
+import com.zjrb.core.utils.StringUtils;
+
 import java.io.Serializable;
 
 /**
@@ -37,6 +39,8 @@ public class HotCommentsBean implements Serializable {
     private String content;
     private String nick_name;
     private long created_at;
+
+    private long sort_number;
     private int like_count;
     private String account_id;
     private int status;
@@ -62,6 +66,14 @@ public class HotCommentsBean implements Serializable {
      * 父评论是否本人评论
      */
     private boolean parent_own;
+
+    public long getSort_number() {
+        return sort_number;
+    }
+
+    public void setSort_number(long sort_number) {
+        this.sort_number = sort_number;
+    }
 
     public String getId() {
         return id;
@@ -239,4 +251,13 @@ public class HotCommentsBean implements Serializable {
     public void setOwn(boolean own) {
         this.own = own;
     }
+
+//    StringUtils.long2String(mData.getCreated_at(), "MM-dd")
+//    public String getCommentTime(){
+//        long time = System.currentTimeMillis();
+//        if(time - created_at < 5000){
+//
+//        }
+//
+//    }
 }

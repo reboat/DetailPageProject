@@ -45,19 +45,6 @@
         <item name="bc_33ffffff">@color/bc_33ffffff</item>
         <item name="bc_f4f5f6">@color/bc_f4f5f6</item>
 
-
-        <item name="tc_e85757">@color/tc_e85757</item>
-        <item name="tc_ffffff_bababa">@color/tc_ffffff</item>
-
-        <item name="bc_7f000000">@color/bc_7f000000</item>
-
-        <item name="sl_tc_subscribe">@color/sl_tc_subscribe</item>
-        <item name="sl_tc_tab_news">@color/sl_tc_tab_news</item>
-
-        <item name="border_f44b50">@drawable/border_f44b50</item>
-        <item name="border_f44b50_r10">@drawable/border_f44b50_r10</item>
-        <item name="border_999999_r10">@drawable/border_999999_r10</item>
-        <item name="border_subscribe">@drawable/border_subscribe</item>
         <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
 
         <item name="module_news_tc_white">@color/module_news_tc_white</item>
@@ -68,7 +55,6 @@
         <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar</item>
         <item name="module_news_bg_search">@drawable/module_news_bg_search</item>
         <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross</item>
-        <item name="module_news_sl_tc_search_text">@color/sl_tc_search_text</item>
         <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text</item>
         <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item</item>
         <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete</item>
@@ -135,18 +121,6 @@
         <item name="bc_33ffffff">@color/bc_191919</item>
         <item name="bc_f4f5f6">@color/bc_f4f5f6_night</item>
 
-        <item name="tc_e85757">@color/tc_e85757_night</item>
-        <item name="tc_ffffff_bababa">@color/tc_bababa</item>
-
-        <item name="bc_7f000000">@color/bc_7f000000_night</item>
-
-        <item name="sl_tc_subscribe">@color/sl_tc_subscribe_night</item>
-        <item name="sl_tc_tab_news">@color/sl_tc_tab_news_night</item>
-
-        <item name="border_f44b50">@drawable/border_f44b50_night</item>
-        <item name="border_f44b50_r10">@drawable/border_f44b50_r10_night</item>
-        <item name="border_999999_r10">@drawable/border_999999_r10_night</item>
-        <item name="border_subscribe">@drawable/border_subscribe_night</item>
         <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>
 
         <item name="module_news_tc_white">@color/module_news_tc_white_night</item>
@@ -157,13 +131,11 @@
         <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar_night</item>
         <item name="module_news_bg_search">@drawable/module_news_bg_search_night</item>
         <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross_night</item>
-        <item name="module_news_sl_tc_search_text">@color/sl_tc_search_text_night</item>
         <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text_night</item>
         <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item_night</item>
         <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete_night</item>
 
         <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city_night</item>
-        <item name="module_news_tc_manage_channel_item">@color/sl_tc_manage_channel_item_night</item>
         <item name="module_news_tc_recommend_complete">@color/tc_cccbcb</item>
         <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city_night</item>
 

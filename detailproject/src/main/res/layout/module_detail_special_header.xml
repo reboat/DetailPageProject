@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="?attr/bc_7f000000"
+            android:background="?attr/module_detail_color_7f000000_7f191919"
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"

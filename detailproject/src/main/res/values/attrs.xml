@@ -1,14 +1,7 @@
 <resources>
 
     <declare-styleable name="SupportUiMode">
-        <!--系统自带属性-->
-        <attr name="colorPrimary" />
-        <attr name="colorPrimaryDark" />
-        <attr name="colorAccent" />
-        <!--按钮水波纹-->
-        <attr name="selectableItemBackground" />
-        <attr name="actionBarItemBackground" />
-        <attr name="selectableItemBackgroundBorderless" />
+
         <!--#484848  7a7b7d-->
         <attr name="tc_484848" format="color|reference" />
         <!--#ffffff  #202124-->
@@ -70,6 +63,8 @@
         <attr name="module_detail_share_qq" format="reference" />
         <attr name="module_detail_share_qzone" format="reference" />
         <attr name="module_detail_share_wb" format="reference" />
+
+        <attr name="module_detail_color_7f000000_7f191919" format="color|reference" />
 
     </declare-styleable>
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DetailDayTheme">
+
+        <item name="module_detail_color_7f000000_7f191919">#7f000000</item>
+
+    </style>
+
+    <style name="DetailNightTheme">
+
+        <item name="module_detail_color_7f000000_7f191919">#7f191919</item>
+
+    </style>
+</resources>

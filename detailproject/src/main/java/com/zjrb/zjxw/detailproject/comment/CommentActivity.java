@@ -45,7 +45,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener,DetailCommentHolder.deleteCommentListener {
+public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -147,7 +147,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
         mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
-        head = UIUtils.inflate(R.layout.module_detail_comment_head,mRvContent,false);
+        head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
         tvHot = (TextView) head.findViewById(R.id.tv_hot);
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
@@ -169,15 +169,15 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         }
 
         //评论数
-        if (mNewsDetail != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getComment_count_general())) {
-            tvCommentNum.setText(mNewsDetail.getArticle().getComment_count_general() + "条评论");
+        if (bean != null && !TextUtils.isEmpty(bean.getComment_count())) {
+            tvCommentNum.setText(bean.getComment_count() + "条评论");
         } else {
             tvCommentNum.setVisibility(View.GONE);
         }
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId,is_select_list);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId, is_select_list);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -214,7 +214,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        },is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
+        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
     }
 
 
@@ -222,7 +222,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             CommentRefreshBean.ShareArtcleInfo bean = mBean.getShare_article_info();
             if (bean != null) {
@@ -262,7 +262,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
-        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).show(getSupportFragmentManager(), "CommentWindowDialog");
+        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
     }
 
     @Override
@@ -276,8 +276,20 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
         });
     }
 
+    /**
+     * 删除评论回调
+     */
     @Override
     public void onDeleteComment() {
+        requestData();
+    }
+
+
+    /**
+     * 评论框提交评论后回调
+     */
+    @Override
+    public void onUpdateComment() {
         requestData();
     }
 }

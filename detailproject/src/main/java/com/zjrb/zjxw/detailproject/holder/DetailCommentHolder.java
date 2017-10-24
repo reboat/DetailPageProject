@@ -147,7 +147,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         }
 
         //时间显示
-        mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd"));
+        mTime.setText(mData.getCommentTime(mData.getCreated_at()));
 
         //点赞次数
         mThumb.setText(mData.getLike_count() + "");

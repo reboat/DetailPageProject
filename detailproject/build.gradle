@@ -38,7 +38,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
 //    compile project(':core-library')
     compile 'cn.daily.android:core-library:5.0.0.13'
-    compile 'cn.daily.android:daily-news:5.0.0.15'
+    compile('cn.daily.android:daily-news:5.0.0.15') {
         exclude group: 'cn.daily.android'
     }
 

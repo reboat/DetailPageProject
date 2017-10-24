@@ -4,7 +4,6 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -54,7 +52,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     TextView mDelete;
     //回复评论
     @BindView(R2.id.ly_comment_reply)
-    LinearLayout mReply;
+    RelativeLayout mReply;
     //原评论内容
     @BindView(R2.id.tv_comment_content)
     TextView mTvCommentContent;
@@ -63,6 +61,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     TextView mTvCommentSrc;
     @BindView(R2.id.tv_delete_tip)
     TextView mTvDeleteTip;
+    @BindView(R2.id.iv_host)
+    ImageView mIvHost;
+    @BindView(R2.id.iv_guest)
+    ImageView mIvGuest;
 
     /**
      * 稿件id
@@ -94,29 +96,51 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvDeleteTip.setVisibility(View.GONE);
             mTvCommentContent.setVisibility(View.VISIBLE);
             //我的评论
-            if (mData.getParent_content() != null) {
-                mTvCommentContent.setText(mData.getParent_content());
+            if (mData.getContent() != null) {
+                mContent.setText(mData.getContent());
             }
             mTvCommentSrc.setVisibility(View.VISIBLE);
             //我的昵称
+            if (mData.getAccount_type() == 1) {//主持人
+                mTvCommentSrc.setText("主持人");
+                mIvHost.setVisibility(View.VISIBLE);
+            } else if (mData.getAccount_type() == 2) {//嘉宾
+                mTvCommentSrc.setText("嘉宾");
+                mIvGuest.setVisibility(View.VISIBLE);
+            } else {
+                if (mData.getNick_name() != null) {
+                    mTvCommentSrc.setText(mData.getNick_name());
+                    mIvHost.setVisibility(View.GONE);
+                    mIvGuest.setVisibility(View.GONE);
+                }
+            }
+
+        }
+
+//        //回复内容
+//        if (mData.getParent_content() != null) {
+//            mContent.setText(mData.getParent_content());
+//        }
+
+        //回复者昵称
+        if (mData.getAccount_type() == 1) {//主持人
+            mName.setText("主持人");
+            mIvHost.setVisibility(View.VISIBLE);
+        } else if (mData.getAccount_type() == 2) {//嘉宾
+            mName.setText("嘉宾");
+            mIvGuest.setVisibility(View.VISIBLE);
+        } else {
             if (mData.getParent_nick_name() != null) {
-                mTvCommentSrc.setText(mData.getParent_nick_name());
+                mName.setText(mData.getParent_nick_name());
+                mIvHost.setVisibility(View.GONE);
+                mIvGuest.setVisibility(View.GONE);
             }
         }
 
-        //回复内容
-        if (mData.getContent() != null) {
-            mContent.setText(mData.getContent());
-        }
-
-        //回复者昵称
-        if (mData.getNick_name() != null) {
-            mName.setText(mData.getNick_name());
-        }
         //回复者的评论
-        if (!TextUtils.isEmpty(mData.getParent_nick_name())) {
+        if (!TextUtils.isEmpty(mData.getParent_content())) {
             mReply.setVisibility(View.VISIBLE);
-
+            mContent.setText(mData.getParent_content());
         } else {
             mReply.setVisibility(View.GONE);
         }
@@ -166,6 +190,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 BizUtils.switchSelectorAnim(mThumb, true);//设置点赞动画
                 mThumb.setSelected(true);
                 mData.setLike_count((mData.getLike_count() + 1));
+                mData.setLiked(true);
                 mThumb.setText(mData.getLike_count() + "");
             }
 

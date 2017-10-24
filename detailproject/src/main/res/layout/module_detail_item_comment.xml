@@ -34,6 +34,15 @@
             android:textSize="@dimen/ts_12sp"
             tools:text="你好" />
 
+        <ImageView
+            android:id="@+id/iv_host"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_name"
+            android:layout_marginLeft="7dp"
+            android:visibility="gone"
+            tools:src="@mipmap/module_detail_activity_host"/>
+
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
@@ -53,7 +62,7 @@
             tools:text="卡死搭建的空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
 
         <!--回复-->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ly_comment_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +70,6 @@
             android:layout_marginLeft="58dp"
             android:layout_marginTop="11dp"
             android:background="@drawable/border_f5f5f5"
-            android:orientation="vertical"
             android:visibility="gone"
             >
 
@@ -80,12 +88,18 @@
                 android:id="@+id/tv_comment_src"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="7dp"
-                android:paddingLeft="7dp"
-                android:paddingTop="7dp"
                 android:textColor="?attr/tc_4d95fa"
                 android:textSize="@dimen/ts_12sp"
                 tools:text="评论者" />
+
+            <ImageView
+                android:id="@+id/iv_guest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_comment_src"
+                android:layout_marginLeft="7dp"
+                android:visibility="gone"
+                tools:src="@mipmap/module_detail_activity_guest"/>
 
             <TextView
                 android:id="@+id/tv_comment_content"
@@ -93,21 +107,23 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="left|center"
+                android:layout_below="@+id/tv_comment_src"
+                android:layout_marginTop="5dp"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingLeft="7dp"
                 android:textColor="?attr/tc_484848"
                 android:textSize="@dimen/ts_16sp"
                 tools:text="手动加卡是的空间啊觉得啊会计师空数据东方时空京东方空数据东方红看似简单福克斯就返回数据看大富科技是地方接口是父控件是父控件是的福克斯的父控件是的发" />
 
-        </LinearLayout>
+        </RelativeLayout>
         <!--评论时间-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ly_comment_reply"
+            android:layout_marginBottom="9dp"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="9dp"
             android:layout_toRightOf="@id/iv_avatar">
 
             <TextView

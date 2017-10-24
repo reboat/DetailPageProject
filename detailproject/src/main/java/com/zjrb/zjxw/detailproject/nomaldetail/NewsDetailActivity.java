@@ -138,7 +138,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         init();
     }
 
-
     /**
      * @param intent 获取传递数据
      */
@@ -254,7 +253,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
         }
         //热门评论
-        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().getComments().size() > 0) {
+        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
             datas.add(data);
         }
         mAdapter = new NewsDetailAdapter(datas);
@@ -439,9 +438,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(new WebJsInterface(this).getFirstSrc())
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
             //重新加载
         } else if (view.getId() == R.id.view_exise) {

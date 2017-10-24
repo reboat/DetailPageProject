@@ -29,9 +29,8 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicCommentAdapter;
 
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
     /**
      * 评论适配器
      */
-    private CommentAdapter adapter;
+    private TopicCommentAdapter adapter;
 
     /**
      * 加载更多
@@ -92,6 +91,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                if (ClickTracker.isDoubleClick()) return;
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         });
@@ -104,8 +104,8 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
         mText.setText(itemView.getContext().getString(R.string.module_detail_interact));
         mMore.setVisibility(View.GONE);
 
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments(), mRecyleView, String.valueOf(mData.getArticle().getId()));
+        if (mData != null && mData.getArticle().getTopic_comment_list() != null && mData.getArticle().getTopic_comment_list().size() > 0) {
+            adapter = new TopicCommentAdapter(mData.getArticle().getTopic_comment_list(), String.valueOf(mData.getArticle().getId()));
             initAdapter();
             mRecyleView.setAdapter(adapter);
         } else {
@@ -163,7 +163,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
      */
     @Override
     public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
-        new CommentListTask(callback).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
+        new CommentListTask(callback,true).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
     }
 
     /**

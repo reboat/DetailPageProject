@@ -17,10 +17,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:focusable="true"
-        android:gravity="center"
+        android:gravity="left"
         android:textColor="?attr/tc_484848"
         android:textSize="@dimen/ts_20sp"
-        tools:text="千年历史沿革畔邵伯" />
+        tools:text="千年历史沿革畔邵史沿革畔邵" />
 
     <TextView
         android:id="@+id/tv_host"

@@ -47,7 +47,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
@@ -265,8 +264,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
 
                     //标题
-                    if (mNewsDetail.getArticle().getList_title() != null) {
-                        mTvCoverTitle.setText(mNewsDetail.getArticle().getList_title());
+                    if (mNewsDetail.getArticle().getDoc_title() != null) {
+                        mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
                     }
 
                     //主持人
@@ -317,8 +316,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 mCoverVH.mFlCoverAlphaPlaceHolder.setVisibility(View.VISIBLE);
                 mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
                 //标题
-                if (mNewsDetail.getArticle().getList_title() != null) {
-                    mTvCoverTitle.setText(mNewsDetail.getArticle().getList_title());
+                if (mNewsDetail.getArticle().getDoc_title() != null) {
+                    mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
                 }
 
                 //主持人
@@ -418,8 +417,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             mTvCoverTitle.setVisibility(View.VISIBLE);
             mVToolbarDivider.setVisibility(View.VISIBLE);
             //标题
-            if (mNewsDetail.getArticle().getList_title() != null) {
-                mTvCoverTitle.setText(mNewsDetail.getArticle().getList_title());
+            if (mNewsDetail.getArticle().getDoc_title() != null) {
+                mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
             }
 
             //主持人
@@ -624,9 +623,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(new WebJsInterface(this).getFirstSrc())
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
                     .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getList_title())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.iv_back) {
             finish();

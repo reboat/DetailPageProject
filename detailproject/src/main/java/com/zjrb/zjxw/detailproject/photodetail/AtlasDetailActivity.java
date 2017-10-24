@@ -147,12 +147,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
-    private void test() {
-        mViewExise.setVisibility(View.VISIBLE);
-        mViewPager.setVisibility(View.GONE);
-        mContainerBottom.setVisibility(View.GONE);
-    }
-
     /**
      * 获取图集数据
      */
@@ -213,7 +207,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
             mTvTottleNum.setText(String.valueOf(mData.getArticle().getAlbum_image_count()));
-            mTvTitle.setText(atlasDetailEntity.getArticle().getList_title());
+            mTvTitle.setText(atlasDetailEntity.getArticle().getDoc_title());
             //添加更多图集(假如有相关新闻)
             if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0) {
                 mAtlasList.add(new AlbumImageListBean());
@@ -285,7 +279,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     .setSingle(false)
                     .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
                     .setTextContent(mData.getArticle().getAlbum_image_list().get(0).getDescription())
-                    .setTitle(mData.getArticle().getList_title())
+                    .setTitle(mData.getArticle().getDoc_title())
                     .setTargetUrl(mData.getArticle().getUrl())
             );
             //评论框

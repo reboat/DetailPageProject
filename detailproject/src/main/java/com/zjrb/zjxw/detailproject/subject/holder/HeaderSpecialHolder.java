@@ -135,7 +135,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         }
 
         //标题不能为空
-        tvTitle.setText(mArticle.getList_title());
+        tvTitle.setText(mArticle.getDoc_title());
 
         //摘要可以为空
         if (TextUtils.isEmpty(mArticle.getSummary())) {

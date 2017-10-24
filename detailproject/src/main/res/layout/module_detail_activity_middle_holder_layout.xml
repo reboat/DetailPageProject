@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/tv_column_subscribe"
-        android:layout_width="57dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
@@ -53,7 +53,7 @@
         android:paddingTop="7.5dp"
         android:textColor="?attr/tc_f44b50"
         android:textSize="@dimen/ts_14sp"
-        android:visibility="visible"
+        android:visibility="gone"
         tools:text="订阅" />
 
 

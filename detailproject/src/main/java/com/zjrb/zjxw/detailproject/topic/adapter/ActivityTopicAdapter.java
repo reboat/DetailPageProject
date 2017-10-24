@@ -15,6 +15,7 @@ import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityCommentHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityHotCommentHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityMiddleHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
+import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
 
@@ -51,37 +52,46 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPE_TOP) {
-            return new NewsActivityTopHolder(parent);
-        } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return new NewsDetailWebViewHolder(parent);
-        } else if (viewType == VIEW_TYPE_MIDDLE) {
-            return new NewsActivityMiddleHolder(parent);
-        } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
-            return new NewsDetailRelatedSubjectHolder(parent);
-        } else if (viewType == VIEW_TYPE_BEAUT_COMMENT) {
-            return new NewsActivityHotCommentHolder(parent);
-        } else {
-            return new NewsActivityCommentHolder(parent);
+        switch (viewType) {
+            case VIEW_TYPE_TOP:
+                return new NewsActivityTopHolder(parent);
+            case VIEW_TYPE_WEB_VIEW:
+                return new NewsDetailWebViewHolder(parent);
+            case VIEW_TYPE_MIDDLE:
+                return new NewsActivityMiddleHolder(parent);
+            case VIEW_TYPE_RELATE_SUBJECT:
+                return new NewsDetailRelatedSubjectHolder(parent);
+            case VIEW_TYPE_BEAUT_COMMENT:
+                return new NewsActivityHotCommentHolder(parent);
+            case VIEW_TYPE_COMMENT:
+                return new NewsActivityCommentHolder(parent);
+            default:
+                return new NewsPlaceHolder(parent);
         }
     }
 
     @Override
     public int getAbsItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_TOP;
-        } else if (position == 1) {
-            return VIEW_TYPE_WEB_VIEW;
-        } else if (position == 2) {
-            mMiddleHolderPosition = position;
-            return VIEW_TYPE_MIDDLE;
-        } else if (position == 3) {
-            return VIEW_TYPE_RELATE_SUBJECT;
-        } else if (position == 4) {
-            return VIEW_TYPE_BEAUT_COMMENT;
-        } else {
-            return VIEW_TYPE_COMMENT;
+        switch (position) {
+            case 0:
+                return VIEW_TYPE_TOP;
+            case 1:
+                return VIEW_TYPE_WEB_VIEW;
+            case 2:
+                mMiddleHolderPosition = position;
+                return VIEW_TYPE_MIDDLE;
+            case 3:
+                return VIEW_TYPE_RELATE_SUBJECT;
+            case 4:
+                return VIEW_TYPE_BEAUT_COMMENT;
+            default:
+                if (position == 5) {
+                    return VIEW_TYPE_COMMENT;
+                }
+                break;
+
         }
+        return 0;
     }
 
     @Override
@@ -126,10 +136,17 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
         if (articles != null && articles.size() > 0) {
             datas.add(detailBean);
         }
-        //添加热门评论
-        if (detailBean.getArticle().getHot_comments() != null) {
-            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments().getComments();
-            if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+        //添加精选评论
+        if (detailBean.getArticle().getTopic_comment_select() != null) {
+            List<HotCommentsBean> selectBeanList = detailBean.getArticle().getTopic_comment_select();
+            if (selectBeanList != null && selectBeanList.size() > 0) {
+                datas.add(detailBean);
+            }
+        }
+        //添加互动评论
+        if (detailBean.getArticle().getTopic_comment_list() != null) {
+            List<HotCommentsBean> commentBeenList = detailBean.getArticle().getTopic_comment_list();
+            if (commentBeenList != null && commentBeenList.size() > 0) {
                 datas.add(detailBean);
             }
         }

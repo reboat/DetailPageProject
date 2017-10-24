@@ -18,7 +18,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicCommentAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +40,7 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_more)
     TextView mMore;
-    private CommentAdapter adapter;
+    private TopicCommentAdapter adapter;
 
     public NewsDetailCommentHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_hot_comment, parent, false));
@@ -60,10 +60,10 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().getComments().size() > 0) {
+        if (mData != null && mData.getArticle().getHot_comments() != null && mData.getArticle().getHot_comments().size() > 0) {
             mText.setText(itemView.getContext().getString(R.string.module_detail_hot_comment));
             mMore.setText(itemView.getContext().getString(R.string.module_detail_more_comment));
-            adapter = new CommentAdapter(mData.getArticle().getHot_comments(),mRecyleView,String.valueOf(mData.getArticle().getId()));
+            adapter = new TopicCommentAdapter(mData.getArticle().getHot_comments(), String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);
         } else {
             mLyHotContainer.setVisibility(View.GONE);
@@ -86,7 +86,7 @@ public class NewsDetailCommentHolder extends BaseRecyclerViewHolder<DraftDetailB
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putSerializable(IKey.NEWS_DETAIL,mData);
+            bundle.putSerializable(IKey.NEWS_DETAIL, mData);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
 
         }

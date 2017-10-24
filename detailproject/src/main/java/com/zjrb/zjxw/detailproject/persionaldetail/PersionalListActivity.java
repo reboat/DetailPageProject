@@ -24,6 +24,7 @@ import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
@@ -152,6 +153,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
+                if (ClickTracker.isDoubleClick()) return;
                 if (list != null && list.get(position) != null && list.size() > 0) {
                     OfficalArticlesBean b = (OfficalArticlesBean) mAdapter.getData(position);
                     String uri = b.getUrl();

@@ -16,7 +16,6 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
@@ -109,10 +108,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mListData == null) {
             mListData = new ArrayList<>();
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
-            mListData.add(new DetailShareBean("微信好友", SHARE_MEDIA.WEIXIN));
-            mListData.add(new DetailShareBean("QQ好友", SHARE_MEDIA.QQ));
+            mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
+            mListData.add(new DetailShareBean("QQ", SHARE_MEDIA.QQ));
             mListData.add(new DetailShareBean("QQ空间", SHARE_MEDIA.QZONE));
-            mListData.add(new DetailShareBean("新浪微博", SHARE_MEDIA.SINA));
+            mListData.add(new DetailShareBean("微博", SHARE_MEDIA.SINA));
         }
 
         mAdapter = new DetailShareAdapter(mListData);
@@ -162,12 +161,13 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     @Override
     public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
-                    .setImgUri(new WebJsInterface(itemView.getContext()).getFirstSrc())
+                    .setImgUri(mData.getArticle().getFirstPic())
                     .setTextContent(mData.getArticle().getSummary())
-                    .setTitle(mData.getArticle().getList_title())
+                    .setTitle(mData.getArticle().getDoc_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));
         }

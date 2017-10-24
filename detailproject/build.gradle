@@ -37,8 +37,8 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'org.greenrobot:eventbus:3.0.0'
 //    compile project(':core-library')
-    compile 'cn.daily.android:core-library:5.0.0.11'
-    compile ('cn.daily.android:daily-news:1.1.2-SNAPSHOT') {
+    compile 'cn.daily.android:core-library:5.0.0.13'
+    compile 'cn.daily.android:daily-news:5.0.0.15'
 
     compile('com.aliya:android-player:0.1.5') {
         exclude group: 'com.android.support'

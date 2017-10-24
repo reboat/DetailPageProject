@@ -35,7 +35,7 @@ public class CommentRefreshBean extends BaseData {
      * parent_liked : false
      * parent_portrait_url : https://www.baidu.com/s?rsv_idx=1&wd=%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1&ie=utf-8&rsv_cq=mybatis+%E6%89%B9%E5%A4%84%E7%90%86&rsv_dl=0_right_recommends_merge_21180&euri=ac7ba1cfb121481483f05744f83a726e
      */
-
+    private String comment_count;
     private List<HotCommentsBean> comment_list;
 
     private ShareArtcleInfo share_article_info;
@@ -54,6 +54,14 @@ public class CommentRefreshBean extends BaseData {
 
     public void setShare_article_info(ShareArtcleInfo share_article_info) {
         this.share_article_info = share_article_info;
+    }
+
+    public String getComment_count() {
+        return comment_count;
+    }
+
+    public void setComment_count(String comment_count) {
+        this.comment_count = comment_count;
     }
 
 

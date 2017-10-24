@@ -75,7 +75,12 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
 
     private void initView() {
         mText.setText(itemView.getContext().getString(R.string.module_detail_interact));
-        mTvAll.setVisibility(View.GONE);
+        //显示"全部"按钮
+        if (mData.getArticle().isTopic_comment_has_more()) {
+            mTvAll.setVisibility(View.VISIBLE);
+        } else {
+            mTvAll.setVisibility(View.GONE);
+        }
         mRecyleView.addItemDecoration(new ListSpaceDivider(0.5d, 0, false));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
@@ -163,7 +168,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
      */
     @Override
     public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
-        new CommentListTask(callback,true).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
+        new CommentListTask(callback, true).setTag(this).exe(mData.getArticle().getId(), lastMinPublishTime == 0 ? null : lastMinPublishTime);
     }
 
     /**

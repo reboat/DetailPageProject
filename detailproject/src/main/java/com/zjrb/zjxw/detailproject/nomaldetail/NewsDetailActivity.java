@@ -41,16 +41,15 @@ import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
@@ -69,7 +68,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, NewsDetailAdapter.IUpdateComment {
 
     /**
      * 稿件ID
@@ -136,6 +135,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         ButterKnife.bind(this);
         getIntentData(getIntent());
         init();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getIntentData(intent);
+        loadData();
+
     }
 
     /**
@@ -350,6 +357,22 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
     /**
+     * 删除评论条目
+     */
+    private int commentPosition;
+
+    @Override
+    public void updateComment(int position) {
+        commentPosition = position;
+        onDeleteComment();
+    }
+
+    @Override
+    public void onDeleteComment() {
+        mAdapter.updateCommentInfo(commentPosition);
+    }
+
+    /**
      * WebView加载完毕
      */
     @Override
@@ -482,6 +505,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
+
 }
 
 

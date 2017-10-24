@@ -39,6 +39,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:drawableRight="@mipmap/module_detail_offical_more"
+            android:visibility="gone"
             android:text="全部"/>
 
     </RelativeLayout>
@@ -61,7 +62,7 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:lineSpacingExtra="5sp"
-        android:textColor="?attr/tc_484848"
+        android:textColor="?attr/tc_4682c5"
         android:textSize="@dimen/ts_14sp"
         tools:text="点击查看更多"/>
 

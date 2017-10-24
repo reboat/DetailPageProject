@@ -13,12 +13,14 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.utils.StringUtils;
+import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.comment.CommentActivity;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -32,7 +34,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> {
+public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener {
     @BindView(R2.id.ly_replay)
     RelativeLayout mLayReplay;
     @BindView(R2.id.ry_container)
@@ -70,6 +72,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      * 稿件id
      */
     private String articleId;
+    //弹框
+    private ConfirmDialog dialog;
 
     public DetailCommentHolder(View itemView, String articleId) {
         super(itemView);
@@ -80,6 +84,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     @Override
     public void bindView() {
         //是否是自己发布的评论
+        dialog = new ConfirmDialog(itemView.getContext());
+        dialog.setOnConfirmListener(this);
         if (mData.isOwn()) {
             mDelete.setVisibility(View.VISIBLE);
         } else {
@@ -117,11 +123,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         }
 
-//        //回复内容
-//        if (mData.getParent_content() != null) {
-//            mContent.setText(mData.getParent_content());
-//        }
-
         //回复者昵称
         if (mData.getAccount_type() == 1) {//主持人
             mName.setText("主持人");
@@ -146,7 +147,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         }
 
         //时间显示
-        mTime.setText(StringUtils.long2String(mData.getCreated_at(), "MM-dd"));
+        mTime.setText(mData.getCommentTime(mData.getCreated_at()));
 
         //点赞次数
         mThumb.setText(mData.getLike_count() + "");
@@ -169,7 +170,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 T.showShortNow(itemView.getContext(), itemView.getContext().getString(R.string.module_detail_you_have_liked));
             }
         } else if (view.getId() == R.id.tv_delete) {
-            deleteComment(mData.getId());
+            //弹框
+            dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
@@ -210,7 +212,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
-                //TODO WLJ 需要增量更新吗
+                if (itemView.getContext() instanceof CommentActivity) {
+                    ((CommentActivity) itemView.getContext()).onDeleteComment();
+                } else if (itemView.getContext() instanceof NewsDetailActivity) {
+                    ((NewsDetailActivity) itemView.getContext()).updateComment(getAdapterPosition());
+                }
             }
 
             @Override
@@ -220,4 +226,21 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         }).setTag(UIUtils.getActivity()).exe(comment_id);
     }
 
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onOK() {
+        deleteComment(mData.getId());
+    }
+
+    /**
+     * 删除评论回调
+     */
+    public interface deleteCommentListener {
+
+        void onDeleteComment();
+    }
 }

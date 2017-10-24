@@ -94,6 +94,14 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getIntentData(intent);
+        loadData();
+
+    }
+
     /**
      * 初始化专题详情页头部和列表信息
      */

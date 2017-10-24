@@ -109,8 +109,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
                         ((IBindSubscribe) holder).bindSubscribe();
                     }
                 } else if (PAYLOADS_COMMENT.equals(payload)) {//有问题
-                    if (holder instanceof IUpdateComment) {
-                        ((IUpdateComment) holder).updateComment();
+                    if (holder instanceof DetailCommentHolder.deleteCommentListener) {
+                        ((DetailCommentHolder.deleteCommentListener) holder).onDeleteComment();
                     }
                 } else if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
@@ -228,7 +228,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
      */
     public interface IUpdateComment {
 
-        void updateComment();
+        void updateComment(int position);
     }
 
     /**

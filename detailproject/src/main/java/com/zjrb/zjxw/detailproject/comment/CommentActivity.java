@@ -45,7 +45,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements OnItemClickListener, HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
+public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -184,7 +184,7 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
                     new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
                     ).itemView);
-            mCommentAdapter.setOnItemClickListener(this);
+//            mCommentAdapter.setOnItemClickListener(this);
             mRvContent.setAdapter(mCommentAdapter);
         } else {
             mCommentAdapter.setData(bean);
@@ -259,11 +259,11 @@ public class CommentActivity extends BaseActivity implements OnItemClickListener
     }
 
 
-    @Override
-    public void onItemClick(View itemView, int position) {
-        if (ClickTracker.isDoubleClick()) return;
-        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
-    }
+//    @Override
+//    public void onItemClick(View itemView, int position) {
+//        if (ClickTracker.isDoubleClick()) return;
+//        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+//    }
 
     @Override
     public void onRefresh() {

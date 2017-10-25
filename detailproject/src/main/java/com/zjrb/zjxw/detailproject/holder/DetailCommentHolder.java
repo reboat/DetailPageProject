@@ -34,7 +34,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener,CommentWindowDialog.updateCommentListener {
+public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, CommentWindowDialog.updateCommentListener {
     @BindView(R2.id.ly_replay)
     RelativeLayout mLayReplay;
     @BindView(R2.id.ry_container)
@@ -100,22 +100,20 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
         } else {//显示正常评论
             mTvDeleteTip.setVisibility(View.GONE);
-            mTvCommentContent.setVisibility(View.VISIBLE);
-            //我的评论
+            //回复者评论
             if (mData.getContent() != null) {
                 mContent.setText(mData.getContent());
             }
-            mTvCommentSrc.setVisibility(View.VISIBLE);
-            //我的昵称
+            //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
-                mTvCommentSrc.setText("主持人");
+                mName.setText("主持人");
                 mIvHost.setVisibility(View.VISIBLE);
             } else if (mData.getAccount_type() == 2) {//嘉宾
-                mTvCommentSrc.setText("嘉宾");
+                mName.setText("嘉宾");
                 mIvGuest.setVisibility(View.VISIBLE);
             } else {
                 if (mData.getNick_name() != null) {
-                    mTvCommentSrc.setText(mData.getNick_name());
+                    mName.setText(mData.getNick_name());
                     mIvHost.setVisibility(View.GONE);
                     mIvGuest.setVisibility(View.GONE);
                 }
@@ -123,25 +121,25 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         }
 
-        //回复者昵称
+        //父评论昵称
         if (mData.getAccount_type() == 1) {//主持人
-            mName.setText("主持人");
+            mTvCommentSrc.setText("主持人");
             mIvHost.setVisibility(View.VISIBLE);
         } else if (mData.getAccount_type() == 2) {//嘉宾
-            mName.setText("嘉宾");
+            mTvCommentSrc.setText("嘉宾");
             mIvGuest.setVisibility(View.VISIBLE);
         } else {
             if (mData.getParent_nick_name() != null) {
-                mName.setText(mData.getParent_nick_name());
+                mTvCommentSrc.setText(mData.getParent_nick_name());
                 mIvHost.setVisibility(View.GONE);
                 mIvGuest.setVisibility(View.GONE);
             }
         }
 
-        //回复者的评论
+        //父评论
         if (!TextUtils.isEmpty(mData.getParent_content())) {
             mReply.setVisibility(View.VISIBLE);
-            mContent.setText(mData.getParent_content());
+            mTvCommentContent.setText(mData.getParent_content());
         } else {
             mReply.setVisibility(View.GONE);
         }
@@ -150,7 +148,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         mTime.setText(mData.getCommentTime(mData.getCreated_at()));
 
         //点赞次数
-        mThumb.setText(mData.getLike_count() + "");
+        if (mData.getLike_count() != 0) {
+            mThumb.setText(mData.getLike_count() + "");
+        }
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //回复者头像(显示默认头像)

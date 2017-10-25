@@ -68,7 +68,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, NewsDetailAdapter.IUpdateComment,CommentWindowDialog.updateCommentListener {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, NewsDetailAdapter.IUpdateComment, CommentWindowDialog.updateCommentListener {
 
     /**
      * 稿件ID

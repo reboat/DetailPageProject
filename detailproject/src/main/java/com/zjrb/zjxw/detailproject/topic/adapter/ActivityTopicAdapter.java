@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.topic.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
@@ -125,6 +126,10 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter {
         //添加标题头
         DraftDetailBean detailBean = (DraftDetailBean) datas.get(0);
 
+        //订阅
+        if (!TextUtils.isEmpty(detailBean.getArticle().getColumn_name())) {
+            datas.add(detailBean);
+        }
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {

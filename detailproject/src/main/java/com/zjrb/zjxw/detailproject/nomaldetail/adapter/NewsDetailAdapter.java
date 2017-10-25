@@ -134,6 +134,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
     /**
      * 显示全部
      */
+    //TODO WLJ 这里有问题
     public void showAll() {
         if (isShowAll) return;
         isShowAll = true;
@@ -141,12 +142,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         //添加标题头
         detailBean = (DraftDetailBean) datas.get(0);
 
+        //中间
+        datas.add(detailBean);
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {
             datas.add(detailBean);
         }
-
 
         //添加相关新闻
         List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
@@ -155,11 +157,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         }
 
         //添加热门评论
-        if (detailBean.getArticle().getHot_comments() != null) {
-            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
-            if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-                datas.add(detailBean);
-            }
+        List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
+        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+            datas.add(detailBean);
         }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }

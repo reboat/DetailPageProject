@@ -191,14 +191,14 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                if(!mBean.getArticle().isFollowed()){
+                if (!mBean.getArticle().isFollowed()) {
                     ivCollect.getDrawable().setLevel(getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_has_success));
-                }else{
+                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                } else {
                     ivCollect.getDrawable().setLevel(getResources().getInteger(R.integer.level_collect_off));
                     mBean.getArticle().setFollowed(false);
-                    T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_cencel_success));
+                    T.showShort(UIUtils.getApp(), "已取消收藏");
                 }
 
                 dismissFragmentDialog();
@@ -207,7 +207,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getApp(), getString(R.string.module_detail_collect_failed));
+                T.showShort(UIUtils.getApp(), "收藏失败");
                 dismissFragmentDialog();
             }
 

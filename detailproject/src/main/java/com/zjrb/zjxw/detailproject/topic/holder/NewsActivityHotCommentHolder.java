@@ -59,11 +59,10 @@ public class NewsActivityHotCommentHolder extends BaseRecyclerViewHolder<DraftDe
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        //精选
-        mText.setText(itemView.getContext().getString(R.string.module_detail_useful_comment));
-        mMore.setVisibility(View.GONE);
-
         if (mData != null && mData.getArticle().getTopic_comment_select() != null && mData.getArticle().getTopic_comment_select().size() > 0) {
+            //精选
+            mText.setText(itemView.getContext().getString(R.string.module_detail_useful_comment));
+            mMore.setVisibility(View.GONE);
             adapter = new TopicCommentAdapter(mData.getArticle().getTopic_comment_select(), String.valueOf(mData.getArticle().getId()));
             mRecyleView.setAdapter(adapter);
         } else {

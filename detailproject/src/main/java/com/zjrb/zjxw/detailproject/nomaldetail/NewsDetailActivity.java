@@ -68,7 +68,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, NewsDetailAdapter.IUpdateComment {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, NewsDetailAdapter.IUpdateComment {
 
     /**
      * 稿件ID
@@ -364,11 +364,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     public void updateComment(int position) {
         commentPosition = position;
-        onDeleteComment();
-    }
-
-    @Override
-    public void onDeleteComment() {
         mAdapter.updateCommentInfo(commentPosition);
     }
 

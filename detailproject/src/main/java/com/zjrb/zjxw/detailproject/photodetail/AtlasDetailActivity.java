@@ -146,12 +146,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
+    /**
+     * 重新初始化顶部栏和底部栏
+     */
+    private void reInitView() {
+        mIndex = 0;
+        mTvTitleTop.setVisibility(View.GONE);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
-
+        reInitView();
     }
 
     /**
@@ -213,10 +221,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
-            mTvTottleNum.setText(String.valueOf(mData.getArticle().getAlbum_image_count()));
+            mTvTottleNum.setText(String.valueOf(atlasDetailEntity.getArticle().getAlbum_image_count()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getDoc_title());
             //添加更多图集(假如有相关新闻)
-            if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0) {
+            if (mData.getArticle().getRelated_news() != null && atlasDetailEntity.getArticle().getRelated_news().size() > 0) {
                 mAtlasList.add(new AlbumImageListBean());
             }
             //设置图片count
@@ -237,9 +245,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      */
     private void initViewState(DraftDetailBean data) {
         //评论数量
-        if (!TextUtils.isEmpty(mData.getArticle().getComment_count_general())) {
+        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setText(mData.getArticle().getComment_count_general());
+            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         } else {
             mTvCommentsNum.setVisibility(View.GONE);
         }

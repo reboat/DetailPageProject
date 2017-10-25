@@ -9,7 +9,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
@@ -109,8 +108,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
                         ((IBindSubscribe) holder).bindSubscribe();
                     }
                 } else if (PAYLOADS_COMMENT.equals(payload)) {//有问题
-                    if (holder instanceof DetailCommentHolder.deleteCommentListener) {
-                        ((DetailCommentHolder.deleteCommentListener) holder).onDeleteComment();
+                    if (holder instanceof IUpdateComment) {
+//                        ((IUpdateComment) holder).updateComment();
                     }
                 } else if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {

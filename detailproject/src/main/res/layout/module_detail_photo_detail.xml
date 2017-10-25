@@ -45,6 +45,7 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:background="@android:color/black" />
 
 
@@ -136,10 +137,11 @@
 
             <FrameLayout
                 android:id="@+id/fl_comment"
-                android:layout_width="230dp"
+                android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/menu_comment"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/module_detail_bg_atlas_say_words"
                 >
@@ -165,6 +167,7 @@
                 android:id="@+id/menu_comment"
                 android:layout_width="26dp"
                 android:layout_height="26dp"
+                android:layout_marginLeft="15dp"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/menu_prised"
                 android:background="?attr/selectableItemBackgroundBorderless"

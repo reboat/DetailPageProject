@@ -13,11 +13,10 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="40.5dp"
         android:layout_marginTop="5dp"
-        android:gravity="center_horizontal|left"
+        android:gravity="left"
         android:lineSpacingMultiplier="1.1"
         android:textColor="?attr/tc_000000"
         android:textSize="@dimen/ts_22sp"
@@ -38,8 +37,8 @@
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tv_comment_num"
         android:layout_above="@+id/fy_container"
+        android:layout_below="@+id/tv_comment_num"
         android:layout_marginTop="13dp" />
 
 

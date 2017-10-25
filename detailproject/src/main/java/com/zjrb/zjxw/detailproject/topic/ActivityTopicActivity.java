@@ -63,7 +63,7 @@ import butterknife.OnClick;
  */
 
 public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        ActivityTopicAdapter.CommonOptCallBack {
+        ActivityTopicAdapter.CommonOptCallBack,CommentWindowDialog.updateCommentListener {
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
@@ -626,7 +626,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -647,5 +647,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
+    }
+
+    @Override
+    public void onUpdateComment() {
+
     }
 }

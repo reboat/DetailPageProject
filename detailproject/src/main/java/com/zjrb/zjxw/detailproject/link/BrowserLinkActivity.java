@@ -61,7 +61,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener,CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -193,6 +193,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
         //是否点赞
         if (data.getArticle().isLike_enabled()) {
+            mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
             mMenuPrised.setVisibility(View.GONE);
@@ -208,6 +209,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mMenuComment.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
                 mTvCommentsNum.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setText(data.getArticle().getComment_count_general());
             }
         }
 
@@ -255,7 +257,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
             //重新加载
         } else if (view.getId() == R.id.view_exise) {
@@ -383,4 +385,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
 
+    @Override
+    public void onUpdateComment() {
+
+    }
 }

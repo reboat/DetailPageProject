@@ -44,7 +44,7 @@ import butterknife.OnClick;
  * create time:2017/7/28  下午12:28
  */
 
-public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements LoadMoreListener<CommentRefreshBean> {
+public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements LoadMoreListener<CommentRefreshBean>,CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.ly_hot_comment)
     LinearLayout mLyHotContainer;
@@ -91,7 +91,7 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
             @Override
             public void onItemClick(View itemView, int position) {
                 if (ClickTracker.isDoubleClick()) return;
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).setListen(NewsActivityCommentHolder.this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         });
     }
@@ -179,5 +179,10 @@ public class NewsActivityCommentHolder extends BaseRecyclerViewHolder<DraftDetai
             return commentList.get(commentList.size() - 1).getCreated_at();
         }
         return 0;
+    }
+
+    @Override
+    public void onUpdateComment() {
+
     }
 }

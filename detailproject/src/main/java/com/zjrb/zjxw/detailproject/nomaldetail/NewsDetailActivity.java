@@ -68,7 +68,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, NewsDetailAdapter.IUpdateComment {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, NewsDetailAdapter.IUpdateComment,CommentWindowDialog.updateCommentListener {
 
     /**
      * 稿件ID
@@ -450,7 +450,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
@@ -501,6 +501,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
     }
 
+    @Override
+    public void onUpdateComment() {
+
+    }
 }
 
 

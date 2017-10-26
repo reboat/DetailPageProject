@@ -45,7 +45,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -89,7 +88,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.fl_content)
     FrameLayout mFlContent;
-    @BindView(R2.id.ly_container)
+    @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     RelativeLayout mViewExise;
@@ -248,21 +247,24 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         datas.add(data);
         //web
         datas.add(data);
-        //middle
-        datas.add(data);
-        //相关专题
-        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
-            datas.add(data);
-        }
-        //相关新闻
-        if (data.getArticle().getRelated_news() != null && data.getArticle().getRelated_news().size() > 0) {
-            datas.add(data);
-
-        }
-        //热门评论
-        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
-            datas.add(data);
-        }
+//        //middle
+//        datas.add(data);
+//        //相关专题
+//        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
+//            datas.add("相关专题");
+//            datas.addAll(data.getArticle().getRelated_subjects());
+//        }
+//        //相关新闻
+//        if (data.getArticle().getRelated_news() != null && data.getArticle().getRelated_news().size() > 0) {
+//            datas.add("相关新闻");
+//            datas.addAll(data.getArticle().getRelated_news());
+//
+//        }
+//        //热门评论
+//        if (data.getArticle().getHot_comments() != null && data.getArticle().getHot_comments().size() > 0) {
+//            datas.add("热门评论");
+//            datas.addAll(data.getArticle().getHot_comments());
+//        }
         mAdapter = new NewsDetailAdapter(datas);
         mRvContent.setAdapter(mAdapter);
 
@@ -498,7 +500,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         mContainer.removeAllViews();
         topHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

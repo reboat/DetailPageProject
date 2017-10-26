@@ -136,7 +136,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (adapter.getData() != null && !adapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(((ArticleItemBean) adapter.getData().get(position)).getUrl());
+            Nav.with(UIUtils.getActivity()).to(((DraftHotTopNewsBean.HotNewsBean) adapter.getData().get(position)).getUrl());
         }
 
     }

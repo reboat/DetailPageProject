@@ -79,7 +79,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     ImageView mMenuSetting;
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
-    @BindView(R2.id.fy_container)
+    @BindView(R2.id.ry_container)
     FrameLayout mContainer;
     @BindView(R2.id.fy_webview_container)
     FrameLayout mWebViewContainer;
@@ -382,7 +382,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mContainer.removeAllViews();
         topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

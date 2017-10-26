@@ -263,7 +263,7 @@ public class HotCommentsBean implements Serializable {
         } else if (timeLocal - created_at >= 60 * 60 * 1000 && timeLocal - created_at < 24 * 60 * 60 * 1000) {
             return (int)Math.ceil((timeLocal - created_at) / (60 * 60 * 1000)) + "小时前";
         } else {
-            return StringUtils.long2String(time, "yyyy-mm-dd");
+            return StringUtils.long2String(time, "yyyy-MM-dd");
         }
 
     }

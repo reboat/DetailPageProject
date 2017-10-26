@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/activity_atlas_detail"
+             android:id="@+id/ry_container"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@android:color/black"
@@ -130,11 +130,14 @@
         <RelativeLayout
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/module_detail_floor_bar_height"
+            android:layout_height="wrap_content"
             android:background="?attr/bc_33ffffff"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
             >
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_alignParentTop="true"
+                android:background="?attr/bc_33ffffff"/>
 
             <FrameLayout
                 android:id="@+id/fl_comment"
@@ -142,7 +145,9 @@
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="8dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginBottom="8dp"
                 android:layout_toLeftOf="@+id/menu_comment"
                 android:background="@drawable/module_detail_bg_atlas_say_words"
                 >

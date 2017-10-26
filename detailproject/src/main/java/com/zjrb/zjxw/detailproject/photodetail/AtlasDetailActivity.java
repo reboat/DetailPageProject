@@ -66,7 +66,7 @@ import butterknife.OnClick;
 public class AtlasDetailActivity extends BaseActivity implements ViewPager
         .OnPageChangeListener, View.OnTouchListener,CommentWindowDialog.updateCommentListener {
 
-    @BindView(R2.id.activity_atlas_detail)
+    @BindView(R2.id.ry_container)
     FrameLayout mContainer;
     @BindView(R2.id.view_pager)
     HackyViewPager mViewPager;
@@ -509,7 +509,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.activity_atlas_detail, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

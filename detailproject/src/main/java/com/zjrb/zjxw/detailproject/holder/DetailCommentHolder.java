@@ -3,10 +3,12 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliya.uimode.utils.UiModeUtils;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
@@ -75,8 +77,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     //弹框
     private ConfirmDialog dialog;
 
-    public DetailCommentHolder(View itemView, String articleId) {
-        super(itemView);
+    public DetailCommentHolder(ViewGroup parent, String articleId) {
+        super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
+        ButterKnife.bind(this, itemView);
+        this.articleId = articleId;
+    }
+
+    public DetailCommentHolder(View view, String articleId) {
+        super(view);
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
     }
@@ -108,38 +116,40 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             if (mData.getAccount_type() == 1) {//主持人
                 mName.setText("主持人");
                 mIvHost.setVisibility(View.VISIBLE);
+                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
             } else if (mData.getAccount_type() == 2) {//嘉宾
                 mName.setText("嘉宾");
-                mIvGuest.setVisibility(View.VISIBLE);
-            } else {
+                mIvHost.setVisibility(View.VISIBLE);
+                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
+            } else if(mData.getAccount_type() == 3){
                 if (mData.getNick_name() != null) {
                     mName.setText(mData.getNick_name());
                     mIvHost.setVisibility(View.GONE);
-                    mIvGuest.setVisibility(View.GONE);
                 }
             }
 
         }
 
-        //父评论昵称
-        if (mData.getAccount_type() == 1) {//主持人
-            mTvCommentSrc.setText("主持人");
-            mIvHost.setVisibility(View.VISIBLE);
-        } else if (mData.getAccount_type() == 2) {//嘉宾
-            mTvCommentSrc.setText("嘉宾");
-            mIvGuest.setVisibility(View.VISIBLE);
-        } else {
-            if (mData.getParent_nick_name() != null) {
-                mTvCommentSrc.setText(mData.getParent_nick_name());
-                mIvHost.setVisibility(View.GONE);
-                mIvGuest.setVisibility(View.GONE);
-            }
-        }
 
         //父评论
         if (!TextUtils.isEmpty(mData.getParent_content())) {
             mReply.setVisibility(View.VISIBLE);
             mTvCommentContent.setText(mData.getParent_content());
+            //父评论昵称
+            if (mData.getParent_account_type() == 1) {//主持人
+                mTvCommentSrc.setText("主持人");
+                mIvGuest.setVisibility(View.VISIBLE);
+                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
+            } else if (mData.getParent_account_type() == 2) {//嘉宾
+                mTvCommentSrc.setText("嘉宾");
+                mIvGuest.setVisibility(View.VISIBLE);
+                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
+            } else if(mData.getAccount_type() == 3){
+                if (mData.getParent_nick_name() != null) {
+                    mTvCommentSrc.setText(mData.getParent_nick_name());
+                    mIvGuest.setVisibility(View.GONE);
+                }
+            }
         } else {
             mReply.setVisibility(View.GONE);
         }

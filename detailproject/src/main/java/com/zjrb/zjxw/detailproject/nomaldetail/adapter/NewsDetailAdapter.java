@@ -1,20 +1,27 @@
 package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailCommentHolder;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedNewsHolder;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailRelatedSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
+import com.zjrb.zjxw.detailproject.holder.NewsRelateNewsHolder;
+import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
+import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
@@ -24,7 +31,7 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/7/10  下午5:39
  */
-public class NewsDetailAdapter extends BaseRecyclerAdapter {
+public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClickListener {
     //顶部标题，视频等
     public static final int VIEW_TYPE_TOP = 1;
     //webview
@@ -37,6 +44,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
     public static final int VIEW_TYPE_RELATE_NEWS = 5;
     //热门评论
     public static final int VIEW_TYPE_COMMENT = 6;
+    //字符串
+    public static final int VIEW_TYPE_STRING = 7;
 
     //评论
     public static final String PAYLOADS_COMMENT = "update_comment";
@@ -55,6 +64,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
 
     public NewsDetailAdapter(List datas) {
         super(datas);
+        setOnItemClickListener(this);
     }
 
     @Override
@@ -66,11 +76,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
-            return new NewsDetailRelatedSubjectHolder(parent);
+            return new NewsRelateSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
-            return new NewsDetailRelatedNewsHolder(parent);
+            return new NewsRelateNewsHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
-            return new NewsDetailCommentHolder(parent);
+            return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()));
+        } else if (viewType == VIEW_TYPE_STRING) {
+            return new NewsStringTextHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -85,12 +97,14 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         } else if (position == 2) {
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
-        } else if (position == 3) {
+        } else if (getData(position) instanceof String) {
+            return VIEW_TYPE_STRING;
+        } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
-        } else if (position == 4) {
-            return VIEW_TYPE_RELATE_NEWS;
-        } else if (position == 5) {
+        } else if (getData(position) instanceof RelatedNewsBean) {
             mCommentHolderPosition = position;
+            return VIEW_TYPE_RELATE_NEWS;
+        } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
         }
         return 0;
@@ -134,7 +148,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
     /**
      * 显示全部
      */
-    //TODO WLJ 这里有问题
     public void showAll() {
         if (isShowAll) return;
         isShowAll = true;
@@ -147,19 +160,22 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {
-            datas.add(detailBean);
+            datas.add("相关专题");
+            datas.addAll(subjectList);
         }
 
         //添加相关新闻
         List<RelatedNewsBean> articles = detailBean.getArticle().getRelated_news();
         if (articles != null && articles.size() > 0) {
-            datas.add(detailBean);
+            datas.add("相关新闻");
+            datas.addAll(articles);
         }
 
         //添加热门评论
         List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
         if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-            datas.add(detailBean);
+            datas.add("热门评论");
+            datas.addAll(hotCommentsBeen);
         }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
@@ -212,6 +228,27 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter {
         if (mWebViewHolderPosition != NO_POSITION) {
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
+    }
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (datas.get(position) instanceof RelatedNewsBean) {
+            String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
+            if (!TextUtils.isEmpty(url)) {
+                Nav.with(UIUtils.getActivity()).to(url);
+            }
+
+        } else if (datas.get(position) instanceof RelatedSubjectsBean) {
+            String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
+            if (!TextUtils.isEmpty(url)) {
+                Nav.with(UIUtils.getActivity()).to(url);
+            }
+
+        } else if (datas.get(position) instanceof HotCommentsBean) {
+
+        }
+
     }
 
     /**

@@ -474,24 +474,24 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         datas.add(data);
         //webview
         datas.add(data);
-        //订阅
-        if (!TextUtils.isEmpty(data.getArticle().getColumn_name())) {
-            datas.add(data);
-        }
-
-        //相关专题
-        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
-            datas.add(data);
-        }
-        //精选评论
-        if (data.getArticle().getTopic_comment_select() != null && data.getArticle().getTopic_comment_select().size() > 0) {
-            datas.add(data);
-
-        }
-        //互动评论
-        if (data.getArticle().getTopic_comment_list() != null && data.getArticle().getTopic_comment_list().size() > 0) {
-            datas.add(data);
-        }
+//        //订阅
+//        if (!TextUtils.isEmpty(data.getArticle().getColumn_name())) {
+//            datas.add(data);
+//        }
+//
+//        //相关专题
+//        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
+//            datas.add(data);
+//        }
+//        //精选评论
+//        if (data.getArticle().getTopic_comment_select() != null && data.getArticle().getTopic_comment_select().size() > 0) {
+//            datas.add(data);
+//
+//        }
+//        //互动评论
+//        if (data.getArticle().getTopic_comment_list() != null && data.getArticle().getTopic_comment_list().size() > 0) {
+//            datas.add(data);
+//        }
 
         mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
 
@@ -646,7 +646,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

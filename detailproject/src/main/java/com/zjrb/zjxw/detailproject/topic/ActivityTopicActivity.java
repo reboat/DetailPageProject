@@ -36,7 +36,6 @@ import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -63,7 +62,7 @@ import butterknife.OnClick;
  */
 
 public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        ActivityTopicAdapter.CommonOptCallBack,CommentWindowDialog.updateCommentListener {
+        ActivityTopicAdapter.CommonOptCallBack, CommentWindowDialog.updateCommentListener {
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)

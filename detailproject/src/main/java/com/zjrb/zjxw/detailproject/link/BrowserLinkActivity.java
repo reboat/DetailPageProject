@@ -389,4 +389,22 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     public void onUpdateComment() {
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mWebView.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mWebView.destroy();
+    }
 }

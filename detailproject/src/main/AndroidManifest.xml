@@ -209,7 +209,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
 
-                <data android:path="/gy.html" />
+                <data android:path="/gy111.html" />
                 <!--以下测试 host -->
                 <!--以下测试 host -->
                 <data android:host="@string/data_host_dev" />

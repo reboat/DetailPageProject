@@ -17,6 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
         android:focusable="true"
+        android:maxLines="5"
+        android:ellipsize="end"
         android:gravity="left"
         android:textColor="?attr/tc_484848"
         android:textSize="@dimen/ts_20sp"

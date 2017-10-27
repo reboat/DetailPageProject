@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -89,8 +90,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      */
     private void getIntentData(Intent intent) {
         if (intent != null) {
-            if (intent.hasExtra(IKey.OFFICIAL_ID)) {
-                official_id = intent.getStringExtra(IKey.OFFICIAL_ID);
+            Uri data = intent.getData();
+            if (data != null && data.getQueryParameter(IKey.ID) != null) {
+                official_id = data.getQueryParameter(IKey.ID);
             }
         }
     }

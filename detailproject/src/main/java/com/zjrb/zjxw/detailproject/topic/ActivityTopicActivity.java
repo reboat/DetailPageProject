@@ -92,12 +92,14 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     TextView mTvGuest;
     @BindView(R2.id.ll_fixed)
     LinearLayout mLlFixedTitle;
-    @BindView(R2.id.ry_container)
-    RelativeLayout mContainer;
+    //    @BindView(R2.id.fy_container)
+//    RelativeLayout mContainer;
     @BindView(R2.id.view_exise)
     LinearLayout mViewExise;
     @BindView(R2.id.fl_comment)
     FrameLayout mFyContainer;
+    @BindView(R2.id.ry_container)
+    RelativeLayout mContainer;
 
     private ActivityTopicAdapter adapter;
     /**
@@ -701,6 +703,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     /**
      * 删除评论，局部刷新
+     *
      * @param comment_id
      */
     @Override

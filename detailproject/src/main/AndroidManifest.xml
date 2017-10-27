@@ -206,10 +206,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/PersionalDetailActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+
+                <data android:path="/gy.html" />
+                <!--以下测试 host -->
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+
             </intent-filter>
         </activity>
 

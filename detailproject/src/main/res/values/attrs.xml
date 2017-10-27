@@ -67,8 +67,8 @@
         <attr name="module_detail_comment_prise" format="reference" />
         <attr name="module_detail_activity_host" format="reference" />
         <attr name="module_detail_activity_guest" format="reference" />
-
-
+        <!--图集-->
+        <attr name="module_detail_atlas_prise" format="reference" />
 
     </declare-styleable>
 

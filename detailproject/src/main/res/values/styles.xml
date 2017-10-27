@@ -10,6 +10,9 @@
         <item name="module_detail_activity_host">@drawable/module_detail_activity_host</item>
         <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest</item>
 
+        <!--图集-->
+        <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
+
     </style>
 
     <style name="DetailNightTheme">
@@ -19,8 +22,9 @@
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
         <!--话题-->
         <item name="module_detail_activity_host">@drawable/module_detail_activity_host_night</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night
-        </item>
+        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night</item>
+        <!--图集-->
+        <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
 
     </style>
 </resources>

@@ -131,11 +131,12 @@
             android:layout_height="wrap_content"
             android:background="?attr/bc_33ffffff"
             >
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentTop="true"
-                android:background="?attr/bc_33ffffff"/>
+                android:background="?attr/bc_33ffffff" />
 
             <FrameLayout
                 android:id="@+id/fl_comment"
@@ -143,9 +144,9 @@
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="5dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/menu_comment"
                 android:background="@drawable/module_detail_bg_atlas_say_words"
                 >
@@ -203,8 +204,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/module_detail_atlas_prise"
-                app:iv_maskColor="@color/module_detail_comment_night" />
+                android:src="?attr/module_detail_atlas_prise"
+                />
 
             <ImageView
                 android:id="@+id/menu_setting"

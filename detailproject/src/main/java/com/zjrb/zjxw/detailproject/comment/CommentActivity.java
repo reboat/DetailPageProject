@@ -266,7 +266,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
                 mCommentAdapter.getData().remove(obj);
                 mCommentAdapter.notifyItemMoved(count, count);
-                mCommentAdapter.notifyItemRangeChanged(count, mCommentAdapter.getDataSize());
+//                mCommentAdapter.notifyItemRangeChanged(count, mCommentAdapter.getDataSize());
                 break;
             }
             count++;

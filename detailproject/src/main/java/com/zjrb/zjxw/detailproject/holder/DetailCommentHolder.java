@@ -220,13 +220,16 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      * @param comment_id
      */
     private void deleteComment(final String comment_id) {
+        if (itemView.getContext() instanceof CommentActivity) {
+            ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id);
+        }
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
                 if (itemView.getContext() instanceof CommentActivity) {
-                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id);
+//                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id);
                 } else if (itemView.getContext() instanceof NewsDetailActivity) {
-                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(comment_id);
+//                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(comment_id);
                 } else if (itemView.getContext() instanceof ActivityTopicActivity) {
 //                    ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(comment_id);
                 }
@@ -246,7 +249,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     @Override
     public void onOK() {
-        deleteComment(mData.getId());
+//        deleteComment(mData.getId());
     }
 
     /**

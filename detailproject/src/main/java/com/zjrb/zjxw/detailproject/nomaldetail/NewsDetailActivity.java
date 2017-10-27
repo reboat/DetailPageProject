@@ -44,7 +44,9 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -67,7 +69,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener {
 
     /**
      * 稿件ID
@@ -341,11 +343,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
     /**
-     * 删除评论条目
-     */
-    private int commentPosition;
-
-    /**
      * WebView加载完毕
      */
     @Override
@@ -466,7 +463,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
-
     }
 
     /**
@@ -479,6 +475,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
+    /**
+     * 删除评论，局部刷新
+     */
+    @Override
+    public void onDeleteComment(String comment_id) {
+        List list = mAdapter.getData();
+        for (Object obj : list) {
+            int count = 0;
+            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
+                mAdapter.getData().remove(obj);
+                mAdapter.notifyItemMoved(count, count);
+                mAdapter.notifyItemRangeChanged(count, mAdapter.getDataSize());
+                break;
+            }
+            count++;
+        }
+    }
 }
 
 

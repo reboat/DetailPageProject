@@ -29,9 +29,12 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -256,8 +259,18 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      * 删除评论回调
      */
     @Override
-    public void onDeleteComment() {
-        requestData();
+    public void onDeleteComment(String comment_id) {
+        List list = mCommentAdapter.getData();
+        for (Object obj : list) {
+            int count = 0;
+            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
+                mCommentAdapter.getData().remove(obj);
+                mCommentAdapter.notifyItemMoved(count, count);
+                mCommentAdapter.notifyItemRangeChanged(count, mCommentAdapter.getDataSize());
+                break;
+            }
+            count++;
+        }
     }
 
 

@@ -47,6 +47,7 @@ import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
@@ -70,7 +71,7 @@ import butterknife.OnClick;
  */
 
 public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        ActivityTopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean> {
+        ActivityTopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>, DetailCommentHolder.deleteCommentListener {
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
@@ -696,5 +697,24 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             }
         }
         return null;
+    }
+
+    /**
+     * 删除评论，局部刷新
+     * @param comment_id
+     */
+    @Override
+    public void onDeleteComment(String comment_id) {
+        List list = adapter.getData();
+        for (Object obj : list) {
+            int count = 0;
+            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
+                adapter.getData().remove(obj);
+                adapter.notifyItemMoved(count, count);
+                adapter.notifyItemRangeChanged(count, adapter.getDataSize());
+                break;
+            }
+            count++;
+        }
     }
 }

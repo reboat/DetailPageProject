@@ -25,6 +25,7 @@ import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
+import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
 import butterknife.BindView;
@@ -218,13 +219,16 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      *
      * @param comment_id
      */
-    private void deleteComment(String comment_id) {
+    private void deleteComment(final String comment_id) {
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
                 if (itemView.getContext() instanceof CommentActivity) {
-                    ((CommentActivity) itemView.getContext()).onDeleteComment();
+                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id);
                 } else if (itemView.getContext() instanceof NewsDetailActivity) {
+                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(comment_id);
+                } else if (itemView.getContext() instanceof ActivityTopicActivity) {
+//                    ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(comment_id);
                 }
             }
 
@@ -250,6 +254,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      */
     public interface deleteCommentListener {
 
-        void onDeleteComment();
+        void onDeleteComment(final String comment_id);
     }
 }

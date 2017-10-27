@@ -215,9 +215,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             if (!TextUtils.isEmpty(url)) {
                 Nav.with(UIUtils.getActivity()).to(url);
             }
-
-        } else if (datas.get(position) instanceof HotCommentsBean) {
-
         }
 
     }

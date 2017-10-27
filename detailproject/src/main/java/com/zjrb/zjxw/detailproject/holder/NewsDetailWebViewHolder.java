@@ -98,6 +98,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     private WebSettings settings;
 
     private void initWebView() {
+        //TODO WLJ 删除无用代码
         mWebView.setFocusable(false);
 
         // 隐藏到滚动条

@@ -64,7 +64,7 @@ import butterknife.OnClick;
  */
 
 public class AtlasDetailActivity extends BaseActivity implements ViewPager
-        .OnPageChangeListener, View.OnTouchListener,CommentWindowDialog.updateCommentListener {
+        .OnPageChangeListener, View.OnTouchListener {
 
     @BindView(R2.id.ry_container)
     FrameLayout mContainer;
@@ -300,7 +300,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null) {
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
             //评论列表
         } else if (id == R.id.menu_comment) {
@@ -512,8 +512,4 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
-    @Override
-    public void onUpdateComment() {
-
-    }
 }

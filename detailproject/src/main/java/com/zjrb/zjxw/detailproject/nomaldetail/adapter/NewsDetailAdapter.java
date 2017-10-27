@@ -47,8 +47,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     //字符串
     public static final int VIEW_TYPE_STRING = 7;
 
-    //评论
-    public static final String PAYLOADS_COMMENT = "update_comment";
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
     //恢复
@@ -59,7 +57,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int NO_POSITION = -1;
     private int mMiddleHolderPosition = NO_POSITION;
     private int mWebViewHolderPosition = NO_POSITION;
-    private int mCommentHolderPosition = NO_POSITION;
     private boolean isShowAll; // true：已经显示全部
 
     public NewsDetailAdapter(List datas) {
@@ -102,7 +99,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (getData(position) instanceof RelatedNewsBean) {
-            mCommentHolderPosition = position;
             return VIEW_TYPE_RELATE_NEWS;
         } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
@@ -120,10 +116,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
                 if (PAYLOADS_SUBSCRIBE.equals(payload)) {
                     if (holder instanceof IBindSubscribe) {
                         ((IBindSubscribe) holder).bindSubscribe();
-                    }
-                } else if (PAYLOADS_COMMENT.equals(payload)) {//有问题
-                    if (holder instanceof IUpdateComment) {
-//                        ((IUpdateComment) holder).updateComment();
                     }
                 } else if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
@@ -192,27 +184,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     }
 
     /**
-     * 刷新评论部分item
-     */
-    public void updateCommentInfo(int position) {
-        //刷新评论
-        if (detailBean.getArticle().getHot_comments() != null) {
-            List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
-            if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
-                hotCommentsBeen.remove(position);
-                detailBean.getArticle().setHot_comments(hotCommentsBeen);
-                datas.add(detailBean);
-            }
-        }
-        notifyItemChanged(0, PAYLOADS_COMMENT);
-        if (mCommentHolderPosition != NO_POSITION) {
-            notifyItemChanged(mCommentHolderPosition, PAYLOADS_COMMENT);
-        }
-
-    }
-
-
-    /**
      * webview恢复监听
      */
     public void onWebViewResume() {
@@ -257,14 +228,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public interface IBindSubscribe {
 
         void bindSubscribe();
-    }
-
-    /**
-     * 评论
-     */
-    public interface IUpdateComment {
-
-        void updateComment(int position);
     }
 
     /**

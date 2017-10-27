@@ -44,7 +44,6 @@ import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,7 +60,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener,CommentWindowDialog.updateCommentListener {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -257,7 +256,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
             //重新加载
         } else if (view.getId() == R.id.view_exise) {
@@ -383,11 +382,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
-    }
-
-    @Override
-    public void onUpdateComment() {
-
     }
 
     @Override

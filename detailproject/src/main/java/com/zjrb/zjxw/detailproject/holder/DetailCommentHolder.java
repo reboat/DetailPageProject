@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, CommentWindowDialog.updateCommentListener {
+public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener {
     @BindView(R2.id.ly_replay)
     RelativeLayout mLayReplay;
     @BindView(R2.id.ry_container)
@@ -121,7 +121,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mName.setText("嘉宾");
                 mIvHost.setVisibility(View.VISIBLE);
                 UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
-            } else if(mData.getAccount_type() == 3){
+            } else if (mData.getAccount_type() == 3) {
                 if (mData.getNick_name() != null) {
                     mName.setText(mData.getNick_name());
                     mIvHost.setVisibility(View.GONE);
@@ -144,7 +144,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mTvCommentSrc.setText("嘉宾");
                 mIvGuest.setVisibility(View.VISIBLE);
                 UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
-            } else if(mData.getAccount_type() == 3){
+            } else if (mData.getAccount_type() == 3) {
                 if (mData.getParent_nick_name() != null) {
                     mTvCommentSrc.setText(mData.getParent_nick_name());
                     mIvGuest.setVisibility(View.GONE);
@@ -184,10 +184,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).setListen(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             //回复回复者
         } else {
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
         }
     }
 
@@ -225,7 +225,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 if (itemView.getContext() instanceof CommentActivity) {
                     ((CommentActivity) itemView.getContext()).onDeleteComment();
                 } else if (itemView.getContext() instanceof NewsDetailActivity) {
-                    ((NewsDetailActivity) itemView.getContext()).updateComment(getAdapterPosition());
                 }
             }
 
@@ -244,11 +243,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     @Override
     public void onOK() {
         deleteComment(mData.getId());
-    }
-
-    @Override
-    public void onUpdateComment() {
-
     }
 
     /**

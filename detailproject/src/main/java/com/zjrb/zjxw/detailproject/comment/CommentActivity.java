@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
@@ -184,7 +183,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                     new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
                     ).itemView);
-//            mCommentAdapter.setOnItemClickListener(this);
             mRvContent.setAdapter(mCommentAdapter);
         } else {
             mCommentAdapter.setData(bean);
@@ -238,32 +236,10 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     }
 
 
-    /**
-     * @param requestCode
-     * @param resultCode
-     * @param data        评论提交成功后刷新评论数据
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == C.request.COMMENT_WINDOW) {
-                requestData();
-            }
-        }
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
     }
-
-
-//    @Override
-//    public void onItemClick(View itemView, int position) {
-//        if (ClickTracker.isDoubleClick()) return;
-//        CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
-//    }
 
     @Override
     public void onRefresh() {
@@ -290,6 +266,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     @Override
     public void onUpdateComment() {
-        requestData();
+        mCommentAdapter.notifyItemInserted(0);
     }
 }

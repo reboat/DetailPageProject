@@ -25,23 +25,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
+import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
@@ -62,7 +70,7 @@ import butterknife.OnClick;
  */
 
 public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        ActivityTopicAdapter.CommonOptCallBack, CommentWindowDialog.updateCommentListener {
+        ActivityTopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean> {
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
     @BindView(R2.id.tv_comment)
@@ -95,6 +103,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * 上下滑动超出范围处理
      */
     private TouchSlopHelper mTouchSlopHelper;
+
+    /**
+     * 加载更多
+     */
+    private FooterLoadMore more;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +184,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        more = new FooterLoadMore(mRecyclerView, this);
         initFixTitle();
     }
 
@@ -473,26 +487,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         datas.add(data);
         //webview
         datas.add(data);
-//        //订阅
-//        if (!TextUtils.isEmpty(data.getArticle().getColumn_name())) {
-//            datas.add(data);
-//        }
-//
-//        //相关专题
-//        if (data.getArticle().getRelated_subjects() != null && data.getArticle().getRelated_subjects().size() > 0) {
-//            datas.add(data);
-//        }
-//        //精选评论
-//        if (data.getArticle().getTopic_comment_select() != null && data.getArticle().getTopic_comment_select().size() > 0) {
-//            datas.add(data);
-//
-//        }
-//        //互动评论
-//        if (data.getArticle().getTopic_comment_list() != null && data.getArticle().getTopic_comment_list().size() > 0) {
-//            datas.add(data);
-//        }
 
-        mRecyclerView.setAdapter(adapter = new ActivityTopicAdapter(datas));
+        adapter = new ActivityTopicAdapter(datas);
+        mRecyclerView.setAdapter(adapter);
 
         //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
@@ -576,6 +573,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     @Override
     public void onOptPageFinished() {
+        adapter.setFooterLoadMore(more.getItemView());
         adapter.showAll();
     }
 
@@ -625,7 +623,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -648,8 +646,55 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }
 
-    @Override
-    public void onUpdateComment() {
+    private long lastMinPublishTime;
 
+    /**
+     * 互动评论加载更多成功
+     *
+     * @param data
+     * @param loadMore
+     */
+    @Override
+    public void onLoadMoreSuccess(CommentRefreshBean data, LoadMore loadMore) {
+        if (data != null && data.getComments() != null) {
+            List<HotCommentsBean> commentList = data.getComments();
+            if (commentList.size() > 0) {
+                lastMinPublishTime = getLastMinPublishTime();
+            }
+            adapter.addData(commentList, true);
+            if (commentList.size() < C.PAGE_SIZE) {
+                loadMore.setState(LoadMore.TYPE_NO_MORE);
+            }
+
+        } else {
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+    }
+
+    /**
+     * 互动评论加载更多
+     *
+     * @param callback
+     */
+    @Override
+    public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
+        new CommentListTask(callback, true).setTag(this).exe(mArticleId, lastMinPublishTime);
+    }
+
+    /**
+     * @return 获取最后一次刷新的时间戳
+     */
+    private Long getLastMinPublishTime() {
+        int size = adapter.getDataSize();
+        if (size > 0) {
+            int count = 1;
+            while (size - count >= 0) {
+                Object data = adapter.getData(size - count++);
+                if (data instanceof HotCommentsBean) {
+                    return ((HotCommentsBean) data).getSort_number();
+                }
+            }
+        }
+        return null;
     }
 }

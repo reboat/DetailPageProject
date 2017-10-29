@@ -616,7 +616,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     private Bundle bundle;
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_back, R2.id.menu_comment, R2.id.menu_setting})
+            R2.id.tv_comment, R2.id.iv_back, R2.id.menu_comment})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 

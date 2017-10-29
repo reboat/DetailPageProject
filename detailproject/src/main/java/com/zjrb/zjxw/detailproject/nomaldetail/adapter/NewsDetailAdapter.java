@@ -20,7 +20,9 @@ import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsRelateNewsHolder;
+import com.zjrb.zjxw.detailproject.holder.NewsRelateNewsTextHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
+import com.zjrb.zjxw.detailproject.holder.NewsStringClickMoreHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
@@ -42,10 +44,14 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int VIEW_TYPE_RELATE_SUBJECT = 4;
     //相关新闻
     public static final int VIEW_TYPE_RELATE_NEWS = 5;
+    //相关新闻无图片
+    public static final int VIEW_TYPE_RELATE_NEWS_TEXT = 6;
     //热门评论
-    public static final int VIEW_TYPE_COMMENT = 6;
+    public static final int VIEW_TYPE_COMMENT = 7;
     //字符串
-    public static final int VIEW_TYPE_STRING = 7;
+    public static final int VIEW_TYPE_STRING = 8;
+    //点击查看更多评论
+    public static final int VIEW_TYPE_STRING_CLICK_MORE = 9;
 
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
@@ -76,10 +82,14 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             return new NewsRelateSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
             return new NewsRelateNewsHolder(parent);
+        } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
+            return new NewsRelateNewsTextHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
             return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()));
         } else if (viewType == VIEW_TYPE_STRING) {
             return new NewsStringTextHolder(parent);
+        } else if (viewType == VIEW_TYPE_STRING_CLICK_MORE) {
+            return new NewsStringClickMoreHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -94,14 +104,18 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (position == 2) {
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
-        } else if (getData(position) instanceof String) {
+        } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论")) {
             return VIEW_TYPE_STRING;
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
-        } else if (getData(position) instanceof RelatedNewsBean) {
+        } else if (getData(position) instanceof RelatedNewsBean && !TextUtils.isEmpty(((RelatedNewsBean) getData(position)).getPic())) {
             return VIEW_TYPE_RELATE_NEWS;
+        } else if (getData(position) instanceof RelatedNewsBean && TextUtils.isEmpty(((RelatedNewsBean) getData(position)).getPic())) {
+            return VIEW_TYPE_RELATE_NEWS_TEXT;
         } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
+        } else if (getData(position) instanceof String && getData(position).toString().equals("点击查看更多评论")) {
+            return VIEW_TYPE_STRING_CLICK_MORE;
         }
         return 0;
     }
@@ -168,6 +182,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
             datas.add("热门评论");
             datas.addAll(hotCommentsBeen);
+            datas.add("点击查看更多评论");
         }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }

@@ -5,6 +5,7 @@
     android:id="@+id/ll_fixed_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#00000000"
     android:orientation="vertical"
     android:paddingBottom="15dp"
     android:paddingLeft="12dp"
@@ -16,12 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
-        android:focusable="true"
-        android:maxLines="5"
         android:ellipsize="end"
+        android:focusable="true"
         android:gravity="left"
-        android:textColor="?attr/tc_484848"
-        android:textSize="@dimen/ts_20sp"
+        android:maxLines="5"
+        android:textColor="?attr/tc_ffffff"
+        android:textSize="@dimen/ts_18sp"
+        android:textStyle="bold"
         tools:text="千年历史沿革畔邵史沿革畔邵" />
 
     <TextView
@@ -32,7 +34,7 @@
         android:drawableLeft="@mipmap/module_detail_activity_host"
         android:drawablePadding="3dp"
         android:padding="3dp"
-        android:textColor="?attr/tc_999999"
+        android:textColor="?attr/tc_d2d2d2"
         android:textSize="@dimen/ts_13sp"
         android:visibility="gone"
         tools:text="主持人：小明" />
@@ -44,7 +46,7 @@
         android:drawableLeft="@mipmap/module_detail_activity_guest"
         android:drawablePadding="3dp"
         android:padding="3dp"
-        android:textColor="?attr/tc_999999"
+        android:textColor="?attr/tc_d2d2d2"
         android:textSize="@dimen/ts_13sp"
         android:visibility="gone"
         tools:text="嘉宾：小明  豆包" />

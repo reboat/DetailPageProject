@@ -26,7 +26,6 @@
         android:layout_marginLeft="12.5dp"
         android:layout_marginRight="12.5dp"
         android:layout_marginTop="5dp"
-        android:fitsSystemWindows="true"
         android:orientation="vertical"
         app:fitType="top">
 
@@ -39,6 +38,7 @@
             android:lineSpacingMultiplier="1.1"
             android:textColor="?attr/tc_000000"
             android:textSize="@dimen/ts_22sp"
+            android:textStyle="bold"
             tools:text="浙商银行程度" />
         <!--新闻来源全部显示-->
         <TextView
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_10sp"
+            android:textSize="@dimen/ts_11sp"
             tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰" />
 
     </com.aliya.view.fitsys.FitWindowsLinearLayout>
@@ -64,7 +64,7 @@
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:textColor="?attr/tc_999999"
-        android:textSize="@dimen/ts_14sp"
+        android:textSize="@dimen/ts_11sp"
         tools:text="2017-05-16 14:24" />
 
     <TextView
@@ -81,7 +81,7 @@
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
         android:textColor="?attr/tc_f44b50"
-        android:textSize="@dimen/ts_14sp"
+        android:textSize="@dimen/ts_11sp"
         tools:text="杭州频道" />
 
 </RelativeLayout>

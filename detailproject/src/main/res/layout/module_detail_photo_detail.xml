@@ -148,7 +148,6 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/menu_comment"
-                android:background="@drawable/module_detail_bg_atlas_say_words"
                 >
 
                 <TextView

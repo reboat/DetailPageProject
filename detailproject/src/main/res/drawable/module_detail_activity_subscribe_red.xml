@@ -8,6 +8,6 @@
 
     <stroke
         android:width="0.5dp"
-        android:color="?attr/tc_f44b50"/>
+        android:color="@color/tc_f44b50"/>
 
 </shape>

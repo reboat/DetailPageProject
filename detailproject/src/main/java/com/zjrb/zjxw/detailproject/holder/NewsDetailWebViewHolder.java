@@ -217,6 +217,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     /**
      * @param event 删除评论后刷新列表
      */
+    //TODO  WLJ 优化  回调
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onEvent(Object event) {
         EventBus.getDefault().removeStickyEvent(event);

@@ -1,45 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/ry_container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="?attr/bc_202124"
-             android:orientation="vertical"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ry_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/bc_202124"
     >
-
-    <!--错误页面-->
-    <RelativeLayout
-        android:id="@+id/view_exise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        >
-
-        <ImageView
-            android:id="@+id/iv_exise"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:scaleType="fitXY"
-            android:src="?attr/module_detail_loading"
-            app:iv_maskColor="@color/module_detail_comment_night"
-            app:ratio_w2h="95:95"
-            />
-
-        <TextView
-            android:id="@+id/tv_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_exise"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:padding="3dp"
-            android:text="重新加载"
-            android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_14sp" />
-
-    </RelativeLayout>
 
     <com.aliya.view.ratio.RatioFrameLayout
         android:id="@+id/video_container"
@@ -68,9 +34,8 @@
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/bc_202124"
         android:layout_below="@+id/video_container"
-        android:visibility="visible">
+        >
 
         <com.aliya.view.fitsys.FitWindowsRecyclerView
             android:id="@+id/rv_content"

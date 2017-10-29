@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:background="@android:color/background_dark"
             android:scaleType="fitXY"
-            tools:src="@mipmap/me_friend_btn"/>
+            />
 
         <ImageView
             android:id="@+id/iv_staus"

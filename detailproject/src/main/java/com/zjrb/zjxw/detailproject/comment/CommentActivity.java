@@ -21,7 +21,6 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -148,7 +147,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
-        mRvContent.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
+        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.bc_dddddd));
         head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
         tvHot = (TextView) head.findViewById(R.id.tv_hot);
         //添加刷新头

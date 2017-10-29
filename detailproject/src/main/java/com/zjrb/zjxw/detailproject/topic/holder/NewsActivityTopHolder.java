@@ -1,10 +1,6 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.graphics.Color;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -31,8 +27,6 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
     @BindView(R2.id.iv_cover)
     ImageView mIvCover;
-    @BindView(R2.id.fl_cover_alpha_place_holder)
-    public View mFlCoverAlphaPlaceHolder;
     @BindView(R2.id.tv_cover_title)
     public TextView mTvCoverTitle;
     @BindView(R2.id.tv_host)
@@ -47,46 +41,6 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public NewsActivityTopHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_activity_top, parent, false));
         ButterKnife.bind(this, itemView);
-        mColor484848 = ContextCompat.getColor(itemView.getContext(), R.color.color_484848);
-    }
-
-    /**
-     * 文字颜色渐变
-     */
-    private int mGradientTxtColor;
-    //获取某一个百分比间的颜色,radio取值[0,1]
-    private boolean isInitCoverShade = false;
-    private int mCoverShadeRedRange;
-    private int mCoverShadeBlueRange;
-    private int mCoverShadeGreenRange;
-    private int mCoverShadeRedStart;
-    private int mCoverShadeBlueStart;
-    private int mCoverShadeGreenStart;
-
-    private int mColor484848;
-
-    public int getColor(float radio) {
-        if (!isInitCoverShade) {
-            mCoverShadeRedStart = Color.red(Color.WHITE);
-            mCoverShadeBlueStart = Color.blue(Color.WHITE);
-            mCoverShadeGreenStart = Color.green(Color.WHITE);
-            mCoverShadeRedRange = Color.red(mColor484848) - mCoverShadeRedStart;
-            mCoverShadeBlueRange = Color.blue(mColor484848) - mCoverShadeBlueStart;
-            mCoverShadeGreenRange = Color.green(mColor484848) - mCoverShadeGreenStart;
-            isInitCoverShade = true;
-        }
-
-        return Color.argb(255,
-                (int) (mCoverShadeRedStart + (mCoverShadeRedRange * radio + 0.5)),
-                (int) (mCoverShadeGreenStart + (mCoverShadeGreenRange * radio + 0.5)),
-                (int) (mCoverShadeBlueStart + (mCoverShadeBlueRange * radio + 0.5)));
-    }
-
-    public void setCoverTxtColor(float radio) {
-        mGradientTxtColor = getColor(radio);
-        mTvGuest.setTextColor(mGradientTxtColor);
-        mTvHost.setTextColor(mGradientTxtColor);
-        mTvCoverTitle.setTextColor(mGradientTxtColor);
     }
 
     @Override
@@ -98,20 +52,12 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
             ViewGroup.LayoutParams params = mLlCover.getLayoutParams();
             params.width = UIUtils.getScreenW();
             params.height = UIUtils.getScreenH();
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                //TODO WLJ
-                params.height -= 60;//UIUtils.getStatusBarHeight();
-            }
             mLlCover.setLayoutParams(params);
             GlideApp.with(mIvCover).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvCover);
         } else {
             mLlCover.setVisibility(View.GONE);
         }
 
-        //标题
-        FrameLayout.LayoutParams coverLp = (FrameLayout.LayoutParams) mLlFixedTitle.getLayoutParams();
-        coverLp.gravity = Gravity.BOTTOM | Gravity.LEFT;
-        mLlFixedTitle.setLayoutParams(coverLp);
         if (mData.getArticle().getDoc_title() != null) {
             mTvCoverTitle.setText(mData.getArticle().getDoc_title());
         }

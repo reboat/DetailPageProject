@@ -30,7 +30,7 @@
             android:gravity="top|left"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:textColor="?attr/tc_4d95fa"
+            android:textColor="?attr/module_detail_tc_4d95fa"
             android:textSize="@dimen/ts_12sp"
             tools:text="你好" />
 
@@ -57,7 +57,7 @@
             android:includeFontPadding="false"
             android:lineSpacingMultiplier="1.2"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_10sp"
+            android:textSize="@dimen/ts_16sp"
             tools:text="卡死搭建的空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
 
         <!--回复-->
@@ -69,7 +69,7 @@
             android:layout_below="@id/tv_content"
             android:layout_marginRight="11.5dp"
             android:layout_marginTop="11dp"
-            android:background="@drawable/border_f5f5f5"
+            android:background="?attr/module_detail_border_f5f5f5"
             android:visibility="gone"
             >
 
@@ -83,6 +83,7 @@
                 android:layout_marginTop="17dp"
                 android:textColor="?attr/tc_999999"
                 android:visibility="gone"
+                android:textSize="@dimen/ts_14sp"
                 tools:text="评论已删除" />
 
             <TextView
@@ -91,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:padding="3dp"
-                android:textColor="?attr/tc_4d95fa"
+                android:textColor="?attr/module_detail_tc_4d95fa"
                 android:textSize="@dimen/ts_12sp"
                 tools:text="评论者" />
 
@@ -117,7 +118,7 @@
                 android:gravity="left|center"
                 android:lineSpacingMultiplier="1.2"
                 android:textColor="?attr/tc_484848"
-                android:textSize="@dimen/ts_16sp"
+                android:textSize="@dimen/ts_14sp"
                 tools:text="手动加卡是的空间啊觉得啊会计师空数据东方时空京东方空数据东方红看似简单福克斯就返回数据看大富科技是地方接口是父控件是父控件是的福克斯的父控件是的发" />
 
         </RelativeLayout>
@@ -143,7 +144,7 @@
                 android:maxLines="1"
                 android:text="2016-09-01 21:20"
                 android:textColor="?attr/tc_484848"
-                android:textSize="@dimen/ts_10sp"
+                android:textSize="@dimen/ts_11sp"
                 tools:text="2016-09-01 21:20" />
 
             <TextView
@@ -156,7 +157,7 @@
                 android:drawableLeft="?attr/module_detail_comment_prise"
                 android:drawablePadding="7dp"
                 android:textColor="?attr/tc_999999"
-                android:textSize="@dimen/ts_12sp"
+                android:textSize="@dimen/ts_11sp"
                 tools:text="1000" />
 
             <!--如果是自己发布的评论 则可以删除-->

@@ -4,6 +4,13 @@
     <style name="DetailDayTheme">
 
         <item name="module_detail_color_7f000000_7f191919">#7f000000</item>
+        <item name="module_detail_news_comment">@drawable/module_detail_news_comment</item>
+        <item name="module_detail_news_more">@drawable/module_detail_news_more</item>
+        <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
+        <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>
+        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left</item>
+        <item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>
+
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>
         <!--话题-->
@@ -12,12 +19,21 @@
 
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
+        <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>
+        <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>
+        <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
 
     </style>
 
     <style name="DetailNightTheme">
 
         <item name="module_detail_color_7f000000_7f191919">#7f191919</item>
+        <item name="module_detail_news_comment">@drawable/module_detail_news_comment_night</item>
+        <item name="module_detail_news_more">@drawable/module_detail_news_more_night</item>
+        <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
+        <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>
+        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left_night</item>
+        <item name="module_detail_tc_4d95fa">@color/tc_315277</item>
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
         <!--话题-->
@@ -25,6 +41,9 @@
         <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night</item>
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
+        <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
+        <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>
+        <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
 
     </style>
 </resources>

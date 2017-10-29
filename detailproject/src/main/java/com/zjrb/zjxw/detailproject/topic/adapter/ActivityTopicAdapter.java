@@ -42,8 +42,6 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
     public static final int VIEW_TYPE_MIDDLE = 3;
     //相关专题
     public static final int VIEW_TYPE_RELATE_SUBJECT = 4;
-    //评论精选
-//    public static final int VIEW_TYPE_BEAUT_COMMENT = 5;
     //互动评论
     public static final int VIEW_TYPE_COMMENT = 5;
     //字符串
@@ -95,13 +93,13 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
         } else if (getData(position) instanceof DraftDetailBean) {
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
-        } else if (getData(position) instanceof String) {
+        } else if (getData(position) instanceof String && !getData(position).toString().equals("互动")) {
             return VIEW_TYPE_STRING;
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
-        } else if ((getData(position) instanceof HotCommentsBean) && detailBean.getArticle().isTopic_comment_has_more()) {
+        } else if ((getData(position) instanceof String) && getData(position).toString().equals("互动")) {
             return VIEW_TYPE_TEXT_MORE;
         }
         return 0;
@@ -146,7 +144,7 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
         }
 
         //添加相关专题
-         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
+        List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {
             datas.add("相关专题");
             datas.addAll(subjectList);

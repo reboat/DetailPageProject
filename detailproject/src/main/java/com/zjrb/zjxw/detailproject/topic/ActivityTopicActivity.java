@@ -1,29 +1,24 @@
 package com.zjrb.zjxw.detailproject.topic;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -31,15 +26,17 @@ import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.load.LoadViewHolder;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -54,7 +51,6 @@ import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
-import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
@@ -78,28 +74,32 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     TextView mTvComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.floor_bar)
-    FrameLayout mFloorBar;
     @BindView(R2.id.v_toolbar_divider)
     View mVToolbarDivider;
-    @BindView(R2.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R2.id.tv_cover_title)
-    TextView mTvCoverTitle;
-    @BindView(R2.id.tv_host)
-    TextView mTvHost;
-    @BindView(R2.id.tv_guest)
-    TextView mTvGuest;
-    @BindView(R2.id.ll_fixed)
-    LinearLayout mLlFixedTitle;
-    //    @BindView(R2.id.fy_container)
-//    RelativeLayout mContainer;
-    @BindView(R2.id.view_exise)
-    LinearLayout mViewExise;
-    @BindView(R2.id.fl_comment)
-    FrameLayout mFyContainer;
+    //    @BindView(R2.id.toolbar)
+//    Toolbar mToolbar;
+//    @BindView(R2.id.tv_cover_title)
+//    TextView mTvCoverTitle;
+//    @BindView(R2.id.tv_host)
+//    TextView mTvHost;
+//    @BindView(R2.id.tv_guest)
+//    TextView mTvGuest;
+//    @BindView(R2.id.ll_fixed)
+//    LinearLayout mLlFixedTitle;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
+    @BindView(R2.id.ly_bottom_comment)
+    FitWindowsRelativeLayout mFloorBar;
+    @BindView(R2.id.fl_comment)
+    FrameLayout mFyContainer;
+    @BindView(R2.id.menu_comment)
+    ImageView mMenuComment;
+    @BindView(R2.id.tv_comments_num)
+    TextView mTvCommentsNum;
+    @BindView(R2.id.iv_share)
+    ImageView mIvShare;
+    @BindView(R2.id.ry_tools)
+    FrameLayout mRyContainer;
 
     private ActivityTopicAdapter adapter;
     /**
@@ -171,23 +171,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      */
     private void initView() {
         //TODO  WLJ
-        mStatusBarHeight = 60;//UIUtils.getStatusBarHeight();
-        setSupportActionBar(mToolbar);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mToolbar.getLayoutParams();
-            layoutParams.topMargin = mStatusBarHeight;
-            mToolbar.setLayoutParams(layoutParams);
-        }
+//        mStatusBarHeight = 60;//UIUtils.getStatusBarHeight();
+//        setSupportActionBar(mToolbar);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+//            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mToolbar.getLayoutParams();
+////            layoutParams.topMargin = mStatusBarHeight;
+//            mToolbar.setLayoutParams(layoutParams);
+//        }
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        more = new FooterLoadMore(mRecyclerView, this);
         initFixTitle();
     }
 
@@ -196,191 +194,191 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * 初始化标题显示位置
      */
     private void initFixTitle() {
-        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mLlFixedTitle.getLayoutParams();
-        lp.addRule(RelativeLayout.BELOW, R.id.toolbar);
-        mLlFixedTitle.setLayoutParams(lp);
-        mLlFixedTitle.setBackgroundColor(Color.WHITE);
+//        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mLlFixedTitle.getLayoutParams();
+//        lp.addRule(RelativeLayout.BELOW, R.id.ry_tools);
+//        mLlFixedTitle.setLayoutParams(lp);
+//        mLlFixedTitle.setBackgroundColor(Color.WHITE);
     }
 
-    /**
-     * 状态栏颜色渐变
-     */
-    private boolean isInitStatusColor = false;
-    private int mStatusRedStart;
-    private int mStatusBlueStart;
-    private int mStatusGreenStart;
-    private int mStatusAlpha;
-    private int mStatusColorEnd;
-
-    public int getStatusColor(float radio) {
-        mStatusColorEnd = ContextCompat.getColor(this, R.color.bc_999999);
-        if (!isInitStatusColor) {
-            mStatusRedStart = Color.red(mStatusColorEnd);
-            mStatusBlueStart = Color.blue(mStatusColorEnd);
-            mStatusGreenStart = Color.green(mStatusColorEnd);
-            isInitStatusColor = true;
-        }
-        mStatusAlpha = (int) (((255) * radio + 0.5));
-        if (mStatusAlpha < 0) {
-            mStatusAlpha = 0;
-        }
-        if (mStatusAlpha > 255) {
-            mStatusAlpha = 255;
-        }
-        return Color.argb(mStatusAlpha, mStatusRedStart, mStatusGreenStart, mStatusBlueStart);
-    }
-
-
-    int mStatusBarHeight;
-    int[] mCurCoverTitleYAxis = new int[2];
-    int mLastCoverTitleYAxis;
-    private float mGradientRadio;
-    private boolean isInitCriticalCoverTitleY = false;
-    private int mCriticalCoverTitleY;
-    private int mGradientRange;
-    private int mGradientY;
-    private int mGradientAlpha;
-
-    private NewsActivityTopHolder mCoverVH;
+//    /**
+//     * 状态栏颜色渐变
+//     */
+//    private boolean isInitStatusColor = false;
+//    private int mStatusRedStart;
+//    private int mStatusBlueStart;
+//    private int mStatusGreenStart;
+//    private int mStatusAlpha;
+//    private int mStatusColorEnd;
+//
+//    public int getStatusColor(float radio) {
+//        mStatusColorEnd = ContextCompat.getColor(this, R.color.bc_999999);
+//        if (!isInitStatusColor) {
+//            mStatusRedStart = Color.red(mStatusColorEnd);
+//            mStatusBlueStart = Color.blue(mStatusColorEnd);
+//            mStatusGreenStart = Color.green(mStatusColorEnd);
+//            isInitStatusColor = true;
+//        }
+//        mStatusAlpha = (int) (((255) * radio + 0.5));
+//        if (mStatusAlpha < 0) {
+//            mStatusAlpha = 0;
+//        }
+//        if (mStatusAlpha > 255) {
+//            mStatusAlpha = 255;
+//        }
+//        return Color.argb(mStatusAlpha, mStatusRedStart, mStatusGreenStart, mStatusBlueStart);
+//    }
+//
+//
+//    //    int mStatusBarHeight;
+//    int[] mCurCoverTitleYAxis = new int[2];
+//    int mLastCoverTitleYAxis;
+//    private float mGradientRadio;
+//    private boolean isInitCriticalCoverTitleY = false;
+//    private int mCriticalCoverTitleY;
+//    private int mGradientRange;
+//    private int mGradientY;
+//    private int mGradientAlpha;
+//
+//    private NewsActivityTopHolder mCoverVH;
 
     /**
      * 滚动监听实现方法
      * fuck 待优化
      */
-    private void HeadScrollChild() {
-        if (mToolbar.getHeight() == 0) {
-            return;
-        }
-
-        if (mCoverVH == null) {
-            mCoverVH = (NewsActivityTopHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
-        }
-
-        if (!isInitCriticalCoverTitleY) {
-            mCriticalCoverTitleY = mToolbar.getHeight() + mStatusBarHeight;
-            mGradientY = mToolbar.getHeight() + mCoverVH.mTvCoverTitle.getHeight() * 2 + mStatusBarHeight;
-            mGradientRange = mCoverVH.mTvCoverTitle.getHeight() * 2;
-            isInitCriticalCoverTitleY = true;
-        }
-
-        mCoverVH.mTvCoverTitle.getLocationInWindow(mCurCoverTitleYAxis);
-
-        //向上滚动
-        if (mCurCoverTitleYAxis[1] < mLastCoverTitleYAxis) {//Up Scroll
-            //Cover Title Fixed Title
-            if (mCurCoverTitleYAxis[1] <= mCriticalCoverTitleY && mCriticalCoverTitleY <= mLastCoverTitleYAxis) {
-                mLlFixedTitle.setVisibility(View.VISIBLE);
-                mCoverVH.mTvCoverTitle.setVisibility(View.INVISIBLE);
-                mToolbar.setBackgroundColor(Color.argb(255, 255, 255, 255));
-                mVToolbarDivider.setVisibility(View.VISIBLE);
-            }
-
-            //Gradient
-            if (mCurCoverTitleYAxis[1] >= mCriticalCoverTitleY) {
-                if (mCurCoverTitleYAxis[1] < mGradientY) {
-                    mGradientRadio = (mGradientY - mCurCoverTitleYAxis[1]) * 1.0f / mGradientRange;
-                    mGradientAlpha = Math.round(mGradientRadio * 255.0f);
-                    mCoverVH.setCoverTxtColor(mGradientRadio);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        setStatusBarColor(getStatusColor(mGradientRadio));
-                    }
-                    mCoverVH.mFlCoverAlphaPlaceHolder.setVisibility(View.VISIBLE);
-                    mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
-
-                    //标题
-                    if (mNewsDetail.getArticle().getDoc_title() != null) {
-                        mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
-                    }
-
-                    //主持人
-                    if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
-                        if (mTvHost.getVisibility() == View.GONE) {
-                            mTvHost.setVisibility(View.VISIBLE);
-                        }
-                        mTvHost.setText("主持人：");
-                        for (String host :
-                                mNewsDetail.getArticle().getTopic_hosts()) {
-                            mTvHost.append(host);
-                        }
-                    }
-
-                    //嘉宾
-                    if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
-                        if (mTvGuest.getVisibility() == View.GONE) {
-                            mTvGuest.setVisibility(View.VISIBLE);
-                        }
-                        mTvGuest.setText("嘉宾：");
-                        for (String guest :
-                                mNewsDetail.getArticle().getTopic_guests()) {
-                            mTvGuest.append(guest);
-                        }
-                    }
-
-                }
-            }
-        }
-
-        //向下滚动
-        if (mCurCoverTitleYAxis[1] > mLastCoverTitleYAxis) {//Down Scroll
-            //Cover Title FixEd Title
-            if (mCurCoverTitleYAxis[1] >= mCriticalCoverTitleY && mLastCoverTitleYAxis <= mCriticalCoverTitleY) {
-                mLlFixedTitle.setVisibility(View.INVISIBLE);
-                mCoverVH.mTvCoverTitle.setVisibility(View.VISIBLE);
-                mToolbar.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                mVToolbarDivider.setVisibility(View.INVISIBLE);
-            }
-            //Gradient
-            if (mCurCoverTitleYAxis[1] <= mGradientY) {
-                mGradientRadio = (mGradientY - mCurCoverTitleYAxis[1]) * 1.0f / mGradientRange;
-                mGradientAlpha = Math.round(mGradientRadio * 255.0f);
-                mCoverVH.setCoverTxtColor(mGradientRadio);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    setStatusBarColor(getStatusColor(mGradientRadio));
-                }
-                mCoverVH.mFlCoverAlphaPlaceHolder.setVisibility(View.VISIBLE);
-                mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
-                //标题
-                if (mNewsDetail.getArticle().getDoc_title() != null) {
-                    mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
-                }
-
-                //主持人
-                if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
-                    if (mTvHost.getVisibility() == View.GONE) {
-                        mTvHost.setVisibility(View.VISIBLE);
-                    }
-                    mTvHost.setText("主持人：");
-                    for (String host :
-                            mNewsDetail.getArticle().getTopic_hosts()) {
-                        mTvHost.append(host);
-                    }
-                }
-
-                //嘉宾
-                if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
-                    if (mTvGuest.getVisibility() == View.GONE) {
-                        mTvGuest.setVisibility(View.VISIBLE);
-                    }
-                    mTvGuest.setText("嘉宾：");
-                    for (String guest :
-                            mNewsDetail.getArticle().getTopic_guests()) {
-                        mTvGuest.append(guest);
-                    }
-                }
-            } else {
-                if (mGradientRadio > 0) {
-                    mGradientRadio = 0.0f;
-                    mCoverVH.setCoverTxtColor(mGradientRadio);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        setStatusBarColor(getStatusColor(mGradientRadio));
-                    }
-                    mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(0, 255, 255, 255));
-                }
-            }
-        }
-
-        mLastCoverTitleYAxis = mCurCoverTitleYAxis[1];
-    }
+//    private void HeadScrollChild() {
+////        if (mToolbar.getHeight() == 0) {
+////            return;
+////        }
+//
+//        if (mCoverVH == null) {
+//            mCoverVH = (NewsActivityTopHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
+//        }
+//
+//        if (!isInitCriticalCoverTitleY) {
+//            mCriticalCoverTitleY = mRyContainer.getHeight();
+//            mGradientY = mCoverVH.mTvCoverTitle.getHeight() * 2;
+//            mGradientRange = mCoverVH.mTvCoverTitle.getHeight() * 2;
+//            isInitCriticalCoverTitleY = true;
+//        }
+//
+//        mCoverVH.mTvCoverTitle.getLocationInWindow(mCurCoverTitleYAxis);
+//
+//        //向上滚动
+//        if (mCurCoverTitleYAxis[1] < mLastCoverTitleYAxis) {//Up Scroll
+//            //Cover Title Fixed Title
+//            if (mCurCoverTitleYAxis[1] <= mCriticalCoverTitleY && mCriticalCoverTitleY <= mLastCoverTitleYAxis) {
+//                mLlFixedTitle.setVisibility(View.VISIBLE);
+//                mCoverVH.mTvCoverTitle.setVisibility(View.INVISIBLE);
+//                mRyContainer.setBackgroundColor(Color.argb(255, 255, 255, 255));
+//                mVToolbarDivider.setVisibility(View.VISIBLE);
+//            }
+//
+//            //Gradient
+//            if (mCurCoverTitleYAxis[1] >= mCriticalCoverTitleY) {
+//                if (mCurCoverTitleYAxis[1] < mGradientY) {
+//                    mGradientRadio = (mGradientY - mCurCoverTitleYAxis[1]) * 1.0f / mGradientRange;
+//                    mGradientAlpha = Math.round(mGradientRadio * 255.0f);
+//                    mCoverVH.setCoverTxtColor(mGradientRadio);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        setStatusBarColor(getStatusColor(mGradientRadio));
+//                    }
+//                    mCoverVH.mFlCoverAlphaPlaceHolder.setVisibility(View.VISIBLE);
+//                    mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
+//
+//                    //标题
+//                    if (mNewsDetail.getArticle().getDoc_title() != null) {
+//                        mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
+//                    }
+//
+//                    //主持人
+//                    if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+//                        if (mTvHost.getVisibility() == View.GONE) {
+//                            mTvHost.setVisibility(View.VISIBLE);
+//                        }
+//                        mTvHost.setText("主持人：");
+//                        for (String host :
+//                                mNewsDetail.getArticle().getTopic_hosts()) {
+//                            mTvHost.append(host);
+//                        }
+//                    }
+//
+//                    //嘉宾
+//                    if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+//                        if (mTvGuest.getVisibility() == View.GONE) {
+//                            mTvGuest.setVisibility(View.VISIBLE);
+//                        }
+//                        mTvGuest.setText("嘉宾：");
+//                        for (String guest :
+//                                mNewsDetail.getArticle().getTopic_guests()) {
+//                            mTvGuest.append(guest);
+//                        }
+//                    }
+//
+//                }
+//            }
+//        }
+//
+//        //向下滚动
+//        if (mCurCoverTitleYAxis[1] > mLastCoverTitleYAxis) {//Down Scroll
+//            //Cover Title FixEd Title
+//            if (mCurCoverTitleYAxis[1] >= mCriticalCoverTitleY && mLastCoverTitleYAxis <= mCriticalCoverTitleY) {
+//                mLlFixedTitle.setVisibility(View.INVISIBLE);
+//                mCoverVH.mTvCoverTitle.setVisibility(View.VISIBLE);
+//                mRyContainer.setBackgroundColor(Color.argb(0, 255, 255, 255));
+//                mVToolbarDivider.setVisibility(View.INVISIBLE);
+//            }
+//            //Gradient
+//            if (mCurCoverTitleYAxis[1] <= mGradientY) {
+//                mGradientRadio = (mGradientY - mCurCoverTitleYAxis[1]) * 1.0f / mGradientRange;
+//                mGradientAlpha = Math.round(mGradientRadio * 255.0f);
+//                mCoverVH.setCoverTxtColor(mGradientRadio);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                    setStatusBarColor(getStatusColor(mGradientRadio));
+//                }
+//                mCoverVH.mFlCoverAlphaPlaceHolder.setVisibility(View.VISIBLE);
+//                mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(mGradientAlpha, 255, 255, 255));
+//                //标题
+//                if (mNewsDetail.getArticle().getDoc_title() != null) {
+//                    mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
+//                }
+//
+//                //主持人
+//                if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+//                    if (mTvHost.getVisibility() == View.GONE) {
+//                        mTvHost.setVisibility(View.VISIBLE);
+//                    }
+//                    mTvHost.setText("主持人：");
+//                    for (String host :
+//                            mNewsDetail.getArticle().getTopic_hosts()) {
+//                        mTvHost.append(host);
+//                    }
+//                }
+//
+//                //嘉宾
+//                if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+//                    if (mTvGuest.getVisibility() == View.GONE) {
+//                        mTvGuest.setVisibility(View.VISIBLE);
+//                    }
+//                    mTvGuest.setText("嘉宾：");
+//                    for (String guest :
+//                            mNewsDetail.getArticle().getTopic_guests()) {
+//                        mTvGuest.append(guest);
+//                    }
+//                }
+//            } else {
+//                if (mGradientRadio > 0) {
+//                    mGradientRadio = 0.0f;
+//                    mCoverVH.setCoverTxtColor(mGradientRadio);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        setStatusBarColor(getStatusColor(mGradientRadio));
+//                    }
+//                    mCoverVH.mFlCoverAlphaPlaceHolder.setBackgroundColor(Color.argb(0, 255, 255, 255));
+//                }
+//            }
+//        }
+//
+//        mLastCoverTitleYAxis = mCurCoverTitleYAxis[1];
+//    }
 
     /**
      * 初始化/拉取数据
@@ -403,22 +401,18 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
-                    mViewExise.setVisibility(View.VISIBLE);
-                    mRecyclerView.setVisibility(View.GONE);
-                    mFloorBar.setVisibility(View.GONE);
-                    mLlFixedTitle.setVisibility(View.GONE);
+                    mIvShare.setVisibility(View.GONE);
                 }
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
     }
 
     /**
      * @param isShowArticlePic 初始化recyleView滚动事件
      */
     private void initRectleView(boolean isShowArticlePic) {
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mRecyclerView.getLayoutParams();
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
         if (isShowArticlePic) {
-            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
             mRecyclerView.setLayoutParams(layoutParams);
             mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -430,44 +424,43 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                     super.onScrolled(recyclerView, dx, dy);
-                    HeadScrollChild();
+//                    HeadScrollChild();
 
                 }
             });
         } else {
-            layoutParams.addRule(RelativeLayout.BELOW, R.id.ll_fixed);
-            mRecyclerView.setLayoutParams(layoutParams);
-            mToolbar.setBackgroundColor(Color.WHITE);
-            mTvCoverTitle.setVisibility(View.VISIBLE);
-            mVToolbarDivider.setVisibility(View.VISIBLE);
-            //标题
-            if (mNewsDetail.getArticle().getDoc_title() != null) {
-                mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
-            }
-
-            //主持人
-            if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
-                if (mTvHost.getVisibility() == View.GONE) {
-                    mTvHost.setVisibility(View.VISIBLE);
-                }
-                mTvHost.setText("主持人：");
-                for (String host :
-                        mNewsDetail.getArticle().getTopic_hosts()) {
-                    mTvHost.append(host);
-                }
-            }
-
-            //嘉宾
-            if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
-                if (mTvGuest.getVisibility() == View.GONE) {
-                    mTvGuest.setVisibility(View.VISIBLE);
-                }
-                mTvGuest.setText("嘉宾：");
-                for (String guest :
-                        mNewsDetail.getArticle().getTopic_guests()) {
-                    mTvGuest.append(guest);
-                }
-            }
+//            mRecyclerView.setLayoutParams(layoutParams);
+////            mToolbar.setBackgroundColor(Color.WHITE);
+//            mTvCoverTitle.setVisibility(View.VISIBLE);
+//            mVToolbarDivider.setVisibility(View.VISIBLE);
+//            //标题
+//            if (mNewsDetail.getArticle().getDoc_title() != null) {
+//                mTvCoverTitle.setText(mNewsDetail.getArticle().getDoc_title());
+//            }
+//
+//            //主持人
+//            if (!mNewsDetail.getArticle().isTopic_hostsEmpty()) {
+//                if (mTvHost.getVisibility() == View.GONE) {
+//                    mTvHost.setVisibility(View.VISIBLE);
+//                }
+//                mTvHost.setText("主持人：");
+//                for (String host :
+//                        mNewsDetail.getArticle().getTopic_hosts()) {
+//                    mTvHost.append(host);
+//                }
+//            }
+//
+//            //嘉宾
+//            if (!mNewsDetail.getArticle().isTopic_guestsEmpty()) {
+//                if (mTvGuest.getVisibility() == View.GONE) {
+//                    mTvGuest.setVisibility(View.VISIBLE);
+//                }
+//                mTvGuest.setText("嘉宾：");
+//                for (String guest :
+//                        mNewsDetail.getArticle().getTopic_guests()) {
+//                    mTvGuest.append(guest);
+//                }
+//            }
         }
     }
 
@@ -479,10 +472,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     private void fillData(DraftDetailBean data) {
         //显示UI
-        mViewExise.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
-        mFloorBar.setVisibility(View.VISIBLE);
-        mLlFixedTitle.setVisibility(View.VISIBLE);
+//        mRecyclerView.setVisibility(View.VISIBLE);
+//        mLlFixedTitle.setVisibility(View.VISIBLE);
 
         mNewsDetail = data;
         List datas = new ArrayList<>();
@@ -491,8 +482,19 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         //webview
         datas.add(data);
 
-        adapter = new ActivityTopicAdapter(datas);
-        mRecyclerView.setAdapter(adapter);
+        if (adapter == null) {
+            adapter = new ActivityTopicAdapter(datas);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            more = new FooterLoadMore(mRecyclerView, this);
+            adapter.setEmptyView(
+                    new EmptyPageHolder(mRecyclerView,
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                    ).itemView);
+            mRecyclerView.setAdapter(adapter);
+        } else {
+            adapter.setData(datas);
+        }
+
 
         //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
@@ -502,19 +504,16 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             mMenuPrised.setVisibility(View.GONE);
         }
 
-        //是否允许评论
+        //禁止评论，隐藏评论框及评论按钮
         if (data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
+            mMenuComment.setVisibility(View.GONE);
+            mTvCommentsNum.setVisibility(View.GONE);
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
+            mMenuComment.setVisibility(View.VISIBLE);
         }
     }
-
-    @Override
-    public LoadViewHolder replaceLoad() {
-        return replaceLoad(mContainer);
-    }
-
 
     /**
      * 底部评论框显示动画
@@ -614,20 +613,26 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }).setTag(this).exe(mArticleId, true);
     }
 
+    private Bundle bundle;
+
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_back})
+            R2.id.tv_comment, R2.id.iv_back, R2.id.menu_comment, R2.id.menu_setting})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
+        //点赞
         if (view.getId() == R.id.menu_prised) {
             onOptFabulous();
+            //更多
         } else if (view.getId() == R.id.menu_setting) {
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
+            //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
+            //分享
         } else if (view.getId() == R.id.iv_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
@@ -637,6 +642,15 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()));
         } else if (view.getId() == R.id.iv_back) {
             finish();
+        } else if (view.getId() == R.id.menu_comment) {
+            if (mNewsDetail != null) {
+                //进入评论列表页面
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putSerializable(IKey.NEWS_DETAIL, mNewsDetail);
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
+            }
         }
     }
 
@@ -714,7 +728,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
                 adapter.getData().remove(obj);
                 adapter.notifyItemMoved(count, count);
-                adapter.notifyItemRangeChanged(count, adapter.getDataSize());
+//                adapter.notifyItemRangeChanged(count, adapter.getDataSize());
                 break;
             }
             count++;

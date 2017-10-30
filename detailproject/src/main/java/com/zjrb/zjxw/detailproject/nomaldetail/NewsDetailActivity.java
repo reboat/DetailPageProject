@@ -234,7 +234,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         datas.add(data);
         //web
         datas.add(data);
-        if (mAdapter == null) {
+//        if (mAdapter == null) {
             mRvContent.setLayoutManager(new LinearLayoutManager(this));
             mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.bc_dddddd));
             mAdapter = new NewsDetailAdapter(datas);
@@ -243,9 +243,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
                     ).itemView);
             mRvContent.setAdapter(mAdapter);
-        } else {
-            mAdapter.setData(datas);
-        }
+//        } else {
+//            mAdapter.setData(datas);
+//        }
 
 
     }

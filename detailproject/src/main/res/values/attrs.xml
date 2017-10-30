@@ -63,6 +63,7 @@
         <attr name="module_detail_edit_bg" format="reference" />
         <attr name="module_detail_commentedit_left" format="reference" />
         <attr name="module_detail_tc_4d95fa" format="color" />
+        <attr name="top_bar_share_white" format="reference" />
         <!--分享-->
         <attr name="module_detail_share_friend" format="reference" />
         <attr name="module_detail_share_wx" format="reference" />

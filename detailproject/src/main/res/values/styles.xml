@@ -22,6 +22,8 @@
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
+        <item name="top_bar_share_white">@mipmap/module_detail_share_white</item>
+
 
     </style>
 
@@ -44,6 +46,7 @@
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
+        <item name="top_bar_share_white">@mipmap/module_detail_share_white</item>
 
     </style>
 </resources>

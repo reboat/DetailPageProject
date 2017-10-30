@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
@@ -28,15 +27,11 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
     @BindView(R2.id.iv_cover)
     ImageView mIvCover;
     @BindView(R2.id.tv_cover_title)
-    public TextView mTvCoverTitle;
+    TextView mTvCoverTitle;
     @BindView(R2.id.tv_host)
-    public TextView mTvHost;
+    TextView mTvHost;
     @BindView(R2.id.tv_guest)
-    public TextView mTvGuest;
-    @BindView(R2.id.ll_cover_title)
-    public LinearLayout mLlFixedTitle;
-    @BindView(R2.id.ll_cover)
-    FrameLayout mLlCover;
+    TextView mTvGuest;
 
     public NewsActivityTopHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_activity_top, parent, false));
@@ -48,16 +43,17 @@ public class NewsActivityTopHolder extends BaseRecyclerViewHolder<DraftDetailBea
         itemView.setOnClickListener(null);
         //题图
         if (!TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
-            mLlCover.setVisibility(View.VISIBLE);
-            ViewGroup.LayoutParams params = mLlCover.getLayoutParams();
-            params.width = UIUtils.getScreenW();
-            params.height = UIUtils.getScreenH();
-            mLlCover.setLayoutParams(params);
+            mIvCover.setVisibility(View.VISIBLE);
+//            ViewGroup.LayoutParams params = mLlCover.getLayoutParams();
+//            params.width = UIUtils.getScreenW();
+//            params.height = UIUtils.getScreenH();
+//            mLlCover.setLayoutParams(params);
             GlideApp.with(mIvCover).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvCover);
         } else {
-            mLlCover.setVisibility(View.GONE);
+            mIvCover.setVisibility(View.GONE);
         }
 
+        //标题
         if (mData.getArticle().getDoc_title() != null) {
             mTvCoverTitle.setText(mData.getArticle().getDoc_title());
         }

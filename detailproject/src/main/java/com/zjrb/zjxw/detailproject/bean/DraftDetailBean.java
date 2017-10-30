@@ -67,8 +67,8 @@ public class DraftDetailBean extends BaseData {
         private String video_url;
         private int video_duration;
         private double video_size;
-        private long topic_date_start;
-        private long topic_date_end;
+        private long topic_start;
+        private long topic_end;
         private String subject_focus_url;
         private String subject_focus_image;
         private String summary;
@@ -449,19 +449,19 @@ public class DraftDetailBean extends BaseData {
         }
 
         public long getTopic_date_start() {
-            return topic_date_start;
+            return topic_start;
         }
 
         public void setTopic_date_start(long topic_date_start) {
-            this.topic_date_start = topic_date_start;
+            this.topic_start = topic_date_start;
         }
 
         public long getTopic_date_end() {
-            return topic_date_end;
+            return topic_end;
         }
 
         public void setTopic_date_end(long topic_date_end) {
-            this.topic_date_end = topic_date_end;
+            this.topic_end = topic_date_end;
         }
 
         public String getSubject_focus_url() {

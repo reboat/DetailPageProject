@@ -1,35 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/ll_cover"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_cover"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:id="@+id/iv_cover"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        tools:src="@mipmap/flower_test"
+        />
 
-        <ImageView
-            android:id="@+id/iv_cover"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/black"
-            android:scaleType="fitXY"
-            tools:src="@mipmap/flower_test"
-            />
+    <include
+        android:id="@+id/ll_cover_title"
+        layout="@layout/module_detail_activity_title" />
 
-        <!--向上滑动占位-->
-        <!--<View-->
-            <!--android:id="@+id/fl_cover_alpha_place_holder"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_gravity="center_horizontal"/>-->
-
-        <include
-            android:id="@+id/ll_cover_title"
-            layout="@layout/module_detail_activity_title"/>
-
-    </FrameLayout>
-</LinearLayout>
+</FrameLayout>

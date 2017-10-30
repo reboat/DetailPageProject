@@ -60,6 +60,7 @@
             android:layout_marginLeft="15dp"
             android:layout_toLeftOf="@+id/menu_prised"
             android:src="?attr/module_detail_news_comment"
+            app:iv_maskColor="@android:color/transparent"
             />
 
         <TextView
@@ -87,6 +88,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toLeftOf="@+id/menu_setting"
             android:src="?attr/module_detail_news_prise"
+            app:iv_maskColor="@android:color/transparent"
             />
 
         <ImageView
@@ -100,6 +102,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="12dp"
             android:src="?attr/module_detail_news_more"
+            app:iv_maskColor="@android:color/transparent"
             />
     </RelativeLayout>
 </com.aliya.view.fitsys.FitWindowsRelativeLayout>

@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="?attr/tc_484848"
+        android:textColor="?attr/tc_999999"
         android:textSize="11sp"
         tools:text="QQ空间"/>
 </RelativeLayout>

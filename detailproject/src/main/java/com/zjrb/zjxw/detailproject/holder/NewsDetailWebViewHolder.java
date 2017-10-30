@@ -94,10 +94,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 });
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
         String css_js = "";
-        String css = "<link id=\"ui_mode_link\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
-        String html = "<script type=\"text/javascript\" src=\"%1$s\"></script>";
+        String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
+        String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
         //CSS
-        if (sp == null ||sp.css == null || sp.css.isEmpty()) {
+        if (sp == null || sp.css == null || sp.css.isEmpty()) {
             css_js += String.format(css, uiModeCssUri);
         } else {
             for (int i = 0; i < sp.css.size(); i++) {

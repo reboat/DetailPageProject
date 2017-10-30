@@ -154,7 +154,7 @@
                     android:id="@+id/tv_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:background="?attr/module_detail_atlas_edit_bg"
                     android:drawableLeft="@mipmap/module_detail_commentedit_left"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical|left"

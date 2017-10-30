@@ -178,7 +178,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             if (bean.getComment_count() <= 99999) {
                 tvCommentNum.setText(bean.getComment_count() + "条评论");
             } else {
-                tvCommentNum.setText("9999+条评论");
+                tvCommentNum.setText("99999+条评论");
             }
         } else {
             tvCommentNum.setVisibility(View.GONE);

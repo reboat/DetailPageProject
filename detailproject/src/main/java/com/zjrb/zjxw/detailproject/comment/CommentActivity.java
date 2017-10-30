@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -153,7 +152,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
-        requestData();
+        requestData(true);
     }
 
     /**
@@ -164,14 +163,23 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     private void bindData(CommentRefreshBean bean) {
         //初始化标题
         mBean = bean;
-        tvHot.setText(getString(R.string.module_detail_new_comment));
+        if (bean.getComment_count() == 0) {
+            tvHot.setVisibility(View.GONE);
+        } else {
+            tvHot.setVisibility(View.VISIBLE);
+            tvHot.setText(getString(R.string.module_detail_new_comment));
+        }
         if (title != null && !title.isEmpty()) {
             tvTitle.setText(title);
         }
 
         //评论数
-        if (bean != null && !TextUtils.isEmpty(bean.getComment_count())) {
-            tvCommentNum.setText(bean.getComment_count() + "条评论");
+        if (bean != null && bean.getComment_count() > 0) {
+            if (bean.getComment_count() <= 99999) {
+                tvCommentNum.setText(bean.getComment_count() + "条评论");
+            } else {
+                tvCommentNum.setText("9999+条评论");
+            }
         } else {
             tvCommentNum.setVisibility(View.GONE);
         }
@@ -183,7 +191,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").attrId(R.attr.ic_comment_empty)
                     ).itemView);
             mRvContent.setAdapter(mCommentAdapter);
         } else {
@@ -198,7 +206,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     /**
      * 下拉刷新取评论数据
      */
-    private void requestData() {
+    private void requestData(boolean isFirst) {
         new CommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
@@ -214,7 +222,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRvContent)).exe(articleId);
+        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRvContent) : null).exe(articleId);
     }
 
 
@@ -249,7 +257,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void run() {
                 refresh.setRefreshing(false);
-                requestData();
+                requestData(false);
             }
         });
     }

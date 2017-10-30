@@ -15,7 +15,9 @@ import android.widget.FrameLayout;
 
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
@@ -90,8 +92,30 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                         mWebJsInterface.setHtmlText(text);
                     }
                 });
-        //TODO WLJ  服务器如果有返回则使用服务器
-        String htmlResult = String.format(htmlCode, uiModeCssUri, htmlBody);
+        ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        String css_js = "";
+        String css = "<link id=\"ui_mode_link\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
+        String html = "<script type=\"text/javascript\" src=\"%1$s\"></script>";
+        //CSS
+        if (sp == null ||sp.css == null || sp.css.isEmpty()) {
+            css_js += String.format(css, uiModeCssUri);
+        } else {
+            for (int i = 0; i < sp.css.size(); i++) {
+                css_js += String.format(css, sp.css.get(i));
+            }
+        }
+
+        //JS
+        css_js += String.format(html, "file:///android_asset/js/basic.js");
+        if (sp == null || sp.js == null || sp.js.isEmpty()) {
+            css_js += String.format(html, "file:///android_asset/js/basic.js");
+        } else {
+            for (int i = 0; i < sp.js.size(); i++) {
+                css_js += String.format(html, sp.js.get(i));
+            }
+        }
+
+        String htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 
@@ -121,7 +145,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if(!TextUtils.isEmpty(url)){
+                if (!TextUtils.isEmpty(url)) {
                     Nav.with(itemView.getContext()).to(url);
                 }
                 return true;

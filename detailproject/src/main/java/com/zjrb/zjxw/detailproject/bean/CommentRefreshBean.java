@@ -56,8 +56,8 @@ public class CommentRefreshBean extends BaseData {
         this.share_article_info = share_article_info;
     }
 
-    public String getComment_count() {
-        return String.valueOf(comment_count);
+    public int getComment_count() {
+        return comment_count;
     }
 
     public void setComment_count(int comment_count) {

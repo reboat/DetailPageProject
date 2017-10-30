@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="com.zjrb.zjxw.detailproject">
+    package="com.zjrb.zjxw.detailproject">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -131,8 +131,7 @@
         <!--专题详情页-->
         <activity
             android:name=".subject.SpecialActivity"
-            android:launchMode="singleTop"
-            >
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -156,9 +155,7 @@
         </activity>
 
         <!--话题详情页-->
-        <activity
-            android:name=".topic.ActivityTopicActivity"
-            >
+        <activity android:name=".topic.ActivityTopicActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -182,8 +179,7 @@
         </activity>
 
         <!--专题列表-->
-        <activity
-            android:name=".subject.SpecialListActivity">
+        <activity android:name=".subject.SpecialListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -198,8 +194,7 @@
         </activity>
 
         <!--官员详情页-->
-        <activity
-            android:name=".persionaldetail.PersionalDetailActivity">
+        <activity android:name=".persionaldetail.PersionalDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -221,8 +216,7 @@
         </activity>
 
         <!--官员新闻列表-->
-        <activity
-            android:name=".persionaldetail.PersionalListActivity">
+        <activity android:name=".persionaldetail.PersionalListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -1,6 +1,68 @@
 <resources>
 
     <style name="AppTheme" parent="CoreTheme.Base">
+
+        <item name="module_news_color_484848_7a7b7d">#484848</item>
+        <item name="module_news_color_f44b50_8e3636">#f44b50</item>
+        <item name="module_news_color_4d95fa_315277">#4d95fa</item>
+        <item name="module_news_color_000000_7a7b7d">#000000</item>
+        <item name="module_news_color_ffffff_bababa">#ffffff</item>
+        <item name="module_news_color_e85757_8e3636">#e85757</item>
+        <item name="module_news_color_999999_5c5c5c">#999999</item>
+        <item name="module_news_color_ffffff_cacaca">#ffffff</item>
+        <item name="module_news_color_ffffff_202124">#ffffff</item>
+        <item name="module_news_color_7f000000_7f191919">#7f000000</item>
+        <item name="module_news_color_dddddd_343434">#dddddd</item>
+        <item name="module_news_color_f0f0f0_191919">#f0f0f0</item>
+        <item name="module_news_color_f5f5f5_191919">#f5f5f5</item>
+        <item name="module_news_color_d8d8d8_5c5c5c">#d8d8d8</item>
+        <item name="module_news_color_ffffff_7a7b7d">#ffffff</item>
+        <item name="module_news_mask_00000000_7f000000">#00000000</item>
+
+        <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>
+        <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
+
+        <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>
+        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10</item>
+        <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>
+        <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>
+        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
+
+        <item name="module_news_tc_white">@color/module_news_tc_white</item>
+        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag</item>
+        <item name="module_news_banner_indicator_dot">
+            @drawable/module_news_banner_indicator_dot
+        </item>
+        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar</item>
+        <item name="module_news_bg_search">@drawable/module_news_bg_search</item>
+        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross</item>
+        <item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text</item>
+        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text</item>
+        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item</item>
+        <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete
+        </item>
+
+        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city</item>
+        <item name="module_news_tc_manage_channel_item">#000000</item>
+        <item name="module_news_tc_recommend_complete">@color/tc_ffffff</item>
+        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city</item>
+
+        <item name="module_video_color_878686_5c5c5c">#878686</item>
+        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay</item>
+        <item name="module_video_controls_mobile_play">@mipmap/module_player_controls_mobile_play
+        </item>
+        <item name="module_video_controls_seek_bar">@drawable/module_player_seek_bar_drawable</item>
+        <item name="module_video_controls_seek_bar_thumb">@drawable/module_player_seek_bar_thumb
+        </item>
+        <item name="module_video_controls_progress_bar">
+            @drawable/module_player_progress_bar_drawable
+        </item>
+        <item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>
+        <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>
+        <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>
+
+
+
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -45,39 +107,84 @@
         <item name="bc_33ffffff">@color/bc_33ffffff</item>
         <item name="bc_f4f5f6">@color/bc_f4f5f6</item>
 
-        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
-
-        <item name="module_news_tc_white">@color/module_news_tc_white</item>
-        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag</item>
-        <item name="module_news_banner_indicator_dot">
-            @drawable/module_news_banner_indicator_dot
-        </item>
-        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar</item>
-        <item name="module_news_bg_search">@drawable/module_news_bg_search</item>
-        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross</item>
-        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text</item>
-        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item</item>
-        <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete</item>
-
-        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city</item>
-        <item name="module_news_tc_manage_channel_item">@color/tc_484848</item>
-        <item name="module_news_tc_recommend_complete">@color/tc_ffffff</item>
-        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city</item>
-
-        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay</item>
-        <item name="module_video_controls_mobile_play">@mipmap/module_player_controls_mobile_play</item>
-        <item name="module_video_controls_seek_bar">@drawable/module_player_seek_bar_drawable</item>
-        <item name="module_video_controls_seek_bar_thumb">@drawable/module_player_seek_bar_thumb</item>
-        <item name="module_video_controls_progress_bar">@drawable/module_player_progress_bar_drawable</item>
-
         <item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel</item>
+        <item name="module_detail_color_7f000000_7f191919">#7f000000</item>
 
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
 
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="module_news_color_484848_7a7b7d">#7a7b7d</item>
+        <item name="module_news_color_f44b50_8e3636">#8e3636</item>
+        <item name="module_news_color_4d95fa_315277">#315277</item>
+        <item name="module_news_color_000000_7a7b7d">#7a7b7d</item>
+        <item name="module_news_color_ffffff_bababa">#bababa</item>
+        <item name="module_news_color_e85757_8e3636">#8e3636</item>
+        <item name="module_news_color_999999_5c5c5c">#5c5c5c</item>
+        <item name="module_news_color_ffffff_cacaca">#cacaca</item>
+        <item name="module_news_color_ffffff_202124">#202124</item>
+        <item name="module_news_color_dddddd_343434">#343434</item>
+        <item name="module_news_color_f0f0f0_191919">#191919</item>
+        <item name="module_news_color_f5f5f5_191919">#191919</item>
+        <item name="module_news_color_d8d8d8_5c5c5c">#5c5c5c</item>
+        <item name="module_news_color_ffffff_7a7b7d">#7a7b7d</item>
+        <item name="module_news_color_7f000000_7f191919">#7f191919</item>
+        <item name="module_news_mask_00000000_7f000000">#7f000000</item>
+
+        <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>
+        <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
+
+        <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>
+        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10_night
+        </item>
+        <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night
+        </item>
+        <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe_night
+        </item>
+        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>
+
+        <item name="module_news_tc_white">@color/module_news_tc_white_night</item>
+        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag_night</item>
+        <item name="module_news_banner_indicator_dot">
+            @drawable/module_news_banner_indicator_dot_night
+        </item>
+        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar_night</item>
+        <item name="module_news_bg_search">@drawable/module_news_bg_search_night</item>
+        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross_night</item>
+        <item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text_night</item>
+        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text_night</item>
+        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item_night</item>
+        <item name="module_news_bg_recommend_complete">
+            @drawable/module_news_bg_recommend_complete_night
+        </item>
+
+        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city_night</item>
+        <item name="module_news_tc_manage_channel_item">
+            @color/module_news_tc_manage_channel_item_night
+        </item>
+        <item name="module_news_tc_recommend_complete">@color/tc_cccbcb</item>
+        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city_night</item>
+
+        <item name="module_video_color_878686_5c5c5c">#5c5c5c</item>
+        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay_night</item>
+        <item name="module_video_controls_mobile_play">
+            @mipmap/module_player_controls_mobile_play_night
+        </item>
+        <item name="module_video_controls_seek_bar">
+            @drawable/module_player_seek_bar_drawable_night
+        </item>
+        <item name="module_video_controls_seek_bar_thumb">
+            @drawable/module_player_seek_bar_thumb_night
+        </item>
+        <item name="module_video_controls_progress_bar">
+            @drawable/module_player_progress_bar_drawable_night
+        </item>
+        <item name="module_video_tc_tab">@color/module_video_sl_tc_tab_night</item>
+        <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout_night</item>
+        <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item_night</item>
+
+
+
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary_night</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>
@@ -121,31 +228,9 @@
         <item name="bc_33ffffff">@color/bc_191919</item>
         <item name="bc_f4f5f6">@color/bc_f4f5f6_night</item>
 
-        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>
-
-        <item name="module_news_tc_white">@color/module_news_tc_white_night</item>
-        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag_night</item>
-        <item name="module_news_banner_indicator_dot">
-            @drawable/module_news_banner_indicator_dot_night
-        </item>
-        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar_night</item>
-        <item name="module_news_bg_search">@drawable/module_news_bg_search_night</item>
-        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross_night</item>
-        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text_night</item>
-        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item_night</item>
-        <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete_night</item>
-
-        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city_night</item>
-        <item name="module_news_tc_recommend_complete">@color/tc_cccbcb</item>
-        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city_night</item>
-
-        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay_night</item>
-        <item name="module_video_controls_mobile_play">@mipmap/module_player_controls_mobile_play_night</item>
-        <item name="module_video_controls_seek_bar">@drawable/module_player_seek_bar_drawable_night</item>
-        <item name="module_video_controls_seek_bar_thumb">@drawable/module_player_seek_bar_thumb_night</item>
-        <item name="module_video_controls_progress_bar">@drawable/module_player_progress_bar_drawable_night</item>
 
         <item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel_night</item>
+        <item name="module_detail_color_7f000000_7f191919">#7f191919</item>
 
     </style>
 

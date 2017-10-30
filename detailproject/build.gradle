@@ -14,9 +14,6 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86_64", "arm64-v8a", "x86"
-        }
 
         lintOptions {
             abortOnError false
@@ -38,7 +35,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':core-library')
 //    compile 'cn.daily.android:core-library:5.0.0.17'
-    compile('cn.daily.android:daily-news:5.0.0.18') {
+    compile('cn.daily.android:daily-news:5.0.0.19') {
         exclude group: 'cn.daily.android'
     }
 

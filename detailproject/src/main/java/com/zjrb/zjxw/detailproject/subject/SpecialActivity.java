@@ -13,8 +13,7 @@ import android.widget.FrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.TopBarWhiteStyle;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
@@ -37,7 +36,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 专题详情页
@@ -46,7 +44,7 @@ import butterknife.OnClick;
  * @date 2017/10/12 上午8:51.
  */
 public class SpecialActivity extends BaseActivity implements OnItemClickListener,
-        HeaderSpecialHolder.OnClickChannelListener {
+        HeaderSpecialHolder.OnClickChannelListener, View.OnClickListener {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -65,27 +63,28 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private String mArticleId = "";
     private DraftDetailBean.ArticleBean mArticle;
 
+    private TopBarWhiteStyle mTopBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_special);
         ButterKnife.bind(this);
-        getIntentData(getIntent());
+        initArgs();
         initView();
         loadData();
     }
 
-    private DefaultTopBarHolder1 topHolder;
-
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
-        topHolder.setViewVisible(topHolder.getCollectView(), View.VISIBLE);
-        return topHolder.getView();
+        mTopBar = new TopBarWhiteStyle(this);
+        mTopBar.getCollectView().setOnClickListener(this);
+        mTopBar.getShareView().setOnClickListener(this);
+        return mTopBar.getView();
     }
 
-    private void getIntentData(Intent intent) {
+    private void initArgs() {
+        Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
             Uri data = intent.getData();
             if (data.getQueryParameter(IKey.ID) != null) {
@@ -97,9 +96,11 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        getIntentData(intent);
+        initArgs();
+        if (mTopBar != null) {
+            mTopBar.setRightVisible(false);
+        }
         loadData();
-
     }
 
     /**
@@ -120,7 +121,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
-    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect})
+    @Override
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -133,7 +134,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .setTitle(mArticle.getDoc_title())
                         .setTargetUrl(mArticle.getUrl()));
             } else if (view.getId() == R.id.iv_top_collect) {
-                newsTopicCollect(); // 收藏
+                collectTask(); // 收藏
             }
         }
     }
@@ -149,7 +150,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             public void onError(String errMsg, int errCode) {
                 //专题撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
-                    showEmptyNewsDetail();
+                    showCancelDraft();
                 } else {//其余页面
                     mRecycler.setVisibility(View.GONE);
                 }
@@ -164,7 +165,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (data != null) {
             mArticle = data.getArticle();
         }
-
+        mTopBar.setRightVisible(true);
         //添加专题详情页的头部holder
         headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);
         headHolder.setData(data);
@@ -178,30 +179,38 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     /**
      * 专题收藏
      */
-    private void newsTopicCollect() {
+    private void collectTask() {
         new DraftCollectTask(new APIExpandCallBack<Void>() {
 
             @Override
-            public void onSuccess(Void baseInnerData) {
-                //TODO WLJ 缺少一张点击后的图
-                topHolder.getCollectView().setImageResource(R.mipmap.module_detail_ic_collect_night);
-                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_success));
+            public void onSuccess(Void data) {
+                if (mArticle != null) {
+                    mArticle.setFollowed(!mArticle.isFollowed());
+
+                    T.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
+                    bindCollect();
+                }
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_collect_failed));
+                T.showShort(getActivity(), errCode);
             }
 
         }).setTag(this).exe(mArticleId, !mArticle.isFollowed());
     }
 
+    private void bindCollect() {
+        if (mArticle != null && mTopBar != null) {
+            mTopBar.getCollectView().setSelected(mArticle.isFollowed());
+        }
+    }
+
     /**
      * 显示撤稿页面
      */
-    private void showEmptyNewsDetail() {
+    private void showCancelDraft() {
         lyContainer.removeAllViews();
-        topHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ly_container,
                 EmptyStateFragment.newInstance()).commit();

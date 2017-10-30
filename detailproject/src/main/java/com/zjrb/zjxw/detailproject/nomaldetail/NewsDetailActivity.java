@@ -471,7 +471,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 删除评论，局部刷新
      */
     @Override
-    public void onDeleteComment(String comment_id) {
+    public void onDeleteComment(String comment_id,int position) {
         List list = mAdapter.getData();
         for (Object obj : list) {
             int count = 0;

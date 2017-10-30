@@ -468,7 +468,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * @param comment_id
      */
     @Override
-    public void onDeleteComment(String comment_id) {
+    public void onDeleteComment(String comment_id,int position) {
         List list = adapter.getData();
         for (Object obj : list) {
             int count = 0;

@@ -27,12 +27,9 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -175,6 +172,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //评论数
         if (bean != null && bean.getComment_count() > 0) {
+            tvCommentNum.setVisibility(View.VISIBLE);
             if (bean.getComment_count() <= 99999) {
                 tvCommentNum.setText(bean.getComment_count() + "条评论");
             } else {
@@ -265,19 +263,17 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     /**
      * 删除评论回调
      */
+    //删完的情况下
     @Override
-    public void onDeleteComment(String comment_id) {
-        List list = mCommentAdapter.getData();
-        for (Object obj : list) {
-            int count = 0;
-            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
-                mCommentAdapter.getData().remove(obj);
-                mCommentAdapter.notifyItemMoved(count, count);
-//                mCommentAdapter.notifyItemRangeChanged(count, mCommentAdapter.getDataSize());
-                break;
-            }
-            count++;
+    public void onDeleteComment(String comment_id, int position) {
+        int pos = position - 1;
+        if (pos <= 0) {
+            head.setVisibility(View.GONE);
+            tvCommentNum.setVisibility(View.GONE);
+            pos = 0;
         }
+        mCommentAdapter.getData().remove(pos);
+        mCommentAdapter.notifyDataSetChanged();
     }
 
 
@@ -286,6 +282,12 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     @Override
     public void onUpdateComment() {
-        mCommentAdapter.notifyItemInserted(0);
+        mRvContent.post(new Runnable() {
+            @Override
+            public void run() {
+                refresh.setRefreshing(false);
+                requestData(false);
+            }
+        });
     }
 }

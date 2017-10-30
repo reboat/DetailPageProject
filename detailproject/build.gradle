@@ -33,8 +33,8 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'org.greenrobot:eventbus:3.0.0'
-//    compile project(':core-library')
-    compile 'cn.daily.android:core-library:5.0.0.20'
+    compile project(':core-library')
+//    compile 'cn.daily.android:core-library:5.0.0.21'
     compile('cn.daily.android:daily-news:5.0.0.19') {
         exclude group: 'cn.daily.android'
     }

@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="com.zjrb.zjxw.detailproject">
+          package="com.zjrb.zjxw.detailproject">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -204,8 +204,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
 
-                <data android:path="/gy111.html" />
-                <!--以下测试 host -->
+                <data android:path="/gy.html" />
                 <!--以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
@@ -223,10 +222,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/PersionalListActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+
+                <data android:path="/gy_list.html" />
+                <!--以下测试 host -->
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
             </intent-filter>
         </activity>
 

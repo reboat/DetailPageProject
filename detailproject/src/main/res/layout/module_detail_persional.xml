@@ -19,8 +19,8 @@
             android:layout_height="139dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="9dp"
-            android:background="#ff0"
             android:scaleType="fitXY"
+            app:ratio_w2h="3:2"
             tools:src="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -50,7 +50,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@+id/tv_name"
-                android:textColor="?attr/tc_999999"
+                android:textColor="?attr/module_detail_tc_808080"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="男" />
 
@@ -67,8 +67,8 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_11sp"
+            android:textColor="?attr/tc_000000"
+            android:textSize="@dimen/ts_14sp"
             tools:text="时间节点和较大精力了发生的好了去基本都是肯定 拉京东方家世界发酵素浪费，啊框架使得卡萨丁。看JHDkwj到了" />
 
         <TextView

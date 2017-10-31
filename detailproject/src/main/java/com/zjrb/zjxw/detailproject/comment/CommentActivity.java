@@ -143,7 +143,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
-        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.bc_dddddd));
+        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.dc_dddddd));
         head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
         tvHot = (TextView) head.findViewById(R.id.tv_hot);
         //添加刷新头
@@ -274,6 +274,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         }
         mCommentAdapter.getData().remove(pos);
         mCommentAdapter.notifyDataSetChanged();
+
     }
 
 

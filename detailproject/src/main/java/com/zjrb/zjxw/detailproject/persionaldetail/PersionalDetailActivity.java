@@ -126,14 +126,14 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像
-            GlideApp.with(ivAvatar).load(bean.getPhoto()).placeholder(PH.zheSmall()).circleCrop().into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getPhoto()).placeholder(PH.zheSmall()).into(ivAvatar);
             //姓名
             if (bean.getName() != null) {
                 tvName.setText(bean.getName());
             }
             //性别
-            if (bean.getGender() != null) {
-                tvSex.setText(bean.getGender());
+            if (bean.getGender_text() != null) {
+                tvSex.setText(bean.getGender_text());
             }
             //描述
             if (bean.getDescription() != null) {

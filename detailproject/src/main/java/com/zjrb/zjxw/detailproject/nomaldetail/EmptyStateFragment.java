@@ -85,7 +85,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
         emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
-        lvNotice.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
+        lvNotice.addItemDecoration(new ListSpaceDivider(0.5f, UIUtils.getActivity().getResources().getColor(R.color.dc_dddddd), true, true));
     }
 
     /**

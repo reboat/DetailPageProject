@@ -144,9 +144,7 @@
                 android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="8dp"
                 android:layout_toLeftOf="@+id/menu_comment"
                 >
 
@@ -174,9 +172,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toLeftOf="@+id/menu_prised"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@mipmap/ic_atlas_detail_comment"
-                app:iv_maskColor="@color/module_detail_comment_night" />
+                android:src="?attr/ic_atlas_detail_comment"
+                />
 
             <TextView
                 android:id="@+id/tv_comments_num"
@@ -203,9 +200,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/menu_setting"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="?attr/module_detail_atlas_prise"
-                app:iv_maskColor="@color/module_detail_comment_night"
                 />
 
             <ImageView
@@ -216,9 +211,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="5dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@mipmap/ic_more_atlas"
-                app:iv_maskColor="@color/module_detail_comment_night" />
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:src="?attr/ic_more_atlas"
+                />
 
         </RelativeLayout>
 

@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,7 +64,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getIntentData(getIntent());
+//        getIntentData(getIntent());
         setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
@@ -74,24 +73,24 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, offical_title).getView();
+        return TopBarFactory.createDefault(view, this, "").getView();
     }
 
     /**
      * 官员列表标题
      */
-    private String offical_title;
+//    private String offical_title;
 
     /**
      * @param intent 获取传递数据
      */
-    private void getIntentData(Intent intent) {
-        if (intent != null) {
-            if (intent.hasExtra(IKey.OFFICAL_TITLE)) {
-                offical_title = intent.getStringExtra(IKey.OFFICAL_TITLE);
-            }
-        }
-    }
+//    private void getIntentData(Intent intent) {
+//        if (intent != null) {
+//            if (intent.hasExtra(IKey.OFFICAL_TITLE)) {
+//                offical_title = intent.getStringExtra(IKey.OFFICAL_TITLE);
+//            }
+//        }
+//    }
 
 
     /**

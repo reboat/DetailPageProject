@@ -4,6 +4,7 @@
     <style name="DetailDayTheme">
 
         <item name="module_detail_color_7f000000_7f191919">#7f000000</item>
+
         <item name="module_detail_news_comment">@drawable/module_detail_news_comment</item>
         <item name="module_detail_news_more">@drawable/module_detail_news_more</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
@@ -26,12 +27,13 @@
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
 
-
+        <item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading</item>
     </style>
 
     <style name="DetailNightTheme">
 
         <item name="module_detail_color_7f000000_7f191919">#7f191919</item>
+
         <item name="module_detail_news_comment">@drawable/module_detail_news_comment_night</item>
         <item name="module_detail_news_more">@drawable/module_detail_news_more_night</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
@@ -52,5 +54,6 @@
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
 
+        <item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>
     </style>
 </resources>

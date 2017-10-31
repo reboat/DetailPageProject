@@ -108,7 +108,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         //JS
-//        css_js += String.format(html, "file:///android_asset/js/basic.js");
         if (sp == null || sp.js == null || sp.js.isEmpty()) {
             css_js += String.format(html, "file:///android_asset/js/basic.js");
         } else {
@@ -124,9 +123,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     private WebSettings settings;
 
     private void initWebView() {
-        //TODO WLJ 删除无用代码
-        mWebView.setFocusable(false);
-
         // 隐藏到滚动条
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);

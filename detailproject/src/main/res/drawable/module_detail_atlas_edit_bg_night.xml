@@ -7,9 +7,9 @@
         />
 
 
-    <solid android:color="@color/tc_5c5c5c" />
+    <solid android:color="@color/bc_7f222222" />
     <stroke
         android:width="0.5dp"
-        android:color="@color/bc_7f222222" />
+        android:color="@color/tc_5c5c5c" />
 
 </shape>

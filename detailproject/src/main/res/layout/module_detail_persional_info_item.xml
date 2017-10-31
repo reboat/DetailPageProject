@@ -5,34 +5,37 @@
               android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="56.5dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        >
 
         <TextView
             android:id="@+id/tv_year"
-            android:layout_width="40dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
             android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_11sp"
-            tools:text="2017年"/>
+            android:textSize="@dimen/ts_14sp"
+            tools:text="2017年" />
 
         <TextView
             android:id="@+id/tv_month"
-            android:layout_width="40dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:maxEms="3"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
             android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_10sp"
-            tools:text="4月"/>
+            android:textSize="@dimen/ts_12sp"
+            tools:text="4月" />
 
     </LinearLayout>
 
@@ -40,21 +43,21 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="3dp"
         android:layout_marginRight="5.5dp"
         >
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:background="?attr/tc_999999"/>
+            android:background="?attr/bc_dddddd" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="7dp"
+            android:layout_height="7dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/module_detail_persional_info_item_bg"/>
+            android:src="@drawable/module_detail_persional_info_item_bg" />
 
     </RelativeLayout>
 
@@ -65,11 +68,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginRight="55dp"
-        android:textColor="?attr/tc_484848"
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
-        tools:text="浙江省委书记"/>
+        android:textColor="?attr/tc_000000"
+        android:textSize="@dimen/ts_16sp"
+        tools:text="浙江省委书记" />
 
 </LinearLayout>

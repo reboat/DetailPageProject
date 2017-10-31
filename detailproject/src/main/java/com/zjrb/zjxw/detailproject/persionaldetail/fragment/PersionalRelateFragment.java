@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
@@ -22,12 +21,9 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.OfficerRelatedNewsAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +38,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
-    @BindView(R2.id.view_exise)
-    LinearLayout mViewExise;
-
     /**
      * 相关新闻标识
      */
@@ -53,7 +46,6 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * 相关新闻列表
      */
     private OfficalDetailBean bean;
-    private List<ArticleItemBean> list;
     /**
      * 官员ID
      */
@@ -93,18 +85,13 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
     }
 
     private void initView() {
-        if (bean != null || bean.getArticle_list().isEmpty()) {
-            mViewExise.setVisibility(View.VISIBLE);
-            mViewExise.setVisibility(View.GONE);
-            return;
-        }
-        mAdapter = new OfficerRelatedNewsAdapter(bean, lvNotice, official_id);
-        lvNotice.setAdapter(mAdapter);
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
         lvNotice.addItemDecoration(new ListSpaceDivider(0.5, R.attr.dc_dddddd, true));
         //添加刷新头
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
+        mAdapter = new OfficerRelatedNewsAdapter(bean, lvNotice, official_id);
+        lvNotice.setAdapter(mAdapter);
         initAdapter();
     }
 
@@ -143,8 +130,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
                 refresh.setRefreshing(false);
             }
 
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad
-                (lvNotice)).exe(official_id);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).exe(official_id);
     }
 
 

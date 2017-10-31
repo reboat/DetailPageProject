@@ -175,6 +175,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     .url(mArticle.getUrl())
             );
         }
+        bindCollect();
         mTopBar.setRightVisible(true);
         //添加专题详情页的头部holder
         headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);

@@ -73,8 +73,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .appendQueryParameter(Key.OFFICIAL_ID, "5")
 //                        .build(), 0);
 
+
+                // 专题详情页
 //                Nav.with(this).to("https://www.8531.cn/subject.html?id=740345");
-                Nav.with(this).to("https://www.8531.cn/subject.html?id=740823");
+//                Nav.with(this).to("https://www.8531.cn/subject.html?id=740823");
+
+                // 图集详情页
+                Nav.with(this).to("http://zjbeta.8531.cn/album.html?id=741157");
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()

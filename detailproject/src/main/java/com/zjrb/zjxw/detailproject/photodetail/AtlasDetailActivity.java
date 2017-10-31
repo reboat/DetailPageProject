@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.photodetail;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -109,6 +110,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setOverly(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_photo_detail);
         ButterKnife.bind(this);
@@ -131,6 +133,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         topHolder = TopBarFactory.createDefault3(view, this);
         mTvTitleTop = topHolder.getTitleView();
         mIvDownLoad = topHolder.getDownView();
+        topHolder.getView().setBackgroundColor(Color.TRANSPARENT);
         return topHolder.getView();
     }
 

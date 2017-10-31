@@ -15,7 +15,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.zhejiangdaily"
+        applicationId "com.dialy.android.detail"
         minSdkVersion 17
         targetSdkVersion 25
         multiDexEnabled true

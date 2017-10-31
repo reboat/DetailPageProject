@@ -172,7 +172,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toLeftOf="@+id/menu_prised"
-                android:src="?attr/ic_atlas_detail_comment"
+                android:src="?attr/module_detail_atlas_detail_comment"
                 />
 
             <TextView

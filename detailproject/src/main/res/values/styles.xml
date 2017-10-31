@@ -29,7 +29,7 @@
         <item name="ic_more_atlas">@mipmap/ic_more_atlas</item>
         <item name="module_detail_tc_808080">@color/tc_808080</item>
         <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>
-        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>
+        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>
 
 
         <item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading</item>

@@ -19,6 +19,8 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.bean.ReadNewsBean;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -162,8 +164,16 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
-        if (data != null) {
+        if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();
+            // 记录阅读信息
+            ReadNewsDaoHelper.get().asyncRecord(
+                    ReadNewsBean.newBuilder().id(mArticle.getId())
+                    .mlfId(mArticle.getMlf_id())
+                    .tag(mArticle.getList_tag())
+                    .title(mArticle.getList_title())
+                    .url(mArticle.getUrl())
+            );
         }
         mTopBar.setRightVisible(true);
         //添加专题详情页的头部holder

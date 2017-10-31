@@ -42,6 +42,8 @@ dependencies {
     compile('com.aliya:android-player:0.1.5') {
         exclude group: 'com.android.support'
     }
+    compile 'cn.daily.android:daily-db:5.0.0.1'
+
     compile butterknifeDeps.butterknife
     annotationProcessor butterknifeDeps.butterknifeCompiler
 }

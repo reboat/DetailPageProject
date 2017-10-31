@@ -40,6 +40,8 @@ import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.core.utils.webjs.BottomSaveDialogFragment;
+import com.zjrb.daily.db.bean.ReadNewsBean;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
@@ -63,7 +65,6 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-
 public class AtlasDetailActivity extends BaseActivity implements ViewPager
         .OnPageChangeListener, View.OnTouchListener {
 
@@ -175,10 +176,21 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             public void onSuccess(DraftDetailBean atlasDetailEntity) {
                 if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
                         || atlasDetailEntity.getArticle().getAlbum_image_list() == null
-                        || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) return;
+                        || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                    return;
+                }
+
+                DraftDetailBean.ArticleBean article = atlasDetailEntity.getArticle();
+                ReadNewsDaoHelper.get().asyncRecord(
+                        ReadNewsBean.newBuilder().id(article.getId())
+                                .mlfId(article.getMlf_id())
+                                .tag(article.getList_tag())
+                                .title(article.getList_title())
+                                .url(article.getUrl()));
 
                 //设置下载按钮
-                if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
+                        !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 } else {
                     mIvDownLoad.setVisibility(View.GONE);
@@ -212,7 +224,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mData = atlasDetailEntity;
         //设置数据
         if (atlasDetailEntity != null) {
-            if (atlasDetailEntity.getArticle().getAlbum_image_list() != null && !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+            if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
+                    !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
                 mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
             }
             mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
@@ -224,16 +237,19 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
-            mTvTottleNum.setText(String.valueOf(atlasDetailEntity.getArticle().getAlbum_image_count()));
+            mTvTottleNum.setText(String.valueOf(atlasDetailEntity.getArticle()
+                    .getAlbum_image_count()));
             mTvTitle.setText(atlasDetailEntity.getArticle().getDoc_title());
             //添加更多图集(假如有相关新闻)
-            if (mData.getArticle().getRelated_news() != null && atlasDetailEntity.getArticle().getRelated_news().size() > 0) {
+            if (mData.getArticle().getRelated_news() != null && atlasDetailEntity.getArticle()
+                    .getRelated_news().size() > 0) {
                 mAtlasList.add(new AlbumImageListBean());
             }
             //设置图片count
             atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
             atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
-            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(), atlasDetailEntity));
+            mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(),
+                    atlasDetailEntity));
 
             AlbumImageListBean entity = mAtlasList.get(mIndex);
             mTvContent.setText(entity.getDescription());
@@ -296,14 +312,17 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
-                    .setTextContent(mData.getArticle().getAlbum_image_list().get(0).getDescription())
+                    .setTextContent(mData.getArticle().getAlbum_image_list().get(0)
+                            .getDescription())
                     .setTitle(mData.getArticle().getDoc_title())
                     .setTargetUrl(mData.getArticle().getUrl())
             );
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null) {
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
+                        .valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(),
+                        "CommentWindowDialog");
             }
             //评论列表
         } else if (id == R.id.menu_comment) {
@@ -313,7 +332,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     bundle = new Bundle();
                 }
                 bundle.putSerializable(IKey.NEWS_DETAIL, mData);
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
+                        .COMMENT_ACTIVITY_PATH);
 
             }
             //点赞
@@ -348,12 +368,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvContent.scrollTo(0, 0);
 
         //更多图集
-        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0) {
+        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news()
+                .size() > 0) {
             setTopTitle(position);
         }
 
         //文案显示
-        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0 && position == (mAtlasList.size() - 1)) {
+        if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news()
+                .size() > 0 && position == (mAtlasList.size() - 1)) {
             mLyContainer.setVisibility(View.GONE);
             mTvContent.setVisibility(View.GONE);
         } else {
@@ -368,8 +390,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     mIvDownLoad.setVisibility(View.VISIBLE);
                 }
                 //更多图集不需要显示下载图标
-                if (mData.getArticle().getRelated_news() != null && mData.getArticle().getRelated_news().size() > 0
-                        && position == (mAtlasList.size() - 1) && mIvDownLoad.getVisibility() == View.VISIBLE) {
+                if (mData.getArticle().getRelated_news() != null && mData.getArticle()
+                        .getRelated_news().size() > 0
+                        && position == (mAtlasList.size() - 1) && mIvDownLoad.getVisibility() ==
+                        View.VISIBLE) {
                     mIvDownLoad.setVisibility(View.GONE);
                 }
             } else {
@@ -449,25 +473,29 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSave() {
                 try {
-                    if (mAtlasList == null || mAtlasList.size() < position || mAtlasList.get(position).equals(""))
+                    if (mAtlasList == null || mAtlasList.size() < position || mAtlasList.get
+                            (position).equals(""))
                         return;
-                    PermissionManager.get().request(AtlasDetailActivity.this, new IPermissionCallBack() {
-                        @Override
-                        public void onGranted(boolean isAlreadyDef) {
-                            String url = mAtlasList.get(position).getImage_url();
-                            download(url);
-                        }
+                    PermissionManager.get().request(AtlasDetailActivity.this, new
+                            IPermissionCallBack() {
+                                @Override
+                                public void onGranted(boolean isAlreadyDef) {
+                                    String url = mAtlasList.get(position).getImage_url();
+                                    download(url);
+                                }
 
-                        @Override
-                        public void onDenied(List<String> neverAskPerms) {
-                            PermissionManager.showAdvice(AtlasDetailActivity.this, "保存图片需要开启存储权限");
-                        }
+                                @Override
+                                public void onDenied(List<String> neverAskPerms) {
+                                    PermissionManager.showAdvice(AtlasDetailActivity.this,
+                                            "保存图片需要开启存储权限");
+                                }
 
-                        @Override
-                        public void onElse(List<String> deniedPerms, List<String> neverAskPerms) {
+                                @Override
+                                public void onElse(List<String> deniedPerms, List<String>
+                                        neverAskPerms) {
 
-                        }
-                    }, Permission.STORAGE_WRITE);
+                                }
+                            }, Permission.STORAGE_WRITE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -494,12 +522,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
                     @Override
                     public void onSuccess(String path) {
-                        T.showShort(AtlasDetailActivity.this, getString(R.string.module_detail_save_success));
+                        T.showShort(AtlasDetailActivity.this, getString(R.string
+                                .module_detail_save_success));
                     }
 
                     @Override
                     public void onFail(String err) {
-                        T.showShort(AtlasDetailActivity.this, getString(R.string.module_detail_save_failed));
+                        T.showShort(AtlasDetailActivity.this, getString(R.string
+                                .module_detail_save_failed));
                     }
                 })
                 .download(url);

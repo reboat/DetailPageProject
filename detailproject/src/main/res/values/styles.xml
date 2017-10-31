@@ -24,6 +24,9 @@
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
+        <item name="ic_atlas_detail_comment">@mipmap/ic_atlas_detail_comment</item>
+        <item name="ic_more_atlas">@mipmap/ic_more_atlas</item>
+        <item name="module_detail_tc_808080">@color/tc_808080</item>
 
 
     </style>
@@ -49,6 +52,9 @@
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
+        <item name="ic_atlas_detail_comment">@mipmap/ic_atlas_detail_comment_night</item>
+        <item name="ic_more_atlas">@mipmap/ic_more_atlas_night</item>
+        <item name="module_detail_tc_808080">@color/tc_5c5c5c</item>
 
     </style>
 </resources>

@@ -236,7 +236,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         datas.add(data);
 //        if (mAdapter == null) {
             mRvContent.setLayoutManager(new LinearLayoutManager(this));
-            mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.bc_dddddd));
+            mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
             mAdapter = new NewsDetailAdapter(datas);
             mAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,

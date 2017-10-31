@@ -48,7 +48,7 @@ public class NewsDetailRelatedNewsHolder extends BaseRecyclerViewHolder<DraftDet
      * 初始化
      */
     private void initView() {
-        mRecyleView.addItemDecoration(new ListSpaceDivider(1f, UIUtils.getActivity().getResources().getColor(R.color.dc_f5f5f5), true, true));
+        mRecyleView.addItemDecoration(new ListSpaceDivider(1f, UIUtils.getActivity().getResources().getColor(R.color.dc_dddddd), true, true));
         mRecyleView.setLayoutManager(new LinearLayoutManager(UIUtils.getContext(),
                 LinearLayoutManager.VERTICAL, false));
     }

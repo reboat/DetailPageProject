@@ -17,12 +17,14 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
+import com.zjrb.core.common.manager.PathManager;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
+import com.zjrb.core.utils.NetworkUtil;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
@@ -106,7 +108,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         //JS
-        css_js += String.format(html, "file:///android_asset/js/basic.js");
+//        css_js += String.format(html, "file:///android_asset/js/basic.js");
         if (sp == null || sp.js == null || sp.js.isEmpty()) {
             css_js += String.format(html, "file:///android_asset/js/basic.js");
         } else {
@@ -141,6 +143,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         settings = mWebView.getSettings();
+        //TODO  WLJ 临时去除缓存
+        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
+            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        // 开启DOM storage API 功能
+        settings.setDomStorageEnabled(false);
+        // 开启database storage API功能
+        settings.setDatabaseEnabled(false);
+        settings.setAppCacheEnabled(false);
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

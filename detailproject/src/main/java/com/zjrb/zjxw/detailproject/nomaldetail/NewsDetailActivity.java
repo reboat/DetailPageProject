@@ -41,6 +41,8 @@ import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.bean.ReadNewsBean;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -226,6 +228,17 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
+
+        DraftDetailBean.ArticleBean article = data.getArticle();
+        if (article!= null) {
+            ReadNewsDaoHelper.get().asyncRecord(
+                    ReadNewsBean.newBuilder().id(article.getId())
+                            .mlfId(article.getMlf_id())
+                            .tag(article.getList_tag())
+                            .title(article.getList_title())
+                            .url(article.getUrl()));
+        }
+
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         mNewsDetail = data;
         initViewState(mNewsDetail);

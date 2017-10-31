@@ -180,14 +180,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     return;
                 }
 
-                DraftDetailBean.ArticleBean article = atlasDetailEntity.getArticle();
-                ReadNewsDaoHelper.get().asyncRecord(
-                        ReadNewsBean.newBuilder().id(article.getId())
-                                .mlfId(article.getMlf_id())
-                                .tag(article.getList_tag())
-                                .title(article.getList_title())
-                                .url(article.getUrl()));
-
                 //设置下载按钮
                 if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
                         !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
@@ -213,22 +205,34 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     /**
-     * @param atlasDetailEntity 获取图集详情页数据
+     * @param data 获取图集详情页数据
      */
-    private void fillData(DraftDetailBean atlasDetailEntity) {
+    private void fillData(DraftDetailBean data) {
+
+        // 记录阅读记录
+        if (data != null && data.getArticle() != null) {
+            DraftDetailBean.ArticleBean article = data.getArticle();
+            ReadNewsDaoHelper.get().asyncRecord(
+                    ReadNewsBean.newBuilder().id(article.getId())
+                            .mlfId(article.getMlf_id())
+                            .tag(article.getList_tag())
+                            .title(article.getList_title())
+                            .url(article.getUrl()));
+        }
+
         //显示UI
         mViewExise.setVisibility(View.GONE);
         mViewPager.setVisibility(View.VISIBLE);
         mContainerBottom.setVisibility(View.VISIBLE);
 
-        mData = atlasDetailEntity;
+        mData = data;
         //设置数据
-        if (atlasDetailEntity != null) {
-            if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
-                    !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
-                mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
+        if (data != null) {
+            if (data.getArticle().getAlbum_image_list() != null &&
+                    !data.getArticle().getAlbum_image_list().isEmpty()) {
+                mAtlasList = data.getArticle().getAlbum_image_list();
             }
-            mAtlasList = atlasDetailEntity.getArticle().getAlbum_image_list();
+            mAtlasList = data.getArticle().getAlbum_image_list();
             initViewState(mData);
         }
         //设置图片列表
@@ -237,19 +241,19 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //设置图集标题和指示器
             mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
-            mTvTottleNum.setText(String.valueOf(atlasDetailEntity.getArticle()
+            mTvTottleNum.setText(String.valueOf(data.getArticle()
                     .getAlbum_image_count()));
-            mTvTitle.setText(atlasDetailEntity.getArticle().getDoc_title());
+            mTvTitle.setText(data.getArticle().getDoc_title());
             //添加更多图集(假如有相关新闻)
-            if (mData.getArticle().getRelated_news() != null && atlasDetailEntity.getArticle()
+            if (mData.getArticle().getRelated_news() != null && data.getArticle()
                     .getRelated_news().size() > 0) {
                 mAtlasList.add(new AlbumImageListBean());
             }
             //设置图片count
-            atlasDetailEntity.getArticle().setAlbum_image_list(mAtlasList);
-            atlasDetailEntity.getArticle().setAlbum_image_count(mAtlasList.size());
+            data.getArticle().setAlbum_image_list(mAtlasList);
+            data.getArticle().setAlbum_image_count(mAtlasList.size());
             mViewPager.setAdapter(new ImagePrePagerAdapter(getSupportFragmentManager(),
-                    atlasDetailEntity));
+                    data));
 
             AlbumImageListBean entity = mAtlasList.get(mIndex);
             mTvContent.setText(entity.getDescription());

@@ -39,6 +39,8 @@ import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.bean.ReadNewsBean;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
@@ -228,6 +230,18 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      */
 
     private void fillData(DraftDetailBean data) {
+
+        // 记录阅读记录
+        if (data != null && data.getArticle() != null) {
+            DraftDetailBean.ArticleBean article = data.getArticle();
+            ReadNewsDaoHelper.get().asyncRecord(
+                    ReadNewsBean.newBuilder().id(article.getId())
+                            .mlfId(article.getMlf_id())
+                            .tag(article.getList_tag())
+                            .title(article.getList_title())
+                            .url(article.getUrl()));
+        }
+
         mNewsDetail = data;
         List datas = new ArrayList<>();
         //头

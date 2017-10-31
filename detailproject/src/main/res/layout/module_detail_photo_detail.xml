@@ -153,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/module_detail_atlas_edit_bg"
-                    android:drawableLeft="@mipmap/module_detail_commentedit_left"
+                    android:drawableLeft="?attr/module_detail_atlas_comment_left"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical|left"
                     android:hint="@string/module_detail_comment_hint"

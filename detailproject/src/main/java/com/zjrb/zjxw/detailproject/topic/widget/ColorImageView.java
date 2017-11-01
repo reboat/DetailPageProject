@@ -85,9 +85,24 @@ public class ColorImageView extends AppCompatImageView implements UiModeChangeLi
         return getContext().getTheme();
     }
 
+    private OnUiModeChangeListener mOnUiModeChangeListener;
+
+    public void setOnUiModeChangeListener(OnUiModeChangeListener listener) {
+        mOnUiModeChangeListener = listener;
+    }
+
     @Override
     public void onUiModeChange() {
         setFraction(mFraction);
+        if (mOnUiModeChangeListener != null) {
+            mOnUiModeChangeListener.onUiModeChange(mFraction);
+        }
+    }
+
+    public interface OnUiModeChangeListener {
+
+        void onUiModeChange(float fraction);
+
     }
 
 }

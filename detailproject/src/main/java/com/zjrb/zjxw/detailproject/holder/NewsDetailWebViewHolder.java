@@ -17,14 +17,12 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
-import com.zjrb.core.common.manager.PathManager;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
-import com.zjrb.core.utils.NetworkUtil;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
@@ -34,7 +32,7 @@ import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
 import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
 import org.greenrobot.eventbus.EventBus;
@@ -173,8 +171,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
                     ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
                             .onOptPageFinished();
-                } else if (itemView.getContext() instanceof ActivityTopicAdapter.CommonOptCallBack) {
-                    ((ActivityTopicAdapter.CommonOptCallBack) itemView.getContext())
+                } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
+                    ((TopicAdapter.CommonOptCallBack) itemView.getContext())
                             .onOptPageFinished();
                 }
             }

@@ -13,11 +13,10 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +28,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener, ActivityTopicAdapter.IBindSubscribe {
+        View.OnAttachStateChangeListener, OnItemClickListener, TopicAdapter.IBindSubscribe {
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
     @BindView(R2.id.tv_column_subscribe)
@@ -67,9 +66,9 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
     @OnClick({R2.id.ry_container, R2.id.tv_column_subscribe})
     public void onViewClicked(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        ActivityTopicAdapter.CommonOptCallBack callback;
-        if (itemView.getContext() instanceof ActivityTopicAdapter.CommonOptCallBack) {
-            callback = (ActivityTopicAdapter.CommonOptCallBack) itemView.getContext();
+        TopicAdapter.CommonOptCallBack callback;
+        if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
+            callback = (TopicAdapter.CommonOptCallBack) itemView.getContext();
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (!mData.getArticle().isColumn_subscribed()) {

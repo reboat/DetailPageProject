@@ -2,7 +2,9 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.ImageView;
 
 import com.zjrb.core.common.base.page.PageItem;
@@ -21,7 +23,8 @@ import butterknife.ButterKnife;
  * @author a_liYa
  * @date 2017/10/31 19:14.
  */
-public class HeaderTopicTop extends PageItem {
+public class HeaderTopicTop extends PageItem implements View.OnAttachStateChangeListener, View
+        .OnLayoutChangeListener {
 
     @BindView(R2.id.iv_cover)
     ImageView mIvCover;
@@ -29,48 +32,49 @@ public class HeaderTopicTop extends PageItem {
     private TopBarHolder mTopBarHolder;
     private OverlyHolder mInnerOverlyHolder;
     private OverlyHolder mOverlyHolder;
+    private FloorBarHolder mFloorBarHolder;
 
+    private RecyclerView mRecycler;
     private DraftDetailBean.ArticleBean mArticle;
+
+    private RecyclerView.OnScrollListener mOnScrollListener
+            = new RecyclerView.OnScrollListener() {
+
+        float fraction = -1;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int maxRange = itemView.getHeight()
+                    - mInnerOverlyHolder.getHeight() - mTopBarHolder.getHeight();
+            float scale;
+            if (maxRange > 0) {
+                scale = (-1f * itemView.getTop()) / maxRange;
+            } else {
+                scale = 1;
+            }
+            if (scale < 0) {
+                scale = 0;
+            } else if (scale > 1) {
+                scale = 1;
+            }
+            if (fraction != scale) {
+                fraction = scale;
+                mTopBarHolder.setFraction(fraction);
+                mInnerOverlyHolder.setFraction(fraction);
+                mOverlyHolder.setVisible(scale == 1);
+                mFloorBarHolder.setVisible(scale == 1);
+            }
+        }
+
+    };
 
     public HeaderTopicTop(RecyclerView parent) {
         super(parent, R.layout.module_detail_activity_top);
         ButterKnife.bind(this, itemView);
         mInnerOverlyHolder = new OverlyHolder(findViewById(R.id.layout_fixed));
-        parent.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-            float fraction = -1;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int maxRange = itemView.getHeight()
-                        - mInnerOverlyHolder.getHeight() - mTopBarHolder.getHeight();
-                float scale;
-                if (maxRange > 0) {
-                    scale = (-1f * itemView.getTop()) / maxRange;
-                } else {
-                    scale = 1;
-                    Log.e("TAG", "macRange 小于0 ");
-                }
-                if (scale < 0) {
-                    scale = 0;
-                } else if (scale > 1) {
-                    scale = 1;
-                }
-                if (fraction != scale) {
-                    fraction = scale;
-                    mTopBarHolder.setFraction(fraction);
-                    mInnerOverlyHolder.setFraction(fraction);
-                    mOverlyHolder.setVisible(scale == 1);
-//                    Log.e("TAG", "mScale " + fraction);
-                }
-            }
-        });
+        itemView.addOnAttachStateChangeListener(this);
+        mRecycler = parent;
     }
 
     public void setData(DraftDetailBean data) {
@@ -81,14 +85,18 @@ public class HeaderTopicTop extends PageItem {
 
         if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();
-            // TODO: 2017/10/31 mock data
-            mArticle.setArticle_pic("https://timgsa.baidu" +
-                    ".com/timg?image&quality=80&size=b9999_10000&sec=1509470921516&di" +
-                    "=ca91966181b58da9112f03db0f56152e&imgtype=0&src=http%3A%2F%2Fww2.sinaimg" +
-                    ".cn%2Fbmiddle%2F005HScoIjw1erfxjbtzuoj30p018gaks.jpg");
+            mTopBarHolder.itemView.removeOnLayoutChangeListener(this);
             if (TextUtils.isEmpty(mArticle.getArticle_pic())) {
-
+                mIvCover.setVisibility(View.GONE);
+                mTopBarHolder.itemView.addOnLayoutChangeListener(this);
+                MarginLayoutParams lp = (MarginLayoutParams) mRecycler.getLayoutParams();
+                lp.setMargins(0, mTopBarHolder.getHeight(), 0, 0);
+                itemView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
             } else {
+                mIvCover.setVisibility(View.VISIBLE);
+                MarginLayoutParams lp = (MarginLayoutParams) mRecycler.getLayoutParams();
+                lp.setMargins(0, 0, 0, 0);
+                itemView.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
                 GlideApp.with(mIvCover)
                         .load(mArticle.getArticle_pic())
                         .apply(AppGlideOptions.bigOptions())
@@ -104,6 +112,28 @@ public class HeaderTopicTop extends PageItem {
 
     public void setOverlayHolder(OverlyHolder overlyHolder) {
         mOverlyHolder = overlyHolder;
+    }
+
+    public void setFloorBarHolder(FloorBarHolder floorBarHolder) {
+        mFloorBarHolder = floorBarHolder;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(View v) {
+        mRecycler.removeOnScrollListener(mOnScrollListener);
+        mRecycler.addOnScrollListener(mOnScrollListener);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(View v) {
+        mRecycler.removeOnScrollListener(mOnScrollListener);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int
+            oldTop, int oldRight, int oldBottom) {
+        MarginLayoutParams lp = (MarginLayoutParams) mRecycler.getLayoutParams();
+        lp.setMargins(0, bottom - top, 0, 0);
     }
 
 }

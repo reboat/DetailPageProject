@@ -25,6 +25,7 @@ import com.zjrb.zjxw.detailproject.holder.NewsTextMoreHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityMiddleHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/7/10  下午5:39
  */
-public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemClickListener {
+public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickListener {
     //顶部标题
     public static final int VIEW_TYPE_TOP = 1;
     //webview
@@ -56,9 +57,19 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
 
     private boolean isShowAll; // true：已经显示全部
 
-    public ActivityTopicAdapter(List datas) {
-        super(datas);
+    public TopicAdapter(DraftDetailBean data) {
+        super(null);
+        setData(data);
         setOnItemClickListener(this);
+    }
+
+
+    public void setData(DraftDetailBean data) {
+        List list = new ArrayList<>();
+        // webView层
+        list.add(data);
+
+        setData(list);
     }
 
     @Override
@@ -73,9 +84,11 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
             case VIEW_TYPE_RELATE_SUBJECT:
                 return new NewsRelateSubjectHolder(parent);
             case VIEW_TYPE_TEXT_MORE:
-                return new NewsTextMoreHolder(parent, detailBean.getArticle().isTopic_comment_has_more());
+                return new NewsTextMoreHolder(parent, detailBean.getArticle()
+                        .isTopic_comment_has_more());
             case VIEW_TYPE_COMMENT:
-                return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()));
+                return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle()
+                        .getId()));
             default:
                 return new NewsPlaceHolder(parent);
         }
@@ -88,13 +101,15 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
         } else if (getData(position) instanceof DraftDetailBean) {
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
-        } else if (getData(position) instanceof String && !getData(position).toString().equals("互动")) {
+        } else if (getData(position) instanceof String && !getData(position).toString().equals
+                ("互动")) {
             return VIEW_TYPE_STRING;
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
-        } else if ((getData(position) instanceof String) && getData(position).toString().equals("互动")) {
+        } else if ((getData(position) instanceof String) && getData(position).toString().equals
+                ("互动")) {
             return VIEW_TYPE_TEXT_MORE;
         }
         return 0;
@@ -146,7 +161,8 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
         }
 
         //添加精选评论
-        List<HotCommentsBean> selectCommentsBean = detailBean.getArticle().getTopic_comment_select();
+        List<HotCommentsBean> selectCommentsBean = detailBean.getArticle()
+                .getTopic_comment_select();
         if (selectCommentsBean != null && selectCommentsBean.size() > 0) {
             datas.add("精选");
             datas.addAll(selectCommentsBean);
@@ -158,7 +174,8 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
             datas.add("互动");
             datas.addAll(listCommentBean);
         }
-        notifyItemRangeChanged(oldSize, datas.size() - oldSize);
+//        notifyItemRangeChanged(oldSize, datas.size() - oldSize);
+        notifyDataSetChanged();
     }
 
     /**
@@ -183,14 +200,16 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
                 Nav.with(UIUtils.getActivity()).to(url);
             }
 
-        } else if (datas.get(position) instanceof String && detailBean.getArticle().isTopic_comment_has_more()) {
+        } else if (datas.get(position) instanceof String && detailBean.getArticle()
+                .isTopic_comment_has_more()) {
             //进入精选列表
             if (bundle == null) {
                 bundle = new Bundle();
             }
             bundle.putSerializable(IKey.NEWS_DETAIL, detailBean);
             bundle.putBoolean(IKey.IS_SELECT_LIST, true);
-            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
+                    .COMMENT_ACTIVITY_PATH);
         }
     }
 

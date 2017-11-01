@@ -230,7 +230,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void fillData(DraftDetailBean data) {
 
         DraftDetailBean.ArticleBean article = data.getArticle();
-        if (article!= null) {
+        if (article != null) {
             ReadNewsDaoHelper.get().asyncRecord(
                     ReadNewsBean.newBuilder().id(article.getId())
                             .mlfId(article.getMlf_id())
@@ -248,14 +248,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         //web
         datas.add(data);
 //        if (mAdapter == null) {
-            mRvContent.setLayoutManager(new LinearLayoutManager(this));
-            mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
-            mAdapter = new NewsDetailAdapter(datas);
-            mAdapter.setEmptyView(
-                    new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
-                    ).itemView);
-            mRvContent.setAdapter(mAdapter);
+        mRvContent.setLayoutManager(new LinearLayoutManager(this));
+        mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
+        mAdapter = new NewsDetailAdapter(datas);
+        mAdapter.setEmptyView(
+                new EmptyPageHolder(mRvContent,
+                        EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                ).itemView);
+        mRvContent.setAdapter(mAdapter);
 //        } else {
 //            mAdapter.setData(datas);
 //        }
@@ -484,7 +484,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 删除评论，局部刷新
      */
     @Override
-    public void onDeleteComment(String comment_id,int position) {
+    public void onDeleteComment(String comment_id, int position) {
         List list = mAdapter.getData();
         for (Object obj : list) {
             int count = 0;

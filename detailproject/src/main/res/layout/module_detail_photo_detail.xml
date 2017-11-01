@@ -1,42 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ry_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
-
-    <!--错误页面-->
-    <RelativeLayout
-        android:id="@+id/view_exise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone">
-
-        <ImageView
-            android:id="@+id/iv_exise"
-            android:layout_width="95dp"
-            android:layout_height="95dp"
-            android:scaleType="fitXY"
-            android:src="?attr/module_detail_atlas_loading"
-            app:iv_maskColor="@color/module_detail_comment_night"  />
-
-        <TextView
-            android:id="@+id/tv_reload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_exise"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="11dp"
-            android:padding="3dp"
-            android:text="重新加载"
-            android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_14sp" />
-
-    </RelativeLayout>
-
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/ry_container"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@android:color/black">
 
     <com.zjrb.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"
@@ -205,7 +173,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:src="?attr/ic_more_atlas"
+                android:src="?attr/module_detail_atlas_more"
                 />
 
         </RelativeLayout>

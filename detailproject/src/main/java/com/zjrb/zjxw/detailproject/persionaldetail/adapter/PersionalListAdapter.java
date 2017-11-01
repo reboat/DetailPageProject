@@ -15,6 +15,7 @@ import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHol
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalTextHolder;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,10 +45,12 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
     }
 
     public void addData(List<OfficalListBean.OfficerListBean> data) {
+        List list = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
-            datas.add(data.get(i));
-            datas.addAll(data.get(i).getArticles());
+            list.add(data.get(i));
+            list.addAll(data.get(i).getArticles());
         }
+        addData(list, false);
         notifyDataSetChanged();
     }
 
@@ -76,7 +79,7 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
     }
 
     /**
-     * @return 获取最后一次刷新的时间戳
+     * @return 获取最后一次刷新的ID
      */
     private Integer getLastOneTag() {
         int size = getDataSize();

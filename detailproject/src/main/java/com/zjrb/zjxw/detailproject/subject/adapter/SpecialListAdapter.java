@@ -8,8 +8,8 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.daily.news.bean.ArticleItemBean;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
-import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 

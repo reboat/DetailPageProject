@@ -92,8 +92,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     TextView mTvComment;
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
-    @BindView(R2.id.view_exise)
-    RelativeLayout mViewExise;
     @BindView(R2.id.fl_comment)
     FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
@@ -101,7 +99,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     /**
-     * 稿件IDid
+     * 稿件ID
      */
     public String mArticleId = "";
 
@@ -195,10 +193,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 //图集撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
-                } else {
-                    mViewExise.setVisibility(View.VISIBLE);
-                    mViewPager.setVisibility(View.GONE);
-                    mContainerBottom.setVisibility(View.GONE);
                 }
             }
         }).setTag(this).exe(mArticleId);
@@ -219,11 +213,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-
-        //显示UI
-        mViewExise.setVisibility(View.GONE);
-        mViewPager.setVisibility(View.VISIBLE);
-        mContainerBottom.setVisibility(View.VISIBLE);
 
         mData = data;
         //设置数据
@@ -296,7 +285,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download, R2.id.view_exise})
+            .menu_setting, R2.id.iv_top_download})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -349,8 +338,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //下载
         } else if (id == R.id.iv_top_download) {
             loadImage(mIndex);
-        } else if (id == R.id.view_exise) {
-            loadData();
         }
     }
 

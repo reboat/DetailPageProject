@@ -10,6 +10,7 @@
     android:drawableLeft="?attr/module_detail_indicator_color_fdc247"
     android:drawablePadding="12dp"
     android:gravity="center_vertical|left"
+    android:layout_marginBottom="10dp"
     android:paddingBottom="9dp"
     android:paddingTop="9dp"
     android:textColor="?attr/tc_484848"

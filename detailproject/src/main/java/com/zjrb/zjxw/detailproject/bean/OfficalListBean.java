@@ -55,6 +55,25 @@ public class OfficalListBean extends BaseData {
         private String description;
         private String photo;
         private String list_pic;
+
+        public String getShare_url() {
+            return share_url;
+        }
+
+        public void setShare_url(String share_url) {
+            this.share_url = share_url;
+        }
+
+        public String getDetail_url() {
+            return detail_url;
+        }
+
+        public void setDetail_url(String detail_url) {
+            this.detail_url = detail_url;
+        }
+
+        private String share_url;
+        private String detail_url;
         /**
          * title : 标题信息
          * url : https://zj.zjol.com.cn/news.html?id=123456

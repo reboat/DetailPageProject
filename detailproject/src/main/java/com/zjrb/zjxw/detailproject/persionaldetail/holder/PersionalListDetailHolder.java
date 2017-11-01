@@ -16,7 +16,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
+import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ import butterknife.OnClick;
  * create time:2017/7/28  下午12:28
  */
 
-public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalArticlesBean> {
+public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalListBean.OfficerListBean> {
 
 
     @BindView(R2.id.iv_avatar)
@@ -51,11 +51,13 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalArt
     public void bindView() {
         //需要显示占位图
         GlideApp.with(mIvAvatar).load(mData.getPhoto()).placeholder(PH.zheSmall()).centerCrop().into(mIvAvatar);
+        //姓名
         if (mData.getName() != null) {
             mTvName.setText(mData.getName());
         }
-        if (mData.getJob() != null) {
-            mTvJob.setText(mData.getJob());
+        //
+        if (mData.getTitle() != null) {
+            mTvJob.setText(mData.getTitle());
         }
     }
 

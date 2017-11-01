@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliya.uimode.utils.UiModeUtils;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -169,7 +171,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.lly_reporter) {
             //跳转到官员详情页H5
-            Nav.with(this).to(bean.getOfficer().getDetail_url());
+            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getDetail_url())) {
+                Nav.with(this).to(bean.getOfficer().getDetail_url());
+            }
         } else {
             //分享
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -243,6 +247,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
     }
 
+    //TODO WLJ 这里属性有问题
     @Override
     public void onPageSelected(int position) {
         if (position == 0) {

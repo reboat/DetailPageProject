@@ -80,7 +80,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
      * 初始化适配器
      * 如果禁言，则不允许弹出评论框
      */
-    //TODO WLJ 后台返回超过6条相关新闻，客户端不做容错
     private void initAdapter() {
         if (mBean == null || mBean.getArticle() == null || mBean.getArticle().getRelated_news() == null || mBean.getArticle().getRelated_news().isEmpty())
             return;

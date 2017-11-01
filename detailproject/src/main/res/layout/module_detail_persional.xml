@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ly_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ly_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="?attr/bc_ffffff"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/lly_reporter"
@@ -20,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_margin="9dp"
             android:scaleType="fitXY"
-            app:ratio_w2h="3:2"
+            app:ratio_w2h="106:139"
             tools:src="@mipmap/ic_launcher" />
 
         <LinearLayout
@@ -38,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
-                android:textColor="?attr/tc_484848"
-                android:textSize="@dimen/ts_14sp"
+                android:textColor="?attr/tc_000000"
+                android:textSize="@dimen/ts_16sp"
                 android:textStyle="bold"
                 tools:text="车俊" />
 
@@ -51,7 +52,7 @@
                 android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@+id/tv_name"
                 android:textColor="?attr/module_detail_tc_808080"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="@dimen/ts_14sp"
                 tools:text="男" />
 
         </LinearLayout>
@@ -82,6 +83,7 @@
             android:gravity="center"
             android:text="@string/module_detail_offical_more"
             android:textColor="?attr/tc_484848"
+            android:textSize="@dimen/ts_11sp"
             tools:text="更多" />
 
     </RelativeLayout>
@@ -102,7 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="13dp"
-        android:background="@color/dc_dddddd" />
+        android:background="?attr/dc_dddddd" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

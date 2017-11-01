@@ -82,10 +82,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FrameLayout mContainer;
-    @BindView(R2.id.fy_webview_container)
-    FrameLayout mWebViewContainer;
-    @BindView(R2.id.view_exise)
-    LinearLayout mViewExise;
 
     private WebSettings settings;
     private String mArticleId;
@@ -172,13 +168,9 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 //撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
-                } else {
-                    //别的错误
-                    mWebViewContainer.setVisibility(View.GONE);
-                    mViewExise.setVisibility(View.VISIBLE);
                 }
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
     }
 
     /**
@@ -197,9 +189,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .url(article.getUrl()));
         }
 
-        //显示UI
-        mWebViewContainer.setVisibility(View.VISIBLE);
-        mViewExise.setVisibility(View.GONE);
 
         //显示标题展示WebView内容等
         mWebView.loadUrl(url);
@@ -232,7 +221,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment, R2.id.view_exise})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -272,9 +261,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
-            //重新加载
-        } else if (view.getId() == R.id.view_exise) {
-            loadData();
         }
     }
 

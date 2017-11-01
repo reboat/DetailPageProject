@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,30 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
-import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +32,7 @@ import butterknife.ButterKnife;
  * create time:2017/8/21  上午10:24
  */
 
-public class PersionalListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, LoadMoreListener<OfficalListBean> {
+public class PersionalListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, OnItemClickListener {
 
     @BindView(R2.id.lv_notice)
     RecyclerView mRecycler;
@@ -50,21 +40,14 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      * 所有官员列表适配器
      */
     private PersionalListAdapter mAdapter;
-
-    private List<OfficalListBean.OfficerListBean> list;
     /**
      * 刷新头
      */
     private HeaderRefresh refresh;
-    /**
-     * 加载更多
-     */
-    private FooterLoadMore more;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getIntentData(getIntent());
         setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
@@ -76,21 +59,10 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         return TopBarFactory.createDefault(view, this, "").getView();
     }
 
-    /**
-     * 官员列表标题
-     */
-//    private String offical_title;
-
-    /**
-     * @param intent 获取传递数据
-     */
-//    private void getIntentData(Intent intent) {
-//        if (intent != null) {
-//            if (intent.hasExtra(IKey.OFFICAL_TITLE)) {
-//                offical_title = intent.getStringExtra(IKey.OFFICAL_TITLE);
-//            }
-//        }
-//    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
 
     /**
@@ -101,22 +73,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
             @Override
             public void onSuccess(OfficalListBean data) {
-                if (data == null) {
-                    return;
-                }
-                more.setState(LoadMore.TYPE_IDLE);
-                list = data.getOfficer_list();
-                if (list != null) {
-                    if (mAdapter == null) {
-                        mAdapter = new PersionalListAdapter();
-                        initAdapter();
-                        mAdapter.setupData(list);
-                        mRecycler.setAdapter(mAdapter);
-                    } else {
-                        mAdapter.setupData(list);
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }
+                bindData(data);
             }
 
             @Override
@@ -137,90 +94,27 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         //添加刷新头
         refresh = new HeaderRefresh(mRecycler);
         refresh.setOnRefreshListener(this);
-        more = new FooterLoadMore(mRecycler, this);
 
     }
 
-    private Bundle bundle;
-
     /**
-     * 初始化适配器
-     */
-    private void initAdapter() {
-        mAdapter.setHeaderRefresh(refresh.getItemView());
-        mAdapter.setFooterLoadMore(more.getItemView());
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                if (ClickTracker.isDoubleClick()) return;
-                if (list != null && list.get(position) != null && list.size() > 0) {
-                    OfficalArticlesBean b = (OfficalArticlesBean) mAdapter.getData(position);
-                    String uri = b.getUrl();
-                    int type = b.getType();
-                    int officalId = b.getOfficalId();
-                    //进入官员详情页
-                    if (type == PersionalListAdapter.TYPE_PERSIONAL_DETAIL) {
-                        if (bundle == null) {
-                            bundle = new Bundle();
-                        }
-                        bundle.putInt(IKey.OFFICIAL_ID, officalId);
-                        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.PERSIONAL_DETAIL);
-                    } else {
-                        //支持跳转到所有的新闻详情页
-                        if (uri != null && !uri.isEmpty()) {
-                            Uri u = Uri.parse(uri);
-                            Nav.with(UIUtils.getActivity()).to(u
-                                    .buildUpon()
-                                    .build(), 0);
-
-                        }
-
-                    }
-
-                }
-            }
-        });
-    }
-
-
-    /**
-     * 最后一次下发的官员ID
-     */
-    private int lastOfficalId = 0;
-
-    /**
-     * 加载更多
+     * adapte处理
      *
-     * @param data
-     * @param loadMore
+     * @param bean
      */
-    @Override
-    public void onLoadMoreSuccess(OfficalListBean data, LoadMore loadMore) {
-        if (data != null && data.getOfficer_list() != null) {
-            List<OfficalListBean.OfficerListBean> list = data.getOfficer_list();
-            if (list.size() > 0) {
-                //获取最后的刷新ID
-                lastOfficalId = getLastOfficalId(list);
-            }
-            mAdapter.addData(list, true);
-            if (list.size() < C.PAGE_SIZE) {
-                loadMore.setState(LoadMore.TYPE_NO_MORE);
-            }
-
+    private void bindData(OfficalListBean bean) {
+        //初始化适配器
+        if (mAdapter == null) {
+            mAdapter = new PersionalListAdapter(bean, mRecycler);
+            mAdapter.setHeaderRefresh(refresh.getItemView());
+            mAdapter.setEmptyView(
+                    new EmptyPageHolder(mRecycler,
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
+                    ).itemView);
+            mRecycler.setAdapter(mAdapter);
         } else {
-            loadMore.setState(LoadMore.TYPE_NO_MORE);
+            mAdapter.setData(bean);
         }
-    }
-
-
-    /**
-     * 加载更多每次加载3条
-     *
-     * @param callback 官员列表每次下发20条
-     */
-    @Override
-    public void onLoadMore(LoadingCallBack<OfficalListBean> callback) {
-        new OfficalListTask(callback).setTag(this).exe(lastOfficalId == 0 ? null : lastOfficalId + "");
     }
 
     /**
@@ -238,14 +132,12 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
 
     }
 
-    /**
-     * @param list
-     * @return 获取最后一次刷新的官员id
-     */
-    private int getLastOfficalId(List<OfficalListBean.OfficerListBean> list) {
-        if (list != null && list.size() > 0) {
-            return list.get(list.size() - 1).getId();
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
+            Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
+        } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
+            Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
         }
-        return 0;
     }
 }

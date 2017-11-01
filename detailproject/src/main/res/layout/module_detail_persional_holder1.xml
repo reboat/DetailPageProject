@@ -2,6 +2,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lly_reporter"
     android:layout_width="match_parent"
@@ -10,12 +11,13 @@
 
     <ImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="106dp"
-        android:layout_height="139dp"
+        android:layout_width="84dp"
+        android:layout_height="110dp"
         android:layout_alignParentLeft="true"
         android:layout_margin="9dp"
         android:scaleType="fitXY"
-        tools:src="@mipmap/ic_launcher"/>
+        app:ratio_w2h="84:110"
+        tools:src="@mipmap/ic_launcher" />
 
     <LinearLayout
         android:id="@+id/ly_name"
@@ -32,10 +34,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_gravity="left"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_14sp"
+            android:padding="2dp"
+            android:textColor="?attr/tc_000000"
+            android:textSize="@dimen/ts_16sp"
             android:textStyle="bold"
-            tools:text="车俊"/>
+            tools:text="车俊" />
 
         <TextView
             android:id="@+id/tv_job"
@@ -43,10 +46,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginTop="6dp"
-            android:lineSpacingMultiplier="1.1"
-            android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_11sp"
-            tools:text="浙江省委书记"/>
+            android:padding="2dp"
+            android:textColor="?attr/tc_000000"
+            android:textSize="@dimen/ts_16sp"
+            tools:text="浙江省委书记" />
 
     </LinearLayout>
 
@@ -57,12 +60,13 @@
         android:layout_alignBottom="@+id/iv_avatar"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_content"
-        android:layout_marginRight="26dp"
+        android:layout_marginRight="22dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
         android:gravity="center"
-        android:textColor="?attr/tc_484848"
         android:text="@string/module_detail_offical_more"
-        tools:text="更多"/>
+        android:textColor="?attr/tc_484848"
+        android:textSize="@dimen/ts_11sp"
+        tools:text="更多" />
 
 </RelativeLayout>
 

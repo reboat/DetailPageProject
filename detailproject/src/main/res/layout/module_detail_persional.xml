@@ -21,7 +21,7 @@
             android:layout_alignParentLeft="true"
             android:layout_margin="9dp"
             android:scaleType="fitXY"
-            app:ratio_w2h="106:"
+            app:ratio_w2h="106:139"
             tools:src="@mipmap/ic_launcher" />
 
         <LinearLayout

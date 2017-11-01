@@ -47,7 +47,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     public void addData(List<HotCommentsBean> data) {
-        // 全量刷新
         addData(data, false);
         notifyDataSetChanged();
     }

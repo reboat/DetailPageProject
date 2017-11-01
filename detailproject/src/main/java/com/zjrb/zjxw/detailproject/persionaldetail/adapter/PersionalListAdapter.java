@@ -2,14 +2,19 @@ package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 
 import android.view.ViewGroup;
 
+import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
+import com.zjrb.core.common.base.page.LoadMore;
+import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.listener.LoadMoreListener;
+import com.zjrb.core.common.manager.APICallManager;
+import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHolder;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalTextHolder;
+import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,39 +22,78 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/8/21  上午10:14
  */
-public class PersionalListAdapter extends BaseRecyclerAdapter {
+public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMoreListener<OfficalListBean> {
 
-    //全部跳转到链接稿
     public static int TYPE_PERSIONAL_DETAIL = -1;
     public static int TYPE_NOMAL = 0;
 
-    public PersionalListAdapter() {
-        super(new ArrayList<OfficalArticlesBean>());
+    private final FooterLoadMore<OfficalListBean> mLoadMore;
+
+    public PersionalListAdapter(OfficalListBean datas, ViewGroup parent) {
+        super(null);
+        mLoadMore = new FooterLoadMore<>(parent, this);
+        setFooterLoadMore(mLoadMore.itemView);
+        setData(datas);
     }
 
-    /**
-     * @param groupList 设置官员列表数据
-     */
-    public void setupData(List<OfficalListBean.OfficerListBean> groupList) {
-        datas.clear();
-        if (groupList != null) {
-            for (OfficalListBean.OfficerListBean group : groupList) {
-                OfficalArticlesBean bean = new OfficalArticlesBean();
-                bean.setOfficalId(group.getId());
-                bean.setPhoto(group.getList_pic());
-                bean.setName(group.getName());
-                bean.setJob(group.getTitle());
-                bean.setType(TYPE_PERSIONAL_DETAIL);
-                datas.add(bean);
-                datas.addAll(group.getArticles());
-            }
-            notifyDataSetChanged();
+    public void setData(OfficalListBean data) {
+        cancelLoadMore();
+        mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
+
+        addData(data != null ? data.getOfficer_list() : null);
+    }
+
+    public void addData(List<OfficalListBean.OfficerListBean> data) {
+        for (int i = 0; i < data.size(); i++) {
+            datas.add(data.get(i));
+            datas.addAll(data.get(i).getArticles());
+        }
+        notifyDataSetChanged();
+    }
+
+    public boolean noMore(OfficalListBean data) {
+        return data == null || data.getOfficer_list() == null
+                || data.getOfficer_list().size() < C.PAGE_SIZE;
+    }
+
+    public void cancelLoadMore() {
+        APICallManager.get().cancel(this);
+    }
+
+    @Override
+    public void onLoadMoreSuccess(OfficalListBean data, LoadMore loadMore) {
+        if (noMore(data)) {
+            loadMore.setState(LoadMore.TYPE_NO_MORE);
+        }
+        if (data != null) {
+            addData(data.getOfficer_list());
         }
     }
 
     @Override
-    public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
-            viewType) {
+    public void onLoadMore(LoadingCallBack<OfficalListBean> callback) {
+        new OfficalListTask(callback).setTag(this).exe(getLastOneTag());
+    }
+
+    /**
+     * @return 获取最后一次刷新的时间戳
+     */
+    private Integer getLastOneTag() {
+        int size = getDataSize();
+        if (size > 0) {
+            int count = 1;
+            while (size - count >= 0) {
+                Object data = getData(size - count++);
+                if (data instanceof OfficalListBean.OfficerListBean) {
+                    return ((OfficalListBean.OfficerListBean) data).getId();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (TYPE_PERSIONAL_DETAIL == viewType) {
             //官员详情
             return new PersionalListDetailHolder(parent);
@@ -58,14 +102,13 @@ public class PersionalListAdapter extends BaseRecyclerAdapter {
         return new PersionalTextHolder(parent);
     }
 
-
     @Override
     public int getAbsItemViewType(int position) {
-        if (((OfficalArticlesBean) datas.get(position)).getType() == -1) {
+        if (datas.get(position) instanceof OfficalListBean) {
             return TYPE_PERSIONAL_DETAIL;
-        } else {
-            return TYPE_NOMAL;
         }
+        return TYPE_NOMAL;
     }
+
 
 }

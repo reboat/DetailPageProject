@@ -23,7 +23,6 @@ import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsTextMoreHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityMiddleHolder;
-import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityTopHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
@@ -65,8 +64,6 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
-            case VIEW_TYPE_TOP:
-                return new NewsActivityTopHolder(parent);
             case VIEW_TYPE_WEB_VIEW:
                 return new NewsDetailWebViewHolder(parent);
             case VIEW_TYPE_MIDDLE:
@@ -87,8 +84,6 @@ public class ActivityTopicAdapter extends BaseRecyclerAdapter implements OnItemC
     @Override
     public int getAbsItemViewType(int position) {
         if (position == 0) {
-            return VIEW_TYPE_TOP;
-        } else if (position == 1) {
             return VIEW_TYPE_WEB_VIEW;
         } else if (getData(position) instanceof DraftDetailBean) {
             mMiddleHolderPosition = position;

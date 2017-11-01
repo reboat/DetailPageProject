@@ -22,8 +22,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
@@ -54,6 +52,9 @@ import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+import com.zjrb.zjxw.detailproject.topic.holder.HeaderTopicTop;
+import com.zjrb.zjxw.detailproject.topic.holder.OverlyHolder;
+import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
@@ -69,10 +70,15 @@ import butterknife.OnClick;
  * create time:2017/9/13  上午9:08
  */
 
-public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
-        ActivityTopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>, DetailCommentHolder.deleteCommentListener {
-    @BindView(R2.id.recyclerView)
-    RecyclerView mRecyclerView;
+public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelper
+        .OnTouchSlopListener,
+        ActivityTopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
+        DetailCommentHolder.deleteCommentListener {
+
+    @BindView(R2.id.recycler)
+    RecyclerView mRecycler;
+
+
     @BindView(R2.id.tv_comment)
     TextView mTvComment;
     @BindView(R2.id.menu_prised)
@@ -88,7 +94,10 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
 
-    private ActivityTopicAdapter adapter;
+    @BindView(R2.id.top_bar)
+    FrameLayout mTopBar;
+
+    private ActivityTopicAdapter mAdapter;
     /**
      * 上下滑动超出范围处理
      */
@@ -98,18 +107,22 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * 加载更多
      */
     private FooterLoadMore more;
+    private HeaderTopicTop mTopicTop;
+
+    // top bar
+    private TopBarHolder mTopBarHolder;
+    // overlay
+    private OverlyHolder mOverlyHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setOverly(true);
         setContentView(R.layout.module_detail_topic_activity);
         ButterKnife.bind(this);
         getIntentData(getIntent());
         initView();
         loadData();
     }
-
 
     /**
      * 处理上下移动监听
@@ -123,7 +136,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             mTouchSlopHelper.onTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
     }
-
 
     /**
      * 文章ID
@@ -160,24 +172,21 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
     private void initView() {
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
+
+        mTopBarHolder = new TopBarHolder(mTopBar);
+        mOverlyHolder = new OverlyHolder(findViewById(R.id.layout_fixed));
     }
 
-    /**
-     * topbar
-     */
-    private DefaultTopBarHolder1 topHolder;
-
     @Override
-    protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
-        return topHolder.getView();
+    public boolean isShowTopBar() {
+        return false;
     }
 
     /**
      * 初始化/拉取数据
      */
     private void loadData() {
-        if (mArticleId == null || mArticleId.isEmpty()) return;
+
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -185,7 +194,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
                 mNewsDetail = draftDetailBean;
                 fillData(draftDetailBean);
-                initRectleView(!TextUtils.isEmpty(draftDetailBean.getArticle().getArticle_pic()) ? true : false);
+                initRectleView(!TextUtils.isEmpty(draftDetailBean.getArticle().getArticle_pic())
+                        ? true : false);
             }
 
             @Override
@@ -194,7 +204,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
-                    topHolder.getShareView().setVisibility(View.GONE);
+//                    topHolder.getShareView().setVisibility(View.GONE);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
@@ -204,23 +214,24 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * @param isShowArticlePic 初始化recyleView滚动事件
      */
     private void initRectleView(boolean isShowArticlePic) {
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mRecyclerView.getLayoutParams();
-        if (isShowArticlePic) {
-            mRecyclerView.setLayoutParams(layoutParams);
-            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                }
-            });
-        }
+//        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mRecycler
+//                .getLayoutParams();
+//        if (isShowArticlePic) {
+//            mRecycler.setLayoutParams(layoutParams);
+//            mRecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//
+//                @Override
+//                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                    super.onScrollStateChanged(recyclerView, newState);
+//                }
+//
+//                @Override
+//                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//
+//                }
+//            });
+//        }
     }
 
     /**
@@ -228,7 +239,6 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      *
      * @param data
      */
-
     private void fillData(DraftDetailBean data) {
 
         // 记录阅读记录
@@ -243,22 +253,29 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         }
 
         mNewsDetail = data;
+
         List datas = new ArrayList<>();
-        //头
-        datas.add(data);
         //webview
         datas.add(data);
 
-        adapter = new ActivityTopicAdapter(datas);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        more = new FooterLoadMore(mRecyclerView, this);
-        adapter.setEmptyView(
-                new EmptyPageHolder(mRecyclerView,
-                        EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
-                ).itemView);
-        mRecyclerView.setAdapter(adapter);
+        if (mAdapter == null) {
+            mAdapter = new ActivityTopicAdapter(datas);
+            mRecycler.setLayoutManager(new LinearLayoutManager(this));
+            more = new FooterLoadMore(mRecycler, this);
+            mTopicTop = new HeaderTopicTop(mRecycler);
+            mTopicTop.setTopBar(mTopBarHolder);
+            mTopicTop.setOverlayHolder(mOverlyHolder);
+            mAdapter.addHeaderView(mTopicTop.itemView);
+            mAdapter.setEmptyView(
+                    new EmptyPageHolder(mRecycler,
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                    ).itemView);
+            mRecycler.setAdapter(mAdapter);
+        } else {
+            // TODO: 2017/10/31
+        }
 
-
+        mTopicTop.setData(data);
         //是否可以点赞
         if (data.getArticle().isLike_enabled()) {
             mMenuPrised.setVisibility(View.VISIBLE);
@@ -288,9 +305,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      */
     @Override
     public void onTouchSlop(boolean isUp) {
+
         if (!isUp && mFloorBar.getVisibility() == View.GONE) {
             mFloorBar.setVisibility(View.VISIBLE);
         }
+        mFloorBar.setVisibility(View.GONE);
         int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
         mFloorBar.animate().setInterpolator(mInterpolator)
                 .setDuration(200)
@@ -324,7 +343,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
             @Override
             public void onAfter() {
-                adapter.updateSubscribeInfo();
+                mAdapter.updateSubscribeInfo();
             }
 
             @Override
@@ -338,8 +357,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
 
     @Override
     public void onOptPageFinished() {
-        adapter.setFooterLoadMore(more.getItemView());
-        adapter.showAll();
+        mAdapter.setFooterLoadMore(more.getItemView());
+        mAdapter.showAll();
     }
 
     /**
@@ -347,7 +366,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      */
     @Override
     public void onOptClickColumn() {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
+        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
+                .appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id
+                        ())).build().toString());
     }
 
     /**
@@ -393,7 +414,9 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String.valueOf(mNewsDetail.getArticle().getId())))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
+                        .valueOf(mNewsDetail.getArticle().getId())))).show
+                        (getSupportFragmentManager(), "CommentWindowDialog");
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
@@ -410,7 +433,8 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
                     bundle = new Bundle();
                 }
                 bundle.putSerializable(IKey.NEWS_DETAIL, mNewsDetail);
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
+                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
+                        .COMMENT_ACTIVITY_PATH);
             }
         }
     }
@@ -439,7 +463,7 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
             if (commentList.size() > 0) {
                 lastMinPublishTime = getLastMinPublishTime();
             }
-            adapter.addData(commentList, true);
+            mAdapter.addData(commentList, true);
             if (commentList.size() < C.PAGE_SIZE) {
                 loadMore.setState(LoadMore.TYPE_NO_MORE);
             }
@@ -463,11 +487,11 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * @return 获取最后一次刷新的时间戳
      */
     private Long getLastMinPublishTime() {
-        int size = adapter.getDataSize();
+        int size = mAdapter.getDataSize();
         if (size > 0) {
             int count = 1;
             while (size - count >= 0) {
-                Object data = adapter.getData(size - count++);
+                Object data = mAdapter.getData(size - count++);
                 if (data instanceof HotCommentsBean) {
                     return ((HotCommentsBean) data).getSort_number();
                 }
@@ -482,17 +506,19 @@ public class ActivityTopicActivity extends BaseActivity implements TouchSlopHelp
      * @param comment_id
      */
     @Override
-    public void onDeleteComment(String comment_id,int position) {
-        List list = adapter.getData();
+    public void onDeleteComment(String comment_id, int position) {
+        List list = mAdapter.getData();
         for (Object obj : list) {
             int count = 0;
-            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
-                adapter.getData().remove(obj);
-                adapter.notifyItemMoved(count, count);
-//                adapter.notifyItemRangeChanged(count, adapter.getDataSize());
+            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals
+                    (comment_id)) {
+                mAdapter.getData().remove(obj);
+                mAdapter.notifyItemMoved(count, count);
+//                mAdapter.notifyItemRangeChanged(count, mAdapter.getDataSize());
                 break;
             }
             count++;
         }
     }
+
 }

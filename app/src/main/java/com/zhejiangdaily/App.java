@@ -7,6 +7,7 @@ import com.zjrb.core.common.base.BaseInit;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.daily.db.DatabaseLoader;
 
 public class App extends MultiDexApplication {
 
@@ -20,5 +21,6 @@ public class App extends MultiDexApplication {
         BaseInit.getInstance().init(this,"bianfeng");
         setTheme(ThemeMode.isNightMode() ? R.style.NightAppTheme : R.style.AppTheme);
 
+        DatabaseLoader.init(this);
     }
 }

@@ -18,12 +18,13 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
     }
 
     /**
-     * @param params
-     * id:稿件id(int)
+     * @param params id:稿件id(int)
      */
     @Override
     protected void onSetupParams(Object... params) {
-        put("id", params[0]);
+        if (params != null && params.length > 0) {
+            put("id", params[0]);
+        }
     }
 
     @Override

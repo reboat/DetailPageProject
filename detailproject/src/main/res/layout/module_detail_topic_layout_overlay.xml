@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_fixed"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/module_detail_color_ffffff_202124"
+    android:orientation="vertical"
+    android:paddingBottom="14dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="14dp">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="5"
+        android:textColor="?attr/module_detail_color_000000_7a7b7d"
+        android:textSize="@dimen/ts_17sp"
+        android:textStyle="bold"
+        tools:text="千年历史沿革畔邵史沿革畔邵" />
+
+    <TextView
+        android:id="@+id/tv_host"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:drawableLeft="@mipmap/module_detail_activity_host"
+        android:drawablePadding="5dp"
+        android:textColor="?attr/module_detail_color_999999_5c5c5c"
+        android:textSize="@dimen/ts_13sp"
+        tools:text="主持人：小明" />
+
+    <TextView
+        android:id="@+id/tv_guest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/module_detail_activity_guest"
+        android:drawablePadding="5dp"
+        android:textColor="?attr/module_detail_color_999999_5c5c5c"
+        android:textSize="@dimen/ts_13sp"
+        tools:text="嘉宾：小明  豆包" />
+</LinearLayout>

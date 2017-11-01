@@ -41,7 +41,7 @@
         <attr name="bc_a4a3a3" format="color|reference" />
         <!--d2d2d2  5c5c5c-->
         <attr name="tc_d2d2d2" format="color|reference" />
-        <attr name="module_detail_color_7f000000_7f191919" format="color|reference" />
+
         <!--#ffffff  #191919-->
         <attr name="bc_ffffff" format="color|reference" />
         <!--#808080  #5c5c5c-->
@@ -84,6 +84,16 @@
         <attr name="module_detail_atlas_edit_bg" format="reference" />
         <attr name="ic_atlas_detail_comment" format="reference" />
         <attr name="ic_more_atlas" format="reference" />
+
+
+
+        <attr name="module_detail_color_7f000000_7f191919" format="color|reference" />
+        <attr name="module_detail_color_ffffff_7a7b7d" format="color|reference" />
+        <attr name="module_detail_color_ffffff_202124" format="color|reference" />
+        <attr name="module_detail_color_000000_7a7b7d" format="color|reference" />
+        <attr name="module_detail_color_d2d2d2_5c5c5c" format="color|reference" />
+        <attr name="module_detail_color_999999_5c5c5c" format="color|reference" />
+        <attr name="module_detail_color_484848_7a7b7d" format="color|reference" />
 
     </declare-styleable>
 

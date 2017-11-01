@@ -138,7 +138,7 @@
         <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
-        <item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>
+        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
 
     </style>
 
@@ -288,7 +288,7 @@
         <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
-        <item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>
+        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
 
     </style>
 

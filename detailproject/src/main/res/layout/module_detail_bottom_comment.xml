@@ -32,7 +32,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toLeftOf="@+id/menu_comment"
-            android:background="@drawable/module_detail_comment_edit"
             >
 
             <TextView

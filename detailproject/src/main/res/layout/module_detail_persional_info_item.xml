@@ -57,7 +57,7 @@
             android:layout_width="7dp"
             android:layout_height="7dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/module_detail_persional_info_item_bg" />
+            android:src="?attr/module_detail_persional_info_item_bg" />
 
     </RelativeLayout>
 

@@ -16,7 +16,7 @@
         android:scaleType="fitXY"
         android:visibility="gone"
         app:ratio_w2h="3:2"
-        tools:src="@mipmap/ic_detail_integral" />
+         />
 
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fit_top_layout"

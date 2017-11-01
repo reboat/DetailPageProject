@@ -82,10 +82,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FrameLayout mContainer;
-    @BindView(R2.id.fy_webview_container)
-    FrameLayout mWebViewContainer;
-//    @BindView(R2.id.view_exise)
-//    LinearLayout mViewExise;
 
     private WebSettings settings;
     private String mArticleId;
@@ -173,11 +169,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 }
-//                else {
-//                    //别的错误
-//                    mWebViewContainer.setVisibility(View.GONE);
-//                    mViewExise.setVisibility(View.VISIBLE);
-//                }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
     }
@@ -198,9 +189,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .url(article.getUrl()));
         }
 
-        //显示UI
-//        mWebViewContainer.setVisibility(View.VISIBLE);
-//        mViewExise.setVisibility(View.GONE);
 
         //显示标题展示WebView内容等
         mWebView.loadUrl(url);

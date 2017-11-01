@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import android.text.TextUtils;
-
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;

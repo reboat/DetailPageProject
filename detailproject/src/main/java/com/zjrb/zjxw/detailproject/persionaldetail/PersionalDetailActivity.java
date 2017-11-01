@@ -247,6 +247,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
     }
 
+    //TODO WLJ 这里属性有问题
     @Override
     public void onPageSelected(int position) {
         if (position == 0) {

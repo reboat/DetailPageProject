@@ -276,7 +276,7 @@ public class OfficalDetailBean extends BaseData {
         /**
          * 官员详情页任职履历
          */
-        public static class ResumesBean {
+        public static class ResumesBean implements Serializable{
             private int year;
             private int month;
             private String location;

@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.holder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -55,7 +56,7 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
         if (mData.getName() != null) {
             mTvName.setText(mData.getName());
         }
-        //
+        //职位
         if (mData.getTitle() != null) {
             mTvJob.setText(mData.getTitle());
         }

@@ -11,18 +11,18 @@
         <item name="module_detail_color_999999_5c5c5c">#999999</item>
         <item name="module_detail_color_484848_7a7b7d">#484848</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more</item>
+        <item name="module_detail_news_comment">@mipmap/module_detail_ic_comment</item>
+        <item name="module_detail_news_more">@mipmap/module_detail_ic_more</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left</item>
+        <item name="module_detail_commentedit_left">@mipmap/module_detail_commentedit_left</item>
         <item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>
 
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>
         <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest</item>
+        <item name="module_detail_activity_host">@mipmap/module_detail_activity_host</item>
+        <item name="module_detail_activity_guest">@mipmap/module_detail_activity_guest</item>
 
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
@@ -37,6 +37,14 @@
         <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>
         <item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>
         <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>
+        <item name="module_detail_share_friend">@mipmap/module_detail_me_friend_btn</item>
+        <item name="module_detail_share_qq">@mipmap/module_detail_me_qq_btn</item>
+        <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn</item>
+        <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn</item>
+        <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn</item>
+
+
     </style>
 
     <style name="DetailNightTheme">
@@ -49,17 +57,17 @@
         <item name="module_detail_color_999999_5c5c5c">#5c5c5c</item>
         <item name="module_detail_color_484848_7a7b7d">#7a7b7d</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment_night</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more_night</item>
+        <item name="module_detail_news_comment">@mipmap/module_detail_ic_comment_night</item>
+        <item name="module_detail_news_more">@mipmap/module_detail_ic_more_night</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left_night</item>
+        <item name="module_detail_commentedit_left">@mipmap/module_detail_commentedit_left_night</item>
         <item name="module_detail_tc_4d95fa">@color/tc_315277</item>
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
         <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host_night</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night</item>
+        <item name="module_detail_activity_host">@mipmap/module_detail_activity_host_night</item>
+        <item name="module_detail_activity_guest">@mipmap/module_detail_activity_guest_night</item>
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
@@ -74,5 +82,11 @@
         <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg_night</item>
         <item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>
         <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit_night</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_343434</item>
+        <item name="module_detail_share_friend">@mipmap/module_detail_me_friend_btn_night</item>
+        <item name="module_detail_share_qq">@mipmap/module_detail_me_qq_btn_night</item>
+        <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn_night</item>
+        <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn_night</item>
+        <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn_night</item>
     </style>
 </resources>

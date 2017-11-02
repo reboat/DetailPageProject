@@ -42,6 +42,7 @@ public class OfficalListBean extends BaseData {
 
     public static class OfficerListBean {
         private int id;
+        private String gender_text;
         private String name;
         private String gender;
         private String hometown;
@@ -55,6 +56,14 @@ public class OfficalListBean extends BaseData {
         private String description;
         private String photo;
         private String list_pic;
+
+        public String getGender_text() {
+            return gender_text;
+        }
+
+        public void setGender_text(String gender_text) {
+            this.gender_text = gender_text;
+        }
 
         public String getShare_url() {
             return share_url;

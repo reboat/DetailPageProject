@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -50,6 +51,8 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     TextView tvTitle;
     @BindView(R2.id.tv_comment_num)
     TextView tvCommentNum;
+    @BindView(R2.id.activity_comment)
+    RelativeLayout ry_containerl;
 
     /**
      * 文章id
@@ -220,7 +223,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRvContent) : null).exe(articleId);
+        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }
 
 

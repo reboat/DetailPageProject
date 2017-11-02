@@ -3,8 +3,8 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="?attr/bc_202124"
               android:layout_marginBottom="17dp"
+              android:background="?attr/bc_202124"
               android:orientation="vertical">
 
     <LinearLayout
@@ -36,7 +36,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="0.5dp"
-            android:layout_marginLeft="17.5dp"
+            android:layout_marginRight="17.5dp"
             android:layout_weight="1"
             android:background="?attr/bc_dddddd" />
     </LinearLayout>
@@ -55,7 +55,7 @@
         android:layout_marginBottom="17dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="?attr/bc_e2e2e2" />
+        android:background="?attr/module_detail_bc_e2e2e2" />
     <!--频道-->
     <RelativeLayout
         android:id="@+id/ry_channel"

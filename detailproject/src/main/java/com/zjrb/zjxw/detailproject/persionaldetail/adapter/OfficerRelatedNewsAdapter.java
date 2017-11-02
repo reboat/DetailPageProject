@@ -36,12 +36,12 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
     public void setData(OfficalDetailBean data) {
         cancelLoadMore();
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
-        setData(data != null ? data.getArticle_list() : null);
+        setData((data != null && data.getOfficer() != null && data.getOfficer().getArticle_list() != null) ? data.getOfficer().getArticle_list() : null);
     }
 
     public boolean noMore(OfficalDetailBean data) {
-        return data == null || data.getArticle_list() == null
-                || data.getArticle_list().size() < C.PAGE_SIZE;
+        return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null
+                || data.getOfficer().getArticle_list().size() < C.PAGE_SIZE;
     }
 
     public void cancelLoadMore() {
@@ -53,8 +53,8 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
         if (noMore(data)) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
-        if (data != null) {
-            addData(data.getArticle_list(), true);
+        if (data != null && data.getOfficer() != null && data.getOfficer().getArticle_list() != null && data.getOfficer().getArticle_list().size() > 0) {
+            addData(data.getOfficer().getArticle_list(), true);
         }
     }
 

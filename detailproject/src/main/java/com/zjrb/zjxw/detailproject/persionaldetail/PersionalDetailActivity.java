@@ -15,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.aliya.uimode.utils.UiModeUtils;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -123,7 +122,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      */
     private void initView(OfficalDetailBean b) {
         bean = b;
-        bean.setArticle_list(b.getArticle_list());
         bean.setOfficer(b.getOfficer());
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();

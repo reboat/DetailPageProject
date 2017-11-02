@@ -137,6 +137,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     /**
+     * 显示顶部栏显示/隐藏
+     *
+     * @param flag
+     */
+    private void setTopBarInOut(int flag) {
+        topHolder.getView().setVisibility(flag);
+    }
+
+    /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
@@ -410,8 +419,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setVisibility(View.VISIBLE);
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
+                setTopBarInOut(View.GONE);
             } else {
                 mTvTitleTop.setVisibility(View.GONE);
+                setTopBarInOut(View.VISIBLE);
             }
         }
     }

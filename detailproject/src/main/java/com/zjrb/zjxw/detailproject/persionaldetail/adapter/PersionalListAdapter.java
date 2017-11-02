@@ -10,10 +10,12 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHolder;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalTextHolder;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
+import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,9 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
         List list = new ArrayList<>();
         for (int i = 0; i < data.size(); i++) {
             list.add(data.get(i));
-            list.addAll(data.get(i).getArticles());
+            if (data.get(i).getArticles() != null && !data.get(i).getArticles().isEmpty()) {
+                list.addAll(data.get(i).getArticles());
+            }
         }
         addData(list, false);
         notifyDataSetChanged();
@@ -100,17 +104,21 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
         if (TYPE_PERSIONAL_DETAIL == viewType) {
             //官员详情
             return new PersionalListDetailHolder(parent);
+        } else if (TYPE_NOMAL == viewType) {
+            //链接稿
+            return new PersionalTextHolder(parent);
         }
-        //链接稿
-        return new PersionalTextHolder(parent);
+        return new NewsPlaceHolder(parent);
     }
 
     @Override
     public int getAbsItemViewType(int position) {
-        if (datas.get(position) instanceof OfficalListBean) {
+        if (datas.get(position) instanceof OfficalListBean.OfficerListBean) {
             return TYPE_PERSIONAL_DETAIL;
+        } else if (datas.get(position) instanceof OfficalArticlesBean) {
+            return TYPE_NOMAL;
         }
-        return TYPE_NOMAL;
+        return 0;
     }
 
 

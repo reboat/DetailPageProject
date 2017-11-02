@@ -86,6 +86,8 @@
         <attr name="module_detail_persional_info_item_bg" format="reference" />
         <attr name="module_detail_atlas_comment_left" format="reference" />
         <attr name="module_detail_comment_edit" format="reference" />
+        <attr name="module_detail_bc_e2e2e2" format="color" />
+
 
 
 

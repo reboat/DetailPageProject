@@ -236,7 +236,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getApp(), "收藏失败");
+                T.showShort(UIUtils.getApp(), errMsg);
                 dismissFragmentDialog();
             }
 

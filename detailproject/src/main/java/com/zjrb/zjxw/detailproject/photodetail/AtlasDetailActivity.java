@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -69,7 +70,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         .OnPageChangeListener, View.OnTouchListener {
 
     @BindView(R2.id.ry_container)
-    FrameLayout mContainer;
+    FitWindowsFrameLayout mContainer;
     @BindView(R2.id.view_pager)
     HackyViewPager mViewPager;
     @BindView(R2.id.tv_title)

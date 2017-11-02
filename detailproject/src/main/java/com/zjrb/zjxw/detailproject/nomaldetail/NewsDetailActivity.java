@@ -38,6 +38,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.NetUtils;
+import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -185,7 +186,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             mVideoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .into(mivVideoBG);
-            PlayerManager.get().play(mVideoContainer, videoPath);
+            if (SettingManager.getInstance().isAutoPlayVideoWithWifi()) {
+                PlayerManager.get().play(mVideoContainer, videoPath);
+            }
         } else {
             mVideoContainer.setVisibility(View.GONE);
         }
@@ -427,7 +430,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(),mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {

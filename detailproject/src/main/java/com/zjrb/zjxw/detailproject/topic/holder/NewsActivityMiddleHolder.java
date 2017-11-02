@@ -6,11 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -28,7 +25,7 @@ import butterknife.OnClick;
  * create time:2017/7/17  上午10:14
  */
 public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        View.OnAttachStateChangeListener, OnItemClickListener, TopicAdapter.IBindSubscribe {
+        View.OnAttachStateChangeListener, TopicAdapter.IBindSubscribe {
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
     @BindView(R2.id.tv_column_subscribe)
@@ -43,8 +40,8 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void bindView() {
-        itemView.removeOnAttachStateChangeListener(this);
-        itemView.addOnAttachStateChangeListener(this);
+//        itemView.removeOnAttachStateChangeListener(this);
+//        itemView.addOnAttachStateChangeListener(this);
         //栏目LOGO
         GlideApp.with(mIvColumnLogo).load(mData.getArticle().getColumn_logo()).placeholder(PH.zheSmall()).centerCrop().into(mIvColumnLogo);
 
@@ -57,6 +54,8 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
         if (!mData.getArticle().isColumn_subscribed()) {
             mTvColumnSubscribe.setVisibility(View.VISIBLE);
             mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
+        } else {
+            mTvColumnSubscribe.setVisibility(View.GONE);
         }
     }
 
@@ -88,18 +87,6 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void onViewDetachedFromWindow(View v) {
-    }
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-        if (ClickTracker.isDoubleClick()) return;
-        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                .setSingle(true)
-                .setImgUri(mData.getArticle().getFirstPic())
-                .setTextContent(mData.getArticle().getSummary())
-                .setTitle(mData.getArticle().getDoc_title())
-                .setTargetUrl(mData.getArticle().getUrl()));
-
     }
 
     /**

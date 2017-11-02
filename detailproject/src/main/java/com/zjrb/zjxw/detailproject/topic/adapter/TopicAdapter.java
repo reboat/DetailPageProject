@@ -44,10 +44,10 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     public static final int VIEW_TYPE_RELATE_SUBJECT = 4;
     //互动评论
     public static final int VIEW_TYPE_COMMENT = 5;
-    //字符串
+    //互动
     public static final int VIEW_TYPE_STRING = 6;
-
-    public static final int VIEW_TYPE_TEXT_MORE = 7;
+    //精选
+    public static final int VIEW_TYPE_TEXT_INTERACT = 7;
 
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
@@ -83,7 +83,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 return new NewsStringTextHolder(parent);
             case VIEW_TYPE_RELATE_SUBJECT:
                 return new NewsRelateSubjectHolder(parent);
-            case VIEW_TYPE_TEXT_MORE:
+            case VIEW_TYPE_TEXT_INTERACT:
                 return new NewsTextMoreHolder(parent, detailBean.getArticle()
                         .isTopic_comment_has_more());
             case VIEW_TYPE_COMMENT:
@@ -102,15 +102,15 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
         } else if (getData(position) instanceof String && !getData(position).toString().equals
-                ("互动")) {
+                ("精选")) {
             return VIEW_TYPE_STRING;
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
         } else if (getData(position) instanceof HotCommentsBean) {
             return VIEW_TYPE_COMMENT;
         } else if ((getData(position) instanceof String) && getData(position).toString().equals
-                ("互动")) {
-            return VIEW_TYPE_TEXT_MORE;
+                ("精选")) {
+            return VIEW_TYPE_TEXT_INTERACT;
         }
         return 0;
     }
@@ -174,8 +174,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             datas.add("互动");
             datas.addAll(listCommentBean);
         }
-//        notifyItemRangeChanged(oldSize, datas.size() - oldSize);
-        notifyDataSetChanged();
+        notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
     /**

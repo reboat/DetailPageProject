@@ -22,7 +22,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
@@ -56,7 +55,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener,MoreDialog.IWebViewTextSize {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -248,7 +247,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(null,this).show(getSupportFragmentManager(), "MoreDialog");
+            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
@@ -367,10 +366,4 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mWebView.destroy();
     }
 
-    @Override
-    public void onChangeTextSize(float textSize) {
-        //设置缩放比例
-        int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
-        settings.setTextZoom(zoom);
-    }
 }

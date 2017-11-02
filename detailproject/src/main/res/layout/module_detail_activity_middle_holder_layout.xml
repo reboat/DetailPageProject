@@ -8,6 +8,7 @@
                 android:background="?attr/bc_f5f5f5"
                 android:paddingBottom="12dp"
                 android:paddingTop="10dp"
+                android:layout_marginBottom="12dp"
     >
 
     <ImageView

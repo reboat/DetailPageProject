@@ -147,6 +147,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     private void initView() {
+        mMenuComment.setVisibility(View.GONE);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
 
         mTopBarHolder = new TopBarHolder(mTopBar);
@@ -228,11 +229,9 @@ public class ActivityTopicActivity extends BaseActivity implements
         //禁止评论，隐藏评论框及评论按钮
         if (data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mMenuComment.setVisibility(View.GONE);
             mTvCommentsNum.setVisibility(View.GONE);
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
-            mMenuComment.setVisibility(View.VISIBLE);
         }
     }
 
@@ -246,7 +245,6 @@ public class ActivityTopicActivity extends BaseActivity implements
             @Override
             public void onSuccess(Void baseInnerData) {
                 T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
-                mDetailData.getArticle().setColumn_subscribed(true);
             }
 
             @Override
@@ -293,7 +291,7 @@ public class ActivityTopicActivity extends BaseActivity implements
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_failed));
+                T.showShort(getBaseContext(), errMsg);
             }
 
             @Override
@@ -305,10 +303,8 @@ public class ActivityTopicActivity extends BaseActivity implements
         }).setTag(this).exe(mArticleId, true);
     }
 
-    private Bundle bundle;
-
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.menu_comment, R2.id.iv_top_share})
+            R2.id.tv_comment, R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -325,16 +321,6 @@ public class ActivityTopicActivity extends BaseActivity implements
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
                         .valueOf(mDetailData.getArticle().getId())))).show
                         (getSupportFragmentManager(), "CommentWindowDialog");
-            }
-        } else if (view.getId() == R.id.menu_comment) {
-            if (mDetailData != null) {
-                //进入评论列表页面
-                if (bundle == null) {
-                    bundle = new Bundle();
-                }
-                bundle.putSerializable(IKey.NEWS_DETAIL, mDetailData);
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
-                        .COMMENT_ACTIVITY_PATH);
             }
         }
     }

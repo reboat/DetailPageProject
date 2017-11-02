@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.topic.adapter;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -181,7 +182,8 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
      * 刷新订阅部分item
      */
     public void updateSubscribeInfo() {
-        notifyItemChanged(0, PAYLOADS_SUBSCRIBE);
+
+        notifyItemChanged(2, PAYLOADS_SUBSCRIBE);
         if (mMiddleHolderPosition != NO_POSITION) {
             notifyItemChanged(mMiddleHolderPosition, PAYLOADS_SUBSCRIBE);
         }
@@ -209,6 +211,9 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             bundle.putBoolean(IKey.IS_SELECT_LIST, true);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
                     .COMMENT_ACTIVITY_PATH);
+        } else if (datas.get(position) instanceof DraftDetailBean) {
+            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
+                    .appendQueryParameter("id", String.valueOf(((DraftDetailBean) datas.get(position)).getArticle().getColumn_id())).build().toString());
         }
     }
 
@@ -236,11 +241,6 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
          * WebView加载完毕操作
          */
         void onOptPageFinished();
-
-        /**
-         * 点击栏目操作
-         */
-        void onOptClickColumn();
 
     }
 

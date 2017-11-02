@@ -20,15 +20,12 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -265,16 +262,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     public void onOptPageFinished() {
         mAdapter.setFooterLoadMore(mLoadMore.getItemView());
         mAdapter.showAll();
-    }
-
-    /**
-     * 进入栏目
-     */
-    @Override
-    public void onOptClickColumn() {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
-                .appendQueryParameter("id", String.valueOf(mDetailData.getArticle().getColumn_id
-                        ())).build().toString());
     }
 
     /**

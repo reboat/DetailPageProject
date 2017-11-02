@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.comment.adapter;
 
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
@@ -18,6 +20,8 @@ import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
 import java.util.List;
 
+import static com.zjrb.core.utils.UIUtils.getString;
+
 /**
  * 评论页Adapter
  * Created by wanglinjie.
@@ -28,12 +32,13 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private String articleId;
     private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
+    private View mView;
 
-
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, String articleId, boolean is_select_list) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, String articleId, boolean is_select_list) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
+        mView = view;
         this.articleId = articleId;
         this.is_select_list = is_select_list;
         setData(datas);
@@ -42,12 +47,13 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     public void setData(CommentRefreshBean data) {
         cancelLoadMore();
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
-
         setData(data != null ? data.getComments() : null);
+        updateHead();
     }
 
     public void addData(List<HotCommentsBean> data) {
         addData(data, false);
+        updateHead();
         notifyDataSetChanged();
     }
 
@@ -95,5 +101,20 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
             }
         }
         return null;
+    }
+
+    public void remove(int position) {
+        getData().remove(cleanPosition(position));
+        updateHead();
+        notifyItemRemoved(position);
+    }
+
+    private void updateHead(){
+        if (getDataSize() == 0) {
+            mView.setVisibility(View.GONE);
+        } else {
+            mView.setVisibility(View.VISIBLE);
+            ((TextView) mView).setText(getString(R.string.module_detail_new_comment));
+        }
     }
 }

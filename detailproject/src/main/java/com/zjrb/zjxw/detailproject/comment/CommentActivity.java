@@ -139,7 +139,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      * 头部布局
      */
     private View head;
-    private TextView tvHot;
 
     /**
      * 初始化评论界面数据
@@ -148,7 +147,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
         mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.dc_dddddd));
         head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
-        tvHot = (TextView) head.findViewById(R.id.tv_hot);
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
@@ -164,10 +162,10 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         //初始化标题
         mBean = bean;
         if (bean.getComment_count() == 0) {
-            tvHot.setVisibility(View.GONE);
+            head.setVisibility(View.GONE);
         } else {
-            tvHot.setVisibility(View.VISIBLE);
-            tvHot.setText(getString(R.string.module_detail_new_comment));
+            head.setVisibility(View.VISIBLE);
+            ((TextView)head).setText(getString(R.string.module_detail_new_comment));
         }
         if (title != null && !title.isEmpty()) {
             tvTitle.setText(title);
@@ -187,7 +185,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, articleId, is_select_list);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent,head, articleId, is_select_list);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -266,18 +264,9 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     /**
      * 删除评论回调
      */
-    //删完的情况下
     @Override
     public void onDeleteComment(String comment_id, int position) {
-        int pos = position - 1;
-        if (pos <= 0) {
-            head.setVisibility(View.GONE);
-            tvCommentNum.setVisibility(View.GONE);
-            pos = 0;
-        }
-        mCommentAdapter.getData().remove(pos);
-        mCommentAdapter.notifyDataSetChanged();
-
+        mCommentAdapter.remove(position);
     }
 
 

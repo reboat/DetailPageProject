@@ -224,7 +224,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             @Override
             public void onSuccess(Void stateBean) {
                 if (itemView.getContext() instanceof CommentActivity) {
-                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id,Position - 1);
+                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id,Position);
                 } else if (itemView.getContext() instanceof NewsDetailActivity) {
 //                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(comment_id);
                 } else if (itemView.getContext() instanceof ActivityTopicActivity) {
@@ -246,7 +246,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     @Override
     public void onOK() {
-        deleteComment(mData.getId(),getPosition());
+        deleteComment(mData.getId(),getAdapterPosition());
     }
 
     /**

@@ -40,8 +40,8 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
 
     @Override
     public void bindView() {
-//        itemView.removeOnAttachStateChangeListener(this);
-//        itemView.addOnAttachStateChangeListener(this);
+        itemView.removeOnAttachStateChangeListener(this);
+        itemView.addOnAttachStateChangeListener(this);
         //栏目LOGO
         GlideApp.with(mIvColumnLogo).load(mData.getArticle().getColumn_logo()).placeholder(PH.zheSmall()).centerCrop().into(mIvColumnLogo);
 
@@ -73,9 +73,6 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
                 if (!mData.getArticle().isColumn_subscribed()) {
                     callback.onOptSubscribe();
                 }
-            } else {
-                //进入栏目详情页
-                callback.onOptClickColumn();
             }
         }
     }

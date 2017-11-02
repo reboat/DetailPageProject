@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/ry_container"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
@@ -133,6 +134,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toLeftOf="@+id/menu_prised"
                 android:src="?attr/module_detail_atlas_detail_comment"
+                app:iv_maskColor="@android:color/transparent"
                 />
 
             <TextView
@@ -143,7 +145,7 @@
                 android:layout_marginLeft="-12dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/menu_comment"
-                android:background="@drawable/module_detail_comment_num"
+                android:background="?attr/module_detail_comment_num"
                 android:paddingBottom="1dp"
                 android:paddingLeft="2dp"
                 android:paddingRight="2dp"
@@ -161,6 +163,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:src="?attr/module_detail_atlas_prise"
+                app:iv_maskColor="@android:color/transparent"
                 />
 
             <ImageView
@@ -174,6 +177,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:src="?attr/module_detail_atlas_more"
+                app:iv_maskColor="@android:color/transparent"
                 />
 
         </RelativeLayout>

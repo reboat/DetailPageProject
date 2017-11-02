@@ -17,29 +17,22 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
-import com.zjrb.core.common.manager.PathManager;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
-import com.zjrb.core.utils.NetworkUtil;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.ActivityTopicAdapter;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +43,7 @@ import butterknife.ButterKnife;
  * create time:2017/7/18  上午09:14
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener {
+        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN, MoreDialog.IWebViewTextSize {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -69,6 +62,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void bindView() {
+        mWebJsInterface = mWebView.getWebJs();
         if (mData.getArticle().getContent() == null) return;
         itemView.setOnClickListener(null);
         setCssJSWebView();
@@ -85,13 +79,22 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
                     public void callBack(String[] imgSrcs) {
-                        mWebJsInterface.setImgSrcs(imgSrcs);
+                        if (mWebJsInterface != null && imgSrcs != null && imgSrcs.length > 0) {
+                            for (int i = 0; i < imgSrcs.length; i++) {
+                                if (!TextUtils.isEmpty(imgSrcs[i]) && imgSrcs[i].contains("?w=")) {
+                                    imgSrcs[i] = imgSrcs[i].split("[?]")[0];
+                                }
+                            }
+                            mWebJsInterface.setImgSrcs(imgSrcs);
+                        }
                     }
                 }, new WebBiz.TextCallBack() {
 
                     @Override
                     public void callBack(String text) {
-                        mWebJsInterface.setHtmlText(text);
+                        if (mWebJsInterface != null && !TextUtils.isEmpty(text)) {
+                            mWebJsInterface.setHtmlText(text);
+                        }
                     }
                 });
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
@@ -99,22 +102,34 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
         String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
         //CSS
-        if (sp == null || sp.css == null || sp.css.isEmpty()) {
-            css_js += String.format(css, uiModeCssUri);
-        } else {
+//        if (sp == null || sp.css == null || sp.css.isEmpty()) {
+//            css_js += String.format(css, uiModeCssUri);
+//        } else {
+//            for (int i = 0; i < sp.css.size(); i++) {
+//                css_js += String.format(css, sp.css.get(i));
+//            }
+//        }
+        css_js += String.format(css, uiModeCssUri);
+        css_js += String.format(html, "file:///android_asset/js/basic.js");
+        if(sp != null && sp.css != null && !sp.css.isEmpty()){
             for (int i = 0; i < sp.css.size(); i++) {
                 css_js += String.format(css, sp.css.get(i));
             }
         }
 
-        //JS
-        if (sp == null || sp.js == null || sp.js.isEmpty()) {
-            css_js += String.format(html, "file:///android_asset/js/basic.js");
-        } else {
+        if (sp != null && sp.js != null && !sp.js.isEmpty()) {
             for (int i = 0; i < sp.js.size(); i++) {
                 css_js += String.format(html, sp.js.get(i));
             }
         }
+        //JS
+//        if (sp == null || sp.js == null || sp.js.isEmpty()) {
+//            css_js += String.format(html, "file:///android_asset/js/basic.js");
+//        } else {
+//            for (int i = 0; i < sp.js.size(); i++) {
+//                css_js += String.format(html, sp.js.get(i));
+//            }
+//        }
 
         String htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
@@ -127,10 +142,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
-        //注入支持的本地方法
-        mWebJsInterface = new WebJsInterface(itemView.getContext());
-        mWebView.addJavascriptInterface(mWebJsInterface, WebJsInterface.JS_NAME);
-        mWebJsInterface.setWebJsCallBack(mWebView);
         // 夜间模式
         if (ThemeMode.isNightMode()) {
             mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_202124_night));
@@ -141,7 +152,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         settings = mWebView.getSettings();
         //TODO  WLJ 临时去除缓存
         // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
-            settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         // 开启DOM storage API 功能
         settings.setDomStorageEnabled(false);
         // 开启database storage API功能
@@ -226,11 +237,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onResume() {
-        try {
-            EventBus.getDefault().register(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         if (mWebView != null) {
             mWebView.onResume();
         }
@@ -238,30 +244,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void onPause() {
-        EventBus.getDefault().unregister(this);
         if (mWebView != null) {
             mWebView.onPause();
         }
-    }
-
-    /**
-     * @param event 删除评论后刷新列表
-     */
-    //TODO  WLJ 优化  回调
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(Object event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event != null) {
-            if (event instanceof NewsDetailTextZoomEvent) {
-                //设置缩放比例
-                int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
-                settings.setTextZoom(zoom);
-            } else if (event instanceof NewsDetailNightThemeEvent) {
-                //设置夜间模式
-                setCssJSWebView();
-            }
-        }
-
     }
 
     @Override
@@ -274,4 +259,18 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         onPause();
     }
 
+    /**
+     * 切换夜间模式
+     */
+    @Override
+    public void onChangeTheme() {
+        setCssJSWebView();
+    }
+
+    @Override
+    public void onChangeTextSize(float textSize) {
+        //设置缩放比例
+        int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
+        settings.setTextZoom(zoom);
+    }
 }

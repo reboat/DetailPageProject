@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.persionaldetail;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -135,9 +136,13 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
-            Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
+            if(mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())){
+                Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
+            }
         } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
-            Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
+            if(mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())){
+                Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
+            }
         }
     }
 }

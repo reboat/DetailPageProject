@@ -4,7 +4,7 @@
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="?attr/bc_202124"
+                android:background="?attr/bc_ffffff"
     >
 
     <com.aliya.view.ratio.RatioFrameLayout

@@ -13,7 +13,6 @@ import android.view.animation.Interpolator;
 import android.webkit.WebSettings;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,16 +40,11 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +56,7 @@ import butterknife.OnClick;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener,MoreDialog.IWebViewTextSize {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -254,7 +248,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
+            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(null,this).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
@@ -291,17 +285,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         }).setTag(this).exe(mArticleId, true);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
 
     /**
      * 分享回调
@@ -316,24 +299,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
 
     }
-
-
-    /**
-     * @param event 缩放字体
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(Object event) {
-        EventBus.getDefault().removeStickyEvent(event);
-        if (event != null) {
-            if (event instanceof NewsDetailTextZoomEvent) {
-                //设置缩放比例
-                int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
-                settings.setTextZoom(zoom);
-            }
-        }
-
-    }
-
 
     /**
      * 处理上下移动监听
@@ -400,5 +365,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     public void onDestroy() {
         super.onDestroy();
         mWebView.destroy();
+    }
+
+    @Override
+    public void onChangeTextSize(float textSize) {
+        //设置缩放比例
+        int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
+        settings.setTextZoom(zoom);
     }
 }

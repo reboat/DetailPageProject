@@ -70,12 +70,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         setOnItemClickListener(this);
     }
 
+    private NewsDetailWebViewHolder webviewHolder;
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
             return new NewsDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return new NewsDetailWebViewHolder(parent);
+            return webviewHolder = new NewsDetailWebViewHolder(parent);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
@@ -92,6 +93,14 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             return new NewsStringClickMoreHolder(parent);
         }
         return new NewsPlaceHolder(parent);
+    }
+
+    /**
+     * 获取webviewholder
+     * @return
+     */
+    public NewsDetailWebViewHolder getWebViewHolder(){
+        return webviewHolder;
     }
 
     @Override

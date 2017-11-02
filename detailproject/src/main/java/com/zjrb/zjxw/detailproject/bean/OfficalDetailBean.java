@@ -51,22 +51,12 @@ public class OfficalDetailBean extends BaseData {
      * topic_date_end : 1450000000000
      */
 
-    private List<ArticleItemBean> article_list;
-
     public OfficerBean getOfficer() {
         return officer;
     }
 
     public void setOfficer(OfficerBean officer) {
         this.officer = officer;
-    }
-
-    public List<ArticleItemBean> getArticle_list() {
-        return article_list;
-    }
-
-    public void setArticle_list(List<ArticleItemBean> article_list) {
-        this.article_list = article_list;
     }
 
     /**
@@ -92,7 +82,7 @@ public class OfficalDetailBean extends BaseData {
         private String current_title;
         private String top_title;
         private String share_url;
-
+        private List<ArticleItemBean> article_list;
         private String detail_url;
         /**
          * year : 2017
@@ -100,6 +90,14 @@ public class OfficalDetailBean extends BaseData {
          * location : 杭州
          * title : 职务
          */
+
+        public List<ArticleItemBean> getArticle_list() {
+            return article_list;
+        }
+
+        public void setArticle_list(List<ArticleItemBean> article_list) {
+            this.article_list = article_list;
+        }
 
         private List<ResumesBean> resumes;
 

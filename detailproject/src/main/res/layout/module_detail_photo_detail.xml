@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              xmlns:app="http://schemas.android.com/apk/res-auto"
              android:id="@+id/ry_container"
@@ -146,10 +146,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/menu_comment"
                 android:background="?attr/module_detail_comment_num"
-                android:paddingBottom="1dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:paddingTop="1dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="1dp"
+                android:paddingRight="1dp"
+                android:paddingTop="5dp"
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_10sp"
                 android:visibility="gone"
@@ -181,13 +181,6 @@
                 />
 
         </RelativeLayout>
-
-        <!--<com.aliya.view.fitsys.FitWindowsFrameLayout-->
-        <!--android:id="@+id/fit_bottom_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--app:fitType="bottom" />-->
     </LinearLayout>
 
-</FrameLayout>
+</com.aliya.view.fitsys.FitWindowsFrameLayout>

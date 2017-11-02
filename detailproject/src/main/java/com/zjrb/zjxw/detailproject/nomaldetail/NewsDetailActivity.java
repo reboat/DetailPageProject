@@ -427,7 +427,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
+            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(),mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {

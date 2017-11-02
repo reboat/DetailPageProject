@@ -29,11 +29,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailNightThemeEvent;
-import com.zjrb.zjxw.detailproject.eventBus.NewsDetailTextZoomEvent;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,9 +58,40 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     private DraftDetailBean mBean;
 
     /**
+     * js夜间模式回调
+     */
+    public interface IWebViewDN {
+
+        void onChangeTheme();
+
+    }
+
+    /**
+     * webview文字颜色
+     */
+    public interface IWebViewTextSize {
+        void onChangeTextSize(final float textSize);
+    }
+
+    /**
      * @return
      */
     private static MoreDialog fragment = null;
+
+    private IWebViewDN callback;
+    private IWebViewTextSize callback_2;
+
+    /**
+     * 设置webview回调
+     * @param callback
+     * @param callback_2
+     * @return
+     */
+    public MoreDialog setWebViewCallBack(IWebViewDN callback, IWebViewTextSize callback_2) {
+        this.callback = callback;
+        this.callback_2 = callback_2;
+        return fragment;
+    }
 
     public static MoreDialog newInstance(DraftDetailBean bean) {
         fragment = new MoreDialog();
@@ -171,7 +198,9 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             newsTopicCollect();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
-            EventBus.getDefault().postSticky(new NewsDetailNightThemeEvent(!ThemeMode.isNightMode()));
+            if(callback != null){
+                callback.onChangeTheme();
+            }
             dismissFragmentDialog();
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
@@ -192,7 +221,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             @Override
             public void onSuccess(Void baseInnerData) {
                 if (!mBean.getArticle().isFollowed()) {
-                        ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
+                    ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
                     T.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
@@ -221,19 +250,25 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             tvPreview.setScaleX(C.FONT_SCALE_SMALL);
             tvPreview.setScaleY(C.FONT_SCALE_SMALL);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_SMALL);
-            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_SMALL));
+            if(callback_2 != null){
+                callback_2.onChangeTextSize(C.FONT_SCALE_SMALL);
+            }
 
         } else if (checkedId == R.id.rb_module_core_more_set_font_size_normal) {
             tvPreview.setScaleX(C.FONT_SCALE_STANDARD);
             tvPreview.setScaleY(C.FONT_SCALE_STANDARD);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_STANDARD);
-            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_STANDARD));
+            if(callback_2 != null){
+                callback_2.onChangeTextSize(C.FONT_SCALE_STANDARD);
+            }
 
         } else if (checkedId == R.id.rb_module_core_more_set_font_size_big) {
             tvPreview.setScaleX(C.FONT_SCALE_LARGE);
             tvPreview.setScaleY(C.FONT_SCALE_LARGE);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_LARGE);
-            EventBus.getDefault().postSticky(new NewsDetailTextZoomEvent(C.FONT_SCALE_LARGE));
+            if(callback_2 != null){
+                callback_2.onChangeTextSize(C.FONT_SCALE_LARGE);
+            }
         }
     }
 

@@ -2,7 +2,7 @@
 
 // 预览图片
 function imageBrowse(index) {
-    Android.imageBrowse(index);
+    zjxw.imageBrowse(index);
 }
 
 // 执行夜间模式

@@ -101,7 +101,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     private void initShareBean() {
 
-        mRecyleView.addItemDecoration(new GridSpaceDivider(0));
+        mRecyleView.addItemDecoration(new GridSpaceDivider(8));
         GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
         mRecyleView.setLayoutManager(managerFollow);
 

@@ -397,7 +397,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             @Override
             public void onError(String errMsg, int errCode) {
-                //用户未登录
+                if (errCode == 50013) {
+                    mNewsDetail.getArticle().setLiked(true);
+                    mMenuPrised.setSelected(true);
+                }
                 T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
             }
 

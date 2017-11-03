@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.text.TextUtils;
 
-
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.UIUtils;
 
@@ -34,7 +33,7 @@ public class WebBiz {
      * @param callBack
      * @return 处理过的Html Body内容
      */
-    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack,TextCallBack textBack) {
+    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack, TextCallBack textBack) {
 
         Document doc = Jsoup.parseBodyFragment(html);
         List<String> imgSrcs = parseImgTags(doc);
@@ -45,7 +44,7 @@ public class WebBiz {
             callBack.callBack((imgSrcs.toArray(new String[imgSrcs.size()])));
         }
 
-        if(textBack != null){
+        if (textBack != null) {
             textBack.callBack(doc.text());
         }
 
@@ -153,15 +152,44 @@ public class WebBiz {
                 }
 
                 // 夜间模式点击应在遮罩层
-                //TODO  WLJ  将图片点击事件替换成我们的打开图片
                 if (isNeedOnClick && !ThemeMode.isNightMode()) {
                     node.attr("onClick", "imageBrowse(" + index + ")");
                 }
-//                UiModeManager.get().fitUiModeForImgTag(node, isNeedOnClick, index);
+                fitUiModeForImgTag(node, isNeedOnClick, index);
             }
         }
 
         return imgSrcs;
+    }
+
+
+    /**
+     * 适配Img标签
+     *
+     * @param node         Img节点
+     * @param isAddOnClick
+     * @param index
+     */
+    private static void fitUiModeForImgTag(Element node, boolean isAddOnClick, int index) {
+        if (ThemeMode.isNightMode()) { // 是否适配夜间模式
+
+            Element div = new Element("div");
+            div.attr("class", "zjxw_imgBox");
+
+            node.replaceWith(div);
+
+            div.appendChild(node);
+
+            Element imgBgDiv = new Element("div");
+
+            if (isAddOnClick) {
+                imgBgDiv.attr("onClick", "imageBrowse(" + index + ")");
+            }
+
+            imgBgDiv.attr("class", "zjxw_imgMask");
+
+            div.appendChild(imgBgDiv);
+        }
     }
 
     /**

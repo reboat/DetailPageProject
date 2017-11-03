@@ -169,10 +169,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             // 记录阅读信息
             ReadNewsDaoHelper.get().asyncRecord(
                     ReadNewsBean.newBuilder().id(mArticle.getId())
-                    .mlfId(mArticle.getMlf_id())
-                    .tag(mArticle.getList_tag())
-                    .title(mArticle.getList_title())
-                    .url(mArticle.getUrl())
+                            .mlfId(mArticle.getMlf_id())
+                            .tag(mArticle.getList_tag())
+                            .title(mArticle.getList_title())
+                            .url(mArticle.getUrl())
             );
         }
         bindCollect();
@@ -205,6 +205,13 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
             @Override
             public void onError(String errMsg, int errCode) {
+                //已收藏成功
+                if (errCode == 50013) {
+                    if (mArticle != null) {
+                        mArticle.setFollowed(true);
+                        bindCollect();
+                    }
+                }
                 T.showShort(getActivity(), errCode);
             }
 

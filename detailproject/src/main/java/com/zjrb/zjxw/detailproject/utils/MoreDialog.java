@@ -83,6 +83,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
     /**
      * 设置webview回调
+     *
      * @param callback
      * @param callback_2
      * @return
@@ -198,7 +199,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             newsTopicCollect();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
-            if(callback != null){
+            if (callback != null) {
                 callback.onChangeTheme();
             }
             dismissFragmentDialog();
@@ -236,6 +237,11 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
             @Override
             public void onError(String errMsg, int errCode) {
+                //已收藏成功
+                if (errCode == 50013) {
+                    ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
+                    mBean.getArticle().setFollowed(true);
+                }
                 T.showShort(UIUtils.getApp(), errMsg);
                 dismissFragmentDialog();
             }
@@ -250,7 +256,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             tvPreview.setScaleX(C.FONT_SCALE_SMALL);
             tvPreview.setScaleY(C.FONT_SCALE_SMALL);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_SMALL);
-            if(callback_2 != null){
+            if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_SMALL);
             }
 
@@ -258,7 +264,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             tvPreview.setScaleX(C.FONT_SCALE_STANDARD);
             tvPreview.setScaleY(C.FONT_SCALE_STANDARD);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_STANDARD);
-            if(callback_2 != null){
+            if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_STANDARD);
             }
 
@@ -266,7 +272,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             tvPreview.setScaleX(C.FONT_SCALE_LARGE);
             tvPreview.setScaleY(C.FONT_SCALE_LARGE);
             SettingBiz.get().setHtmlFontScale(C.FONT_SCALE_LARGE);
-            if(callback_2 != null){
+            if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_LARGE);
             }
         }

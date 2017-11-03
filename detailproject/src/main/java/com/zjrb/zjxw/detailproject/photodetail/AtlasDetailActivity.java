@@ -97,6 +97,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
+    @BindView(R2.id.tv_source)
+    TextView mTvSource;
+    @BindView(R2.id.tv_name)
+    TextView mTvName;
 
 
     /**
@@ -243,6 +247,22 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mTvTottleNum.setText(String.valueOf(data.getArticle()
                     .getAlbum_image_count()));
             mTvTitle.setText(data.getArticle().getDoc_title());
+            //新闻来源
+            if (!TextUtils.isEmpty(mData.getArticle().getSource())) {
+                mTvSource.setVisibility(View.VISIBLE);
+                mTvSource.setText("来源:" + mData.getArticle().getSource());
+            } else {
+                mTvSource.setVisibility(View.GONE);
+            }
+
+            //新闻作者
+            if (!TextUtils.isEmpty(mData.getArticle().getAuthor())) {
+                mTvName.setVisibility(View.VISIBLE);
+                mTvName.setText("记者:" + mData.getArticle().getAuthor());
+            } else {
+                mTvName.setVisibility(View.GONE);
+            }
+
             //添加更多图集(假如有相关新闻)
             if (mData.getArticle().getRelated_news() != null && data.getArticle()
                     .getRelated_news().size() > 0) {
@@ -453,6 +473,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         new DraftPraiseTask(new APICallBack<Void>() {
             @Override
             public void onError(String errMsg, int errCode) {
+                if (errCode == 50013) {
+                    mData.getArticle().setLiked(true);
+                    mMenuPrised.setSelected(true);
+                }
                 T.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_failed));
             }
 

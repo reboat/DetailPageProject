@@ -278,6 +278,10 @@ public class ActivityTopicActivity extends BaseActivity implements
 
             @Override
             public void onError(String errMsg, int errCode) {
+                if (errCode == 50013) {
+                    mDetailData.getArticle().setLiked(true);
+                    mMenuPrised.setSelected(true);
+                }
                 T.showShort(getBaseContext(), errMsg);
             }
 

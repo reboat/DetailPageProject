@@ -101,35 +101,21 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String css_js = "";
         String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
         String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
-        //CSS
-//        if (sp == null || sp.css == null || sp.css.isEmpty()) {
-//            css_js += String.format(css, uiModeCssUri);
-//        } else {
-//            for (int i = 0; i < sp.css.size(); i++) {
-//                css_js += String.format(css, sp.css.get(i));
-//            }
-//        }
+        //TODO WLJ 这里样式和后台下发的css有冲突
         css_js += String.format(css, uiModeCssUri);
         css_js += String.format(html, "file:///android_asset/js/basic.js");
-        if(sp != null && sp.css != null && !sp.css.isEmpty()){
+        //CSS
+        if (sp != null && sp.css != null && !sp.css.isEmpty()) {
             for (int i = 0; i < sp.css.size(); i++) {
                 css_js += String.format(css, sp.css.get(i));
             }
         }
-
+        //JS
         if (sp != null && sp.js != null && !sp.js.isEmpty()) {
             for (int i = 0; i < sp.js.size(); i++) {
                 css_js += String.format(html, sp.js.get(i));
             }
         }
-        //JS
-//        if (sp == null || sp.js == null || sp.js.isEmpty()) {
-//            css_js += String.format(html, "file:///android_asset/js/basic.js");
-//        } else {
-//            for (int i = 0; i < sp.js.size(); i++) {
-//                css_js += String.format(html, sp.js.get(i));
-//            }
-//        }
 
         String htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);

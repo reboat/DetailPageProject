@@ -210,9 +210,11 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     if (mArticle != null) {
                         mArticle.setFollowed(true);
                         bindCollect();
+                        T.showShort(getActivity(), "已收藏成功");
                     }
+                }else{
+                    T.showShort(getActivity(), errMsg);
                 }
-                T.showShort(getActivity(), errCode);
             }
 
         }).setTag(this).exe(mArticleId, !mArticle.isFollowed());

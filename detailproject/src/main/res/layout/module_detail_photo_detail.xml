@@ -36,6 +36,8 @@
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:paddingTop="10dp"
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_16sp"
@@ -63,8 +65,6 @@
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_12sp"
                 tools:text="6" />
-
-
         </RelativeLayout>
 
         <TextView
@@ -75,8 +75,7 @@
             android:layout_marginRight="11dp"
             android:fadingEdge="vertical"
             android:lineSpacingMultiplier="1.2"
-            android:maxLines="4"
-            android:paddingBottom="10dp"
+            android:paddingBottom="5dp"
             android:scrollbars="vertical"
             android:textColor="?attr/tc_999999"
             android:textSize="@dimen/ts_14sp"
@@ -103,7 +102,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:paddingTop="3.5dp"
             android:textColor="?attr/tc_484848"
             android:textSize="@dimen/ts_13sp"
             android:visibility="gone" />

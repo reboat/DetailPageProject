@@ -1,6 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.holder;
 
-import android.text.TextUtils;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -62,6 +62,8 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
         }
     }
 
+    private Bundle bundle;
+
     /**
      * 点击跳转到官员详情页
      *
@@ -71,7 +73,11 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.lly_reporter) {
-            Nav.with(itemView.getContext()).toPath(RouteManager.PERSIONAL_DETAIL);
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            bundle.putString(IKey.LINK_TITLE, mData.getName());
+            Nav.with(itemView.getContext()).setExtras(bundle).toPath(mData.getDetail_url());
         }
     }
 }

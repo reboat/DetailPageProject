@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 public class OfficalArticlesBean implements Serializable {
     private String url;
-    private String title;
+    private String list_title;
 
 
     public String getUrl() {
@@ -23,10 +23,10 @@ public class OfficalArticlesBean implements Serializable {
     }
 
     public String getTitle() {
-        return title;
+        return list_title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.list_title = title;
     }
 }

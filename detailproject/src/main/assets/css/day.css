@@ -1,22 +1,22 @@
 div,section,ul,li,a,h1,h2,h3,p,link,textarea,form,select,input,span,button,em,menu,aside,table,tr,td,nav,img,dl,dt,dd, html, body,strong{
     background:#ffffff ;color:#3b424c;
-    border-color:#aaaaaa !important;
-    scrollbar-arrow-color:#333333 !important;
-    scrollbar-base-color:#dddddd !important;
-    scrollbar-shadow-color:#dddddd !important;
-    scrollbar-face-color:#dddddd !important;
-    scrollbar-highlight-color:#dddddd !important;
-    scrollbar-dark-shadow-color:#dddddd !important;
-    scrollbar-3d-light-color:#dddddd !important;
-    scrollbar-track-color:#dddddd !important;}
+    border-color:#aaaaaa;
+    scrollbar-arrow-color:#333333;
+    scrollbar-base-color:#dddddd;
+    scrollbar-shadow-color:#dddddd;
+    scrollbar-face-color:#dddddd;
+    scrollbar-highlight-color:#dddddd;
+    scrollbar-dark-shadow-color:#dddddd;
+    scrollbar-3d-light-color:#dddddd;
+    scrollbar-track-color:#dddddd;}
 strong{display:block;}
-a,a *{color:#3b424c !important;text-decoration:none !important;}a:visited,a:visited *,a:active,a:active *{color:#aaaaaa !important;}
-a:hover,a:hover *{color:#3b424c !important;
-    background:#ffffff !important;}
-input,select,option,button,textarea{color:#3b424c !important;
-    background:#ffffff !important;
-    border:#aaaaaa !important;
-    border-color: #3b424c #3b424c #3b424c #3b424c !important;}
-input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #3b424c #3b424c #3b424c #3b424c !important;}
-input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#3b424c !important;background:#ffffff !important; border-color: #3b424c #3b424c #3b424c #3b424c !important;}
+a,a *{color:#3b424c;text-decoration:none;}a:visited,a:visited *,a:active,a:active *{color:#aaaaaa;}
+a:hover,a:hover *{color:#3b424c;
+    background:#ffffff;}
+input,select,option,button,textarea{color:#3b424c;
+    background:#ffffff;
+    border:#aaaaaa;
+    border-color: #3b424c #3b424c #3b424c #3b424c;}
+input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #3b424c #3b424c #3b424c #3b424c;}
+input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#3b424c;background:#ffffff; border-color: #3b424c #3b424c #3b424c #3b424c;}
 a{color:#4682c5   !important}

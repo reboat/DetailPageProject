@@ -274,8 +274,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
+                    T.showShort(getBaseContext(), "已点赞成功");
+                } else {
+                    T.showShort(getBaseContext(), errMsg);
                 }
-                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
             }
 
             @Override

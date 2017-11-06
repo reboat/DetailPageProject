@@ -281,8 +281,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                 if (errCode == 50013) {
                     mDetailData.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
+                    T.showShort(getBaseContext(), "已点赞成功");
+                } else {
+                    T.showShort(getBaseContext(), errMsg);
                 }
-                T.showShort(getBaseContext(), errMsg);
             }
 
             @Override

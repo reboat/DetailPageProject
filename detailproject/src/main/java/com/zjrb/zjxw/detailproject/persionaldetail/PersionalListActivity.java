@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
+import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
@@ -45,19 +47,29 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      * 刷新头
      */
     private HeaderRefresh refresh;
+    private String title = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getIntentData(getIntent());
         setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
-        loadData();
+        loadData(true);
+    }
+
+    private void getIntentData(Intent intent) {
+        if (intent != null) {
+            if (intent.hasExtra(IKey.TITLE)) {
+                title = intent.getStringExtra(IKey.TITLE);
+            }
+        }
     }
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, "").getView();
+        return TopBarFactory.createDefault(view, this, title).getView();
     }
 
     @Override
@@ -69,7 +81,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     /**
      * 下拉加载所有官员列表数据
      */
-    private void loadData() {
+    private void loadData(boolean isFirst) {
         new OfficalListTask(new APIExpandCallBack<OfficalListBean>() {
 
             @Override
@@ -82,7 +94,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mRecycler)).exe();
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe();
 
     }
 
@@ -127,7 +139,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
             @Override
             public void run() {
                 refresh.setRefreshing(false);
-                loadData();
+                loadData(false);
             }
         });
 
@@ -136,11 +148,11 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
     @Override
     public void onItemClick(View itemView, int position) {
         if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
-            if(mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())){
+            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())) {
                 Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
             }
         } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
-            if(mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())){
+            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())) {
                 Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
             }
         }

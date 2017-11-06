@@ -250,7 +250,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //新闻来源
             if (!TextUtils.isEmpty(mData.getArticle().getSource())) {
                 mTvSource.setVisibility(View.VISIBLE);
-                mTvSource.setText("来源:" + mData.getArticle().getSource());
+                mTvSource.setText(mData.getArticle().getSource());
             } else {
                 mTvSource.setVisibility(View.GONE);
             }
@@ -258,7 +258,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //新闻作者
             if (!TextUtils.isEmpty(mData.getArticle().getAuthor())) {
                 mTvName.setVisibility(View.VISIBLE);
-                mTvName.setText("记者:" + mData.getArticle().getAuthor());
+                mTvName.setText(mData.getArticle().getAuthor());
             } else {
                 mTvName.setVisibility(View.GONE);
             }
@@ -476,8 +476,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 if (errCode == 50013) {
                     mData.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
+                    T.showShort(UIUtils.getContext(), "已点赞成功");
+                } else {
+                    T.showShort(UIUtils.getContext(), errMsg);
                 }
-                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_failed));
             }
 
             @Override

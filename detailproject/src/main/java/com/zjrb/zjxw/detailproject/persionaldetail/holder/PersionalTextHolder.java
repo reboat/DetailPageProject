@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.holder;
 
-import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -49,9 +48,7 @@ public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesB
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_title) {
-            Nav.with(UIUtils.getActivity()).to(Uri.parse(mData.getUrl())
-                    .buildUpon()
-                    .build(), 0);
+            Nav.with(UIUtils.getActivity()).to(mData.getUrl());
         }
     }
 }

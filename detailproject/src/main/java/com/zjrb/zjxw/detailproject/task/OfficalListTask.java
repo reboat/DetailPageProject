@@ -26,7 +26,7 @@ public class OfficalListTask extends APIGetTask<OfficalListBean> {
         if (params.length > 0) {
             put("start", params[0]);
         }
-        put("size", C.PAGE_SIZE_OFFICAL);
+        put("size", 20);
     }
 
     @Override

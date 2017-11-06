@@ -29,7 +29,6 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
         if (params.length > 1 && params[1] != null) {
             put("start", params[1]);
         }
-        put("size", C.PAGE_SIZE_OFFICAL);
     }
 
     @Override

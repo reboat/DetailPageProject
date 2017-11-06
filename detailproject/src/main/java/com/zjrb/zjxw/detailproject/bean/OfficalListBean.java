@@ -88,7 +88,7 @@ public class OfficalListBean extends BaseData {
          * url : https://zj.zjol.com.cn/news.html?id=123456
          */
 
-        private List<OfficalArticlesBean> articles;
+        private List<OfficalArticlesBean> article_list;
 
         public int getId() {
             return id;
@@ -203,11 +203,11 @@ public class OfficalListBean extends BaseData {
         }
 
         public List<OfficalArticlesBean> getArticles() {
-            return articles;
+            return article_list;
         }
 
         public void setArticles(List<OfficalArticlesBean> articles) {
-            this.articles = articles;
+            this.article_list = articles;
         }
 
     }

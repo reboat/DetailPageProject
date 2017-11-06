@@ -7,7 +7,7 @@
     android:id="@+id/lly_reporter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/bc_f5f5f5">
+    android:background="?attr/bc_ffffff">
 
     <ImageView
         android:id="@+id/iv_avatar"

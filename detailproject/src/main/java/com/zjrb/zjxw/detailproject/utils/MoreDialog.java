@@ -241,8 +241,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 if (errCode == 50013) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
+                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                }else{
+                    T.showShort(UIUtils.getApp(), errMsg);
                 }
-                T.showShort(UIUtils.getApp(), errMsg);
                 dismissFragmentDialog();
             }
 

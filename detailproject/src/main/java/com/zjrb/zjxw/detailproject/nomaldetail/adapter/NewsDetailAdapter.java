@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.nomaldetail.adapter;
 
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -27,6 +30,8 @@ import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 /**
  * 普通新闻详情页Adapter
@@ -71,6 +76,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     }
 
     private NewsDetailWebViewHolder webviewHolder;
+
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
@@ -97,9 +103,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     /**
      * 获取webviewholder
+     *
      * @return
      */
-    public NewsDetailWebViewHolder getWebViewHolder(){
+    public NewsDetailWebViewHolder getWebViewHolder() {
         return webviewHolder;
     }
 
@@ -225,6 +232,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         }
     }
 
+    private Bundle bundle;
+
     @Override
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
@@ -233,12 +242,18 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             if (!TextUtils.isEmpty(url)) {
                 Nav.with(UIUtils.getActivity()).to(url);
             }
-
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 Nav.with(UIUtils.getActivity()).to(url);
             }
+        } else if (datas.get(position) instanceof String && datas.get(position).toString().equals("点击查看更多评论")) {
+            //进入评论列表页面
+            if (bundle == null) {
+                bundle = new Bundle();
+            }
+            bundle.putSerializable(IKey.NEWS_DETAIL, detailBean);
+            Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
         }
 
     }

@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +12,6 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
@@ -47,29 +45,20 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      * 刷新头
      */
     private HeaderRefresh refresh;
-    private String title = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getIntentData(getIntent());
         setContentView(R.layout.module_detail_special_list);
         ButterKnife.bind(this);
         init();
         loadData(true);
     }
 
-    private void getIntentData(Intent intent) {
-        if (intent != null) {
-            if (intent.hasExtra(IKey.TITLE)) {
-                title = intent.getStringExtra(IKey.TITLE);
-            }
-        }
-    }
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        return TopBarFactory.createDefault(view, this, title).getView();
+        return TopBarFactory.createDefault(view, this, "").getView();
     }
 
     @Override

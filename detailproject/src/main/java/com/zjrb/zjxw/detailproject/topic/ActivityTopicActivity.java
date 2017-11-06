@@ -83,6 +83,8 @@ public class ActivityTopicActivity extends BaseActivity implements
 
     @BindView(R2.id.top_bar)
     FrameLayout mTopBar;
+    @BindView(R2.id.iv_top_share)
+    ImageView mIvShare;
 
     private TopicAdapter mAdapter;
 
@@ -182,12 +184,15 @@ public class ActivityTopicActivity extends BaseActivity implements
                 //话题撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
+                }else{
+                    T.showShortNow(ActivityTopicActivity.this,errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
     }
 
     private void fillData(DraftDetailBean data) {
+        mIvShare.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
             DraftDetailBean.ArticleBean article = data.getArticle();
@@ -322,6 +327,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
+        mIvShare.setVisibility(View.GONE);
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();

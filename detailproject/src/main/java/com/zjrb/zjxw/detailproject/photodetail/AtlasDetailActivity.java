@@ -131,12 +131,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private DefaultTopBarHolder3 topHolder;
     private TextView mTvTitleTop;
     private ImageView mIvDownLoad;
+    private ImageView mIvShare;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault3(view, this);
         mTvTitleTop = topHolder.getTitleView();
         mIvDownLoad = topHolder.getDownView();
+        mIvShare = topHolder.getShareView();
         topHolder.getView().setBackgroundColor(Color.TRANSPARENT);
         return topHolder.getView();
     }
@@ -207,6 +209,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 //图集撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
+                } else {
+                    T.showShortNow(AtlasDetailActivity.this, errMsg);
                 }
             }
         }).setTag(this).exe(mArticleId);
@@ -217,6 +221,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      */
     private void fillData(DraftDetailBean data) {
 
+        mIvShare.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
             DraftDetailBean.ArticleBean article = data.getArticle();
@@ -569,6 +574,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
+        mIvShare.setVisibility(View.GONE);
+        mIvDownLoad.setVisibility(View.GONE);
         mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();

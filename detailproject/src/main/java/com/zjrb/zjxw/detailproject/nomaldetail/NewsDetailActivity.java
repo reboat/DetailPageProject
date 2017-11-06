@@ -50,6 +50,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
+import com.zjrb.zjxw.detailproject.link.BrowserLinkActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -218,9 +219,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
-                    topHolder.setViewVisible(topHolder.getShareView(), View.GONE);
+                    T.showShortNow(NewsDetailActivity.this,errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
@@ -484,7 +486,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     private void showEmptyNewsDetail() {
         mContainer.removeAllViews();
-        topHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
     }

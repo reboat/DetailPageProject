@@ -33,7 +33,7 @@ dependencies {
 
     compile 'org.jsoup:jsoup:1.10.2'
     compile project(':core-library')
-//    compile 'cn.daily.android:core-library:5.0.0.27'
+//    compile 'cn.daily.android:core-library:5.0.0.29'
     compile('cn.daily.android:daily-news:5.0.0.23.3-SNAPSHOT') {
         exclude group: 'cn.daily.android'
     }

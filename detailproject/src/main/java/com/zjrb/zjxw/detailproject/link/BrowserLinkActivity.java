@@ -161,6 +161,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 //撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
+                }else{
+                    T.showShortNow(BrowserLinkActivity.this,errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);

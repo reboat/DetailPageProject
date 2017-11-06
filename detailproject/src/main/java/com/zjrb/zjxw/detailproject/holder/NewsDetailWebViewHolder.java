@@ -105,8 +105,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         css_js += String.format(css, uiModeCssUri);
         css_js += String.format(html, "file:///android_asset/js/basic.js");
         //测试用js
-        css_js +=  String.format(css, "http://192.168.1.100/zb/20171026/static/css/zjxw.v2.css");
-        css_js += String.format(html, "http://192.168.1.100/zb/20171026/static/js/client.js");
+//        css_js +=  String.format(css, "http://192.168.1.100/zb/20171026/static/css/zjxw.v2.css");
+//        css_js += String.format(html, "http://192.168.1.100/zb/20171026/static/js/client.js");
         //CSS
         if (sp != null && sp.css != null && !sp.css.isEmpty()) {
             for (int i = 0; i < sp.css.size(); i++) {

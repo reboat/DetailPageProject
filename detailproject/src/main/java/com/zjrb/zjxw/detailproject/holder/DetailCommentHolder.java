@@ -104,9 +104,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //评论已删除
         if (mData.getStatus() == 3) {
             mTvDeleteTip.setVisibility(View.VISIBLE);
+            mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
             mTvCommentContent.setVisibility(View.GONE);
             mTvCommentSrc.setVisibility(View.GONE);
-            mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
         } else {//显示正常评论
             mTvDeleteTip.setVisibility(View.GONE);
             //回复者评论

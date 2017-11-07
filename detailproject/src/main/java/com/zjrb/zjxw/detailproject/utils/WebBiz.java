@@ -175,7 +175,6 @@ public class WebBiz {
 
             Element div = new Element("div");
             div.attr("class", "zjxw_imgBox");
-
             node.replaceWith(div);
 
             div.appendChild(node);

@@ -62,6 +62,9 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public NewsDetailMiddleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_middle, parent, false));
         ButterKnife.bind(this, itemView);
+        mRecyleView.addItemDecoration(new GridSpaceDivider(8));
+        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
+        mRecyleView.setLayoutManager(managerFollow);
     }
 
     @Override
@@ -100,11 +103,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      * 初始化滚动列表数据
      */
     private void initShareBean() {
-
-        mRecyleView.addItemDecoration(new GridSpaceDivider(8));
-        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
-        mRecyleView.setLayoutManager(managerFollow);
-
         if (mListData == null) {
             mListData = new ArrayList<>();
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));

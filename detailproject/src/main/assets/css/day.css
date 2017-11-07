@@ -1,6 +1,6 @@
-div,section,ul,li,a,h1,h2,h3,p,link,textarea,form,select,input,span,button,em,menu,aside,table,tr,td,nav,img,dl,dt,dd, html, body,strong{
-   /* background:#ffffff ;color:#3b424c;
-    border-color:#aaaaaa;*/
+.zjxw div,.zjxw section,.zjxw ul,.zjxw li,.zjxw a,.zjxw h1,.zjxw h2,.zjxw h3,.zjxw p,.zjxw link,.zjxw textarea,.zjxw form,.zjxw select,.zjxw input,.zjxw span,.zjxw button,.zjxw em,.zjxw menu,.zjxw aside,.zjxw table,.zjxw tr,.zjxw td,.zjxw nav,.zjxw img,.zjxw dl,.zjxw dt,.zjxw dd, .zjxw html, .zjxw body,.zjxw strong{
+    background:#ffffff ;color:#3b424c;
+    border-color:#aaaaaa;
     scrollbar-arrow-color:#333333;
     scrollbar-base-color:#dddddd;
     scrollbar-shadow-color:#dddddd;
@@ -10,13 +10,36 @@ div,section,ul,li,a,h1,h2,h3,p,link,textarea,form,select,input,span,button,em,me
     scrollbar-3d-light-color:#dddddd;
     scrollbar-track-color:#dddddd;}
 strong{display:block;}
-a,a *{color:#3b424c;text-decoration:none;}a:visited,a:visited *,a:active,a:active *{color:#aaaaaa;}
-a:hover,a:hover *{color:#3b424c;
+.zjxw a,.zjxw a *{color:#3b424c;text-decoration:none;}a:visited,.zjxw a:visited *,.zjxw a:active,.zjxw a:active *{color:#aaaaaa;}
+.zjxw a:hover,.zjxw a:hover *{color:#3b424c;
     background:#ffffff;}
-input,select,option,button,textarea{color:#3b424c;
+.zjxw input,.zjxw select,.zjxw option,.zjxw button,.zjxw textarea{color:#3b424c;
     background:#ffffff;
     border:#aaaaaa;
     border-color: #3b424c #3b424c #3b424c #3b424c;}
-input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #3b424c #3b424c #3b424c #3b424c;}
-input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#3b424c;background:#ffffff; border-color: #3b424c #3b424c #3b424c #3b424c;}
-a{color:#4682c5   !important}
+.zjxw input:focus,.zjxw select:focus,.zjxw option:focus,.zjxw button:focus,.zjxw textarea:focus,.zjxw input:hover,.zjxw input[type=button],.zjxw input[type=submit],.zjxw input[type=reset],.zjxw input[type=image] {border-color: #3b424c #3b424c #3b424c #3b424c;}
+.zjxw input[type=button]:focus,.zjxw input[type=submit]:focus,.zjxw input[type=reset]:focus,.zjxw input[type=image]:focus,.zjxw input[type=button]:hover,.zjxw input[type=submit]:hover,.zjxw input[type=reset]:hover,.zjxw input[type=image]:hover {color:#3b424c;background:#ffffff; border-color: #3b424c #3b424c #3b424c #3b424c;}
+.zjxw a{color:#4682c5   !important}
+
+.night div,.night section,.night ul,.night li,.night a,.night h1,.night h2,.night h3,.night p,.night link,.night textarea,.night form,.night select,.night input,.night span,.night button,.night em,.night menu,.night aside,.night table,.night tr,.night td,.night nav,.night img,.night dl,.night dt,.night dd,.night html,.night body,.night strong{
+    background:#202124;color:#7a7b7d;
+    border-color:#555555;
+    scrollbar-arrow-color:#CCCCCC;
+    scrollbar-base-color:#202124;
+    scrollbar-shadow-color:#202124;
+    scrollbar-face-color:#202124;
+    scrollbar-highlight-color:#202124;
+    scrollbar-dark-shadow-color:#202124;
+    scrollbar-3d-light-color:#202124;
+    scrollbar-track-color:#202124;}
+.night strong{display:block;}
+.night a,.night a *{color:#7a7b7d;text-decoration:none;}.night a:visited,.night a:visited *,.night a:active,.night a:active *{color:#555555;}
+.night a:hover,.night a:hover *{color:#7a7b7d;
+    background:#202124;}
+.night input,.night select,.night option,.night button,.night textarea{color:#7a7b7d;
+    background:#202124;
+    border:#555555;
+    border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
+.night input:focus,.night select:focus,.night option:focus,.night button:focus,.night textarea:focus,.night input:hover,.night input[type=button],.night input[type=submit],.night input[type=reset],.night input[type=image] {border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
+.night input[type=button]:focus,.night input[type=submit]:focus,.night input[type=reset]:focus,.night input[type=image]:focus,.night input[type=button]:hover,.night input[type=submit]:hover,.night input[type=reset]:hover,.night input[type=image]:hover {color:#7a7b7d;background:#202124; border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
+.night a{color:#315277   !important}

@@ -34,6 +34,11 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -68,13 +73,23 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         setCssJSWebView();
     }
 
+    private Elements ele;
+    private Document doc;
+
     /**
      * 设置CSS和JS
      */
     private void setCssJSWebView() {
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
-        String uiModeCssUri = ThemeMode.isNightMode()
-                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
+
+        doc = Jsoup.parse(htmlCode);
+        ele = doc.getElementsByClass("zjxw");
+//        ele = doc.getElementsByClass("zjxw");
+//        ele.attr("class","night");
+
+//        String uiModeCssUri = ThemeMode.isNightMode()
+//                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
+        String uiModeCssUri = C.DAY_CSS_URI;
         String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent()) ? "" : mData.getArticle().getContent(),
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
@@ -116,9 +131,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             }
         }
 
-        String htmlResult = String.format(htmlCode, css_js, htmlBody);
+        htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
+    private String htmlResult;
 
     private WebSettings settings;
 
@@ -249,11 +265,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void onChangeTheme() {
-        if (ThemeMode.isNightMode()) {
-            mWebJsInterface.applyDayTheme();
-        } else {
-            mWebJsInterface.applyNightTheme();
+        if(ThemeMode.isNightMode()){
+            ele.attr("class", "night");
+        }else{
+            ele.attr("class", "zjxw");
         }
+        mWebView.callback_zjxw_js_isAppOpenNightTheme(ThemeMode.isNightMode());
     }
 
     @Override

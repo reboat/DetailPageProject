@@ -43,7 +43,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     TextView mTvChannelName;
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
-    @BindView(R2.id.tv_column_subscribe)
+    @BindView(R2.id.tv_column_subscribe) 
     TextView mTvColumnSubscribe;
     @BindView(R2.id.ry_channel)
     RelativeLayout mRyChannel;

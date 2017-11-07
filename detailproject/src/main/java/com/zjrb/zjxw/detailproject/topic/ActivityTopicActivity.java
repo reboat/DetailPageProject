@@ -184,8 +184,8 @@ public class ActivityTopicActivity extends BaseActivity implements
                 //话题撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
-                }else{
-                    T.showShortNow(ActivityTopicActivity.this,errMsg);
+                } else {
+                    T.showShortNow(ActivityTopicActivity.this, errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
@@ -207,7 +207,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         mDetailData = data;
 
         if (mAdapter == null) {
-            mAdapter = new TopicAdapter(data);
+            mAdapter = new TopicAdapter(data,mLoadMore);
             mAdapter.addHeaderView(mTopicTop.itemView);
             mAdapter.setEmptyView(
                     new EmptyPageHolder(mRecycler,

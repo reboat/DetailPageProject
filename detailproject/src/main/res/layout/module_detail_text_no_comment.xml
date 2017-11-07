@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:background="?attr/bc_ffffff"
-    android:gravity="center"
+    android:layout_marginTop="148dp"
+    android:gravity="center_horizontal"
     android:textColor="?attr/tc_484848"
     android:textSize="14sp"
     tools:text="暂无评论" />

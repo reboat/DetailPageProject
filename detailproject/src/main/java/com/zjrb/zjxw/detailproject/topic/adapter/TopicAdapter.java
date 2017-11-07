@@ -13,6 +13,7 @@ import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -61,10 +62,13 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
 
     private boolean isShowAll; // true：已经显示全部
 
-    public TopicAdapter(DraftDetailBean data) {
+    private View loadMore;
+
+    public TopicAdapter(DraftDetailBean data, FooterLoadMore loadMore) {
         super(null);
         setData(data);
         setOnItemClickListener(this);
+        this.loadMore = loadMore.getLoadMore();
     }
 
 
@@ -119,8 +123,10 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 ("精选")) {
             return VIEW_TYPE_TEXT_INTERACT;
         } else if ((getData(position) instanceof String) && getData(position).toString().equals
-                ("暂无评论"))
+                ("暂无评论")) {
+            loadMore.setVisibility(View.GONE);
             return VIEW_TYPE_NO_COMMENT;
+        }
         return 0;
     }
 

@@ -50,7 +50,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
-import com.zjrb.zjxw.detailproject.link.BrowserLinkActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -222,7 +221,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
-                    T.showShortNow(NewsDetailActivity.this,errMsg);
+                    T.showShortNow(NewsDetailActivity.this, errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
@@ -403,7 +402,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     mNewsDetail.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
                     T.showShort(getBaseContext(), "已点赞成功");
-                }else{
+                } else {
                     T.showShort(getBaseContext(), errMsg);
                 }
 

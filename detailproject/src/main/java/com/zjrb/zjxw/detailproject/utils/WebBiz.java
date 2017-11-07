@@ -37,7 +37,6 @@ public class WebBiz {
 
         Document doc = Jsoup.parseBodyFragment(html);
         List<String> imgSrcs = parseImgTags(doc);
-
         parseVideoTags(doc);
 
         if (callBack != null) {
@@ -119,6 +118,7 @@ public class WebBiz {
 
     }
 
+
     /**
      * 解析处理Img标签
      *
@@ -186,6 +186,7 @@ public class WebBiz {
             }
 
             imgBgDiv.attr("class", "zjxw_imgMask");
+
 
             div.appendChild(imgBgDiv);
         }

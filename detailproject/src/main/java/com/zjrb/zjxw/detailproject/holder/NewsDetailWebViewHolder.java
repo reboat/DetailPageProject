@@ -34,11 +34,6 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -73,23 +68,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         setCssJSWebView();
     }
 
-    private Elements ele;
-    private Document doc;
-
+    private String css_js;
     /**
      * 设置CSS和JS
      */
     private void setCssJSWebView() {
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
-
-        doc = Jsoup.parse(htmlCode);
-        ele = doc.getElementsByClass("zjxw");
-//        ele = doc.getElementsByClass("zjxw");
-//        ele.attr("class","night");
-
-//        String uiModeCssUri = ThemeMode.isNightMode()
-//                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
-        String uiModeCssUri = C.DAY_CSS_URI;
+        String uiModeCssUri = ThemeMode.isNightMode()
+                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
         String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent()) ? "" : mData.getArticle().getContent(),
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
@@ -113,7 +99,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     }
                 });
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-        String css_js = "";
+        css_js = "";
         String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
         String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
         css_js += String.format(css, uiModeCssUri);
@@ -134,6 +120,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
+
     private String htmlResult;
 
     private WebSettings settings;
@@ -265,11 +252,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void onChangeTheme() {
-        if(ThemeMode.isNightMode()){
-            ele.attr("class", "night");
-        }else{
-            ele.attr("class", "zjxw");
+        if (ThemeMode.isNightMode()) {
+            final String execUrl = "javascript:applyNightTheme();";
+            mWebView.loadUrl(execUrl);
+        } else {
+            final String execUrl = "javascript:applyDayTheme();";
+            mWebView.loadUrl(execUrl);
         }
+
         mWebView.callback_zjxw_js_isAppOpenNightTheme(ThemeMode.isNightMode());
     }
 

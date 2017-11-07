@@ -74,17 +74,17 @@ public class CommentRefreshBean extends BaseData {
          * url : http://10.100.60.98:9000/news.html?id=738982
          */
 
-        private String list_title;
+        private String doc_title;
         private String summary;
         private String article_pic;
         private String url;
 
         public String getList_title() {
-            return list_title;
+            return doc_title;
         }
 
         public void setList_title(String list_title) {
-            this.list_title = list_title;
+            this.doc_title = list_title;
         }
 
         public String getSummary() {

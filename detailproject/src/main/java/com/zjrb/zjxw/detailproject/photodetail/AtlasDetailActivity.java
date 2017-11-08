@@ -34,6 +34,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.ui.widget.load.AtlasLoad;
 import com.zjrb.core.ui.widget.photoview.HackyViewPager;
 import com.zjrb.core.utils.DownloadUtil;
 import com.zjrb.core.utils.PathUtil;
@@ -184,6 +185,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 获取图集数据
      */
     private void loadData() {
+        AtlasLoad holder=new AtlasLoad(mViewPager,mContainer);
         //获取详情页
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
@@ -213,7 +215,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     T.showShortNow(AtlasDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId);
     }
 
     /**

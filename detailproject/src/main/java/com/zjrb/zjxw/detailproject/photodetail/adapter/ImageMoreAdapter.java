@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
@@ -54,7 +55,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //无图片时用占位图
-            GlideApp.with(mIvImage).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).into(mIvImage);
+            GlideApp.with(mIvImage).load(mData.getPic()).centerCrop().placeholder(PH.zheSmall()).apply(AppGlideOptions.smallOptions()).into(mIvImage);
             //文案
             if (mData.getTitle() != null) {
                 mTvTitle.setText(mData.getTitle());

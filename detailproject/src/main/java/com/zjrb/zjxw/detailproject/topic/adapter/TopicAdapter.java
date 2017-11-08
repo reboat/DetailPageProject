@@ -236,6 +236,10 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         }
     }
 
+    public void remove(int position) {
+        getData().remove(cleanPosition(position));
+        notifyItemRemoved(position);
+    }
     /**
      * 订阅
      */

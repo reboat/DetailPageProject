@@ -19,6 +19,7 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
@@ -95,6 +96,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             if (data != null && data.getQueryParameter(IKey.ID) != null) {
                 official_id = data.getQueryParameter(IKey.ID);
             }
+            if (intent.hasExtra(IKey.ID)) {
+                official_id = intent.getStringExtra(IKey.ID);
+            }
         }
     }
 
@@ -126,7 +130,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         if (b != null && b.getOfficer() != null) {
             OfficalDetailBean.OfficerBean bean = b.getOfficer();
             //头像
-            GlideApp.with(ivAvatar).load(bean.getPhoto()).placeholder(PH.zheSmall()).into(ivAvatar);
+            GlideApp.with(ivAvatar).load(bean.getPhoto()).placeholder(PH.zheSmall()).apply(AppGlideOptions.smallOptions()).into(ivAvatar);
             //姓名
             if (bean.getName() != null) {
                 tvName.setText(bean.getName());
@@ -177,8 +181,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setImgUri(bean.getOfficer().getPhoto())
-                    .setTextContent(bean.getOfficer().getName())
-                    .setTitle(getString(R.string.module_detail_share_content_from))
+                    .setTextContent(getString(R.string.module_detail_share_content_from))
+                    .setTitle(bean.getOfficer().getName())
                     .setTargetUrl(bean.getOfficer().getShare_url()));
         }
     }

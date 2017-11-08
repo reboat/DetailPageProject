@@ -207,7 +207,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         mDetailData = data;
 
         if (mAdapter == null) {
-            mAdapter = new TopicAdapter(data,mLoadMore);
+            mAdapter = new TopicAdapter(data, mLoadMore);
             mAdapter.addHeaderView(mTopicTop.itemView);
             mAdapter.setEmptyView(
                     new EmptyPageHolder(mRecycler,
@@ -387,23 +387,10 @@ public class ActivityTopicActivity extends BaseActivity implements
 
     /**
      * 删除评论，局部刷新
-     *
-     * @param comment_id
      */
     @Override
-    public void onDeleteComment(String comment_id, int position) {
-        List list = mAdapter.getData();
-        for (Object obj : list) {
-            int count = 0;
-            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals
-                    (comment_id)) {
-                mAdapter.getData().remove(obj);
-                mAdapter.notifyItemMoved(count, count);
-//                mAdapter.notifyItemRangeChanged(count, mAdapter.getDataSize());
-                break;
-            }
-            count++;
-        }
+    public void onDeleteComment(int position) {
+        mAdapter.remove(position);
     }
 
 }

@@ -9,9 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -51,7 +53,7 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
     @Override
     public void bindView() {
         //需要显示占位图
-        GlideApp.with(mIvAvatar).load(mData.getPhoto()).placeholder(PH.zheSmall()).centerCrop().into(mIvAvatar);
+        GlideApp.with(mIvAvatar).load(mData.getPhoto()).placeholder(PH.zheSmall()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mIvAvatar);
         //姓名
         if (mData.getName() != null) {
             mTvName.setText(mData.getName());
@@ -76,8 +78,8 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
             if (bundle == null) {
                 bundle = new Bundle();
             }
-            bundle.putString(IKey.LINK_TITLE, mData.getName());
-            Nav.with(itemView.getContext()).setExtras(bundle).toPath(mData.getDetail_url());
+            bundle.putString(IKey.ID, String.valueOf(mData.getId()));
+            Nav.with(itemView.getContext()).setExtras(bundle).toPath(RouteManager.PERSIONAL_DETAIL);
         }
     }
 }

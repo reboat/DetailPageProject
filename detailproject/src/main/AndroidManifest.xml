@@ -205,7 +205,9 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <data android:path="/gy.html" />
+                <data android:path="/persionaldetail/PersionalDetailActivity" />
                 <!--以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />

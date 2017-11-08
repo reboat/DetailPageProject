@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
@@ -82,7 +83,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //占位图，如无图片，则显示占位图
-            GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).into(mImg);
+            GlideApp.with(mImg).load(mData.getList_pics().get(0)).centerCrop().placeholder(PH.zheSmall()).apply(AppGlideOptions.smallOptions()).into(mImg);
             //标题
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());

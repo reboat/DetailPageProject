@@ -4,6 +4,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
@@ -32,7 +33,7 @@ public class NewsRelateSubjectHolder extends BaseRecyclerViewHolder<RelatedSubje
 
     @Override
     public void bindView() {
-        GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheBig()).centerCrop().into(mImg);
+        GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheBig()).centerCrop().apply(AppGlideOptions.bigOptions()).into(mImg);
     }
 
 }

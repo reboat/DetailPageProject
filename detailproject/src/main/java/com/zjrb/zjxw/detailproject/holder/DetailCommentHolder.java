@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.aliya.uimode.utils.UiModeUtils;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
@@ -165,7 +166,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //回复者头像(显示默认头像)
-        GlideApp.with(mImg).load(mData.getPortrait_url()).placeholder(PH.zheSmall()).centerCrop().into(mImg);
+        GlideApp.with(mImg).load(mData.getPortrait_url()).placeholder(PH.zheSmall()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mImg);
 
 
     }
@@ -219,16 +220,16 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      *
      * @param comment_id
      */
-    private void deleteComment(final String comment_id,final int Position) {
+    private void deleteComment(final String comment_id,final int position) {
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
                 if (itemView.getContext() instanceof CommentActivity) {
-                    ((CommentActivity) itemView.getContext()).onDeleteComment(comment_id,Position);
+                    ((CommentActivity) itemView.getContext()).onDeleteComment(position);
                 } else if (itemView.getContext() instanceof NewsDetailActivity) {
-//                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(comment_id);
+                    ((NewsDetailActivity) itemView.getContext()).onDeleteComment(position);
                 } else if (itemView.getContext() instanceof ActivityTopicActivity) {
-//                    ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(comment_id);
+                    ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(position);
                 }
             }
 
@@ -254,6 +255,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      */
     public interface deleteCommentListener {
 
-        void onDeleteComment(final String comment_id,int position);
+        void onDeleteComment(int position);
     }
 }

@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
@@ -38,7 +39,7 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
     public void bindView() {
         if (!TextUtils.isEmpty(mData.getPic())) {
             mImg.setVisibility(View.VISIBLE);
-            GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheSmall()).centerCrop().into(mImg);
+            GlideApp.with(mImg).load(mData.getPic()).placeholder(PH.zheSmall()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mImg);
         } else {
             mImg.setVisibility(View.GONE);
         }

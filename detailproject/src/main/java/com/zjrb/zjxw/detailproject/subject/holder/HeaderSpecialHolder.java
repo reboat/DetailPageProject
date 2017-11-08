@@ -153,6 +153,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     .placeholder(PH.zheBig())
                     .error(PH.zheBig())
                     .centerCrop()
+                    .apply(AppGlideOptions.bigOptions())
                     .into(ivTopicPic);
 
             //专题焦点图摘要可以为空

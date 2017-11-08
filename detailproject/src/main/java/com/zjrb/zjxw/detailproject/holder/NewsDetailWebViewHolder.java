@@ -82,7 +82,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     public void callBack(String[] imgSrcs) {
                         if (mWebJsInterface != null && imgSrcs != null && imgSrcs.length > 0) {
                             for (int i = 0; i < imgSrcs.length; i++) {
-                                if (!TextUtils.isEmpty(imgSrcs[i]) && imgSrcs[i].contains("?w=")) {
+                                if (!TextUtils.isEmpty(imgSrcs[i]) && (imgSrcs[i].contains("?w=") || imgSrcs[i].contains("?width="))) {
                                     imgSrcs[i] = imgSrcs[i].split("[?]")[0];
                                 }
                             }

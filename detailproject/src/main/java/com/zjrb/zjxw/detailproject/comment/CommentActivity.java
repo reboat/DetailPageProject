@@ -265,7 +265,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      * 删除评论回调
      */
     @Override
-    public void onDeleteComment(String comment_id, int position) {
+    public void onDeleteComment(int position) {
         mCommentAdapter.remove(position);
     }
 

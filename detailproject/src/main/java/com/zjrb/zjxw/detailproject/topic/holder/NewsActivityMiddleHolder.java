@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
@@ -43,7 +44,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
         //栏目LOGO
-        GlideApp.with(mIvColumnLogo).load(mData.getArticle().getColumn_logo()).placeholder(PH.zheSmall()).centerCrop().into(mIvColumnLogo);
+        GlideApp.with(mIvColumnLogo).load(mData.getArticle().getColumn_logo()).placeholder(PH.zheSmall()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mIvColumnLogo);
 
         //栏目名
         if (mData.getArticle().getColumn_name() != null) {

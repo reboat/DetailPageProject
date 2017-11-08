@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
@@ -53,7 +54,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         //顶部焦点图(可以不填写)
         if (!TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
             mIvTopBg.setVisibility(View.VISIBLE);
-            GlideApp.with(mIvTopBg).load(mData.getArticle().getArticle_pic()).centerCrop().into(mIvTopBg);
+            GlideApp.with(mIvTopBg).load(mData.getArticle().getArticle_pic()).apply(AppGlideOptions.bigOptions()).centerCrop().into(mIvTopBg);
         } else {
             mIvTopBg.setVisibility(View.GONE);
         }

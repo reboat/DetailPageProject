@@ -7,6 +7,12 @@
                 android:background="?attr/bc_ffffff"
     >
 
+    <FrameLayout
+        android:id="@+id/v_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
     <com.aliya.view.ratio.RatioFrameLayout
         android:id="@+id/video_container"
         android:layout_width="match_parent"

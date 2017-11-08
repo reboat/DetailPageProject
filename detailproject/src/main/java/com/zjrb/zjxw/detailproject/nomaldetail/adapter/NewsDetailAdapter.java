@@ -31,8 +31,6 @@ import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
 
-import butterknife.BindView;
-
 /**
  * 普通新闻详情页Adapter
  * Created by wanglinjie.
@@ -256,6 +254,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
         }
 
+    }
+
+    public void remove(int position) {
+        getData().remove(cleanPosition(position));
+        notifyItemRemoved(position);
     }
 
     /**

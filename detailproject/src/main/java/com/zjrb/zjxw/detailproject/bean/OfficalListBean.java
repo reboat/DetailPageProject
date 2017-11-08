@@ -49,7 +49,7 @@ public class OfficalListBean extends BaseData {
         private String nation;
         private String university;
         private String degree;
-        private String title;
+        private String current_title;
         private long birthday;
         private long ccp_date;
         private long work_date;
@@ -147,11 +147,11 @@ public class OfficalListBean extends BaseData {
         }
 
         public String getTitle() {
-            return title;
+            return current_title;
         }
 
         public void setTitle(String title) {
-            this.title = title;
+            this.current_title = title;
         }
 
         public long getBirthday() {

@@ -27,6 +27,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.biz.TouchSlopHelper;
+import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
@@ -47,7 +48,6 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
@@ -99,6 +99,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
+    @BindView(R2.id.v_container)
+    FrameLayout mView;
 
     /**
      * 上下滑动超出范围处理
@@ -185,7 +187,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (!TextUtils.isEmpty(videoPath)) {
             mVideoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
-                    .into(mivVideoBG);
+                    .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
             if (SettingManager.getInstance().isAutoPlayVideoWithWifi()) {
                 PlayerManager.get().play(mVideoContainer, videoPath);
             }
@@ -207,6 +209,9 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
+                if(mView.getVisibility() == View.VISIBLE){
+                    mView.setVisibility(View.GONE);
+                }
                 mNewsDetail = draftDetailBean;
                 if (!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
                     initVideo(mNewsDetail.getArticle().getVideo_url());
@@ -484,27 +489,18 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-        mContainer.removeAllViews();
+//        mContainer.removeAllViews();
+        mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
     /**
      * 删除评论，局部刷新
      */
     @Override
-    public void onDeleteComment(String comment_id, int position) {
-        List list = mAdapter.getData();
-        for (Object obj : list) {
-            int count = 0;
-            if (obj instanceof HotCommentsBean && ((HotCommentsBean) obj).getId().equals(comment_id)) {
-                mAdapter.getData().remove(obj);
-                mAdapter.notifyItemMoved(count, count);
-//                mAdapter.notifyItemRangeChanged(count, mAdapter.getDataSize());
-                break;
-            }
-            count++;
-        }
+    public void onDeleteComment(int position) {
+        mAdapter.remove(position);
     }
 }
 

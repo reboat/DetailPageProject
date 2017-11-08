@@ -9,8 +9,6 @@ import com.aliya.uimode.utils.UiModeUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;

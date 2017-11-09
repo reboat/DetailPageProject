@@ -1,10 +1,6 @@
 <resources>
 
     <style name="AppTheme" parent="CoreTheme.Base">
-
-
-
-
         <item name="module_news_color_484848_7a7b7d">#484848</item>
         <item name="module_news_color_f44b50_8e3636">#f44b50</item>
         <item name="module_news_color_4d95fa_315277">#4d95fa</item>
@@ -20,11 +16,14 @@
         <item name="module_news_color_f5f5f5_191919">#f5f5f5</item>
         <item name="module_news_color_d8d8d8_5c5c5c">#d8d8d8</item>
         <item name="module_news_color_ffffff_7a7b7d">#ffffff</item>
+        <item name="module_news_color_cc696969_cc333333">#cc696969</item>
         <item name="module_news_mask_00000000_7f000000">#00000000</item>
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
 
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag</item>
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>
         <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>
@@ -62,7 +61,6 @@
         <item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>
         <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>
         <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>
-
 
 
 
@@ -142,8 +140,6 @@
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
 
-
-
         <item name="module_news_color_484848_7a7b7d">#7a7b7d</item>
         <item name="module_news_color_f44b50_8e3636">#8e3636</item>
         <item name="module_news_color_4d95fa_315277">#315277</item>
@@ -159,11 +155,14 @@
         <item name="module_news_color_d8d8d8_5c5c5c">#5c5c5c</item>
         <item name="module_news_color_ffffff_7a7b7d">#7a7b7d</item>
         <item name="module_news_color_7f000000_7f191919">#7f191919</item>
+        <item name="module_news_color_cc696969_cc333333">#cc333333</item>
         <item name="module_news_mask_00000000_7f000000">#7f000000</item>
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
 
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night
         </item>
@@ -210,7 +209,6 @@
         <item name="module_video_tc_tab">@color/module_video_sl_tc_tab_night</item>
         <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout_night</item>
         <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item_night</item>
-
 
 
 

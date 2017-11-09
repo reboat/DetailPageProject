@@ -2,6 +2,9 @@
 
     <style name="AppTheme" parent="CoreTheme.Base">
 
+
+
+
         <item name="module_news_color_484848_7a7b7d">#484848</item>
         <item name="module_news_color_f44b50_8e3636">#f44b50</item>
         <item name="module_news_color_4d95fa_315277">#4d95fa</item>
@@ -23,7 +26,6 @@
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
 
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>
-        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10</item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>
         <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>
         <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
@@ -60,6 +62,8 @@
         <item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>
         <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>
         <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>
+
+
 
 
 
@@ -117,18 +121,12 @@
         <item name="module_detail_color_999999_5c5c5c">#999999</item>
         <item name="module_detail_color_484848_7a7b7d">#484848</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left</item>
         <item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>
 
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>
-        <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest</item>
 
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
@@ -143,6 +141,8 @@
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
+
+
 
         <item name="module_news_color_484848_7a7b7d">#7a7b7d</item>
         <item name="module_news_color_f44b50_8e3636">#8e3636</item>
@@ -165,8 +165,6 @@
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
 
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>
-        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10_night
-        </item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night
         </item>
         <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe_night
@@ -212,6 +210,7 @@
         <item name="module_video_tc_tab">@color/module_video_sl_tc_tab_night</item>
         <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout_night</item>
         <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item_night</item>
+
 
 
 
@@ -269,17 +268,11 @@
         <item name="module_detail_color_999999_5c5c5c">#5c5c5c</item>
         <item name="module_detail_color_484848_7a7b7d">#7a7b7d</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment_night</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more_night</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left_night</item>
         <item name="module_detail_tc_4d95fa">@color/tc_315277</item>
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
-        <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host_night</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night</item>
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>

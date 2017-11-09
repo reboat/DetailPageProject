@@ -80,6 +80,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
         lvNotice.addItemDecoration(new GridSpaceDivider(6));
         mTitleView.setText("更多图集");
+        mTitleView.setVisibility(View.VISIBLE);
         initAdapter();
     }
 

@@ -1,7 +1,6 @@
 <resources>
 
     <style name="AppTheme" parent="CoreTheme.Base">
-
         <item name="module_news_color_484848_7a7b7d">#484848</item>
         <item name="module_news_color_f44b50_8e3636">#f44b50</item>
         <item name="module_news_color_4d95fa_315277">#4d95fa</item>
@@ -17,13 +16,15 @@
         <item name="module_news_color_f5f5f5_191919">#f5f5f5</item>
         <item name="module_news_color_d8d8d8_5c5c5c">#d8d8d8</item>
         <item name="module_news_color_ffffff_7a7b7d">#ffffff</item>
+        <item name="module_news_color_cc696969_cc333333">#cc696969</item>
         <item name="module_news_mask_00000000_7f000000">#00000000</item>
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
 
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag</item>
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>
-        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10</item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>
         <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>
         <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
@@ -60,6 +61,7 @@
         <item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>
         <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>
         <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>
+
 
 
 
@@ -117,28 +119,29 @@
         <item name="module_detail_color_999999_5c5c5c">#999999</item>
         <item name="module_detail_color_484848_7a7b7d">#484848</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left</item>
         <item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>
 
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>
-        <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest</item>
 
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
-        <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
-        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
+        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_atlas_detail_comment</item>
+        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas</item>
+        <item name="module_detail_tc_808080">@color/tc_808080</item>
+        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>
+        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>
+        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>
+        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>
+        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color</item>
 
     </style>
 
@@ -159,14 +162,15 @@
         <item name="module_news_color_d8d8d8_5c5c5c">#5c5c5c</item>
         <item name="module_news_color_ffffff_7a7b7d">#7a7b7d</item>
         <item name="module_news_color_7f000000_7f191919">#7f191919</item>
+        <item name="module_news_color_cc696969_cc333333">#cc333333</item>
         <item name="module_news_mask_00000000_7f000000">#7f000000</item>
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
 
+        <item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>
+        <item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>
         <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>
-        <item name="module_news_border_f44b50_r10">@drawable/module_news_border_f44b50_r10_night
-        </item>
         <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night
         </item>
         <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe_night
@@ -269,26 +273,27 @@
         <item name="module_detail_color_999999_5c5c5c">#5c5c5c</item>
         <item name="module_detail_color_484848_7a7b7d">#7a7b7d</item>
 
-        <item name="module_detail_news_comment">@drawable/module_detail_news_comment_night</item>
-        <item name="module_detail_news_more">@drawable/module_detail_news_more_night</item>
         <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
         <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>
-        <item name="module_detail_commentedit_left">@drawable/module_detail_commentedit_left_night</item>
         <item name="module_detail_tc_4d95fa">@color/tc_315277</item>
         <!--评论-->
         <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
-        <!--话题-->
-        <item name="module_detail_activity_host">@drawable/module_detail_activity_host_night</item>
-        <item name="module_detail_activity_guest">@drawable/module_detail_activity_guest_night</item>
         <!--图集-->
         <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
-        <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
-        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
+        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_ic_comment_night</item>
+        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas_night</item>
+        <item name="module_detail_tc_808080">@color/tc_5c5c5c</item>
+        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg_night</item>
+        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>
+        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit_night</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_343434</item>
+        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe_night</item>
+        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color_night</item>
 
     </style>
 

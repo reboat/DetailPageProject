@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.task;
 
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.api.okhttp.CachePolicy;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
@@ -24,6 +25,7 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
     protected void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
             put("id", params[0]);
+            cachePolicy(CachePolicy.NO_CACHE);
         }
     }
 

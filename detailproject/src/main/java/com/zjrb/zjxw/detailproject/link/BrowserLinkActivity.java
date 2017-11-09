@@ -231,6 +231,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         } else if (id == R.id.iv_top_share) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
                     .setTextContent(getString(R.string.module_detail_share_content_from))
                     .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setTargetUrl(url)

@@ -19,14 +19,11 @@ function applyDayTheme() {
 
 //替换webview中的图片
 function replaceImage(index,url){
-        alert("replaceImage111111");
-        var img = document.getElementsByTagName("img");
-        for(var i = 0; i < img.length; i++) {
-        if(i == index){
-        alert("replaceImage222222");
-            var a = document.getElementsByTagName("img")[i];
-            a.src=url;
+      var img = document.getElementsByTagName("img");
+      for(var i = 0; i < img.length; i++) {
+      if(i == index){
+          var a = document.getElementsByTagName("img")[i];
+          a.setAttribute("src",url);
         }
-
-        }
-   }
+       }
+ }

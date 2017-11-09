@@ -7,14 +7,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,6 +105,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     TextView mTvName;
     @BindView(R2.id.v_container)
     FrameLayout mView;
+    @BindView(R2.id.atlas_scrollView)
+    ScrollView mScrollView;
 
 
     /**
@@ -123,9 +126,55 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         ButterKnife.bind(this);
         getIntentData(getIntent());
         mFloorBar.setOnTouchListener(this);
-        mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
+//        mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
         loadData();
+
+
+        mScrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        y = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float duration = y - event.getY();
+                        y = event.getY();
+                        if (Math.abs(duration) < 20) {
+                            return true;
+                        }
+                        ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
+                        if (params != null) {
+                            params.height += duration;
+                            if (params.height < UIUtils.dip2px(160)) {
+                                params.height = UIUtils.dip2px(160);
+                                mScrollView.setLayoutParams(params);
+                                mScrollView.invalidate();
+                                return false;
+                            } else if (params.height > mMaxHeight) {
+                                params.height = mMaxHeight;
+                                mScrollView.setLayoutParams(params);
+                                mScrollView.invalidate();
+                                return false;
+                            } else {
+                                mScrollView.setLayoutParams(params);
+                                mScrollView.invalidate();
+                            }
+                        }
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        return false;
+                }
+
+                return true;
+            }
+        });
     }
+
+    private float y = 0;
 
 
     /**
@@ -187,7 +236,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 获取图集数据
      */
     private void loadData() {
-        AtlasLoad holder=new AtlasLoad(mViewPager,mContainer);
+        AtlasLoad holder = new AtlasLoad(mViewPager, mContainer);
         //获取详情页
         new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
@@ -287,6 +336,25 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             mTvContent.setText(entity.getDescription());
         }
 
+        calculationMaxHeight();
+
+    }
+
+    private int mMaxHeight = 0;
+
+    private void calculationMaxHeight() {
+
+        mTvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int titleHeight = mTvTitle.getMeasuredHeight();
+                int contentHeight = mTvContent.getMeasuredHeight();
+                int sourceHeight = mTvSource.getMeasuredHeight();
+                int authorHeight = mTvName.getMeasuredHeight();
+                mMaxHeight = titleHeight + contentHeight + sourceHeight + authorHeight + 10;
+                mTvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     /**
@@ -437,7 +505,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }
 
+        if(position==mAtlasList.size()-1){
+            mScrollView.setVisibility(View.GONE);
+        }else{
+            mScrollView.setVisibility(View.VISIBLE);
+        }
 
+        calculationMaxHeight();
     }
 
     /**

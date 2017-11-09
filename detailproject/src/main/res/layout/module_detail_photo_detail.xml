@@ -25,90 +25,94 @@
         android:layout_gravity="bottom"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/ly_tip_contain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:gravity="center"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:paddingTop="10dp"
-                android:textColor="?attr/tc_ffffff"
-                android:textSize="@dimen/ts_16sp"
-                android:textStyle="bold"
-                tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发" />
-
-            <TextView
-                android:id="@+id/tv_index"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_title"
-                android:layout_marginRight="11dp"
-                android:layout_toLeftOf="@+id/tv_tottle_num"
-                android:textColor="?attr/tc_ffffff"
-                android:textSize="@dimen/ts_20sp"
-                tools:text="1 /" />
-
-            <TextView
-                android:id="@+id/tv_tottle_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_index"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="11dp"
-                android:textColor="?attr/tc_ffffff"
-                android:textSize="@dimen/ts_12sp"
-                tools:text="6" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_content"
+        <ScrollView
+            android:id="@+id/atlas_scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
-            android:fadingEdge="vertical"
-            android:lineSpacingMultiplier="1.2"
-            android:paddingBottom="5dp"
-            android:scrollbars="vertical"
-            android:textColor="?attr/tc_999999"
-            android:textSize="@dimen/ts_14sp"
-            tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
+            android:layout_height="160dp">
 
-        <TextView
-            android:id="@+id/tv_source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_13sp"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
-            android:layout_marginRight="11dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingBottom="10dp"
-            android:paddingTop="3.5dp"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_13sp"
-            android:visibility="gone" />
+                <RelativeLayout
+                    android:id="@+id/ly_tip_contain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:gravity="center"
+                    android:paddingBottom="10dp">
 
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_toLeftOf="@+id/tv_index"
+                        android:paddingTop="10dp"
+                        android:textColor="?attr/tc_ffffff"
+                        android:textSize="@dimen/ts_16sp"
+                        android:textStyle="bold"
+                        tools:text="说的看山东矿机斯凯俯拾地芥方式开多久发手动加卡福克斯就父控件时代峰峻啥大部分圣诞节发" />
+
+                    <TextView
+                        android:id="@+id/tv_index"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tv_title"
+                        android:layout_toLeftOf="@+id/tv_tottle_num"
+                        android:textColor="?attr/tc_ffffff"
+                        android:textSize="@dimen/ts_20sp"
+                        tools:text="1 /" />
+
+                    <TextView
+                        android:id="@+id/tv_tottle_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tv_index"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="11dp"
+                        android:textColor="?attr/tc_ffffff"
+                        android:textSize="@dimen/ts_12sp"
+                        tools:text="6" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="11dp"
+                    android:fadingEdge="vertical"
+                    android:paddingBottom="5dp"
+                    android:scrollbars="vertical"
+                    android:textColor="?attr/tc_999999"
+                    android:textSize="@dimen/ts_14sp"
+                    tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
+
+                <TextView
+                    android:id="@+id/tv_source"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="11dp"
+                    android:textColor="?attr/tc_484848"
+                    android:textSize="@dimen/ts_13sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="11dp"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="3.5dp"
+                    android:textColor="?attr/tc_484848"
+                    android:textSize="@dimen/ts_13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </ScrollView>
         <!--底部floorBar-->
         <RelativeLayout
             android:id="@+id/floor_bar"
@@ -169,10 +173,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/menu_comment"
                 android:background="?attr/module_detail_comment_num"
-                android:paddingBottom="5dp"
-                android:paddingLeft="1dp"
-                android:paddingRight="1dp"
-                android:paddingTop="5dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="2dp"
                 android:textColor="?attr/tc_ffffff"
                 android:textSize="@dimen/ts_10sp"
                 android:visibility="gone"

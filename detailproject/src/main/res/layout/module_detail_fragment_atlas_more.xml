@@ -1,23 +1,31 @@
-<com.aliya.view.fitsys.FitWindowsLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@android:color/black"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
+<com.aliya.view.fitsys.FitWindowsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@android:color/black"
+                                        android:fitsSystemWindows="true"
+                                        android:orientation="vertical"
+                                        app:fitType="top"
     >
 
-    <include
-        android:id="@+id/ly_top_bar"
-        layout="@layout/module_core_layout_top_bar3" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lv_notice"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginBottom="60dp"
-        />
+        android:layout_height="match_parent">
 
-</com.aliya.view.fitsys.FitWindowsLinearLayout>
+        <include
+            android:id="@+id/ly_top_bar"
+            layout="@layout/module_core_layout_top_bar3"
+            />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginBottom="60dp"
+            />
+    </LinearLayout>
+
+</com.aliya.view.fitsys.FitWindowsLayout>
 

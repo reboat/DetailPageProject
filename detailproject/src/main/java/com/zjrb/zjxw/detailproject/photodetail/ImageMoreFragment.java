@@ -11,6 +11,8 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -22,6 +24,7 @@ import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 更多图集
@@ -99,5 +102,24 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
             Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
         }
+    }
+
+    @OnClick(R2.id.iv_back)
+    public void onBack() {
+        if (getActivity() != null) {
+            getActivity().finish();
+        }
+    }
+
+    @OnClick(R2.id.iv_share)
+    public void onShare(){
+        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                .setSingle(false)
+                .setImgUri(mBean.getArticle().getAlbum_image_list().get(0).getImage_url())
+                .setTextContent(mBean.getArticle().getAlbum_image_list().get(0)
+                        .getDescription())
+                .setTitle(mBean.getArticle().getDoc_title())
+                .setTargetUrl(mBean.getArticle().getUrl())
+        );
     }
 }

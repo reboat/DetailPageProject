@@ -131,10 +131,17 @@
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
-        <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
-        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
+        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_atlas_detail_comment</item>
+        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas</item>
+        <item name="module_detail_tc_808080">@color/tc_808080</item>
+        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>
+        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>
+        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>
+        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>
+        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color</item>
 
     </style>
 
@@ -276,10 +283,17 @@
         <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
         <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>
         <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
-        <!--<item name="top_bar_share_white">@mipmap/module_detail_share_white</item>-->
         <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
         <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
-        <!--<item name="module_detail_atlas_loading">@drawable/module_detail_atlas_loading_night</item>-->
+        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_ic_comment_night</item>
+        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas_night</item>
+        <item name="module_detail_tc_808080">@color/tc_5c5c5c</item>
+        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg_night</item>
+        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>
+        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit_night</item>
+        <item name="module_detail_bc_e2e2e2">@color/bc_343434</item>
+        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe_night</item>
+        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color_night</item>
 
     </style>
 

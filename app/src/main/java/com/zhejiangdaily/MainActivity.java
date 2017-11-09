@@ -5,9 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -32,8 +29,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_text:
+        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
+
+
+//        switch (v.getId()) {
+//            case R.id.tv_text:
 //                if (bundle == null) {
 //                    bundle = new Bundle();
 //                }
@@ -86,11 +86,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // 话题详情页
 //                Nav.with(this).to("http://zjbeta.8531.cn/topic.html?id=740957");
 
-                //进入专题更多列表
-                Bundle bundle = new Bundle();
-                bundle.putString(IKey.GROUP_ID, String.valueOf(1313));
-                bundle.putString(IKey.TITLE, "时局");
-                Nav.with(v.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
+//                //进入专题更多列表
+//                Bundle bundle = new Bundle();
+//                bundle.putString(IKey.GROUP_ID, String.valueOf(1313));
+//                bundle.putString(IKey.TITLE, "时局");
+//                Nav.with(v.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
 
 //                Nav.with(this).to(Uri.parse("http://www.8531.cn/detail/ActivityTopicActivity")
 //                        .buildUpon()
@@ -101,10 +101,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                        .build(), 0);
 
 
-                break;
-            case R.id.tv_ui_mode:
-                ThemeMode.setUiMode(!ThemeMode.isNightMode());
-                break;
-        }
+//                break;
+//            case R.id.tv_ui_mode:
+//                ThemeMode.setUiMode(!ThemeMode.isNightMode());
+//                break;
+//        }
     }
 }

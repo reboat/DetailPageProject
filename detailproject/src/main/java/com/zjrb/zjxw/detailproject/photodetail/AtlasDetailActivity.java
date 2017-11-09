@@ -101,6 +101,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     TextView mTvSource;
     @BindView(R2.id.tv_name)
     TextView mTvName;
+    @BindView(R2.id.v_container)
+    FrameLayout mView;
 
 
     /**
@@ -220,7 +222,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * @param data 获取图集详情页数据
      */
     private void fillData(DraftDetailBean data) {
-
+        mView.setVisibility(View.GONE);
         mIvShare.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
@@ -576,9 +578,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void showEmptyNewsDetail() {
         mIvShare.setVisibility(View.GONE);
         mIvDownLoad.setVisibility(View.GONE);
-        mContainer.removeAllViews();
+//        mContainer.removeAllViews();
+        mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
 }

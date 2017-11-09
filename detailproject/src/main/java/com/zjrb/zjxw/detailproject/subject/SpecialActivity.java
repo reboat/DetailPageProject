@@ -56,6 +56,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     RecyclerView mRecyclerCopy;
     @BindView(R2.id.group_copy)
     FrameLayout mGroupCopy;
+    @BindView(R2.id.v_container)
+    FrameLayout mView;
 
     private SpecialAdapter mAdapter;
 
@@ -164,6 +166,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
+        mView.setVisibility(View.GONE);
         if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();
             // 记录阅读信息
@@ -230,9 +233,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      * 显示撤稿页面
      */
     private void showCancelDraft() {
-        lyContainer.removeAllViews();
+//        lyContainer.removeAllViews();
+        mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ly_container,
+        ft.add(R.id.v_container,
                 EmptyStateFragment.newInstance()).commit();
     }
 

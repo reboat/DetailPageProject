@@ -5,7 +5,6 @@
              android:layout_height="match_parent"
              android:background="?attr/bc_ffffff">
 
-
     <com.zjrb.core.ui.widget.ZBWebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
@@ -19,5 +18,11 @@
     <include
         android:id="@+id/ly_bottom_comment"
         layout="@layout/module_detail_bottom_comment" />
+
+    <FrameLayout
+        android:id="@+id/v_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </FrameLayout>

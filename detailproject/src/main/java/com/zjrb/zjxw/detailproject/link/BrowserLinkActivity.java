@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.webkit.WebSettings;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,8 +74,9 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FrameLayout mContainer;
+    @BindView(R2.id.v_container)
+    FrameLayout mView;
 
-    private WebSettings settings;
     private String mArticleId;
     /**
      * 上下滑动超出范围处理
@@ -108,7 +108,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * 初始化滑动/webview
      */
     private void init() {
-        settings = mWebView.getSettings();
         mTouchSlopHelper = new TouchSlopHelper();
         mTouchSlopHelper.setOnTouchSlopListener(this);
     }
@@ -173,6 +172,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void fillData(DraftDetailBean data) {
 
+        mView.setVisibility(View.GONE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
             DraftDetailBean.ArticleBean article = data.getArticle();
@@ -349,10 +349,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-        mContainer.removeAllViews();
+//        mContainer.removeAllViews();
+        mView.setVisibility(View.VISIBLE);
         topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override

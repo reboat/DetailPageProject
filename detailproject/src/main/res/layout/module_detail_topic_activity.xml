@@ -63,4 +63,10 @@
         layout="@layout/module_detail_bottom_comment"
         android:visibility="gone" />
 
+    <FrameLayout
+        android:id="@+id/v_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
 </FrameLayout>

@@ -80,11 +80,12 @@ public class ActivityTopicActivity extends BaseActivity implements
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
-
     @BindView(R2.id.top_bar)
     FrameLayout mTopBar;
     @BindView(R2.id.iv_top_share)
     ImageView mIvShare;
+    @BindView(R2.id.v_container)
+    FrameLayout mView;
 
     private TopicAdapter mAdapter;
 
@@ -192,6 +193,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     private void fillData(DraftDetailBean data) {
+        mView.setVisibility(View.GONE);
         mIvShare.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
@@ -328,9 +330,10 @@ public class ActivityTopicActivity extends BaseActivity implements
      */
     private void showEmptyNewsDetail() {
         mIvShare.setVisibility(View.GONE);
-        mContainer.removeAllViews();
+        mView.setVisibility(View.VISIBLE);
+//        mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(R.id.ry_container, EmptyStateFragment.newInstance()).commit();
+        ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
     private long lastMinPublishTime;

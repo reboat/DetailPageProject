@@ -200,8 +200,13 @@
                 android:src="?attr/module_detail_atlas_more"
                 app:iv_maskColor="@android:color/transparent"
                 />
-
         </RelativeLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/v_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </com.aliya.view.fitsys.FitWindowsFrameLayout>

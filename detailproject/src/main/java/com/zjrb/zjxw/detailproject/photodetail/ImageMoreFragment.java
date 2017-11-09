@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -35,6 +36,8 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
+    @BindView(R2.id.tv_top_bar_title)
+    TextView mTitleView;
 
     private ImageMoreAdapter mAdapter;
     private DraftDetailBean mBean;
@@ -76,6 +79,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     private void initView(View v) {
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
         lvNotice.addItemDecoration(new GridSpaceDivider(6));
+        mTitleView.setText("更多图集");
         initAdapter();
     }
 

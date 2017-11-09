@@ -162,6 +162,10 @@ public class WebBiz {
         return imgSrcs;
     }
 
+    private static void replaceWebViewPic(int position,String  url){
+
+    }
+
 
     /**
      * 适配Img标签

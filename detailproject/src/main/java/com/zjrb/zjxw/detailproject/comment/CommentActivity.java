@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -68,11 +69,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     public int commentSet = -1;
 
-    /**
-     * 评论标题
-     */
-    public String title;
-
     private CommentAdapter mCommentAdapter;
     /**
      * 刷新头
@@ -124,7 +120,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                 articleId = String.valueOf(mNewsDetail.getArticle().getId());
                 mlfId = mNewsDetail.getArticle().getMlf_id();
                 commentSet = mNewsDetail.getArticle().getComment_level();
-                title = mNewsDetail.getArticle().getList_title();
             }
 
             if (intent.hasExtra(IKey.IS_SELECT_LIST)) {
@@ -165,10 +160,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             head.setVisibility(View.GONE);
         } else {
             head.setVisibility(View.VISIBLE);
-            ((TextView)head).setText(getString(R.string.module_detail_new_comment));
+            ((TextView) head).setText(getString(R.string.module_detail_new_comment));
         }
-        if (title != null && !title.isEmpty()) {
-            tvTitle.setText(title);
+
+        if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getList_title())) {
+            tvTitle.setText(mBean.getShare_article_info().getList_title());
         }
 
         //评论数
@@ -185,7 +181,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent,head, articleId, is_select_list);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(

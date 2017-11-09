@@ -18,39 +18,50 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginLeft="11dp"
-             />
+            />
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/ly_name"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/iv_avatar"
             android:layout_marginLeft="11dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@id/iv_avatar"
-            android:gravity="top|left"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:textColor="?attr/module_detail_tc_4d95fa"
-            android:textSize="@dimen/ts_12sp"
-            tools:text="你好" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_host"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_toRightOf="@+id/tv_name"
-            android:src="?attr/module_detail_activity_host"
-            android:visibility="gone"
-            tools:src="@mipmap/module_detail_activity_host" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textColor="?attr/module_detail_tc_4d95fa"
+                android:textSize="@dimen/ts_12sp"
+                tools:text="你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好" />
+
+            <ImageView
+                android:id="@+id/iv_host"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:src="?attr/module_detail_activity_host"
+                android:visibility="gone"
+                tools:src="@mipmap/module_detail_activity_host" />
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
+            android:layout_below="@+id/ly_name"
             android:layout_marginLeft="11dp"
-            android:layout_marginRight="35.5dp"
+            android:layout_marginRight="12.5dp"
             android:layout_marginTop="9dp"
             android:layout_toRightOf="@id/iv_avatar"
             android:gravity="left|bottom"
@@ -65,7 +76,7 @@
             android:id="@+id/ly_comment_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_name"
+            android:layout_alignLeft="@+id/ly_name"
             android:layout_below="@id/tv_content"
             android:layout_marginRight="11.5dp"
             android:layout_marginTop="11dp"
@@ -86,33 +97,37 @@
                 android:visibility="gone"
                 tools:text="评论已删除" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/ly_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
                 android:gravity="center"
-                android:orientation="horizontal">
+                >
 
                 <TextView
                     android:id="@+id/tv_comment_src"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:padding="3dp"
                     android:textColor="?attr/module_detail_tc_4d95fa"
                     android:textSize="@dimen/ts_12sp"
-                    tools:text="评论者" />
+                    tools:text="评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者" />
 
                 <ImageView
                     android:id="@+id/iv_guest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:src="?attr/module_detail_activity_guest"
                     android:visibility="gone"
                     tools:src="@mipmap/module_detail_activity_guest" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <TextView
@@ -141,20 +156,20 @@
             android:layout_marginLeft="11dp"
             android:layout_marginTop="13dp"
             android:layout_toRightOf="@id/iv_avatar"
-            android:paddingTop="5dp"
             android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             >
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_thumb_up"
                 android:maxLines="1"
                 android:text="2016-09-01 21:20"
                 android:textColor="?attr/tc_484848"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="2016-09-01 21:20"
-                android:layout_alignBottom="@+id/tv_thumb_up"
                 />
 
             <TextView

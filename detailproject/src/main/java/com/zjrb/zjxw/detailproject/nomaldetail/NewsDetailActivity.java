@@ -78,6 +78,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 稿件ID
      */
     public String mArticleId;
+    private String mFromChannel;
 
     @BindView(R2.id.video_container)
     RatioFrameLayout mVideoContainer;
@@ -153,9 +154,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void getIntentData(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
-            if (data != null && data.getQueryParameter(IKey.ID) != null) {
-                mArticleId = data.getQueryParameter(IKey.ID);
+            if(data != null){
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                    mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                }
             }
+
+
         }
     }
 
@@ -229,7 +237,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     T.showShortNow(NewsDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId,mFromChannel);
     }
 
 

@@ -112,15 +112,23 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mTouchSlopHelper.setOnTouchSlopListener(this);
     }
 
+    private String mFromChannel;
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
-            if (data != null && data.getQueryParameter(IKey.ID) != null) {
-                mArticleId = data.getQueryParameter(IKey.ID);
+            if(data != null){
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                    mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                }
             }
+
+
         }
     }
 
@@ -164,7 +172,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     T.showShortNow(BrowserLinkActivity.this,errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId,mFromChannel);
     }
 
     /**
@@ -209,8 +217,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 mTvCommentsNum.setText(data.getArticle().getComment_count_general());
             }
         }
-
-
     }
 
 

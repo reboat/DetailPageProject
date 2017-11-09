@@ -25,7 +25,9 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
     protected void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
             put("id", params[0]);
-            cachePolicy(CachePolicy.NO_CACHE);
+            put("from_channel",params[1]);
+            //TODO WLJ 是否需要缓存
+//            cachePolicy(CachePolicy.NO_CACHE);
         }
     }
 

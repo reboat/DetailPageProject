@@ -87,13 +87,21 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         return mTopBar.getView();
     }
 
+    private String mFromChannel;
     private void initArgs() {
         Intent intent = getIntent();
-        if (intent != null && intent.getData() != null) {
+        if (intent != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(IKey.ID) != null) {
-                mArticleId = data.getQueryParameter(IKey.ID);
+            if(data != null){
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                    mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                }
             }
+
+
         }
     }
 
@@ -160,7 +168,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(mArticleId,mFromChannel);
     }
 
     private HeaderSpecialHolder headHolder;

@@ -139,14 +139,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         settings = mWebView.getSettings();
-        //TODO  WLJ 临时去除缓存
-        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
-        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        // 开启DOM storage API 功能
-        settings.setDomStorageEnabled(false);
-        // 开启database storage API功能
-        settings.setDatabaseEnabled(false);
-        settings.setAppCacheEnabled(false);
+//        //TODO  WLJ 临时去除缓存
+//        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
+//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        // 开启DOM storage API 功能
+//        settings.setDomStorageEnabled(false);
+//        // 开启database storage API功能
+//        settings.setDatabaseEnabled(false);
+//        settings.setAppCacheEnabled(false);
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

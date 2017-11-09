@@ -126,16 +126,24 @@ public class ActivityTopicActivity extends BaseActivity implements
      */
     private String mArticleId;
     private DraftDetailBean mDetailData;
+    private String mFromChannel;
 
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
+        if (intent != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(IKey.ID) != null) {
-                mArticleId = data.getQueryParameter(IKey.ID);
+            if (data != null) {
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+                if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
+                    mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                }
             }
+
+
         }
     }
 
@@ -189,7 +197,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                     T.showShortNow(ActivityTopicActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
     }
 
     private void fillData(DraftDetailBean data) {

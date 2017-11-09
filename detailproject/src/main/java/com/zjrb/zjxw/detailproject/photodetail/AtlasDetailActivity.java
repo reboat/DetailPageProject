@@ -155,15 +155,24 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         topHolder.getView().setVisibility(flag);
     }
 
+
+    private String mFromChannel;
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
-        if (intent != null && intent.getData() != null) {
+        if (intent != null) {
             Uri data = intent.getData();
-            if (data.getQueryParameter(IKey.ID) != null) {
-                mArticleId = data.getQueryParameter(IKey.ID);
+            if(data != null){
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                    mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                }
             }
+
+
         }
     }
 
@@ -217,7 +226,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     T.showShortNow(AtlasDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId);
+        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId,mFromChannel);
     }
 
     /**

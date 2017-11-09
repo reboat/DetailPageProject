@@ -69,6 +69,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     }
 
     private String css_js;
+
     /**
      * 设置CSS和JS
      */
@@ -253,8 +254,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void onChangeTheme() {
         if (ThemeMode.isNightMode()) {
-            final String execUrl = "javascript:applyNightTheme();";
+            String url = "http://stc.zjol.com.cn/g1/M000B8ECggSBFmmp52AGQR6AAZwnyTS0g8581.png";
+            final String execUrl = "javascript:replaceImage('" + 0 + "','" +
+                    url + "')";
             mWebView.loadUrl(execUrl);
+
+//            final String execUrl = "javascript:applyNightTheme();";
+//            mWebView.loadUrl(execUrl);
         } else {
             final String execUrl = "javascript:applyDayTheme();";
             mWebView.loadUrl(execUrl);

@@ -29,11 +29,13 @@
             android:id="@+id/atlas_scrollView"
             android:layout_width="match_parent"
             android:background="#7F000000"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:scrollbars="none"
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:id="@+id/atlas_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

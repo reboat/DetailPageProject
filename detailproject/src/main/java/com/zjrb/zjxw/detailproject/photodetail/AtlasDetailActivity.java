@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,22 +139,24 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        y = event.getY();
+                        Log.e("event","ACTION_DOWN");
+                        y = event.getRawY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        float duration = y - event.getY();
-                        y = event.getY();
-                        if (Math.abs(duration) < 20) {
+                        float duration = y - event.getRawY();
+                        Log.e("event","ACTION_MOVE:"+duration);
+                        y = event.getRawY();
+                        if (Math.abs(duration) < 10) {
                             return true;
                         }
                         ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
                         if (params != null) {
                             params.height += duration;
-                            if (params.height < mMinHeight) {
+                            if (params.height <= mMinHeight) {
                                 params.height = mMinHeight;
                                 mScrollView.setLayoutParams(params);
                                 return false;
-                            } else if (params.height > mMaxHeight) {
+                            } else if (params.height >= mMaxHeight) {
                                 params.height = mMaxHeight;
                                 mScrollView.setLayoutParams(params);
                                 return false;
@@ -164,6 +167,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
                         break;
                     case MotionEvent.ACTION_UP:
+                        Log.e("event","ACTION_UP");
                         return false;
                 }
 

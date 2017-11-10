@@ -105,6 +105,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
         css_js += String.format(css, uiModeCssUri);
         css_js += String.format(html, "file:///android_asset/js/basic.js");
+        //前端测试
+//        css_js += String.format(css,"http://192.168.1.100/zb/20171026/static/css/zjxw.v2.css");
+//        css_js += String.format(html,"http://192.168.1.100/zb/20171026/static/js/client.js");
         //CSS
         if (sp != null && sp.css != null && !sp.css.isEmpty()) {
             for (int i = 0; i < sp.css.size(); i++) {
@@ -128,6 +131,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     private void initWebView() {
         // 隐藏到滚动条
+        mWebView.setFocusable(false);
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);
@@ -140,7 +144,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
         settings = mWebView.getSettings();
 //        //TODO  WLJ 临时去除缓存
-//        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
+        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
 //        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 //        // 开启DOM storage API 功能
 //        settings.setDomStorageEnabled(false);

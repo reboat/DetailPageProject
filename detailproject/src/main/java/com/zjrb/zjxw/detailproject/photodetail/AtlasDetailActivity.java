@@ -126,7 +126,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         ButterKnife.bind(this);
         getIntentData(getIntent());
         mFloorBar.setOnTouchListener(this);
-//        mTvContent.setMovementMethod(ScrollingMovementMethod.getInstance());
         loadData();
 
 
@@ -206,17 +205,18 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     private String mFromChannel;
+
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
-            if(data != null){
+            if (data != null) {
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
                 }
-                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
@@ -275,7 +275,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     T.showShortNow(AtlasDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId,mFromChannel);
+        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId, mFromChannel);
     }
 
     /**
@@ -514,9 +514,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }
 
-        if(position==mAtlasList.size()-1){
+        if (position == mAtlasList.size() - 1) {
             mScrollView.setVisibility(View.GONE);
-        }else{
+        } else {
             mScrollView.setVisibility(View.VISIBLE);
         }
 
@@ -661,9 +661,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-        mIvShare.setVisibility(View.GONE);
-        mIvDownLoad.setVisibility(View.GONE);
-//        mContainer.removeAllViews();
+        setTopBarInOut(View.GONE);
         mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();

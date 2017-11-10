@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -71,7 +72,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ry_container)
-    FrameLayout mContainer;
+    FitWindowsFrameLayout mContainer;
     @BindView(R2.id.ly_bottom_comment)
     RelativeLayout mFloorBar;
     @BindView(R2.id.fl_comment)

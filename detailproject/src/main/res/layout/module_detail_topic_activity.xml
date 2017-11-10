@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ry_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/bc_202124">
+<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/ry_container"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="?attr/bc_202124"
+                                             android:fitsSystemWindows="true">
 
     <com.aliya.view.fitsys.FitWindowsRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:scrollbars="vertical"
         app:fitType="bottom" />
 
@@ -23,7 +23,6 @@
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
             android:minHeight="@dimen/toolbar_normal_height"
             app:fitType="top">
 
@@ -69,4 +68,4 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-</FrameLayout>
+</com.aliya.view.fitsys.FitWindowsFrameLayout>

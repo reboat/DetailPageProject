@@ -16,4 +16,4 @@
     android:paddingTop="15dp"
     android:textColor="?attr/tc_ffffff"
     android:textSize="@dimen/ts_11sp"
-    tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容"/>
+    tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容" />

@@ -142,7 +142,8 @@
         <item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>
         <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>
         <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color</item>
-
+        <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f</item>
+        <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
@@ -294,7 +295,8 @@
         <item name="module_detail_bc_e2e2e2">@color/bc_343434</item>
         <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe_night</item>
         <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color_night</item>
-
+        <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f_night</item>
+        <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7_night</item>
     </style>
 
 </resources>

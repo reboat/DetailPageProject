@@ -222,6 +222,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void reInitView() {
         mIndex = 0;
         mTvTitleTop.setVisibility(View.GONE);
+        setTopBarInOut(View.VISIBLE);
+        mScrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -351,7 +353,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 int contentHeight = mTvContent.getMeasuredHeight();
                 int sourceHeight = mTvSource.getMeasuredHeight();
                 int authorHeight = mTvName.getMeasuredHeight();
-                mMaxHeight = titleHeight + contentHeight + sourceHeight + authorHeight + 10;
+                mMaxHeight = titleHeight + contentHeight + sourceHeight + authorHeight + 40;
                 mTvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });

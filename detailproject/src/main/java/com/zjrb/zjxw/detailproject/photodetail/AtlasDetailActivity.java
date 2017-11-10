@@ -360,15 +360,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int titleHeight = mLyContainer.getMeasuredHeight();
-                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mLyContainer.getLayoutParams();
-                if (params != null) {
-                    titleHeight += params.bottomMargin;
-                    titleHeight += params.topMargin;
-                }
+                int titleHeight = mLyContainer.getMeasuredHeight()+mLyContainer.getPaddingBottom();
                 mMaxHeight = mScrollView.getMeasuredHeight();
                 int defaultMin = (int) (titleHeight + (mTvContent.getLineHeight() + mTvContent.getLineSpacingExtra()) * 2.5);
-                mMinHeight = (titleHeight + mTvContent.getMeasuredHeight()) < defaultMin ? titleHeight + mTvContent.getMeasuredHeight() : defaultMin;
+                mMinHeight = (titleHeight + mTvContent.getHeight()) < defaultMin ? titleHeight + mTvContent.getHeight() : defaultMin;
                 ViewGroup.LayoutParams paramsSc = mScrollView.getLayoutParams();
                 if (paramsSc != null) {
                     paramsSc.height = mMinHeight;

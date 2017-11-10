@@ -28,7 +28,10 @@
         <ScrollView
             android:id="@+id/atlas_scrollView"
             android:layout_width="match_parent"
-            android:layout_height="160dp">
+            android:background="#7F000000"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +89,7 @@
                     android:fadingEdge="vertical"
                     android:paddingBottom="5dp"
                     android:scrollbars="vertical"
-                    android:textColor="?attr/tc_999999"
+                    android:textColor="?attr/module_detail_tc_d7d7d7"
                     android:textSize="@dimen/ts_14sp"
                     tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
 
@@ -96,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
-                    android:textColor="?attr/tc_484848"
+                    android:textColor="?attr/module_detail_tc_9f9f9f"
                     android:textSize="@dimen/ts_13sp"
                     android:visibility="gone" />
 
@@ -108,7 +111,7 @@
                     android:layout_marginRight="11dp"
                     android:paddingBottom="10dp"
                     android:paddingTop="3.5dp"
-                    android:textColor="?attr/tc_484848"
+                    android:textColor="?attr/module_detail_tc_9f9f9f"
                     android:textSize="@dimen/ts_13sp"
                     android:visibility="gone" />
             </LinearLayout>

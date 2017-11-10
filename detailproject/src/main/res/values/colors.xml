@@ -78,5 +78,9 @@
     <!--评论框-->
     <color name="bc_ebebed">#ebebed</color>
     <color name="module_detail_comment_night">#7a7b7d</color>
+    <color name="module_detail_tc_9f9f9f">#9f9f9f</color>
+    <color name="module_detail_tc_9f9f9f_night">#5c5c5c</color>
+    <color name="module_detail_tc_d7d7d7">#d7d7d7</color>
+    <color name="module_detail_tc_d7d7d7_night">#7a7b7d</color>
 
 </resources>

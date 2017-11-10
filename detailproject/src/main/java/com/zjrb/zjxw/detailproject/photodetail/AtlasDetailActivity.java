@@ -148,8 +148,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
                         if (params != null) {
                             params.height += duration;
-                            if (params.height < UIUtils.dip2px(160)) {
-                                params.height = UIUtils.dip2px(160);
+                            if (params.height < mMinHeight) {
+                                params.height = mMinHeight;
                                 mScrollView.setLayoutParams(params);
                                 mScrollView.invalidate();
                                 return false;
@@ -224,6 +224,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvTitleTop.setVisibility(View.GONE);
         setTopBarInOut(View.VISIBLE);
         mScrollView.setVisibility(View.VISIBLE);
+        mLyContainer.setVisibility(View.VISIBLE);
+        mTvContent.setVisibility(View.VISIBLE);
+        mTvSource.setVisibility(View.VISIBLE);
+        mTvName.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -343,6 +347,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private int mMaxHeight = 0;
+    private int mMinHeight = 0;
 
     private void calculationMaxHeight() {
 
@@ -353,7 +358,17 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 int contentHeight = mTvContent.getMeasuredHeight();
                 int sourceHeight = mTvSource.getMeasuredHeight();
                 int authorHeight = mTvName.getMeasuredHeight();
+
                 mMaxHeight = titleHeight + contentHeight + sourceHeight + authorHeight + 40;
+
+                mMinHeight = titleHeight + mTvContent.getLineHeight()*4;
+                ViewGroup.LayoutParams paramsSc = mScrollView.getLayoutParams();
+                if (paramsSc != null) {
+                    paramsSc.height = mMinHeight;
+                    mScrollView.setLayoutParams(paramsSc);
+                    mScrollView.invalidate();
+                }
+
                 mTvTitle.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -507,9 +522,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }
 
-        if(position==mAtlasList.size()-1){
+        if (position == mAtlasList.size() - 1) {
             mScrollView.setVisibility(View.GONE);
-        }else{
+        } else {
             mScrollView.setVisibility(View.VISIBLE);
         }
 

@@ -107,6 +107,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     FrameLayout mView;
     @BindView(R2.id.atlas_scrollView)
     ScrollView mScrollView;
+    @BindView(R2.id.atlas_container)
+    LinearLayout mBottomContainer;
 
 
     /**
@@ -136,22 +138,22 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 int action = event.getAction();
                 switch (action) {
                     case MotionEvent.ACTION_DOWN:
-                        y = event.getY();
+                        y = event.getRawY();
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        float duration = y - event.getY();
-                        y = event.getY();
-                        if (Math.abs(duration) < 20) {
+                        float duration = y - event.getRawY();
+                        y = event.getRawY();
+                        if (Math.abs(duration) < 10) {
                             return true;
                         }
                         ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
                         if (params != null) {
                             params.height += duration;
-                            if (params.height < mMinHeight) {
+                            if (params.height <= mMinHeight) {
                                 params.height = mMinHeight;
                                 mScrollView.setLayoutParams(params);
                                 return false;
-                            } else if (params.height > mMaxHeight) {
+                            } else if (params.height >= mMaxHeight) {
                                 params.height = mMaxHeight;
                                 mScrollView.setLayoutParams(params);
                                 return false;
@@ -361,7 +363,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onGlobalLayout() {
                 int titleHeight = mLyContainer.getMeasuredHeight()+mLyContainer.getPaddingBottom();
-                mMaxHeight = mScrollView.getMeasuredHeight();
+                mMaxHeight = mBottomContainer.getMeasuredHeight();
                 int defaultMin = (int) (titleHeight + (mTvContent.getLineHeight() + mTvContent.getLineSpacingExtra()) * 2.5);
                 mMinHeight = (titleHeight + mTvContent.getHeight()) < defaultMin ? titleHeight + mTvContent.getHeight() : defaultMin;
                 ViewGroup.LayoutParams paramsSc = mScrollView.getLayoutParams();
@@ -476,13 +478,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void onPageSelected(int position) {
-
-        ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
-        if (params != null) {
-            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-            mScrollView.setLayoutParams(params);
-        }
-
         mIndex = position;
         mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
         setSwipeBackEnable(0 == position);

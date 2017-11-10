@@ -7,7 +7,7 @@
                                              android:layout_height="match_parent"
                                              android:background="@android:color/black"
                                              android:fitsSystemWindows="true"
-                                             app:fitType="bottom">
+                                             >
 
     <com.zjrb.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"

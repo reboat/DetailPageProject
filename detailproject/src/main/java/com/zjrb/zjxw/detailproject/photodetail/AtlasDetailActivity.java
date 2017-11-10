@@ -531,7 +531,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }
 
-        if (position == mAtlasList.size() - 1) {
+        if (position == mAtlasList.size() - 1 && mData.getArticle().getRelated_news()!=null && mData.getArticle().getRelated_news().size()>0) {
             mScrollView.setVisibility(View.GONE);
         } else {
             mScrollView.setVisibility(View.VISIBLE);

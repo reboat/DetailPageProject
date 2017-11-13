@@ -362,7 +362,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                int titleHeight = mLyContainer.getMeasuredHeight()+mLyContainer.getPaddingBottom();
+                int titleHeight = mLyContainer.getMeasuredHeight() + mLyContainer.getPaddingBottom();
                 mMaxHeight = mBottomContainer.getMeasuredHeight();
                 int defaultMin = (int) (titleHeight + (mTvContent.getLineHeight() + mTvContent.getLineSpacingExtra()) * 2.5);
                 mMinHeight = (titleHeight + mTvContent.getHeight()) < defaultMin ? titleHeight + mTvContent.getHeight() : defaultMin;
@@ -672,10 +672,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-        setTopBarInOut(View.GONE);
+        mIvShare.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
+        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        p.setMargins(0, mView.getTop() + mView.getHeight(), 0, 0);
+        mView.setLayoutParams(p);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
+
     }
 
 }

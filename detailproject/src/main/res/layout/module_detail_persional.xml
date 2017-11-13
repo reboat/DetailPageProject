@@ -6,7 +6,9 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="?attr/bc_ffffff"
-              android:orientation="vertical">
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              app:fitType="bottom">
 
     <RelativeLayout
         android:id="@+id/lly_reporter"

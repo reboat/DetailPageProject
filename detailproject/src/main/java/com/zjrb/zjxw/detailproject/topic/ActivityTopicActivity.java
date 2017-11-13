@@ -23,6 +23,8 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -85,6 +87,8 @@ public class ActivityTopicActivity extends BaseActivity implements
     FrameLayout mTopBar;
     @BindView(R2.id.iv_top_share)
     ImageView mIvShare;
+    @BindView(R2.id.iv_top_back)
+    ImageView mIvBack;
     @BindView(R2.id.v_container)
     FrameLayout mView;
 
@@ -312,9 +316,8 @@ public class ActivityTopicActivity extends BaseActivity implements
         }).setTag(this).exe(mArticleId, true);
     }
 
-    //TODO WLJ 分享
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share})
+            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -326,12 +329,26 @@ public class ActivityTopicActivity extends BaseActivity implements
             MoreDialog.newInstance(mDetailData).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
-            if (mDetailData != null) {
+            if (mDetailData != null && mDetailData.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
                         .valueOf(mDetailData.getArticle().getId())))).show
                         (getSupportFragmentManager(), "CommentWindowDialog");
             }
+            //分享
+        } else if (view.getId() == R.id.iv_top_share) {
+            //关闭
+            if (mDetailData != null && mDetailData.getArticle() != null) {
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setImgUri(mDetailData.getArticle().getFirstPic())
+                        .setTextContent(mDetailData.getArticle().getSummary())
+                        .setTitle(mDetailData.getArticle().getDoc_title())
+                        .setTargetUrl(mDetailData.getArticle().getUrl()));
+            }
+
+        } else {
+            finish();
         }
     }
 

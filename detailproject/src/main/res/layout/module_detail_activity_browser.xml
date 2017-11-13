@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/ry_container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="?attr/bc_ffffff">
+<app:FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                 android:id="@+id/ry_container"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="?attr/bc_ffffff"
+                 android:fitsSystemWindows="true"
+                 app:fitType="bottom">
 
     <com.zjrb.core.ui.widget.ZBWebView
         android:id="@+id/web_view"
@@ -25,4 +28,4 @@
         android:layout_height="match_parent"
         android:visibility="gone" />
 
-</FrameLayout>
+</app:FrameLayout>

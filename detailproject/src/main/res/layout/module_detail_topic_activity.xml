@@ -5,13 +5,14 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="?attr/bc_202124"
-                                             android:fitsSystemWindows="true">
+                                             >
 
     <com.aliya.view.fitsys.FitWindowsRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:fitsSystemWindows="true"
         app:fitType="bottom" />
 
     <LinearLayout
@@ -24,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/toolbar_normal_height"
+            android:fitsSystemWindows="true"
             app:fitType="top">
 
             <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView

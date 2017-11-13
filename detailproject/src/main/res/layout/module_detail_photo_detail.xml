@@ -6,7 +6,9 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
                                              android:background="@android:color/black"
-                                             >
+                                             android:fitsSystemWindows="true"
+                                             app:fitType="bottom"
+    >
 
     <com.zjrb.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"
@@ -27,17 +29,17 @@
         <ScrollView
             android:id="@+id/atlas_scrollView"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="#7F000000"
-            android:scrollbars="none"
-            android:layout_height="wrap_content">
+            android:scrollbars="none">
 
             <LinearLayout
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
                 android:id="@+id/atlas_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
 
                 <RelativeLayout
                     android:id="@+id/ly_tip_contain"

@@ -131,7 +131,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     private void initWebView() {
         // 隐藏到滚动条
-        mWebView.setFocusable(false);
+        mWebView.requestFocus(View.FOCUS_DOWN);
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);
         mWebView.setScrollContainer(false);

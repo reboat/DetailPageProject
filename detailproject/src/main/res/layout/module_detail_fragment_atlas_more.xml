@@ -12,7 +12,7 @@
 
         <include
             android:id="@+id/ly_top_bar"
-            layout="@layout/module_core_layout_top_bar3"
+            layout="@layout/module_core_layout_top_new_bar3"
             />
 
         <android.support.v7.widget.RecyclerView

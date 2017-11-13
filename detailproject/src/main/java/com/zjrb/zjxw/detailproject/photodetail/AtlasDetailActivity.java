@@ -229,6 +229,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      */
     private void reInitView() {
         mIndex = 0;
+        topHolder.getView().setVisibility(View.GONE);
+        mContainerBottom.setVisibility(View.VISIBLE);
         mTvTitleTop.setVisibility(View.GONE);
         setTopBarInOut(View.VISIBLE);
         mScrollView.setVisibility(View.VISIBLE);
@@ -672,12 +674,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-        mIvShare.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
-//        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        p.setMargins(0, mView.getTop() + mView.getHeight(), 0, 0);
-//        mView.setLayoutParams(p);
-
+        mContainerBottom.setVisibility(View.GONE);
+        topHolder.getView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
 

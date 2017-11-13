@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:background="?attr/bc_ffffff"
                 android:fitsSystemWindows="true"
-                app:fitType="top"
+                app:fitType="bottom"
     >
 
     <FrameLayout
@@ -51,9 +51,8 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:fitsSystemWindows="true"
             android:scrollbars="vertical"
-            app:fitType="bottom" />
+            />
 
         <include
             android:id="@+id/ly_bottom_comment"

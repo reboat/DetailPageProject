@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.aliya.view.fitsys.FitWindowsLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ly_container"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="?attr/bc_202124"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              xmlns:tools="http://schemas.android.com/tools"
+                                              android:id="@+id/ly_container"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:background="?attr/bc_ffffff"
+                                              android:fitsSystemWindows="true"
+                                              android:orientation="vertical"
     >
 
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
+        android:id="@+id/layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/bc_ffffff"
+        android:fitsSystemWindows="true"
+        android:minHeight="@dimen/toolbar_normal_height"
+        android:visibility="gone"
+        app:fitType="top">
+
+        <ImageView
+            android:id="@+id/iv_top_bar_back"
+            android:layout_width="42dp"
+            android:layout_height="@dimen/toolbar_normal_height"
+            android:background="?attr/actionBarItemBackground"
+            android:paddingRight="7dp"
+            android:scaleType="center"
+            android:src="@mipmap/ic_top_bar_back_dark"
+            app:iv_maskColor="@android:color/transparent" />
+
+        <TextView
+            android:id="@+id/tv_top_bar_title"
+            style="@style/ToolbarTitle"
+            android:textColor="?attr/tc_484848"
+            tools:text="自定义ToolBar" />
+
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+
     <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lv_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

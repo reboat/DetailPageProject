@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -18,15 +19,16 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
+import com.zjrb.zjxw.detailproject.photodetail.AtlasDetailActivity;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 撤稿空态页面
@@ -37,6 +39,8 @@ import butterknife.ButterKnife;
 public class EmptyStateFragment extends BaseFragment implements OnItemClickListener {
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
+    @BindView(R2.id.layout_title_bar)
+    FitWindowsFrameLayout viewGroup;
 
 
     private EmptyStateListAdapter adapter;
@@ -81,6 +85,9 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private void initView() {
         //添加头布局
+        if(UIUtils.getActivity() instanceof AtlasDetailActivity){
+            viewGroup.setVisibility(View.VISIBLE);
+        }
         head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
         emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
@@ -97,6 +104,15 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     }
 
     private List<DraftHotTopNewsBean.HotNewsBean> article_list;
+
+
+    @OnClick({R2.id.iv_top_bar_back})
+    public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
+        if(view.getId() == R.id.iv_top_bar_back){
+            getActivity().finish();
+        }
+    }
 
     /**
      * 获取频道热门列表

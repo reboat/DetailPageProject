@@ -40,14 +40,14 @@
                 android:maxLines="1"
                 android:textColor="?attr/module_detail_tc_4d95fa"
                 android:textSize="@dimen/ts_12sp"
-                tools:text="你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好" />
+                tools:text="你好你好你好你好" />
 
             <ImageView
                 android:id="@+id/iv_host"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_name"
                 android:layout_centerVertical="true"
                 android:src="?attr/module_detail_activity_host"
                 android:visibility="gone"
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@+id/tv_comment_src"
                     android:layout_centerVertical="true"
                     android:src="?attr/module_detail_activity_guest"
                     android:visibility="gone"

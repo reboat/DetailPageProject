@@ -180,7 +180,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             //分享
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
-                    .setImgUri(bean.getOfficer().getPhoto())
+                    .setImgUri(bean.getOfficer().getList_pic())
                     .setTextContent(getString(R.string.module_detail_share_content_from))
                     .setTitle(bean.getOfficer().getName())
                     .setTargetUrl(bean.getOfficer().getShare_url()));

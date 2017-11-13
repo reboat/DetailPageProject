@@ -312,6 +312,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         }).setTag(this).exe(mArticleId, true);
     }
 
+    //TODO WLJ 分享
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share})
     public void onClick(View view) {

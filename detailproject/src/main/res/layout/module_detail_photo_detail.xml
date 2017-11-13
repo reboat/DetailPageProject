@@ -219,6 +219,8 @@
         android:id="@+id/v_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:fitType="bottom"
         android:visibility="gone" />
 
 </com.aliya.view.fitsys.FitWindowsFrameLayout>

@@ -1,12 +1,9 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.View;
 
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -16,7 +13,6 @@ import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * top bar view holder
@@ -50,23 +46,23 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
         mArticle = data != null ? data.getArticle() : null;
     }
 
-    @OnClick({R2.id.iv_top_back, R2.id.iv_top_share})
-    public void onViewClicked(View view) {
-        if (view.getId() == R.id.iv_top_back) {
-            if (view.getContext() instanceof Activity) {
-                ((Activity) view.getContext()).finish();
-            }
-        } else if (view.getId() == R.id.iv_top_share) {
-            if (mArticle != null) {
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setImgUri(mArticle.getFirstPic())
-                        .setTextContent(mArticle.getSummary())
-                        .setTitle(mArticle.getDoc_title())
-                        .setTargetUrl(mArticle.getUrl()));
-            }
-        }
-    }
+//    @OnClick({R2.id.iv_top_back, R2.id.iv_top_share})
+//    public void onViewClicked(View view) {
+//        if (view.getId() == R.id.iv_top_back) {
+//            if (view.getContext() instanceof Activity) {
+//                ((Activity) view.getContext()).finish();
+//            }
+//        } else if (view.getId() == R.id.iv_top_share) {
+//            if (mArticle != null) {
+//                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+//                        .setSingle(false)
+//                        .setImgUri(mArticle.getFirstPic())
+//                        .setTextContent(mArticle.getSummary())
+//                        .setTitle(mArticle.getDoc_title())
+//                        .setTargetUrl(mArticle.getUrl()));
+//            }
+//        }
+//    }
 
     public void setFraction(float fraction) {
         itemView.setBackgroundColor(ArgbUtils.evaluate(fraction, Color.TRANSPARENT,

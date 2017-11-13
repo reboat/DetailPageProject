@@ -49,6 +49,7 @@ import com.zjrb.zjxw.detailproject.topic.holder.FloorBarHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.HeaderTopicTop;
 import com.zjrb.zjxw.detailproject.topic.holder.OverlyHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
+import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.List;
@@ -86,9 +87,9 @@ public class ActivityTopicActivity extends BaseActivity implements
     @BindView(R2.id.top_bar)
     FrameLayout mTopBar;
     @BindView(R2.id.iv_top_share)
-    ImageView mIvShare;
+    ColorImageView mIvShare;
     @BindView(R2.id.iv_top_back)
-    ImageView mIvBack;
+    ColorImageView mIvBack;
     @BindView(R2.id.v_container)
     FrameLayout mView;
 
@@ -173,6 +174,13 @@ public class ActivityTopicActivity extends BaseActivity implements
         mTopicTop.setTopBar(mTopBarHolder);
         mTopicTop.setOverlayHolder(mOverlyHolder);
         mTopicTop.setFloorBarHolder(mFloorBarHolder);
+        //TODO WLJ ???应 4.4手机
+//        mIvBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                finish();
+//            }
+//        });
     }
 
     @Override
@@ -317,7 +325,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back})
+            R2.id.tv_comment, R2.id.iv_top_share,R2.id.iv_top_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -347,7 +355,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setTargetUrl(mDetailData.getArticle().getUrl()));
             }
 
-        } else {
+        }else if(view.getId() == R.id.iv_top_back){
             finish();
         }
     }

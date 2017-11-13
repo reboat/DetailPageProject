@@ -62,7 +62,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public NewsDetailMiddleHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_middle, parent, false));
         ButterKnife.bind(this, itemView);
-        mRecyleView.addItemDecoration(new GridSpaceDivider(4));
+        mRecyleView.addItemDecoration(new GridSpaceDivider(3));
         GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
         mRecyleView.setLayoutManager(managerFollow);
     }

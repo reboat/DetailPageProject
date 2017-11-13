@@ -674,9 +674,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void showEmptyNewsDetail() {
         mIvShare.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
-        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        p.setMargins(0, mView.getTop() + mView.getHeight(), 0, 0);
-        mView.setLayoutParams(p);
+//        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        p.setMargins(0, mView.getTop() + mView.getHeight(), 0, 0);
+//        mView.setLayoutParams(p);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();

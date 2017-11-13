@@ -6,7 +6,7 @@
                 android:layout_height="match_parent"
                 android:background="?attr/bc_ffffff"
                 android:fitsSystemWindows="true"
-                app:fitType="bottom"
+                app:fitType="top"
     >
 
     <FrameLayout

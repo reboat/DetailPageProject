@@ -19,4 +19,3 @@ input,select,option,button,textarea{color:#3b424c;
     border-color: #3b424c #3b424c #3b424c #3b424c;}
 input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #3b424c #3b424c #3b424c #3b424c;}
 input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus,input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#3b424c;background:#ffffff; border-color: #3b424c #3b424c #3b424c #3b424c;}
-a{color:#4682c5   !important}

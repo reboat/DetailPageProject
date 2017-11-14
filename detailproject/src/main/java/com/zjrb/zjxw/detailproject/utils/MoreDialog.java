@@ -26,6 +26,7 @@ import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -194,6 +195,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
     @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_night, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close})
     public void onClick(View v) {
+        if (ClickTracker.isDoubleClick()) return;
         int i = v.getId();
         if (i == R.id.ll_module_core_more_collect) {
             newsTopicCollect();

@@ -156,6 +156,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mTopBar.setVisibility(View.VISIBLE);
         getIntentData(intent);
         loadData();
     }
@@ -366,6 +367,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     private void showEmptyNewsDetail() {
         mIvShare.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
+        mTopBar.setVisibility(View.GONE);
 //        mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();

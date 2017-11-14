@@ -19,4 +19,3 @@ input,select,option,button,textarea{color:#7a7b7d;
     border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
 input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
 input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#7a7b7d;background:#202124; border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
-a{color:#315277   !important}

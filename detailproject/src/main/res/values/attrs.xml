@@ -54,7 +54,7 @@
         <attr name="border_f44b50" format="reference" />
         <attr name="border_f44b50_r10" format="reference" />
         <attr name="border_999999_r10" format="reference" />
-
+        <attr name="module_detail_808080" format="color" />
         <attr name="module_detail_special_channel_bg" format="reference" />
         <attr name="ic_comment_empty" format="reference" />
 
@@ -89,9 +89,11 @@
         <attr name="module_detail_bc_e2e2e2" format="color" />
         <attr name="module_detail_tc_9f9f9f" format="color"/>
         <attr name="module_detail_tc_d7d7d7" format="color"/>
-
-
-
+        <attr name="module_detail_audio_play" format="reference" />
+        <attr name="module_detail_arrow" format="reference" />
+        <attr name="module_detail_audio_record" format="reference" />
+        <attr name="module_detail_audio_playing" format="reference" />
+        <attr name="module_detail_audio_unrecord" format="reference" />
 
 
 

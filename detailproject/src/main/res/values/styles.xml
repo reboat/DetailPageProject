@@ -48,7 +48,11 @@
         <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f</item>
         <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>
 
-
+        <item name="module_detail_808080">@color/tc_808080</item>
+        <item name="module_detail_arrow">@mipmap/module_detail_arrow</item>
+        <item name="module_detail_audio_record">@mipmap/module_detail_audio_record</item>
+        <item name="module_detail_audio_playing">@mipmap/module_detail_audio_playing</item>
+        <item name="module_detail_audio_unrecord">@mipmap/module_detail_audio_unrecord</item>
     </style>
 
     <style name="DetailNightTheme">
@@ -96,5 +100,11 @@
         <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn_night</item>
         <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn_night</item>
         <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn_night</item>
+        <item name="module_detail_audio_play">@mipmap/module_detail_audio_play_night</item>
+        <item name="module_detail_808080">@color/tc_484848_night</item>
+        <item name="module_detail_arrow">@mipmap/module_detail_arrow_night</item>
+        <item name="module_detail_audio_record">@mipmap/module_detail_audio_record_night</item>
+        <item name="module_detail_audio_playing">@mipmap/module_detail_audio_playing_night</item>
+        <item name="module_detail_audio_unrecord">@mipmap/module_detail_audio_unrecord_night</item>
     </style>
 </resources>

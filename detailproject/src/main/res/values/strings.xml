@@ -45,8 +45,10 @@
     <string name="module_detail_collect_cencel_success">已取消收藏</string>
     <string name="module_detail_collect_failed">收藏失败</string>
     <string name="module_detail_no_speaking">您已被禁言</string>
-
-
+    <string name="module_detail_audio_start_play">开始播放</string>
+    <string name="module_detail_audio_start_record">开始录音</string>
+    <string name="module_detail_audio_record_stop">点击结束</string>
+    <string name="module_detail_audio_record_pause">点击暂停</string>
     <!--scheme地址-->
     <string name="data_host_dev">10.100.60.98</string>
     <string name="data_host_test">zjbeta.8531.cn</string>

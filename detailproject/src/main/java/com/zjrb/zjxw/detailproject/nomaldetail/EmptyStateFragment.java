@@ -23,6 +23,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.EmptyStateListAdapter;
 import com.zjrb.zjxw.detailproject.photodetail.AtlasDetailActivity;
 import com.zjrb.zjxw.detailproject.task.DraftRankListTask;
+import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 
 import java.util.List;
 
@@ -85,7 +86,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      */
     private void initView() {
         //添加头布局
-        if(UIUtils.getActivity() instanceof AtlasDetailActivity){
+        if (UIUtils.getActivity() instanceof AtlasDetailActivity || UIUtils.getActivity() instanceof ActivityTopicActivity) {
             viewGroup.setVisibility(View.VISIBLE);
         }
         head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
@@ -109,7 +110,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
     @OnClick({R2.id.iv_top_bar_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if(view.getId() == R.id.iv_top_bar_back){
+        if (view.getId() == R.id.iv_top_bar_back) {
             getActivity().finish();
         }
     }

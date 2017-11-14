@@ -497,7 +497,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-//        mContainer.removeAllViews();
         mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();

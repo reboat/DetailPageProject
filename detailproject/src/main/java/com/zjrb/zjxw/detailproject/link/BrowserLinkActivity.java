@@ -113,17 +113,18 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     }
 
     private String mFromChannel;
+
     /**
      * @param intent 获取传递数据
      */
     private void getIntentData(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
-            if(data != null){
+            if (data != null) {
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
                 }
-                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
@@ -168,11 +169,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 //撤稿
                 if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
-                }else{
-                    T.showShortNow(BrowserLinkActivity.this,errMsg);
+                } else {
+                    T.showShortNow(BrowserLinkActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId,mFromChannel);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
     }
 
     /**
@@ -235,13 +236,16 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
         } else if (id == R.id.iv_top_share) {
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                    .setTextContent(getString(R.string.module_detail_share_content_from))
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-                    .setTargetUrl(url)
-            );
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(url)) {
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setArticleId(mNewsDetail.getArticle().getId() + "")
+                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTitle(mNewsDetail.getArticle().getDoc_title())
+                        .setTargetUrl(url)
+                );
+            }
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
                 //进入评论列表页面

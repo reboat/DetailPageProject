@@ -43,7 +43,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     TextView mTvChannelName;
     @BindView(R2.id.tv_column_name)
     TextView mTvColumnName;
-    @BindView(R2.id.tv_column_subscribe) 
+    @BindView(R2.id.tv_column_subscribe)
     TextView mTvColumnSubscribe;
     @BindView(R2.id.ry_channel)
     RelativeLayout mRyChannel;
@@ -163,6 +163,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
+                    .setArticleId(mData.getArticle().getId() + "")
                     .setImgUri(mData.getArticle().getFirstPic())
                     .setTextContent(mData.getArticle().getSummary())
                     .setTitle(mData.getArticle().getDoc_title())

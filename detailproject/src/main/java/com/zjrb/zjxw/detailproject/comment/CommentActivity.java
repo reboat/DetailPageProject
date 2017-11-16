@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.comment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -221,16 +222,35 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     }
 
 
+    private String mArticleId;
+
+    /**
+     * 获取稿件ID
+     *
+     * @param bean
+     */
+    private String getID(CommentRefreshBean bean) {
+        if (bean != null && bean.getShare_article_info() != null && !TextUtils.isEmpty(bean.getShare_article_info().getUrl())) {
+            Uri data = Uri.parse(bean.getShare_article_info().getUrl());
+            if (data != null) {
+                if (data.getQueryParameter(IKey.ID) != null) {
+                    mArticleId = data.getQueryParameter(IKey.ID);
+                }
+            }
+        }
+        return mArticleId;
+    }
+
     @OnClick({R2.id.tv_comment, R2.id.iv_top_share})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
-            CommentRefreshBean.ShareArtcleInfo bean = mBean.getShare_article_info();
-            if (bean != null) {
+            if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setArticleId(getID(mBean))
                         .setImgUri(mBean.getShare_article_info().getArticle_pic())
                         .setTextContent(mBean.getShare_article_info().getSummary())
                         .setTitle(mBean.getShare_article_info().getList_title())

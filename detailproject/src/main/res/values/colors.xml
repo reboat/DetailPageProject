@@ -50,6 +50,7 @@
     <color name="bc_33ffffff">#33ffffff</color>
     <color name="bc_f4f5f6">#f4f5f6</color>
     <color name="bc_000000">#000000</color>
+    <color name="bc_878686">#878686</color>
     <!--夜间颜色-->
     <color name="tc_484848_night">#7a7b7d</color>
     <color name="bc_ffffff_night">#202124</color>

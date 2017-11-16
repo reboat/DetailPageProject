@@ -154,11 +154,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void getIntentData(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
-            if(data != null){
+            if (data != null) {
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
                 }
-                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
@@ -217,7 +217,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
-                if(mView.getVisibility() == View.VISIBLE){
+                if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
                 mNewsDetail = draftDetailBean;
@@ -237,7 +237,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     T.showShortNow(NewsDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId,mFromChannel);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
     }
 
 
@@ -459,12 +459,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                    .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-                    .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setArticleId(mNewsDetail.getArticle().getId() + "")
+                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setTextContent(mNewsDetail.getArticle().getSummary())
+                        .setTitle(mNewsDetail.getArticle().getDoc_title())
+                        .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+            }
+
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());

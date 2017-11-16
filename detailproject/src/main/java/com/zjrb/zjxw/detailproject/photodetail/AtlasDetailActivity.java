@@ -431,14 +431,17 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             finish();
             //分享
         } else if (id == R.id.iv_share) {
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
-                    .setTextContent(mData.getArticle().getAlbum_image_list().get(0)
-                            .getDescription())
-                    .setTitle(mData.getArticle().getDoc_title())
-                    .setTargetUrl(mData.getArticle().getUrl())
-            );
+            if(mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())){
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setArticleId(mData.getArticle().getId()+"")
+                        .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
+                        .setTextContent(mData.getArticle().getAlbum_image_list().get(0)
+                                .getDescription())
+                        .setTitle(mData.getArticle().getDoc_title())
+                        .setTargetUrl(mData.getArticle().getUrl())
+                );
+            }
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null) {

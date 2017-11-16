@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.photodetail;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,14 +118,17 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     }
 
     @OnClick(R2.id.iv_share)
-    public void onShare(){
-        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                .setSingle(false)
-                .setImgUri(mBean.getArticle().getAlbum_image_list().get(0).getImage_url())
-                .setTextContent(mBean.getArticle().getAlbum_image_list().get(0)
-                        .getDescription())
-                .setTitle(mBean.getArticle().getDoc_title())
-                .setTargetUrl(mBean.getArticle().getUrl())
-        );
+    public void onShare() {
+        if (null != mBean && null != mBean.getArticle() && !TextUtils.isEmpty(mBean.getArticle().getUrl())) {
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setArticleId(mBean.getArticle().getId() + "")
+                    .setImgUri(mBean.getArticle().getAlbum_image_list().get(0).getImage_url())
+                    .setTextContent(mBean.getArticle().getAlbum_image_list().get(0)
+                            .getDescription())
+                    .setTitle(mBean.getArticle().getDoc_title())
+                    .setTargetUrl(mBean.getArticle().getUrl())
+            );
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -88,15 +89,16 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     }
 
     private String mFromChannel;
+
     private void initArgs() {
         Intent intent = getIntent();
         if (intent != null) {
             Uri data = intent.getData();
-            if(data != null){
+            if (data != null) {
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
                 }
-                if(data.getQueryParameter(IKey.FROM_CHANNEL) != null){
+                if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
@@ -139,12 +141,16 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
         if (mArticle != null) {
             if (view.getId() == R.id.iv_top_share) {
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setImgUri(mArticle.getArticle_pic())
-                        .setTextContent(mArticle.getSummary())
-                        .setTitle(mArticle.getDoc_title())
-                        .setTargetUrl(mArticle.getUrl()));
+                if (!TextUtils.isEmpty(mArticle.getUrl())) {
+                    UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                            .setSingle(false)
+                            .setArticleId(mArticle.getId() + "")
+                            .setImgUri(mArticle.getArticle_pic())
+                            .setTextContent(mArticle.getSummary())
+                            .setTitle(mArticle.getDoc_title())
+                            .setTargetUrl(mArticle.getUrl()));
+                }
+
             } else if (view.getId() == R.id.iv_top_collect) {
                 collectTask(); // 收藏
             }
@@ -168,7 +174,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
             }
 
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(mArticleId,mFromChannel);
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mRecycler)).exe(mArticleId, mFromChannel);
     }
 
     private HeaderSpecialHolder headHolder;
@@ -223,7 +229,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         bindCollect();
                         T.showShort(getActivity(), "已收藏成功");
                     }
-                }else{
+                } else {
                     T.showShort(getActivity(), errMsg);
                 }
             }

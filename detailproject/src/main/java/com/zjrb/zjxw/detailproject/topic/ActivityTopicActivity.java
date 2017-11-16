@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -326,7 +327,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share,R2.id.iv_top_back})
+            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -346,17 +347,17 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
-            //关闭
-            if (mDetailData != null && mDetailData.getArticle() != null) {
+            if (mDetailData != null && mDetailData.getArticle() != null && !TextUtils.isEmpty(mDetailData.getArticle().getUrl())) {
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setArticleId(mDetailData.getArticle().getId() + "")
                         .setImgUri(mDetailData.getArticle().getFirstPic())
                         .setTextContent(mDetailData.getArticle().getSummary())
                         .setTitle(mDetailData.getArticle().getDoc_title())
                         .setTargetUrl(mDetailData.getArticle().getUrl()));
             }
 
-        }else if(view.getId() == R.id.iv_top_back){
+        } else if (view.getId() == R.id.iv_top_back) {
             finish();
         }
     }

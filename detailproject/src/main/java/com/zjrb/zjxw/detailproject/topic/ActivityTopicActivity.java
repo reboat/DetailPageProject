@@ -336,7 +336,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            MoreDialog.newInstance(mDetailData).show(getSupportFragmentManager(), "MoreDialog");
+            MoreDialog.newInstance(mDetailData).setWebViewCallBack(mAdapter.getWebViewHolder(),mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mDetailData != null && mDetailData.getArticle() != null) {

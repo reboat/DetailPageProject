@@ -21,6 +21,7 @@ import com.aliya.player.PlayerManager;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
+import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -34,6 +35,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.UmengShareAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
@@ -57,11 +59,14 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -432,7 +437,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video})
+            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -460,18 +465,47 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                //分享专用bean
+                UmengShareAnalyticsBean bean = UmengShareAnalyticsBean.getInstance()
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+                //分享操作
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setAnalyticsBean(bean)
                         .setTextContent(mNewsDetail.getArticle().getSummary())
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
                         .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+                //点击分享操作
+                new Analytics.AnalyticsBuilder(getContext(), "800018", "800018")
+                        .setEvenName("点击分享")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
             }
 
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());
+        } else if (view.getId() == R.id.iv_top_bar_back) {
+            finish();
         }
     }
 

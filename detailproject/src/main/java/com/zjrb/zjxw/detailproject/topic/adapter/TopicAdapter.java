@@ -80,11 +80,12 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         setData(list);
     }
 
+
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_WEB_VIEW:
-                return new NewsDetailWebViewHolder(parent);
+                return webviewHolder = new NewsDetailWebViewHolder(parent);
             case VIEW_TYPE_MIDDLE:
                 return new NewsActivityMiddleHolder(parent);
             case VIEW_TYPE_STRING:
@@ -102,6 +103,16 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             default:
                 return new NewsPlaceHolder(parent);
         }
+    }
+
+    private NewsDetailWebViewHolder webviewHolder;
+    /**
+     * 获取webviewholder
+     *
+     * @return
+     */
+    public NewsDetailWebViewHolder getWebViewHolder() {
+        return webviewHolder;
     }
 
     @Override

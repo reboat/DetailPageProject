@@ -86,6 +86,8 @@ public class DraftDetailBean extends BaseData {
         private String source_channel_name;
         private String channel_code;
         private String source;
+
+        private String from_channel;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -96,6 +98,14 @@ public class DraftDetailBean extends BaseData {
         private List<String> topic_guests;
 
         private List<SpecialGroupBean> subject_groups;
+
+        public String getFrom_channel() {
+            return from_channel;
+        }
+
+        public void setFrom_channel(String from_channel) {
+            this.from_channel = from_channel;
+        }
 
         public boolean isTopic_comment_has_more() {
             return topic_comment_has_more;

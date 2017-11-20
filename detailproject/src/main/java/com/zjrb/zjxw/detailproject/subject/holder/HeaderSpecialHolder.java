@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.subject.holder;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -154,13 +155,17 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         if (TextUtils.isEmpty(mArticle.getSubject_focus_image())) {
             mLayoutFocus.setVisibility(View.GONE);
         } else {
+            if (ivTopicPic.getContext() instanceof Activity) {
+                if (((Activity) ivTopicPic.getContext()).isDestroyed()) {
+                    return;
+                }
+            }
             GlideApp.with(ivTopicPic).load(mArticle.getSubject_focus_image())
                     .placeholder(PH.zheBig())
                     .error(PH.zheBig())
                     .centerCrop()
                     .apply(AppGlideOptions.bigOptions())
                     .into(ivTopicPic);
-
             //专题焦点图摘要可以为空
             if (TextUtils.isEmpty(mArticle.getSubject_focus_description())) {
                 tvTitle2.setVisibility(View.GONE);
@@ -197,7 +202,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 map.put("subject", mArticle.getId());
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003")
                         .setEvenName("专题详情页，焦点图点击")
-                        .setObjectID(mArticle.getMlf_id()+"")
+                        .setObjectID(mArticle.getMlf_id() + "")
                         .setObjectName(mArticle.getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mArticle.getChannel_id())

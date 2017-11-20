@@ -32,6 +32,7 @@ import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
@@ -449,10 +450,39 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void click(int id) {
         //返回
         if (id == R.id.iv_back) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id())
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .build()
+                    .send();
             finish();
             //分享
         } else if (id == R.id.iv_share) {
             if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id() + "")
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfobjectID(mData.getArticle().getId() + "");
+
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setArticleId(mData.getArticle().getId() + "")
@@ -461,18 +491,48 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                                 .getDescription())
                         .setTitle(mData.getArticle().getDoc_title())
                         .setTargetUrl(mData.getArticle().getUrl())
+                        .setAnalyticsBean(bean)
                 );
             }
             //评论框
         } else if (id == R.id.tv_comment) {
-            if (mData != null) {
+            if (mData != null && mData.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                        .setEvenName("点击评论输入框")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
+
+                //评论发表成功
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                        .setEvenName("发表评论，且发送成功")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build();
+
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                        .valueOf(mData.getArticle().getId())))).show(getSupportFragmentManager(),
+                        .valueOf(mData.getArticle().getId())))).setWMData(analytics).show(getSupportFragmentManager(),
                         "CommentWindowDialog");
             }
             //评论列表
         } else if (id == R.id.menu_comment) {
-            if (mData != null) {
+            if (mData != null && mData.getArticle() != null) {
 
                 if (bundle == null) {
                     bundle = new Bundle();
@@ -484,26 +544,60 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
             //点赞
         } else if (id == R.id.menu_prised) {
-            fabulous();
-            //设置
-        } else if (id == R.id.menu_setting) {
-            MoreDialog.newInstance(mData).show(getSupportFragmentManager(), "MoreDialog");
-            //下载
-        } else if (id == R.id.iv_top_download) {
             Map map = new HashMap();
             map.put("relatedColumn", mData.getArticle().getColumn_id());
-            new Analytics.AnalyticsBuilder(this, "A0025", "A0025")
-                    .setEvenName("点击下载按钮")
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                    .setEvenName("点击点赞")
                     .setObjectID(mData.getArticle().getMlf_id() + "")
                     .setObjectName(mData.getArticle().getDoc_title())
                     .setObjectType(ObjectType.NewsType)
                     .setClassifyID(mData.getArticle().getChannel_id())
                     .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("图集详情页")
+                    .setPageType("新闻详情页")
                     .setOtherInfo(map.toString())
                     .setSelfObjectID(mData.getArticle().getId() + "")
                     .build()
                     .send();
+            fabulous();
+            //设置
+        } else if (id == R.id.menu_setting) {
+            if (mData != null && mData.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                        .setEvenName("点击更多")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
+                MoreDialog.newInstance(mData).show(getSupportFragmentManager(), "MoreDialog");
+            }
+            //下载
+        } else if (id == R.id.iv_top_download) {
+            if (mData != null && mData.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                new Analytics.AnalyticsBuilder(this, "A0025", "A0025")
+                        .setEvenName("点击下载按钮")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("图集详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             loadImage(mIndex);
         }
     }
@@ -639,7 +733,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 稿件点赞
      */
     private void fabulous() {
-        if (mData == null) return;
+        if (mData == null && mData.getArticle() != null) return;
         if (mData.getArticle().isLiked()) {
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;

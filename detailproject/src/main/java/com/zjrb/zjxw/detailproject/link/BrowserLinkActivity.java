@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
+import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -26,6 +27,7 @@ import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.ZBWebView;
@@ -44,9 +46,15 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 链接稿 - Activity
@@ -234,9 +242,38 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             } else {
                 onBackPressed();
             }
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
         } else if (id == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(url)) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
@@ -244,10 +281,40 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setTextContent(getString(R.string.module_detail_share_content_from))
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
                         .setTargetUrl(url)
+                        .setAnalyticsBean(bean)
                 );
+
+                //点击分享操作
+                new Analytics.AnalyticsBuilder(getContext(), "800018", "800018")
+                        .setEvenName("点击分享")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
             }
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800004", "800004")
+                        .setEvenName("点击评论，进入评论列表")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
                 //进入评论列表页面
                 if (bundle == null) {
                     bundle = new Bundle();
@@ -257,15 +324,74 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                    .setEvenName("点击点赞")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                    .setEvenName("点击更多")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                        .setEvenName("点击评论输入框")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+
+                //评论发表成功
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                        .setEvenName("发表评论，且发送成功")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build();
+                //进入评论编辑页面(不针对某条评论)
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
         }
     }

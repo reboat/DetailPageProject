@@ -14,6 +14,7 @@ import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
@@ -32,6 +33,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 更多图集
@@ -132,6 +135,21 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @OnClick(R2.id.iv_back)
     public void onBack() {
         if (getActivity() != null) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mBean.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mBean.getArticle().getMlf_id() + "")
+                    .setObjectName(mBean.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mBean.getArticle().getChannel_id())
+                    .setClassifyName(mBean.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mBean.getArticle().getId() + "")
+                    .build()
+                    .send();
             getActivity().finish();
         }
     }
@@ -139,6 +157,20 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @OnClick(R2.id.iv_share)
     public void onShare() {
         if (null != mBean && null != mBean.getArticle() && !TextUtils.isEmpty(mBean.getArticle().getUrl())) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mBean.getArticle().getColumn_id());
+            map.put("subject", "");
+            //分享专用bean
+            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                    .setObjectID(mBean.getArticle().getMlf_id() + "")
+                    .setObjectName(mBean.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mBean.getArticle().getChannel_id() + "")
+                    .setClassifyName(mBean.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfobjectID(mBean.getArticle().getId() + "");
+
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
                     .setArticleId(mBean.getArticle().getId() + "")
@@ -147,6 +179,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
                             .getDescription())
                     .setTitle(mBean.getArticle().getDoc_title())
                     .setTargetUrl(mBean.getArticle().getUrl())
+                    .setAnalyticsBean(bean)
             );
         }
     }

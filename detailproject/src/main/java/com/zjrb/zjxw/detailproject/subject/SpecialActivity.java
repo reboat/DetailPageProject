@@ -17,6 +17,7 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.holder.TopBarWhiteStyle;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.T;
@@ -165,12 +166,27 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (mArticle != null) {
             if (view.getId() == R.id.iv_top_share) {
                 if (!TextUtils.isEmpty(mArticle.getUrl())) {
+                    Map map = new HashMap();
+                    map.put("relatedColumn", mArticle.getColumn_id());
+                    map.put("subject", "");
+                    //分享专用bean
+                    OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                            .setObjectID(mArticle.getMlf_id() + "")
+                            .setObjectName(mArticle.getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(mArticle.getChannel_id() + "")
+                            .setClassifyName(mArticle.getChannel_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(map.toString())
+                            .setSelfobjectID(mArticle.getId() + "");
+
                     UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                             .setSingle(false)
                             .setArticleId(mArticle.getId() + "")
                             .setImgUri(mArticle.getArticle_pic())
                             .setTextContent(mArticle.getSummary())
                             .setTitle(mArticle.getDoc_title())
+                            .setAnalyticsBean(bean)
                             .setTargetUrl(mArticle.getUrl()));
                 }
 
@@ -211,6 +227,23 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
 
                 collectTask(); // 收藏
+            } else if (view.getId() == R2.id.iv_top_bar_back) {//返回
+                Map map = new HashMap();
+                map.put("relatedColumn", mArticle.getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mArticle.getMlf_id() + "")
+                        .setObjectName(mArticle.getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mArticle.getChannel_id())
+                        .setClassifyName(mArticle.getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mArticle.getId() + "")
+                        .build()
+                        .send();
+                finish();
             }
         }
     }

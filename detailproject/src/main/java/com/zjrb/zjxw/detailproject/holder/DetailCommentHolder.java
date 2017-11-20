@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliya.uimode.utils.UiModeUtils;
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.AppGlideOptions;
@@ -21,6 +22,7 @@ import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
@@ -29,9 +31,15 @@ import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 详情页/评论列表item holder
@@ -79,6 +87,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     //弹框
     private ConfirmDialog dialog;
 
+    private DraftDetailBean mBean;
+
     public DetailCommentHolder(ViewGroup parent, String articleId) {
         super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
         ButterKnife.bind(this, itemView);
@@ -89,6 +99,20 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         super(view);
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
+    }
+
+    /**
+     * 网脉专用构造器
+     *
+     * @param parent
+     * @param articleId
+     * @param bean
+     */
+    public DetailCommentHolder(ViewGroup parent, String articleId, DraftDetailBean bean) {
+        super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
+        ButterKnife.bind(this, itemView);
+        this.articleId = articleId;
+        mBean = bean;
     }
 
     @Override
@@ -188,10 +212,79 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            if (mBean != null && mBean.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+                map.put("subject", "");
+
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
+                        .setEvenName("热门评论点击回复")
+                        .setObjectID(mBean.getArticle().getChannel_id())
+                        .setObjectName(mBean.getArticle().getChannel_name())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getSource_channel_id())
+                        .setClassifyName(mBean.getArticle().getSource_channel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setAttachObjectId(mData.getId())
+                        .build()
+                        .send();
+
+
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003")
+                        .setEvenName("回复评论，且发送成功")
+                        .setObjectID(mBean.getArticle().getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setAttachObjectId(mData.getId())
+                        .build();
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            } else {
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            }
+
             //回复回复者
         } else {
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            if (mBean != null && mBean.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
+                        .setEvenName("热门评论点击回复")
+                        .setObjectID(mBean.getArticle().getChannel_id())
+                        .setObjectName(mBean.getArticle().getChannel_name())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getSource_channel_id())
+                        .setClassifyName(mBean.getArticle().getSource_channel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setAttachObjectId(mData.getId())
+                        .build()
+                        .send();
+
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003")
+                        .setEvenName("回复评论，且发送成功")
+                        .setObjectID(mBean.getArticle().getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setAttachObjectId(mData.getId())
+                        .build();
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            } else {
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+            }
         }
     }
 
@@ -222,7 +315,25 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      *
      * @param comment_id
      */
-    private void deleteComment(final String comment_id,final int position) {
+    private void deleteComment(final String comment_id, final int position) {
+        if (mBean != null && mBean.getArticle() != null && mData != null) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mBean.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123")
+                    .setEvenName("删除评论")
+                    .setObjectID(mBean.getArticle().getChannel_id())
+                    .setObjectName(mBean.getArticle().getChannel_name())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mBean.getArticle().getSource_channel_id())
+                    .setClassifyName(mBean.getArticle().getSource_channel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mBean.getArticle().getId() + "")
+                    .setAttachObjectId(mData.getId())
+                    .build()
+                    .send();
+        }
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
@@ -249,7 +360,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     @Override
     public void onOK() {
-        deleteComment(mData.getId(),getAdapterPosition());
+        deleteComment(mData.getId(), getAdapterPosition());
     }
 
     /**

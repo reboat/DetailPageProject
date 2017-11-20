@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -29,7 +30,11 @@ import com.zjrb.zjxw.detailproject.holder.NewsStringClickMoreHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 普通新闻详情页Adapter
@@ -90,7 +95,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
             return new NewsRelateNewsTextHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
-            return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()));
+            return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()), detailBean);
         } else if (viewType == VIEW_TYPE_STRING) {
             return new NewsStringTextHolder(parent);
         } else if (viewType == VIEW_TYPE_STRING_CLICK_MORE) {
@@ -238,11 +243,41 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (datas.get(position) instanceof RelatedNewsBean) {
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
+                Map map = new HashMap();
+                map.put("relatedColumn", detailBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
+                        .setEvenName("点击相关新闻列表")
+                        .setObjectID(detailBean.getArticle().getMlf_id() + "")
+                        .setObjectName(detailBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(detailBean.getArticle().getChannel_id())
+                        .setClassifyName(detailBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(detailBean.getArticle().getId() + "")
+                        .build()
+                        .send();
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
+                Map map = new HashMap();
+                map.put("customObjectType", "SubjectType");
+                map.put("subject", ((RelatedSubjectsBean) datas.get(position)).getId());
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                        .setEvenName("点击相关专题列表")
+                        .setObjectID(detailBean.getArticle().getMlf_id() + "")
+                        .setObjectName(detailBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(detailBean.getArticle().getChannel_id())
+                        .setClassifyName(detailBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(detailBean.getArticle().getId() + "")
+                        .build()
+                        .send();
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof String && datas.get(position).toString().equals("点击查看更多评论")) {

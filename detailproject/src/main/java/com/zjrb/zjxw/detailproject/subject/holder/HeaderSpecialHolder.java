@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.page.PageItem;
 import com.zjrb.core.common.glide.AppGlideOptions;
@@ -25,8 +26,12 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 专题详情页 - header
@@ -184,8 +189,24 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             } else {
                 tvSummary.setMaxLines(MAX_DEFAULT_LINES);
             }
+            //专题详情页焦点图点击
         } else if (v.getId() == R.id.layout_focus) {
             if (!TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
+                Map map = new HashMap();
+                map.put("relatedColumn", "SubjectType");
+                map.put("subject", mArticle.getId());
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003")
+                        .setEvenName("专题详情页，焦点图点击")
+                        .setObjectID(mArticle.getMlf_id()+"")
+                        .setObjectName(mArticle.getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mArticle.getChannel_id())
+                        .setClassifyName(mArticle.getChannel_name())
+                        .setPageType("专题详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mArticle.getId() + "")
+                        .build()
+                        .send();
                 Nav.with(v.getContext()).to(mArticle.getSubject_focus_url());
             }
         }

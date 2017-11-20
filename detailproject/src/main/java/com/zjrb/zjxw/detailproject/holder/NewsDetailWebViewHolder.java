@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
@@ -20,6 +21,7 @@ import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
@@ -34,8 +36,12 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 新闻详情页 WebView - ViewHolder
@@ -57,12 +63,34 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     }
 
     /**
+     * 设置网脉数据
+     *
+     * @param bean
+     */
+    private OutSizeAnalyticsBean getWMData(DraftDetailBean.ArticleBean bean) {
+        return OutSizeAnalyticsBean.getInstance()
+                .setEventCode("A0010")
+                .setUmCode("A0010")
+                .setObjectID(bean.getMlf_id() + "")
+                .setObjectName(bean.getDoc_title())
+                .setObjectType(ObjectType.PictureType)
+                .setClassifyID(bean.getChannel_id())
+                .setClassifyName(bean.getChannel_name())
+                .setPageType("图片预览页")
+                .setSelfobjectID(bean.getId() + "");
+    }
+
+    /**
      * 如需要动态加载css,可直接传入url
      * 新增接口拉取css和js
      */
     @Override
     public void bindView() {
         mWebJsInterface = mWebView.getWebJs();
+        //设置网脉数据
+        if (mWebJsInterface != null && mData != null && mData.getArticle() != null) {
+            mWebJsInterface.setOutSizeAnalyticsBean(getWMData(mData.getArticle()));
+        }
         if (mData.getArticle().getContent() == null) return;
         itemView.setOnClickListener(null);
         setCssJSWebView();
@@ -153,6 +181,35 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (!TextUtils.isEmpty(url)) {
+                    //点击话题链接
+                    if (url.contains("topic.html?id=")) {
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
+                                .setEvenName("点击话题标签")
+                                .setPageType("新闻详情页")
+                                .build()
+                                .send();
+
+                        //官员名称
+                    } else if (url.contains("gy.html?id=")) {
+                        Map map = new HashMap();
+                        map.put("customObjectType", "OfficerType");
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
+                                .setEvenName("点击官员名称")
+                                .setPageType("新闻详情页")
+                                .setOtherInfo(map.toString())
+                                .build()
+                                .send();
+                    } else {
+                        Map map = new HashMap();
+                        map.put("mediaURL", url);
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
+                                .setEvenName("链接点击")
+                                .setPageType("新闻详情页")
+                                .setOtherInfo(map.toString())
+                                .build()
+                                .send();
+                    }
+
                     Nav.with(itemView.getContext()).to(url);
                 }
                 return true;

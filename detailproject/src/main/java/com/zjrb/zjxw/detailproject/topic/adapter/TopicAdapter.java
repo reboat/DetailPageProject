@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -29,7 +30,11 @@ import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityMiddleHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 话题稿Adapter
@@ -94,7 +99,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 return new NewsRelateSubjectHolder(parent);
             case VIEW_TYPE_TEXT_INTERACT:
                 return new NewsTextMoreHolder(parent, detailBean.getArticle()
-                        .isTopic_comment_has_more());
+                        .isTopic_comment_has_more(),detailBean);
             case VIEW_TYPE_COMMENT:
                 return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle()
                         .getId()));
@@ -225,9 +230,25 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     @Override
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
+        //相关专题
         if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
+                Map map = new HashMap();
+                map.put("customObjectType", "SubjectType");
+                map.put("subject", ((RelatedSubjectsBean) datas.get(position)).getId());
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                        .setEvenName("点击相关专题列表")
+                        .setObjectID(detailBean.getArticle().getMlf_id() + "")
+                        .setObjectName(detailBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(detailBean.getArticle().getChannel_id())
+                        .setClassifyName(detailBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(detailBean.getArticle().getId() + "")
+                        .build()
+                        .send();
                 Nav.with(UIUtils.getActivity()).to(url);
             }
 
@@ -242,6 +263,23 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
                     .COMMENT_ACTIVITY_PATH);
         } else if (datas.get(position) instanceof DraftDetailBean) {
+            if(detailBean != null && detailBean.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", detailBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                        .setEvenName("点击正文底部频道名称")
+                        .setObjectID(detailBean.getArticle().getChannel_id())
+                        .setObjectName(detailBean.getArticle().getChannel_name())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(detailBean.getArticle().getSource_channel_id())
+                        .setClassifyName(detailBean.getArticle().getSource_channel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(detailBean.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
                     .appendQueryParameter("id", String.valueOf(((DraftDetailBean) datas.get(position)).getArticle().getColumn_id())).build().toString());
         }

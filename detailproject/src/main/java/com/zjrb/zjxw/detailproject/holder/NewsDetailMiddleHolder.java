@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -24,11 +25,14 @@ import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 新闻详情页中间内容
@@ -130,12 +134,47 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             //频道订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (!mData.getArticle().isColumn_subscribed()) {
+                    Map map = new HashMap();
+                    map.put("customObjectType", "RelatedColumnType");
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")
+                            .setEvenName("点击订阅")
+                            .setObjectID(mData.getArticle().getColumn_id() + "")
+                            .setObjectName(mData.getArticle().getColumn_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(map.toString())
+                            .build()
+                            .send();
                     callback.onOptSubscribe();
                 }
                 //进入频道详情页
             } else if (view.getId() == R.id.ry_channel) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                        .setEvenName("点击正文底部频道名称")
+                        .setObjectID(mData.getArticle().getChannel_id())
+                        .setObjectName(mData.getArticle().getChannel_name())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getSource_channel_id())
+                        .setClassifyName(mData.getArticle().getSource_channel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
                 callback.onOptClickChannel();
             } else {
+                Map map = new HashMap();
+                map.put("customObjectType", "RelatedColumnType");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
+                        .setEvenName("点击进入栏目详情页")
+                        .setObjectID(mData.getArticle().getColumn_id() + "")
+                        .setObjectName(mData.getArticle().getColumn_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .build()
+                        .send();
                 //进入栏目详情页
                 callback.onOptClickColumn();
             }
@@ -161,6 +200,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
+            setAnalytics(mListData.get(position).getPlatform());
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
                     .setArticleId(mData.getArticle().getId() + "")
@@ -169,6 +209,61 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                     .setTitle(mData.getArticle().getDoc_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.getArticle().getUrl()));
+
+        }
+    }
+
+    /**
+     * 设置网脉埋点
+     */
+    private void setAnalytics(SHARE_MEDIA share_media) {
+        if (mData != null && mData.getArticle() != null) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            map.put("subject", "");
+            String eventName = "";
+            String WMCode = "";
+            String UMCode = "";
+            String eventDetail = "";
+            if (share_media == SHARE_MEDIA.WEIXIN) {
+                WMCode = "A0022";
+                UMCode = "60003";
+                eventName = "微信分享";
+                eventDetail = "微信";
+            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                WMCode = "A0022";
+                UMCode = "60004";
+                eventName = "朋友圈分享";
+                eventDetail = "朋友圈";
+            } else if (share_media == SHARE_MEDIA.QQ) {
+                WMCode = "A0022";
+                UMCode = "800020";
+                eventName = "QQ分享";
+                eventDetail = "QQ";
+            } else if (share_media == SHARE_MEDIA.SINA) {
+                WMCode = "A0022";
+                UMCode = "60001";
+                eventName = "新浪微博分享";
+                eventDetail = "新浪微博";
+            } else if (share_media == SHARE_MEDIA.QZONE) {
+                WMCode = "A0022";
+                UMCode = "800019";
+                eventName = "QQ空间分享";
+                eventDetail = "QQ空间";
+            }
+            new Analytics.AnalyticsBuilder(itemView.getContext(), WMCode, UMCode)
+                    .setEvenName(eventName)
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id())
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .setEventDetail(eventDetail)
+                    .build()
+                    .send();
         }
     }
 

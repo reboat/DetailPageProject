@@ -34,9 +34,13 @@ import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 
 /**
@@ -245,6 +249,22 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                new Analytics.AnalyticsBuilder(this, "800002", "800002")
+                        .setEvenName("点击评论输入框")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("评论页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
+
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
@@ -294,6 +314,22 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         mRvContent.post(new Runnable() {
             @Override
             public void run() {
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    Map map = new HashMap();
+                    map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                    new Analytics.AnalyticsBuilder(CommentActivity.this, "A0023", "A0023")
+                            .setEvenName("发表评论")
+                            .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                            .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                            .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                            .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                            .setPageType("评论页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                            .build()
+                            .send();
+                }
+
                 refresh.setRefreshing(false);
                 requestData(false);
             }

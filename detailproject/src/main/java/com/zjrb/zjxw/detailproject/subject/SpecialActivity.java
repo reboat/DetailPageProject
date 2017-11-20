@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
@@ -35,10 +36,15 @@ import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 专题详情页
@@ -61,6 +67,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     FrameLayout mView;
 
     private SpecialAdapter mAdapter;
+
+    private Analytics mAnalytics;
 
     /**
      * 稿件ID
@@ -131,6 +139,21 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
         Object data = mAdapter.getData(position);
         if (data instanceof ArticleItemBean) {
+            if (mArticle != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", "SubjectType");
+                map.put("subject", mArticle.getId());
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "200007", "200007")
+                        .setEvenName("专题详情页，新闻列表点击")
+                        .setObjectID(mArticle.getChannel_id())
+                        .setObjectName(mArticle.getChannel_name())
+                        .setObjectType(ObjectType.NewsType)
+                        .setPageType("专题详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mArticle.getId() + "")
+                        .build()
+                        .send();
+            }
             NewsUtils.itemClick(this, data);
         }
     }
@@ -152,6 +175,41 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
 
             } else if (view.getId() == R.id.iv_top_collect) {
+                //未被收藏
+                if (!mArticle.isFollowed()) {
+                    Map map = new HashMap();
+                    map.put("relatedColumn", "SubjectType");
+                    map.put("subject", mArticle.getId());
+                    new Analytics.AnalyticsBuilder(this, "A0024", "A0024")
+                            .setEvenName("点击收藏")
+                            .setObjectID(mArticle.getMlf_id() + "")
+                            .setObjectName(mArticle.getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(mArticle.getChannel_id())
+                            .setClassifyName(mArticle.getChannel_name())
+                            .setPageType("专题详情页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mArticle.getId() + "")
+                            .build()
+                            .send();
+                } else {
+                    Map map = new HashMap();
+                    map.put("relatedColumn", "SubjectType");
+                    map.put("subject", mArticle.getId());
+                    new Analytics.AnalyticsBuilder(this, "A0124", "A0124")
+                            .setEvenName("取消收藏")
+                            .setObjectID(mArticle.getMlf_id() + "")
+                            .setObjectName(mArticle.getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(mArticle.getChannel_id())
+                            .setClassifyName(mArticle.getChannel_name())
+                            .setPageType("专题详情页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mArticle.getId() + "")
+                            .build()
+                            .send();
+                }
+
                 collectTask(); // 收藏
             }
         }
@@ -191,6 +249,20 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .title(mArticle.getList_title())
                             .url(mArticle.getUrl())
             );
+
+            Map map = new HashMap();
+            map.put("relatedColumn", data.getArticle().getColumn_id());
+            map.put("subject", data.getArticle().getId());
+            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+                    .setEvenName("页面停留时长")
+                    .setObjectID(data.getArticle().getMlf_id() + "")
+                    .setObjectName(data.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(data.getArticle().getChannel_id())
+                    .setClassifyName(data.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setSelfObjectID(data.getArticle().getId() + "")
+                    .build();
         }
         bindCollect();
         mTopBar.setRightVisible(true);
@@ -262,7 +334,30 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerCopy.getHeight());
+            if (mArticle != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mArticle.getColumn_id());
+                map.put("subject", mArticle.getId());
+                new Analytics.AnalyticsBuilder(this, "900001", "900001")
+                        .setEvenName("专题详情页，分类标签点击")
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mArticle.getMlf_id() + "")
+                        .setClassifyName(mArticle.getDoc_title())
+                        .setPageType("专题详情页")
+                        .setSearch(bean.getGroup_name())
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mArticle.getId() + "")
+                        .build()
+                        .send();
+            }
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAnalytics != null) {
+            mAnalytics.sendWithDuration();
+        }
+    }
 }

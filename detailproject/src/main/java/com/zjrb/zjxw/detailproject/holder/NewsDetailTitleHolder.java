@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
@@ -21,9 +22,13 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 新闻详情页title - ViewHolder
@@ -91,6 +96,21 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     @OnClick({R2.id.tv_channel_name})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
+        Map map = new HashMap();
+        map.put("relatedColumn", mData.getArticle().getColumn_id());
+        map.put("subject", "");
+        new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                .setEvenName("点击稿件标题下频道名称")
+                .setObjectID(mData.getArticle().getChannel_id())
+                .setObjectName(mData.getArticle().getChannel_name())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mData.getArticle().getSource_channel_id())
+                .setClassifyName(mData.getArticle().getSource_channel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(map.toString())
+                .setSelfObjectID(mData.getArticle().getId() + "")
+                .build()
+                .send();
         if (view.getId() == R.id.tv_channel_name) {
             if (bundle == null) {
                 bundle = new Bundle();

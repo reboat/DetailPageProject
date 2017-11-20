@@ -25,6 +25,7 @@ import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.db.BundleHelper;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.utils.T;
@@ -37,9 +38,13 @@ import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoF
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 官员详情页
@@ -111,6 +116,15 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
+                Map map = new HashMap();
+                map.put("relatedColumn", "OfficerType");
+                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "")
+                        .setEvenName("打开单个官员详情页")
+                        .setObjectID(data.getOfficer().getId() + "")
+                        .setPageType("官员页面")
+                        .setOtherInfo(map.toString())
+                        .build()
+                        .send();
                 initView(data);
             }
 
@@ -177,14 +191,36 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 Nav.with(this).to(bean.getOfficer().getDetail_url());
             }
         } else {
+            Map map = new HashMap();
+            map.put("customObjectType", "OfficerType");
+            new Analytics.AnalyticsBuilder(this, "800018", "800018")
+                    .setEvenName("点击分享")
+                    .setObjectID(bean.getOfficer().getId() + "")
+                    .setPageType("官员页面")
+                    .setOtherInfo(map.toString())
+                    .build()
+                    .send();
             //分享
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
+                    .setAnalyticsBean(getWMData())
                     .setImgUri(bean.getOfficer().getList_pic())
                     .setTextContent(getString(R.string.module_detail_share_content_from))
                     .setTitle(bean.getOfficer().getName())
                     .setTargetUrl(bean.getOfficer().getShare_url()));
         }
+    }
+
+
+    /**
+     * 设置网脉数据
+     */
+    private OutSizeAnalyticsBean getWMData() {
+        Map map = new HashMap();
+        map.put("customObjectType", "OfficerType");
+        return OutSizeAnalyticsBean.getInstance()
+                .setObjectID(bean.getOfficer().getId() + "")
+                .setOtherInfo(map.toString());
     }
 
 
@@ -238,6 +274,17 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 tab.setCustomView(v2);
                 ViewParent parent = v2.getParent();
                 ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
+
+                Map map = new HashMap();
+                map.put("customObjectType", "OfficerType");
+                new Analytics.AnalyticsBuilder(this, "210003", "210003")
+                        .setEvenName("点击官员任职履历标签)")
+                        .setObjectID(bean.getOfficer().getId() + "")
+                        .setPageType("官员页面")
+                        .setOtherInfo(map.toString())
+                        .setSearch("任职履历")
+                        .build()
+                        .send();
             }
 
         }

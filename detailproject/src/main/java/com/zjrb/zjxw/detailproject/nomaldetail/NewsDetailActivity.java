@@ -35,7 +35,7 @@ import com.zjrb.core.common.global.PH;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.UmengShareAnalyticsBean;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
@@ -120,6 +120,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 详情页适配器
      */
     private NewsDetailAdapter mAdapter;
+
+    private Analytics mAnalytics;
 
     /**
      * 处理上下移动监听
@@ -222,6 +224,19 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null) return;
+                Map map = new HashMap();
+                map.put("relatedColumn", draftDetailBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+                        .setEvenName("页面停留时长")
+                        .setObjectID(draftDetailBean.getArticle().getMlf_id() + "")
+                        .setObjectName(draftDetailBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(draftDetailBean.getArticle().getChannel_id())
+                        .setClassifyName(draftDetailBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setSelfObjectID(draftDetailBean.getArticle().getId() + "")
+                        .build();
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -443,6 +458,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         //评论列表
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null) {
+                //埋点，进入评论列表
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800004", "800004")
+                        .setEvenName("点击评论，进入评论列表")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+
                 //进入评论列表页面
                 if (bundle == null) {
                     bundle = new Bundle();
@@ -452,23 +484,82 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                    .setEvenName("点击点赞")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                    .setEvenName("点击更多")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null) {
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).show(getSupportFragmentManager(), "CommentWindowDialog");
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                        .setEvenName("点击评论输入框")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+
+                //评论发表成功
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                        .setEvenName("发表评论，且发送成功")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build();
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
                 //分享专用bean
-                UmengShareAnalyticsBean bean = UmengShareAnalyticsBean.getInstance()
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
@@ -505,6 +596,22 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_type_video) {
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());
         } else if (view.getId() == R.id.iv_top_bar_back) {
+            //点击返回操作
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
             finish();
         }
     }
@@ -522,6 +629,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         super.onPause();
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAnalytics != null) {
+            mAnalytics.sendWithDuration();
         }
     }
 

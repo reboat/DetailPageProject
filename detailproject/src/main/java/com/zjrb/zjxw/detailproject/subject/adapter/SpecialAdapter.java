@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.OverlayViewHolder;
 import com.zjrb.core.common.global.IKey;
@@ -17,10 +18,13 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 专题详情页 - Adapter
@@ -33,10 +37,13 @@ public class SpecialAdapter extends NewsBaseAdapter {
     // group组名
     public static final int TYPE_GROUP = 100;
 
+    private DraftDetailBean mBean;
+
     public SpecialAdapter(DraftDetailBean data) {
         super(null);
         if (data != null && data.getArticle() != null
                 && data.getArticle().getSubject_groups() != null) {
+            mBean = data;
             List<SpecialGroupBean> groups = data.getArticle().getSubject_groups();
             List list = new ArrayList();
             for (SpecialGroupBean group : groups) {
@@ -53,14 +60,14 @@ public class SpecialAdapter extends NewsBaseAdapter {
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
             viewType) {
         if (TYPE_GROUP == viewType) {
-            return new GroupViewHolder(parent);
+            return new GroupViewHolder(parent,mBean);
         }
         return super.onAbsCreateViewHolder(parent, viewType);
     }
 
     @Override
     public OverlayViewHolder onCreateOverlayViewHolder(ViewGroup parent, int viewType) {
-        return new GroupViewHolder(parent);
+        return new GroupViewHolder(parent,mBean);
     }
 
     @Override
@@ -94,6 +101,17 @@ public class SpecialAdapter extends NewsBaseAdapter {
             ButterKnife.bind(this, itemView);
         }
 
+        private DraftDetailBean mBean;
+        /**
+         * 网脉埋点专用构造器
+         * @param parent
+         */
+        public GroupViewHolder(ViewGroup parent,DraftDetailBean bean) {
+            super(parent, R.layout.module_detail_special_group_name);
+            ButterKnife.bind(this, itemView);
+            mBean = bean;
+        }
+
         @Override
         public void bindView() {
             tvGroupName.setText(mData.getGroup_name());
@@ -112,6 +130,20 @@ public class SpecialAdapter extends NewsBaseAdapter {
         @Override
         public void onClick(View v) {
             if (itemView == v && mData != null) {
+                if(mData != null){
+                    Map map = new HashMap();
+                    map.put("relatedColumn", "SubjectType");
+                    map.put("subject", mBean.getArticle().getId());
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "900002", "900002")
+                            .setEvenName("专题详情页，更多按钮点击")
+                            .setPageType("专题详情页")
+                            .setClassifyID(mBean.getArticle().getMlf_id()+"")
+                            .setClassifyName(mBean.getArticle().getDoc_title())
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .build()
+                            .send();
+                }
                 //进入专题更多列表
                 Bundle bundle = new Bundle();
                 bundle.putString(IKey.GROUP_ID, String.valueOf(mData.getGroup_id()));

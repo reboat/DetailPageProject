@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseFragment;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.global.IKey;
@@ -24,9 +25,13 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 更多图集
@@ -106,6 +111,20 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
+            Map map = new HashMap();
+            map.put("relatedColumn", mBean.getArticle().getColumn_id());
+            new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
+                    .setEvenName("更多图集页面，点击单个图集稿件)")
+                    .setObjectID(mBean.getArticle().getMlf_id() + "")
+                    .setObjectName(mBean.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mBean.getArticle().getChannel_id())
+                    .setClassifyName(mBean.getArticle().getChannel_name())
+                    .setPageType("更多图集页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mBean.getArticle().getId() + "")
+                    .build()
+                    .send();
             Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
         }
     }

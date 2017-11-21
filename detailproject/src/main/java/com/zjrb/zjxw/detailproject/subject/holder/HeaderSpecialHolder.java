@@ -196,7 +196,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             }
             //专题详情页焦点图点击
         } else if (v.getId() == R.id.layout_focus) {
-            if (!TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
+            if (mArticle != null && !TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
                 Map map = new HashMap();
                 map.put("relatedColumn", "SubjectType");
                 map.put("subject", mArticle.getId());

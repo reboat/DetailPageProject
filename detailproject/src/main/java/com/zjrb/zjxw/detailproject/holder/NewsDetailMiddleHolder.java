@@ -133,7 +133,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
             //频道订阅
             if (view.getId() == R.id.tv_column_subscribe) {
-                if (!mData.getArticle().isColumn_subscribed()) {
+                if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
                     Map map = new HashMap();
                     map.put("customObjectType", "RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")
@@ -148,33 +148,37 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 }
                 //进入频道详情页
             } else if (view.getId() == R.id.ry_channel) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mData.getArticle().getColumn_id());
-                map.put("subject", "");
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
-                        .setEvenName("点击正文底部频道名称")
-                        .setObjectID(mData.getArticle().getChannel_id())
-                        .setObjectName(mData.getArticle().getChannel_name())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getSource_channel_id())
-                        .setClassifyName(mData.getArticle().getSource_channel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                if (mData != null && mData.getArticle() != null){
+                    Map map = new HashMap();
+                    map.put("relatedColumn", mData.getArticle().getColumn_id());
+                    map.put("subject", "");
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                            .setEvenName("点击正文底部频道名称")
+                            .setObjectID(mData.getArticle().getChannel_id())
+                            .setObjectName(mData.getArticle().getChannel_name())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(mData.getArticle().getSource_channel_id())
+                            .setClassifyName(mData.getArticle().getSource_channel_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mData.getArticle().getId() + "")
+                            .build()
+                            .send();
+                }
                 callback.onOptClickChannel();
             } else {
-                Map map = new HashMap();
-                map.put("customObjectType", "RelatedColumnType");
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
-                        .setEvenName("点击进入栏目详情页")
-                        .setObjectID(mData.getArticle().getColumn_id() + "")
-                        .setObjectName(mData.getArticle().getColumn_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
-                        .build()
-                        .send();
+                if (mData != null && mData.getArticle() != null){
+                    Map map = new HashMap();
+                    map.put("customObjectType", "RelatedColumnType");
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
+                            .setEvenName("点击进入栏目详情页")
+                            .setObjectID(mData.getArticle().getColumn_id() + "")
+                            .setObjectName(mData.getArticle().getColumn_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(map.toString())
+                            .build()
+                            .send();
+                }
                 //进入栏目详情页
                 callback.onOptClickColumn();
             }

@@ -223,7 +223,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                if (draftDetailBean == null) return;
+                if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 Map map = new HashMap();
                 map.put("relatedColumn", draftDetailBean.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -467,7 +467,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
         if (view.getId() == R.id.menu_comment) {
-            if (mNewsDetail != null) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //埋点，进入评论列表
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
@@ -494,43 +494,48 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                    .setEvenName("点击点赞")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                        .setEvenName("点击点赞")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
-                    .setEvenName("点击更多")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
-            MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                        .setEvenName("点击更多")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+            }
+
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
@@ -607,21 +612,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());
         } else if (view.getId() == R.id.iv_top_bar_back) {
             //点击返回操作
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                    .setEvenName("点击返回")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             finish();
         }
     }
@@ -646,22 +653,24 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     protected void onDestroy() {
         super.onDestroy();
         //阅读深度
-        Map map = new HashMap();
-        map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-        map.put("subject", "");
-        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                .setEvenName("阅读深度")
-                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(map.toString())
-                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                .setPercentage(mScale + "")
-                .build()
-                .send();
+        if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            Map map = new HashMap();
+            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                    .setEvenName("阅读深度")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .setPercentage(mScale + "")
+                    .build()
+                    .send();
+        }
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

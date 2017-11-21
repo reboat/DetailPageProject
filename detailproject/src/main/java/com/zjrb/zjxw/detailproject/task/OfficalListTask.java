@@ -23,7 +23,7 @@ public class OfficalListTask extends APIGetTask<OfficalListBean> {
      */
     @Override
     protected void onSetupParams(Object... params) {
-        if (params.length > 0) {
+        if (params.length > 0 && params[0] != null) {
             put("start", params[0]);
         }
         put("size", 20);

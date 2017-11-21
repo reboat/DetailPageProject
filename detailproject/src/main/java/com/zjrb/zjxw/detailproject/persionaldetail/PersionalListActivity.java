@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +20,7 @@ import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
@@ -83,7 +85,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe();
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe(getLastOneTag());
 
     }
 
@@ -106,6 +108,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     private void bindData(OfficalListBean bean) {
         //初始化适配器
+        Log.e("WLJ","WLJ,getLastOneTag="+getLastOneTag());
         if (mAdapter == null) {
             mAdapter = new PersionalListAdapter(bean, mRecycler);
             mAdapter.setHeaderRefresh(refresh.getItemView());
@@ -116,6 +119,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
             mRecycler.setAdapter(mAdapter);
         } else {
             mAdapter.setData(bean);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -146,4 +150,24 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
             }
         }
     }
+
+    /**
+     * @return 获取最后一次刷新的ID
+     */
+    private Integer getLastOneTag() {
+        if (mAdapter != null && mAdapter.getDataSize() > 0) {
+            int size = mAdapter.getDataSize();
+            if (size > 0) {
+                int count = 1;
+                while (size - count >= 0) {
+                    Object data = mAdapter.getData(size - count++);
+                    if (data instanceof OfficalListBean.OfficerListBean) {
+                        return ((OfficalListBean.OfficerListBean) data).getId();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 }

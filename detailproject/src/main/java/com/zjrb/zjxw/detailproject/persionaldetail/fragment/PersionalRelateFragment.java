@@ -105,7 +105,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
         mAdapter = new OfficerRelatedNewsAdapter(bean, lvNotice, official_id);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(lvNotice,
-                        EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
+                        EmptyPageHolder.ArgsBuilder.newBuilder().content("")
                 ).itemView);
     }
 

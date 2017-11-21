@@ -234,21 +234,23 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                Map map = new HashMap();
-                map.put("customObjectType", "SubjectType");
-                map.put("subject", ((RelatedSubjectsBean) datas.get(position)).getId());
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
-                        .setEvenName("点击相关专题列表")
-                        .setObjectID(detailBean.getArticle().getMlf_id() + "")
-                        .setObjectName(detailBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(detailBean.getArticle().getChannel_id())
-                        .setClassifyName(detailBean.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
-                        .setSelfObjectID(detailBean.getArticle().getId() + "")
-                        .build()
-                        .send();
+                if(detailBean != null && detailBean.getArticle() != null){
+                    Map map = new HashMap();
+                    map.put("customObjectType", "SubjectType");
+                    map.put("subject", ((RelatedSubjectsBean) datas.get(position)).getId());
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                            .setEvenName("点击相关专题列表")
+                            .setObjectID(detailBean.getArticle().getMlf_id() + "")
+                            .setObjectName(detailBean.getArticle().getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(detailBean.getArticle().getChannel_id())
+                            .setClassifyName(detailBean.getArticle().getChannel_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(detailBean.getArticle().getId() + "")
+                            .build()
+                            .send();
+                }
                 Nav.with(UIUtils.getActivity()).to(url);
             }
 

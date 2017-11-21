@@ -208,6 +208,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setSelfObjectID(mArticle.getId() + "")
                             .build()
                             .send();
+
                 } else {
                     Map map = new HashMap();
                     map.put("relatedColumn", "SubjectType");

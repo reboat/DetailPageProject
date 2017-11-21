@@ -191,23 +191,26 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 Nav.with(this).to(bean.getOfficer().getDetail_url());
             }
         } else {
-            Map map = new HashMap();
-            map.put("customObjectType", "OfficerType");
-            new Analytics.AnalyticsBuilder(this, "800018", "800018")
-                    .setEvenName("点击分享")
-                    .setObjectID(bean.getOfficer().getId() + "")
-                    .setPageType("官员页面")
-                    .setOtherInfo(map.toString())
-                    .build()
-                    .send();
-            //分享
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setAnalyticsBean(getWMData())
-                    .setImgUri(bean.getOfficer().getList_pic())
-                    .setTextContent(getString(R.string.module_detail_share_content_from))
-                    .setTitle(bean.getOfficer().getName())
-                    .setTargetUrl(bean.getOfficer().getShare_url()));
+            if(bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())){
+                Map map = new HashMap();
+                map.put("customObjectType", "OfficerType");
+                new Analytics.AnalyticsBuilder(this, "800018", "800018")
+                        .setEvenName("点击分享")
+                        .setObjectID(bean.getOfficer().getId() + "")
+                        .setPageType("官员页面")
+                        .setOtherInfo(map.toString())
+                        .build()
+                        .send();
+                //分享
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setAnalyticsBean(getWMData())
+                        .setImgUri(bean.getOfficer().getList_pic())
+                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTitle(bean.getOfficer().getName())
+                        .setTargetUrl(bean.getOfficer().getShare_url()));
+            }
+
         }
     }
 
@@ -274,17 +277,19 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 tab.setCustomView(v2);
                 ViewParent parent = v2.getParent();
                 ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
+                if(bean != null && bean.getOfficer() != null){
+                    Map map = new HashMap();
+                    map.put("customObjectType", "OfficerType");
+                    new Analytics.AnalyticsBuilder(this, "210003", "210003")
+                            .setEvenName("点击官员任职履历标签)")
+                            .setObjectID(bean.getOfficer().getId() + "")
+                            .setPageType("官员页面")
+                            .setOtherInfo(map.toString())
+                            .setSearch("任职履历")
+                            .build()
+                            .send();
+                }
 
-                Map map = new HashMap();
-                map.put("customObjectType", "OfficerType");
-                new Analytics.AnalyticsBuilder(this, "210003", "210003")
-                        .setEvenName("点击官员任职履历标签)")
-                        .setObjectID(bean.getOfficer().getId() + "")
-                        .setPageType("官员页面")
-                        .setOtherInfo(map.toString())
-                        .setSearch("任职履历")
-                        .build()
-                        .send();
             }
 
         }

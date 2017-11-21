@@ -242,21 +242,23 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             } else {
                 onBackPressed();
             }
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                    .setEvenName("点击返回")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
         } else if (id == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(url)) {
@@ -299,7 +301,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .send();
             }
         } else if (view.getId() == R.id.menu_comment) {
-            if (mNewsDetail != null) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -324,43 +326,48 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                    .setEvenName("点击点赞")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                        .setEvenName("点击点赞")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
+
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
-                    .setEvenName("点击更多")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                        .setEvenName("点击更多")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());

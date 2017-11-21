@@ -130,7 +130,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
         @Override
         public void onClick(View v) {
             if (itemView == v && mData != null) {
-                if(mData != null){
+                if(mBean != null && mBean.getArticle() != null){
                     Map map = new HashMap();
                     map.put("relatedColumn", "SubjectType");
                     map.put("subject", mBean.getArticle().getId());

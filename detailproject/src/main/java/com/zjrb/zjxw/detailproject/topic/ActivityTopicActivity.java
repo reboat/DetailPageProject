@@ -346,21 +346,23 @@ public class ActivityTopicActivity extends BaseActivity implements
         if (ClickTracker.isDoubleClick()) return;
         //点赞
         if (view.getId() == R.id.menu_prised) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                    .setEvenName("点击点赞")
-                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                    .setObjectName(mDetailData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mDetailData.getArticle().getChannel_id())
-                    .setClassifyName(mDetailData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mDetailData != null && mDetailData.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                        .setEvenName("点击点赞")
+                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                        .setObjectName(mDetailData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mDetailData.getArticle().getChannel_id())
+                        .setClassifyName(mDetailData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
@@ -447,21 +449,23 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
 
         } else if (view.getId() == R.id.iv_top_back) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                    .setEvenName("点击返回")
-                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                    .setObjectName(mDetailData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mDetailData.getArticle().getChannel_id())
-                    .setClassifyName(mDetailData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mDetailData != null && mDetailData.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                        .setObjectName(mDetailData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mDetailData.getArticle().getChannel_id())
+                        .setClassifyName(mDetailData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             finish();
         }
     }
@@ -541,22 +545,24 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         //阅读深度
-        Map map = new HashMap();
-        map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-        map.put("subject", "");
-        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                .setEvenName("阅读深度")
-                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                .setObjectName(mDetailData.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mDetailData.getArticle().getChannel_id())
-                .setClassifyName(mDetailData.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(map.toString())
-                .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                .setPercentage(mScale + "")
-                .build()
-                .send();
+        if(mDetailData != null && mDetailData.getArticle() != null){
+            Map map = new HashMap();
+            map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                    .setEvenName("阅读深度")
+                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                    .setObjectName(mDetailData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mDetailData.getArticle().getChannel_id())
+                    .setClassifyName(mDetailData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                    .setPercentage(mScale + "")
+                    .build()
+                    .send();
+        }
         super.onDestroy();
     }
 }

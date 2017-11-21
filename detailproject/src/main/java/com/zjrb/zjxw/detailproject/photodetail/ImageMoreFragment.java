@@ -114,20 +114,23 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mBean.getArticle().getColumn_id());
-            new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
-                    .setEvenName("更多图集页面，点击单个图集稿件)")
-                    .setObjectID(mBean.getArticle().getMlf_id() + "")
-                    .setObjectName(mBean.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mBean.getArticle().getChannel_id())
-                    .setClassifyName(mBean.getArticle().getChannel_name())
-                    .setPageType("更多图集页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mBean.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mBean != null && mBean.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+                new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
+                        .setEvenName("更多图集页面，点击单个图集稿件)")
+                        .setObjectID(mBean.getArticle().getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setPageType("更多图集页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
+
             Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
         }
     }
@@ -135,21 +138,23 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @OnClick(R2.id.iv_back)
     public void onBack() {
         if (getActivity() != null) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mBean.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                    .setEvenName("点击返回")
-                    .setObjectID(mBean.getArticle().getMlf_id() + "")
-                    .setObjectName(mBean.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mBean.getArticle().getChannel_id())
-                    .setClassifyName(mBean.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mBean.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mBean != null && mBean.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mBean.getArticle().getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             getActivity().finish();
         }
     }

@@ -1,58 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/ly_container"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="?attr/bc_202124"
-              android:orientation="vertical"
-    >
-    <!--错误页面-->
-    <LinearLayout
-        android:id="@+id/view_exise"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="gone"
-        >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="?attr/bc_ffffff">
 
-        <ImageView
-            android:id="@+id/iv_exise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="118dp"
-            android:src="?attr/module_core_ic_global_failed"
-            />
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/lv_notice"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="24dp"
+    />
 
-        <TextView
-            android:id="@+id/tv_exise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_exise"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
-            android:text="加载失败"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_14sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_exise"
-            android:layout_centerHorizontal="true"
-            android:padding="3dp"
-            android:text="点击屏幕重试"
-            android:textColor="?attr/tc_484848"
-            android:textSize="@dimen/ts_11sp" />
-
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lv_notice"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="24dp"
-        >
-    </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+</FrameLayout>
 

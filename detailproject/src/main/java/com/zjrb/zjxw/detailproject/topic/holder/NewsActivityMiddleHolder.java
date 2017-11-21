@@ -75,7 +75,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
             callback = (TopicAdapter.CommonOptCallBack) itemView.getContext();
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
-                if (!mData.getArticle().isColumn_subscribed()) {
+                if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
                     Map map = new HashMap();
                     map.put("customObjectType","RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")

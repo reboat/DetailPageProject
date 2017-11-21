@@ -453,21 +453,24 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void click(int id) {
         //返回
         if (id == R.id.iv_back) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mData.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                    .setEvenName("点击返回")
-                    .setObjectID(mData.getArticle().getMlf_id() + "")
-                    .setObjectName(mData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mData.getArticle().getChannel_id())
-                    .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mData != null && mData.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                        .setEvenName("点击返回")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
+
             finish();
             //分享
         } else if (id == R.id.iv_share) {
@@ -547,21 +550,23 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
             //点赞
         } else if (id == R.id.menu_prised) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mData.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                    .setEvenName("点击点赞")
-                    .setObjectID(mData.getArticle().getMlf_id() + "")
-                    .setObjectName(mData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mData.getArticle().getChannel_id())
-                    .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "")
-                    .build()
-                    .send();
+            if(mData != null && mData.getArticle() != null){
+                Map map = new HashMap();
+                map.put("relatedColumn", mData.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                        .setEvenName("点击点赞")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
             fabulous();
             //设置
         } else if (id == R.id.menu_setting) {
@@ -679,20 +684,23 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
         calculationMaxHeight();
 
-        Map map = new HashMap();
-        map.put("relatedColumn", mData.getArticle().getColumn_id());
-        new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
-                .setEvenName("图片浏览(左右滑动)")
-                .setObjectID(mData.getArticle().getMlf_id() + "")
-                .setObjectName(mData.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mData.getArticle().getChannel_id())
-                .setClassifyName(mData.getArticle().getChannel_name())
-                .setPageType("图集详情页")
-                .setOtherInfo(map.toString())
-                .setSelfObjectID(mData.getArticle().getId() + "")
-                .build()
-                .send();
+        if(mData != null && mData.getArticle() != null){
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
+                    .setEvenName("图片浏览(左右滑动)")
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id())
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("图集详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+
     }
 
     /**
@@ -705,21 +713,23 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
                 setTopBarInOut(View.GONE);
+                if(mData != null && mData.getArticle() != null){
+                    Map map = new HashMap();
+                    map.put("relatedColumn", mData.getArticle().getColumn_id());
+                    new Analytics.AnalyticsBuilder(this, "A0010", "")
+                            .setEvenName("打开更多图集页面)")
+                            .setObjectID(mData.getArticle().getMlf_id() + "")
+                            .setObjectName(mData.getArticle().getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(mData.getArticle().getChannel_id())
+                            .setClassifyName(mData.getArticle().getChannel_name())
+                            .setPageType("更多图集页")
+                            .setOtherInfo(map.toString())
+                            .setSelfObjectID(mData.getArticle().getId() + "")
+                            .build()
+                            .send();
+                }
 
-                Map map = new HashMap();
-                map.put("relatedColumn", mData.getArticle().getColumn_id());
-                new Analytics.AnalyticsBuilder(this, "A0010", "")
-                        .setEvenName("打开更多图集页面)")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("更多图集页")
-                        .setOtherInfo(map.toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
 
             } else {
                 mTvTitleTop.setVisibility(View.GONE);
@@ -860,22 +870,25 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Map map = new HashMap();
-        map.put("relatedColumn", mData.getArticle().getColumn_id());
-        map.put("subject", "");
-        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                .setEvenName("阅读深度")
-                .setObjectID(mData.getArticle().getMlf_id() + "")
-                .setObjectName(mData.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mData.getArticle().getChannel_id())
-                .setClassifyName(mData.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(map.toString())
-                .setSelfObjectID(mData.getArticle().getId() + "")
-                .setPercentage(mReadingScale + "")
-                .build()
-                .send();
+        if(mData != null && mData.getArticle() != null){
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                    .setEvenName("阅读深度")
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id())
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .setPercentage(mReadingScale + "")
+                    .build()
+                    .send();
+        }
+
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

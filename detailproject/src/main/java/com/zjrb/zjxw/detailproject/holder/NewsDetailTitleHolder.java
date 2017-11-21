@@ -96,21 +96,23 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     @OnClick({R2.id.tv_channel_name})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        Map map = new HashMap();
-        map.put("relatedColumn", mData.getArticle().getColumn_id());
-        map.put("subject", "");
-        new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
-                .setEvenName("点击稿件标题下频道名称")
-                .setObjectID(mData.getArticle().getChannel_id())
-                .setObjectName(mData.getArticle().getChannel_name())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mData.getArticle().getSource_channel_id())
-                .setClassifyName(mData.getArticle().getSource_channel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(map.toString())
-                .setSelfObjectID(mData.getArticle().getId() + "")
-                .build()
-                .send();
+        if(mData != null && mData.getArticle() != null){
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            map.put("subject", "");
+            new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                    .setEvenName("点击稿件标题下频道名称")
+                    .setObjectID(mData.getArticle().getChannel_id())
+                    .setObjectName(mData.getArticle().getChannel_name())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getSource_channel_id())
+                    .setClassifyName(mData.getArticle().getSource_channel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
         if (view.getId() == R.id.tv_channel_name) {
             if (bundle == null) {
                 bundle = new Bundle();

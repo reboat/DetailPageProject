@@ -79,6 +79,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     ImageView mIvHost;
     @BindView(R2.id.iv_guest)
     ImageView mIvGuest;
+    @BindView(R2.id.ly_comment)
+    RelativeLayout mLyComment;
 
     /**
      * 稿件id
@@ -131,25 +133,24 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvDeleteTip.setVisibility(View.VISIBLE);
             mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
             mTvCommentContent.setVisibility(View.GONE);
-            mTvCommentSrc.setVisibility(View.GONE);
+            mLyComment.setVisibility(View.GONE);
         } else {//显示正常评论
             mTvDeleteTip.setVisibility(View.GONE);
+            mTvCommentContent.setVisibility(View.VISIBLE);
+            mLyComment.setVisibility(View.VISIBLE);
             //回复者评论
             if (mData.getContent() != null) {
                 mContent.setText(mData.getContent());
             }
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
-//                mName.setText("主持人");
                 mIvHost.setVisibility(View.VISIBLE);
                 UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
             } else if (mData.getAccount_type() == 2) {//嘉宾
-//                mName.setText("嘉宾");
                 mIvHost.setVisibility(View.VISIBLE);
                 UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
             } else if (mData.getAccount_type() == 3) {
                 if (mData.getNick_name() != null) {
-//                    mName.setText(mData.getNick_name());
                     mIvHost.setVisibility(View.GONE);
                 }
             }
@@ -160,24 +161,31 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         //父评论
         if (!TextUtils.isEmpty(mData.getParent_content())) {
-            mReply.setVisibility(View.VISIBLE);
-            mTvCommentContent.setText(mData.getParent_content());
-            //父评论昵称
-            if (mData.getParent_account_type() == 1) {//主持人
-//                mTvCommentSrc.setText("主持人");
-                mIvGuest.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
-            } else if (mData.getParent_account_type() == 2) {//嘉宾
-//                mTvCommentSrc.setText("嘉宾");
-                mIvGuest.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
-            } else if (mData.getAccount_type() == 3) {
-                if (mData.getParent_nick_name() != null) {
-//                    mTvCommentSrc.setText(mData.getParent_nick_name());
-                    mIvGuest.setVisibility(View.GONE);
+            if (mData.getParent_status() == 3) {
+                mReply.setVisibility(View.VISIBLE);
+                mTvDeleteTip.setVisibility(View.VISIBLE);
+                mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
+                mTvCommentContent.setVisibility(View.GONE);
+                mLyComment.setVisibility(View.GONE);
+            } else {
+                mTvCommentContent.setVisibility(View.VISIBLE);
+                mLyComment.setVisibility(View.VISIBLE);
+                mReply.setVisibility(View.VISIBLE);
+                mTvCommentContent.setText(mData.getParent_content());
+                //父评论昵称
+                if (mData.getParent_account_type() == 1) {//主持人
+                    mIvGuest.setVisibility(View.VISIBLE);
+                    UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
+                } else if (mData.getParent_account_type() == 2) {//嘉宾
+                    mIvGuest.setVisibility(View.VISIBLE);
+                    UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
+                } else if (mData.getAccount_type() == 3) {
+                    if (mData.getParent_nick_name() != null) {
+                        mIvGuest.setVisibility(View.GONE);
+                    }
                 }
+                mTvCommentSrc.setText(mData.getParent_nick_name());
             }
-            mTvCommentSrc.setText(mData.getParent_nick_name());
         } else {
             mReply.setVisibility(View.GONE);
         }

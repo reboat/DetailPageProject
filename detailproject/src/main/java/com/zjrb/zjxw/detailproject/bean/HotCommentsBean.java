@@ -56,6 +56,7 @@ public class HotCommentsBean implements Serializable {
     private boolean parent_liked;
     private int account_type;
     private int parent_account_type;
+    private int parent_status;
 
     /**
      * 是否是自己的评论
@@ -252,16 +253,24 @@ public class HotCommentsBean implements Serializable {
         this.own = own;
     }
 
+    public int getParent_status() {
+        return parent_status;
+    }
+
+    public void setParent_status(int parent_status) {
+        this.parent_status = parent_status;
+    }
+
     public String getCommentTime(long time) {
         long timeLocal = System.currentTimeMillis();
         if (timeLocal - created_at < 5000) {
             return "刚刚";
         } else if (timeLocal - created_at >= 5000 && timeLocal - created_at < 60 * 1000) {
-            return (int)Math.ceil((timeLocal - created_at) / 1000) + "秒前";
+            return (int) Math.ceil((timeLocal - created_at) / 1000) + "秒前";
         } else if (timeLocal - created_at >= 60 * 1000 && timeLocal - created_at < 60 * 60 * 1000) {
-            return (int)Math.ceil((timeLocal - created_at) / (60 * 1000)) + "分钟前";
+            return (int) Math.ceil((timeLocal - created_at) / (60 * 1000)) + "分钟前";
         } else if (timeLocal - created_at >= 60 * 60 * 1000 && timeLocal - created_at < 24 * 60 * 60 * 1000) {
-            return (int)Math.ceil((timeLocal - created_at) / (60 * 60 * 1000)) + "小时前";
+            return (int) Math.ceil((timeLocal - created_at) / (60 * 60 * 1000)) + "小时前";
         } else {
             return StringUtils.long2String(time, "yyyy-MM-dd");
         }

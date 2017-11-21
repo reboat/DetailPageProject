@@ -93,6 +93,7 @@
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="17dp"
                 android:textColor="?attr/tc_999999"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/ts_14sp"
                 android:visibility="gone"
                 tools:text="评论已删除" />

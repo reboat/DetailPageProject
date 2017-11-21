@@ -188,7 +188,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-
+        mFloorBar.setVisibility(View.VISIBLE);
         mView.setVisibility(View.GONE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
@@ -494,6 +494,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void showEmptyNewsDetail() {
 //        mContainer.removeAllViews();
+        mFloorBar.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
         topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

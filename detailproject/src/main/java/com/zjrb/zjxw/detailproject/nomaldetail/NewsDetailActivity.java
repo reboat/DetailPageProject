@@ -265,7 +265,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-
+        mFloorBar.setVisibility(View.VISIBLE);
         DraftDetailBean.ArticleBean article = data.getArticle();
         if (article != null) {
             ReadNewsDaoHelper.get().asyncRecord(
@@ -687,6 +687,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
+        mFloorBar.setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

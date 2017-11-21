@@ -17,6 +17,7 @@ import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalTextHolder;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,12 +42,25 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
     public void setData(OfficalListBean data) {
         cancelLoadMore();
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
-
-        addData(data != null ? data.getOfficer_list() : null);
+        List list = new ArrayList<>();
+        for (int i = 0; i < data.getOfficer_list().size(); i++) {
+            list.add(data.getOfficer_list().get(i));
+            if (data.getOfficer_list().get(i).getArticles() != null && !data.getOfficer_list().get(i).getArticles().isEmpty()) {
+                list.addAll(data.getOfficer_list().get(i).getArticles());
+            }
+        }
+        setData(data != null ? list : null);
     }
 
     public void addData(List<OfficalListBean.OfficerListBean> data) {
-        addData(data, false);
+        List list = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            list.add(data.get(i));
+            if (data.get(i).getArticles() != null && !data.get(i).getArticles().isEmpty()) {
+                list.addAll(data.get(i).getArticles());
+            }
+        }
+        addData(list, false);
         notifyDataSetChanged();
     }
 

@@ -85,7 +85,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe(getLastOneTag());
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe();
 
     }
 
@@ -108,7 +108,6 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     private void bindData(OfficalListBean bean) {
         //初始化适配器
-        Log.e("WLJ","WLJ,getLastOneTag="+getLastOneTag());
         if (mAdapter == null) {
             mAdapter = new PersionalListAdapter(bean, mRecycler);
             mAdapter.setHeaderRefresh(refresh.getItemView());
@@ -149,25 +148,6 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
                 Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
             }
         }
-    }
-
-    /**
-     * @return 获取最后一次刷新的ID
-     */
-    private Integer getLastOneTag() {
-        if (mAdapter != null && mAdapter.getDataSize() > 0) {
-            int size = mAdapter.getDataSize();
-            if (size > 0) {
-                int count = 1;
-                while (size - count >= 0) {
-                    Object data = mAdapter.getData(size - count++);
-                    if (data instanceof OfficalListBean.OfficerListBean) {
-                        return ((OfficalListBean.OfficerListBean) data).getId();
-                    }
-                }
-            }
-        }
-        return null;
     }
 
 }

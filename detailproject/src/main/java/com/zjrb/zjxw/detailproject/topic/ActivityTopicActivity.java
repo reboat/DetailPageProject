@@ -225,6 +225,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     private void fillData(DraftDetailBean data) {
         mView.setVisibility(View.GONE);
         mIvShare.setVisibility(View.VISIBLE);
+        mFloorBar.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
             DraftDetailBean.ArticleBean article = data.getArticle();
@@ -477,6 +478,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         mIvShare.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
         mTopBar.setVisibility(View.GONE);
+        mFloorBar.setVisibility(View.GONE);
 //        mContainer.removeAllViews();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();

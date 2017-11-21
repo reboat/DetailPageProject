@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,17 +50,28 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/18  上午09:14
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN, MoreDialog.IWebViewTextSize {
+        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN, MoreDialog.IWebViewTextSize, View
+        .OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
     private WebJsInterface mWebJsInterface;
+
+    /**
+     * WebView的高度
+     */
+    private int mWebViewHeight;
+    /**
+     * 当前稿件阅读进度
+     */
+    private float mReadingScale;
 
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
         initWebView();
         itemView.addOnAttachStateChangeListener(this);
+        mWebView.addOnLayoutChangeListener(this);
     }
 
     /**
@@ -273,7 +285,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 mWebView.setVisibility(View.VISIBLE);
             }
 
-
         });
     }
 
@@ -296,14 +307,43 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     }
 
+    private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            if (mWebViewHeight > 0) {
+                //当前阅读进度
+                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f / mWebViewHeight;
+                //取最大阅读进度
+                if (tempScale > mReadingScale) {
+                    mReadingScale = tempScale;
+                }
+                if (mReadingScale > 1) mReadingScale = 1;
+                if (recyclerView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+                    NewsDetailAdapter.CommonOptCallBack callback = (NewsDetailAdapter.CommonOptCallBack) recyclerView.getContext();
+                    callback.onReadingScaleChange(mReadingScale);
+                } else if (recyclerView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
+                    TopicAdapter.CommonOptCallBack callback = (TopicAdapter.CommonOptCallBack) recyclerView.getContext();
+                    callback.onReadingScaleChange(mReadingScale);
+                }
+            }
+        }
+    };
+
     @Override
     public void onViewAttachedToWindow(View v) {
         onResume();
+        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+            ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
+        }
     }
 
     @Override
     public void onViewDetachedFromWindow(View v) {
         onPause();
+        if (v == itemView && itemView.getParent() instanceof RecyclerView) {
+            ((RecyclerView) itemView.getParent()).addOnScrollListener(mScrollListener);
+        }
     }
 
     /**
@@ -327,5 +367,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         //设置缩放比例
         int zoom = Math.round(SettingBiz.get().getHtmlFontScale() * 100);
         settings.setTextZoom(zoom);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        mWebViewHeight = bottom - top;
     }
 }

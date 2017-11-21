@@ -301,6 +301,13 @@ public class ActivityTopicActivity extends BaseActivity implements
         mAdapter.showAll();
     }
 
+    private float mScale;
+
+    @Override
+    public void onReadingScaleChange(float scale) {
+        mScale = scale;
+    }
+
     /**
      * 点赞操作
      */
@@ -531,4 +538,25 @@ public class ActivityTopicActivity extends BaseActivity implements
         mAdapter.remove(position);
     }
 
+    @Override
+    protected void onDestroy() {
+        //阅读深度
+        Map map = new HashMap();
+        map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
+        map.put("subject", "");
+        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                .setEvenName("阅读深度")
+                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                .setObjectName(mDetailData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mDetailData.getArticle().getChannel_id())
+                .setClassifyName(mDetailData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(map.toString())
+                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .setPercentage(mScale + "")
+                .build()
+                .send();
+        super.onDestroy();
+    }
 }

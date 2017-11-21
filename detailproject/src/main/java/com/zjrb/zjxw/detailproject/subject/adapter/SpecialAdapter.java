@@ -146,7 +146,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                 }
                 //进入专题更多列表
                 Bundle bundle = new Bundle();
-                bundle.putString(IKey.GROUP_ID, String.valueOf(mData.getGroup_id()));
+                bundle.putString(IKey.GROUP_ID, mData.getGroup_id());
                 bundle.putString(IKey.TITLE, mData.getGroup_name());
                 Nav.with(v.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
             }

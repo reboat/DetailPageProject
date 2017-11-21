@@ -313,6 +313,12 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
          * WebView加载完毕操作
          */
         void onOptPageFinished();
+        /**
+         * 稿件阅读百分比变化
+         *
+         * @param scale
+         */
+        void onReadingScaleChange(float scale);
 
     }
 

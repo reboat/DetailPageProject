@@ -417,6 +417,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
     }
 
+    private float mScale;
+    /**
+     * 阅读百分比
+     * @param scale
+     */
+    @Override
+    public void onReadingScaleChange(float scale) {
+        mScale = scale;
+    }
+
     /**
      * 点赞操作
      */
@@ -635,6 +645,23 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //阅读深度
+        Map map = new HashMap();
+        map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
+        map.put("subject", "");
+        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                .setEvenName("阅读深度")
+                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(map.toString())
+                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .setPercentage(mScale + "")
+                .build()
+                .send();
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

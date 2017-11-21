@@ -10,17 +10,17 @@ import java.util.List;
  */
 public class SpecialGroupBean {
 
-    private int group_id;
+    private String group_id;
     private String group_name;
     private boolean group_has_more;
 
     private List<ArticleItemBean> group_articles;
 
-    public int getGroup_id() {
+    public String getGroup_id() {
         return group_id;
     }
 
-    public void setGroup_id(int group_id) {
+    public void setGroup_id(String group_id) {
         this.group_id = group_id;
     }
 

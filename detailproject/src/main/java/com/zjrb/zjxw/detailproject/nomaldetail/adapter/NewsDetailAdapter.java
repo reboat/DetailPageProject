@@ -340,6 +340,12 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
          * 点击频道操作
          */
         void onOptClickChannel();
+        /**
+         * 稿件阅读百分比变化
+         *
+         * @param scale
+         */
+        void onReadingScaleChange(float scale);
 
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -298,6 +299,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * @param data 获取图集详情页数据
      */
     private void fillData(DraftDetailBean data) {
+        //阅读深度
+        mReadingScale = (readedIndex + 1) * 1f / (data.getArticle().getAlbum_image_count());
         mView.setVisibility(View.GONE);
         mIvShare.setVisibility(View.VISIBLE);
         // 记录阅读记录
@@ -609,13 +612,22 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
     }
 
+    //图集阅读深度
+    private float mReadingScale;
+    private int readedIndex = 0;
 
     @Override
     public void onPageSelected(int position) {
+        //只记录最大阅读
+        if (readedIndex <= position) {
+            readedIndex = position;
+        }
         mIndex = position;
         mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
         setSwipeBackEnable(0 == position);
         AlbumImageListBean entity = mAtlasList.get(position);
+        //阅读深度
+        mReadingScale = (readedIndex + 1) * 1f / (mData.getArticle().getAlbum_image_count());
         mTvContent.setText(entity.getDescription());
         mTvContent.scrollTo(0, 0);
 
@@ -848,6 +860,22 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Map map = new HashMap();
+        map.put("relatedColumn", mData.getArticle().getColumn_id());
+        map.put("subject", "");
+        new Analytics.AnalyticsBuilder(this, "A0010", "800021")
+                .setEvenName("阅读深度")
+                .setObjectID(mData.getArticle().getMlf_id() + "")
+                .setObjectName(mData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mData.getArticle().getChannel_id())
+                .setClassifyName(mData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(map.toString())
+                .setSelfObjectID(mData.getArticle().getId() + "")
+                .setPercentage(mReadingScale + "")
+                .build()
+                .send();
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

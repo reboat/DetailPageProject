@@ -68,7 +68,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     @Override
     public DetailCommentHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId);
+        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId,"评论页");
     }
 
     @Override

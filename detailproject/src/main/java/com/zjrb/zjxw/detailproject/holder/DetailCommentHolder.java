@@ -91,16 +91,21 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private DraftDetailBean mBean;
 
+    private String pageType="新闻详情页";
+
     public DetailCommentHolder(ViewGroup parent, String articleId) {
         super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
     }
 
-    public DetailCommentHolder(View view, String articleId) {
+    public DetailCommentHolder(View view, String articleId,String s) {
         super(view);
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
+        if(!TextUtils.isEmpty(s)){
+            pageType = s;
+        }
     }
 
     /**
@@ -232,7 +237,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mBean.getArticle().getSource_channel_id())
                         .setClassifyName(mBean.getArticle().getSource_channel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
@@ -247,7 +252,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
@@ -270,7 +275,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mBean.getArticle().getSource_channel_id())
                         .setClassifyName(mBean.getArticle().getSource_channel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
@@ -284,7 +289,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
@@ -335,7 +340,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     .setObjectType(ObjectType.NewsType)
                     .setClassifyID(mBean.getArticle().getSource_channel_id())
                     .setClassifyName(mBean.getArticle().getSource_channel_name())
-                    .setPageType("新闻详情页")
+                    .setPageType(pageType)
                     .setOtherInfo(map.toString())
                     .setSelfObjectID(mBean.getArticle().getId() + "")
                     .setAttachObjectId(mData.getId())

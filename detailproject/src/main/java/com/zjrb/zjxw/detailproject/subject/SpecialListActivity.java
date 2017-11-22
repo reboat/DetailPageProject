@@ -17,6 +17,7 @@ import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.news.bean.ArticleItemBean;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -24,8 +25,12 @@ import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 专题列表页面
@@ -85,6 +90,8 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
         loadData(true);
     }
 
+    private SubjectListBean mBean;
+
     private void loadData(boolean isFirst) {
         new DraftTopicListTask(new APIExpandCallBack<SubjectListBean>() {
             @Override
@@ -105,6 +112,7 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
     }
 
     private void bindData(SubjectListBean bean) {
+        mBean = bean;
         if (mAdapter == null) {
             mAdapter = new SpecialListAdapter(bean, mRecycler, group_id);
             mAdapter.setHeaderRefresh(mRefresh.getItemView());
@@ -137,6 +145,23 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mAdapter != null) {
+            if (mBean != null && mBean.getArticle_list() != null && mBean.getArticle_list().size() >= position) {
+                ArticleItemBean bean = mBean.getArticle_list().get(position);
+                Map map = new HashMap();
+                map.put("customObjectType", "SubjectType");
+                new Analytics.AnalyticsBuilder(this, "900002", "900002")
+                        .setEvenName("点击更多进入专题列表页面后，新闻列表点击")
+                        .setObjectID(bean.getMlf_id() + "")
+                        .setObjectName(bean.getDoc_title())
+                        .setClassifyID(bean.getChannel_id())
+                        .setClassifyName(bean.getChannel_name())
+                        .setPageType("专题详情页")
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(bean.getId() + "")
+                        .build()
+                        .send();
+            }
+
             NewsUtils.itemClick(this, mAdapter.getData(position));
         }
     }

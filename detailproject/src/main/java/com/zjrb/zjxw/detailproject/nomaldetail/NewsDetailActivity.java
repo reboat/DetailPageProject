@@ -51,6 +51,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -198,13 +199,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     /**
      * 初始化视频
      */
-    private void initVideo(String videoPath) {
-        if (!TextUtils.isEmpty(videoPath)) {
+    private void initVideo(DraftDetailBean.ArticleBean bean) {
+        if (!TextUtils.isEmpty(bean.getVideo_url())) {
             mVideoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
             if (SettingManager.getInstance().isAutoPlayVideoWithWifi()) {
-                PlayerManager.get().play(mVideoContainer, videoPath);
+                PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), bean);
+                PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             }
         } else {
             mVideoContainer.setVisibility(View.GONE);
@@ -241,8 +243,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     mView.setVisibility(View.GONE);
                 }
                 mNewsDetail = draftDetailBean;
-                if (!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-                    initVideo(mNewsDetail.getArticle().getVideo_url());
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
+                    initVideo(mNewsDetail.getArticle());
                 }
                 fillData(mNewsDetail);
             }
@@ -418,8 +420,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
     private float mScale;
+
     /**
      * 阅读百分比
+     *
      * @param scale
      */
     @Override
@@ -609,10 +613,13 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
-            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url());
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
+                PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
+                PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+            }
         } else if (view.getId() == R.id.iv_top_bar_back) {
             //点击返回操作
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -653,7 +660,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     protected void onDestroy() {
         super.onDestroy();
         //阅读深度
-        if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
             Map map = new HashMap();
             map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
             map.put("subject", "");

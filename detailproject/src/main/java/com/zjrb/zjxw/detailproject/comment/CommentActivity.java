@@ -266,7 +266,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .build()
                         .send();
             }
-
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {

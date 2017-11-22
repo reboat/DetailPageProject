@@ -33,33 +33,33 @@ public final class PlayerAnalytics implements PlayerCallback {
 
     @Override
     public void onPause(PlayerView view) {
-        analytics(view, "A0042", "400004");
+        analytics(view, "点击视频播放框上暂停按钮", "A0042", "400004");
     }
 
     @Override
     public void onPlay(PlayerView view) {
-        analytics(view, "A0041", "400010");
+        analytics(view, "点击视频播放框上播放按钮", "A0041", "400010");
     }
 
     @Override
     public void onFullscreenChange(boolean isFullscreen, PlayerView view) {
         if (isFullscreen) {
-            analytics(view, "A0043", "400005");
+            analytics(view, "点击全屏播放按钮", "A0043", "400005");
         } else {
-            analytics(view, "A0044", "400006");
+            analytics(view, "点击关闭全屏播放按钮", "A0044", "400006");
         }
     }
 
     @Override
     public void onMuteChange(boolean isMute, PlayerView view) {
         if (isMute) {
-            analytics(view, "A0045", "400007");
+            analytics(view, "点击开启静音按钮", "A0045", "400007");
         } else {
-            analytics(view, "A0046", "400008");
+            analytics(view, "点击关闭静音按钮", "A0046", "400008");
         }
     }
 
-    private void analytics(PlayerView view, String eventCode, String umengID) {
+    private void analytics(PlayerView view, String eventName, String eventCode, String umengID) {
         DraftDetailBean.ArticleBean extra = Extra.getExtraData(view);
         if (extra != null) {
             Analytics.newBuilder(getContext(view), eventCode, umengID)

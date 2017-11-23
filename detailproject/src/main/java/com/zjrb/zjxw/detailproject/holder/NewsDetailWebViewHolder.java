@@ -1,21 +1,15 @@
 package com.zjrb.zjxw.detailproject.holder;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
@@ -23,7 +17,6 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.widget.WebFullScreenContainer;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
@@ -247,49 +240,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
         });
 
-        mWebView.setWebChromeClient(new WebChromeClient() {
-
-            private FrameLayout container;
-            private View videoView;
-            private CustomViewCallback customViewCallback;
-
-            @Override
-            public void onShowCustomView(View view, CustomViewCallback callback) {
-                if (videoView != null) {
-                    callback.onCustomViewHidden();
-                    return;
-                }
-
-                FrameLayout decor = getDecorView();
-                ((Activity) itemView.getContext())
-                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                container = new WebFullScreenContainer(itemView.getContext());
-                container.addView(view, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                decor.addView(container, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                videoView = view;
-                customViewCallback = callback;
-            }
-
-            @Override
-            public void onHideCustomView() {
-                if (videoView == null) {
-                    return;
-                }
-                ((Activity) itemView.getContext())
-                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                FrameLayout decor = getDecorView();
-                decor.removeView(container);
-                container = null;
-                videoView = null;
-                customViewCallback.onCustomViewHidden();
-                mWebView.setVisibility(View.VISIBLE);
-            }
-
-        });
-    }
-
-    protected FrameLayout getDecorView() {
-        return (FrameLayout) ((BaseActivity) itemView.getContext()).getWindow().getDecorView();
     }
 
 
@@ -338,6 +288,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     /**
      * 添加到window
+     *
      * @param v
      */
     @Override
@@ -350,6 +301,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     /**
      * 从window移除
+     *
      * @param v
      */
     @Override
@@ -378,6 +330,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     /**
      * 设置webview文字大小
+     *
      * @param textSize
      */
     @Override
@@ -389,6 +342,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     /**
      * 计算webview高度
+     *
      * @param v
      * @param left
      * @param top

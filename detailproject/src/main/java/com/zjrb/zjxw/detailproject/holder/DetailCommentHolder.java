@@ -14,7 +14,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
@@ -220,8 +219,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //回复者头像(显示默认头像)
-        GlideApp.with(mImg).load(mData.getPortrait_url()).placeholder(PH.zheSmall()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mImg);
-
+        GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mImg);
 
     }
 

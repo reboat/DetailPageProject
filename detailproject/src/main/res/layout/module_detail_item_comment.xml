@@ -18,6 +18,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginLeft="11dp"
+            android:src="?attr/module_detail_defaule_icon"
             />
 
         <RelativeLayout
@@ -46,9 +47,9 @@
                 android:id="@+id/iv_host"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/tv_name"
-                android:layout_centerVertical="true"
                 android:src="?attr/module_detail_activity_host"
                 android:visibility="gone"
                 tools:src="@mipmap/module_detail_activity_host" />
@@ -88,12 +89,12 @@
                 android:id="@+id/tv_delete_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_marginBottom="17dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="17dp"
                 android:textColor="?attr/tc_999999"
-                android:layout_centerInParent="true"
                 android:textSize="@dimen/ts_14sp"
                 android:visibility="gone"
                 tools:text="评论已删除" />
@@ -121,9 +122,9 @@
                     android:id="@+id/iv_guest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
                     android:layout_toRightOf="@+id/tv_comment_src"
-                    android:layout_centerVertical="true"
                     android:src="?attr/module_detail_activity_guest"
                     android:visibility="gone"
                     tools:src="@mipmap/module_detail_activity_guest" />

@@ -54,8 +54,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
-import static com.zjrb.core.utils.UIUtils.getContext;
-
 /**
  * 链接稿 - Activity
  * <p>
@@ -242,11 +240,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             } else {
                 onBackPressed();
             }
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
-                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -287,7 +285,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 );
 
                 //点击分享操作
-                new Analytics.AnalyticsBuilder(getContext(), "800018", "800018")
+                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018")
                         .setEvenName("点击分享")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -305,7 +303,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
-                new Analytics.AnalyticsBuilder(getContext(), "800004", "800004")
+                new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
                         .setEvenName("点击评论，进入评论列表")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -326,11 +324,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
-                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021")
                         .setEvenName("点击点赞")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -347,11 +345,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
-                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005")
                         .setEvenName("点击更多")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -372,7 +370,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 Map map = new HashMap();
                 map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 map.put("subject", "");
-                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002")
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -386,7 +384,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .send();
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023")
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -493,7 +491,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * 显示撤稿页面
      */
     private void showEmptyNewsDetail() {
-//        mContainer.removeAllViews();
         mFloorBar.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
         topBarHolder.getShareView().setVisibility(View.GONE);

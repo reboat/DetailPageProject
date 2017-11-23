@@ -55,6 +55,7 @@
         </item>
         <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f</item>
         <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>
+        <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon</item>
     </style>
 
     <style name="DetailNightTheme">
@@ -114,5 +115,7 @@
         <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn_night</item>
         <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn_night</item>
         <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn_night</item>
+        <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon_night</item>
+
     </style>
 </resources>

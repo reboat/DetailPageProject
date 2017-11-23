@@ -14,6 +14,7 @@ import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
+import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
@@ -33,8 +34,12 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
     private View mView;
+    /**
+     * 网脉专用
+     */
+    private DraftDetailBean mBean;
 
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, String articleId, boolean is_select_list) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, String articleId, boolean is_select_list, DraftDetailBean bean) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
@@ -42,6 +47,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         this.articleId = articleId;
         this.is_select_list = is_select_list;
         setData(datas);
+        mBean = bean;
     }
 
     public void setData(CommentRefreshBean data) {
@@ -68,7 +74,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     @Override
     public DetailCommentHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId,"评论页");
+        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId,"评论页",mBean);
     }
 
     @Override

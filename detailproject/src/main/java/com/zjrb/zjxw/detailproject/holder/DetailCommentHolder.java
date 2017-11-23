@@ -91,7 +91,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private DraftDetailBean mBean;
 
-    private String pageType="新闻详情页";
+    private String pageType = "新闻详情页";
 
     public DetailCommentHolder(ViewGroup parent, String articleId) {
         super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
@@ -99,13 +99,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         this.articleId = articleId;
     }
 
-    public DetailCommentHolder(View view, String articleId,String s) {
+    public DetailCommentHolder(View view, String articleId, String s,DraftDetailBean bean) {
         super(view);
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
-        if(!TextUtils.isEmpty(s)){
+        if (!TextUtils.isEmpty(s)) {
             pageType = s;
         }
+        mBean = bean;
     }
 
     /**
@@ -222,6 +223,24 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else if (view.getId() == R.id.tv_delete) {
             //弹框
+            if (mBean != null && mBean.getArticle() != null && mData != null) {
+                Map map = new HashMap();
+                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+                map.put("subject", "");
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123")
+                        .setEvenName("删除评论")
+                        .setObjectID(mBean.getArticle().getMlf_id())
+                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setPageType(pageType)
+                        .setOtherInfo(map.toString())
+                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setAttachObjectId(mData.getId())
+                        .build()
+                        .send();
+            }
             dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
@@ -232,11 +251,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
                         .setEvenName("热门评论点击回复")
-                        .setObjectID(mBean.getArticle().getChannel_id())
-                        .setObjectName(mBean.getArticle().getChannel_name())
+                        .setObjectID(mBean.getArticle().getMlf_id())
+                        .setObjectName(mBean.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getSource_channel_id())
-                        .setClassifyName(mBean.getArticle().getSource_channel_name())
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
@@ -270,11 +289,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 map.put("subject", "");
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
                         .setEvenName("热门评论点击回复")
-                        .setObjectID(mBean.getArticle().getChannel_id())
-                        .setObjectName(mBean.getArticle().getChannel_name())
+                        .setObjectID(mBean.getArticle().getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getSource_channel_id())
-                        .setClassifyName(mBean.getArticle().getSource_channel_name())
+                        .setClassifyID(mBean.getArticle().getChannel_id())
+                        .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
                         .setOtherInfo(map.toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
@@ -329,24 +348,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      * @param comment_id
      */
     private void deleteComment(final String comment_id, final int position) {
-        if (mBean != null && mBean.getArticle() != null && mData != null) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mBean.getArticle().getColumn_id());
-            map.put("subject", "");
-            new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123")
-                    .setEvenName("删除评论")
-                    .setObjectID(mBean.getArticle().getChannel_id())
-                    .setObjectName(mBean.getArticle().getChannel_name())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mBean.getArticle().getSource_channel_id())
-                    .setClassifyName(mBean.getArticle().getSource_channel_name())
-                    .setPageType(pageType)
-                    .setOtherInfo(map.toString())
-                    .setSelfObjectID(mBean.getArticle().getId() + "")
-                    .setAttachObjectId(mData.getId())
-                    .build()
-                    .send();
-        }
         new CommentDeleteTask(new APIExpandCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {

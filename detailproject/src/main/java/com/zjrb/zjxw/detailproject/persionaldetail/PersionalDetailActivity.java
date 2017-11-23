@@ -277,19 +277,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 tab.setCustomView(v2);
                 ViewParent parent = v2.getParent();
                 ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
-                if(bean != null && bean.getOfficer() != null){
-                    Map map = new HashMap();
-                    map.put("customObjectType", "OfficerType");
-                    new Analytics.AnalyticsBuilder(this, "210003", "210003")
-                            .setEvenName("点击官员任职履历标签)")
-                            .setObjectID(bean.getOfficer().getId() + "")
-                            .setPageType("官员页面")
-                            .setOtherInfo(map.toString())
-                            .setSearch("任职履历")
-                            .build()
-                            .send();
-                }
-
             }
 
         }
@@ -314,6 +301,18 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right);
             tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
             tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
+            if(bean != null && bean.getOfficer() != null){
+                Map map = new HashMap();
+                map.put("customObjectType", "OfficerType");
+                new Analytics.AnalyticsBuilder(this, "210003", "210003")
+                        .setEvenName("点击官员任职履历标签")
+                        .setObjectID(bean.getOfficer().getId() + "")
+                        .setPageType("官员页面")
+                        .setOtherInfo(map.toString())
+                        .setSearch("任职履历")
+                        .build()
+                        .send();
+            }
         }
 
     }

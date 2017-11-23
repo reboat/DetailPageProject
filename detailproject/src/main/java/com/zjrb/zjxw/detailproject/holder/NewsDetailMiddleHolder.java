@@ -12,6 +12,7 @@ import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
@@ -148,7 +149,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 }
                 //进入频道详情页
             } else if (view.getId() == R.id.ry_channel) {
-                if (mData != null && mData.getArticle() != null){
+                if (mData != null && mData.getArticle() != null) {
                     Map map = new HashMap();
                     map.put("relatedColumn", mData.getArticle().getColumn_id());
                     map.put("subject", "");
@@ -167,7 +168,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 }
                 callback.onOptClickChannel();
             } else {
-                if (mData != null && mData.getArticle() != null){
+                if (mData != null && mData.getArticle() != null) {
                     Map map = new HashMap();
                     map.put("customObjectType", "RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
@@ -205,8 +206,24 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             setAnalytics(mListData.get(position).getPlatform());
+
+            Map map = new HashMap();
+            map.put("relatedColumn", mData.getArticle().getColumn_id());
+            map.put("subject", "");
+            //分享专用bean
+            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id() + "")
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(map.toString())
+                    .setSelfobjectID(mData.getArticle().getId() + "");
+
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(true)
+                    .setAnalyticsBean(bean)
                     .setArticleId(mData.getArticle().getId() + "")
                     .setImgUri(mData.getArticle().getFirstPic())
                     .setTextContent(mData.getArticle().getSummary())
@@ -216,6 +233,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 
         }
     }
+
 
     /**
      * 设置网脉埋点

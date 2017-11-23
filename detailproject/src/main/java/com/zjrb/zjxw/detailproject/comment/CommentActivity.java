@@ -188,7 +188,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list,mNewsDetail);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list, mNewsDetail);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -350,5 +350,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                 requestData(false);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
     }
 }

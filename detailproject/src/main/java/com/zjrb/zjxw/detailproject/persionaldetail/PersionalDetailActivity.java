@@ -191,7 +191,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                 Nav.with(this).to(bean.getOfficer().getDetail_url());
             }
         } else {
-            if(bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())){
+            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
                 Map map = new HashMap();
                 map.put("customObjectType", "OfficerType");
                 new Analytics.AnalyticsBuilder(this, "800018", "800018")
@@ -201,6 +201,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                         .setOtherInfo(map.toString())
                         .build()
                         .send();
+
                 //分享
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
@@ -301,7 +302,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right);
             tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
             tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
-            if(bean != null && bean.getOfficer() != null){
+            if (bean != null && bean.getOfficer() != null) {
                 Map map = new HashMap();
                 map.put("customObjectType", "OfficerType");
                 new Analytics.AnalyticsBuilder(this, "210003", "210003")
@@ -320,5 +321,11 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
     }
 }

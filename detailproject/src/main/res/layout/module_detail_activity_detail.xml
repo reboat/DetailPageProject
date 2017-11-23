@@ -43,14 +43,22 @@
         android:layout_below="@+id/video_container"
         >
 
-        <com.aliya.view.fitsys.FitWindowsRecyclerView
-            android:id="@+id/rv_content"
+        <com.aliya.view.fitsys.FitWindowsFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            />
+            android:fitsSystemWindows="true"
+            app:fitType="bottom">
+
+            <com.aliya.view.fitsys.FitWindowsRecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                />
+
+        </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
         <include
             android:id="@+id/ly_bottom_comment"

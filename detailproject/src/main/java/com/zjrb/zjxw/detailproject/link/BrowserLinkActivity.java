@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.UMShareAPI;
@@ -79,7 +80,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
-    FrameLayout mContainer;
+    FitWindowsFrameLayout mContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
 

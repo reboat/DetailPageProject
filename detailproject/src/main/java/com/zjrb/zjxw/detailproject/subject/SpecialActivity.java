@@ -361,7 +361,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      * 显示撤稿页面
      */
     private void showCancelDraft() {
-//        lyContainer.removeAllViews();
         mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container,

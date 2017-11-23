@@ -293,6 +293,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     }
 
 
+    /**
+     * webview同步页面生命周期
+     */
     @Override
     public void onResume() {
         if (mWebView != null) {
@@ -307,6 +310,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     }
 
+    /**
+     * 阅读深度记录
+     */
     private RecyclerView.OnScrollListener mScrollListener = new RecyclerView.OnScrollListener() {
 
         @Override
@@ -330,6 +336,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     };
 
+    /**
+     * 添加到window
+     * @param v
+     */
     @Override
     public void onViewAttachedToWindow(View v) {
         onResume();
@@ -338,6 +348,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
     }
 
+    /**
+     * 从window移除
+     * @param v
+     */
     @Override
     public void onViewDetachedFromWindow(View v) {
         onPause();
@@ -362,6 +376,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.callback_zjxw_js_isAppOpenNightTheme(ThemeMode.isNightMode());
     }
 
+    /**
+     * 设置webview文字大小
+     * @param textSize
+     */
     @Override
     public void onChangeTextSize(float textSize) {
         //设置缩放比例
@@ -369,6 +387,18 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         settings.setTextZoom(zoom);
     }
 
+    /**
+     * 计算webview高度
+     * @param v
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     * @param oldLeft
+     * @param oldTop
+     * @param oldRight
+     * @param oldBottom
+     */
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         mWebViewHeight = bottom - top;

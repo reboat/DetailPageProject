@@ -63,6 +63,11 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
         new OfficalDetailTask(callback).setTag(this).exe(official_id, getLastOneTag());
     }
 
+    /**
+     * 获取列表最后一条数据的官员ID
+     *
+     * @return
+     */
     private int getLastOneTag() {
         int size = getDataSize();
         if (size > 0) {

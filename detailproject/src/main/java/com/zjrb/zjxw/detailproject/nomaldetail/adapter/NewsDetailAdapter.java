@@ -71,7 +71,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int NO_POSITION = -1;
     private int mMiddleHolderPosition = NO_POSITION;
     private int mWebViewHolderPosition = NO_POSITION;
-    private boolean isShowAll; // true：已经显示全部
+    // true：已经显示全部
+    private boolean isShowAll;
 
     public NewsDetailAdapter(List datas) {
         super(datas);
@@ -237,13 +238,19 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     private Bundle bundle;
 
+    /**
+     * 详情页item点击
+     *
+     * @param itemView .
+     * @param position .
+     */
     @Override
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (datas.get(position) instanceof RelatedNewsBean) {
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                if(detailBean != null && detailBean.getArticle() != null){
+                if (detailBean != null && detailBean.getArticle() != null) {
                     Map map = new HashMap();
                     map.put("relatedColumn", detailBean.getArticle().getColumn_id());
                     map.put("subject", "");
@@ -265,7 +272,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                if(detailBean != null && detailBean.getArticle() != null){
+                if (detailBean != null && detailBean.getArticle() != null) {
                     Map map = new HashMap();
                     map.put("customObjectType", "SubjectType");
                     map.put("subject", ((RelatedSubjectsBean) datas.get(position)).getId());
@@ -295,6 +302,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     }
 
+    /**
+     * 删除评论
+     * @param position
+     */
     public void remove(int position) {
         getData().remove(cleanPosition(position));
         notifyItemRemoved(position);
@@ -344,6 +355,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
          * 点击频道操作
          */
         void onOptClickChannel();
+
         /**
          * 稿件阅读百分比变化
          *

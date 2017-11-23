@@ -40,6 +40,9 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
         return new DetailShareViewHolder(UIUtils.inflate(R.layout.module_detail_share_item, parent, false));
     }
 
+    /**
+     * 普通详情页中间分享holder
+     */
     public class DetailShareViewHolder extends BaseRecyclerViewHolder<DetailShareBean> {
         private TextView tv_title;
         private ImageView iv_img;

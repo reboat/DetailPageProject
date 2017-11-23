@@ -10,7 +10,7 @@ import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 
 /**
- * 普通详情页 - 分割线
+ * 评论列表 - 分割线
  * <p>
  * Created by wanglinjie.
  * create time:2017/10/12 下午5:26.

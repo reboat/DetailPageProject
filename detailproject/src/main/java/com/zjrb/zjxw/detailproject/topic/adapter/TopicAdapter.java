@@ -81,7 +81,6 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         List list = new ArrayList<>();
         // webView层
         list.add(data);
-
         setData(list);
     }
 
@@ -287,6 +286,10 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         }
     }
 
+    /**
+     * 删除评论
+     * @param position
+     */
     public void remove(int position) {
         getData().remove(cleanPosition(position));
         notifyItemRemoved(position);

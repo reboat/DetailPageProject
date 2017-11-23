@@ -47,6 +47,11 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
         }
     }
 
+    /**
+     * 滑动显示/隐藏底部评论栏
+     *
+     * @param isUp
+     */
     @Override
     public void onTouchSlop(boolean isUp) {
         this.isUp = isUp;

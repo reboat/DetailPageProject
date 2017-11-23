@@ -183,13 +183,6 @@ public class ActivityTopicActivity extends BaseActivity implements
         mTopicTop.setTopBar(mTopBarHolder);
         mTopicTop.setOverlayHolder(mOverlyHolder);
         mTopicTop.setFloorBarHolder(mFloorBarHolder);
-        //TODO WLJ ???应 4.4手机
-//        mIvBack.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
     }
 
     @Override
@@ -347,7 +340,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         if (ClickTracker.isDoubleClick()) return;
         //点赞
         if (view.getId() == R.id.menu_prised) {
-            if(mDetailData != null && mDetailData.getArticle() != null){
+            if (mDetailData != null && mDetailData.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -450,7 +443,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
 
         } else if (view.getId() == R.id.iv_top_back) {
-            if(mDetailData != null && mDetailData.getArticle() != null){
+            if (mDetailData != null && mDetailData.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -547,7 +540,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     protected void onDestroy() {
         //阅读深度
-        if(mDetailData != null && mDetailData.getArticle() != null){
+        if (mDetailData != null && mDetailData.getArticle() != null) {
             Map map = new HashMap();
             map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
             map.put("subject", "");

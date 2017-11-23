@@ -115,6 +115,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         notifyItemRemoved(position);
     }
 
+    /**
+     * 刷新评论列表文案头部
+     */
     private void updateHead(){
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);

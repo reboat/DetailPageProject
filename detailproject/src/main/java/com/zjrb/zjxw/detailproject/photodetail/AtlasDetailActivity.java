@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -248,6 +247,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         mTvName.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * singleTop启动模式下复用页面
+     *
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -384,6 +388,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private int mMaxHeight = 0;
     private int mMinHeight = 0;
 
+    /**
+     * 计算底部栏最大高度
+     */
     private void calculationMaxHeight() {
 
         mTvTitle.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -453,7 +460,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void click(int id) {
         //返回
         if (id == R.id.iv_back) {
-            if(mData != null && mData.getArticle() != null){
+            if (mData != null && mData.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mData.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -550,7 +557,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
             //点赞
         } else if (id == R.id.menu_prised) {
-            if(mData != null && mData.getArticle() != null){
+            if (mData != null && mData.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mData.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -619,6 +626,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     //图集阅读深度
     private float mReadingScale;
+    //阅读数量
     private int readedIndex = 0;
 
     @Override
@@ -684,7 +692,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
         calculationMaxHeight();
 
-        if(mData != null && mData.getArticle() != null){
+        if (mData != null && mData.getArticle() != null) {
             Map map = new HashMap();
             map.put("relatedColumn", mData.getArticle().getColumn_id());
             new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
@@ -713,7 +721,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
                 setTopBarInOut(View.GONE);
-                if(mData != null && mData.getArticle() != null){
+                if (mData != null && mData.getArticle() != null) {
                     Map map = new HashMap();
                     map.put("relatedColumn", mData.getArticle().getColumn_id());
                     new Analytics.AnalyticsBuilder(this, "A0010", "")
@@ -870,7 +878,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mData != null && mData.getArticle() != null){
+        if (mData != null && mData.getArticle() != null) {
             Map map = new HashMap();
             map.put("relatedColumn", mData.getArticle().getColumn_id());
             map.put("subject", "");

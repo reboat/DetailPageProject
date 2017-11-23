@@ -116,6 +116,11 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
     }
 
+    /**
+     * 专题复用
+     *
+     * @param intent
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -343,6 +348,9 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }).setTag(this).exe(mArticleId, !mArticle.isFollowed());
     }
 
+    /**
+     * 收藏状态
+     */
     private void bindCollect() {
         if (mArticle != null && mTopBar != null) {
             mTopBar.getCollectView().setSelected(mArticle.isFollowed());

@@ -25,7 +25,7 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
 /**
- * 相关新闻holder
+ * 点击更多文案holder
  * Created by wanglinjie.
  * create time:2017/10/26  上午8:58
  */
@@ -65,7 +65,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
         if (ClickTracker.isDoubleClick()) return;
         //点击精选更多
         if (view.getId() == R.id.menu_comment) {
-            if(mBean != null && mBean.getArticle() != null){
+            if (mBean != null && mBean.getArticle() != null) {
                 Map map = new HashMap();
                 map.put("relatedColumn", mBean.getArticle().getColumn_id());
                 map.put("subject", "");
@@ -86,7 +86,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
                     bundle = new Bundle();
                 }
                 bundle.putSerializable(IKey.NEWS_DETAIL, mBean);
-                bundle.putBoolean(IKey.IS_SELECT_LIST,true);
+                bundle.putBoolean(IKey.IS_SELECT_LIST, true);
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
         }

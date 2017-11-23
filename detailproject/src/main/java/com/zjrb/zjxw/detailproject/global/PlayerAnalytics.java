@@ -15,6 +15,7 @@ import java.lang.ref.SoftReference;
 import cn.daily.news.analytics.Analytics;
 
 /**
+ * 视频埋点记录类
  * Created by wanglinjie.
  * create time:2017/11/22  下午3:08
  */

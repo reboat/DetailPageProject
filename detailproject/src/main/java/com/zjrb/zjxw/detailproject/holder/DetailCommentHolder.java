@@ -93,13 +93,27 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private String pageType = "新闻详情页";
 
+    /**
+     * 话题稿专用构造器
+     *
+     * @param parent
+     * @param articleId
+     */
     public DetailCommentHolder(ViewGroup parent, String articleId) {
         super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
     }
 
-    public DetailCommentHolder(View view, String articleId, String s,DraftDetailBean bean) {
+    /**
+     * 评论列表专用构造器
+     *
+     * @param view
+     * @param articleId
+     * @param s
+     * @param bean
+     */
+    public DetailCommentHolder(View view, String articleId, String s, DraftDetailBean bean) {
         super(view);
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;

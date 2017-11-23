@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 相关新闻holder
+ * 详情页文案holder
  * Created by wanglinjie.
  * create time:2017/10/26  上午8:58
  */

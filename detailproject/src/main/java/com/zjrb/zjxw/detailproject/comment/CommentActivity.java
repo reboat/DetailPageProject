@@ -252,8 +252,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                 new Analytics.AnalyticsBuilder(this, "800002", "800002")
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -261,7 +259,9 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("评论页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -269,9 +269,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -280,7 +277,10 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -331,8 +331,6 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    Map map = new HashMap();
-                    map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
                     new Analytics.AnalyticsBuilder(CommentActivity.this, "A0023", "A0023")
                             .setEvenName("发表评论")
                             .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -340,7 +338,9 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                             .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                             .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                             .setPageType("评论页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                    .toString())
                             .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                             .build()
                             .send();

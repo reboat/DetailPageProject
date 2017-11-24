@@ -38,9 +38,6 @@ import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoF
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -116,13 +113,13 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                Map map = new HashMap();
-                map.put("relatedColumn", "OfficerType");
                 new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "")
                         .setEvenName("打开单个官员详情页")
                         .setObjectID(data.getOfficer().getId() + "")
                         .setPageType("官员页面")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "OfficerType")
+                                .toString())
                         .build()
                         .send();
                 initView(data);
@@ -192,13 +189,13 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             }
         } else {
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
-                Map map = new HashMap();
-                map.put("customObjectType", "OfficerType");
                 new Analytics.AnalyticsBuilder(this, "800018", "800018")
                         .setEvenName("点击分享")
                         .setObjectID(bean.getOfficer().getId() + "")
                         .setPageType("官员页面")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "OfficerType")
+                                .toString())
                         .build()
                         .send();
 
@@ -220,11 +217,11 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      * 设置网脉数据
      */
     private OutSizeAnalyticsBean getWMData() {
-        Map map = new HashMap();
-        map.put("customObjectType", "OfficerType");
         return OutSizeAnalyticsBean.getInstance()
                 .setObjectID(bean.getOfficer().getId() + "")
-                .setOtherInfo(map.toString());
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "OfficerType")
+                        .toString());
     }
 
 
@@ -303,13 +300,13 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
             tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
             if (bean != null && bean.getOfficer() != null) {
-                Map map = new HashMap();
-                map.put("customObjectType", "OfficerType");
                 new Analytics.AnalyticsBuilder(this, "210003", "210003")
                         .setEvenName("点击官员任职履历标签")
                         .setObjectID(bean.getOfficer().getId() + "")
                         .setPageType("官员页面")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("customObjectType", "OfficerType")
+                                .toString())
                         .setSearch("任职履历")
                         .build()
                         .send();

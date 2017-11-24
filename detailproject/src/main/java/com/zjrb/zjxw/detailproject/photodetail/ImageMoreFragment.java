@@ -26,15 +26,10 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
-
-import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 更多图集
@@ -114,9 +109,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            if(mBean != null && mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
+            if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
                         .setEvenName("更多图集页面，点击单个图集稿件)")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -125,7 +118,10 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("更多图集页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .build()
                         .send();
@@ -138,10 +134,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @OnClick(R2.id.iv_back)
     public void onBack() {
         if (getActivity() != null) {
-            if(mBean != null && mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
+            if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -150,7 +143,10 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .build()
                         .send();
@@ -162,9 +158,6 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     @OnClick(R2.id.iv_share)
     public void onShare() {
         if (null != mBean && null != mBean.getArticle() && !TextUtils.isEmpty(mBean.getArticle().getUrl())) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mBean.getArticle().getColumn_id());
-            map.put("subject", "");
             //分享专用bean
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -173,7 +166,10 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
                     .setClassifyID(mBean.getArticle().getChannel_id() + "")
                     .setClassifyName(mBean.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
                     .setSelfobjectID(mBean.getArticle().getId() + "");
 
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()

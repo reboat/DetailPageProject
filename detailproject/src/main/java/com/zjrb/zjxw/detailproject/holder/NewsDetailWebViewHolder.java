@@ -31,9 +31,6 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
@@ -197,21 +194,21 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
                         //官员名称
                     } else if (url.contains("gy.html?id=")) {
-                        Map map = new HashMap();
-                        map.put("customObjectType", "OfficerType");
                         new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
                                 .setEvenName("点击官员名称")
                                 .setPageType("新闻详情页")
-                                .setOtherInfo(map.toString())
+                                .setOtherInfo(Analytics.newOtherInfo()
+                                        .put("customObjectType", "OfficerType")
+                                        .toString())
                                 .build()
                                 .send();
                     } else {
-                        Map map = new HashMap();
-                        map.put("mediaURL", url);
                         new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
                                 .setEvenName("链接点击")
                                 .setPageType("新闻详情页")
-                                .setOtherInfo(map.toString())
+                                .setOtherInfo(Analytics.newOtherInfo()
+                                        .put("mediaURL", url)
+                                        .toString())
                                 .build()
                                 .send();
                     }

@@ -146,16 +146,16 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         Object data = mAdapter.getData(position);
         if (data instanceof ArticleItemBean) {
             if (mArticle != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", "SubjectType");
-                map.put("subject", mArticle.getId());
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "200007", "200007")
                         .setEvenName("专题详情页，新闻列表点击")
                         .setObjectID(mArticle.getChannel_id())
                         .setObjectName(mArticle.getChannel_name())
                         .setObjectType(ObjectType.NewsType)
                         .setPageType("专题详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "SubjectType")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mArticle.getId() + "")
                         .build()
                         .send();
@@ -171,9 +171,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (mArticle != null) {
             if (view.getId() == R.id.iv_top_share) {
                 if (!TextUtils.isEmpty(mArticle.getUrl())) {
-                    Map map = new HashMap();
-                    map.put("relatedColumn", mArticle.getColumn_id());
-                    map.put("subject", "");
                     //分享专用bean
                     OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                             .setObjectID(mArticle.getMlf_id() + "")
@@ -182,7 +179,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mArticle.getColumn_id()+"")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfobjectID(mArticle.getId() + "");
 
                     UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -198,9 +198,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             } else if (view.getId() == R.id.iv_top_collect) {
                 //未被收藏
                 if (!mArticle.isFollowed()) {
-                    Map map = new HashMap();
-                    map.put("relatedColumn", "SubjectType");
-                    map.put("subject", mArticle.getId());
                     new Analytics.AnalyticsBuilder(this, "A0024", "A0024")
                             .setEvenName("点击收藏")
                             .setObjectID(mArticle.getMlf_id() + "")
@@ -209,15 +206,15 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setClassifyID(mArticle.getChannel_id())
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("专题详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", "SubjectType")
+                                    .put("subject", mArticle.getId()+"")
+                                    .toString())
                             .setSelfObjectID(mArticle.getId() + "")
                             .build()
                             .send();
 
                 } else {
-                    Map map = new HashMap();
-                    map.put("relatedColumn", "SubjectType");
-                    map.put("subject", mArticle.getId());
                     new Analytics.AnalyticsBuilder(this, "A0124", "A0124")
                             .setEvenName("取消收藏")
                             .setObjectID(mArticle.getMlf_id() + "")
@@ -226,7 +223,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setClassifyID(mArticle.getChannel_id())
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("专题详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", "SubjectType")
+                                    .put("subject", mArticle.getId()+"")
+                                    .toString())
                             .setSelfObjectID(mArticle.getId() + "")
                             .build()
                             .send();
@@ -234,9 +234,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
                 collectTask(); // 收藏
             } else if (view.getId() == R2.id.iv_top_bar_back) {//返回
-                Map map = new HashMap();
-                map.put("relatedColumn", mArticle.getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mArticle.getMlf_id() + "")
@@ -245,7 +242,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .setClassifyID(mArticle.getChannel_id())
                         .setClassifyName(mArticle.getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mArticle.getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mArticle.getId() + "")
                         .build()
                         .send();
@@ -289,9 +289,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .url(mArticle.getUrl())
             );
 
-            Map map = new HashMap();
-            map.put("relatedColumn", data.getArticle().getColumn_id());
-            map.put("subject", data.getArticle().getId());
             mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
                     .setEvenName("页面停留时长")
                     .setObjectID(data.getArticle().getMlf_id() + "")
@@ -300,6 +297,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     .setClassifyID(data.getArticle().getChannel_id())
                     .setClassifyName(data.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", data.getArticle().getColumn_id()+"")
+                            .put("subject", data.getArticle().getId()+"")
+                            .toString())
                     .setSelfObjectID(data.getArticle().getId() + "")
                     .build();
         }
@@ -376,9 +377,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerCopy.getHeight());
             if (mArticle != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mArticle.getColumn_id());
-                map.put("subject", mArticle.getId());
                 new Analytics.AnalyticsBuilder(this, "900001", "900001")
                         .setEvenName("专题详情页，分类标签点击")
                         .setObjectType(ObjectType.NewsType)
@@ -386,7 +384,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .setClassifyName(mArticle.getDoc_title())
                         .setPageType("专题详情页")
                         .setSearch(bean.getGroup_name())
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mArticle.getColumn_id()+"")
+                                .put("subject", mArticle.getId()+"")
+                                .toString())
                         .setSelfObjectID(mArticle.getId() + "")
                         .build()
                         .send();

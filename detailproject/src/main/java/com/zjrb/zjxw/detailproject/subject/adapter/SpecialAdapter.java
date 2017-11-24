@@ -131,15 +131,15 @@ public class SpecialAdapter extends NewsBaseAdapter {
         public void onClick(View v) {
             if (itemView == v && mData != null) {
                 if(mBean != null && mBean.getArticle() != null){
-                    Map map = new HashMap();
-                    map.put("relatedColumn", "SubjectType");
-                    map.put("subject", mBean.getArticle().getId());
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "900002", "900002")
                             .setEvenName("专题详情页，更多按钮点击")
                             .setPageType("专题详情页")
                             .setClassifyID(mBean.getArticle().getMlf_id()+"")
                             .setClassifyName(mBean.getArticle().getDoc_title())
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", "SubjectType")
+                                    .put("subject", mBean.getArticle().getId()+"")
+                                    .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();

@@ -97,9 +97,6 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if(mData != null && mData.getArticle() != null){
-            Map map = new HashMap();
-            map.put("relatedColumn", mData.getArticle().getColumn_id());
-            map.put("subject", "");
             new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
                     .setEvenName("点击稿件标题下频道名称")
                     .setObjectID(mData.getArticle().getChannel_id())
@@ -108,7 +105,10 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
                     .setClassifyID(mData.getArticle().getSource_channel_id())
                     .setClassifyName(mData.getArticle().getSource_channel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                            .put("subject", "")
+                            .toString())
                     .setSelfObjectID(mData.getArticle().getId() + "")
                     .build()
                     .send();

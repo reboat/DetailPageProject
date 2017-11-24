@@ -16,9 +16,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -66,9 +63,6 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
         //点击精选更多
         if (view.getId() == R.id.menu_comment) {
             if (mBean != null && mBean.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800013", "800013")
                         .setEvenName("点击精选的全部按钮")
                         .setObjectID(mBean.getArticle().getChannel_id())
@@ -77,7 +71,10 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
                         .setClassifyID(mBean.getArticle().getSource_channel_id())
                         .setClassifyName(mBean.getArticle().getSource_channel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .build()
                         .send();

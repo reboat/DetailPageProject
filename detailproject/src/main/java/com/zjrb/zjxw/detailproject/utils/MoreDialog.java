@@ -33,9 +33,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -204,9 +201,6 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         int i = v.getId();
         if (i == R.id.ll_module_core_more_collect) {
             if (mBean != null && mBean.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
                 if (!mBean.getArticle().isFollowed()) {
                     new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024")
                             .setEvenName("点击收藏")
@@ -216,7 +210,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .setClassifyID(mBean.getArticle().getChannel_id())
                             .setClassifyName(mBean.getArticle().getChannel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();
@@ -229,7 +226,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .setClassifyID(mBean.getArticle().getChannel_id())
                             .setClassifyName(mBean.getArticle().getChannel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();
@@ -244,10 +244,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             }
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
-                if(mBean != null & mBean.getArticle() != null){
-                    Map map = new HashMap();
-                    map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                    map.put("subject", "");
+                if (mBean != null & mBean.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(getContext(), "700020", "700020")
                             .setEvenName("点击开启夜间模式")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -256,16 +253,16 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .setClassifyID(mBean.getArticle().getChannel_id())
                             .setClassifyName(mBean.getArticle().getChannel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();
                 }
             } else {//关闭夜间模式
-                if(mBean != null & mBean.getArticle() != null){
-                    Map map = new HashMap();
-                    map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                    map.put("subject", "");
+                if (mBean != null & mBean.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(getContext(), "800006", "800006")
                             .setEvenName("点击关闭夜间模式")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -274,7 +271,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .setClassifyID(mBean.getArticle().getChannel_id())
                             .setClassifyName(mBean.getArticle().getChannel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();
@@ -283,10 +283,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             dismissFragmentDialog();
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
-            if(mBean != null & mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
+            if (mBean != null & mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800007", "800007")
                         .setEvenName("点击反馈问题")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -295,7 +292,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .build()
                         .send();
@@ -356,10 +356,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_SMALL);
             }
-            if(mBean != null && mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
+            if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -368,7 +365,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setEventDetail("s")
                         .build()
@@ -382,10 +382,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_STANDARD);
             }
-            if(mBean != null && mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
+            if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -394,7 +391,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setEventDetail("m")
                         .build()
@@ -408,10 +408,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             if (callback_2 != null) {
                 callback_2.onChangeTextSize(C.FONT_SCALE_LARGE);
             }
-            if(mBean != null && mBean.getArticle() != null){
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
+            if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -420,7 +417,10 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setEventDetail("l")
                         .build()

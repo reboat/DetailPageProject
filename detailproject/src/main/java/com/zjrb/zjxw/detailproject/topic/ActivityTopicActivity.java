@@ -55,9 +55,7 @@ import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
 import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -343,9 +341,6 @@ public class ActivityTopicActivity extends BaseActivity implements
         //点赞
         if (view.getId() == R.id.menu_prised) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
                         .setEvenName("点击点赞")
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -354,7 +349,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id())
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "SubjectType")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build()
                         .send();
@@ -363,9 +361,6 @@ public class ActivityTopicActivity extends BaseActivity implements
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
                         .setEvenName("点击更多")
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -374,7 +369,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id())
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build()
                         .send();
@@ -383,9 +381,6 @@ public class ActivityTopicActivity extends BaseActivity implements
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
                         .setEvenName("点击评论输入框")
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -394,7 +389,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id())
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build()
                         .send();
@@ -408,7 +406,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id())
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build();
 
@@ -420,9 +421,6 @@ public class ActivityTopicActivity extends BaseActivity implements
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
             if (mDetailData != null && mDetailData.getArticle() != null && !TextUtils.isEmpty(mDetailData.getArticle().getUrl())) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-                map.put("subject", "");
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -431,7 +429,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id() + "")
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfobjectID(mDetailData.getArticle().getId() + "");
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -446,9 +447,6 @@ public class ActivityTopicActivity extends BaseActivity implements
 
         } else if (view.getId() == R.id.iv_top_back) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -457,7 +455,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setClassifyID(mDetailData.getArticle().getChannel_id())
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build()
                         .send();
@@ -543,9 +544,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     protected void onDestroy() {
         //阅读深度
         if (mDetailData != null && mDetailData.getArticle() != null) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mDetailData.getArticle().getColumn_id());
-            map.put("subject", "");
             new Analytics.AnalyticsBuilder(this, "A0010", "800021")
                     .setEvenName("阅读深度")
                     .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -554,7 +552,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                     .setClassifyID(mDetailData.getArticle().getChannel_id())
                     .setClassifyName(mDetailData.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                            .put("subject", mDetailData.getArticle().getId() + "")
+                            .toString())
                     .setSelfObjectID(mDetailData.getArticle().getId() + "")
                     .setPercentage(mScale + "")
                     .build()

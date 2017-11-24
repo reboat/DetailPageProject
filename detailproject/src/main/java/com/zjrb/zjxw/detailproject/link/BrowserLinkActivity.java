@@ -242,9 +242,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 onBackPressed();
             }
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -253,7 +250,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -261,9 +261,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
         } else if (id == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(url)) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -272,7 +269,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -294,16 +294,16 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
             }
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
                         .setEvenName("点击评论，进入评论列表")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -312,7 +312,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -326,9 +329,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021")
                         .setEvenName("点击点赞")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -337,7 +337,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -347,9 +350,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005")
                         .setEvenName("点击更多")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -358,7 +358,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -368,9 +371,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002")
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -379,7 +379,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -393,7 +396,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
                 //进入评论编辑页面(不针对某条评论)

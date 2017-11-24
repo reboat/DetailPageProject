@@ -25,9 +25,6 @@ import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
@@ -147,8 +144,6 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
         if (mAdapter != null) {
             if (mBean != null && mBean.getArticle_list() != null && mBean.getArticle_list().size() >= position) {
                 ArticleItemBean bean = mBean.getArticle_list().get(position);
-                Map map = new HashMap();
-                map.put("customObjectType", "SubjectType");
                 new Analytics.AnalyticsBuilder(this, "900002", "900002")
                         .setEvenName("点击更多进入专题列表页面后，新闻列表点击")
                         .setObjectID(bean.getMlf_id() + "")
@@ -156,7 +151,9 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
                         .setClassifyID(bean.getChannel_id())
                         .setClassifyName(bean.getChannel_name())
                         .setPageType("专题详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("customObjectType", "SubjectType")
+                                .toString())
                         .setSelfObjectID(bean.getId() + "")
                         .build()
                         .send();

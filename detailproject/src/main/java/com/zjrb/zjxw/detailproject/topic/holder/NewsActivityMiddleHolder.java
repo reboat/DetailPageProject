@@ -16,9 +16,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,14 +73,14 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
-                    Map map = new HashMap();
-                    map.put("customObjectType","RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")
                             .setEvenName("点击订阅")
                             .setObjectID(mData.getArticle().getColumn_id()+"")
                             .setObjectName(mData.getArticle().getColumn_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("customObjectType", "RelatedColumnType")
+                                    .toString())
                             .build()
                             .send();
                     callback.onOptSubscribe();

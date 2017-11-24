@@ -26,9 +26,7 @@ import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -135,14 +133,14 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             //频道订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
-                    Map map = new HashMap();
-                    map.put("customObjectType", "RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")
                             .setEvenName("点击订阅")
                             .setObjectID(mData.getArticle().getColumn_id() + "")
                             .setObjectName(mData.getArticle().getColumn_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("customObjectType", "RelatedColumnType")
+                                    .toString())
                             .build()
                             .send();
                     callback.onOptSubscribe();
@@ -150,9 +148,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 //进入频道详情页
             } else if (view.getId() == R.id.ry_channel) {
                 if (mData != null && mData.getArticle() != null) {
-                    Map map = new HashMap();
-                    map.put("relatedColumn", mData.getArticle().getColumn_id());
-                    map.put("subject", "");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
                             .setEvenName("点击正文底部频道名称")
                             .setObjectID(mData.getArticle().getChannel_id())
@@ -161,7 +156,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                             .setClassifyID(mData.getArticle().getSource_channel_id())
                             .setClassifyName(mData.getArticle().getSource_channel_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
                             .setSelfObjectID(mData.getArticle().getId() + "")
                             .build()
                             .send();
@@ -169,14 +167,14 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 callback.onOptClickChannel();
             } else {
                 if (mData != null && mData.getArticle() != null) {
-                    Map map = new HashMap();
-                    map.put("customObjectType", "RelatedColumnType");
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
                             .setEvenName("点击进入栏目详情页")
                             .setObjectID(mData.getArticle().getColumn_id() + "")
                             .setObjectName(mData.getArticle().getColumn_name())
                             .setPageType("新闻详情页")
-                            .setOtherInfo(map.toString())
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("customObjectType", "RelatedColumnType")
+                                    .toString())
                             .build()
                             .send();
                 }
@@ -206,10 +204,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
             setAnalytics(mListData.get(position).getPlatform());
-
-            Map map = new HashMap();
-            map.put("relatedColumn", mData.getArticle().getColumn_id());
-            map.put("subject", "");
             //分享专用bean
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mData.getArticle().getMlf_id() + "")
@@ -218,7 +212,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                     .setClassifyID(mData.getArticle().getChannel_id() + "")
                     .setClassifyName(mData.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
                     .setSelfobjectID(mData.getArticle().getId() + "");
 
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -240,9 +237,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     private void setAnalytics(SHARE_MEDIA share_media) {
         if (mData != null && mData.getArticle() != null) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mData.getArticle().getColumn_id());
-            map.put("subject", "");
             String eventName = "";
             String WMCode = "";
             String UMCode = "";
@@ -281,7 +275,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                     .setClassifyID(mData.getArticle().getChannel_id())
                     .setClassifyName(mData.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
                     .setSelfObjectID(mData.getArticle().getId() + "")
                     .setEventDetail(eventDetail)
                     .build()

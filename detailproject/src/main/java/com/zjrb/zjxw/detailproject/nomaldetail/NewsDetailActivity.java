@@ -473,9 +473,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //埋点，进入评论列表
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800004", "800004")
                         .setEvenName("点击评论，进入评论列表")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -484,7 +481,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -499,9 +499,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
                         .setEvenName("点击点赞")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -510,7 +507,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -519,9 +519,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
                         .setEvenName("点击更多")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -530,7 +527,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -541,9 +541,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -552,7 +549,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -566,7 +566,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
@@ -574,9 +577,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -585,7 +585,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
                 //分享操作
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
@@ -605,7 +608,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -620,9 +626,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         } else if (view.getId() == R.id.iv_top_bar_back) {
             //点击返回操作
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -631,7 +634,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                                .put("subject","")
+                                .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
@@ -661,9 +667,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         super.onDestroy();
         //阅读深度
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            Map map = new HashMap();
-            map.put("relatedColumn", mNewsDetail.getArticle().getColumn_id());
-            map.put("subject", "");
             new Analytics.AnalyticsBuilder(this, "A0010", "800021")
                     .setEvenName("阅读深度")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -672,7 +675,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                     .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setOtherInfo(map.toString())
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
+                            .put("subject","")
+                            .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                     .setPercentage(mScale + "")
                     .build()

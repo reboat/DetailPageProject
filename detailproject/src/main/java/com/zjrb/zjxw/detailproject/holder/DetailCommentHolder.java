@@ -236,9 +236,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else if (view.getId() == R.id.tv_delete) {
             //弹框
             if (mBean != null && mBean.getArticle() != null && mData != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123")
                         .setEvenName("删除评论")
                         .setObjectID(mBean.getArticle().getMlf_id())
@@ -247,7 +244,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build()
@@ -257,10 +257,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
             if (mBean != null && mBean.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
-
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
                         .setEvenName("热门评论点击回复")
                         .setObjectID(mBean.getArticle().getMlf_id())
@@ -269,7 +265,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build()
@@ -284,7 +283,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
@@ -296,9 +298,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复回复者
         } else {
             if (mBean != null && mBean.getArticle() != null) {
-                Map map = new HashMap();
-                map.put("relatedColumn", mBean.getArticle().getColumn_id());
-                map.put("subject", "");
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
                         .setEvenName("热门评论点击回复")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
@@ -307,7 +306,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build()
@@ -321,7 +323,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
                         .setPageType(pageType)
-                        .setOtherInfo(map.toString())
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();

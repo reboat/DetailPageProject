@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -223,23 +224,48 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                onWebPageComplete();
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 // 因为加载的是html文本，所以onPageStart时机比较合适
-                if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
-                    ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
-                            .onOptPageFinished();
-                } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
-                    ((TopicAdapter.CommonOptCallBack) itemView.getContext())
-                            .onOptPageFinished();
-                }
+//                if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+//                    ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
+//                            .onOptPageFinished();
+//                } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
+//                    ((TopicAdapter.CommonOptCallBack) itemView.getContext())
+//                            .onOptPageFinished();
+//                }
             }
 
         });
 
+        //选择webview加载时机
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress > 75) {
+                    onWebPageComplete();
+                }
+            }
+        });
+
+    }
+
+    /**
+     * webview加载
+     */
+    private void onWebPageComplete() {
+        if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
+            ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
+                    .onOptPageFinished();
+        } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
+            ((TopicAdapter.CommonOptCallBack) itemView.getContext())
+                    .onOptPageFinished();
+        }
     }
 
 

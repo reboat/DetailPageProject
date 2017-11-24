@@ -172,15 +172,17 @@ public class ActivityTopicActivity extends BaseActivity implements
     private void initView() {
         mMenuComment.setVisibility(View.GONE);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-
-        mTopBarHolder = new TopBarHolder(mTopBar);
+        if (mTopBar != null) {
+            mTopBarHolder = new TopBarHolder(mTopBar);
+        }
         mOverlyHolder = new OverlyHolder(findViewById(R.id.layout_fixed));
         mFloorBarHolder = new FloorBarHolder(mFloorBar);
 
         mLoadMore = new FooterLoadMore(mRecycler, this);
         mTopicTop = new HeaderTopicTop(mRecycler);
-
-        mTopicTop.setTopBar(mTopBarHolder);
+        if (mTopBarHolder != null) {
+            mTopicTop.setTopBar(mTopBarHolder);
+        }
         mTopicTop.setOverlayHolder(mOverlyHolder);
         mTopicTop.setFloorBarHolder(mFloorBarHolder);
     }

@@ -45,19 +45,12 @@
         android:id="@+id/gridlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="12dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
         android:layout_marginTop="20dp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginBottom="17dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="?attr/module_detail_bc_e2e2e2" />
     <!--频道-->
     <RelativeLayout
         android:id="@+id/ry_channel"
@@ -90,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:background="?attr/module_detail_activity_subscribe_red"
+            android:background="?attr/module_detail_subscribe_red"
             android:foreground="?android:attr/actionBarItemBackground"
             android:gravity="center"
             android:paddingBottom="7.5dp"
@@ -133,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:background="?attr/module_detail_activity_subscribe_red"
+            android:background="?attr/module_detail_subscribe_red"
             android:foreground="?android:attr/actionBarItemBackground"
             android:gravity="center"
             android:paddingBottom="7.5dp"

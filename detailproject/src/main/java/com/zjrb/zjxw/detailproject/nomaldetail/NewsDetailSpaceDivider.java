@@ -39,10 +39,11 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
                     if (data instanceof RelatedNewsBean && nextData instanceof RelatedNewsBean) {
                         // 文章 - 文章
                         outRect.set(0, 0, 0, mDividerHeight);
-                    } else if (data instanceof HotCommentsBean && nextData instanceof HotCommentsBean) {
-                        //评论
-                        outRect.set(0, 0, 0, mDividerHeight);
                     }
+//                    else if (data instanceof HotCommentsBean && nextData instanceof HotCommentsBean) {
+//                        //评论
+//                        outRect.set(0, 0, 0, mDividerHeight);
+//                    }
                 }
             }
         }
@@ -85,14 +86,15 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
                     int top = child.getBottom() + params.bottomMargin;
                     int bottom = top + mDividerHeight;
                     c.drawRect(left + mLeftMargin, top, right - mRightMargin, bottom, mPaint);
-                } else if (data instanceof HotCommentsBean && nextData instanceof HotCommentsBean) {
-                    // 文章 - 文章
-                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
-                            .getLayoutParams();
-                    int top = child.getBottom() + params.bottomMargin;
-                    int bottom = top + mDividerHeight;
-                    c.drawRect(left + 57, top, right - mRightMargin, bottom, mPaint);
                 }
+//                else if (data instanceof HotCommentsBean && nextData instanceof HotCommentsBean) {
+//                    // 文章 - 文章
+//                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+//                            .getLayoutParams();
+//                    int top = child.getBottom() + params.bottomMargin;
+//                    int bottom = top + mDividerHeight;
+//                    c.drawRect(left + 57, top, right - mRightMargin, bottom, mPaint);
+//                }
             }
         }
     }

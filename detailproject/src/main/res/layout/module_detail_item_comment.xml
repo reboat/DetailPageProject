@@ -158,8 +158,6 @@
             android:layout_marginLeft="11dp"
             android:layout_marginTop="13dp"
             android:layout_toRightOf="@id/iv_avatar"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
             >
 
             <TextView
@@ -168,6 +166,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/tv_thumb_up"
                 android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
                 android:text="2016-09-01 21:20"
                 android:textColor="?attr/tc_484848"
                 android:textSize="@dimen/ts_11sp"
@@ -183,10 +183,12 @@
                 android:layout_toRightOf="@+id/tv_time"
                 android:drawableLeft="?attr/module_detail_comment_prise"
                 android:drawablePadding="7dp"
-                android:textColor="?attr/tc_999999"
-                android:textSize="@dimen/ts_11sp"
+                android:paddingBottom="8dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:paddingTop="8dp"
+                android:textColor="?attr/tc_999999"
+                android:textSize="@dimen/ts_11sp"
                 tools:text="1000" />
 
             <!--如果是自己发布的评论 则可以删除-->
@@ -198,9 +200,11 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="11.5dp"
-                android:text="@string/module_detail_comment_delete"
+                android:paddingBottom="8dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
+                android:paddingTop="8dp"
+                android:text="@string/module_detail_comment_delete"
                 android:textColor="?attr/tc_999999"
                 android:textSize="@dimen/ts_11sp"
                 android:visibility="gone"
@@ -208,7 +212,6 @@
 
 
         </RelativeLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

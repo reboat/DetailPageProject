@@ -1,8 +1,10 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -44,7 +46,8 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/18  上午09:14
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
-        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN, MoreDialog.IWebViewTextSize, View
+        NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN,
+        MoreDialog.IWebViewTextSize, View
         .OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
@@ -111,13 +114,15 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
-        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent()) ? "" : mData.getArticle().getContent(),
+        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent
+                        ()) ? "" : mData.getArticle().getContent(),
                 new WebBiz.ImgSrcsCallBack() {
                     @Override
                     public void callBack(String[] imgSrcs) {
                         if (mWebJsInterface != null && imgSrcs != null && imgSrcs.length > 0) {
                             for (int i = 0; i < imgSrcs.length; i++) {
-                                if (!TextUtils.isEmpty(imgSrcs[i]) && (imgSrcs[i].contains("?w=") || imgSrcs[i].contains("?width="))) {
+                                if (!TextUtils.isEmpty(imgSrcs[i]) && (imgSrcs[i].contains("?w=")
+                                        || imgSrcs[i].contains("?width="))) {
                                     imgSrcs[i] = imgSrcs[i].split("[?]")[0];
                                 }
                             }
@@ -135,7 +140,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 });
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
         css_js = "";
-        String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" rel=\"stylesheet\" type=\"text/css\"/>";
+        String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" " +
+                "rel=\"stylesheet\" type=\"text/css\"/>";
         String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
         css_js += String.format(css, uiModeCssUri);
         css_js += String.format(html, "file:///android_asset/js/basic.js");
@@ -168,9 +174,11 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setScrollContainer(false);
         // 夜间模式
         if (ThemeMode.isNightMode()) {
-            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_202124_night));
+            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
+                    .bc_202124_night));
         } else {
-            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color.bc_ffffff));
+            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
+                    .bc_ffffff));
         }
 
         settings = mWebView.getSettings();
@@ -251,12 +259,16 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * webview加载
      */
     private void onWebPageComplete() {
-        if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
-            ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
-                    .onOptPageFinished();
-        } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
-            ((TopicAdapter.CommonOptCallBack) itemView.getContext())
-                    .onOptPageFinished();
+        Context context = itemView.getContext();
+        while (context instanceof ContextThemeWrapper) {
+            if (context instanceof NewsDetailAdapter.CommonOptCallBack) {
+                ((NewsDetailAdapter.CommonOptCallBack) context).onOptPageFinished();
+                return;
+            } else if (context instanceof TopicAdapter.CommonOptCallBack) {
+                ((TopicAdapter.CommonOptCallBack) context).onOptPageFinished();
+                return;
+            }
+            context = ((ContextThemeWrapper) context).getBaseContext();
         }
     }
 
@@ -287,17 +299,20 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
                 //当前阅读进度
-                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f / mWebViewHeight;
+                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f /
+                        mWebViewHeight;
                 //取最大阅读进度
                 if (tempScale > mReadingScale) {
                     mReadingScale = tempScale;
                 }
                 if (mReadingScale > 1) mReadingScale = 1;
                 if (recyclerView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
-                    NewsDetailAdapter.CommonOptCallBack callback = (NewsDetailAdapter.CommonOptCallBack) recyclerView.getContext();
+                    NewsDetailAdapter.CommonOptCallBack callback = (NewsDetailAdapter
+                            .CommonOptCallBack) recyclerView.getContext();
                     callback.onReadingScaleChange(mReadingScale);
                 } else if (recyclerView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
-                    TopicAdapter.CommonOptCallBack callback = (TopicAdapter.CommonOptCallBack) recyclerView.getContext();
+                    TopicAdapter.CommonOptCallBack callback = (TopicAdapter.CommonOptCallBack)
+                            recyclerView.getContext();
                     callback.onReadingScaleChange(mReadingScale);
                 }
             }
@@ -372,7 +387,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * @param oldBottom
      */
     @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int
+            oldTop, int oldRight, int oldBottom) {
         mWebViewHeight = bottom - top;
     }
 }

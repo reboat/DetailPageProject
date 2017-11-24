@@ -27,7 +27,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
         .OnLayoutChangeListener {
 
     @BindView(R2.id.iv_cover)
-    ImageView mIvCover;
+    ImageView mIvCover; // 话题封面图
 
     private TopBarHolder mTopBarHolder;
     private OverlyHolder mInnerOverlyHolder;
@@ -53,17 +53,15 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
             } else {
                 scale = 1;
             }
-            if (scale < 0) {
-                scale = 0;
-            } else if (scale > 1) {
-                scale = 1;
-            }
+            scale = Math.min(1, Math.max(0, scale));
+
             if (fraction != scale) {
                 fraction = scale;
                 mTopBarHolder.setFraction(fraction);
                 mInnerOverlyHolder.setFraction(fraction);
                 mOverlyHolder.setVisible(scale == 1);
-                mFloorBarHolder.setVisible(scale == 1);
+                float limitScale = mFloorBarHolder.getRangeHeight() / recyclerView.getHeight();
+                mFloorBarHolder.setCanVisible(scale > limitScale);
             }
         }
 
@@ -92,7 +90,9 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
                 MarginLayoutParams lp = (MarginLayoutParams) mRecycler.getLayoutParams();
                 lp.setMargins(0, mTopBarHolder.getHeight(), 0, 0);
                 itemView.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                mFloorBarHolder.setVisible(true);
             } else {
+                mFloorBarHolder.setVisible(false);
                 mIvCover.setVisibility(View.VISIBLE);
                 MarginLayoutParams lp = (MarginLayoutParams) mRecycler.getLayoutParams();
                 lp.setMargins(0, 0, 0, 0);

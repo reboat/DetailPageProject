@@ -19,7 +19,7 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
     private View mFloorBar;
 
     private boolean isUp = true; // 缓存 isUp 的状态
-    private boolean visible;
+    private boolean canVisible; // 是否可以显示
 
     /**
      * 上下滑动超出范围处理
@@ -36,15 +36,23 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
         mTouchSlopHelper.setOnTouchSlopListener(this);
     }
 
-    public void setVisible(boolean visible) {
-        if (this.visible != visible) {
-            if (visible) {
+    public void setCanVisible(boolean canVisible) {
+        if (this.canVisible != canVisible) {
+            if (canVisible) {
                 onTouchSlop(isUp); // 显示时 恢复 isUp 状态
             } else {
                 onTouchSlop(true);
             }
-            this.visible = visible;
+            this.canVisible = canVisible;
         }
+    }
+
+    public void setVisible(boolean visible) {
+        mFloorBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public float getRangeHeight() {
+        return mFloorBar.getHeight() * 1.5f;
     }
 
     /**
@@ -55,7 +63,7 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
     @Override
     public void onTouchSlop(boolean isUp) {
         this.isUp = isUp;
-        if (!visible) { // visible=false时不处理
+        if (!canVisible) { // visible=false时不处理
             return;
         }
         if (!isUp && mFloorBar.getVisibility() != View.VISIBLE) {

@@ -1,6 +1,9 @@
 <resources>
 
     <style name="AppTheme" parent="CoreTheme.Base">
+
+        <item name="android:theme">@style/DetailDayTheme</item>
+
         <item name="module_news_color_484848_7a7b7d">#484848</item>
         <item name="module_news_color_f44b50_8e3636">#f44b50</item>
         <item name="module_news_color_4d95fa_315277">#4d95fa</item>
@@ -147,6 +150,8 @@
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
+
+        <item name="android:theme">@style/DetailNightTheme</item>
 
         <item name="module_news_color_484848_7a7b7d">#7a7b7d</item>
         <item name="module_news_color_f44b50_8e3636">#8e3636</item>

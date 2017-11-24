@@ -76,8 +76,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
 
-    @BindView(R2.id.tv_comment)
-    TextView mTvComment;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ry_container)
@@ -94,8 +92,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     FrameLayout mTopBar;
     @BindView(R2.id.iv_top_share)
     ColorImageView mIvShare;
-    @BindView(R2.id.iv_top_back)
-    ColorImageView mIvBack;
     @BindView(R2.id.v_container)
     FrameLayout mView;
 
@@ -218,7 +214,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     private void fillData(DraftDetailBean data) {
         mView.setVisibility(View.GONE);
         mIvShare.setVisibility(View.VISIBLE);
-        mFloorBar.setVisibility(View.VISIBLE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {
             DraftDetailBean.ArticleBean article = data.getArticle();

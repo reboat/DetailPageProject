@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:id="@+id/ry_container"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="?attr/bc_202124"
-                                             >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ry_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/bc_202124">
 
     <com.aliya.view.fitsys.FitWindowsRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
         android:fitsSystemWindows="true"
+        android:scrollbars="vertical"
         app:fitType="bottom" />
 
     <LinearLayout
@@ -24,8 +23,8 @@
             android:id="@+id/top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="@dimen/toolbar_normal_height"
             android:fitsSystemWindows="true"
+            android:minHeight="@dimen/toolbar_normal_height"
             app:fitType="top">
 
             <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView
@@ -58,7 +57,6 @@
 
     </LinearLayout>
 
-
     <include
         android:id="@+id/ly_bottom_comment"
         layout="@layout/module_detail_bottom_comment"
@@ -69,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        app:fitType="top"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:fitType="top" />
 
 </com.aliya.view.fitsys.FitWindowsFrameLayout>

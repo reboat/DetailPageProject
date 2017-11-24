@@ -230,14 +230,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                // 因为加载的是html文本，所以onPageStart时机比较合适
-//                if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
-//                    ((NewsDetailAdapter.CommonOptCallBack) itemView.getContext())
-//                            .onOptPageFinished();
-//                } else if (itemView.getContext() instanceof TopicAdapter.CommonOptCallBack) {
-//                    ((TopicAdapter.CommonOptCallBack) itemView.getContext())
-//                            .onOptPageFinished();
-//                }
             }
 
         });

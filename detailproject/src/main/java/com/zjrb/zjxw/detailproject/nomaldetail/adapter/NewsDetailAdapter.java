@@ -175,6 +175,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
      * 显示全部
      */
     public void showAll() {
+        //只加载一次
         if (isShowAll) return;
         isShowAll = true;
         int oldSize = datas.size();
@@ -304,6 +305,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     /**
      * 删除评论
+     *
      * @param position
      */
     public void remove(int position) {

@@ -37,9 +37,7 @@ import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +73,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      * 稿件ID
      */
     private String mArticleId = "";
+    private String mFromChannel;
+
     private DraftDetailBean.ArticleBean mArticle;
 
     private TopBarWhiteStyle mTopBar;
@@ -84,8 +84,18 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_special);
         ButterKnife.bind(this);
-        initArgs();
+        initArgs(getIntent());
         initView();
+        loadData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        initArgs(intent);
+        if (mTopBar != null) {
+            mTopBar.setRightVisible(false);
+        }
         loadData();
     }
 
@@ -97,13 +107,11 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         return mTopBar.getView();
     }
 
-    private String mFromChannel;
-
-    private void initArgs() {
-        Intent intent = getIntent();
+    private void initArgs(Intent intent) {
         if (intent != null) {
             Uri data = intent.getData();
             if (data != null) {
+                getIntent().setData(data);
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
                 }
@@ -111,24 +119,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
-
-
         }
-    }
-
-    /**
-     * 专题复用
-     *
-     * @param intent
-     */
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        initArgs();
-        if (mTopBar != null) {
-            mTopBar.setRightVisible(false);
-        }
-        loadData();
     }
 
     /**
@@ -180,7 +171,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mArticle.getColumn_id()+"")
+                                    .put("relatedColumn", mArticle.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
                             .setSelfobjectID(mArticle.getId() + "");
@@ -208,7 +199,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setPageType("专题详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
                                     .put("relatedColumn", "SubjectType")
-                                    .put("subject", mArticle.getId()+"")
+                                    .put("subject", mArticle.getId() + "")
                                     .toString())
                             .setSelfObjectID(mArticle.getId() + "")
                             .build()
@@ -225,7 +216,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setPageType("专题详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
                                     .put("relatedColumn", "SubjectType")
-                                    .put("subject", mArticle.getId()+"")
+                                    .put("subject", mArticle.getId() + "")
                                     .toString())
                             .setSelfObjectID(mArticle.getId() + "")
                             .build()
@@ -298,8 +289,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     .setClassifyName(data.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
                     .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", data.getArticle().getColumn_id()+"")
-                            .put("subject", data.getArticle().getId()+"")
+                            .put("relatedColumn", data.getArticle().getColumn_id() + "")
+                            .put("subject", data.getArticle().getId() + "")
                             .toString())
                     .setSelfObjectID(data.getArticle().getId() + "")
                     .build();
@@ -385,8 +376,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .setPageType("专题详情页")
                         .setSearch(bean.getGroup_name())
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mArticle.getColumn_id()+"")
-                                .put("subject", mArticle.getId()+"")
+                                .put("relatedColumn", mArticle.getColumn_id() + "")
+                                .put("subject", mArticle.getId() + "")
                                 .toString())
                         .setSelfObjectID(mArticle.getId() + "")
                         .build()

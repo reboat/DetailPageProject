@@ -41,6 +41,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
     public SpecialAdapter(DraftDetailBean data) {
         super(null);
+        setData(data);
+    }
+
+    public void setData(DraftDetailBean data) {
         if (data != null && data.getArticle() != null
                 && data.getArticle().getSubject_groups() != null) {
             mBean = data;

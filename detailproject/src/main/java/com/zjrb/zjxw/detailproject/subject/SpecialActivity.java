@@ -78,6 +78,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private DraftDetailBean.ArticleBean mArticle;
 
     private TopBarWhiteStyle mTopBar;
+    private OverlayHelper mOverlayHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -297,14 +298,25 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
         bindCollect();
         mTopBar.setRightVisible(true);
-        //添加专题详情页的头部holder
-        headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);
-        headHolder.setData(data);
-        mAdapter = new SpecialAdapter(data);
-        mAdapter.addHeaderView(headHolder.getItemView());
-        mAdapter.setOnItemClickListener(this);
-        mRecycler.setAdapter(mAdapter);
-        new OverlayHelper(mRecycler, mRecyclerCopy, mGroupCopy);
+
+        if (mAdapter == null) {
+            mAdapter = new SpecialAdapter(data);
+            mAdapter.setOnItemClickListener(this);
+            //添加专题详情页的头部holder
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);
+            headHolder.setData(data);
+            mAdapter.addHeaderView(headHolder.getItemView());
+            mRecycler.setAdapter(mAdapter);
+        } else {
+            headHolder.setData(data);
+            mAdapter.setData(data);
+            mAdapter.notifyDataSetChanged();
+            mRecycler.scrollToPosition(0);
+        }
+
+        if (mOverlayHelper == null) {
+            mOverlayHelper = new OverlayHelper(mRecycler, mRecyclerCopy, mGroupCopy);
+        }
     }
 
     /**

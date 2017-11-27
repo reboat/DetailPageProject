@@ -164,10 +164,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
+                UiModeUtils.applyImageSrc(mIvHost, R.attr.module_detail_activity_host);
             } else if (mData.getAccount_type() == 2) {//嘉宾
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
+                UiModeUtils.applyImageSrc(mIvHost, R.attr.module_detail_activity_guest);
             } else if (mData.getAccount_type() == 3) {
                 if (mData.getNick_name() != null) {
                     mIvHost.setVisibility(View.GONE);

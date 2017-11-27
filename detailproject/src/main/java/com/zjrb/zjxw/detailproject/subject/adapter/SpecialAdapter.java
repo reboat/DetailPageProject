@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.base.OverlayViewHolder;
 import com.zjrb.core.common.global.IKey;
@@ -18,9 +17,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +38,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
     public SpecialAdapter(DraftDetailBean data) {
         super(null);
+        setData(data);
+    }
+
+    public void setData(DraftDetailBean data) {
         if (data != null && data.getArticle() != null
                 && data.getArticle().getSubject_groups() != null) {
             mBean = data;

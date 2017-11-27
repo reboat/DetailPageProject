@@ -41,7 +41,6 @@
                 android:paddingLeft="20dp"
                 android:text="@string/module_detail_comment_hint"
                 android:textColor="?attr/tc_999999"
-                android:textColorHint="#7a7b7d"
                 android:textSize="@dimen/ts_14sp" />
 
         </FrameLayout>

@@ -27,9 +27,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
@@ -74,8 +71,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
 
     public static final int MAX_DEFAULT_LINES = 3;
 
-    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy,
-                               OnClickChannelListener listener) {
+    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, OnClickChannelListener
+            listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
         mRecyclerTabCopy = copy;
@@ -207,7 +204,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                         .setPageType("专题详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", "SubjectType")
-                                .put("subject", mArticle.getId()+"")
+                                .put("subject", mArticle.getId() + "")
                                 .toString())
                         .setSelfObjectID(mArticle.getId() + "")
                         .build()

@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.daily.news.bean.ArticleItemBean;
+import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 
 /**
@@ -35,7 +36,9 @@ public class SpecialSpaceDivider extends ListSpaceDivider {
                 if (position < dataSize - 1) {
                     Object data = adapter.getData(position);
                     Object nextData = adapter.getData(position + 1);
-                    if (data instanceof ArticleItemBean && nextData instanceof ArticleItemBean) {
+                    if ((data instanceof ArticleItemBean && nextData instanceof ArticleItemBean)
+                            || (data instanceof ArticleItemBean && nextData instanceof
+                            SpecialGroupBean)) {
                         // 文章 - 文章
                         outRect.set(0, 0, 0, mDividerHeight);
                     }
@@ -74,7 +77,8 @@ public class SpecialSpaceDivider extends ListSpaceDivider {
             Object data = adapter.getData(position);
             if (position < adapter.getDataSize() - 1) {
                 Object nextData = adapter.getData(position + 1);
-                if (data instanceof ArticleItemBean && nextData instanceof ArticleItemBean) {
+                if ((data instanceof ArticleItemBean && nextData instanceof ArticleItemBean) ||
+                        (data instanceof ArticleItemBean && nextData instanceof SpecialGroupBean)) {
                     // 文章 - 文章
                     RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                             .getLayoutParams();

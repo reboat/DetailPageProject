@@ -30,7 +30,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
     ImageView mIvCover; // 话题封面图
 
     private TopBarHolder mTopBarHolder;
-    private OverlyHolder mInnerOverlyHolder;
+    private OverlyHolder mCoverOverlyHolder; // 封面
     private OverlyHolder mOverlyHolder;
     private FloorBarHolder mFloorBarHolder;
 
@@ -46,7 +46,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             int maxRange = itemView.getHeight()
-                    - mInnerOverlyHolder.getHeight() - mTopBarHolder.getHeight();
+                    - mCoverOverlyHolder.getHeight() - mTopBarHolder.getHeight();
             float scale;
             if (maxRange > 0) {
                 scale = (-1f * itemView.getTop()) / maxRange;
@@ -58,7 +58,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
             if (fraction != scale) {
                 fraction = scale;
                 mTopBarHolder.setFraction(fraction);
-                mInnerOverlyHolder.setFraction(fraction);
+                mCoverOverlyHolder.setFraction(fraction);
                 mOverlyHolder.setVisible(scale == 1);
                 float limitScale = mFloorBarHolder.getRangeHeight() / recyclerView.getHeight();
                 mFloorBarHolder.setCanVisible(scale > limitScale);
@@ -70,7 +70,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
     public HeaderTopicTop(RecyclerView parent) {
         super(parent, R.layout.module_detail_activity_top);
         ButterKnife.bind(this, itemView);
-        mInnerOverlyHolder = new OverlyHolder(findViewById(R.id.layout_fixed));
+        mCoverOverlyHolder = new OverlyHolder(findViewById(R.id.layout_fixed));
         itemView.addOnAttachStateChangeListener(this);
         mRecycler = parent;
     }
@@ -79,7 +79,7 @@ public class HeaderTopicTop extends PageItem implements View.OnAttachStateChange
 
         mTopBarHolder.setData(data);
         mOverlyHolder.setData(data);
-        mInnerOverlyHolder.setData(data);
+        mCoverOverlyHolder.setData(data);
 
         if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();

@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class OverlyHolder {
 
     public View itemView;
 
-    private static final int BC_START = Color.parseColor("#7f000000");
+    private static final int BC_START = Color.parseColor("#cc000000");
     private static final int ATTR_BC_END = R.attr.module_detail_color_ffffff_202124;
 
     // 标题 颜色
@@ -94,10 +95,22 @@ public class OverlyHolder {
     }
 
     public void setFraction(float fraction) {
+
+        GradientDrawable bg;
+        if (itemView.getBackground() instanceof GradientDrawable) {
+            bg = (GradientDrawable) itemView.getBackground();
+            bg.mutate();
+        } else {
+            bg = new GradientDrawable();
+            bg.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+        }
+        bg.setColors(new int[]{
+                ArgbUtils.evaluate(fraction,
+                        Color.TRANSPARENT, AttrUtils.getColor(getTheme(), ATTR_BC_END)),
+                ArgbUtils.evaluate(fraction,
+                        BC_START, AttrUtils.getColor(getTheme(), ATTR_BC_END))});
         // 背景
-        itemView.setBackgroundColor(
-                ArgbUtils.evaluate(
-                        fraction, BC_START, AttrUtils.getColor(getTheme(), ATTR_BC_END)));
+        itemView.setBackground(bg);
 
         // 标题
         mTvTitle.setTextColor(ArgbUtils.evaluate(fraction,

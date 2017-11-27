@@ -31,6 +31,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
 //        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
         Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
+//        Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=741791");
+//        Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=741790");
 
 //        switch (v.getId()) {
 //            case R.id.tv_text:

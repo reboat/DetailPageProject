@@ -379,6 +379,10 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerCopy.getHeight());
+
+//            if (mOverlayHelper != null) {
+//                mOverlayHelper.updateChannelTab(bean);
+//            }
             if (mArticle != null) {
                 new Analytics.AnalyticsBuilder(this, "900001", "900001")
                         .setEvenName("专题详情页，分类标签点击")

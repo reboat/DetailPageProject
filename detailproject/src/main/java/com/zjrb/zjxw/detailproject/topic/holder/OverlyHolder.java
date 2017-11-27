@@ -61,7 +61,7 @@ public class OverlyHolder {
             if (hosts != null && !hosts.isEmpty()) {
                 mTvHost.setText("主持人：");
                 for (String host : hosts) {
-                    mTvHost.append(host);
+                    mTvHost.append(host+"  ");
                 }
                 mTvHost.setVisibility(View.VISIBLE);
             } else {
@@ -74,7 +74,7 @@ public class OverlyHolder {
                 mTvGuest.setVisibility(View.VISIBLE);
                 mTvGuest.setText("嘉宾：");
                 for (String guest : guests) {
-                    mTvGuest.append(guest);
+                    mTvGuest.append(guest+"  ");
                 }
             } else {
                 mTvGuest.setVisibility(View.GONE);

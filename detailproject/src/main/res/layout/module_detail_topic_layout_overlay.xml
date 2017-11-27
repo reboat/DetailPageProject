@@ -30,6 +30,8 @@
         android:layout_marginTop="12dp"
         android:drawableLeft="@mipmap/module_detail_activity_host"
         android:drawablePadding="5dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="?attr/module_detail_color_999999_5c5c5c"
         android:textSize="@dimen/ts_13sp"
         tools:text="主持人：小明" />
@@ -40,6 +42,8 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@mipmap/module_detail_activity_guest"
         android:drawablePadding="5dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textColor="?attr/module_detail_color_999999_5c5c5c"
         android:textSize="@dimen/ts_13sp"
         tools:text="嘉宾：小明  豆包" />

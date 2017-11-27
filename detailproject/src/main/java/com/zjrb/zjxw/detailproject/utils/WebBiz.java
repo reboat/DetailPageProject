@@ -33,7 +33,7 @@ public class WebBiz {
      * @param callBack
      * @return 处理过的Html Body内容
      */
-    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack, TextCallBack textBack) {
+    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack, TextCallBack textBack, AudioCallBack audioCallBack) {
 
         Document doc = Jsoup.parseBodyFragment(html);
         List<String> imgSrcs = parseImgTags(doc);
@@ -47,10 +47,30 @@ public class WebBiz {
             textBack.callBack(doc.text());
         }
 
+        if (audioCallBack != null) {
+            audioCallBack.callBack(parseAudioTags(doc));
+        }
+
         return doc.body().html();
 
     }
 
+
+    /**
+     * 解析音频标签
+     *
+     * @param doc
+     * @return
+     */
+    private static int parseAudioTags(Document doc) {
+        if (doc == null) return 0;
+        Elements audio = doc.getElementsByTag(html.tag.AUDIO);
+        if (audio != null && audio.size() > 0) {
+            return audio.size();
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * 解析视频相关标签 Video、iframe
@@ -162,7 +182,7 @@ public class WebBiz {
         return imgSrcs;
     }
 
-    private static void replaceWebViewPic(int position,String  url){
+    private static void replaceWebViewPic(int position, String url) {
 
     }
 
@@ -247,6 +267,13 @@ public class WebBiz {
     }
 
     /**
+     * 获取网页中的音频
+     */
+    public interface AudioCallBack {
+        void callBack(int count);
+    }
+
+    /**
      * Html 相关常量
      */
     private static final class html {
@@ -261,6 +288,8 @@ public class WebBiz {
             static final String VIDEO = "video";
 
             static final String A = "a";
+
+            static final String AUDIO = "audio";
 
         }
 

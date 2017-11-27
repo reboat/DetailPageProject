@@ -137,7 +137,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         return super.dispatchTouchEvent(ev);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -482,8 +481,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -508,8 +507,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -528,8 +527,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -550,8 +549,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -567,8 +566,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
@@ -586,8 +585,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
                 //分享操作
@@ -609,8 +608,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -635,8 +634,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -645,6 +644,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
             finish();
         }
     }
+
 
     @Override
     protected void onResume() {
@@ -676,8 +676,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
                     .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                            .put("subject","")
+                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                            .put("subject", "")
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                     .setPercentage(mScale + "")
@@ -713,6 +713,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     public void onDeleteComment(int position) {
         mAdapter.remove(position);
     }
+
 }
 
 

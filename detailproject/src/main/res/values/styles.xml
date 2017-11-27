@@ -57,6 +57,7 @@
         <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>
         <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon</item>
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red</item>
+        <item name="bc_mask">@android:color/transparent</item>
     </style>
 
     <style name="DetailNightTheme">
@@ -118,5 +119,6 @@
         <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn_night</item>
         <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon_night</item>
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red_night</item>
+        <item name="bc_mask">@color/color_7f000000_night</item>
     </style>
 </resources>

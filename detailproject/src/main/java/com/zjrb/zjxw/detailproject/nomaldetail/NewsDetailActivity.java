@@ -701,6 +701,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
         mFloorBar.setVisibility(View.GONE);
+        mVideoContainer.setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

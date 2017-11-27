@@ -46,7 +46,7 @@
         <attr name="bc_ffffff" format="color|reference" />
         <!--#808080  #5c5c5c-->
         <attr name="module_detail_tc_808080" format="color|reference" />
-
+        <attr name="bc_mask" format="color" />
         <!--#33ffffff  #191919-->
         <attr name="bc_33ffffff" format="color|reference" />
         <!--#f4f5f6  #191919-->

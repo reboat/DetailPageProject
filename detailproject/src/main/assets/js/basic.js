@@ -27,3 +27,12 @@ function replaceImage(index,url){
         }
        }
  }
+
+ function musicPause(){
+    var audio = document.getElementsByTagName("audio")
+    for(var i = 0; i < audio.length; i++) {
+        var a = document.getElementsByTagName("audio")[i];
+        a.pause();
+    }
+
+ }

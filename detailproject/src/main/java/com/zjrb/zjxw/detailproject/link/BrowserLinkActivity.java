@@ -47,9 +47,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -108,7 +105,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         getIntentData(getIntent());
         init();
         loadData();
-
     }
 
     /**
@@ -121,6 +117,16 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     private String mFromChannel;
 
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getIntentData(intent);
+        loadData();
+        if(topBarHolder != null){
+            topBarHolder.getShareView().setVisibility(View.VISIBLE);
+        }
+    }
     /**
      * @param intent 获取传递数据
      */
@@ -251,8 +257,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -270,8 +276,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
@@ -295,8 +301,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -313,8 +319,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -338,8 +344,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -359,8 +365,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -380,8 +386,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
@@ -397,8 +403,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id()+"")
-                                .put("subject","")
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();

@@ -60,6 +60,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
+
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
@@ -103,6 +104,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     }
 
     private String css_js;
+    private int audioCount = 0;
 
     /**
      * 设置CSS和JS
@@ -133,6 +135,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                         if (mWebJsInterface != null && !TextUtils.isEmpty(text)) {
                             mWebJsInterface.setHtmlText(text);
                         }
+                    }
+                }, new WebBiz.AudioCallBack() {
+
+                    @Override
+                    public void callBack(int count) {
+                        audioCount = count;
                     }
                 });
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
@@ -285,8 +293,18 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     public void onPause() {
         if (mWebView != null) {
             mWebView.onPause();
+            if (audioCount > 0) {
+                final String execUrl = "javascript:musicPause();";
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(execUrl);
+                    }
+                });
+            }
         }
     }
+
 
     /**
      * 阅读深度记录

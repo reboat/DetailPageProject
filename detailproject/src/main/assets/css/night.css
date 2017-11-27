@@ -17,5 +17,7 @@ input,select,option,button,textarea{color:#7a7b7d;
     background:#202124;
     border:#555555;
     border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
+.wgImage .wgImage-content {border:1px #5C5C5C solid!important;border-top:none!important;}
+
 input:focus,select:focus,option:focus,button:focus,textarea:focus,input:hover,input[type=button],input[type=submit],input[type=reset],input[type=image] {border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}
 input[type=button]:focus,input[type=submit]:focus,input[type=reset]:focus,input[type=image]:focus, input[type=button]:hover,input[type=submit]:hover,input[type=reset]:hover,input[type=image]:hover {color:#7a7b7d;background:#202124; border-color: #7a7b7d #7a7b7d #7a7b7d #7a7b7d;}

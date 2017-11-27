@@ -8,5 +8,5 @@
     android:layout_height="wrap_content"
     android:scaleType="fitXY"
     android:layout_marginBottom="12dp"
-    app:ratio_w2h="235:100"
+    app:ratio_w2h="359:123"
     />

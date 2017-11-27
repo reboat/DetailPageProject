@@ -157,7 +157,8 @@
         </activity>
 
         <!--话题详情页-->
-        <activity android:name=".topic.ActivityTopicActivity">
+        <activity android:name=".topic.ActivityTopicActivity"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

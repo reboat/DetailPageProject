@@ -209,6 +209,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
 
         //显示标题展示WebView内容等
+        mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
 
         //是否点赞

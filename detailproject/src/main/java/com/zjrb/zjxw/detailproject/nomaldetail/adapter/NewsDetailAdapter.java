@@ -30,9 +30,7 @@ import com.zjrb.zjxw.detailproject.holder.NewsStringClickMoreHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.daily.news.analytics.Analytics;
 
@@ -73,9 +71,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private int mWebViewHolderPosition = NO_POSITION;
     // true：已经显示全部
     private boolean isShowAll;
+    private boolean mHasVideoUrl = false;
 
-    public NewsDetailAdapter(List datas) {
+    public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
         super(datas);
+        mHasVideoUrl = hasVideoUrl;
         setOnItemClickListener(this);
     }
 
@@ -86,7 +86,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (viewType == VIEW_TYPE_TOP) {
             return new NewsDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return webviewHolder = new NewsDetailWebViewHolder(parent);
+            return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {

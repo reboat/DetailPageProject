@@ -59,11 +59,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * 当前稿件阅读进度
      */
     private float mReadingScale;
+    private boolean mHasVideoUrl = false;
 
-
-    public NewsDetailWebViewHolder(ViewGroup parent) {
+    public NewsDetailWebViewHolder(ViewGroup parent,boolean hasVideoUrl) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
+        mHasVideoUrl = hasVideoUrl;
         initWebView();
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
@@ -173,6 +174,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     private void initWebView() {
         // 隐藏到滚动条
+        mWebView.hasVideoUrl(mHasVideoUrl);
         mWebView.requestFocus(View.FOCUS_DOWN);
         mWebView.setVerticalScrollBarEnabled(false);
         mWebView.setHorizontalScrollBarEnabled(false);

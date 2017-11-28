@@ -1,9 +1,13 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -137,12 +141,34 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         return super.dispatchTouchEvent(ev);
     }
 
+    private class VideoBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video).equals(action)) {
+                mVideoContainer.setVisibility(View.GONE);
+            } else if (UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video).equals(action)) {
+                mVideoContainer.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+    private VideoBroadcastReceiver receive;
+    private IntentFilter intentFilter;
+    private LocalBroadcastManager localBroadcastManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTranslucenceStatusBarBg();
         setContentView(R.layout.module_detail_activity_detail);
         ButterKnife.bind(this);
+        localBroadcastManager = LocalBroadcastManager.getInstance(this);
+        receive = new VideoBroadcastReceiver();
+        intentFilter = new IntentFilter(UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video));
+        intentFilter.addAction(UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video));
+        localBroadcastManager.registerReceiver(receive, intentFilter);
         getIntentData(getIntent());
         init();
     }
@@ -152,7 +178,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
-
     }
 
     /**
@@ -288,7 +313,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 //        if (mAdapter == null) {
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
-        mAdapter = new NewsDetailAdapter(datas);
+        mAdapter = new NewsDetailAdapter(datas,!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())?true:false);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -687,6 +712,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
+        localBroadcastManager.unregisterReceiver(receive);
     }
 
     @Override

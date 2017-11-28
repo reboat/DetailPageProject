@@ -71,6 +71,8 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
+
             </intent-filter>
         </activity>
 
@@ -101,6 +103,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
             </intent-filter>
         </activity>
 
@@ -127,6 +130,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
             </intent-filter>
         </activity>
 
@@ -153,6 +157,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
             </intent-filter>
         </activity>
 
@@ -179,6 +184,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
             </intent-filter>
         </activity>
 
@@ -216,6 +222,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
 
             </intent-filter>
         </activity>
@@ -237,6 +244,7 @@
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
                 <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol"/>
             </intent-filter>
         </activity>
 

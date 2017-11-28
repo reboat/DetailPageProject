@@ -24,8 +24,10 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.comment.CommentActivity;
+import com.zjrb.zjxw.detailproject.comment.CommentSelectActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
+import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -374,6 +376,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     ((NewsDetailActivity) itemView.getContext()).onDeleteComment(position);
                 } else if (itemView.getContext() instanceof ActivityTopicActivity) {
                     ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(position);
+                } else if(itemView.getContext() instanceof CommentSelectActivity){
+                    ((CommentSelectActivity) itemView.getContext()).onDeleteComment(position);
                 }
             }
 

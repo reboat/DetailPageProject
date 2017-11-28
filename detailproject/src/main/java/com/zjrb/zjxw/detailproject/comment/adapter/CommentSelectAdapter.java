@@ -1,8 +1,6 @@
 package com.zjrb.zjxw.detailproject.comment.adapter;
 
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
@@ -20,8 +18,6 @@ import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
 import java.util.List;
-
-import static com.zjrb.core.utils.UIUtils.getString;
 
 /**
  * 评论页Adapter

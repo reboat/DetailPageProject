@@ -270,7 +270,7 @@
 
                 <data
                     android:host="@string/data_host"
-                    android:path="/detail/CommentActivity"
+                    android:path="/detail/CommentSelectActivity"
                     android:scheme="@string/data_scheme" />
             </intent-filter>
         </activity>

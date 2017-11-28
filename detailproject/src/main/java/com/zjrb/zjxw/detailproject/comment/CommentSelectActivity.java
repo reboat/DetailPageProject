@@ -1,16 +1,13 @@
 package com.zjrb.zjxw.detailproject.comment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -18,9 +15,6 @@ import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -56,16 +50,7 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
     /**
      * 文章id
      */
-    public String articleId;
-    /**
-     * 媒立方id
-     */
-    public int mlfId = -1;
-    /**
-     * 评论登记(是否可以评论)
-     * 0 禁止评论 1 先审后发 2 先发后审
-     */
-    public int commentSet = -1;
+    public String articleId = "";
 
     private CommentSelectAdapter mCommentAdapter;
     /**
@@ -99,7 +84,9 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getShareView(), View.GONE);
+        topHolder.setViewVisible(topHolder.getTitleView(), View.VISIBLE);
+        topHolder.getTitleView().setText("精选");
         return topHolder.getView();
     }
 
@@ -110,9 +97,9 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
         if (intent != null) {
             if (intent.hasExtra(IKey.NEWS_DETAIL)) {
                 mNewsDetail = (DraftDetailBean) intent.getExtras().get(IKey.NEWS_DETAIL);
-                articleId = String.valueOf(mNewsDetail.getArticle().getId());
-                mlfId = mNewsDetail.getArticle().getMlf_id();
-                commentSet = mNewsDetail.getArticle().getComment_level();
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    articleId = String.valueOf(mNewsDetail.getArticle().getId());
+                }
             }
         }
     }
@@ -123,7 +110,6 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
      */
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentSelectActivity.this));
-        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.dc_dddddd));
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
@@ -136,9 +122,6 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
      * @param bean
      */
     private void bindData(CommentRefreshBean bean) {
-        //初始化标题
-        mBean = bean;
-
         //初始化适配器
         if (mCommentAdapter == null) {
             mCommentAdapter = new CommentSelectAdapter(bean, mRvContent, articleId, true, mNewsDetail);
@@ -154,8 +137,6 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
         }
     }
 
-
-    private CommentRefreshBean mBean;
 
     /**
      * 下拉刷新取评论数据
@@ -177,75 +158,6 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
                 refresh.setRefreshing(false);
             }
         }, true).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
-    }
-
-
-    private String mArticleId;
-
-    /**
-     * 获取稿件ID
-     *
-     * @param bean
-     */
-    private String getID(CommentRefreshBean bean) {
-        if (bean != null && bean.getShare_article_info() != null && !TextUtils.isEmpty(bean.getShare_article_info().getUrl())) {
-            Uri data = Uri.parse(bean.getShare_article_info().getUrl());
-            if (data != null) {
-                if (data.getQueryParameter(IKey.ID) != null) {
-                    mArticleId = data.getQueryParameter(IKey.ID);
-                }
-            }
-        }
-        return mArticleId;
-    }
-
-    @OnClick({R2.id.tv_comment, R2.id.iv_top_share})
-    public void onClick(View v) {
-        if (ClickTracker.isDoubleClick()) return;
-        if (v.getId() == R.id.tv_comment) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(this, "800002", "800002")
-                        .setEvenName("点击评论输入框")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("评论页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
-        } else if (v.getId() == R.id.iv_top_share) {
-            if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
-
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setArticleId(getID(mBean))
-                        .setImgUri(mBean.getShare_article_info().getArticle_pic())
-                        .setTextContent(mBean.getShare_article_info().getSummary())
-                        .setTitle(mBean.getShare_article_info().getList_title())
-                        .setAnalyticsBean(bean)
-                        .setTargetUrl(mBean.getShare_article_info().getUrl()));
-            }
-
-        }
     }
 
 
@@ -304,16 +216,4 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
         });
     }
 
-    /**
-     * 友盟分享回调(主要是QQ)
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
-    }
 }

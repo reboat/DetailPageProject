@@ -40,8 +40,6 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/10  下午5:39
  */
 public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickListener {
-    //顶部标题
-    public static final int VIEW_TYPE_TOP = 1;
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
     //订阅频道
@@ -96,7 +94,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 return new NewsRelateSubjectHolder(parent);
             case VIEW_TYPE_TEXT_INTERACT:
                 return new NewsTextMoreHolder(parent, detailBean.getArticle()
-                        .isTopic_comment_has_more(),detailBean);
+                        .isTopic_comment_has_more(), detailBean);
             case VIEW_TYPE_COMMENT:
                 return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle()
                         .getId()));
@@ -108,6 +106,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     }
 
     private NewsDetailWebViewHolder webviewHolder;
+
     /**
      * 获取webviewholder
      *
@@ -231,7 +230,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                if(detailBean != null && detailBean.getArticle() != null){
+                if (detailBean != null && detailBean.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
                             .setEvenName("点击相关专题列表")
                             .setObjectID(detailBean.getArticle().getMlf_id() + "")
@@ -258,11 +257,10 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 bundle = new Bundle();
             }
             bundle.putSerializable(IKey.NEWS_DETAIL, detailBean);
-            bundle.putBoolean(IKey.IS_SELECT_LIST, true);
             Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager
-                    .COMMENT_ACTIVITY_PATH);
+                    .COMMENT_SELECT_ACTIVITY);
         } else if (datas.get(position) instanceof DraftDetailBean) {
-            if(detailBean != null && detailBean.getArticle() != null){
+            if (detailBean != null && detailBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
                         .setEvenName("点击正文底部频道名称")
                         .setObjectID(detailBean.getArticle().getChannel_id())
@@ -286,12 +284,14 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
 
     /**
      * 删除评论
+     *
      * @param position
      */
     public void remove(int position) {
         getData().remove(cleanPosition(position));
         notifyItemRemoved(position);
     }
+
     /**
      * 订阅
      */
@@ -316,6 +316,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
          * WebView加载完毕操作
          */
         void onOptPageFinished();
+
         /**
          * 稿件阅读百分比变化
          *

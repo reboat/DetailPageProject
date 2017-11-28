@@ -123,10 +123,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
-        if(topBarHolder != null){
+        if (topBarHolder != null) {
             topBarHolder.getShareView().setVisibility(View.VISIBLE);
         }
     }
+
     /**
      * @param intent 获取传递数据
      */

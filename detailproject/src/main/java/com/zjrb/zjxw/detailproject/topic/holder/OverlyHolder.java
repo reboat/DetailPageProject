@@ -58,24 +58,36 @@ public class OverlyHolder {
 
             // 主持人
             List<String> hosts = mArticle.getTopic_hosts();
-            if (hosts != null && !hosts.isEmpty()) {
-                mTvHost.setText("主持人：");
-                for (String host : hosts) {
-                    mTvHost.append(host+"  ");
-                }
+            String host_s = "";
+            if (hosts != null && !hosts.isEmpty() && hosts.size() > 0) {
                 mTvHost.setVisibility(View.VISIBLE);
+                for (int i = 0; i < hosts.size(); i++) {
+                    host_s += hosts.get(i) + "  ";
+                    if (i == (hosts.size() - 1)) {
+                        host_s += hosts.get(i);
+                    } else {
+                        host_s += hosts.get(i) + "  ";
+                    }
+                }
+                mTvHost.setText("主持人: " + host_s);
+
             } else {
                 mTvHost.setVisibility(View.GONE);
             }
 
             // 嘉宾
             List<String> guests = mArticle.getTopic_guests();
-            if (guests != null && !guests.isEmpty()) {
+            String guest_s = "";
+            if (guests != null && !guests.isEmpty() && guests.size() > 0) {
                 mTvGuest.setVisibility(View.VISIBLE);
-                mTvGuest.setText("嘉宾：");
-                for (String guest : guests) {
-                    mTvGuest.append(guest+"  ");
+                for (int i = 0; i < guests.size(); i++) {
+                    if (i == (guests.size() - 1)) {
+                        guest_s += guests.get(i);
+                    } else {
+                        guest_s += guests.get(i) + "  ";
+                    }
                 }
+                mTvGuest.setText("嘉宾: " + guest_s);
             } else {
                 mTvGuest.setVisibility(View.GONE);
             }

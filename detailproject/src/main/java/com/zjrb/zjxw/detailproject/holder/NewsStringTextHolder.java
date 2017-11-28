@@ -29,6 +29,7 @@ public class NewsStringTextHolder extends BaseRecyclerViewHolder<String> {
 
     @Override
     public void bindView() {
+        itemView.setOnClickListener(null);
         mTvRelated.setText(mData.toString());
     }
 

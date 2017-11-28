@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--录音权限-->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- umeng permission start -->
     <uses-permission android:name="android.permission.READ_LOGS" />
@@ -157,8 +157,9 @@
         </activity>
 
         <!--话题详情页-->
-        <activity android:name=".topic.ActivityTopicActivity"
-                  android:launchMode="singleTop">
+        <activity
+            android:name=".topic.ActivityTopicActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -256,6 +257,24 @@
 
             </intent-filter>
         </activity>
+
+        <!--精选评论列表-->
+        <activity
+            android:name=".comment.CommentSelectActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host"
+                    android:path="/detail/CommentActivity"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+        </activity>
+
 
     </application>
 

@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -26,18 +25,14 @@ import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.comment.adapter.CommentSelectAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,19 +41,15 @@ import cn.daily.news.analytics.Analytics;
 
 
 /**
- * 评论列表页面
+ * 精选评论列表页面
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
+public class CommentSelectActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
-    @BindView(R2.id.tv_title)
-    TextView tvTitle;
-    @BindView(R2.id.tv_comment_num)
-    TextView tvCommentNum;
     @BindView(R2.id.activity_comment)
     RelativeLayout ry_containerl;
 
@@ -76,7 +67,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     public int commentSet = -1;
 
-    private CommentAdapter mCommentAdapter;
+    private CommentSelectAdapter mCommentAdapter;
     /**
      * 刷新头
      */
@@ -85,16 +76,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
     private DraftDetailBean mNewsDetail;
 
-    /**
-     * 是否是精选列表
-     */
-    private boolean is_select_list = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIntentData(getIntent());
-        setContentView(R.layout.module_detail_comment);
+        setContentView(R.layout.module_detail_select_comment);
         ButterKnife.bind(this);
         initData();
     }
@@ -128,27 +114,16 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                 mlfId = mNewsDetail.getArticle().getMlf_id();
                 commentSet = mNewsDetail.getArticle().getComment_level();
             }
-
-            if (intent.hasExtra(IKey.IS_SELECT_LIST)) {
-                is_select_list = intent.getBooleanExtra(IKey.IS_SELECT_LIST, false);
-            }
-
-
         }
     }
 
-    /**
-     * 头部布局
-     */
-    private View head;
 
     /**
      * 初始化评论界面数据
      */
     private void initData() {
-        mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
+        mRvContent.setLayoutManager(new LinearLayoutManager(CommentSelectActivity.this));
         mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.dc_dddddd));
-        head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
         refresh.setOnRefreshListener(this);
@@ -163,38 +138,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
     private void bindData(CommentRefreshBean bean) {
         //初始化标题
         mBean = bean;
-        if (bean.getComment_count() == 0) {
-            head.setVisibility(View.GONE);
-        } else {
-            head.setVisibility(View.VISIBLE);
-            ((TextView) head).setText(getString(R.string.module_detail_new_comment));
-        }
-
-        if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getList_title())) {
-            tvTitle.setText(mBean.getShare_article_info().getList_title());
-        }else{
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getDoc_title())){
-                tvTitle.setText(mNewsDetail.getArticle().getDoc_title());
-            }
-        }
-
-        //评论数
-        if (bean != null && bean.getComment_count() > 0) {
-            tvCommentNum.setVisibility(View.VISIBLE);
-            if (bean.getComment_count() <= 99999) {
-                tvCommentNum.setText(bean.getComment_count() + "条评论");
-            } else {
-                tvCommentNum.setText("99999+条评论");
-            }
-        } else {
-            tvCommentNum.setVisibility(View.GONE);
-        }
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list, mNewsDetail);
+            mCommentAdapter = new CommentSelectAdapter(bean, mRvContent, articleId, true, mNewsDetail);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
-            mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
                             EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").attrId(R.attr.ic_comment_empty)
@@ -228,7 +176,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             public void onAfter() {
                 refresh.setRefreshing(false);
             }
-        }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
+        }, true).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }
 
 
@@ -335,7 +283,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(CommentActivity.this, "A0023", "A0023")
+                    new Analytics.AnalyticsBuilder(CommentSelectActivity.this, "A0023", "A0023")
                             .setEvenName("发表评论")
                             .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                             .setObjectName(mNewsDetail.getArticle().getDoc_title())

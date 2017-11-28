@@ -52,6 +52,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
             mTvAll.setVisibility(View.VISIBLE);
         } else {
             mTvAll.setVisibility(View.GONE);
+            itemView.setOnClickListener(null);
         }
     }
 

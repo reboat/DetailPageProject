@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @author a_liYa
  * @date 2017/10/11 10:43.
  */
-public class SpecialGroupBean {
+public class SpecialGroupBean implements Serializable {
 
     private String group_id;
     private String group_name;

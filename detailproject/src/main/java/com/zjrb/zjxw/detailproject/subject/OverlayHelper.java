@@ -70,7 +70,6 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                 if (mOverlayPosition != overlayPosition) {
                     mOverlayPosition = overlayPosition;
                     Object data = adapter.getData(mOverlayPosition);
-                    mOverlayHolder.setData(data);
                     updateChannelTab(data);
                 }
             } else {
@@ -83,7 +82,10 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
         }
     }
 
-    private void updateChannelTab(Object data) {
+    public void updateChannelTab(Object data) {
+        if (data != null) {
+            mOverlayHolder.setData(data);
+        }
         if (mRecyclerCopy.getAdapter() instanceof ChannelAdapter) {
             ChannelAdapter adapter = (ChannelAdapter) mRecyclerCopy.getAdapter();
             if (data instanceof SpecialGroupBean) {

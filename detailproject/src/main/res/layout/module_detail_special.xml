@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/ly_container"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="?attr/bc_ffffff"
-             android:fitsSystemWindows="true"
-             app:fitType="bottom">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ly_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/bc_ffffff"
+    android:fitsSystemWindows="true"
+    app:fitType="bottom">
 
     <View
         android:id="@+id/top_line"
@@ -36,7 +36,7 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="5dp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/group_copy"

@@ -81,9 +81,9 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         parent.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (mRecyclerTab.getTop() + itemView.getTop() > 0
+                if (mRecyclerTab.getTop() + itemView.getTop() + dy > 0
                         && itemView.getRootView() != itemView) {
-                    mRecyclerTabCopy.setVisibility(View.GONE);
+                    mRecyclerTabCopy.setVisibility(View.INVISIBLE);
                 } else {
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1)
                         mRecyclerTabCopy.setVisibility(View.VISIBLE);
@@ -123,6 +123,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         if (mChannelAdapter == null || mChannelAdapter.getDataSize() < 2) {
             mRecyclerTab.setVisibility(View.GONE);
             mRecyclerTabCopy.setVisibility(View.GONE);
+        } else {
+            mRecyclerTabCopy.setVisibility(View.INVISIBLE);
         }
 
 

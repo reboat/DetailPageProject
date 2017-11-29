@@ -217,6 +217,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //点赞次数
         if (mData.getLike_count() != 0) {
             mThumb.setText(mData.getLike_count() + "");
+        } else {
+            mThumb.setText("");
         }
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
@@ -376,7 +378,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     ((NewsDetailActivity) itemView.getContext()).onDeleteComment(position);
                 } else if (itemView.getContext() instanceof ActivityTopicActivity) {
                     ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(position);
-                } else if(itemView.getContext() instanceof CommentSelectActivity){
+                } else if (itemView.getContext() instanceof CommentSelectActivity) {
                     ((CommentSelectActivity) itemView.getContext()).onDeleteComment(position);
                 }
             }

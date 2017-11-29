@@ -15,7 +15,6 @@
         android:layout_alignParentLeft="true"
         android:scaleType="fitXY"
         app:ratio_w2h="117:78"
-        tools:src="@mipmap/ic_launcher"
         />
 
     <TextView

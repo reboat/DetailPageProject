@@ -13,7 +13,7 @@
         android:background="?attr/tc_484848"
         android:scaleType="fitXY"
         app:ratio_w2h="177:118"
-        tools:src="@mipmap/ic_launcher" />
+         />
 
     <TextView
         android:id="@+id/tv_title"

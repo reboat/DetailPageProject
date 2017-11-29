@@ -24,7 +24,7 @@
             android:layout_margin="9dp"
             android:scaleType="fitXY"
             app:ratio_w2h="106:139"
-            tools:src="@mipmap/ic_launcher" />
+             />
 
         <LinearLayout
             android:id="@+id/ly_name"

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -67,7 +68,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @BindView(R2.id.viewpager)
     ViewPager viewpager;
     @BindView(R2.id.ly_container)
-    LinearLayout mLyContailer;
+    FitWindowsLinearLayout mLyContailer;
 
     /**
      * 官员ID

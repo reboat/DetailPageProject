@@ -18,15 +18,17 @@ function applyDayTheme() {
 }
 
 //替换webview中的图片
-function replaceImage(index,url){
-      var img = document.getElementsByTagName("img");
-      for(var i = 0; i < img.length; i++) {
-      if(i == index){
-          var a = document.getElementsByTagName("img")[i];
-          a.setAttribute("src",url);
+ function replaceImage(index,url){
+       var imgs = document.getElementsByTagName("img"),arr=[];
+       for(var i = 0; i < imgs.length; i++) {
+         if (imgs[i].parentNode.tagName !== 'A') {
+            arr.push(imgs[i]);
+         }
         }
-       }
- }
+        var a = arr[index];
+        a.setAttribute("src",url);
+  }
+
 
  function musicPause(){
     var audio = document.getElementsByTagName("audio")

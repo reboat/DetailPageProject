@@ -11,7 +11,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -29,18 +31,27 @@ public class WebBiz {
     /**
      * 解析处理Html内容
      *
-     * @param html     HtmlBody字符串
-     * @param callBack
+     * @param html          HtmlBody字符串
+     * @param callBack      图片
+     * @param callBack1     超链接图片
+     * @param textBack      标题
+     * @param audioCallBack 音频
      * @return 处理过的Html Body内容
      */
-    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack, TextCallBack textBack, AudioCallBack audioCallBack) {
+    public static String parseHandleHtml(String html, ImgSrcsCallBack callBack, ImgASrcsCallBack callBack1, TextCallBack textBack, AudioCallBack audioCallBack) {
 
         Document doc = Jsoup.parseBodyFragment(html);
         List<String> imgSrcs = parseImgTags(doc);
+        List<Map<String, String>> imgSrcs1 = parseAImgTags(doc);
         parseVideoTags(doc);
 
         if (callBack != null) {
             callBack.callBack((imgSrcs.toArray(new String[imgSrcs.size()])));
+        }
+
+        //超链接
+        if (callBack1 != null) {
+            callBack1.callBack(imgSrcs1);
         }
 
         if (textBack != null) {
@@ -182,6 +193,52 @@ public class WebBiz {
         return imgSrcs;
     }
 
+
+    /**
+     * 解析处理带超链接的Img标签
+     *
+     * @param doc Document
+     * @return 返回Img标签的src集合
+     */
+    private static List<Map<String, String>> parseAImgTags(Document doc) {
+        List<Map<String, String>> imgSrcs = new ArrayList<>();
+
+        if (doc == null) return imgSrcs;
+
+        Elements imgs = doc.getElementsByTag(html.tag.IMG);
+        int index = -1;
+        if (imgs != null) {
+            for (int i = 0; i < imgs.size(); i++) {
+                boolean isNeedOnClick = false;
+                Element node = imgs.get(i);
+                Element parent = node.parent();
+
+                int widthPx = handleImgElementWidth(node);
+
+                String src = node.attr(html.attr.SRC);
+                if (!TextUtils.isEmpty(src)) {
+                    if ((html.tag.A.equalsIgnoreCase(parent.tagName())
+                            && !TextUtils.isEmpty(parent.attr(html.attr.HREF)))) {
+                        Map<String, String> map = new HashMap<>();
+                        map.put(node.attr(html.attr.SRC), node.parent().attr(html.attr.HREF));
+                        imgSrcs.add(map);
+                        ++index;
+                        isNeedOnClick = widthPx != 0;
+
+                    }
+                }
+
+                // 夜间模式点击应在遮罩层
+                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+                    node.attr("onClick", "imageABrowse(" + index + ")");
+                }
+                fitUiModeForImgATag(node, isNeedOnClick, index);
+            }
+        }
+
+        return imgSrcs;
+    }
+
     private static void replaceWebViewPic(int position, String url) {
 
     }
@@ -207,6 +264,35 @@ public class WebBiz {
 
             if (isAddOnClick) {
                 imgBgDiv.attr("onClick", "imageBrowse(" + index + ")");
+            }
+
+            imgBgDiv.attr("class", "zjxw_imgMask");
+
+
+            div.appendChild(imgBgDiv);
+        }
+    }
+
+    /**
+     * 适配Img标签
+     *
+     * @param node         Img节点
+     * @param isAddOnClick
+     * @param index
+     */
+    private static void fitUiModeForImgATag(Element node, boolean isAddOnClick, int index) {
+        if (ThemeMode.isNightMode()) { // 是否适配夜间模式
+
+            Element div = new Element("div");
+            div.attr("class", "zjxw_imgBox");
+            node.replaceWith(div);
+
+            div.appendChild(node);
+
+            Element imgBgDiv = new Element("div");
+
+            if (isAddOnClick) {
+                imgBgDiv.attr("onClick", "imageABrowse(" + index + ")");
             }
 
             imgBgDiv.attr("class", "zjxw_imgMask");
@@ -251,6 +337,13 @@ public class WebBiz {
         return widthPx;
     }
 
+
+    /**
+     * 带超链接父节点的图片集合
+     */
+    public interface ImgASrcsCallBack {
+        void callBack(List<Map<String, String>> imgSrcs);
+    }
 
     /**
      * 获取网页图集

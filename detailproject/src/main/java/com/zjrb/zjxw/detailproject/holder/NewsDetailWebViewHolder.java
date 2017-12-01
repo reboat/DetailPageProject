@@ -33,6 +33,9 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
+import java.util.List;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
@@ -61,7 +64,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     private float mReadingScale;
     private boolean mHasVideoUrl = false;
 
-    public NewsDetailWebViewHolder(ViewGroup parent,boolean hasVideoUrl) {
+    public NewsDetailWebViewHolder(ViewGroup parent, boolean hasVideoUrl) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
         mHasVideoUrl = hasVideoUrl;
@@ -126,6 +129,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                                     imgSrcs[i] = imgSrcs[i].split("[?]")[0];
                                 }
                             }
+                            mWebJsInterface.setImgSrcs(imgSrcs);
+                        }
+                    }
+                }, new WebBiz.ImgASrcsCallBack() {//超链接
+                    @Override
+                    public void callBack(List<Map<String, String>> imgSrcs) {
+                        if (mWebJsInterface != null && imgSrcs != null && imgSrcs.size() > 0) {
                             mWebJsInterface.setImgSrcs(imgSrcs);
                         }
                     }

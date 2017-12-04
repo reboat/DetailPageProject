@@ -321,9 +321,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
+//    }
 }

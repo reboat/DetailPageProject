@@ -449,19 +449,19 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    /**
-     * 分享回调
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
-
-    }
+//    /**
+//     * 分享回调
+//     *
+//     * @param requestCode
+//     * @param resultCode
+//     * @param data
+//     */
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
+//
+//    }
 
     /**
      * 处理上下移动监听

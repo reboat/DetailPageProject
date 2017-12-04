@@ -313,7 +313,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 //        if (mAdapter == null) {
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
-        mAdapter = new NewsDetailAdapter(datas,!TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())?true:false);
+        mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -488,7 +488,6 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }).setTag(this).exe(mArticleId, true);
     }
 
-
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back})
     public void onClick(View view) {
@@ -597,6 +596,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
+
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
@@ -715,11 +715,11 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         localBroadcastManager.unregisterReceiver(receive);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
+//    }
 
     /**
      * 显示撤稿页面

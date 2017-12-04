@@ -37,7 +37,7 @@ function applyDayTheme() {
         }
   }
 
-//替换webview中的图片
+//替换webview中的超链接图片
  function replaceAImage(index,url){
        var imgs = document.getElementsByTagName("img"),arr=[];
        for(var i = 0; i < imgs.length; i++) {

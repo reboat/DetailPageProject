@@ -34,16 +34,18 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
     private View mView;
+    private TextView mTextView;
     /**
      * 网脉专用
      */
     private DraftDetailBean mBean;
 
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, String articleId, boolean is_select_list, DraftDetailBean bean) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view,TextView textView, String articleId, boolean is_select_list, DraftDetailBean bean) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         mView = view;
+        mTextView = textView;
         this.articleId = articleId;
         this.is_select_list = is_select_list;
         setData(datas);
@@ -121,8 +123,16 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private void updateHead(){
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);
+            mTextView.setVisibility(View.GONE);
         } else {
             mView.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.VISIBLE);
+            if (getDataSize() <= 99999) {
+                mTextView.setText(getDataSize() + "条评论");
+            } else {
+                mTextView.setText("99999+条评论");
+            }
+
             ((TextView) mView).setText(getString(R.string.module_detail_new_comment));
         }
     }

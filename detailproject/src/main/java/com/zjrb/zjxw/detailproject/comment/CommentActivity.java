@@ -36,9 +36,6 @@ import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -172,8 +169,8 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getList_title())) {
             tvTitle.setText(mBean.getShare_article_info().getList_title());
-        }else{
-            if(mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getDoc_title())){
+        } else {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getDoc_title())) {
                 tvTitle.setText(mNewsDetail.getArticle().getDoc_title());
             }
         }
@@ -192,7 +189,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list, mNewsDetail);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head,tvCommentNum, articleId, is_select_list, mNewsDetail);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -322,7 +319,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     @Override
     public void onDeleteComment(int position) {
-        mCommentAdapter.remove(position);
+        try {
+            mCommentAdapter.remove(position);
+        } catch (Exception e) {
+
+        }
     }
 
 

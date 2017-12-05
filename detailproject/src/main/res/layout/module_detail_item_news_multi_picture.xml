@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:background="?attr/tc_484848"
             android:scaleType="fitXY"
-            tools:src="@mipmap/default_avatar_icon"/>
+            />
 
     </com.aliya.view.ratio.RatioLinearLayout>
 

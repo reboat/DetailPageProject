@@ -97,7 +97,7 @@
             android:paddingRight="7dp"
             android:paddingTop="10dp"
             app:iv_maskColor="@color/color_5c5c5c"
-            tools:src="@mipmap/default_avatar_icon"/>
+            />
 
         <TextView
             android:id="@+id/tv_prise"

@@ -223,7 +223,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //回复者头像(显示默认头像)
-        GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().apply(AppGlideOptions.smallOptions()).into(mImg);
+        if(mData != null && !TextUtils.isEmpty(mData.getPortrait_url())){
+            GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
+        }
 
     }
 

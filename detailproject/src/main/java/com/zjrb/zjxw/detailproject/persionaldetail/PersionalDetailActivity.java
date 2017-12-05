@@ -220,6 +220,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     private OutSizeAnalyticsBean getWMData() {
         return OutSizeAnalyticsBean.getInstance()
                 .setObjectID(bean.getOfficer().getId() + "")
+                .setPageType("官员页面")
                 .setOtherInfo(Analytics.newOtherInfo()
                         .put("customObjectType", "OfficerType")
                         .toString());

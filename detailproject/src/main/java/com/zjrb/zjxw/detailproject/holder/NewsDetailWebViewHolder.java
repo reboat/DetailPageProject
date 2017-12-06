@@ -264,7 +264,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                if (newProgress > 75) {
+                if (newProgress > 30) {
                     onWebPageComplete();
                 }
             }

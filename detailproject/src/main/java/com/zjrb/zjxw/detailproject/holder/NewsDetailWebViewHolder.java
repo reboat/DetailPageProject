@@ -377,12 +377,23 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void onChangeTheme() {
+
         if (ThemeMode.isNightMode()) {
             final String execUrl = "javascript:applyNightTheme();";
-            mWebView.loadUrl(execUrl);
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadUrl(execUrl);
+                }
+            });
         } else {
             final String execUrl = "javascript:applyDayTheme();";
-            mWebView.loadUrl(execUrl);
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadUrl(execUrl);
+                }
+            });
         }
 
         mWebView.callback_zjxw_js_isAppOpenNightTheme(ThemeMode.isNightMode());

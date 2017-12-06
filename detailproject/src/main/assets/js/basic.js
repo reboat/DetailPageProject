@@ -59,3 +59,25 @@ function applyDayTheme() {
     }
 
  }
+
+
+// function zbWebView_changeDayMode(){
+//     var imgs = document.getElementsByClassName('zjxw_imgMask');
+//     if(imgs.length > 0){
+//         var length = imgs.length;
+//         for(var i=0;i<length;i++){
+// 				imgs[i].style.opacity = 0;
+//         }
+//     }
+// }
+//
+//
+// function zbWebView_changeNightMode(){
+//      var imgs = document.getElementsByClassName('zjxw_imgMask');
+//      if(imgs.length > 0){
+//          var length = imgs.length;
+//          for(var i=0;i<length;i++){
+//  				imgs[i].style.opacity = 0.3;
+//          }
+//      }
+//  }

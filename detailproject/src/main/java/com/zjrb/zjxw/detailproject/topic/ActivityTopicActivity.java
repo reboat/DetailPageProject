@@ -157,7 +157,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(mTopBar != null){
+        if (mTopBar != null) {
             mTopBar.setVisibility(View.VISIBLE);
         }
         getIntentData(intent);
@@ -560,9 +560,4 @@ public class ActivityTopicActivity extends BaseActivity implements
         super.onDestroy();
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
-//    }
 }

@@ -357,16 +357,4 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         });
     }
 
-//    /**
-//     * 友盟分享回调(主要是QQ)
-//     *
-//     * @param requestCode
-//     * @param resultCode
-//     * @param data
-//     */
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        UmengShareUtils.getInstance().initResult(requestCode, resultCode, data);
-//    }
 }

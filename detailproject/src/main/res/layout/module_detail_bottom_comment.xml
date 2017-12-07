@@ -63,7 +63,7 @@
             android:layout_marginLeft="-10dp"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@id/menu_comment"
-            android:background="@drawable/module_detail_comment_num"
+            android:background="?attr/module_detail_comment_num"
             android:paddingBottom="1dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"

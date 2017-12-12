@@ -189,7 +189,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head,tvCommentNum, articleId, is_select_list, mNewsDetail);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -326,6 +326,12 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!isFinishing()) {
+            super.onBackPressed();
+        }
+    }
 
     /**
      * 评论框提交评论后回调

@@ -762,7 +762,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * 稿件点赞
      */
     private void fabulous() {
-        if (mData == null && mData.getArticle() != null) return;
+        if (mData == null || mData.getArticle() == null) return;
         if (mData.getArticle().isLiked()) {
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;

@@ -18,7 +18,7 @@ public class App extends MultiDexApplication {
         SettingManager.init(this);
         ThemeMode.initTheme(R.style.AppTheme, R.style.NightAppTheme);
         UiModeManager.init(this, R.styleable.SupportUiMode);
-        BaseInit.getInstance().init(this,"bianfeng");
+        BaseInit.init(this,"bianfeng");
         setTheme(ThemeMode.isNightMode() ? R.style.NightAppTheme : R.style.AppTheme);
 
         DatabaseLoader.init(this);

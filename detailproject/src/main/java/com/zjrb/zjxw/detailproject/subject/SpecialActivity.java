@@ -140,15 +140,15 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             if (mArticle != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "200007", "200007")
                         .setEvenName("专题详情页，新闻列表点击")
-                        .setObjectID(mArticle.getMlf_id()+"")
-                        .setObjectName(mArticle.getDoc_title())
+                        .setObjectID(((ArticleItemBean) data).getMlf_id()+"")
+                        .setObjectName(((ArticleItemBean) data).getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setPageType("专题详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", "SubjectType")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mArticle.getId() + "")
+                        .setSelfObjectID(((ArticleItemBean) data).getId() + "")
                         .build()
                         .send();
             }

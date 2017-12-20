@@ -32,7 +32,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
 //    compile project(':core-library')
-    compile 'cn.daily.android:core-library:5.0.0.128-SNAPSHOT'
+    compile 'cn.daily.android:core-library:5.0.1.0-SNAPSHOT'
     compile('cn.daily.android:daily-news:5.0.0.40') {
         exclude group: 'cn.daily.android'
     }

@@ -260,6 +260,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         reInitView();
     }
 
+    private Analytics.AnalyticsBuilder builder;
+
     /**
      * 获取图集数据
      */
@@ -319,16 +321,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
             Map map = new HashMap();
             map.put("relatedColumn", data.getArticle().getColumn_id());
-            mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
-                    .setEvenName("页面停留时长")
+            builder = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+                    .setEvenName("页面停留时长/阅读深度")
                     .setObjectID(data.getArticle().getMlf_id() + "")
                     .setObjectName(data.getArticle().getDoc_title())
                     .setObjectType(ObjectType.NewsType)
                     .setClassifyID(data.getArticle().getChannel_id())
                     .setClassifyName(data.getArticle().getChannel_name())
                     .setPageType("新闻详情页")
-                    .setSelfObjectID(data.getArticle().getId() + "")
-                    .build();
+                    .setSelfObjectID(data.getArticle().getId() + "");
         }
 
         mData = data;
@@ -491,7 +492,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfobjectID(mData.getArticle().getId() + "");
@@ -519,7 +520,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "")
@@ -536,7 +537,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "")
@@ -570,7 +571,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "")
@@ -590,7 +591,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "")
@@ -610,7 +611,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("图集详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "")
@@ -699,7 +700,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     .setClassifyName(mData.getArticle().getChannel_name())
                     .setPageType("图集详情页")
                     .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                             .put("subject", "")
                             .toString())
                     .setSelfObjectID(mData.getArticle().getId() + "")
@@ -729,7 +730,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .setClassifyName(mData.getArticle().getChannel_name())
                             .setPageType("更多图集页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mData.getArticle().getColumn_id()+"")
+                                    .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
                             .setSelfObjectID(mData.getArticle().getId() + "")
@@ -878,26 +879,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     protected void onDestroy() {
         super.onDestroy();
         if (mData != null && mData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                    .setEvenName("阅读深度")
-                    .setObjectID(mData.getArticle().getMlf_id() + "")
-                    .setObjectName(mData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mData.getArticle().getChannel_id())
-                    .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mData.getArticle().getColumn_id()+"")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "")
-                    .setPercentage(mReadingScale + "")
-                    .build()
-                    .send();
+            if (builder != null) {
+                builder.setPercentage(mReadingScale + "");
+                mAnalytics = builder.build();
+                if (mAnalytics != null) {
+                    mAnalytics.sendWithDuration();
+                }
+            }
         }
 
-        if (mAnalytics != null) {
-            mAnalytics.sendWithDuration();
-        }
     }
 }

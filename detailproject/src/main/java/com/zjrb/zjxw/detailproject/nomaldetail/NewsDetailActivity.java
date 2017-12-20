@@ -26,7 +26,6 @@ import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
-import com.umeng.socialize.UMShareAPI;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -241,6 +240,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         }
     }
 
+    Analytics.AnalyticsBuilder builder;
+
     /**
      * 请求详情页数据
      */
@@ -253,16 +254,16 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 Map map = new HashMap();
                 map.put("relatedColumn", draftDetailBean.getArticle().getColumn_id());
                 map.put("subject", "");
-                mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
-                        .setEvenName("页面停留时长")
+                builder = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+                        .setEvenName("页面停留时长/阅读深度")
                         .setObjectID(draftDetailBean.getArticle().getMlf_id() + "")
                         .setObjectName(draftDetailBean.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(draftDetailBean.getArticle().getChannel_id())
                         .setClassifyName(draftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setSelfObjectID(draftDetailBean.getArticle().getId() + "")
-                        .build();
+                        .setSelfObjectID(draftDetailBean.getArticle().getId() + "");
+
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -692,34 +693,14 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
         super.onDestroy();
         //阅读深度
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                    .setEvenName("阅读深度")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .setPercentage(mScale + "")
-                    .build()
-                    .send();
+            builder.setPercentage(mScale + "");
         }
-        if (mAnalytics != null) {
+        mAnalytics = builder.build();
+        if(mAnalytics != null){
             mAnalytics.sendWithDuration();
         }
         localBroadcastManager.unregisterReceiver(receive);
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
-//    }
 
     /**
      * 显示撤稿页面

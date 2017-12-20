@@ -187,6 +187,9 @@ public class ActivityTopicActivity extends BaseActivity implements
         return false;
     }
 
+    private Analytics.AnalyticsBuilder builder;
+    private Analytics mAnalytics;
+
     /**
      * 初始化/拉取数据
      */
@@ -197,6 +200,19 @@ public class ActivityTopicActivity extends BaseActivity implements
             public void onSuccess(DraftDetailBean data) {
                 if (data == null) return;
                 mTopBarHolder.setShareVisible(true);
+                builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010", "800021")
+                        .setEvenName("页面停留时长/阅读深度")
+                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                        .setObjectName(mDetailData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mDetailData.getArticle().getChannel_id())
+                        .setClassifyName(mDetailData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                                .put("subject", mDetailData.getArticle().getId() + "")
+                                .toString())
+                        .setSelfObjectID(mDetailData.getArticle().getId() + "");
                 fillData(data);
             }
 
@@ -540,22 +556,13 @@ public class ActivityTopicActivity extends BaseActivity implements
     protected void onDestroy() {
         //阅读深度
         if (mDetailData != null && mDetailData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(this, "A0010", "800021")
-                    .setEvenName("阅读深度")
-                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                    .setObjectName(mDetailData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mDetailData.getArticle().getChannel_id())
-                    .setClassifyName(mDetailData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
-                            .put("subject", mDetailData.getArticle().getId() + "")
-                            .toString())
-                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                    .setPercentage(mScale + "")
-                    .build()
-                    .send();
+            if (builder != null) {
+                builder.setPercentage(mScale + "");
+                mAnalytics = builder.build();
+                if(mAnalytics != null){
+                    mAnalytics.sendWithDuration();
+                }
+            }
         }
         super.onDestroy();
     }

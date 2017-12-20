@@ -200,19 +200,21 @@ public class ActivityTopicActivity extends BaseActivity implements
             public void onSuccess(DraftDetailBean data) {
                 if (data == null) return;
                 mTopBarHolder.setShareVisible(true);
-                builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010", "800021")
-                        .setEvenName("页面停留时长/阅读深度")
-                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                        .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mDetailData.getArticle().getChannel_id())
-                        .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
-                                .put("subject", mDetailData.getArticle().getId() + "")
-                                .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "");
+                if(data.getArticle() != null){
+                    builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010", "800021")
+                            .setEvenName("页面停留时长/阅读深度")
+                            .setObjectID(data.getArticle().getMlf_id() + "")
+                            .setObjectName(data.getArticle().getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(data.getArticle().getChannel_id())
+                            .setClassifyName(data.getArticle().getChannel_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", data.getArticle().getColumn_id() + "")
+                                    .put("subject", data.getArticle().getId() + "")
+                                    .toString())
+                            .setSelfObjectID(data.getArticle().getId() + "");
+                }
                 fillData(data);
             }
 

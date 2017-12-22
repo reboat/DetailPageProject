@@ -691,13 +691,15 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //阅读深度
-        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            builder.setPercentage(mScale + "");
-        }
-        mAnalytics = builder.build();
-        if(mAnalytics != null){
-            mAnalytics.sendWithDuration();
+        if (builder != null) {
+            //阅读深度
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                builder.setPercentage(mScale + "");
+            }
+            mAnalytics = builder.build();
+            if(mAnalytics != null){
+                mAnalytics.sendWithDuration();
+            }
         }
         localBroadcastManager.unregisterReceiver(receive);
     }

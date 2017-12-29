@@ -41,13 +41,17 @@
         android:layout_marginTop="13dp" />
 
 
-    <FrameLayout
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/fy_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:background="?attr/bc_ffffff"
-        >
+        android:fitsSystemWindows="true"
+        app:fitType="bottom">
 
         <View
             android:layout_width="match_parent"
@@ -74,7 +78,7 @@
             android:textColorHint="?attr/tc_999999"
             />
 
-    </FrameLayout>
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
 
 </RelativeLayout>

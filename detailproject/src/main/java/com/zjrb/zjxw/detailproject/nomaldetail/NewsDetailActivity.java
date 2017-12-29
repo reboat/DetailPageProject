@@ -50,6 +50,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
+import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -111,6 +112,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     ImageView mMenuComment;
     @BindView(R2.id.v_container)
     FrameLayout mView;
+    @BindView(R2.id.tv_duration)
+    TextView mTvDuration;
 
     /**
      * 上下滑动超出范围处理
@@ -225,6 +228,12 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         if (!TextUtils.isEmpty(bean.getVideo_url())) {
             mVideoContainer.setVisibility(View.VISIBLE);
+            if (bean.getVideo_duration() > 0) {
+                mTvDuration.setText(Format.duration(bean.getVideo_duration() * 1000));
+                mTvDuration.setVisibility(View.VISIBLE);
+            } else {
+                mTvDuration.setVisibility(View.GONE);
+            }
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
             if (SettingManager.getInstance().isAutoPlayVideoWithWifi()) {
@@ -268,7 +277,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     mView.setVisibility(View.GONE);
                 }
                 mNewsDetail = draftDetailBean;
-                if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null ) {
                     initVideo(mNewsDetail.getArticle());
                 }
                 fillData(mNewsDetail);

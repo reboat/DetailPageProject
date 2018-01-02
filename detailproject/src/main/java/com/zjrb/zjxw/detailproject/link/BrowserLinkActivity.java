@@ -17,13 +17,10 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder4;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -54,10 +51,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
-    //    @BindView(R2.id.tv_comment)
-//    TextView mTvComment;
-//    @BindView(R2.id.fl_comment)
-//    FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
@@ -66,8 +59,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     ImageView mMenuPrised;
     @BindView(R2.id.menu_setting)
     ImageView mMenuSetting;
-    //    @BindView(R2.id.ly_bottom_comment)
-//    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
     @BindView(R2.id.v_container)
@@ -102,9 +93,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
-        if (topBarHolder != null) {
-            topBarHolder.getShareView().setVisibility(View.VISIBLE);
-        }
     }
 
     /**
@@ -129,12 +117,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     /**
      * 顶部标题
      */
-    private DefaultTopBarHolder1 topBarHolder;
+    private DefaultTopBarHolder4 topBarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder = TopBarFactory.createDefault1(view, this);
-        topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
+        topBarHolder = TopBarFactory.createDefault4(view, this);
         topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.GONE);
         return topBarHolder.getView();
     }
@@ -215,12 +202,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting})
+    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
         int id = view.getId();
-        if (R.id.iv_top_bar_back == id) {
+        if (R.id.iv_back == id) {
             if (mWebView.canGoBack()) {
                 mWebView.goBack();
             } else {
@@ -244,49 +231,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .send();
             }
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
-        } else if (id == R.id.iv_top_share) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(url)) {
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
-
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setArticleId(mNewsDetail.getArticle().getId() + "")
-                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setTextContent(getString(R.string.module_detail_share_content_from))
-                        .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(url)
-                        .setAnalyticsBean(bean)
-                );
-
-                //点击分享操作
-                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018")
-                        .setEvenName("点击分享")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
@@ -392,7 +336,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
-        topBarHolder.getShareView().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

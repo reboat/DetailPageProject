@@ -20,14 +20,14 @@ import java.util.List;
  */
 public class OverlayHelper extends RecyclerView.OnScrollListener {
 
-    private RecyclerView mRecyclerCopy;
+    private RecyclerView mRecyclerTabCopy;
     private FrameLayout mGroupCopy;
     private OverlayViewHolder mOverlayHolder;
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
     public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
-        mRecyclerCopy = recyclerCopy;
+        mRecyclerTabCopy = recyclerCopy;
         mGroupCopy = groupCopy;
         SpecialAdapter adapter = (SpecialAdapter) recycler.getAdapter();
         mOverlayHolder = adapter.onCreateOverlayViewHolder(recycler, 0);
@@ -47,7 +47,8 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
             for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
                 int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
-                if (top > mRecyclerCopy.getHeight()) {
+                boolean visible = mRecyclerTabCopy.getVisibility() == View.VISIBLE;
+                if (top > (visible ? mRecyclerTabCopy.getHeight() : 0)) {
                     startPosition = i;
                     break;
                 }
@@ -86,8 +87,8 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
         if (data != null) {
             mOverlayHolder.setData(data);
         }
-        if (mRecyclerCopy.getAdapter() instanceof ChannelAdapter) {
-            ChannelAdapter adapter = (ChannelAdapter) mRecyclerCopy.getAdapter();
+        if (mRecyclerTabCopy.getAdapter() instanceof ChannelAdapter) {
+            ChannelAdapter adapter = (ChannelAdapter) mRecyclerTabCopy.getAdapter();
             if (data instanceof SpecialGroupBean) {
                 adapter.setSelectedData((SpecialGroupBean) data);
             } else {

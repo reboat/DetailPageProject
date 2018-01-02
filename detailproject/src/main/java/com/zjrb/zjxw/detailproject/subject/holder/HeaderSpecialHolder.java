@@ -83,7 +83,9 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (mRecyclerTab.getTop() + itemView.getTop() + dy > 0
                         && itemView.getRootView() != itemView) {
-                    mRecyclerTabCopy.setVisibility(View.INVISIBLE);
+                    if (mRecyclerTabCopy.getVisibility() != View.GONE) {
+                        mRecyclerTabCopy.setVisibility(View.INVISIBLE);
+                    }
                 } else {
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1)
                         mRecyclerTabCopy.setVisibility(View.VISIBLE);
@@ -126,7 +128,6 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         } else {
             mRecyclerTabCopy.setVisibility(View.INVISIBLE);
         }
-
 
         //题图可以为空
         if (TextUtils.isEmpty(mArticle.getArticle_pic())) {

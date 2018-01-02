@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
@@ -59,11 +60,13 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     @BindView(R2.id.ly_container)
     ViewGroup lyContainer;
     @BindView(R2.id.recycler_copy)
-    RecyclerView mRecyclerCopy;
+    RecyclerView mRecyclerTabCopy;
     @BindView(R2.id.group_copy)
     FrameLayout mGroupCopy;
     @BindView(R2.id.v_container)
     FrameLayout mView;
+    @BindView(R2.id.overlay_layout)
+    LinearLayout mOverlayLayout;
 
     private SpecialAdapter mAdapter;
 
@@ -140,7 +143,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             if (mArticle != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "200007", "200007")
                         .setEvenName("专题详情页，新闻列表点击")
-                        .setObjectID(((ArticleItemBean) data).getMlf_id()+"")
+                        .setObjectID(((ArticleItemBean) data).getMlf_id() + "")
                         .setObjectName(((ArticleItemBean) data).getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setPageType("专题详情页")
@@ -247,6 +250,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     }
 
     private void loadData() {
+        mOverlayLayout.setVisibility(View.INVISIBLE);
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean data) {
@@ -269,6 +273,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
+        mOverlayLayout.setVisibility(View.VISIBLE);
         mView.setVisibility(View.GONE);
         if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();
@@ -303,7 +308,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
             //添加专题详情页的头部holder
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerCopy, this);
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);
@@ -315,7 +320,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         }
 
         if (mOverlayHelper == null) {
-            mOverlayHelper = new OverlayHelper(mRecycler, mRecyclerCopy, mGroupCopy);
+            mOverlayHelper = new OverlayHelper(mRecycler, mRecyclerTabCopy, mGroupCopy);
         }
     }
 
@@ -378,11 +383,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             int index = data.indexOf(bean);
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
-                    mRecyclerCopy.getHeight());
+                    mRecyclerTabCopy.getHeight());
 
-//            if (mOverlayHelper != null) {
-//                mOverlayHelper.updateChannelTab(bean);
-//            }
             if (mArticle != null) {
                 new Analytics.AnalyticsBuilder(this, "900001", "900001")
                         .setEvenName("专题详情页，分类标签点击")

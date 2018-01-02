@@ -21,6 +21,8 @@ import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder4;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -34,7 +36,7 @@ import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -208,11 +210,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
         int id = view.getId();
         if (R.id.iv_back == id) {
-            if (mWebView.canGoBack()) {
-                mWebView.goBack();
-            } else {
-                onBackPressed();
-            }
+//            if (mWebView.canGoBack()) {
+//                mWebView.goBack();
+//            } else {
+            onBackPressed();
+//            }
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")
@@ -294,8 +296,31 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+
+                UmengShareBean shareBean = UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setArticleId(mNewsDetail.getArticle().getId() + "")
+                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTitle(mNewsDetail.getArticle().getDoc_title())
+                        .setTargetUrl(url)
+                        .setAnalyticsBean(bean);
+
+                MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).show(getSupportFragmentManager(), "MoreDialog");
             }
-            MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
         }
     }
 

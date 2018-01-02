@@ -243,11 +243,11 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
         int id = view.getId();
         if (R.id.iv_top_bar_back == id) {
-            if (mWebView.canGoBack()) {
-                mWebView.goBack();
-            } else {
-                onBackPressed();
-            }
+//            if (mWebView.canGoBack()) {
+//                mWebView.goBack();
+//            } else {
+            onBackPressed();
+//            }
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")

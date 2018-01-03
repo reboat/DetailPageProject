@@ -168,7 +168,6 @@ public class MoreDialogLink extends BaseDialogFragment {
         wlp.gravity = Gravity.BOTTOM;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
-        mShareAPI = UMShareAPI.get(UIUtils.getActivity());
     }
 
     @Override
@@ -351,7 +350,7 @@ public class MoreDialogLink extends BaseDialogFragment {
                 if (errCode == 50013) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), "t");
+                    T.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
                     T.showShort(UIUtils.getApp(), errMsg);
                 }

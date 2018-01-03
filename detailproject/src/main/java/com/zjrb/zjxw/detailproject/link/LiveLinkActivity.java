@@ -167,11 +167,9 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                if (draftDetailBean == null) return;
+                if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
-                if (mNewsDetail.getArticle().getDoc_type() == 3) {
-                    url = mNewsDetail.getArticle().getWeb_link();
-                } else if (mNewsDetail.getArticle().getDoc_type() == 8) {
+                if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
                 fillData(mNewsDetail);

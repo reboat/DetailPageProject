@@ -136,12 +136,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
-                if (draftDetailBean == null) return;
+                if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 if (mNewsDetail.getArticle().getDoc_type() == 3) {
                     url = mNewsDetail.getArticle().getWeb_link();
-                } else if (mNewsDetail.getArticle().getDoc_type() == 8) {
-                    url = mNewsDetail.getArticle().getLive_url();
                 }
                 fillData(mNewsDetail);
             }
@@ -162,7 +160,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
-//        mFloorBar.setVisibility(View.VISIBLE);
         mView.setVisibility(View.GONE);
         // 记录阅读记录
         if (data != null && data.getArticle() != null) {

@@ -93,31 +93,10 @@ public class MoreDialogLink extends BaseDialogFragment {
     private UmengShareBean mBeanShare;
 
     /**
-     * js夜间模式回调
-     */
-    public interface IWebViewDN {
-
-        void onChangeTheme();
-
-    }
-
-    /**
      * @return
      */
     private static MoreDialogLink fragment = null;
 
-    private IWebViewDN callback;
-
-    /**
-     * 设置webview回调
-     *
-     * @param callback
-     * @return
-     */
-    public MoreDialogLink setWebViewCallBack(IWebViewDN callback) {
-        this.callback = callback;
-        return fragment;
-    }
 
     public MoreDialogLink setShareBean(UmengShareBean mBeanShare) {
         this.mBeanShare = mBeanShare;
@@ -237,9 +216,6 @@ public class MoreDialogLink extends BaseDialogFragment {
             newsTopicCollect();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
-            if (callback != null) {
-                callback.onChangeTheme();
-            }
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {

@@ -5,11 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +19,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
@@ -57,7 +53,7 @@ import cn.daily.news.analytics.Analytics;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends BaseActivity implements View.OnClickListener, TouchSlopHelper.OnTouchSlopListener {
+public class LiveLinkActivity extends BaseActivity implements View.OnClickListener/*, TouchSlopHelper.OnTouchSlopListener*/ {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -81,10 +77,10 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     FrameLayout mView;
 
     private String mArticleId;
-    /**
-     * 上下滑动超出范围处理
-     */
-    private TouchSlopHelper mTouchSlopHelper;
+//    /**
+//     * 上下滑动超出范围处理
+//     */
+//    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 详情页数据
      */
@@ -102,17 +98,17 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
         getIntentData(getIntent());
-        init();
+//        init();
         loadData();
     }
 
-    /**
-     * 初始化滑动/webview
-     */
-    private void init() {
-        mTouchSlopHelper = new TouchSlopHelper();
-        mTouchSlopHelper.setOnTouchSlopListener(this);
-    }
+//    /**
+//     * 初始化滑动/webview
+//     */
+//    private void init() {
+//        mTouchSlopHelper = new TouchSlopHelper();
+//        mTouchSlopHelper.setOnTouchSlopListener(this);
+//    }
 
     private String mFromChannel;
 
@@ -460,43 +456,43 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 //
 //    }
 
-    /**
-     * 处理上下移动监听
-     *
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mTouchSlopHelper != null)
-            mTouchSlopHelper.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
-    }
+//    /**
+//     * 处理上下移动监听
+//     *
+//     * @param ev
+//     * @return
+//     */
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (mTouchSlopHelper != null)
+//            mTouchSlopHelper.onTouchEvent(ev);
+//        return super.dispatchTouchEvent(ev);
+//    }
+//
+//    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
-    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+//    /**
+//     * @param isUp 控制底部floorBar
+//     */
+//    @Override
+//    public void onTouchSlop(boolean isUp) {
+//        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
+//        mFloorBar.animate().setInterpolator(mInterpolator)
+//                .setDuration(200)
+//                .translationY(translationY);
+//    }
 
-    /**
-     * @param isUp 控制底部floorBar
-     */
-    @Override
-    public void onTouchSlop(boolean isUp) {
-        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
-        mFloorBar.animate().setInterpolator(mInterpolator)
-                .setDuration(200)
-                .translationY(translationY);
-    }
-
-    /**
-     * @return 获取底部栏间距
-     */
-    private int getFloorBarMarginBottom() {
-        int marginBottom = 0;
-        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
-        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-        }
-        return marginBottom;
-    }
+//    /**
+//     * @return 获取底部栏间距
+//     */
+//    private int getFloorBarMarginBottom() {
+//        int marginBottom = 0;
+//        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
+//        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+//            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
+//        }
+//        return marginBottom;
+//    }
 
 
     /**

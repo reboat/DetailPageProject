@@ -26,7 +26,6 @@ public class DraftHotTopNewsBean extends BaseData {
 
 
     public static class HotNewsBean {
-
         /**
          * id : 123456
          * list_title : 浙江省第十四次党代会胜利闭幕
@@ -51,7 +50,7 @@ public class DraftHotTopNewsBean extends BaseData {
          * like_enabled : true
          * web_link : http://www.baidu.com
          */
-
+        private int mlf_id;
         private int id;
         private String list_title;
         private int list_style;
@@ -263,6 +262,14 @@ public class DraftHotTopNewsBean extends BaseData {
 
         public void setWeb_link(String web_link) {
             this.web_link = web_link;
+        }
+
+        public int getMlf_id() {
+            return mlf_id;
+        }
+
+        public void setMlf_id(int mlf_id) {
+            this.mlf_id = mlf_id;
         }
     }
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class RelatedNewsBean implements Serializable {
+    private int mlf_id;
     private int id;
     private String title;
     private String pic;
@@ -45,5 +46,13 @@ public class RelatedNewsBean implements Serializable {
 
     public void setUri_scheme(String url) {
         this.url = url;
+    }
+
+    public int getMlf_id() {
+        return mlf_id;
+    }
+
+    public void setMlf_id(int mlf_id) {
+        this.mlf_id = mlf_id;
     }
 }

@@ -59,6 +59,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int VIEW_TYPE_STRING = 8;
     //点击查看更多评论
     public static final int VIEW_TYPE_STRING_CLICK_MORE = 9;
+    //占位
+    public static final int VIEW_REPLEASE = 10;
 
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
@@ -104,6 +106,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             return new NewsStringTextHolder(parent);
         } else if (viewType == VIEW_TYPE_STRING_CLICK_MORE) {
             return new NewsStringClickMoreHolder(parent);
+        } else if (viewType == VIEW_REPLEASE) {
+            return new NewsPlaceHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -139,6 +143,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             return VIEW_TYPE_COMMENT;
         } else if (getData(position) instanceof String && getData(position).toString().equals("点击查看更多评论")) {
             return VIEW_TYPE_STRING_CLICK_MORE;
+        } else if (getData(position) instanceof String && getData(position).toString().equals("占位")) {
+            return VIEW_REPLEASE;
         }
         return 0;
     }
@@ -208,6 +214,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             datas.addAll(hotCommentsBeen);
             datas.add("点击查看更多评论");
         }
+        datas.add("占位");
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
@@ -260,7 +267,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             if (!TextUtils.isEmpty(url)) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
                         .setEvenName("点击相关新闻列表")
-                        .setObjectID("")
+                        .setObjectID(((RelatedNewsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID("")
@@ -280,7 +287,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             if (!TextUtils.isEmpty(url)) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
                         .setEvenName("点击相关专题列表")
-                        .setObjectID("")
+                        .setObjectID(((RelatedSubjectsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID("")

@@ -30,6 +30,8 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
     ImageView mImg;
     @BindView(R2.id.tv_title)
     TextView mTitle;
+    @BindView(R2.id.tv_time)
+    TextView mTime;
 
     public NewsRelateNewsHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_item_subject, parent, false));

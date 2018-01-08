@@ -88,6 +88,7 @@ public class DraftDetailBean extends BaseData {
         private String source;
 
         private String from_channel;
+        private String timeline;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -692,35 +693,13 @@ public class DraftDetailBean extends BaseData {
             this.source = source;
         }
 
-        /**
-         * docType
-         * 2-9分别代表普通、链接、图集、专题、话题、活动、直播、视频
-         */
-        public static final class type {
-
-            // 普通
-            public static final int NOMAL = 2;
-
-            // 链接
-            public static final int LINK = 3;
-
-            // 图集
-            public static final int ALBUM = 4;
-            // 专题
-            public static final int SUBJECT = 5;
-
-            // 话题
-            public static final int TOPIC = 6;
-
-            // 活动
-            public static final int ACTIVITY = 7;
-
-            // 直播
-            public static final int LIVE = 8;
-
-            // 视频
-            public static final int VIDEO = 9;
+        public String getTimeline() {
+            return timeline;
         }
 
+        public void setTimeline(String timeline) {
+            this.timeline = timeline;
+        }
     }
+
 }

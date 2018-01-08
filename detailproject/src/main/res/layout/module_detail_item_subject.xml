@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
-        android:textColor="?attr/tc_000000"
+        android:textColor="?attr/module_news_tc_item_title"
         android:textSize="@dimen/ts_16sp"
         tools:text="张高丽夏宝龙车俊对温州倒房作出批，要求全力搜救要求全力搜救要求全面加加啥叫撒娇是 "
         />

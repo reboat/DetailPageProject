@@ -7,14 +7,17 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.adapter.ItemClickCallback;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftHotTopNewsBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 
 import java.util.List;
 
@@ -68,7 +71,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
      * 撤稿适配器
      * 样式与相关新闻一致，图文/纯文
      */
-    static class EmptyStateHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> {
+    static class EmptyStateHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> implements ItemClickCallback {
 
         @BindView(R2.id.tv_title)
         TextView mTitle;
@@ -87,6 +90,19 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
             //标题
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());
+                mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
+            }
+        }
+
+        @Override
+        public void onItemClick(View itemView, int position) {
+            if (ClickTracker.isDoubleClick()) return;
+            if (mTitle != null) {
+                mTitle.setSelected(true);
+                ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+            }
+            if (mData != null && !mData.getUrl().isEmpty()) {
+                Nav.with(UIUtils.getActivity()).to(mData.getUrl());
             }
         }
     }
@@ -94,7 +110,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
     /**
      * 相关新闻holder/纯文本
      */
-    static class EmptyStateTextHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> {
+    static class EmptyStateTextHolder extends BaseRecyclerViewHolder<DraftHotTopNewsBean.HotNewsBean> implements ItemClickCallback {
 
         @BindView(R2.id.tv_title)
         TextView mTitle;
@@ -108,6 +124,19 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
         public void bindView() {
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());
+                mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
+            }
+        }
+
+        @Override
+        public void onItemClick(View itemView, int position) {
+            if (ClickTracker.isDoubleClick()) return;
+            if (mTitle != null) {
+                mTitle.setSelected(true);
+                ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+            }
+            if (getData() != null && !mData.getUrl().isEmpty()) {
+                Nav.with(UIUtils.getActivity()).to(mData.getUrl());
             }
         }
     }

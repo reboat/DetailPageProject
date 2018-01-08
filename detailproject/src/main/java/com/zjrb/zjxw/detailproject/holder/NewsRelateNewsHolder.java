@@ -11,6 +11,7 @@ import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -46,7 +47,12 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
 
         if (mData.getTitle() != null) {
             mTitle.setText(mData.getTitle());
+            mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
         }
+    }
+
+    public TextView getTitle(){
+        return mTitle;
     }
 
 }

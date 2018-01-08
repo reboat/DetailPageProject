@@ -157,6 +157,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     }
 
     /**
+     * 顶部导航条在数据加载结束后再显示
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {

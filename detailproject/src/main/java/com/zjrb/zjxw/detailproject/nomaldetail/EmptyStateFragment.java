@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -37,7 +35,7 @@ import butterknife.OnClick;
  * create time:2017/9/2  下午9:53
  */
 
-public class EmptyStateFragment extends BaseFragment implements OnItemClickListener {
+public class EmptyStateFragment extends BaseFragment {
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
     @BindView(R2.id.layout_title_bar)
@@ -100,7 +98,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      * 初始化适配器
      */
     private void initAdapter() {
-        adapter.setOnItemClickListener(this);
         adapter.addHeaderView(head);
     }
 
@@ -143,19 +140,6 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                 T.showShort(UIUtils.getContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe();
-    }
-
-    /**
-     * @param itemView
-     * @param position 进入详情页
-     */
-    @Override
-    public void onItemClick(View itemView, int position) {
-        if (ClickTracker.isDoubleClick()) return;
-        if (adapter.getData() != null && !adapter.getData().isEmpty()) {
-            Nav.with(UIUtils.getActivity()).to(((DraftHotTopNewsBean.HotNewsBean) adapter.getData().get(position)).getUrl());
-        }
-
     }
 
 }

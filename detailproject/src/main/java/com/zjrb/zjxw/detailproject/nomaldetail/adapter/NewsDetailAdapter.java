@@ -15,6 +15,7 @@ import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -73,6 +74,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private boolean isShowAll;
     private boolean mHasVideoUrl = false;
 
+    private NewsRelateNewsHolder relateNewsHolder;
+
     public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
         super(datas);
         mHasVideoUrl = hasVideoUrl;
@@ -92,7 +95,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
             return new NewsRelateSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
-            return new NewsRelateNewsHolder(parent);
+            return relateNewsHolder = new NewsRelateNewsHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
             return new NewsRelateNewsTextHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
@@ -249,47 +252,47 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (datas.get(position) instanceof RelatedNewsBean) {
+            if (relateNewsHolder != null && relateNewsHolder.getTitle() != null) {
+                relateNewsHolder.getTitle().setSelected(true);
+                ReadNewsDaoHelper.addAlreadyRead(((RelatedNewsBean) datas.get(position)).getId());
+            }
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                if (detailBean != null && detailBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
-                            .setEvenName("点击相关新闻列表")
-                            .setObjectID(detailBean.getArticle().getMlf_id() + "")
-                            .setObjectName(detailBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(detailBean.getArticle().getChannel_id())
-                            .setClassifyName(detailBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", detailBean.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(detailBean.getArticle().getId() + "")
-                            .build()
-                            .send();
-                }
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
+                        .setEvenName("点击相关新闻列表")
+                        .setObjectID("")
+                        .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID("")
+                        .setClassifyName("")
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfObjectID(((RelatedNewsBean) datas.get(position)).getId() + "")
+                        .build()
+                        .send();
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                if (detailBean != null && detailBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
-                            .setEvenName("点击相关专题列表")
-                            .setObjectID(detailBean.getArticle().getMlf_id() + "")
-                            .setObjectName(detailBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(detailBean.getArticle().getChannel_id())
-                            .setClassifyName(detailBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("customObjectType", "SubjectType")
-                                    .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
-                                    .toString())
-                            .setSelfObjectID(detailBean.getArticle().getId() + "")
-                            .build()
-                            .send();
-                }
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                        .setEvenName("点击相关专题列表")
+                        .setObjectID("")
+                        .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID("")
+                        .setClassifyName("")
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("customObjectType", "SubjectType")
+                                .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
+                                .toString())
+                        .setSelfObjectID(((RelatedNewsBean) datas.get(position)).getId() + "")
+                        .build()
+                        .send();
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof String && datas.get(position).toString().equals("点击查看更多评论")) {

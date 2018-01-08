@@ -10,11 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -30,7 +27,6 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.biz.TouchSlopHelper;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
@@ -81,7 +77,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.OnTouchSlopListener,
+public class NewsDetailActivity extends BaseActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener {
 
     /**
@@ -115,10 +111,10 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     @BindView(R2.id.tv_duration)
     TextView mTvDuration;
 
-    /**
-     * 上下滑动超出范围处理
-     */
-    private TouchSlopHelper mTouchSlopHelper;
+//    /**
+//     * 上下滑动超出范围处理
+//     */
+//    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 详情页数据
      */
@@ -130,18 +126,18 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
 
     private Analytics mAnalytics;
 
-    /**
-     * 处理上下移动监听
-     *
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mTouchSlopHelper != null)
-            mTouchSlopHelper.onTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
-    }
+//    /**
+//     * 处理上下移动监听
+//     *
+//     * @param ev
+//     * @return
+//     */
+//    @Override
+//    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (mTouchSlopHelper != null)
+//            mTouchSlopHelper.onTouchEvent(ev);
+//        return super.dispatchTouchEvent(ev);
+//    }
 
     private class VideoBroadcastReceiver extends BroadcastReceiver {
 
@@ -217,8 +213,8 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
      * 初始化/拉取数据
      */
     private void init() {
-        mTouchSlopHelper = new TouchSlopHelper();
-        mTouchSlopHelper.setOnTouchSlopListener(this);
+//        mTouchSlopHelper = new TouchSlopHelper();
+//        mTouchSlopHelper.setOnTouchSlopListener(this);
         loadData();
     }
 
@@ -277,7 +273,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                     mView.setVisibility(View.GONE);
                 }
                 mNewsDetail = draftDetailBean;
-                if (mNewsDetail != null && mNewsDetail.getArticle() != null ) {
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                     initVideo(mNewsDetail.getArticle());
                 }
                 fillData(mNewsDetail);
@@ -370,30 +366,30 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
     }
 
 
-    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+//    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
-    /**
-     * @param isUp 控制底部floorBar
-     */
-    @Override
-    public void onTouchSlop(boolean isUp) {
-        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
-        mFloorBar.animate().setInterpolator(mInterpolator)
-                .setDuration(200)
-                .translationY(translationY);
-    }
+//    /**
+//     * @param isUp 控制底部floorBar
+//     */
+//    @Override
+//    public void onTouchSlop(boolean isUp) {
+//        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
+//        mFloorBar.animate().setInterpolator(mInterpolator)
+//                .setDuration(200)
+//                .translationY(translationY);
+//    }
 
-    /**
-     * @return 获取底部栏间距
-     */
-    private int getFloorBarMarginBottom() {
-        int marginBottom = 0;
-        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
-        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-        }
-        return marginBottom;
-    }
+//    /**
+//     * @return 获取底部栏间距
+//     */
+//    private int getFloorBarMarginBottom() {
+//        int marginBottom = 0;
+//        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
+//        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
+//            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
+//        }
+//        return marginBottom;
+//    }
 
     /**
      * 订阅
@@ -706,7 +702,7 @@ public class NewsDetailActivity extends BaseActivity implements TouchSlopHelper.
                 builder.setPercentage(mScale + "");
             }
             mAnalytics = builder.build();
-            if(mAnalytics != null){
+            if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }
         }

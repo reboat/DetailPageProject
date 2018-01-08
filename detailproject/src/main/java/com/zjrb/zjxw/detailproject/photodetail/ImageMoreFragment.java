@@ -109,11 +109,11 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-            if (mBean != null && mBean.getArticle() != null) {
+            if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getRelated_news() != null && mBean.getArticle().getRelated_news().get(position) != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
                         .setEvenName("更多图集页面，点击单个图集稿件)")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectID(mBean.getArticle().getRelated_news().get(position).getMlf_id() + "")
+                        .setObjectName(mBean.getArticle().getRelated_news().get(position).getTitle())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mBean.getArticle().getChannel_id())
                         .setClassifyName(mBean.getArticle().getChannel_name())
@@ -122,7 +122,7 @@ public class ImageMoreFragment extends BaseFragment implements OnItemClickListen
                                 .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(mBean.getArticle().getRelated_news().get(position).getId() + "")
                         .build()
                         .send();
             }

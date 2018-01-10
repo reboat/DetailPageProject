@@ -62,7 +62,6 @@ public class OverlyHolder {
             if (hosts != null && !hosts.isEmpty() && hosts.size() > 0) {
                 mTvHost.setVisibility(View.VISIBLE);
                 for (int i = 0; i < hosts.size(); i++) {
-                    host_s += hosts.get(i) + "  ";
                     if (i == (hosts.size() - 1)) {
                         host_s += hosts.get(i);
                     } else {

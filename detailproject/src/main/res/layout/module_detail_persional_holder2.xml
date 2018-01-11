@@ -13,6 +13,6 @@
     android:maxLines="2"
     android:paddingBottom="3dp"
     android:paddingTop="3dp"
-    android:textColor="?attr/tc_000000"
+    android:textColor="?attr/module_news_tc_item_title"
     android:textSize="@dimen/ts_16sp"
     tools:text="人文直播001人文直播001人文直播001人文直播001人文直播001人文直播001人文直播001人文直播001" />

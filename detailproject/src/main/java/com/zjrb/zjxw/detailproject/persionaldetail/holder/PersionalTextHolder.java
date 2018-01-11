@@ -8,6 +8,7 @@ import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
@@ -36,6 +37,7 @@ public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesB
     public void bindView() {
         if (mData.getTitle() != null) {
             mTvTitle.setText(mData.getTitle());
+            mTvTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
         }
     }
 
@@ -48,6 +50,10 @@ public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesB
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.tv_title) {
+            if (mTvTitle != null) {
+                mTvTitle.setSelected(true);
+                ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+            }
             Nav.with(UIUtils.getActivity()).to(mData.getUrl());
         }
     }

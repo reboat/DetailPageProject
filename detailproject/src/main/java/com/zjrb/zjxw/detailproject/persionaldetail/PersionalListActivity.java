@@ -3,25 +3,19 @@ package com.zjrb.zjxw.detailproject.persionaldetail;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.global.C;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.HeaderRefresh;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalListAdapter;
 import com.zjrb.zjxw.detailproject.task.OfficalListTask;
@@ -35,7 +29,7 @@ import butterknife.ButterKnife;
  * create time:2017/8/21  上午10:24
  */
 
-public class PersionalListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, OnItemClickListener {
+public class PersionalListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener {
 
     @BindView(R2.id.lv_notice)
     RecyclerView mRecycler;
@@ -136,18 +130,18 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         });
 
     }
-
-    @Override
-    public void onItemClick(View itemView, int position) {
-        if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
-            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())) {
-                Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
-            }
-        } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
-            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())) {
-                Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
-            }
-        }
-    }
+//    @Override
+//    public void onItemClick(View itemView, int position) {
+//        if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
+//            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())) {
+//                Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
+//            }
+//            //链接稿
+//        } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
+//            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())) {
+//                Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
+//            }
+//        }
+//    }
 
 }

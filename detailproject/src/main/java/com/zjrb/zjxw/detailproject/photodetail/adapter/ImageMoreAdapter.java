@@ -1,15 +1,22 @@
 package com.zjrb.zjxw.detailproject.photodetail.adapter;
 
+import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -18,6 +25,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.daily.news.analytics.Analytics;
 
 /**
  * 更多图集
@@ -46,6 +55,8 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         ImageView mIvImage;
         @BindView(R2.id.tv_title)
         TextView mTvTitle;
+        @BindView(R2.id.ry_container)
+        RelativeLayout mContainer;
 
         public ImageMoreHolder(ViewGroup parent) {
             super(UIUtils.inflate(R.layout.module_detail_image_more_item, parent, false));
@@ -59,8 +70,38 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
             //文案
             if (mData.getTitle() != null) {
                 mTvTitle.setText(mData.getTitle());
+                mTvTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
             }
         }
+
+
+        @OnClick({R2.id.ry_container})
+        public void onClick(View view) {
+            if (ClickTracker.isDoubleClick()) return;
+            if (view.getId() == R.id.ry_container && mData != null && !TextUtils.isEmpty(mData.getUri_scheme())) {
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011")
+                        .setEvenName("更多图集页面，点击单个图集稿件)")
+                        .setObjectID(mData.getMlf_id() + "")
+                        .setObjectName(mData.getTitle())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID("")
+                        .setClassifyName("")
+                        .setPageType("更多图集页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfObjectID(mData.getId() + "")
+                        .build()
+                        .send();
+            }
+            if (mTvTitle != null) {
+                mTvTitle.setSelected(true);
+                ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+            }
+            Nav.with(UIUtils.getActivity()).to(mData.getUri_scheme());
+        }
+
     }
 
 

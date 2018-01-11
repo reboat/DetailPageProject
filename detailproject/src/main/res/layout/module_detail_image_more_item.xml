@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
     >
@@ -29,7 +30,7 @@
         android:maxLines="2"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textColor="?attr/tc_ffffff"
+        android:textColor="?attr/module_news_tc_item_title"
         tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全" />
 
 </RelativeLayout>

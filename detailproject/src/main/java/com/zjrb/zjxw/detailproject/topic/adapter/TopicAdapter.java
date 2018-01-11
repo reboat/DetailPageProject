@@ -54,6 +54,8 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     public static final int VIEW_TYPE_TEXT_INTERACT = 7;
     //暂无评论
     public static final int VIEW_TYPE_NO_COMMENT = 8;
+    //占位
+    public static final int VIEW_REPLEASE = 10;
 
     //订阅
     public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
@@ -100,6 +102,8 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                         .getId()));
             case VIEW_TYPE_NO_COMMENT:
                 return new NewsNoCommentTextHolder(parent);
+            case VIEW_REPLEASE:
+                return new NewsPlaceHolder(parent);
             default:
                 return new NewsPlaceHolder(parent);
         }
@@ -138,6 +142,8 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                 ("暂无评论")) {
             loadMore.setVisibility(View.GONE);
             return VIEW_TYPE_NO_COMMENT;
+        } else if (getData(position) instanceof String && getData(position).toString().equals("占位")) {
+            return VIEW_REPLEASE;
         }
         return 0;
     }
@@ -206,6 +212,12 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             datas.add("互动");
             datas.add("暂无评论");
         }
+
+        //有相关新闻/相关专题/热门评论
+        if ((subjectList != null && subjectList.size() > 0) || (selectCommentsBean != null && selectCommentsBean.size() > 0) || (listCommentBean != null && listCommentBean.size() > 0)) {
+            datas.add("占位");
+        }
+
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class OfficalArticlesBean implements Serializable {
+    private int id;
     private String url;
     private String list_title;
 
@@ -28,5 +29,13 @@ public class OfficalArticlesBean implements Serializable {
 
     public void setTitle(String title) {
         this.list_title = title;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

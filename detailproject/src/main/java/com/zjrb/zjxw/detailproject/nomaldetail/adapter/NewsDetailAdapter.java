@@ -214,7 +214,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             datas.addAll(hotCommentsBeen);
             datas.add("点击查看更多评论");
         }
-        datas.add("占位");
+        //有相关新闻/相关专题/热门评论
+        if((subjectList != null && subjectList.size() > 0) || (articles != null && articles.size() > 0) || (hotCommentsBeen != null && hotCommentsBeen.size() > 0)){
+            datas.add("占位");
+        }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

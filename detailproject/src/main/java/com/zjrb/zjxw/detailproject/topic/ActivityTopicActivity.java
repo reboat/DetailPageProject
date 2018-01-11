@@ -125,7 +125,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (mFloorBarHolder != null) mFloorBarHolder.dispatchTouchEvent(ev);
+//        if (mFloorBarHolder != null) mFloorBarHolder.dispatchTouchEvent(ev);
         return super.dispatchTouchEvent(ev);
     }
 

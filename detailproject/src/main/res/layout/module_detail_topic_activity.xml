@@ -60,7 +60,7 @@
     <include
         android:id="@+id/ly_bottom_comment"
         layout="@layout/module_detail_bottom_comment"
-        android:visibility="gone" />
+        android:visibility="invisible" />
 
     <FrameLayout
         android:id="@+id/v_container"

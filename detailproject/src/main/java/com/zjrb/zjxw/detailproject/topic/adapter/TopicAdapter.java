@@ -69,7 +69,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         super(null);
         setData(data);
         setOnItemClickListener(this);
-        this.loadMore = loadMore.getLoadMore();
+        this.loadMore = loadMore.getItemView();
     }
 
 

@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -49,6 +48,7 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.topic.holder.FloorBarHolder;
+import com.zjrb.zjxw.detailproject.topic.holder.FooterPlaceHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.HeaderTopicTop;
 import com.zjrb.zjxw.detailproject.topic.holder.OverlyHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
@@ -115,18 +115,6 @@ public class ActivityTopicActivity extends BaseActivity implements
         getIntentData(getIntent());
         initView();
         loadData();
-    }
-
-    /**
-     * 处理上下移动监听
-     *
-     * @param ev
-     * @return
-     */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (mFloorBarHolder != null) mFloorBarHolder.dispatchTouchEvent(ev);
-        return super.dispatchTouchEvent(ev);
     }
 
     /**
@@ -200,8 +188,9 @@ public class ActivityTopicActivity extends BaseActivity implements
             public void onSuccess(DraftDetailBean data) {
                 if (data == null) return;
                 mTopBarHolder.setShareVisible(true);
-                if(data.getArticle() != null){
-                    builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010", "800021")
+                if (data.getArticle() != null) {
+                    builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
+                            "800021")
                             .setEvenName("页面停留时长/阅读深度")
                             .setObjectID(data.getArticle().getMlf_id() + "")
                             .setObjectName(data.getArticle().getDoc_title())
@@ -305,7 +294,10 @@ public class ActivityTopicActivity extends BaseActivity implements
 
     @Override
     public void onOptPageFinished() {
-        mAdapter.setFooterLoadMore(mLoadMore.getItemView());
+        if (mAdapter.getFooterCount() == 0) {
+            mAdapter.addFooterView(mLoadMore.getItemView());
+            mAdapter.addFooterView(new FooterPlaceHolder(mRecycler).getItemView());
+        }
         mAdapter.showAll();
     }
 
@@ -390,7 +382,9 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setSelfObjectID(mDetailData.getArticle().getId() + "")
                         .build()
                         .send();
-                MoreDialog.newInstance(mDetailData).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+                MoreDialog.newInstance(mDetailData).setWebViewCallBack(mAdapter.getWebViewHolder
+                        (), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(),
+                        "MoreDialog");
             }
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
@@ -434,7 +428,8 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
-            if (mDetailData != null && mDetailData.getArticle() != null && !TextUtils.isEmpty(mDetailData.getArticle().getUrl())) {
+            if (mDetailData != null && mDetailData.getArticle() != null && !TextUtils.isEmpty
+                    (mDetailData.getArticle().getUrl())) {
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -561,7 +556,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             if (builder != null) {
                 builder.setPercentage(mScale + "");
                 mAnalytics = builder.build();
-                if(mAnalytics != null){
+                if (mAnalytics != null) {
                     mAnalytics.sendWithDuration();
                 }
             }

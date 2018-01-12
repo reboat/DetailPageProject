@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
 //        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
 //        Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
-        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791
+//        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=785088"); // 741791
 //        Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=741790");
 
@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                Nav.with(this).to("http://zjbeta.8531.cn/album.html?id=741157");
 
                 // 话题详情页
-//                Nav.with(this).to("http://zjbeta.8531.cn/topic.html?id=740957");
+                Nav.with(this).to("http://zjbeta.8531.cn/topic.html?id=802710"); // 802710,802979
 
 //                //进入专题更多列表
 //                Bundle bundle = new Bundle();

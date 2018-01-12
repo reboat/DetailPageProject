@@ -1,12 +1,9 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-
-import com.zjrb.core.common.biz.TouchSlopHelper;
 
 /**
  * 底部 bar view holder
@@ -14,17 +11,12 @@ import com.zjrb.core.common.biz.TouchSlopHelper;
  * @author a_liYa
  * @date 2017/11/1 18:51.
  */
-public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
+public class FloorBarHolder {
 
     private View mFloorBar;
 
-    private boolean isUp = true; // 缓存 isUp 的状态
-    private boolean canVisible; // 是否可以显示
+    private boolean mVisible; // 是否可以显示
 
-    /**
-     * 上下滑动超出范围处理
-     */
-    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 底部评论框显示动画
      */
@@ -32,18 +24,20 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
 
     public FloorBarHolder(View floorBar) {
         mFloorBar = floorBar;
-        mTouchSlopHelper = new TouchSlopHelper();
-        mTouchSlopHelper.setOnTouchSlopListener(this);
     }
 
-    public void setCanVisible(boolean canVisible) {
-        if (this.canVisible != canVisible) {
-            if (canVisible) {
-                onTouchSlop(isUp); // 显示时 恢复 isUp 状态
-            } else {
-                onTouchSlop(true);
+    public void setCanVisible(boolean visible) {
+        if (this.mVisible != visible) {
+            if (visible) {
+                if (mFloorBar.getVisibility() != View.VISIBLE) {
+                    mFloorBar.setVisibility(View.VISIBLE);
+                }
             }
-            this.canVisible = canVisible;
+            mFloorBar.animate().setInterpolator(mInterpolator)
+                    .setDuration(200)
+                    .translationY(visible ? 0 : mFloorBar.getHeight() + getMarginBottom());
+
+            this.mVisible = visible;
         }
     }
 
@@ -52,33 +46,12 @@ public class FloorBarHolder implements TouchSlopHelper.OnTouchSlopListener {
     }
 
     public float getRangeHeight() {
-        return mFloorBar.getHeight() * 1.5f;
-    }
-
-    /**
-     * 滑动显示/隐藏底部评论栏
-     *
-     * @param isUp
-     */
-    @Override
-    public void onTouchSlop(boolean isUp) {
-        this.isUp = isUp;
-        if (!canVisible) { // visible=false时不处理
-            return;
+        int height = mFloorBar.getHeight();
+        if (height == 0) {
+            mFloorBar.measure(0,0);
+            height = mFloorBar.getMeasuredHeight();
         }
-        if (!isUp && mFloorBar.getVisibility() != View.VISIBLE) {
-            mFloorBar.setVisibility(View.VISIBLE);
-        }
-
-        mFloorBar.animate().setInterpolator(mInterpolator)
-                .setDuration(200)
-                .translationY(!isUp ? 0 : mFloorBar.getHeight() + getMarginBottom());
-    }
-
-    public void dispatchTouchEvent(MotionEvent ev) {
-        if (mTouchSlopHelper != null) {
-            mTouchSlopHelper.onTouchEvent(ev);
-        }
+        return height * 1.5f;
     }
 
     private int getMarginBottom() {

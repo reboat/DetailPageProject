@@ -58,6 +58,9 @@
         <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon</item>
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red</item>
         <item name="bc_mask">@android:color/transparent</item>
+        <item name="module_detail_tc_item_title">@color/module_detail_tc_item_title</item>
+
+
     </style>
 
     <style name="DetailNightTheme">
@@ -119,5 +122,6 @@
         <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon_night</item>
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red_night</item>
         <item name="bc_mask">@color/color_7f000000_night</item>
+        <item name="module_detail_tc_item_title">@color/module_detail_tc_item_title_night</item>
     </style>
 </resources>

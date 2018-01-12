@@ -98,7 +98,7 @@
         <attr name="module_detail_color_999999_5c5c5c" format="color|reference" />
         <attr name="module_detail_color_484848_7a7b7d" format="color|reference" />
         <attr name="module_detail_defaule_icon" format="color|reference" />
-
+        <attr name="module_detail_tc_item_title" format="color|reference" />
 
     </declare-styleable>
 

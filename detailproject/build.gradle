@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: 'http://10.100.47.176:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.4/publish-0.0.4.gradle'
-apply from: "${rootDir}/public.gradle"
+//apply from: "${rootDir}/public.gradle"
 
 android {
     compileSdkVersion 25
@@ -37,7 +37,7 @@ dependencies {
         exclude group: 'cn.daily.android'
     }
     compile 'cn.daily.android:daily-db:5.0.0.2'
-    compile butterknifeDeps.butterknife
-    annotationProcessor butterknifeDeps.butterknifeCompiler
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 }
 

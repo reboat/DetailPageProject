@@ -40,12 +40,13 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
      */
     private DraftDetailBean mBean;
 
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view,TextView textView, String articleId, boolean is_select_list, DraftDetailBean bean) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, TextView textView, String articleId, boolean is_select_list, DraftDetailBean bean,int commentCount) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         mView = view;
         mTextView = textView;
+        this.commentCount = commentCount;
         this.articleId = articleId;
         this.is_select_list = is_select_list;
         setData(datas);
@@ -76,7 +77,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     @Override
     public DetailCommentHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId,"评论页",mBean);
+        return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
     }
 
     @Override
@@ -117,20 +118,26 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         notifyItemRemoved(position);
     }
 
+    private int commentCount = 0;
+    public void setCommentCount(int commentCount){
+        this.commentCount = commentCount;
+    }
+
     /**
      * 刷新评论列表文案头部
      */
-    private void updateHead(){
+    private void updateHead() {
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);
             mTextView.setVisibility(View.GONE);
         } else {
             mView.setVisibility(View.VISIBLE);
             mTextView.setVisibility(View.VISIBLE);
-            if (getDataSize() <= 99999) {
-                mTextView.setText(getDataSize() + "条评论");
-            } else {
+            if (getDataSize() >= 99999) {
                 mTextView.setText("99999+条评论");
+            } else {
+                mTextView.setText(commentCount + "条评论");
+
             }
 
             ((TextView) mView).setText(getString(R.string.module_detail_new_comment));

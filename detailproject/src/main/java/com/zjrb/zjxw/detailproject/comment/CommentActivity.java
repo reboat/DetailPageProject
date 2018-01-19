@@ -176,20 +176,20 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         }
 
         //评论数
-        if (bean != null && bean.getComment_count() > 0) {
-            tvCommentNum.setVisibility(View.VISIBLE);
-            if (bean.getComment_count() <= 99999) {
-                tvCommentNum.setText(bean.getComment_count() + "条评论");
-            } else {
-                tvCommentNum.setText("99999+条评论");
-            }
-        } else {
-            tvCommentNum.setVisibility(View.GONE);
-        }
+//        if (bean != null && bean.getComment_count() > 0) {
+//            tvCommentNum.setVisibility(View.VISIBLE);
+//            if (bean.getComment_count() <= 99999) {
+//                tvCommentNum.setText(bean.getComment_count() + "条评论");
+//            } else {
+//                tvCommentNum.setText("99999+条评论");
+//            }
+//        } else {
+//            tvCommentNum.setVisibility(View.GONE);
+//        }
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail);
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail,bean.getComment_count());
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -198,6 +198,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                     ).itemView);
             mRvContent.setAdapter(mCommentAdapter);
         } else {
+            mCommentAdapter.setCommentCount(bean.getComment_count());
             mCommentAdapter.setData(bean);
             mCommentAdapter.notifyDataSetChanged();
         }

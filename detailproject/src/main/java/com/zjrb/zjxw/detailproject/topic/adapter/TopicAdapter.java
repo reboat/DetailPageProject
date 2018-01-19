@@ -265,7 +265,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                         .setEvenName("点击正文底部频道名称")
                         .setObjectID(detailBean.getArticle().getChannel_id())
                         .setObjectName(detailBean.getArticle().getChannel_name())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.ColumnType)
                         .setClassifyID(detailBean.getArticle().getSource_channel_id())
                         .setClassifyName(detailBean.getArticle().getSource_channel_name())
                         .setPageType("新闻详情页")

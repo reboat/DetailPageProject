@@ -152,7 +152,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                             .setEvenName("点击正文底部频道名称")
                             .setObjectID(mData.getArticle().getChannel_id())
                             .setObjectName(mData.getArticle().getChannel_name())
-                            .setObjectType(ObjectType.NewsType)
+                            .setObjectType(ObjectType.ColumnType)
                             .setClassifyID(mData.getArticle().getSource_channel_id())
                             .setClassifyName(mData.getArticle().getSource_channel_name())
                             .setPageType("新闻详情页")

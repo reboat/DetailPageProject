@@ -20,7 +20,8 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/11/22  下午3:08
  */
 
-public final class PlayerAnalytics implements PlayerCallback {
+public final class
+PlayerAnalytics implements PlayerCallback {
 
     private static SoftReference<PlayerAnalytics> sAnalyticsSoft;
 
@@ -76,6 +77,7 @@ public final class PlayerAnalytics implements PlayerCallback {
                             .put("mediaURL", extra.getVideo_url())
                             .toString())
                     .setSelfObjectID(extra.getId())
+                    .setEvenName(eventName)
                     .build().send();
         }
     }

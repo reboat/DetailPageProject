@@ -291,7 +291,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
                         .setEvenName("点击相关专题列表")
                         .setObjectID(((RelatedSubjectsBean) datas.get(position)).getMlf_id())
-                        .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
+                        .setObjectName(((RelatedSubjectsBean) datas.get(position)).getTitle())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID("")
                         .setClassifyName("")
@@ -300,7 +300,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
                                 .put("customObjectType", "SubjectType")
                                 .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
                                 .toString())
-                        .setSelfObjectID(((RelatedNewsBean) datas.get(position)).getId() + "")
+                        .setSelfObjectID(((RelatedSubjectsBean) datas.get(position)).getId() + "")
                         .build()
                         .send();
                 Nav.with(UIUtils.getActivity()).to(url);

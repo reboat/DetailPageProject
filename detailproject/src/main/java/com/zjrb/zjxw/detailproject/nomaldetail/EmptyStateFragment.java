@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.nomaldetail;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseFragment;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -35,7 +38,7 @@ import butterknife.OnClick;
  * create time:2017/9/2  下午9:53
  */
 
-public class EmptyStateFragment extends BaseFragment {
+public class EmptyStateFragment extends BaseFragment implements OnItemClickListener {
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
     @BindView(R2.id.layout_title_bar)
@@ -126,6 +129,7 @@ public class EmptyStateFragment extends BaseFragment {
                 if (article_list != null) {
                     if (adapter == null) {
                         adapter = new EmptyStateListAdapter(article_list);
+                        adapter.setOnItemClickListener(EmptyStateFragment.this);
                         initAdapter();
                         lvNotice.setAdapter(adapter);
                     } else {
@@ -142,4 +146,10 @@ public class EmptyStateFragment extends BaseFragment {
         }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe();
     }
 
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (adapter.getData(position) != null && !TextUtils.isEmpty(adapter.getData(position).getUrl())) {
+            Nav.with(UIUtils.getActivity()).to(adapter.getData(position).getUrl());
+        }
+    }
 }

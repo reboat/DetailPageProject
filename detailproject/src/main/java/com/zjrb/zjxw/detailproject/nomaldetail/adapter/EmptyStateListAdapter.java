@@ -11,7 +11,6 @@ import com.zjrb.core.common.base.adapter.ItemClickCallback;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
  * create time:2017/9/4  上午8:59
  */
 
-public class EmptyStateListAdapter extends BaseRecyclerAdapter {
+public class EmptyStateListAdapter extends BaseRecyclerAdapter<DraftHotTopNewsBean.HotNewsBean> {
     public static int TYPE_TEXT = -1;
     public static int TYPE_NOMAL = 0;
 
@@ -101,9 +100,6 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
                 mTitle.setSelected(true);
                 ReadNewsDaoHelper.addAlreadyRead(mData.getId());
             }
-            if (mData != null && !mData.getUrl().isEmpty()) {
-                Nav.with(UIUtils.getActivity()).to(mData.getUrl());
-            }
         }
     }
 
@@ -134,9 +130,6 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter {
             if (mTitle != null) {
                 mTitle.setSelected(true);
                 ReadNewsDaoHelper.addAlreadyRead(mData.getId());
-            }
-            if (getData() != null && !mData.getUrl().isEmpty()) {
-                Nav.with(UIUtils.getActivity()).to(mData.getUrl());
             }
         }
     }

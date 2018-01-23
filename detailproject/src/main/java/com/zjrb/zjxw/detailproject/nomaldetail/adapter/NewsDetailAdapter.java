@@ -131,7 +131,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (position == 2) {
             mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
-        } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论")) {
+        } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论") && !getData(position).toString().equals("占位")) {
             return VIEW_TYPE_STRING;
         } else if (getData(position) instanceof RelatedSubjectsBean) {
             return VIEW_TYPE_RELATE_SUBJECT;
@@ -215,9 +215,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             datas.add("点击查看更多评论");
         }
         //有相关新闻/相关专题/热门评论
-        if((subjectList != null && subjectList.size() > 0) || (articles != null && articles.size() > 0) || (hotCommentsBeen != null && hotCommentsBeen.size() > 0)){
+//        if((subjectList != null && subjectList.size() > 0) || (articles != null && articles.size() > 0) || (hotCommentsBeen != null && hotCommentsBeen.size() > 0)){
             datas.add("占位");
-        }
+//        }
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 

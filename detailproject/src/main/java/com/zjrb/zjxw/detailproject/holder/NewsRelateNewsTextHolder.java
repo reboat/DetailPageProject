@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -31,6 +32,7 @@ public class NewsRelateNewsTextHolder extends BaseRecyclerViewHolder<RelatedNews
     public void bindView() {
         if (mData.getTitle() != null) {
             mTitle.setText(mData.getTitle());
+            mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
         }
     }
 

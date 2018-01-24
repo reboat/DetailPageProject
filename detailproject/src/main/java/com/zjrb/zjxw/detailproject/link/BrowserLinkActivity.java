@@ -179,7 +179,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mWebView.loadUrl(url);
 
         if(topBarHolder != null){
-            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.GONE);
+            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.VISIBLE);
         }
         //是否点赞
         if (data.getArticle().isLike_enabled()) {

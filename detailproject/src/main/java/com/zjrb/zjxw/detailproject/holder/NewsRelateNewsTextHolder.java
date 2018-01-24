@@ -1,9 +1,11 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.adapter.ItemClickCallback;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
@@ -19,7 +21,7 @@ import butterknife.ButterKnife;
  * create time:2017/10/26  上午8:58
  */
 
-public class NewsRelateNewsTextHolder extends BaseRecyclerViewHolder<RelatedNewsBean> {
+public class NewsRelateNewsTextHolder extends BaseRecyclerViewHolder<RelatedNewsBean> implements ItemClickCallback {
     @BindView(R2.id.tv_title)
     TextView mTitle;
 
@@ -36,4 +38,11 @@ public class NewsRelateNewsTextHolder extends BaseRecyclerViewHolder<RelatedNews
         }
     }
 
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (mData != null && mData.getTitle() != null) {
+            mTitle.setSelected(true);
+            ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+        }
+    }
 }

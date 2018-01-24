@@ -262,10 +262,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (datas.get(position) instanceof RelatedNewsBean) {
-            if (relateNewsHolder != null && relateNewsHolder.getTitle() != null) {
-                relateNewsHolder.getTitle().setSelected(true);
-                ReadNewsDaoHelper.addAlreadyRead(((RelatedNewsBean) datas.get(position)).getId());
-            }
+//            if (relateNewsHolder != null && relateNewsHolder.getTitle() != null) {
+//                relateNewsHolder.getTitle().setSelected(true);
+//                ReadNewsDaoHelper.addAlreadyRead(((RelatedNewsBean) datas.get(position)).getId());
+//            }
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")

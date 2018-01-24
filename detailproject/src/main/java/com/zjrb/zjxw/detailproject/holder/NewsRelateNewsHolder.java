@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.base.adapter.ItemClickCallback;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.PH;
@@ -25,7 +26,7 @@ import butterknife.ButterKnife;
  * create time:2017/10/26  上午8:58
  */
 
-public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean> {
+public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean> implements ItemClickCallback {
     @BindView(R2.id.iv_pic)
     ImageView mImg;
     @BindView(R2.id.tv_title)
@@ -57,4 +58,11 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
         return mTitle;
     }
 
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (mData != null && mData.getTitle() != null) {
+            mTitle.setSelected(true);
+            ReadNewsDaoHelper.addAlreadyRead(mData.getId());
+        }
+    }
 }

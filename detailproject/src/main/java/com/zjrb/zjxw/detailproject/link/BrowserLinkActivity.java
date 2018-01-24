@@ -178,6 +178,9 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
 
+        if(topBarHolder != null){
+            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.GONE);
+        }
         //是否点赞
         if (data.getArticle().isLike_enabled()) {
             mMenuPrised.setVisibility(View.VISIBLE);
@@ -359,6 +362,9 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
+        if(topBarHolder != null){
+            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.GONE);
+        }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

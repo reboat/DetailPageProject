@@ -110,11 +110,6 @@ public class NewsDetailActivity extends BaseActivity implements
     FrameLayout mView;
     @BindView(R2.id.tv_duration)
     TextView mTvDuration;
-
-//    /**
-//     * 上下滑动超出范围处理
-//     */
-//    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 详情页数据
      */
@@ -126,18 +121,6 @@ public class NewsDetailActivity extends BaseActivity implements
 
     private Analytics mAnalytics;
 
-//    /**
-//     * 处理上下移动监听
-//     *
-//     * @param ev
-//     * @return
-//     */
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (mTouchSlopHelper != null)
-//            mTouchSlopHelper.onTouchEvent(ev);
-//        return super.dispatchTouchEvent(ev);
-//    }
 
     private class VideoBroadcastReceiver extends BroadcastReceiver {
 
@@ -213,8 +196,6 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化/拉取数据
      */
     private void init() {
-//        mTouchSlopHelper = new TouchSlopHelper();
-//        mTouchSlopHelper.setOnTouchSlopListener(this);
         loadData();
     }
 
@@ -365,31 +346,6 @@ public class NewsDetailActivity extends BaseActivity implements
         }
     }
 
-
-//    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
-
-//    /**
-//     * @param isUp 控制底部floorBar
-//     */
-//    @Override
-//    public void onTouchSlop(boolean isUp) {
-//        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
-//        mFloorBar.animate().setInterpolator(mInterpolator)
-//                .setDuration(200)
-//                .translationY(translationY);
-//    }
-
-//    /**
-//     * @return 获取底部栏间距
-//     */
-//    private int getFloorBarMarginBottom() {
-//        int marginBottom = 0;
-//        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
-//        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-//            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-//        }
-//        return marginBottom;
-//    }
 
     /**
      * 订阅

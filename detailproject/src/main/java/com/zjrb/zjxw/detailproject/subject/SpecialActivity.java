@@ -228,7 +228,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
 
                 collectTask(); // 收藏
-            } else if (view.getId() == R2.id.iv_top_bar_back) {//返回
+            } else if (view.getId() == R.id.iv_top_bar_back) {//返回
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
                         .setObjectID(mArticle.getMlf_id() + "")
@@ -293,7 +293,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     .setObjectType(ObjectType.NewsType)
                     .setClassifyID(data.getArticle().getChannel_id())
                     .setClassifyName(data.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
+                    .setPageType("专题详情页")
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("relatedColumn", data.getArticle().getColumn_id() + "")
                             .put("subject", data.getArticle().getId() + "")

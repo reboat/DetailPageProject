@@ -10,6 +10,11 @@ function imageABrowse(index) {
     zjxw.imageABrowse(index);
 }
 
+// 测试音频录制
+function zjxw_js_startRecord() {
+    zjxw.zjxw_js_startRecord();
+}
+
 
 // 执行夜间模式
 function applyNightTheme() {

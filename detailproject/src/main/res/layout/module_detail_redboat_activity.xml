@@ -1,69 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.aliya.view.fitsys.FitWindowsFrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ry_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/bc_202124">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.aliya.view.fitsys.FitWindowsFrameLayout
-            android:id="@+id/top_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:minHeight="@dimen/toolbar_normal_height"
-            app:fitType="top">
-
-            <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView
-                android:id="@+id/iv_top_back"
-                android:layout_width="42dp"
-                android:layout_height="@dimen/toolbar_normal_height"
-                android:background="?attr/actionBarItemBackground"
-                android:paddingRight="7dp"
-                android:scaleType="center"
-                android:src="@mipmap/ic_top_bar_back_dark" />
-
-            <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView
-                android:id="@+id/iv_top_share"
-                android:layout_width="42dp"
-                android:layout_height="@dimen/toolbar_normal_height"
-                android:layout_gravity="right"
-                android:scaleType="center"
-                android:src="@mipmap/module_detail_topbar_share" />
-
-            <View
-                android:id="@+id/top_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_gravity="bottom"
-                android:background="?attr/dc_dddddd" />
-
-        </com.aliya.view.fitsys.FitWindowsFrameLayout>
-
-        <include layout="@layout/module_detail_topic_layout_overlay" />
-
-    </LinearLayout>
-
-
-    <FrameLayout
-        android:id="@+id/v_container"
+    <TextView
+        android:id="@+id/test_tv"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:visibility="gone"
-        app:fitType="top" />
-
-    <com.aliya.view.fitsys.FitWindowsRecyclerView
-        android:id="@+id/recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:scrollbars="vertical"
-        app:fitType="bottom"/>
+        android:text="这是测试"/>
 
 </com.aliya.view.fitsys.FitWindowsFrameLayout>

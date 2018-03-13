@@ -87,7 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                Nav.with(this).to("http://zjbeta.8531.cn/album.html?id=741157");
 
                 // 话题详情页
-                Nav.with(this).to("http://zjbeta.8531.cn/topic.html?id=802710"); // 802710,802979
+                Nav.with(this).to("http://zjbeta.8531.cn/redboat.html?id=802979"); // 802710,802979
 
 //                //进入专题更多列表
 //                Bundle bundle = new Bundle();

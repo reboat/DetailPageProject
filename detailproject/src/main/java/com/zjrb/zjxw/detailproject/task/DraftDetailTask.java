@@ -13,6 +13,11 @@ import com.zjrb.zjxw.detailproject.global.APIManager;
  */
 
 public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
+    boolean isRedBoat;
+
+    public void isRedBoat(boolean isRedBoat) {
+        this.isRedBoat = isRedBoat;
+    }
 
     public DraftDetailTask(LoadingCallBack<DraftDetailBean> callBack) {
         super(callBack);
@@ -24,14 +29,18 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
     @Override
     protected void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
-            put("id", params[0]);
-            put("from_channel",params[1]);
+            if (isRedBoat) put("artilce_id", params[0]);
+            else {
+                put("id", params[0]);
+                put("from_channel", params[1]);
 //            cachePolicy(CachePolicy.NO_CACHE);
+            }
         }
     }
 
     @Override
     protected String getApi() {
-        return APIManager.endpoint.NEWS_DETAIL;
+        if (isRedBoat) return APIManager.endpoint.RED_BOAT_DETAIL;
+        else return APIManager.endpoint.NEWS_DETAIL;
     }
 }

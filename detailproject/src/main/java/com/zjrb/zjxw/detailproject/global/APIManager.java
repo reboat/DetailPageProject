@@ -33,6 +33,11 @@ public class APIManager {
         public static final String NEWS_DETAIL = "/api/article/detail";
 
         /**
+         * 红船号详情页
+         */
+        public static final String RED_BOAT_DETAIL = "/api/red_boat/article_detail";
+
+        /**
          * 评论列表
          */
         public static final String COMMENT_LIST = "/api/comment/list";

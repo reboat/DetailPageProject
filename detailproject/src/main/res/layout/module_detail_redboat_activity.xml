@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.aliya.view.fitsys.FitWindowsFrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ry_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/bc_202124">
+    android:background="?attr/bc_ffffff">
 
-    <TextView
-        android:id="@+id/test_tv"
-        android:gravity="center"
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="这是测试"/>
+        android:fitsSystemWindows="true"
+        app:fitType="bottom">
 
-</com.aliya.view.fitsys.FitWindowsFrameLayout>
+        <com.aliya.view.fitsys.FitWindowsRecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"/>
+
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+
+    <FrameLayout
+        android:id="@+id/v_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</RelativeLayout>

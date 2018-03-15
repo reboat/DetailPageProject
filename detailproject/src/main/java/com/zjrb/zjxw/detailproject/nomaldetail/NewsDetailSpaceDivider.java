@@ -5,10 +5,9 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 
 /**
  * 普通详情页 - 分割线
@@ -24,26 +23,19 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State
-            state) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0, 0, 0);
         int position = parent.getChildAdapterPosition(view);
-        if (parent.getAdapter() instanceof NewsDetailAdapter) {
-            NewsDetailAdapter adapter = (NewsDetailAdapter) parent.getAdapter();
-            if (!adapter.isInnerPosition(position)) {
-                position = adapter.cleanPosition(position);
-                int dataSize = adapter.getDataSize();
-                if (position < dataSize - 1 && position > 1) {
-                    Object data = adapter.getData(position);
-                    Object nextData = adapter.getData(position + 1);
-                    if (data instanceof RelatedNewsBean && nextData instanceof RelatedNewsBean) {
-                        // 文章 - 文章
-                        outRect.set(0, 0, 0, mDividerHeight);
-                    }
-//                    else if (data instanceof HotCommentsBean && nextData instanceof HotCommentsBean) {
-//                        //评论
-//                        outRect.set(0, 0, 0, mDividerHeight);
-//                    }
+        BaseRecyclerAdapter adapter = (BaseRecyclerAdapter) parent.getAdapter();
+        if (adapter == null)return;
+        if (!adapter.isInnerPosition(position)) {
+            position = adapter.cleanPosition(position);
+            int dataSize = adapter.getDataSize();
+            if (position < dataSize - 1 && position > 1) {
+                Object data = adapter.getData(position);
+                Object nextData = adapter.getData(position + 1);
+                if (data instanceof RelatedNewsBean && nextData instanceof RelatedNewsBean) {
+                    outRect.set(0, 0, 0, mDividerHeight);
                 }
             }
         }
@@ -54,13 +46,8 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
         if (parent.getAdapter() == null) return;
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
-        int footerCount = 0;
-        NewsDetailAdapter adapter = null;
-        if (parent.getAdapter() instanceof NewsDetailAdapter) {
-            adapter = (NewsDetailAdapter) parent.getAdapter();
-            footerCount = adapter.getFooterCount();
-        }
-        final int itemCount = parent.getAdapter().getItemCount();
+        BaseRecyclerAdapter adapter = (BaseRecyclerAdapter) parent.getAdapter();
+        if (adapter == null)return;
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);
@@ -68,7 +55,7 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
             if (position == RecyclerView.NO_POSITION) {
                 continue;
             }
-            if (!mIncludeLastItem && position == itemCount - 1 - footerCount) {
+            if (!mIncludeLastItem && position == adapter.getItemCount() - 1 - adapter.getFooterCount()) {
                 continue;
             }
             if (adapter != null && adapter.isInnerPosition(position)) {

@@ -15,7 +15,6 @@ import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -109,6 +108,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_REPLEASE) {
             return new NewsPlaceHolder(parent);
         }
+
         return new NewsPlaceHolder(parent);
     }
 

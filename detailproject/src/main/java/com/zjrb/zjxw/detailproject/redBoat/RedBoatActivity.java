@@ -84,7 +84,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
-        // TODO: 2018/3/14 为什么还会显示分享按钮
         topHolder.setViewVisible(topHolder.getShareView(),View.INVISIBLE);
         return topHolder.getView();
     }
@@ -216,7 +215,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                             .url(article.getUrl()));
         }
 
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         mNewsDetail = data;
         List datas = new ArrayList<>();
         //头

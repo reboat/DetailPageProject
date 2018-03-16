@@ -23,7 +23,7 @@ public class RedBoatActivity2 extends NewsDetailActivity {
      */
     @Override
     public void configTak(DraftDetailTask task) {
-//        task.isRedBoat(true);
+        task.isRedBoat(true);
     }
 
     /**

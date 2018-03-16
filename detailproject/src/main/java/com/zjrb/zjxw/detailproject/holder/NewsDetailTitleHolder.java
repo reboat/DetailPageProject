@@ -64,8 +64,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //标题(必填)
-        if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_title() != null) {
-            mTvTitle.setText(mData.getArticle().getDoc_title());
+        if (mData != null && mData.getArticle() != null ) {
+            mTvTitle.setText(mData.getArticle().getDoc_title()==null? mData.getArticle().getList_title(): mData.getArticle().getDoc_title());
         }
 
         //来源及记者(发稿允许不填写)
@@ -77,7 +77,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
                 source += " ";
             }
             mTvReporter.setVisibility(View.VISIBLE);
-            mTvReporter.setText(source + mData.getArticle().getAuthor());
+            mTvReporter.setText((source == null ? "" : source) + mData.getArticle().getAuthor());
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)

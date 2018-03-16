@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
+import com.zjrb.zjxw.detailproject.holder.RedBoatDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
@@ -25,8 +25,6 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     public static final int VIEW_TYPE_TOP = 1;
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
-    //占位
-    public static final int VIEW_REPLEASE = 10;
 
     private NewsDetailWebViewHolder webviewHolder;
     private boolean mHasVideoUrl = false;
@@ -47,11 +45,9 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
-            return new NewsDetailTitleHolder(parent);
+            return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
-        } else if (viewType == VIEW_REPLEASE) {
-            return new NewsPlaceHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -63,9 +59,6 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         } else if (position == 1) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
-        } else if (getData(position) instanceof String
-                && getData(position).toString().equals("占位")) {
-            return VIEW_REPLEASE;
         }
         return 0;
     }

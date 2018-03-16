@@ -231,7 +231,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
 
-                <data android:path="/redboat.html" />
+                <data android:path="/red_boat.html" />
 
                 <data android:host="@string/data_host" />
 

@@ -45,10 +45,12 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     TextView mTvTime;
     @BindView(R2.id.tv_read_num)
     TextView mTvReadNum;
+    boolean isRedBoat;//是否是红船号
 
-    public NewsDetailTitleHolder(ViewGroup parent) {
+    public NewsDetailTitleHolder(ViewGroup parent, boolean isRedBoat) {
         super(UIUtils.inflate(R.layout.module_detail_layout_top, parent, false));
         ButterKnife.bind(this, itemView);
+        this.isRedBoat = isRedBoat;
     }
 
     @Override
@@ -67,17 +69,23 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_title() != null) {
             mTvTitle.setText(mData.getArticle().getDoc_title());
         }
-
-        //来源及记者(发稿允许不填写)
-        if (mData != null && mData.getArticle() != null && TextUtils.isEmpty(mData.getArticle().getSource()) && TextUtils.isEmpty(mData.getArticle().getAuthor())) {
-            mTvReporter.setVisibility(View.GONE);
+        if (isRedBoat) {
+            if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource())) {
+                mTvReporter.setVisibility(View.VISIBLE);
+                mTvReporter.setText(mData.getArticle().getSource());
+            } else mTvReporter.setVisibility(View.GONE);
         } else {
-            String source = mData.getArticle().getSource();
-            if (!TextUtils.isEmpty(source)) {
-                source += " ";
+            //来源及记者(发稿允许不填写)
+            if (mData != null && mData.getArticle() != null && TextUtils.isEmpty(mData.getArticle().getSource()) && TextUtils.isEmpty(mData.getArticle().getAuthor())) {
+                mTvReporter.setVisibility(View.GONE);
+            } else {
+                String source = mData.getArticle().getSource();
+                if (!TextUtils.isEmpty(source)) {
+                    source += " ";
+                }
+                mTvReporter.setVisibility(View.VISIBLE);
+                mTvReporter.setText((source == null ? "" : source) + mData.getArticle().getAuthor());
             }
-            mTvReporter.setVisibility(View.VISIBLE);
-            mTvReporter.setText(source + mData.getArticle().getAuthor());
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)

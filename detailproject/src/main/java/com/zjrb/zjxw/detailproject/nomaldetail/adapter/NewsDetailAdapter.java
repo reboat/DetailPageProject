@@ -74,6 +74,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     // true：已经显示全部
     private boolean isShowAll;
     private boolean mHasVideoUrl = false;
+    private boolean isRedBoat = false;//是否是红船号的适配器
+
+    public void setRedBoat(boolean redBoat) {
+        isRedBoat = redBoat;
+    }
 
     private NewsRelateNewsHolder relateNewsHolder;
 
@@ -88,7 +93,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
-            return new NewsDetailTitleHolder(parent);
+            return new NewsDetailTitleHolder(parent,isRedBoat);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
         } else if (viewType == VIEW_TYPE_MIDDLE) {

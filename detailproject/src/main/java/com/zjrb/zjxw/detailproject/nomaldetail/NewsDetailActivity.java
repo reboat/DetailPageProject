@@ -97,7 +97,7 @@ public class NewsDetailActivity extends BaseActivity implements
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsRelativeLayout mFloorBar;
+    public FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
     @BindView(R2.id.iv_image)
@@ -184,7 +184,7 @@ public class NewsDetailActivity extends BaseActivity implements
     /**
      * topbar
      */
-    private DefaultTopBarHolder1 topHolder;
+    public DefaultTopBarHolder1 topHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
@@ -233,7 +233,7 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     private void loadData() {
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
@@ -249,7 +249,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         .setClassifyName(draftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setSelfObjectID(draftDetailBean.getArticle().getId() + "");
-
+                initAnalyticsBuilder(builder, draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -270,14 +270,28 @@ public class NewsDetailActivity extends BaseActivity implements
                     T.showShortNow(NewsDetailActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+        });
+        configTak(task);
+        task.setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+    }
+
+    /**
+     * 配置媒立方数据
+     *
+     * @param builder         媒立方对象
+     * @param draftDetailBean 稿件详情
+     */
+    public void initAnalyticsBuilder(Analytics.AnalyticsBuilder builder, DraftDetailBean draftDetailBean) {
+    }
+
+    public void configTak(DraftDetailTask task) {
     }
 
 
     /**
      * @param data 填充详情页数据
      */
-    private void fillData(DraftDetailBean data) {
+    public void fillData(DraftDetailBean data) {
         mFloorBar.setVisibility(View.VISIBLE);
         DraftDetailBean.ArticleBean article = data.getArticle();
         if (article != null) {
@@ -301,6 +315,7 @@ public class NewsDetailActivity extends BaseActivity implements
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
         mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
+        initAdapter(mAdapter);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -309,9 +324,13 @@ public class NewsDetailActivity extends BaseActivity implements
 //        } else {
 //            mAdapter.setData(datas);
 //        }
-
-
     }
+
+    /**
+     * 配置Adapter
+     * @param adapter 适配器
+     */
+    public void initAdapter(NewsDetailAdapter adapter){}
 
     /**
      * 刷新底部栏状态
@@ -648,6 +667,7 @@ public class NewsDetailActivity extends BaseActivity implements
             mAdapter.onWebViewPause();
         }
     }
+
 
     @Override
     protected void onDestroy() {

@@ -5,9 +5,10 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.utils.ListUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.RedBoatDetailTitleHolder;
+import com.zjrb.zjxw.detailproject.holder.RedBoatWebViewHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
 
-    private NewsDetailWebViewHolder webviewHolder;
+    private RedBoatWebViewHolder webviewHolder;
     private boolean mHasVideoUrl = false;
     public static final int NO_POSITION = -1;
     private int mWebViewHolderPosition = NO_POSITION;
@@ -47,7 +48,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         if (viewType == VIEW_TYPE_TOP) {
             return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
+            return webviewHolder = new RedBoatWebViewHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -63,7 +64,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         return 0;
     }
 
-    public NewsDetailWebViewHolder getWebViewHolder() {
+    public RedBoatWebViewHolder getWebViewHolder() {
         return webviewHolder;
     }
 
@@ -102,9 +103,58 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         }
     }
 
+    /**
+     * 视频生命周期监听
+     */
+    public interface ILifecycle {
+
+        void onResume();
+
+        void onPause();
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
-        // TODO: 2018/3/14 未做
-        super.onBindViewHolder(holder, position, payloads);
+        boolean isNeedSuperBind = true;
+        if (!ListUtils.isListEmpty(payloads)) {
+            isNeedSuperBind = false;
+            for (int i = 0; i < payloads.size(); i++) {
+                Object payload = payloads.get(i);
+                if (PAYLOADS_RESUME.equals(payload)) {
+                    if (holder instanceof ILifecycle) {
+                        ((ILifecycle) holder).onResume();
+                    }
+                } else if (PAYLOADS_PAUSE.equals(payload)) {
+                    if (holder instanceof ILifecycle) {
+                        ((ILifecycle) holder).onPause();
+                    }
+                } else {
+                    isNeedSuperBind = true;
+                }
+            }
+        }
+        if (isNeedSuperBind) {
+            super.onBindViewHolder(holder, position, payloads);
+        }
+    }
+
+    /**
+     * 公共操作回调
+     *
+     * @author a_liYa
+     * @date 2017/5/15 下午8:53.
+     */
+    public interface CommonOptCallBack {
+        /**
+         * WebView加载完毕操作
+         */
+        void onOptPageFinished();
+
+        /**
+         * 稿件阅读百分比变化
+         *
+         * @param scale
+         */
+        void onReadingScaleChange(float scale);
     }
 }

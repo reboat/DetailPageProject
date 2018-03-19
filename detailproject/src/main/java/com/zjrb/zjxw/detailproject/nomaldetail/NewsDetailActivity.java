@@ -249,7 +249,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         .setClassifyName(draftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setSelfObjectID(draftDetailBean.getArticle().getId() + "");
-
+                initAnalyticsBuilder(builder, draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -273,6 +273,15 @@ public class NewsDetailActivity extends BaseActivity implements
         });
         configTak(task);
         task.setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+    }
+
+    /**
+     * 配置媒立方数据
+     *
+     * @param builder         媒立方对象
+     * @param draftDetailBean 稿件详情
+     */
+    public void initAnalyticsBuilder(Analytics.AnalyticsBuilder builder, DraftDetailBean draftDetailBean) {
     }
 
     public void configTak(DraftDetailTask task) {
@@ -306,6 +315,7 @@ public class NewsDetailActivity extends BaseActivity implements
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
         mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
+        initAdapter(mAdapter);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -314,9 +324,13 @@ public class NewsDetailActivity extends BaseActivity implements
 //        } else {
 //            mAdapter.setData(datas);
 //        }
-
-
     }
+
+    /**
+     * 配置Adapter
+     * @param adapter 适配器
+     */
+    public void initAdapter(NewsDetailAdapter adapter){}
 
     /**
      * 刷新底部栏状态
@@ -653,6 +667,7 @@ public class NewsDetailActivity extends BaseActivity implements
             mAdapter.onWebViewPause();
         }
     }
+
 
     @Override
     protected void onDestroy() {

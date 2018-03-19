@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         //红船号详情页
         SettingManager.getInstance().setOpenHttps(false);
         SettingManager.getInstance().setHost("10.100.62.206:8085");
-        Nav.with(this).to("http://zjbeta.8531.cn/redboat2.html?id=1747");
+        Nav.with(this).to("http://zjbeta.8531.cn/redboat2.html?id=4719");
 
 //                //进入专题更多列表
 //                Bundle bundle = new Bundle();

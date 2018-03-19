@@ -40,7 +40,7 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
 
     @Override
     protected String getApi() {
-        if (isRedBoat) return APIManager.endpoint.RED_BOAT_DETAIL;
+        if (isRedBoat) return APIManager.endpoint.REDBOAT_NEWS_DETAIL;
         else return APIManager.endpoint.NEWS_DETAIL;
     }
 }

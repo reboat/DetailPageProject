@@ -97,7 +97,6 @@ public class RedBoatWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO: 2018/3/16
                 if (!TextUtils.isEmpty(url)) {
                     //点击话题链接
                     if (url.contains("topic.html?id=")) {

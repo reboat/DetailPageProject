@@ -29,7 +29,7 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
     @Override
     protected void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
-            if (isRedBoat) put("artilce_id", params[0]);
+            if (isRedBoat) put("article_id", params[0]);
             else {
                 put("id", params[0]);
                 put("from_channel", params[1]);

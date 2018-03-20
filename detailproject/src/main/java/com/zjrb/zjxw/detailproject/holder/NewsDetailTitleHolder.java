@@ -89,7 +89,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
@@ -97,7 +97,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             mTvChannelName.setVisibility(View.GONE);
         }
 
-        if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
+        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
             mTvReadNum.setVisibility(View.VISIBLE);
             mTvReadNum.setText(mData.getArticle().getRead_count_general());
         } else {

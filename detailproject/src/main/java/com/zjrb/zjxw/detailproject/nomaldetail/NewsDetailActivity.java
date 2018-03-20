@@ -213,7 +213,7 @@ public class NewsDetailActivity extends BaseActivity implements
             }
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
-            if (SettingManager.getInstance().isAutoPlayVideoWithWifi()) {
+            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
                 PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), bean);
                 PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             }

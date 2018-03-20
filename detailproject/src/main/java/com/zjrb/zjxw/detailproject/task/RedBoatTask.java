@@ -21,7 +21,7 @@ public class RedBoatTask extends APIGetTask<DraftDetailBean> {
     @Override
     protected void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
-            put("artilce_id", params[0]);
+            put("article_id", params[0]);
         }
     }
 

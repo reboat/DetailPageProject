@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply from: 'http://10.100.47.176:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.4/publish-0.0.4.gradle'
+apply from: 'http://10.100.62.98:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.4/publish-0.0.4.gradle'
 apply plugin: 'com.jakewharton.butterknife'
 //apply from: "${rootDir}/public.gradle"
 
@@ -35,8 +35,8 @@ dependencies {
 
 //    compile project(':core-library')
     compile 'com.android.support:percent:25.3.1'
-    compile 'cn.daily.android:core-library:5.2.1-SNAPSHOT'
-    compile('cn.daily.android:daily-news:5.0.1.5-SNAPSHOT') {
+    compile 'cn.daily.android:core-library:5.2.1.6-SNAPSHOT'
+    compile('cn.daily.android:daily-news:5.1.1.36-SNAPSHOT') {
         exclude group: 'cn.daily.android'
     }
     compile 'cn.daily.android:daily-db:5.0.0.2'

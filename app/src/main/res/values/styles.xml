@@ -24,6 +24,7 @@
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
+        <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
 
         <item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>
         <item name="module_news_tc_tag">@color/module_news_tc_tag</item>
@@ -173,6 +174,7 @@
 
         <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>
         <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
+        <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
 
         <item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>
         <item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>

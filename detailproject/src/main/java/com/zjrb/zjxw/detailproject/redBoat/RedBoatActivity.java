@@ -52,7 +52,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * @date 2018/3/12 2007
  */
 
-public class RedBoatActivity extends BaseActivity implements View.OnClickListener,RedBoatAdapter.CommonOptCallBack {
+public class RedBoatActivity extends BaseActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack {
 
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
@@ -84,7 +84,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
-        topHolder.setViewVisible(topHolder.getShareView(),View.INVISIBLE);
+        topHolder.setViewVisible(topHolder.getShareView(), View.INVISIBLE);
         return topHolder.getView();
     }
 
@@ -220,7 +220,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectID(mNewsDetail.getArticle().getId() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
@@ -230,7 +230,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .setSelfObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .build()
                         .send();
             }

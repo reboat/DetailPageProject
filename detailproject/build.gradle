@@ -36,7 +36,7 @@ dependencies {
 //    compile project(':core-library')
     compile 'com.android.support:percent:25.3.1'
     compile 'cn.daily.android:core-library:5.2.1.7-SNAPSHOT'
-    compile('cn.daily.android:daily-news:5.1.1.36-SNAPSHOT') {
+    compile('cn.daily.android:daily-news:5.1.1.7-SNAPSHOT') {
         exclude group: 'cn.daily.android'
     }
     compile 'cn.daily.android:daily-db:5.0.0.2'

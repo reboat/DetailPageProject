@@ -30,6 +30,7 @@ public class DraftDetailBean extends BaseData {
 
         private int id;
         private int mlf_id;
+        public long guid;
         private String list_title;
         /**
          * 详情页标题
@@ -122,6 +123,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setDoc_title(String doc_title) {
             this.doc_title = doc_title;
+        }
+
+        public long getGuid() {
+            return guid;
+        }
+
+        public void setGuid(long guid) {
+            this.guid = guid;
         }
 
         /**

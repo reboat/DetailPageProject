@@ -146,7 +146,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 map.put("subject", "");
                 builder = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
                         .setEvenName("页面停留时长/阅读深度")
-                        .setObjectID(draftDetailBean.getArticle().getMlf_id() + "")
+                        .setObjectID(draftDetailBean.getArticle().getGuid() + "")
                         .setObjectName(draftDetailBean.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(draftDetailBean.getArticle().getChannel_id())
@@ -180,6 +180,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     private void fillData(DraftDetailBean data) {
         DraftDetailBean.ArticleBean article = data.getArticle();
         if (article != null) {
+            //经liya和新科确认，暂不管新增guid（long）字段存储数据库
             ReadNewsDaoHelper.get().asyncRecord(
                     ReadNewsBean.newBuilder().id(article.getId())
                             .mlfId(article.getMlf_id())
@@ -220,7 +221,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
                         .setEvenName("点击返回")
-                        .setObjectID(mNewsDetail.getArticle().getId() + "")
+                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id())
@@ -230,7 +231,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build()
                         .send();
             }

@@ -36,10 +36,10 @@ dependencies {
 //    compile project(':core-library')
     compile 'com.android.support:percent:25.3.1'
     compile 'cn.daily.android:core-library:5.2.1.7-SNAPSHOT'
-    compile('cn.daily.android:daily-news:5.1.1.7-SNAPSHOT') {
+    compile('cn.daily.android:daily-news:5.1.1.9-SNAPSHOT') {
         exclude group: 'cn.daily.android'
     }
-    compile 'cn.daily.android:daily-db:5.0.0.2'
+    compile 'cn.daily.android:daily-db:5.1.0'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 }

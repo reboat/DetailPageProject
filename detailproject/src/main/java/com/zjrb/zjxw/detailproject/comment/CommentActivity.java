@@ -1,8 +1,12 @@
 package com.zjrb.zjxw.detailproject.comment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -87,6 +91,13 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     private boolean is_select_list = false;
 
+    private BroadcastReceiver mRefreshReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onUpdateComment();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +105,8 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
         initData();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRefreshReceiver,new IntentFilter("refresh_comment"));
     }
 
     @Override
@@ -189,7 +202,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail,bean.getComment_count());
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail, bean.getComment_count());
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
@@ -215,6 +228,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
                 bindData(commentRefreshBean);
+                mRvContent.scrollToPosition(0);
             }
 
             @Override
@@ -332,6 +346,12 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         if (!isFinishing()) {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRefreshReceiver);
     }
 
     /**

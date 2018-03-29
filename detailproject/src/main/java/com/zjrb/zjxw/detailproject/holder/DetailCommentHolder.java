@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.holder;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -218,7 +220,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //回复者头像(显示默认头像)
-        if(mData != null && !TextUtils.isEmpty(mData.getPortrait_url())){
+        if (mData != null && !TextUtils.isEmpty(mData.getPortrait_url())) {
             GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
         }
 
@@ -291,9 +293,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                        .setListen(new RefreshComment())
+                        .setWMData(analytics)
+                        .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                        .setListen(new RefreshComment())
+                        .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
 
             //回复回复者
@@ -331,9 +338,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         }
     }
@@ -404,5 +411,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     public interface deleteCommentListener {
 
         void onDeleteComment(int position);
+    }
+
+    static class RefreshComment implements CommentWindowDialog.updateCommentListener {
+
+        @Override
+        public void onUpdateComment() {
+            LocalBroadcastManager.getInstance(UIUtils.getApp()).sendBroadcast(new Intent("refresh_comment"));
+        }
     }
 }

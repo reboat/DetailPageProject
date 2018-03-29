@@ -12,7 +12,6 @@ import com.aliya.uimode.utils.UiModeUtils;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -27,13 +26,9 @@ import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.comment.CommentSelectActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
-import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -356,6 +351,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mData.setLike_count((mData.getLike_count() + 1));
                 mData.setLiked(true);
                 mThumb.setText(mData.getLike_count() + "");
+                T.showShort(itemView.getContext(), "点赞成功");
             }
 
             @Override

@@ -7,8 +7,8 @@ import com.zjrb.core.common.base.BaseRecyclerAdapter;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.ListUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.RedBoatDetailTitleHolder;
-import com.zjrb.zjxw.detailproject.holder.RedBoatWebViewHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
 
-    private RedBoatWebViewHolder webviewHolder;
+    private NewsDetailWebViewHolder webviewHolder;
     private boolean mHasVideoUrl = false;
     public static final int NO_POSITION = -1;
     private int mWebViewHolderPosition = NO_POSITION;
@@ -48,7 +48,9 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         if (viewType == VIEW_TYPE_TOP) {
             return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return webviewHolder = new RedBoatWebViewHolder(parent);
+             webviewHolder = new NewsDetailWebViewHolder(parent,mHasVideoUrl);
+             webviewHolder.setRedBoatActivity(true);
+             return webviewHolder;
         }
         return new NewsPlaceHolder(parent);
     }
@@ -64,7 +66,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         return 0;
     }
 
-    public RedBoatWebViewHolder getWebViewHolder() {
+    public NewsDetailWebViewHolder getWebViewHolder() {
         return webviewHolder;
     }
 

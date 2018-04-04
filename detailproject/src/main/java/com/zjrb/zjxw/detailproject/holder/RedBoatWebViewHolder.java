@@ -218,7 +218,7 @@ public class RedBoatWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean
         return OutSizeAnalyticsBean.getInstance()
                 .setEventCode("A0010")
                 .setUmCode("A0010")
-                .setObjectID(bean.getMlf_id() + "")
+                .setObjectID(bean.getGuid() + "")
                 .setObjectName(bean.getDoc_title())
                 .setObjectType(ObjectType.PictureType)
                 .setClassifyID(bean.getChannel_id())

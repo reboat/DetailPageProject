@@ -18,6 +18,9 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -84,7 +87,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = TopBarFactory.createDefault1(view, this);
-        topHolder.setViewVisible(topHolder.getShareView(), View.INVISIBLE);
         return topHolder.getView();
     }
 
@@ -188,7 +190,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-
+        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         mNewsDetail = data;
         List datas = new ArrayList<>();
         //头
@@ -214,7 +216,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     }
 
     @Override
-    @OnClick({R2.id.iv_top_bar_back})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.iv_top_bar_back) {
@@ -236,6 +238,47 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .send();
             }
             finish();
+        } else if (v.getId() == R.id.iv_top_share) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+                //分享操作
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setArticleId(mNewsDetail.getArticle().getId() + "")
+                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setAnalyticsBean(bean)
+                        .setTextContent(mNewsDetail.getArticle().getSummary())
+                        .setTitle(mNewsDetail.getArticle().getDoc_title())
+                        .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+                //点击分享操作
+                new Analytics.AnalyticsBuilder(getContext(), "800018", "800018")
+                        .setEvenName("点击分享")
+                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .build()
+                        .send();
+            }
         }
     }
 

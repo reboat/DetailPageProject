@@ -246,34 +246,6 @@
             </intent-filter>
         </activity>
 
-        <!--红船号详情页-->
-        <activity
-            android:name=".redBoat.RedBoatActivity2"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="@string/data_scheme" />
-                <data android:scheme="@string/data_scheme_https" />
-
-                <data android:path="/redboat2.html" />
-
-                <data android:host="@string/data_host" />
-
-                <!--以下测试 host -->
-                <!--以下测试 host -->
-                <data android:host="@string/data_host_dev" />
-                <data android:host="@string/data_host_test" />
-                <data android:host="@string/data_host_pre" />
-                <data android:host="@string/data_host_real" />
-                <data android:host="@string/data_host_zjol" />
-                <data android:host="@string/data_host_zj" />
-            </intent-filter>
-        </activity>
-
 
         <!--专题列表-->
         <activity android:name=".subject.SpecialListActivity">

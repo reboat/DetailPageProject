@@ -62,7 +62,18 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * 当前稿件阅读进度
      */
     private float mReadingScale;
+    //是否来自红船号详情页
     private boolean mHasVideoUrl = false;
+
+    public boolean isRedBoatActivity() {
+        return isRedBoatActivity;
+    }
+
+    public void setRedBoatActivity(boolean redBoatActivity) {
+        isRedBoatActivity = redBoatActivity;
+    }
+
+    private boolean isRedBoatActivity = false;
 
     public NewsDetailWebViewHolder(ViewGroup parent, boolean hasVideoUrl) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
@@ -79,10 +90,16 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * @param bean
      */
     private OutSizeAnalyticsBean getWMData(DraftDetailBean.ArticleBean bean) {
+        String mlf_id;
+        if (isRedBoatActivity) {
+            mlf_id = bean.getGuid() + "";
+        } else {
+            mlf_id = bean.getMlf_id() + "";
+        }
         return OutSizeAnalyticsBean.getInstance()
                 .setEventCode("A0010")
                 .setUmCode("A0010")
-                .setObjectID(bean.getMlf_id() + "")
+                .setObjectID(mlf_id)
                 .setObjectName(bean.getDoc_title())
                 .setObjectType(ObjectType.PictureType)
                 .setClassifyID(bean.getChannel_id())

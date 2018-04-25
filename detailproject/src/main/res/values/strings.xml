@@ -46,7 +46,8 @@
     <string name="module_detail_collect_failed">收藏失败</string>
     <string name="module_detail_no_speaking">您已被禁言</string>
     <!--scheme地址-->
-    <string name="data_host_dev">10.100.60.98</string>
+    <!--<string name="data_host_dev">10.100.60.98</string>-->
+    <string name="data_host_dev">10.100.62.206</string>
     <string name="data_host_test">zjbeta.8531.cn</string>
     <string name="data_host_pre">zjprev.8531.cn</string>
     <string name="data_host_real">zjnews.8531.cn</string>

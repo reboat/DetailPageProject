@@ -190,7 +190,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 css_js += String.format(html, sp.js.get(i));
             }
         }
-
         htmlResult = String.format(htmlCode, css_js, htmlBody);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }

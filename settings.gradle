@@ -1,3 +1,3 @@
 include ':app', ':detailproject'
-//include(':core-library')
-//project(":core-library").projectDir = new File('../CoreProject/core')
+include(':core-library')
+project(":core-library").projectDir = new File('../CoreProject/core')

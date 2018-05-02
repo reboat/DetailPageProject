@@ -16,13 +16,13 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.RedBoatTopBarHolder;
+import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -33,7 +33,9 @@ import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
+import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +70,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     public String mArticleId;
     private String mFromChannel;
 
-    private DefaultTopBarHolder1 topHolder;
+    private RedBoatTopBarHolder topHolder;
     private Analytics.AnalyticsBuilder builder;
     private DraftDetailBean mNewsDetail;
     private RedBoatAdapter mAdapter;
@@ -86,7 +88,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder = TopBarFactory.createRedBoatTopBar(view, this);
         return topHolder.getView();
     }
 
@@ -191,6 +193,27 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                             .url(article.getUrl()));
         }
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+
+        //中间栏目布局处理
+        if (!TextUtils.isEmpty(article.getColumn_name())) {
+            //栏目名称
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
+            topHolder.getTitleView().setText(article.getColumn_name());
+            //栏目头像
+            if (!TextUtils.isEmpty(article.getColumn_logo())) {
+                GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).centerCrop().into(topHolder.getIvIcon());
+            }
+            //订阅状态 采用select
+            if (article.isColumn_subscribed()) {
+                topHolder.getSubscribe().setText("已订阅");
+                topHolder.getSubscribe().setSelected(true);
+            } else {
+                topHolder.getSubscribe().setText("+订阅");
+                topHolder.getSubscribe().setSelected(false);
+            }
+        } else {
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+        }
         mNewsDetail = data;
         List datas = new ArrayList<>();
         //头
@@ -238,47 +261,52 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .send();
             }
             finish();
+            //红船号点击更多
         } else if (v.getId() == R.id.iv_top_share) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getUrl())) {
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
-                //分享操作
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setArticleId(mNewsDetail.getArticle().getId() + "")
-                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setAnalyticsBean(bean)
-                        .setTextContent(mNewsDetail.getArticle().getSummary())
-                        .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(mNewsDetail.getArticle().getUrl()));
-                //点击分享操作
-                new Analytics.AnalyticsBuilder(getContext(), "800018", "800018")
-                        .setEvenName("点击分享")
-                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             }
+            //点击订阅/取消订阅
+        } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {
+            //已订阅状态->取消订阅
+            if (topHolder.getSubscribe().isSelected()) {
+                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                    @Override
+                    public void onSuccess(Void baseInnerData) {
+                        topHolder.getSubscribe().setSelected(false);
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        T.showShortNow(RedBoatActivity.this, "取消订阅失败");
+                    }
+
+                }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
+            } else {//未订阅状态->订阅
+                if (topHolder.getSubscribe().isSelected()) {
+                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                        @Override
+                        public void onSuccess(Void baseInnerData) {
+                            topHolder.getSubscribe().setSelected(true);
+                        }
+
+                        @Override
+                        public void onError(String errMsg, int errCode) {
+                            T.showShortNow(RedBoatActivity.this, "订阅失败");
+                        }
+
+                    }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
+                }
+
+            }
+            //进入栏目
+        } else if (v.getId() == R.id.tv_top_bar_title) {
+            Bundle bundle = new Bundle();
+            bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
+            Nav.with(UIUtils.getContext()).setExtras(bundle)
+                    .toPath("/subscription/detail");
         }
     }
 

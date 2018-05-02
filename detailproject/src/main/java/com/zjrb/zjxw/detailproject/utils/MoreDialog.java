@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +17,13 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.common.base.adapter.OnItemClickListener;
 import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
@@ -25,13 +31,22 @@ import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
+import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +57,7 @@ import cn.daily.news.analytics.Analytics;
  * Created by wanglinjie on 2017/9/21.
  */
 
-public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheckedChangeListener {
+public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheckedChangeListener, OnItemClickListener {
 
     protected Dialog dialog;
     @BindView(R2.id.iv_module_core_more_collect)
@@ -57,8 +72,28 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     RadioGroup rgSetFontSize;
     @BindView(R2.id.tv_module_core_more_set_font_size_preview)
     TextView tvPreview;
+    @BindView(R2.id.gridlist)
+    RecyclerView mRecyleView;
+    @BindView(R2.id.ry_font)
+    RelativeLayout fontRelativeLayout;
 
     private DraftDetailBean mBean;
+    /**
+     * @return
+     */
+    private static MoreDialog fragment = null;
+
+    private IWebViewDN callback;
+    private IWebViewTextSize callback_2;
+
+    /**
+     * 分享适配器
+     */
+    private DetailShareAdapter mAdapter;
+    /**
+     * 分享数据列表
+     */
+    private List<DetailShareBean> mListData;
 
     /**
      * js夜间模式回调
@@ -77,14 +112,6 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     }
 
     /**
-     * @return
-     */
-    private static MoreDialog fragment = null;
-
-    private IWebViewDN callback;
-    private IWebViewTextSize callback_2;
-
-    /**
      * 设置webview回调
      *
      * @param callback
@@ -96,6 +123,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         this.callback_2 = callback_2;
         return fragment;
     }
+
 
     public static MoreDialog newInstance(DraftDetailBean bean) {
         fragment = new MoreDialog();
@@ -119,6 +147,21 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.BottomDialog);
         View view = View.inflate(getContext(), R.layout.module_core_dialog_more_layout, null);
         ButterKnife.bind(this, view);
+
+        //红船号稿件
+        mRecyleView.addItemDecoration(new GridSpaceDivider(34));
+        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
+        mRecyleView.setLayoutManager(managerFollow);
+        if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getDoc_type() == 10) {
+            fontRelativeLayout.setVisibility(View.GONE);
+            mRecyleView.setVisibility(View.VISIBLE);
+            //初始化分享
+            initShareBean();
+        } else {
+            fontRelativeLayout.setVisibility(View.VISIBLE);
+            mRecyleView.setVisibility(View.GONE);
+        }
+
         rgSetFontSize.setOnCheckedChangeListener(this);
         if (mBean.getArticle().isFollowed()) {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
@@ -131,6 +174,116 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         dialog.setCanceledOnTouchOutside(true);
         initWindow();
         return dialog;
+    }
+
+
+    @Override
+    public void onItemClick(View itemView, int position) {
+        if (ClickTracker.isDoubleClick()) return;
+        if (mBean != null && mBean.getArticle() != null && !TextUtils.isEmpty(mBean.getArticle().getUrl())) {
+            setAnalytics(mListData.get(position).getPlatform());
+            //红船号分享专用bean
+            DraftDetailBean.ArticleBean article = mBean.getArticle();
+            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                    .setObjectID(article.getGuid() + "")
+                    .setObjectName(article.getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(article.getChannel_id() + "")
+                    .setClassifyName(article.getChannel_name())
+                    .setPageType("红船号详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", article.getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfobjectID(article.getId() + "");
+
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(true)
+                    .setAnalyticsBean(bean)
+                    .setArticleId(article.getId() + "")
+                    .setImgUri(article.getFirstPic())
+                    .setTextContent(article.getSummary())
+                    .setTitle(article.getDoc_title())
+                    .setPlatform(mListData.get(position).getPlatform())
+                    .setTargetUrl(article.getUrl()));
+
+        }
+    }
+
+
+    /**
+     * 设置网脉埋点
+     */
+    private void setAnalytics(SHARE_MEDIA share_media) {
+        if (mBean != null && mBean.getArticle() != null) {
+            DraftDetailBean.ArticleBean article = mBean.getArticle();
+            String eventName = "";
+            String WMCode = "";
+            String UMCode = "";
+            String eventDetail = "";
+            if (share_media == SHARE_MEDIA.WEIXIN) {
+                WMCode = "A0022";
+                UMCode = "60003";
+                eventName = "微信分享";
+                eventDetail = "微信";
+            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
+                WMCode = "A0022";
+                UMCode = "60004";
+                eventName = "朋友圈分享";
+                eventDetail = "朋友圈";
+            } else if (share_media == SHARE_MEDIA.QQ) {
+                WMCode = "A0022";
+                UMCode = "800020";
+                eventName = "QQ分享";
+                eventDetail = "QQ";
+            } else if (share_media == SHARE_MEDIA.SINA) {
+                WMCode = "A0022";
+                UMCode = "60001";
+                eventName = "新浪微博分享";
+                eventDetail = "新浪微博";
+            } else if (share_media == SHARE_MEDIA.QZONE) {
+                WMCode = "A0022";
+                UMCode = "800019";
+                eventName = "QQ空间分享";
+                eventDetail = "QQ空间";
+            }
+            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode)
+                    .setEvenName(eventName)
+                    .setObjectID(getMlfID(article))
+                    .setObjectName(article.getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(article.getChannel_id())
+                    .setClassifyName(article.getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", article.getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfObjectID(article.getId() + "")
+                    .setEventDetail(eventDetail)
+                    .build()
+                    .send();
+        }
+    }
+
+
+    /**
+     * 初始化滚动列表数据
+     */
+    private void initShareBean() {
+        if (mListData == null) {
+            mListData = new ArrayList<>();
+            mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
+            mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
+            mListData.add(new DetailShareBean("QQ", SHARE_MEDIA.QQ));
+            mListData.add(new DetailShareBean("QQ空间", SHARE_MEDIA.QZONE));
+            mListData.add(new DetailShareBean("微博", SHARE_MEDIA.SINA));
+        }
+
+        mAdapter = new DetailShareAdapter(mListData);
+        mAdapter.setOnItemClickListener(this);
+        mRecyleView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -199,44 +352,47 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         int i = v.getId();
+        //收藏按钮
         if (i == R.id.ll_module_core_more_collect) {
             if (mBean != null && mBean.getArticle() != null) {
+                DraftDetailBean.ArticleBean article = mBean.getArticle();
                 if (!mBean.getArticle().isFollowed()) {
                     new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024")
                             .setEvenName("点击收藏")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
+                            .setObjectID(getMlfID(article))
+                            .setObjectName(article.getDoc_title())
                             .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
+                            .setClassifyID(article.getChannel_id())
+                            .setClassifyName(article.getChannel_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("relatedColumn", article.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .setSelfObjectID(article.getId() + "")
                             .build()
                             .send();
                 } else {
                     new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124")
                             .setEvenName("取消收藏")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
+                            .setObjectID(getMlfID(article))
+                            .setObjectName(article.getDoc_title())
                             .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
+                            .setClassifyID(article.getChannel_id())
+                            .setClassifyName(article.getChannel_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("relatedColumn", article.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .setSelfObjectID(article.getId() + "")
                             .build()
                             .send();
                 }
             }
 
             newsTopicCollect();
+            //夜间模式
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
             if (callback != null) {
@@ -245,58 +401,61 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {
+                    DraftDetailBean.ArticleBean article = mBean.getArticle();
                     new Analytics.AnalyticsBuilder(getContext(), "700020", "700020")
                             .setEvenName("点击开启夜间模式")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
+                            .setObjectID(getMlfID(article))
+                            .setObjectName(article.getDoc_title())
                             .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
+                            .setClassifyID(article.getChannel_id())
+                            .setClassifyName(article.getChannel_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("relatedColumn", article.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .setSelfObjectID(article.getId() + "")
                             .build()
                             .send();
                 }
             } else {//关闭夜间模式
                 if (mBean != null & mBean.getArticle() != null) {
+                    DraftDetailBean.ArticleBean article = mBean.getArticle();
                     new Analytics.AnalyticsBuilder(getContext(), "800006", "800006")
                             .setEvenName("点击关闭夜间模式")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
+                            .setObjectID(getMlfID(article))
+                            .setObjectName(article.getDoc_title())
                             .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
+                            .setClassifyID(article.getChannel_id())
                             .setClassifyName(mBean.getArticle().getChannel_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                    .put("relatedColumn", article.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .setSelfObjectID(article.getId() + "")
                             .build()
                             .send();
                 }
             }
             dismissFragmentDialog();
-
+            //返回键
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
+                DraftDetailBean.ArticleBean article = mBean.getArticle();
                 new Analytics.AnalyticsBuilder(getContext(), "800007", "800007")
                         .setEvenName("点击反馈问题")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectID(getMlfID(article))
+                        .setObjectName(article.getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setClassifyID(article.getChannel_id())
+                        .setClassifyName(article.getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("relatedColumn", article.getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(article.getId() + "")
                         .build()
                         .send();
             }
@@ -357,19 +516,20 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 callback_2.onChangeTextSize(C.FONT_SCALE_SMALL);
             }
             if (mBean != null && mBean.getArticle() != null) {
+                DraftDetailBean.ArticleBean article = mBean.getArticle();
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectID(getMlfID(article))
+                        .setObjectName(article.getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setClassifyID(article.getChannel_id())
+                        .setClassifyName(article.getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("relatedColumn", article.getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(article.getId() + "")
                         .setEventDetail("s")
                         .build()
                         .send();
@@ -383,19 +543,20 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 callback_2.onChangeTextSize(C.FONT_SCALE_STANDARD);
             }
             if (mBean != null && mBean.getArticle() != null) {
+                DraftDetailBean.ArticleBean article = mBean.getArticle();
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectID(getMlfID(article))
+                        .setObjectName(article.getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setClassifyID(article.getChannel_id())
+                        .setClassifyName(article.getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("relatedColumn", article.getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(article.getId() + "")
                         .setEventDetail("m")
                         .build()
                         .send();
@@ -409,24 +570,39 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 callback_2.onChangeTextSize(C.FONT_SCALE_LARGE);
             }
             if (mBean != null && mBean.getArticle() != null) {
+                DraftDetailBean.ArticleBean article = mBean.getArticle();
                 new Analytics.AnalyticsBuilder(getContext(), "700022", "700022")
                         .setEvenName("点击字体调节")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
+                        .setObjectID(getMlfID(article))
+                        .setObjectName(article.getDoc_title())
                         .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
+                        .setClassifyID(article.getChannel_id())
+                        .setClassifyName(article.getChannel_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+                                .put("relatedColumn", article.getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(article.getId() + "")
                         .setEventDetail("l")
                         .build()
                         .send();
             }
         }
+    }
+
+    /**
+     * 封装方法，获取mlf_id
+     *
+     * @param article
+     * @return
+     */
+    private String getMlfID(DraftDetailBean.ArticleBean article) {
+        String mlfId = String.valueOf(article.getMlf_id());
+        if (article.getDoc_type() == 10) {
+            mlfId = String.valueOf(article.getGuid());
+        }
+        return mlfId;
     }
 
 }

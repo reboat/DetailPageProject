@@ -371,7 +371,7 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     @Override
     public void onOptSubscribe() {
-        //如果频道未订阅
+        //如果栏目未订阅
         new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
             @Override

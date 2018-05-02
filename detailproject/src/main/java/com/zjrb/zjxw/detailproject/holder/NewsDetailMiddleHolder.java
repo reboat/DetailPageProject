@@ -124,7 +124,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     /**
      * @param view 频道订阅/栏目  点击
      */
-    @OnClick({R2.id.tv_column_subscribe, R2.id.ry_subscribe, R2.id.ry_channel})
+    @OnClick({R2.id.ry_channel})
     public void onViewClicked(View view) {
         if (ClickTracker.isDoubleClick()) return;
         NewsDetailAdapter.CommonOptCallBack callback;
@@ -166,22 +166,23 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                             .send();
                 }
                 callback.onOptClickChannel();
-            } else {
-                if (mData != null && mData.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
-                            .setEvenName("点击进入栏目详情页")
-                            .setObjectID(mData.getArticle().getColumn_id() + "")
-                            .setObjectName(mData.getArticle().getColumn_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("customObjectType", "RelatedColumnType")
-                                    .toString())
-                            .build()
-                            .send();
-                }
-                //进入栏目详情页
-                callback.onOptClickColumn();
             }
+//            else {
+//                if (mData != null && mData.getArticle() != null) {
+//                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
+//                            .setEvenName("点击进入栏目详情页")
+//                            .setObjectID(mData.getArticle().getColumn_id() + "")
+//                            .setObjectName(mData.getArticle().getColumn_name())
+//                            .setPageType("新闻详情页")
+//                            .setOtherInfo(Analytics.newOtherInfo()
+//                                    .put("customObjectType", "RelatedColumnType")
+//                                    .toString())
+//                            .build()
+//                            .send();
+//                }
+//                //进入栏目详情页
+//                callback.onOptClickColumn();
+//            }
         }
     }
 

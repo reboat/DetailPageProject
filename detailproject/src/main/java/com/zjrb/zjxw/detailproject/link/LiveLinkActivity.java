@@ -430,7 +430,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                if (topBarHolder.getSubscribe().isSelected()) {
+                if (!topBarHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override

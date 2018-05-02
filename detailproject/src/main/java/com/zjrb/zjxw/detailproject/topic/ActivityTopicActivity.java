@@ -494,7 +494,7 @@ public class ActivityTopicActivity extends BaseActivity implements
 
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                if (mTopBarHolder.getSubscribe().isSelected()) {
+                if (!mTopBarHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override

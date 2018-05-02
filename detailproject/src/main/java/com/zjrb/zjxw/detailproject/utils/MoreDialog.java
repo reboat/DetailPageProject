@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -76,6 +77,8 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     RecyclerView mRecyleView;
     @BindView(R2.id.ry_font)
     RelativeLayout fontRelativeLayout;
+    @BindView(R2.id.ly_preview)
+    LinearLayout previewLineLayout;
 
     private DraftDetailBean mBean;
     /**
@@ -154,11 +157,13 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         mRecyleView.setLayoutManager(managerFollow);
         if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getDoc_type() == 10) {
             fontRelativeLayout.setVisibility(View.GONE);
+            previewLineLayout.setVisibility(View.GONE);
             mRecyleView.setVisibility(View.VISIBLE);
             //初始化分享
             initShareBean();
         } else {
             fontRelativeLayout.setVisibility(View.VISIBLE);
+            previewLineLayout.setVisibility(View.VISIBLE);
             mRecyleView.setVisibility(View.GONE);
         }
 

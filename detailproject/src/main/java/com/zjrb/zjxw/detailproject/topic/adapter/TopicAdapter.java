@@ -26,7 +26,6 @@ import com.zjrb.zjxw.detailproject.holder.NewsNoCommentTextHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsTextMoreHolder;
-import com.zjrb.zjxw.detailproject.topic.holder.NewsActivityMiddleHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.ArrayList;
@@ -42,8 +41,8 @@ import cn.daily.news.analytics.Analytics;
 public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickListener {
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
-    //订阅频道
-    public static final int VIEW_TYPE_MIDDLE = 3;
+    //    //订阅频道
+//    public static final int VIEW_TYPE_MIDDLE = 3;
     //相关专题
     public static final int VIEW_TYPE_RELATE_SUBJECT = 4;
     //互动评论
@@ -86,8 +85,8 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         switch (viewType) {
             case VIEW_TYPE_WEB_VIEW:
                 return webviewHolder = new NewsDetailWebViewHolder(parent, false);
-            case VIEW_TYPE_MIDDLE:
-                return new NewsActivityMiddleHolder(parent);
+//            case VIEW_TYPE_MIDDLE:
+//                return new NewsActivityMiddleHolder(parent);
             case VIEW_TYPE_STRING:
                 return new NewsStringTextHolder(parent);
             case VIEW_TYPE_RELATE_SUBJECT:
@@ -120,10 +119,12 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     public int getAbsItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_WEB_VIEW;
-        } else if (getData(position) instanceof DraftDetailBean) {
-            mMiddleHolderPosition = position;
-            return VIEW_TYPE_MIDDLE;
-        } else if (getData(position) instanceof String && !getData(position).toString().equals
+        }
+//        else if (getData(position) instanceof DraftDetailBean) {
+//            mMiddleHolderPosition = position;
+//            return VIEW_TYPE_MIDDLE;
+//        }
+        else if (getData(position) instanceof String && !getData(position).toString().equals
                 ("精选") && !getData(position).toString().equals
                 ("暂无评论")) {
             return VIEW_TYPE_STRING;
@@ -176,9 +177,9 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
         detailBean = (DraftDetailBean) datas.get(0);
 
         //订阅
-        if (!TextUtils.isEmpty(detailBean.getArticle().getColumn_name())) {
-            datas.add(detailBean);
-        }
+//        if (!TextUtils.isEmpty(detailBean.getArticle().getColumn_name())) {
+//            datas.add(detailBean);
+//        }
 
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();

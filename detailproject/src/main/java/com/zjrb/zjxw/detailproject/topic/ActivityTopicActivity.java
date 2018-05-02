@@ -24,6 +24,7 @@ import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.domain.CommentDialogBean;
+import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
@@ -31,6 +32,7 @@ import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -341,7 +343,8 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back})
+            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back,
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
@@ -473,6 +476,48 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .send();
             }
             finish();
+        } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
+            //已订阅状态->取消订阅
+            if (mTopBarHolder.getSubscribe().isSelected()) {
+                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                    @Override
+                    public void onSuccess(Void baseInnerData) {
+                        mTopBarHolder.getSubscribe().setSelected(false);
+                        mTopBarHolder.getSubscribe().setText("+订阅");
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        T.showShortNow(ActivityTopicActivity.this, "取消订阅失败");
+                    }
+
+                }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
+            } else {//未订阅状态->订阅
+                if (mTopBarHolder.getSubscribe().isSelected()) {
+                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                        @Override
+                        public void onSuccess(Void baseInnerData) {
+                            mTopBarHolder.getSubscribe().setSelected(true);
+                            mTopBarHolder.getSubscribe().setText("已订阅");
+                        }
+
+                        @Override
+                        public void onError(String errMsg, int errCode) {
+                            T.showShortNow(ActivityTopicActivity.this, "订阅失败");
+                        }
+
+                    }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), true);
+                }
+
+            }
+            //进入栏目
+        } else if (view.getId() == R.id.tv_top_bar_title) {
+            Bundle bundle = new Bundle();
+            bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
+            Nav.with(UIUtils.getContext()).setExtras(bundle)
+                    .toPath("/subscription/detail");
         }
     }
 
@@ -484,7 +529,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         mView.setVisibility(View.VISIBLE);
         mTopBar.setVisibility(View.GONE);
         mFloorBar.setVisibility(View.GONE);
-//        mContainer.removeAllViews();
+        mTopBarHolder.getSubscribeRelativeLayout().setVisibility(View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

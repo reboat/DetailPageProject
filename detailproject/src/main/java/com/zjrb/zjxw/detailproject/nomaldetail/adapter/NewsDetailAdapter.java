@@ -61,8 +61,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     //占位
     public static final int VIEW_REPLEASE = 10;
 
-    //订阅
-    public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
+    //    //订阅
+//    public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
     //恢复
     public static final String PAYLOADS_RESUME = "on_resume";
     //暂停
@@ -93,7 +93,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
-            return new NewsDetailTitleHolder(parent,isRedBoat);
+            return new NewsDetailTitleHolder(parent, isRedBoat);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
@@ -161,11 +161,12 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             isNeedSuperBind = false;
             for (int i = 0; i < payloads.size(); i++) {
                 Object payload = payloads.get(i);
-                if (PAYLOADS_SUBSCRIBE.equals(payload)) {
-                    if (holder instanceof IBindSubscribe) {
-                        ((IBindSubscribe) holder).bindSubscribe();
-                    }
-                } else if (PAYLOADS_RESUME.equals(payload)) {
+//                if (PAYLOADS_SUBSCRIBE.equals(payload)) {
+//                    if (holder instanceof IBindSubscribe) {
+//                        ((IBindSubscribe) holder).bindSubscribe();
+//                    }
+//                } else
+                if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
                         ((ILifecycle) holder).onResume();
                     }
@@ -220,22 +221,20 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             datas.add("点击查看更多评论");
         }
         //有相关新闻/相关专题/热门评论
-//        if((subjectList != null && subjectList.size() > 0) || (articles != null && articles.size() > 0) || (hotCommentsBeen != null && hotCommentsBeen.size() > 0)){
-            datas.add("占位");
-//        }
+        datas.add("占位");
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
-    /**
-     * 刷新订阅部分item
-     */
-    public void updateSubscribeInfo() {
-        notifyItemChanged(0, PAYLOADS_SUBSCRIBE);
-        if (mMiddleHolderPosition != NO_POSITION) {
-            notifyItemChanged(mMiddleHolderPosition, PAYLOADS_SUBSCRIBE);
-        }
-
-    }
+//    /**
+//     * 刷新订阅部分item
+//     */
+//    public void updateSubscribeInfo() {
+//        notifyItemChanged(0, PAYLOADS_SUBSCRIBE);
+//        if (mMiddleHolderPosition != NO_POSITION) {
+//            notifyItemChanged(mMiddleHolderPosition, PAYLOADS_SUBSCRIBE);
+//        }
+//
+//    }
 
     /**
      * webview恢复监听
@@ -267,10 +266,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (datas.get(position) instanceof RelatedNewsBean) {
-//            if (relateNewsHolder != null && relateNewsHolder.getTitle() != null) {
-//                relateNewsHolder.getTitle().setSelected(true);
-//                ReadNewsDaoHelper.addAlreadyRead(((RelatedNewsBean) datas.get(position)).getId());
-//            }
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
@@ -331,13 +326,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         notifyItemRemoved(position);
     }
 
-    /**
-     * 订阅
-     */
-    public interface IBindSubscribe {
-
-        void bindSubscribe();
-    }
+//    /**
+//     * 订阅
+//     */
+//    public interface IBindSubscribe {
+//
+//        void bindSubscribe();
+//    }
 
     /**
      * 视频生命周期监听
@@ -356,20 +351,20 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
      * @date 2017/5/15 下午8:53.
      */
     public interface CommonOptCallBack {
-        /**
-         * 订阅操作
-         */
-        void onOptSubscribe();
+//        /**
+//         * 订阅操作
+//         */
+//        void onOptSubscribe();
 
         /**
          * WebView加载完毕操作
          */
         void onOptPageFinished();
 
-        /**
-         * 点击栏目操作
-         */
-        void onOptClickColumn();
+//        /**
+//         * 点击栏目操作
+//         */
+//        void onOptClickColumn();
 
         /**
          * 点击频道操作

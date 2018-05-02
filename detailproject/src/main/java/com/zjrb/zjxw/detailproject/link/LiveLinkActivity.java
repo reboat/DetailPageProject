@@ -18,7 +18,8 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
+import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.domain.CommentDialogBean;
@@ -38,6 +39,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
@@ -53,7 +55,7 @@ import cn.daily.news.analytics.Analytics;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends BaseActivity implements View.OnClickListener/*, TouchSlopHelper.OnTouchSlopListener*/ {
+public class LiveLinkActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -77,10 +79,6 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     FrameLayout mView;
 
     private String mArticleId;
-//    /**
-//     * 上下滑动超出范围处理
-//     */
-//    private TouchSlopHelper mTouchSlopHelper;
     /**
      * 详情页数据
      */
@@ -98,17 +96,9 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
         getIntentData(getIntent());
-//        init();
         loadData();
     }
 
-//    /**
-//     * 初始化滑动/webview
-//     */
-//    private void init() {
-//        mTouchSlopHelper = new TouchSlopHelper();
-//        mTouchSlopHelper.setOnTouchSlopListener(this);
-//    }
 
     private String mFromChannel;
 
@@ -145,13 +135,12 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     /**
      * 顶部标题
      */
-    private DefaultTopBarHolder1 topBarHolder;
+    private CommonTopBarHolder topBarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder = TopBarFactory.createDefault1(view, this);
+        topBarHolder = TopBarFactory.createCommonTopBar(view, this);
         topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
-        topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.GONE);
         return topBarHolder.getView();
     }
 
@@ -199,7 +188,26 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-
+        //中间栏目布局处理
+        if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_name())) {
+            //栏目名称
+            topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.VISIBLE);
+            topBarHolder.getTitleView().setText(mNewsDetail.getArticle().getColumn_name());
+            //栏目头像
+            if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_logo())) {
+                GlideApp.with(topBarHolder.getIvIcon()).load(mNewsDetail.getArticle().getColumn_logo()).centerCrop().into(topBarHolder.getIvIcon());
+            }
+            //订阅状态 采用select
+            if (mNewsDetail.getArticle().isColumn_subscribed()) {
+                topBarHolder.getSubscribe().setText("已订阅");
+                topBarHolder.getSubscribe().setSelected(true);
+            } else {
+                topBarHolder.getSubscribe().setText("+订阅");
+                topBarHolder.getSubscribe().setSelected(false);
+            }
+        } else {
+            topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
+        }
 
         //显示标题展示WebView内容等
         mWebView.hasVideoUrl(false);
@@ -231,17 +239,15 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment,
+            R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment,
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
         int id = view.getId();
         if (R.id.iv_top_bar_back == id) {
-//            if (mWebView.canGoBack()) {
-//                mWebView.goBack();
-//            } else {
             onBackPressed();
-//            }
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")
@@ -406,6 +412,48 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
             }
+        } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
+            //已订阅状态->取消订阅
+            if (topBarHolder.getSubscribe().isSelected()) {
+                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                    @Override
+                    public void onSuccess(Void baseInnerData) {
+                        topBarHolder.getSubscribe().setSelected(false);
+                        topBarHolder.getSubscribe().setText("+订阅");
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        T.showShortNow(LiveLinkActivity.this, "取消订阅失败");
+                    }
+
+                }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
+            } else {//未订阅状态->订阅
+                if (topBarHolder.getSubscribe().isSelected()) {
+                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                        @Override
+                        public void onSuccess(Void baseInnerData) {
+                            topBarHolder.getSubscribe().setSelected(true);
+                            topBarHolder.getSubscribe().setText("已订阅");
+                        }
+
+                        @Override
+                        public void onError(String errMsg, int errCode) {
+                            T.showShortNow(LiveLinkActivity.this, "订阅失败");
+                        }
+
+                    }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
+                }
+
+            }
+            //进入栏目
+        } else if (view.getId() == R.id.tv_top_bar_title) {
+            Bundle bundle = new Bundle();
+            bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
+            Nav.with(UIUtils.getContext()).setExtras(bundle)
+                    .toPath("/subscription/detail");
         }
     }
 
@@ -441,60 +489,6 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         }).setTag(this).exe(mArticleId, true);
     }
 
-
-//    /**
-//     * 分享回调
-//     *
-//     * @param requestCode
-//     * @param resultCode
-//     * @param data
-//     */
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        UMShareAPI.get(UIUtils.getApp()).onActivityResult(requestCode, resultCode, data);
-//
-//    }
-
-//    /**
-//     * 处理上下移动监听
-//     *
-//     * @param ev
-//     * @return
-//     */
-//    @Override
-//    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (mTouchSlopHelper != null)
-//            mTouchSlopHelper.onTouchEvent(ev);
-//        return super.dispatchTouchEvent(ev);
-//    }
-//
-//    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
-
-//    /**
-//     * @param isUp 控制底部floorBar
-//     */
-//    @Override
-//    public void onTouchSlop(boolean isUp) {
-//        int translationY = !isUp ? 0 : mFloorBar.getHeight() + getFloorBarMarginBottom();
-//        mFloorBar.animate().setInterpolator(mInterpolator)
-//                .setDuration(200)
-//                .translationY(translationY);
-//    }
-
-//    /**
-//     * @return 获取底部栏间距
-//     */
-//    private int getFloorBarMarginBottom() {
-//        int marginBottom = 0;
-//        final ViewGroup.LayoutParams layoutParams = mFloorBar.getLayoutParams();
-//        if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
-//            marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
-//        }
-//        return marginBottom;
-//    }
-
-
     /**
      * 显示撤稿页面
      */
@@ -502,6 +496,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         mFloorBar.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
         topBarHolder.getShareView().setVisibility(View.GONE);
+        topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

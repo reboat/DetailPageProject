@@ -234,12 +234,13 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
     @Override
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.iv_top_bar_back) {
@@ -275,6 +276,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
+                        topHolder.getSubscribe().setText("+订阅");
                     }
 
                     @Override
@@ -290,6 +292,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
+                            topHolder.getSubscribe().setText("已订阅");
                         }
 
                         @Override

@@ -26,7 +26,7 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
+import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
 import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
@@ -90,14 +90,12 @@ public class NewsDetailActivity extends BaseActivity implements
     RatioFrameLayout mVideoContainer;
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
-    @BindView(R2.id.tv_comment)
-    TextView mTvComment;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    public FitWindowsRelativeLayout mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
     @BindView(R2.id.iv_image)
@@ -151,7 +149,7 @@ public class NewsDetailActivity extends BaseActivity implements
         intentFilter.addAction(UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video));
         localBroadcastManager.registerReceiver(receive, intentFilter);
         getIntentData(getIntent());
-        init();
+        loadData();
     }
 
     @Override
@@ -182,21 +180,14 @@ public class NewsDetailActivity extends BaseActivity implements
 
 
     /**
-     * topbar
+     * 5.3.0版本通用topbar
      */
-    public DefaultTopBarHolder1 topHolder;
+    public CommonTopBarHolder topHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder = TopBarFactory.createCommonTopBar(view, this);
         return topHolder.getView();
-    }
-
-    /**
-     * 初始化/拉取数据
-     */
-    private void init() {
-        loadData();
     }
 
     /**
@@ -249,7 +240,6 @@ public class NewsDetailActivity extends BaseActivity implements
                         .setClassifyName(draftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
                         .setSelfObjectID(draftDetailBean.getArticle().getId() + "");
-                initAnalyticsBuilder(builder, draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -271,22 +261,8 @@ public class NewsDetailActivity extends BaseActivity implements
                 }
             }
         });
-        configTak(task);
         task.setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
     }
-
-    /**
-     * 配置媒立方数据
-     *
-     * @param builder         媒立方对象
-     * @param draftDetailBean 稿件详情
-     */
-    public void initAnalyticsBuilder(Analytics.AnalyticsBuilder builder, DraftDetailBean draftDetailBean) {
-    }
-
-    public void configTak(DraftDetailTask task) {
-    }
-
 
     /**
      * @param data 填充详情页数据
@@ -304,6 +280,27 @@ public class NewsDetailActivity extends BaseActivity implements
         }
 
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        //中间栏目布局处理
+        if (!TextUtils.isEmpty(article.getColumn_name())) {
+            //栏目名称
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
+            topHolder.getTitleView().setText(article.getColumn_name());
+            //栏目头像
+            if (!TextUtils.isEmpty(article.getColumn_logo())) {
+                GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).centerCrop().into(topHolder.getIvIcon());
+            }
+            //订阅状态 采用select
+            if (article.isColumn_subscribed()) {
+                topHolder.getSubscribe().setText("已订阅");
+                topHolder.getSubscribe().setSelected(true);
+            } else {
+                topHolder.getSubscribe().setText("+订阅");
+                topHolder.getSubscribe().setSelected(false);
+            }
+        } else {
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+        }
+
         mNewsDetail = data;
         initViewState(mNewsDetail);
         List datas = new ArrayList<>();
@@ -311,7 +308,6 @@ public class NewsDetailActivity extends BaseActivity implements
         datas.add(data);
         //web
         datas.add(data);
-//        if (mAdapter == null) {
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
         mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
@@ -321,16 +317,15 @@ public class NewsDetailActivity extends BaseActivity implements
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
                 ).itemView);
         mRvContent.setAdapter(mAdapter);
-//        } else {
-//            mAdapter.setData(datas);
-//        }
     }
 
     /**
      * 配置Adapter
+     *
      * @param adapter 适配器
      */
-    public void initAdapter(NewsDetailAdapter adapter){}
+    public void initAdapter(NewsDetailAdapter adapter) {
+    }
 
     /**
      * 刷新底部栏状态
@@ -366,32 +361,32 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
 
-    /**
-     * 订阅
-     */
-    @Override
-    public void onOptSubscribe() {
-        //如果栏目未订阅
-        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
-
-            @Override
-            public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
-            }
-
-            @Override
-            public void onAfter() {
-                mAdapter.updateSubscribeInfo();
-            }
-
-            @Override
-            public void onError(String errMsg, int errCode) {
-                T.showShortNow(NewsDetailActivity.this, errMsg);
-            }
-
-        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
-
-    }
+//    /**
+//     * 订阅
+//     */
+//    @Override
+//    public void onOptSubscribe() {
+//        //如果栏目未订阅
+//        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+//
+//            @Override
+//            public void onSuccess(Void baseInnerData) {
+//                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
+//            }
+//
+//            @Override
+//            public void onAfter() {
+//                mAdapter.updateSubscribeInfo();
+//            }
+//
+//            @Override
+//            public void onError(String errMsg, int errCode) {
+//                T.showShortNow(NewsDetailActivity.this, errMsg);
+//            }
+//
+//        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
+//
+//    }
 
     /**
      * WebView加载完毕
@@ -403,13 +398,13 @@ public class NewsDetailActivity extends BaseActivity implements
 
     private Bundle bundle;
 
-    /**
-     * 进入栏目列表页
-     */
-    @Override
-    public void onOptClickColumn() {
-        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
-    }
+//    /**
+//     * 进入栏目列表页
+//     */
+//    @Override
+//    public void onOptClickColumn() {
+//        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
+//    }
 
     /**
      * 进入频道详情页
@@ -470,7 +465,8 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back})
+            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -648,6 +644,48 @@ public class NewsDetailActivity extends BaseActivity implements
                         .send();
             }
             finish();
+        } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
+            //已订阅状态->取消订阅
+            if (topHolder.getSubscribe().isSelected()) {
+                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                    @Override
+                    public void onSuccess(Void baseInnerData) {
+                        topHolder.getSubscribe().setSelected(false);
+                        topHolder.getSubscribe().setText("+订阅");
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        T.showShortNow(NewsDetailActivity.this, "取消订阅失败");
+                    }
+
+                }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
+            } else {//未订阅状态->订阅
+                if (topHolder.getSubscribe().isSelected()) {
+                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+
+                        @Override
+                        public void onSuccess(Void baseInnerData) {
+                            topHolder.getSubscribe().setSelected(true);
+                            topHolder.getSubscribe().setText("已订阅");
+                        }
+
+                        @Override
+                        public void onError(String errMsg, int errCode) {
+                            T.showShortNow(NewsDetailActivity.this, "订阅失败");
+                        }
+
+                    }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
+                }
+
+            }
+            //进入栏目
+        } else if (view.getId() == R.id.tv_top_bar_title) {
+            Bundle bundle = new Bundle();
+            bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
+            Nav.with(UIUtils.getContext()).setExtras(bundle)
+                    .toPath("/subscription/detail");
         }
     }
 
@@ -692,6 +730,7 @@ public class NewsDetailActivity extends BaseActivity implements
         mView.setVisibility(View.VISIBLE);
         mFloorBar.setVisibility(View.GONE);
         mVideoContainer.setVisibility(View.GONE);
+        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

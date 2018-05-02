@@ -2,8 +2,13 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
+import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -28,6 +33,14 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
     ColorImageView mIvTopShare;
     @BindView(R2.id.top_line)
     View mTopLine;
+    @BindView(R2.id.frl_title)
+    FitWindowsRelativeLayout mRelativeLayout;
+    @BindView(R2.id.iv_top_subscribe_icon)
+    CircleImageView mIvIcon;
+    @BindView(R2.id.tv_top_bar_title)
+    TextView tvTitle;
+    @BindView(R2.id.tv_top_bar_subscribe_text)
+    TextView tvSubscribe;
 
     public View itemView;
     private DraftDetailBean.ArticleBean mArticle;
@@ -42,27 +55,47 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
         mIvTopBack.setOnUiModeChangeListener(this);
     }
 
-    public void setData(DraftDetailBean data) {
-        mArticle = data != null ? data.getArticle() : null;
+    /**
+     * 获取订阅控件
+     * @return
+     */
+    public TextView getSubscribe() {
+        return tvSubscribe;
     }
 
-//    @OnClick({R2.id.iv_top_back, R2.id.iv_top_share})
-//    public void onViewClicked(View view) {
-//        if (view.getId() == R.id.iv_top_back) {
-//            if (view.getContext() instanceof Activity) {
-//                ((Activity) view.getContext()).finish();
-//            }
-//        } else if (view.getId() == R.id.iv_top_share) {
-//            if (mArticle != null) {
-//                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-//                        .setSingle(false)
-//                        .setImgUri(mArticle.getFirstPic())
-//                        .setTextContent(mArticle.getSummary())
-//                        .setTitle(mArticle.getDoc_title())
-//                        .setTargetUrl(mArticle.getUrl()));
-//            }
-//        }
-//    }
+    /**
+     * 订阅布局
+     * @return
+     */
+    public FitWindowsRelativeLayout getSubscribeRelativeLayout(){
+        return mRelativeLayout;
+    }
+
+    public void setData(DraftDetailBean data) {
+        mArticle = data != null ? data.getArticle() : null;
+        //中间栏目布局处理
+        if (mArticle != null) {
+            if (!TextUtils.isEmpty(mArticle.getColumn_name())) {
+                //栏目名称
+                mRelativeLayout.setVisibility(View.VISIBLE);
+                tvTitle.setText(mArticle.getColumn_name());
+                //栏目头像
+                if (!TextUtils.isEmpty(mArticle.getColumn_logo())) {
+                    GlideApp.with(mIvIcon).load(mArticle.getColumn_logo()).centerCrop().into(mIvIcon);
+                }
+                //订阅状态 采用select
+                if (mArticle.isColumn_subscribed()) {
+                    tvSubscribe.setText("已订阅");
+                    tvSubscribe.setSelected(true);
+                } else {
+                    tvSubscribe.setText("+订阅");
+                    tvSubscribe.setSelected(false);
+                }
+            } else {
+                mRelativeLayout.setVisibility(View.GONE);
+            }
+        }
+    }
 
     public void setFraction(float fraction) {
         itemView.setBackgroundColor(ArgbUtils.evaluate(fraction, Color.TRANSPARENT,
@@ -70,6 +103,10 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
         mTopLine.setAlpha(fraction);
         mIvTopBack.setFraction(fraction);
         mIvTopShare.setFraction(fraction);
+        mRelativeLayout.setAlpha(fraction);
+        mIvIcon.setAlpha(fraction);
+        tvTitle.setAlpha(fraction);
+        tvSubscribe.setAlpha(fraction);
     }
 
     private Resources.Theme getTheme() {

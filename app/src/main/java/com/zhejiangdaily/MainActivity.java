@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         //普通详情页
                 Nav.with(this).to("https://zjprev.8531.cn/red_boat.html?id=100003112");
-
+//                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
                 //红船号详情页
 //                SettingManager.getInstance().setOpenHttps(false);
 //                SettingManager.getInstance().setHost("10.100.62.206:8085");

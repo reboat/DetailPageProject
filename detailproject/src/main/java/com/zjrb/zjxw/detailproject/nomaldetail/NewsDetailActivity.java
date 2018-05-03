@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +25,7 @@ import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
+import com.utovr.player.UVMediaType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -68,6 +71,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import daily.zjrb.com.daily_vr.player.VRManager;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -118,6 +122,8 @@ public class NewsDetailActivity extends BaseActivity implements
     private NewsDetailAdapter mAdapter;
 
     private Analytics mAnalytics;
+    private VRManager vrManager;
+    private int ui;//记录系统状态栏和导航栏样式
 
 
     private class VideoBroadcastReceiver extends BroadcastReceiver {
@@ -143,6 +149,7 @@ public class NewsDetailActivity extends BaseActivity implements
         setTranslucenceStatusBarBg();
         setContentView(R.layout.module_detail_activity_detail);
         ButterKnife.bind(this);
+        ui = getWindow().getDecorView().getSystemUiVisibility();
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         receive = new VideoBroadcastReceiver();
         intentFilter = new IntentFilter(UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video));
@@ -194,6 +201,17 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
+        // TODO: 2018/4/26 模拟vr稿件类型 lujialei
+//        if(true/*bean.getDoc_type() == 111 */){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+//            mVideoContainer.setVisibility(View.VISIBLE);
+//            vrManager = new VRManager(this,mVideoContainer);
+//            String path = "http://cache.utovr.com/201508270528174780.m3u8";
+//            vrManager.getController().setSource(UVMediaType.UVMEDIA_TYPE_M3U8, path);
+//            return;
+//        }
+
+
         if (!TextUtils.isEmpty(bean.getVideo_url())) {
             mVideoContainer.setVisibility(View.VISIBLE);
             if (bean.getVideo_duration() > 0) {
@@ -696,6 +714,9 @@ public class NewsDetailActivity extends BaseActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewResume();
         }
+        if(vrManager != null){
+            vrManager.onResume();
+        }
     }
 
     @Override
@@ -704,11 +725,17 @@ public class NewsDetailActivity extends BaseActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
         }
+        if(vrManager != null){
+            vrManager.onPause();
+        }
     }
 
 
     @Override
     protected void onDestroy() {
+        if(vrManager != null){
+            vrManager.releasePlayer();
+        }
         super.onDestroy();
         if (builder != null) {
             //阅读深度
@@ -743,6 +770,23 @@ public class NewsDetailActivity extends BaseActivity implements
         mAdapter.remove(position);
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //横屏全屏 去掉topbar
+        //横屏去掉topbar
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            hideTopBar();
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }else {
+            showTopBar();
+            getWindow().getDecorView().setSystemUiVisibility(ui);
+        }
+    }
 }
 
 

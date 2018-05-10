@@ -333,7 +333,7 @@ public class MoreDialogLink extends BaseDialogFragment {
                 dismissAllDialog();
             }
 
-        }).setTag(this).exe(mBean.getArticle().getId(), !mBean.getArticle().isFollowed());
+        }).setTag(this).exe(mBean.getArticle().getId(), !mBean.getArticle().isFollowed(), mBean.getArticle().getUrl());
     }
 
     private UMShareAPI mShareAPI;

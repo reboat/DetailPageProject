@@ -354,7 +354,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 }
             }
 
-        }).setTag(this).exe(mArticleId, !mArticle.isFollowed());
+        }).setTag(this).exe(mArticleId, !mArticle.isFollowed(), mArticle.getUrl());
     }
 
     /**

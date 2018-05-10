@@ -354,7 +354,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
     /**

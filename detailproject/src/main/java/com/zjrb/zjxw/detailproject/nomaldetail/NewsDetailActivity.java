@@ -479,7 +479,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,

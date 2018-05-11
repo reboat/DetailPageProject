@@ -23,10 +23,12 @@ import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.fragment.ScanerBottomFragment;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.LongClickCallBack;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
@@ -49,7 +51,7 @@ import cn.daily.news.analytics.Analytics;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -84,6 +86,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.module_detail_activity_browser_link);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        mWebView.setLongClickCallBack(this);
         loadData();
     }
 
@@ -158,6 +161,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     /**
      * 顶部导航条在数据加载结束后再显示
+     *
      * @param data 填充详情页数据
      */
     private void fillData(DraftDetailBean data) {
@@ -178,8 +182,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
 
-        if(topBarHolder != null){
-            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.VISIBLE);
+        if (topBarHolder != null) {
+            topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
         //是否点赞
         if (data.getArticle().isLike_enabled()) {
@@ -211,11 +215,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
         int id = view.getId();
         if (R.id.iv_back == id) {
-//            if (mWebView.canGoBack()) {
-//                mWebView.goBack();
-//            } else {
             onBackPressed();
-//            }
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
                         .setEvenName("点击返回")
@@ -362,8 +362,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
-        if(topBarHolder != null){
-            topBarHolder.setViewVisible(topBarHolder.getSettingView(),View.GONE);
+        if (topBarHolder != null) {
+            topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.GONE);
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
@@ -384,7 +384,21 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onDestroy() {
         super.onDestroy();
+        //清除线程池
+        if (mWebView != null) {
+            mWebView.stopThreadPool();
+        }
         mWebView.destroy();
     }
 
+    /**
+     * 长按识别二维码
+     *
+     * @param imgUrl
+     * @param isScanerImg
+     */
+    @Override
+    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
+    }
 }

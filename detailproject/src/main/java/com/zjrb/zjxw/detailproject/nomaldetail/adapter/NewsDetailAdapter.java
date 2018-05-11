@@ -252,6 +252,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (mWebViewHolderPosition != NO_POSITION) {
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
+        //关闭线程池
+        if (webviewHolder != null) {
+            webviewHolder.stopThreadPool();
+        }
     }
 
     private Bundle bundle;

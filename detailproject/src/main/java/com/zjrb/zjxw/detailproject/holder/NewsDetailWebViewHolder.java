@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.holder;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
@@ -13,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
@@ -20,9 +22,11 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
+import com.zjrb.core.ui.fragment.ScanerBottomFragment;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.webjs.LongClickCallBack;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -47,8 +51,7 @@ import cn.daily.news.analytics.Analytics;
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
         NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN,
-        MoreDialog.IWebViewTextSize, View
-        .OnLayoutChangeListener {
+        MoreDialog.IWebViewTextSize, View.OnLayoutChangeListener, LongClickCallBack {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -82,6 +85,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         initWebView();
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
+        mWebView.setLongClickCallBack(this);
     }
 
     /**
@@ -218,9 +222,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
         // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        // 开启DOM storage API 功能
+        // 开启DOM storage API 功能
         settings.setDomStorageEnabled(false);
-//        // 开启database storage API功能
+        // 开启database storage API功能
         settings.setDatabaseEnabled(false);
         settings.setAppCacheEnabled(false);
         mWebView.setWebViewClient(new WebViewClient() {
@@ -444,5 +448,25 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int
             oldTop, int oldRight, int oldBottom) {
         mWebViewHeight = bottom - top;
+    }
+
+    /**
+     * 长按识别二维码弹框
+     *
+     * @param imgUrl
+     */
+    @Override
+    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+        ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
+                .getActivity()).isScanerImg(isScanerImg).setActivity((BaseActivity) itemView.getContext()).setImgUrl(imgUrl);
+    }
+
+    /**
+     * 关闭线程池
+     */
+    public void stopThreadPool() {
+        if(mWebView != null){
+            mWebView.stopThreadPool();
+        }
     }
 }

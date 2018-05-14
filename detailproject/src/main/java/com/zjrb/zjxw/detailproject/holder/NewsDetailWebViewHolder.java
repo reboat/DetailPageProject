@@ -458,14 +458,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
         ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
-                .getActivity()).isScanerImg(isScanerImg).setActivity((BaseActivity) itemView.getContext()).setImgUrl(imgUrl);
+                .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl);
     }
 
     /**
      * 关闭线程池
      */
     public void stopThreadPool() {
-        if(mWebView != null){
+        if (mWebView != null) {
             mWebView.stopThreadPool();
         }
     }

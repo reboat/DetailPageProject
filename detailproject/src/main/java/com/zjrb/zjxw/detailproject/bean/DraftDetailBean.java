@@ -90,6 +90,7 @@ public class DraftDetailBean extends BaseData {
 
         private String from_channel;
         private String timeline;
+        private int video_type;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -709,6 +710,15 @@ public class DraftDetailBean extends BaseData {
         public void setTimeline(String timeline) {
             this.timeline = timeline;
         }
+
+        public int getVideo_type() {
+            return video_type;
+        }
+
+        public void setVideo_type(int video_type) {
+            this.video_type = video_type;
+        }
+
     }
 
 }

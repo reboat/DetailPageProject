@@ -45,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
+import static com.zjrb.core.utils.UIUtils.getContext;
+
 /**
  * 链接稿 - Activity
  * <p>
@@ -399,6 +401,30 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     @Override
     public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+        scanerAnalytics(imgUrl, isScanerImg);
         ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
+    }
+
+
+    /**
+     * 二维码识别相关埋点
+     */
+    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
+        if (mNewsDetail != null && isScanerImg) {
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024")
+                    .setEvenName("识别二维码图片")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("mediaURL", imgUrl)
+                            .toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
     }
 }

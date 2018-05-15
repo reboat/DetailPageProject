@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
-import com.utovr.player.UVMediaType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -667,6 +665,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
+                subscribeAnalytics("点击取消订阅栏目","A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -682,6 +681,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
+                subscribeAnalytics("点击订阅栏目","A0014");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -702,6 +702,7 @@ public class NewsDetailActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
+            subscribeAnalytics("点击进入栏目详情页","800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -716,7 +717,7 @@ public class NewsDetailActivity extends BaseActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewResume();
         }
-        if(vrManager != null){
+        if (vrManager != null) {
             vrManager.onResume();
         }
     }
@@ -727,7 +728,7 @@ public class NewsDetailActivity extends BaseActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
         }
-        if(vrManager != null){
+        if (vrManager != null) {
             vrManager.onPause();
         }
     }
@@ -735,7 +736,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     protected void onDestroy() {
-        if(vrManager != null){
+        if (vrManager != null) {
             vrManager.releasePlayer();
         }
         super.onDestroy();
@@ -778,16 +779,39 @@ public class NewsDetailActivity extends BaseActivity implements
         super.onConfigurationChanged(newConfig);
         //横屏全屏 去掉topbar
         //横屏去掉topbar
-        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             hideTopBar();
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }else {
+        } else {
             showTopBar();
             getWindow().getDecorView().setSystemUiVisibility(ui);
         }
+    }
+
+
+    /**
+     * 订阅相关埋点
+     *
+     * @param eventNme
+     */
+    private void subscribeAnalytics(String eventNme,String eventCode) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
+                .setEvenName(eventNme)
+                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "RelatedColumnType")
+                        .toString())
+                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .build()
+                .send();
     }
 }
 

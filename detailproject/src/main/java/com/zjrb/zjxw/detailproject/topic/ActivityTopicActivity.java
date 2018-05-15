@@ -479,6 +479,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
+                subscribeAnalytics("点击取消订阅栏目","A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -495,6 +496,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
+                    subscribeAnalytics("点击订阅栏目","A0014");
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override
@@ -514,6 +516,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
+            subscribeAnalytics("点击进入栏目详情页","800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -607,6 +610,28 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
         }
         super.onDestroy();
+    }
+
+    /**
+     * 订阅相关埋点
+     *
+     * @param eventNme
+     */
+    private void subscribeAnalytics(String eventNme,String eventCode) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
+                .setEvenName(eventNme)
+                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                .setObjectName(mDetailData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mDetailData.getArticle().getChannel_id())
+                .setClassifyName(mDetailData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "RelatedColumnType")
+                        .toString())
+                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .build()
+                .send();
     }
 
 }

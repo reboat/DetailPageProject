@@ -206,11 +206,10 @@ public class NewsDetailActivity extends BaseActivity implements
         if(true/*bean.getVideo_type() == 2*/){//video 2 vr类型 1或者空 普通视频
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             mVideoContainer.setVisibility(View.VISIBLE);
-            vrManager = new VRManager(this, mVideoContainer);
+            vrManager = new VRManager(this, mVideoContainer,new VrAnaly(bean));
             vrManager.changeOrientation(false);
             String path = "http://cache.utovr.com/201508270528174780.m3u8";
             vrManager.getController().setSource(UVMediaType.UVMEDIA_TYPE_M3U8, path);
-            vrManager.setAnalyCallBack(new VrAnaly(bean));
             return;
         }
 

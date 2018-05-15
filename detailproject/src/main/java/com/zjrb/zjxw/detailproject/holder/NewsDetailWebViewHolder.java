@@ -14,7 +14,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
@@ -43,6 +42,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+
+import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 新闻详情页 WebView - ViewHolder
@@ -457,8 +458,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     @Override
     public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+        scanerAnalytics(imgUrl, isScanerImg);
+        int mlfid = 0;
+        if (mData != null && mData.getArticle() != null) {
+            mlfid = mData.getArticle().getMlf_id();
+        }
         ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
-                .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl);
+                .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl).setMlfId(mlfid);
     }
 
     /**
@@ -469,4 +475,27 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             mWebView.stopThreadPool();
         }
     }
+
+    /**
+     * 二维码识别相关埋点
+     */
+    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
+        if (mData != null && isScanerImg) {
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024")
+                    .setEvenName("识别二维码图片")
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id())
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("mediaURL", imgUrl)
+                            .toString())
+                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+    }
+
 }

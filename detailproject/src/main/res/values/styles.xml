@@ -60,7 +60,10 @@
         <item name="bc_mask">@android:color/transparent</item>
         <item name="module_detail_tc_item_title">@color/module_detail_tc_item_title</item>
 
-
+        <!--vr相关-->
+        <item name="vr_play">@mipmap/vr_module_detail_ic_play_start_red</item>
+        <item name="vr_gyroscope">@drawable/vr_video_toolbar_tb_gyro</item>
+        <item name="vr_screen">@drawable/vr_video_toolbar_tb_screen</item>
     </style>
 
     <style name="DetailNightTheme">
@@ -123,5 +126,10 @@
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red_night</item>
         <item name="bc_mask">@color/color_7f000000_night</item>
         <item name="module_detail_tc_item_title">@color/module_detail_tc_item_title_night</item>
+
+        <!--vr 相关-->
+        <item name="vr_play">@mipmap/vr_module_detail_ic_play_start</item>
+        <item name="vr_gyroscope">@drawable/vr_video_toolbar_tb_gyro_night</item>
+        <item name="vr_screen">@drawable/vr_video_toolbar_tb_screen_night</item>
     </style>
 </resources>

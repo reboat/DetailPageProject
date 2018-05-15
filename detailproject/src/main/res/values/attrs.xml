@@ -100,6 +100,11 @@
         <attr name="module_detail_defaule_icon" format="color|reference" />
         <attr name="module_detail_tc_item_title" format="color|reference" />
 
+
+        <attr name="vr_play" format="reference"></attr>
+        <attr name="vr_gyroscope" format="reference"></attr>
+        <attr name="vr_screen" format="reference"></attr>
+
     </declare-styleable>
 
 </resources>

@@ -50,6 +50,7 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.VrAnaly;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
@@ -200,14 +201,16 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         // TODO: 2018/4/26 模拟vr稿件类型 lujialei
-//        if(true/*bean.getDoc_type() == 111 */){
-//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-//            mVideoContainer.setVisibility(View.VISIBLE);
-//            vrManager = new VRManager(this,mVideoContainer);
-//            String path = "http://cache.utovr.com/201508270528174780.m3u8";
-//            vrManager.getController().setSource(UVMediaType.UVMEDIA_TYPE_M3U8, path);
-//            return;
-//        }
+        if(true/*bean.getVideo_type() == 2*/){//video 2 vr类型 1或者空 普通视频
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+            mVideoContainer.setVisibility(View.VISIBLE);
+            vrManager = new VRManager(this, mVideoContainer);
+            vrManager.changeOrientation(false);
+            String path = "http://cache.utovr.com/201508270528174780.m3u8";
+            vrManager.getController().setSource(UVMediaType.UVMEDIA_TYPE_M3U8, path);
+            vrManager.setAnalyCallBack(new VrAnaly(bean));
+            return;
+        }
 
 
         if (!TextUtils.isEmpty(bean.getVideo_url())) {

@@ -202,8 +202,8 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-        // TODO: 2018/4/26 模拟vr稿件类型 lujialei
-        if(true/*bean.getVideo_type() == 2*/){//video 2 vr类型 1或者空 普通视频
+        // TODO: 2018/4/26 判断vr稿件类型 lujialei 上线后去掉此注释
+        if(bean.getVideo_type() == 2){//video 2 vr类型 1或者空 普通视频
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
             mVideoContainer.setVisibility(View.VISIBLE);
             vrManager = new VRManager(this, mVideoContainer,new VrAnaly(bean));

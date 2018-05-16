@@ -491,7 +491,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
     /**

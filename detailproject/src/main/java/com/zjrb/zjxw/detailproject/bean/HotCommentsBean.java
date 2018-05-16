@@ -32,6 +32,8 @@ public class HotCommentsBean implements Serializable {
      * parent_account_id : 0596d77b9b2e3f43afc63ad5a
      * parent_portrait_url : https://img6.bdstatic.com/img/image/smallpic/yangmixiaotugengxin.jpg
      * parent_liked : false
+     * location: 评论所在位置
+     * parent_location: 父评论所在位置
      */
 
     private String id;
@@ -57,6 +59,8 @@ public class HotCommentsBean implements Serializable {
     private int account_type;
     private int parent_account_type;
     private int parent_status;
+    private String location;
+    private String parent_location;
 
     /**
      * 是否是自己的评论
@@ -259,6 +263,22 @@ public class HotCommentsBean implements Serializable {
 
     public void setParent_status(int parent_status) {
         this.parent_status = parent_status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getParent_location() {
+        return parent_location;
+    }
+
+    public void setParent_location(String parent_location) {
+        this.parent_location = parent_location;
     }
 
     public String getCommentTime(long time) {

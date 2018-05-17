@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.utils.SettingManager;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -90,12 +91,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                Nav.with(this).to("http://zjbeta.8531.cn/topic.html?id=802710"); // 802710,802979
 
         //普通详情页
-//                Nav.with(this).to("https://zjprev.8531.cn/red_boat.html?id=100003112");
-        Nav.with(this).to("https://www.baidu.com/");
+                Nav.with(this).to("https://zjprev.8531.cn/red_boat.html?id=100003112");
+//        Nav.with(this).to("https://www.baidu.com/");
 //                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
         //红船号详情页
-//                SettingManager.getInstance().setOpenHttps(false);
-//                SettingManager.getInstance().setHost("10.100.62.206:8085");
+//                SettingManager.getInstance().setOpenHttps(true);
+//                SettingManager.getInstance().setHost("api-new.8531.cn");
+//                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
+
+
 //                Nav.with(this).to("https://zj.zjol.com.cn/news.html?id=920034");
 
 //                //进入专题更多列表

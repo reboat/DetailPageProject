@@ -1,5 +1,5 @@
 include ':app', ':detailproject'
-include(':core-library')
-project(":core-library").projectDir = new File('../CoreProject/core')
-include(':scaner-library')
-project(":scaner-library").projectDir = new File('../Scaner/scaner')
+//include(':core-library')
+//project(":core-library").projectDir = new File('../CoreProject/core')
+//include(':scaner-library')
+//project(":scaner-library").projectDir = new File('../Scaner/scaner')

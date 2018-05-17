@@ -59,6 +59,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     TextView mContent;
     @BindView(R2.id.tv_time)
     TextView mTime;
+    @BindView(R2.id.tv_location)
+    TextView mLocation;
+    @BindView(R2.id.tv_comment_location)
+    TextView mTvCommentLocation;
     //删除评论
     @BindView(R2.id.tv_delete)
     TextView mDelete;
@@ -152,6 +156,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
             mTvCommentContent.setVisibility(View.GONE);
             mLyComment.setVisibility(View.GONE);
+            mTvCommentLocation.setVisibility(View.GONE);
+            mTvCommentSrc.setVisibility(View.GONE);
         } else {//显示正常评论
             mTvDeleteTip.setVisibility(View.GONE);
             mTvCommentContent.setVisibility(View.VISIBLE);
@@ -185,6 +191,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mTvDeleteTip.setText(itemView.getContext().getString(R.string.module_detail_comment_delete_tip));
                 mTvCommentContent.setVisibility(View.GONE);
                 mLyComment.setVisibility(View.GONE);
+                mTvCommentLocation.setVisibility(View.GONE);
             } else {
                 mTvCommentContent.setVisibility(View.VISIBLE);
                 mLyComment.setVisibility(View.VISIBLE);
@@ -203,6 +210,15 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     }
                 }
                 mTvCommentSrc.setText(mData.getParent_nick_name());
+                if (!TextUtils.isEmpty(mData.getParent_location())) {
+                    mTvCommentLocation.setText(mData.getParent_location());
+                    // 计算location最大宽度  左侧宽度 11+36+11   右侧留白 12  中间: 左侧7dp 右侧12dp
+                    int maxWidth = UIUtils.getScreenW() - UIUtils.dip2px(89);
+                    mTvCommentLocation.setMaxWidth(maxWidth);
+                    mTvCommentLocation.setVisibility(View.VISIBLE);
+                } else {
+                    mTvCommentLocation.setVisibility(View.GONE);
+                }
             }
         } else {
             mReply.setVisibility(View.GONE);
@@ -219,6 +235,18 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         }
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
+
+        if (!TextUtils.isEmpty(mData.getLocation())) { // 评论位置
+            mLocation.setText(mData.getLocation());
+            // 计算最大location最大展示宽度
+            // 左侧宽度 11+36+11   右侧留白 12  中间: 时间宽度+10+位置宽度+5+点赞宽度+删除按钮宽度
+            int maxWidth = UIUtils.getScreenW() - UIUtils.dip2px(85) - measureTextWidth(mThumb) - measureTextWidth(mThumb) - measureTextWidth(mDelete);
+            mLocation.setMaxWidth(maxWidth);
+            mLocation.setVisibility(View.VISIBLE);
+        } else {
+            mLocation.setVisibility(View.GONE);
+        }
+
         //回复者头像(显示默认头像)
         if (mData != null && !TextUtils.isEmpty(mData.getPortrait_url())) {
             GlideApp.with(mImg).load(mData.getPortrait_url()).centerCrop().into(mImg);
@@ -366,6 +394,17 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 T.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);
+    }
+
+    /**
+     * 测量textview宽度
+     * @param tv
+     * @return
+     */
+    private int measureTextWidth(TextView tv) {
+        if (tv == null) return 0;
+        tv.measure(0, 0);
+        return tv.getMeasuredWidth();
     }
 
     /**

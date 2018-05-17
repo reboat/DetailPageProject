@@ -72,7 +72,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
-import daily.zjrb.com.daily_vr.VrSource;
+import daily.zjrb.com.daily_vr.bean.VrSource;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
 import static com.zjrb.core.utils.UIUtils.getContext;

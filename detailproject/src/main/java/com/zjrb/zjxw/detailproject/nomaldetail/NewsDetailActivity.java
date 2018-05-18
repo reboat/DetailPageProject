@@ -202,6 +202,16 @@ public class NewsDetailActivity extends BaseActivity implements
         return topHolder.getView();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (vrManager != null && vrManager.getController().getCurrentIsLand()){
+            vrManager.getController().changeOrientation(false);
+        }else {
+            super.onBackPressed();
+        }
+
+    }
+
     /**
      * 初始化视频
      */

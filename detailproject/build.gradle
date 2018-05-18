@@ -47,7 +47,7 @@ dependencies {
     compile 'cn.daily.android:daily-db:5.1.0'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'cn.daily.android:daily-vr:0.0.34-SNAPSHOT'
+    compile 'cn.daily.android:daily-vr:0.0.35-SNAPSHOT'
     compile 'cn.daily.android:location:1.0.6-SNAPSHOT'
 }
 

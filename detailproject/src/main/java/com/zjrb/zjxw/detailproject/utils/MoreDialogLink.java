@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -42,6 +43,7 @@ import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
 import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
+import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -62,6 +64,8 @@ import cn.daily.news.analytics.Analytics;
  */
 
 public class MoreDialogLink extends BaseDialogFragment {
+
+    public static final int SHARE_IMG_MAX_SIZE = 32; // 分享图片最大尺寸,微信分享要求分享的图片最大不能超过32k
 
     protected Dialog dialog;
     @BindView(R2.id.iv_module_core_more_collect)
@@ -520,47 +524,100 @@ public class MoreDialogLink extends BaseDialogFragment {
     /**
      * @param bean 分享的信息
      */
-    public void umengShare(SHARE_MEDIA platform, @NonNull UmengShareBean bean) {
-        UMWeb web = new UMWeb(bean.getTargetUrl());
-        if (!TextUtils.isEmpty(bean.getTitle())) {
-            web.setTitle(bean.getTitle());//标题
-        } else {
-            web.setTitle("看浙江新闻，拿积分好礼");//标题
-        }
-        //分享图片
-        if (!TextUtils.isEmpty(bean.getImgUri())) {
-            String url;
-            if (bean.getImgUri().contains("?w=") || bean.getImgUri().contains("?width=")) {
-                url = bean.getImgUri().split("[?]")[0];
+    public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
+        if (!bean.isPicShare()) { // 非图片分享
+            UMWeb web = new UMWeb(bean.getTargetUrl());
+            if (!TextUtils.isEmpty(bean.getTitle())) {
+                web.setTitle(bean.getTitle());//标题
             } else {
-                url = bean.getImgUri();
+                web.setTitle("看浙江新闻，拿积分好礼");//标题
             }
-            web.setThumb(new UMImage(UIUtils.getContext(), url));  //缩略图
-        } else {
-            web.setThumb(new UMImage(UIUtils.getContext(), com.zjrb.core.R.mipmap.ic_share));
-        }
-        //分享描述
-        if (!TextUtils.isEmpty(bean.getTextContent())) {
-            web.setDescription(bean.getTextContent());
-        } else {
-            web.setDescription(UIUtils.getContext().getString(com.zjrb.core.R.string.module_core_share_content_from));
+            //分享图片
+            if (!TextUtils.isEmpty(bean.getImgUri())) {
+                String url;
+                if (bean.getImgUri().contains("?w=") || bean.getImgUri().contains("?width=")) {
+                    url = bean.getImgUri().split("[?]")[0];
+                } else {
+                    url = bean.getImgUri();
+                }
+                web.setThumb(new UMImage(UIUtils.getContext(), url));  //缩略图
+            } else {
+                web.setThumb(new UMImage(UIUtils.getContext(), com.zjrb.core.R.mipmap.ic_share));
+            }
+            //分享描述
+            if (!TextUtils.isEmpty(bean.getTextContent())) {
+                web.setDescription(bean.getTextContent());
+            } else {
+                web.setDescription(UIUtils.getContext().getString(com.zjrb.core.R.string.module_core_share_content_from));
+            }
+
+            if (umShareListener != null) {
+                getShareDialog();
+                if (platform == SHARE_MEDIA.QQ || platform == SHARE_MEDIA.QZONE) {
+                    if (UIUtils.getActivity() instanceof LifecycleActivity) {
+                        ((LifecycleActivity) UIUtils.getActivity())
+                                .registerActivityCallbacks(ShareOnResultCallback.get());
+                    }
+                }
+                new ShareAction(UIUtils.getActivity())
+                        .setPlatform(platform)
+                        .withText(bean.getTextContent())
+                        .withMedia(web)
+                        .setCallback(umShareListener)
+                        .share();
+            }
+        } else { // 图片分享
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    UMImage image = setUMImage(bean);
+                    if (image != null && umShareListener != null) {
+                        if (isAdded() && getActivity() != null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getShareDialog();
+                                }
+                            });
+                        }
+                        if (platform == SHARE_MEDIA.QQ || platform == SHARE_MEDIA.QZONE) {
+                            if (UIUtils.getActivity() instanceof LifecycleActivity) {
+                                ((LifecycleActivity) UIUtils.getActivity())
+                                        .registerActivityCallbacks(ShareOnResultCallback.get());
+                            }
+                        }
+                        new ShareAction(UIUtils.getActivity())
+                                .setPlatform(platform)
+                                .withMedia(image)
+                                .setCallback(umShareListener)
+                                .share();
+                    }
+                }
+            }).start();
         }
 
-        if (umShareListener != null) {
-            getShareDialog();
-            if (platform == SHARE_MEDIA.QQ || platform == SHARE_MEDIA.QZONE) {
-                if (UIUtils.getActivity() instanceof LifecycleActivity) {
-                    ((LifecycleActivity) UIUtils.getActivity())
-                            .registerActivityCallbacks(ShareOnResultCallback.get());
-                }
-            }
-            new ShareAction(UIUtils.getActivity())
-                    .setPlatform(platform)
-                    .withText(bean.getTextContent())
-                    .withMedia(web)
-                    .setCallback(umShareListener)
-                    .share();
+    }
+
+    private UMImage setUMImage(UmengShareBean bean) {
+        UMImage umImage = null;
+        if (bean.getBimtap() != null) { // bitmap图片分享
+            Bitmap bitmap = ImageUtils.compressImage(bean.getBimtap(), SHARE_IMG_MAX_SIZE);
+            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
+            return umImage;
+        } else if (!TextUtils.isEmpty(bean.getImgUri())) { // 网络图片分享
+            Bitmap imageBitmap = ImageUtils.getBitmapByUrlSync(bean.getImgUri());
+            Bitmap bitmap = ImageUtils.compressImage(imageBitmap, SHARE_IMG_MAX_SIZE);
+            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
+            return umImage;
+        } else if (bean.getPicId() != 0) { // 资源文件图片分享
+            Bitmap bitmap = ImageUtils.compressImage(ImageUtils.getBitmapById(bean.getPicId()), SHARE_IMG_MAX_SIZE);
+            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
+            return umImage;
         }
+        return umImage;
     }
 
 

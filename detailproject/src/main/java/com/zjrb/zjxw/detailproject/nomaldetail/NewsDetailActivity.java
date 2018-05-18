@@ -205,7 +205,7 @@ public class NewsDetailActivity extends BaseActivity implements
     @Override
     public void onBackPressed() {
         if (vrManager != null && vrManager.getController().getCurrentIsLand()){
-            vrManager.getController().changeOrientation(false);
+            vrManager.getController().getProgressController().onBackPress();
         }else {
             super.onBackPressed();
         }

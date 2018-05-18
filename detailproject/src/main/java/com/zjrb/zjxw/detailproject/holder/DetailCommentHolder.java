@@ -11,8 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliya.uimode.utils.UiModeUtils;
+import com.daily.news.location.DataLocation;
+import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.domain.CommentDialogBean;
@@ -323,11 +326,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .build();
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
                         .setListen(new RefreshComment())
+                        .setLocationCallBack(new PraiseLocationCallBack())
                         .setWMData(analytics)
                         .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
                         .setListen(new RefreshComment())
+                        .setLocationCallBack(new PraiseLocationCallBack())
                         .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
 
@@ -366,9 +371,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(new PraiseLocationCallBack()).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(new PraiseLocationCallBack()).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         }
     }
@@ -457,6 +462,26 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         @Override
         public void onUpdateComment() {
             LocalBroadcastManager.getInstance(UIUtils.getApp()).sendBroadcast(new Intent("refresh_comment"));
+        }
+    }
+
+    /**
+     * 点击评论时,获取用户所在位置
+     */
+    static class PraiseLocationCallBack implements LocationCallBack {
+
+        @Override
+        public String onGetLocation() {
+            if (LocationManager.getInstance().getLocation() != null) {
+                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+                if (address != null) {
+                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
+                } else {
+                    return "" + "," + "" + "," + "";
+                }
+            } else {
+                return "" + "," + "" + "," + "";
+            }
         }
     }
 }

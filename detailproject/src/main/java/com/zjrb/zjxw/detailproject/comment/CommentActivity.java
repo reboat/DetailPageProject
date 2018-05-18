@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.daily.news.location.DataLocation;
+import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
@@ -52,7 +55,7 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
+public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, LocationCallBack {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -282,7 +285,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .build()
                         .send();
             }
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
                 //分享专用bean
@@ -384,4 +387,17 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         });
     }
 
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
+            } else {
+                return "" + "," + "" + "," + "";
+            }
+        } else {
+            return "" + "," + "" + "," + "";
+        }
+    }
 }

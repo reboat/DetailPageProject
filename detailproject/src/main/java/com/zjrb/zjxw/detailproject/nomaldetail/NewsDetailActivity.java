@@ -24,9 +24,12 @@ import com.aliya.player.PlayerManager;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
+import com.daily.news.location.DataLocation;
+import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.utovr.player.UVMediaType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
+import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
@@ -606,7 +609,7 @@ public class NewsDetailActivity extends BaseActivity implements
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).show(getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
 
             }
             //分享
@@ -828,6 +831,26 @@ public class NewsDetailActivity extends BaseActivity implements
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                 .build()
                 .send();
+    }
+
+    /**
+     * 点击评论时,获取用户所在位置
+     */
+    static class PraiseLocationCallBack implements LocationCallBack {
+
+        @Override
+        public String onGetLocation() {
+            if (LocationManager.getInstance().getLocation() != null) {
+                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+                if (address != null) {
+                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
+                } else {
+                    return "" + "," + "" + "," + "";
+                }
+            } else {
+                return "" + "," + "" + "," + "";
+            }
+        }
     }
 }
 

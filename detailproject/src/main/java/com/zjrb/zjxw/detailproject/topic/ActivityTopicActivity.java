@@ -15,9 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.daily.news.location.DataLocation;
+import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.page.LoadMore;
 import com.zjrb.core.common.global.C;
@@ -426,7 +429,7 @@ public class ActivityTopicActivity extends BaseActivity implements
 
                 //进入评论编辑页面(不针对某条评论)
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                        .valueOf(mDetailData.getArticle().getId())))).setWMData(analytics).show
+                        .valueOf(mDetailData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show
                         (getSupportFragmentManager(), "CommentWindowDialog");
             }
             //分享
@@ -632,6 +635,26 @@ public class ActivityTopicActivity extends BaseActivity implements
                 .setSelfObjectID(mDetailData.getArticle().getId() + "")
                 .build()
                 .send();
+    }
+
+    /**
+     * 点击评论时,获取用户所在位置
+     */
+    static class PraiseLocationCallBack implements LocationCallBack {
+
+        @Override
+        public String onGetLocation() {
+            if (LocationManager.getInstance().getLocation() != null) {
+                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+                if (address != null) {
+                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
+                } else {
+                    return "" + "," + "" + "," + "";
+                }
+            } else {
+                return "" + "," + "" + "," + "";
+            }
+        }
     }
 
 }

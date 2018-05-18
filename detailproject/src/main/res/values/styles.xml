@@ -65,6 +65,7 @@
         <item name="vr_gyroscope">@drawable/vr_video_toolbar_tb_gyro</item>
         <item name="vr_screen">@drawable/vr_video_toolbar_tb_screen</item>
         <item name="vr_tc_duration">@color/tc_f44b50</item>
+        <item name="vr_bg_start">@drawable/vr_module_video_bg_oval_7f000000</item>
     </style>
 
     <style name="DetailNightTheme">
@@ -133,5 +134,6 @@
         <item name="vr_gyroscope">@drawable/vr_video_toolbar_tb_gyro_night</item>
         <item name="vr_screen">@drawable/vr_video_toolbar_tb_screen_night</item>
         <item name="vr_tc_duration">#cccbcb</item>
+        <item name="vr_bg_start">@drawable/vr_module_video_bg_oval_80000000</item>
     </style>
 </resources>

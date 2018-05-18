@@ -507,7 +507,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 dismissFragmentDialog();
             }
 
-        }).setTag(this).exe(mBean.getArticle().getId(), !mBean.getArticle().isFollowed());
+        }).setTag(this).exe(mBean.getArticle().getId(), !mBean.getArticle().isFollowed(), mBean.getArticle().getUrl());
     }
 
 

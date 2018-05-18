@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject;
+package com.zjrb.zjxw.detailproject.global;
 
 import android.content.Context;
 
@@ -20,6 +20,14 @@ import static com.zjrb.core.utils.UIUtils.getContext;
 
 
 public class VrAnaly implements AnalyCallBack {
+
+    public DraftDetailBean.ArticleBean getBean() {
+        return bean;
+    }
+
+    public void setBean(DraftDetailBean.ArticleBean bean) {
+        this.bean = bean;
+    }
 
     private DraftDetailBean.ArticleBean bean;
 

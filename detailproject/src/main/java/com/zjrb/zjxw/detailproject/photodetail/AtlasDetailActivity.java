@@ -786,7 +786,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mData.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mData.getArticle().getUrl());
     }
 
     /**

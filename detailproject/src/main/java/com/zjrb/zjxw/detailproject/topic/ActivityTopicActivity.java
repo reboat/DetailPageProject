@@ -339,7 +339,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 mDetailData.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mDetailData.getArticle().getUrl());
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,

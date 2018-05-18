@@ -19,11 +19,13 @@ public class DraftCollectTask extends APIPostTask<Void> {
     /**
      * @param params id:稿件id(int)
      *               action:false 取消收藏  true:收藏
+     *               urlScheme:标识红船号稿件与普通稿件
      */
     @Override
     protected void onSetupParams(Object... params) {
         put("id", params[0]);
         put("action", params[1]);
+        put("url_scheme", params[2]);
     }
 
     @Override

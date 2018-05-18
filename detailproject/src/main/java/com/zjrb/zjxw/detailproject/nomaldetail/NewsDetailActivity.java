@@ -52,7 +52,7 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.VrAnaly;
+import com.zjrb.zjxw.detailproject.global.VrAnaly;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
@@ -72,6 +72,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import daily.zjrb.com.daily_vr.bean.VrSource;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -202,14 +203,27 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-        // TODO: 2018/4/26 模拟vr稿件类型 lujialei
-        if(true/*bean.getVideo_type() == 2*/){//video 2 vr类型 1或者空 普通视频
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
-            mVideoContainer.setVisibility(View.VISIBLE);
-            vrManager = new VRManager(this, mVideoContainer,new VrAnaly(bean));
-            vrManager.changeOrientation(false);
-            String path = "http://cache.utovr.com/201508270528174780.m3u8";
-            vrManager.getController().setSource(UVMediaType.UVMEDIA_TYPE_M3U8, path);
+        // TODO: 2018/4/26 判断vr稿件类型 lujialei 上线后去掉此注释
+        String url = bean.getVideo_url();
+        if(bean.getVideo_type() == 2){//video 2 vr类型 1或者空 普通视频
+            if(TextUtils.isEmpty(url)){
+                mVideoContainer.setVisibility(View.GONE);
+            }else {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                mVideoContainer.setVisibility(View.VISIBLE);
+//                String path = "http://cache.utovr.com/201508270528174780.m3u8";
+                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
+                if(url.trim().endsWith("m3u8")){
+                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
+                }else if(url.trim().endsWith("mp4")){
+                    type = UVMediaType.UVMEDIA_TYPE_MP4;
+                }
+                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration():0;
+                String pic = bean.getList_pics().get(0);
+                VrSource vrSource = new VrSource(type, url,duration,pic,SettingManager.getInstance().isAutoPlayVideoWithWifi());
+                vrManager = new VRManager(vrSource,this, mVideoContainer,new VrAnaly(bean));
+                vrManager.changeOrientation(false);
+            }
             return;
         }
 
@@ -481,7 +495,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
-        }).setTag(this).exe(mArticleId, true);
+        }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,

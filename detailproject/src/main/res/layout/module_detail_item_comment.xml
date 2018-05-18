@@ -131,15 +131,31 @@
 
             </RelativeLayout>
 
+            <!--用户地理位置-->
+            <TextView
+                android:id="@+id/tv_comment_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ly_comment"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:visibility="gone"
+                android:textColor="?attr/tc_484848"
+                android:textSize="@dimen/ts_11sp"
+                tools:text="" />
+
 
             <TextView
                 android:id="@+id/tv_comment_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ly_comment"
+                android:layout_below="@+id/tv_comment_location"
                 android:layout_marginBottom="7dp"
                 android:layout_marginLeft="7dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:gravity="left|center"
                 android:lineSpacingMultiplier="1.2"
@@ -169,27 +185,28 @@
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp"
                 android:text="2016-09-01 21:20"
-                android:textColor="?attr/tc_484848"
+                android:textColor="?attr/tc_999999"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="2016-09-01 21:20"
                 />
 
             <TextView
-                android:id="@+id/tv_thumb_up"
+                android:id="@+id/tv_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="17dp"
-                android:layout_toRightOf="@+id/tv_time"
-                android:drawableLeft="?attr/module_detail_comment_prise"
-                android:drawablePadding="7dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_time"
+                android:layout_alignBottom="@+id/tv_time"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:paddingBottom="8dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:paddingTop="8dp"
                 android:textColor="?attr/tc_999999"
                 android:textSize="@dimen/ts_11sp"
-                tools:text="1000" />
+                tools:text=""
+                android:visibility="gone"
+                />
 
             <!--如果是自己发布的评论 则可以删除-->
             <TextView
@@ -210,8 +227,27 @@
                 android:visibility="gone"
                 tools:text="删除" />
 
+            <TextView
+                android:id="@+id/tv_thumb_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/tv_location"
+                android:layout_toLeftOf="@id/tv_delete"
+                android:drawableLeft="?attr/module_detail_comment_prise"
+                android:maxLines="1"
+                android:drawablePadding="7dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="8dp"
+                android:textColor="?attr/tc_999999"
+                android:textSize="@dimen/ts_11sp"
+                tools:text="1000" />
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

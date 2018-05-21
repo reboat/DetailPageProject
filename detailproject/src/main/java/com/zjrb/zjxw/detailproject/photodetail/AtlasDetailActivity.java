@@ -20,8 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.daily.news.location.DataLocation;
+import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder3;
@@ -544,7 +547,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .build();
 
                 CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                        .valueOf(mData.getArticle().getId())))).setWMData(analytics).show(getSupportFragmentManager(),
+                        .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(),
                         "CommentWindowDialog");
             }
             //评论列表
@@ -888,5 +891,25 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
         }
 
+    }
+
+    /**
+     * 点击评论时,获取用户所在位置
+     */
+    static class PraiseLocationCallBack implements LocationCallBack {
+
+        @Override
+        public String onGetLocation() {
+            if (LocationManager.getInstance().getLocation() != null) {
+                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+                if (address != null) {
+                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
+                } else {
+                    return "" + "," + "" + "," + "";
+                }
+            } else {
+                return "" + "," + "" + "," + "";
+            }
+        }
     }
 }

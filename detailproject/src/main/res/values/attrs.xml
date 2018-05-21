@@ -105,6 +105,8 @@
         <attr name="vr_gyroscope" format="reference"></attr>
         <attr name="vr_screen" format="reference"></attr>
         <attr name="vr_tc_duration" format="color|reference" />
+        <attr name="vr_bg_start" format="reference" />
+        <attr name="vr_bg_restart" format="reference" />
 
     </declare-styleable>
 

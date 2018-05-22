@@ -50,6 +50,8 @@
         <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn</item>
         <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn</item>
         <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn</item>
+        <item name="module_detail_share_more">@mipmap/module_detail_me_more_btn</item>
+        <item name="module_detail_share_dingding">@mipmap/module_detail_me_dingding_btn</item>
         <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>
         <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color
         </item>
@@ -119,6 +121,8 @@
         <item name="module_detail_share_qzone">@mipmap/module_detail_me_space_btn_night</item>
         <item name="module_detail_share_wb">@mipmap/module_detail_me_sina_btn_night</item>
         <item name="module_detail_share_wx">@mipmap/module_detail_me_wechat_btn_night</item>
+        <item name="module_detail_share_more">@mipmap/module_detail_me_more_btn_night</item>
+        <item name="module_detail_share_dingding">@mipmap/module_detail_me_dingding_btn_night</item>
         <item name="module_detail_defaule_icon">@mipmap/module_detail_defaule_icon_night</item>
         <item name="module_detail_subscribe_red">@drawable/module_detail_subscribe_red_night</item>
         <item name="bc_mask">@color/color_7f000000_night</item>

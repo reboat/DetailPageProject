@@ -38,7 +38,7 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
         //普通图集
         return ImagePreviewFragment.newInstance(
                 mBean.getArticle().getAlbum_image_list().get(position).getImage_url()
-        ,true,mBean.getArticle().getMlf_id());
+                , true, mBean.getArticle().getMlf_id());
     }
 
 }

@@ -250,6 +250,11 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 UMCode = "800019";
                 eventName = "QQ空间分享";
                 eventDetail = "QQ空间";
+            } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
+                WMCode = "A0022";
+                UMCode = "800032";
+                eventName = "钉钉分享";
+                eventDetail = "钉钉";
             }
             new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode)
                     .setEvenName(eventName)

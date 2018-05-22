@@ -268,6 +268,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 UMCode = "800019";
                 eventName = "QQ空间分享";
                 eventDetail = "QQ空间";
+            } else if (share_media == SHARE_MEDIA.MORE) { // 更多
+                WMCode = "800005";
+                UMCode = "800005";
+                eventName = "点击更多";
             }
             new Analytics.AnalyticsBuilder(itemView.getContext(), WMCode, UMCode)
                     .setEvenName(eventName)

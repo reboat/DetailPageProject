@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -35,7 +35,6 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -152,8 +151,8 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         ButterKnife.bind(this, view);
 
         //红船号稿件
-        mRecyleView.addItemDecoration(new GridSpaceDivider(34));
-        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
+        LinearLayoutManager managerFollow = new LinearLayoutManager(UIUtils.getContext());
+        managerFollow.setOrientation(LinearLayoutManager.HORIZONTAL);
         mRecyleView.setLayoutManager(managerFollow);
         if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getDoc_type() == 10) {
             fontRelativeLayout.setVisibility(View.GONE);
@@ -251,6 +250,11 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 UMCode = "800019";
                 eventName = "QQ空间分享";
                 eventDetail = "QQ空间";
+            } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
+                WMCode = "A0022";
+                UMCode = "800032";
+                eventName = "钉钉分享";
+                eventDetail = "钉钉";
             }
             new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode)
                     .setEvenName(eventName)
@@ -278,11 +282,12 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     private void initShareBean() {
         if (mListData == null) {
             mListData = new ArrayList<>();
-            mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
             mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
+            mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
             mListData.add(new DetailShareBean("QQ", SHARE_MEDIA.QQ));
-            mListData.add(new DetailShareBean("QQ空间", SHARE_MEDIA.QZONE));
             mListData.add(new DetailShareBean("微博", SHARE_MEDIA.SINA));
+            mListData.add(new DetailShareBean("QQ空间", SHARE_MEDIA.QZONE));
+            mListData.add(new DetailShareBean("钉钉", SHARE_MEDIA.DINGTALK));
         }
 
         mAdapter = new DetailShareAdapter(mListData);

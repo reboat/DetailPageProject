@@ -37,7 +37,12 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
 
     @Override
     public DetailShareViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
-        return new DetailShareViewHolder(UIUtils.inflate(R.layout.module_detail_share_item, parent, false));
+        View view = UIUtils.inflate(R.layout.module_detail_share_item, parent, false);
+        // 因为5个item和6个item都使用的该adapter,但五个item的LayoutManager是Grid,6个的是LinearLayoutManager,所以这里针对6个的情况设置宽度
+        if (view != null && datas != null && datas.size() == 6) {
+            view.getLayoutParams().width = (int) (UIUtils.getScreenW() * ((float) 2 / 11));
+        }
+        return new DetailShareViewHolder(view);
     }
 
     /**
@@ -64,10 +69,14 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wx);
             } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
                 UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qq);
-            } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qzone);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
                 UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wb);
+            } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qzone);
+            } else if (mData.getPlatform() == SHARE_MEDIA.DINGTALK) {
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_dingding);
+            } else if (mData.getPlatform() == SHARE_MEDIA.MORE) { // 更多
+                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_more);
             }
 
         }

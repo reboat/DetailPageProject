@@ -42,6 +42,7 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
+import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
 import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
@@ -90,6 +91,8 @@ public class MoreDialogLink extends BaseDialogFragment {
     LinearLayout llModuleCoreMeSpace;
     @BindView(R2.id.ll_module_core_me_sina)
     LinearLayout llModuleCoreMeSina;
+    @BindView(R2.id.ll_module_core_me_dingding)
+    LinearLayout llModuleCoreMeDingDing;
     @BindView(R2.id.btn_dialog_close)
     Button btnDialogClose;
 
@@ -135,11 +138,21 @@ public class MoreDialogLink extends BaseDialogFragment {
         } else {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
         }
+        initShareView();
         builder.setView(view);
         dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
         initWindow();
         return dialog;
+    }
+
+    private void initShareView() {
+        setShareItemWidth(llModuleCoreMeWechat);
+        setShareItemWidth(llModuleCoreMeFriend);
+        setShareItemWidth(llModuleCoreMeQq);
+        setShareItemWidth(llModuleCoreMeSina);
+        setShareItemWidth(llModuleCoreMeSpace);
+        setShareItemWidth(llModuleCoreMeDingDing);
     }
 
     /**
@@ -151,6 +164,15 @@ public class MoreDialogLink extends BaseDialogFragment {
         wlp.gravity = Gravity.BOTTOM;
         wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(wlp);
+    }
+
+    private void setShareItemWidth(LinearLayout layout) {
+        if (layout == null) {
+            return;
+        }
+        LinearLayout.LayoutParams weParam = (LinearLayout.LayoutParams) layout.getLayoutParams();
+        weParam.width = (int) (UIUtils.getScreenW() * ((float) 2 / 11));
+        layout.setLayoutParams(weParam);
     }
 
     @Override
@@ -176,7 +198,7 @@ public class MoreDialogLink extends BaseDialogFragment {
     }
 
     @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_night, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close
-            , R2.id.ll_module_core_me_friend, R2.id.ll_module_core_me_wechat, R2.id.ll_module_core_me_qq, R2.id.ll_module_core_me_space, R2.id.ll_module_core_me_sina})
+            , R2.id.ll_module_core_me_friend, R2.id.ll_module_core_me_wechat, R2.id.ll_module_core_me_qq, R2.id.ll_module_core_me_space, R2.id.ll_module_core_me_sina, R2.id.ll_module_core_me_dingding})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         int i = v.getId();
@@ -299,6 +321,8 @@ public class MoreDialogLink extends BaseDialogFragment {
         } else if (i == R.id.ll_module_core_me_sina) {
             checkShare(SHARE_MEDIA.SINA);
 
+        } else if (i== R.id.ll_module_core_me_dingding) {
+            checkShare(SHARE_MEDIA.DINGTALK);
         }
     }
 
@@ -446,6 +470,11 @@ public class MoreDialogLink extends BaseDialogFragment {
                 UMCode = "800019";
                 eventName = "QQ空间分享成功";
                 eventDetail = "QQ空间";
+            } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
+                WMCode = "A0022";
+                UMCode = "800032";
+                eventName = "钉钉分享";
+                eventDetail = "钉钉";
             }
             new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode)
                     .setEvenName(eventName)
@@ -636,6 +665,11 @@ public class MoreDialogLink extends BaseDialogFragment {
         } else if (platform == SHARE_MEDIA.QQ || platform == SHARE_MEDIA.QZONE) {
             if (mShareAPI != null && !mShareAPI.isInstall(UIUtils.getActivity(), SHARE_MEDIA.QQ)) {
                 T.showShortNow(UIUtils.getApp(), "未安装QQ客户端");
+                return false;
+            }
+        } else if (platform == SHARE_MEDIA.DINGTALK) {
+            if (!AppUtils.isInstall("com.alibaba.android.rimet")) { // 旧版本使用友盟api存在问题
+                T.showShortNow(UIUtils.getApp(), "未安装钉钉客户端");
                 return false;
             }
         }

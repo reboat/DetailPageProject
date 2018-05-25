@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -270,14 +271,16 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             //点击订阅/取消订阅
         } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
+            //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
-                subscribeAnalytics("点击取消订阅栏目","A0014");
+                subscribeAnalytics("点击取消订阅栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         topHolder.getSubscribe().setText("+订阅");
+                        SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
                     @Override
@@ -287,7 +290,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                subscribeAnalytics("点击订阅栏目","A0014");
+                subscribeAnalytics("点击订阅栏目", "A0014");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -295,6 +298,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
                             topHolder.getSubscribe().setText("已订阅");
+                            SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
                         @Override
@@ -308,7 +312,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             }
             //进入栏目
         } else if (v.getId() == R.id.tv_top_bar_title) {
-            subscribeAnalytics("点击进入栏目详情页","800031");
+            subscribeAnalytics("点击进入栏目详情页", "800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -346,7 +350,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
      *
      * @param eventNme
      */
-    private void subscribeAnalytics(String eventNme,String eventCode) {
+    private void subscribeAnalytics(String eventNme, String eventCode) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -361,5 +365,15 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                 .build()
                 .send();
+    }
+
+    /**
+     * 同步红船号订阅栏目
+     */
+    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+        Intent intent = new Intent("subscribe_success");
+        intent.putExtra("subscribe", isSubscribe);
+        intent.putExtra("id", columnid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

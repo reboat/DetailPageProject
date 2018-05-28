@@ -285,7 +285,11 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .build()
                         .send();
             }
-            CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+            try {
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
                 //分享专用bean

@@ -415,7 +415,11 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
                 //进入评论编辑页面(不针对某条评论)
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                try {
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅

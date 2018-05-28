@@ -619,7 +619,11 @@ public class NewsDetailActivity extends BaseActivity implements
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                try {
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
             //分享

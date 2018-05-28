@@ -324,16 +324,24 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
-                        .setListen(new RefreshComment())
-                        .setLocationCallBack(new PraiseLocationCallBack())
-                        .setWMData(analytics)
-                        .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                try {
+                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                            .setListen(new RefreshComment())
+                            .setLocationCallBack(new PraiseLocationCallBack())
+                            .setWMData(analytics)
+                            .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
-                        .setListen(new RefreshComment())
-                        .setLocationCallBack(new PraiseLocationCallBack())
-                        .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                try {
+                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                            .setListen(new RefreshComment())
+                            .setLocationCallBack(new PraiseLocationCallBack())
+                            .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             //回复回复者

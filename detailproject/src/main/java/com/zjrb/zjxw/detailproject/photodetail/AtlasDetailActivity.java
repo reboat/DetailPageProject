@@ -546,9 +546,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setSelfObjectID(mData.getArticle().getId() + "")
                         .build();
 
-                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                        .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(),
-                        "CommentWindowDialog");
+                try {
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
+                            .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(),
+                            "CommentWindowDialog");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             //评论列表
         } else if (id == R.id.menu_comment) {

@@ -429,7 +429,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topBarHolder.getSubscribe().isSelected()) {
-                subscribeAnalytics("点击取消订阅栏目","A0014");
+                subscribeAnalytics("点击取消订阅栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -445,7 +445,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                subscribeAnalytics("点击订阅栏目","A0014");
+                subscribeAnalytics("点击订阅栏目", "A0014");
                 if (!topBarHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -466,7 +466,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            subscribeAnalytics("点击进入栏目详情页","800031");
+            subscribeAnalytics("点击进入栏目详情页", "800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -542,7 +542,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      *
      * @param eventNme
      */
-    private void subscribeAnalytics(String eventNme,String eventCode) {
+    private void subscribeAnalytics(String eventNme, String eventCode) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -595,7 +595,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if ("subscribe_success".equals(intent.getAction())) {
+            if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
                 long id = intent.getLongExtra("id", 0);
                 boolean subscribe = intent.getBooleanExtra("subscribe", false);
                 String subscriptionText = subscribe ? "已订阅" : "+订阅";
@@ -603,7 +603,11 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 if (id == mNewsDetail.getArticle().getColumn_id()) {
                     topBarHolder.getSubscribe().setSelected(subscribe);
                     topBarHolder.getSubscribe().setText(subscriptionText);
-                    SyncSubscribeColumn(subscribe, mNewsDetail.getArticle().getColumn_id());
+                    if(subscribe){
+                        subscribeAnalytics("点击订阅栏目", "A0014");
+                    }else{
+                        subscribeAnalytics("点击取消订阅栏目", "A0014");
+                    }
                 }
             }
         }

@@ -388,7 +388,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if ("subscribe_success".equals(intent.getAction())) {
+            if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
                 long id = intent.getLongExtra("id", 0);
                 boolean subscribe = intent.getBooleanExtra("subscribe", false);
                 String subscriptionText = subscribe ? "已订阅" : "+订阅";
@@ -396,7 +396,11 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 if (id == mNewsDetail.getArticle().getColumn_id()) {
                     topHolder.getSubscribe().setSelected(subscribe);
                     topHolder.getSubscribe().setText(subscriptionText);
-                    SyncSubscribeColumn(subscribe, mNewsDetail.getArticle().getColumn_id());
+                    if(subscribe){
+                        subscribeAnalytics("点击订阅栏目", "A0014");
+                    }else{
+                        subscribeAnalytics("点击取消订阅栏目", "A0014");
+                    }
                 }
             }
         }

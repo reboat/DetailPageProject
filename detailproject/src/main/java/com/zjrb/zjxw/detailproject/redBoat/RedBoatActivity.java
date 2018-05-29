@@ -205,9 +205,8 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
             topHolder.getTitleView().setText(article.getColumn_name());
             //栏目头像
-            if (!TextUtils.isEmpty(article.getColumn_logo())) {
-                GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).centerCrop().into(topHolder.getIvIcon());
-            }
+            GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
+                    .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
             if (article.isColumn_subscribed()) {
                 topHolder.getSubscribe().setText("已订阅");
@@ -396,9 +395,9 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 if (id == mNewsDetail.getArticle().getColumn_id()) {
                     topHolder.getSubscribe().setSelected(subscribe);
                     topHolder.getSubscribe().setText(subscriptionText);
-                    if(subscribe){
+                    if (subscribe) {
                         subscribeAnalytics("点击订阅栏目", "A0014");
-                    }else{
+                    } else {
                         subscribeAnalytics("点击取消订阅栏目", "A0014");
                     }
                 }

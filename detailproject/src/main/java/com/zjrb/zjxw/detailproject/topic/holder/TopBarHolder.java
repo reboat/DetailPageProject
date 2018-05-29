@@ -57,6 +57,7 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
 
     /**
      * 获取订阅控件
+     *
      * @return
      */
     public TextView getSubscribe() {
@@ -65,9 +66,10 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
 
     /**
      * 订阅布局
+     *
      * @return
      */
-    public FitWindowsRelativeLayout getSubscribeRelativeLayout(){
+    public FitWindowsRelativeLayout getSubscribeRelativeLayout() {
         return mRelativeLayout;
     }
 
@@ -80,9 +82,8 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
                 mRelativeLayout.setVisibility(View.VISIBLE);
                 tvTitle.setText(mArticle.getColumn_name());
                 //栏目头像
-                if (!TextUtils.isEmpty(mArticle.getColumn_logo())) {
-                    GlideApp.with(mIvIcon).load(mArticle.getColumn_logo()).centerCrop().into(mIvIcon);
-                }
+                GlideApp.with(mIvIcon).load(mArticle.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
+                        .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(mIvIcon);
                 //订阅状态 采用select
                 if (mArticle.isColumn_subscribed()) {
                     tvSubscribe.setText("已订阅");

@@ -204,9 +204,8 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.VISIBLE);
             topBarHolder.getTitleView().setText(mNewsDetail.getArticle().getColumn_name());
             //栏目头像
-            if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_logo())) {
-                GlideApp.with(topBarHolder.getIvIcon()).load(mNewsDetail.getArticle().getColumn_logo()).centerCrop().into(topBarHolder.getIvIcon());
-            }
+            GlideApp.with(topBarHolder.getIvIcon()).load(mNewsDetail.getArticle().getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
+                    .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topBarHolder.getIvIcon());
             //订阅状态 采用select
             if (mNewsDetail.getArticle().isColumn_subscribed()) {
                 topBarHolder.getSubscribe().setText("已订阅");
@@ -603,9 +602,9 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 if (id == mNewsDetail.getArticle().getColumn_id()) {
                     topBarHolder.getSubscribe().setSelected(subscribe);
                     topBarHolder.getSubscribe().setText(subscriptionText);
-                    if(subscribe){
+                    if (subscribe) {
                         subscribeAnalytics("点击订阅栏目", "A0014");
-                    }else{
+                    } else {
                         subscribeAnalytics("点击取消订阅栏目", "A0014");
                     }
                 }

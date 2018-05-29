@@ -55,10 +55,10 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.global.VrAnaly;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
+import com.zjrb.zjxw.detailproject.global.VrAnaly;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -205,9 +205,9 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if (vrManager != null && vrManager.getController().getCurrentIsLand()){
+        if (vrManager != null && vrManager.getController().getCurrentIsLand()) {
             vrManager.getController().getProgressController().onBackPress();
-        }else {
+        } else {
             super.onBackPressed();
         }
 
@@ -219,23 +219,23 @@ public class NewsDetailActivity extends BaseActivity implements
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         // TODO: 2018/4/26 判断vr稿件类型 lujialei 上线后去掉此注释
         String url = bean.getVideo_url();
-        if(bean.getVideo_type() == 2){//video 2 vr类型 1或者空 普通视频
-            if(TextUtils.isEmpty(url)){
+        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
+            if (TextUtils.isEmpty(url)) {
                 mVideoContainer.setVisibility(View.GONE);
-            }else {
+            } else {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 mVideoContainer.setVisibility(View.VISIBLE);
 //                String path = "http://cache.utovr.com/201508270528174780.m3u8";
                 UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                if(url.trim().endsWith("m3u8")){
+                if (url.trim().endsWith("m3u8")) {
                     type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                }else if(url.trim().endsWith("mp4")){
+                } else if (url.trim().endsWith("mp4")) {
                     type = UVMediaType.UVMEDIA_TYPE_MP4;
                 }
-                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration():0;
+                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
                 String pic = bean.getList_pics().get(0);
-                VrSource vrSource = new VrSource(type, url,duration,pic,SettingManager.getInstance().isAutoPlayVideoWithWifi());
-                vrManager = new VRManager(vrSource,this, mVideoContainer,new VrAnaly(bean));
+                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
+                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
                 vrManager.changeOrientation(false);
             }
             return;
@@ -334,9 +334,8 @@ public class NewsDetailActivity extends BaseActivity implements
             topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
             topHolder.getTitleView().setText(article.getColumn_name());
             //栏目头像
-            if (!TextUtils.isEmpty(article.getColumn_logo())) {
-                GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).centerCrop().into(topHolder.getIvIcon());
-            }
+            GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
+                    .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
             if (article.isColumn_subscribed()) {
                 topHolder.getSubscribe().setText("已订阅");
@@ -699,7 +698,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                subscribeAnalytics("点击取消订阅栏目","A0014");
+                subscribeAnalytics("点击取消订阅栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -716,7 +715,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                subscribeAnalytics("点击订阅栏目","A0014");
+                subscribeAnalytics("点击订阅栏目", "A0014");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -738,7 +737,7 @@ public class NewsDetailActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            subscribeAnalytics("点击进入栏目详情页","800031");
+            subscribeAnalytics("点击进入栏目详情页", "800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -834,7 +833,7 @@ public class NewsDetailActivity extends BaseActivity implements
      *
      * @param eventNme
      */
-    private void subscribeAnalytics(String eventNme,String eventCode) {
+    private void subscribeAnalytics(String eventNme, String eventCode) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -895,9 +894,9 @@ public class NewsDetailActivity extends BaseActivity implements
                 if (id == mNewsDetail.getArticle().getColumn_id()) {
                     topHolder.getSubscribe().setSelected(subscribe);
                     topHolder.getSubscribe().setText(subscriptionText);
-                    if(subscribe){
+                    if (subscribe) {
                         subscribeAnalytics("点击订阅栏目", "A0014");
-                    }else{
+                    } else {
                         subscribeAnalytics("点击取消订阅栏目", "A0014");
                     }
                 }

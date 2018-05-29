@@ -160,6 +160,7 @@ public class NewsDetailActivity extends BaseActivity implements
         intentFilter = new IntentFilter(UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video));
         intentFilter.addAction(UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video));
         localBroadcastManager.registerReceiver(receive, intentFilter);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         getIntentData(getIntent());
         loadData();
     }
@@ -705,6 +706,7 @@ public class NewsDetailActivity extends BaseActivity implements
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         topHolder.getSubscribe().setText("+订阅");
+                        SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
                     @Override
@@ -722,6 +724,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
                             topHolder.getSubscribe().setText("已订阅");
+                            SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
                         @Override
@@ -784,6 +787,7 @@ public class NewsDetailActivity extends BaseActivity implements
             }
         }
         localBroadcastManager.unregisterReceiver(receive);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     /**
@@ -848,6 +852,16 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
     /**
+     * 同步订阅栏目
+     */
+    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+        Intent intent = new Intent("subscribe_success");
+        intent.putExtra("subscribe", isSubscribe);
+        intent.putExtra("id", columnid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    /**
      * 点击评论时,获取用户所在位置
      */
     static class PraiseLocationCallBack implements LocationCallBack {
@@ -866,6 +880,26 @@ public class NewsDetailActivity extends BaseActivity implements
             }
         }
     }
+
+    /**
+     * topbar栏目订阅同步广播
+     */
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("subscribe_success".equals(intent.getAction())) {
+                long id = intent.getLongExtra("id", 0);
+                boolean subscribe = intent.getBooleanExtra("subscribe", false);
+                String subscriptionText = subscribe ? "已订阅" : "+订阅";
+                //确定是该栏目需要同步
+                if (id == mNewsDetail.getArticle().getColumn_id()) {
+                    topHolder.getSubscribe().setSelected(subscribe);
+                    topHolder.getSubscribe().setText(subscriptionText);
+                    SyncSubscribeColumn(subscribe, mNewsDetail.getArticle().getColumn_id());
+                }
+            }
+        }
+    };
 }
 
 

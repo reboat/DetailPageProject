@@ -1,6 +1,9 @@
 package com.zjrb.zjxw.detailproject.redBoat;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -85,6 +88,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         setContentView(R.layout.module_detail_redboat_activity);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
     }
 
     @Override
@@ -333,6 +337,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 mAnalytics.sendWithDuration();
             }
         }
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -376,4 +381,24 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         intent.putExtra("id", columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    /**
+     * topbar栏目订阅同步广播
+     */
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("subscribe_success".equals(intent.getAction())) {
+                long id = intent.getLongExtra("id", 0);
+                boolean subscribe = intent.getBooleanExtra("subscribe", false);
+                String subscriptionText = subscribe ? "已订阅" : "+订阅";
+                //确定是该栏目需要同步
+                if (id == mNewsDetail.getArticle().getColumn_id()) {
+                    topHolder.getSubscribe().setSelected(subscribe);
+                    topHolder.getSubscribe().setText(subscriptionText);
+                    SyncSubscribeColumn(subscribe, mNewsDetail.getArticle().getColumn_id());
+                }
+            }
+        }
+    };
 }

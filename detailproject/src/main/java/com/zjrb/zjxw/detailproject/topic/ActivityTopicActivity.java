@@ -1,9 +1,13 @@
 package com.zjrb.zjxw.detailproject.topic;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -120,6 +124,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         getIntentData(getIntent());
         initView();
         loadData();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
     }
 
     /**
@@ -486,13 +491,14 @@ public class ActivityTopicActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
-                subscribeAnalytics("点击取消订阅栏目","A0014");
+                subscribeAnalytics("点击取消订阅栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         mTopBarHolder.getSubscribe().setSelected(false);
                         mTopBarHolder.getSubscribe().setText("+订阅");
+                        SyncSubscribeColumn(false, mDetailData.getArticle().getColumn_id());
                     }
 
                     @Override
@@ -503,13 +509,14 @@ public class ActivityTopicActivity extends BaseActivity implements
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
-                    subscribeAnalytics("点击订阅栏目","A0014");
+                    subscribeAnalytics("点击订阅栏目", "A0014");
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             mTopBarHolder.getSubscribe().setSelected(true);
                             mTopBarHolder.getSubscribe().setText("已订阅");
+                            SyncSubscribeColumn(true, mDetailData.getArticle().getColumn_id());
                         }
 
                         @Override
@@ -523,7 +530,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            subscribeAnalytics("点击进入栏目详情页","800031");
+            subscribeAnalytics("点击进入栏目详情页", "800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -617,6 +624,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
         }
         super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     /**
@@ -624,7 +632,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      *
      * @param eventNme
      */
-    private void subscribeAnalytics(String eventNme,String eventCode) {
+    private void subscribeAnalytics(String eventNme, String eventCode) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
                 .setEvenName(eventNme)
                 .setObjectID(mDetailData.getArticle().getMlf_id() + "")
@@ -660,5 +668,35 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
         }
     }
+
+    /**
+     * 同步订阅栏目
+     */
+    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+        Intent intent = new Intent("subscribe_success");
+        intent.putExtra("subscribe", isSubscribe);
+        intent.putExtra("id", columnid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    /**
+     * topbar栏目订阅同步广播
+     */
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("subscribe_success".equals(intent.getAction())) {
+                long id = intent.getLongExtra("id", 0);
+                boolean subscribe = intent.getBooleanExtra("subscribe", false);
+                String subscriptionText = subscribe ? "已订阅" : "+订阅";
+                //确定是该栏目需要同步
+                if (id == mDetailData.getArticle().getColumn_id()) {
+                    mTopBarHolder.getSubscribe().setSelected(subscribe);
+                    mTopBarHolder.getSubscribe().setText(subscriptionText);
+                    SyncSubscribeColumn(subscribe, mDetailData.getArticle().getColumn_id());
+                }
+            }
+        }
+    };
 
 }

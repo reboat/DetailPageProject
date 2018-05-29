@@ -1,9 +1,13 @@
 package com.zjrb.zjxw.detailproject.link;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +106,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
         getIntentData(getIntent());
         loadData();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
     }
 
 
@@ -529,6 +534,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     public void onDestroy() {
         super.onDestroy();
         mWebView.destroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
     /**
@@ -572,5 +578,35 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             }
         }
     }
+
+    /**
+     * 同步订阅栏目
+     */
+    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+        Intent intent = new Intent("subscribe_success");
+        intent.putExtra("subscribe", isSubscribe);
+        intent.putExtra("id", columnid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    /**
+     * topbar栏目订阅同步广播
+     */
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("subscribe_success".equals(intent.getAction())) {
+                long id = intent.getLongExtra("id", 0);
+                boolean subscribe = intent.getBooleanExtra("subscribe", false);
+                String subscriptionText = subscribe ? "已订阅" : "+订阅";
+                //确定是该栏目需要同步
+                if (id == mNewsDetail.getArticle().getColumn_id()) {
+                    topBarHolder.getSubscribe().setSelected(subscribe);
+                    topBarHolder.getSubscribe().setText(subscriptionText);
+                    SyncSubscribeColumn(subscribe, mNewsDetail.getArticle().getColumn_id());
+                }
+            }
+        }
+    };
 
 }

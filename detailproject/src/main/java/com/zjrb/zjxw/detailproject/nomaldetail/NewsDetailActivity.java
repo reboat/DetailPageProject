@@ -223,9 +223,7 @@ public class NewsDetailActivity extends BaseActivity implements
             if (TextUtils.isEmpty(url)) {
                 mVideoContainer.setVisibility(View.GONE);
             } else {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 mVideoContainer.setVisibility(View.VISIBLE);
-//                String path = "http://cache.utovr.com/201508270528174780.m3u8";
                 UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
                 if (url.trim().endsWith("m3u8")) {
                     type = UVMediaType.UVMEDIA_TYPE_M3U8;
@@ -813,7 +811,6 @@ public class NewsDetailActivity extends BaseActivity implements
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //横屏全屏 去掉topbar
         //横屏去掉topbar
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             hideTopBar();

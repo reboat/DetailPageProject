@@ -64,7 +64,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends BaseActivity implements View.OnClickListener {
+public class LiveLinkActivity extends BaseActivity implements View.OnClickListener, LocationCallBack {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -421,7 +421,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                         .build();
                 //进入评论编辑页面(不针对某条评论)
                 try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -562,20 +562,17 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     /**
      * 点击评论时,获取用户所在位置
      */
-    static class PraiseLocationCallBack implements LocationCallBack {
-
-        @Override
-        public String onGetLocation() {
-            if (LocationManager.getInstance().getLocation() != null) {
-                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-                if (address != null) {
-                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-                } else {
-                    return "" + "," + "" + "," + "";
-                }
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
             } else {
                 return "" + "," + "" + "," + "";
             }
+        } else {
+            return "" + "," + "" + "," + "";
         }
     }
 

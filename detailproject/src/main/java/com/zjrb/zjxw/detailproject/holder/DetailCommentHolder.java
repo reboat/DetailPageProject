@@ -47,7 +47,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener {
+public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, LocationCallBack {
     @BindView(R2.id.ly_replay)
     RelativeLayout mLayReplay;
     @BindView(R2.id.ry_container)
@@ -327,7 +327,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
                             .setListen(new RefreshComment())
-                            .setLocationCallBack(new PraiseLocationCallBack())
+                            .setLocationCallBack(this)
                             .setWMData(analytics)
                             .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
@@ -337,7 +337,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
                             .setListen(new RefreshComment())
-                            .setLocationCallBack(new PraiseLocationCallBack())
+                            .setLocationCallBack(this)
                             .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -379,9 +379,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
                         .build();
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(new PraiseLocationCallBack()).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(new PraiseLocationCallBack()).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         }
     }
@@ -476,20 +476,17 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     /**
      * 点击评论时,获取用户所在位置
      */
-    static class PraiseLocationCallBack implements LocationCallBack {
-
-        @Override
-        public String onGetLocation() {
-            if (LocationManager.getInstance().getLocation() != null) {
-                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-                if (address != null) {
-                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-                } else {
-                    return "" + "," + "" + "," + "";
-                }
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
             } else {
                 return "" + "," + "" + "," + "";
             }
+        } else {
+            return "" + "," + "" + "," + "";
         }
     }
 }

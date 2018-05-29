@@ -80,7 +80,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class ActivityTopicActivity extends BaseActivity implements
         TopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
-        DetailCommentHolder.deleteCommentListener {
+        DetailCommentHolder.deleteCommentListener, LocationCallBack {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -435,7 +435,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 //进入评论编辑页面(不针对某条评论)
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                            .valueOf(mDetailData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show
+                            .valueOf(mDetailData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(this).show
                             (getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -652,20 +652,17 @@ public class ActivityTopicActivity extends BaseActivity implements
     /**
      * 点击评论时,获取用户所在位置
      */
-    static class PraiseLocationCallBack implements LocationCallBack {
-
-        @Override
-        public String onGetLocation() {
-            if (LocationManager.getInstance().getLocation() != null) {
-                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-                if (address != null) {
-                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-                } else {
-                    return "" + "," + "" + "," + "";
-                }
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
             } else {
                 return "" + "," + "" + "," + "";
             }
+        } else {
+            return "" + "," + "" + "," + "";
         }
     }
 

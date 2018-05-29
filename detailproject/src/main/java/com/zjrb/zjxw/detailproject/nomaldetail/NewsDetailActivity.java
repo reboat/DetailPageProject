@@ -87,7 +87,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends BaseActivity implements
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener {
+        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, LocationCallBack {
 
     /**
      * 稿件ID
@@ -620,7 +620,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .build();
                 try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(), "CommentWindowDialog");
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -863,20 +863,17 @@ public class NewsDetailActivity extends BaseActivity implements
     /**
      * 点击评论时,获取用户所在位置
      */
-    static class PraiseLocationCallBack implements LocationCallBack {
-
-        @Override
-        public String onGetLocation() {
-            if (LocationManager.getInstance().getLocation() != null) {
-                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-                if (address != null) {
-                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-                } else {
-                    return "" + "," + "" + "," + "";
-                }
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
             } else {
                 return "" + "," + "" + "," + "";
             }
+        } else {
+            return "" + "," + "" + "," + "";
         }
     }
 

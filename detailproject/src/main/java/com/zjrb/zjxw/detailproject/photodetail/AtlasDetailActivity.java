@@ -79,7 +79,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class AtlasDetailActivity extends BaseActivity implements ViewPager
-        .OnPageChangeListener, View.OnTouchListener {
+        .OnPageChangeListener, View.OnTouchListener, LocationCallBack {
 
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
@@ -548,7 +548,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
-                            .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(new PraiseLocationCallBack()).show(getSupportFragmentManager(),
+                            .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(),
                             "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -900,20 +900,17 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     /**
      * 点击评论时,获取用户所在位置
      */
-    static class PraiseLocationCallBack implements LocationCallBack {
-
-        @Override
-        public String onGetLocation() {
-            if (LocationManager.getInstance().getLocation() != null) {
-                DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-                if (address != null) {
-                    return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-                } else {
-                    return "" + "," + "" + "," + "";
-                }
+    @Override
+    public String onGetLocation() {
+        if (LocationManager.getInstance().getLocation() != null) {
+            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
+            if (address != null) {
+                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
             } else {
                 return "" + "," + "" + "," + "";
             }
+        } else {
+            return "" + "," + "" + "," + "";
         }
     }
 }

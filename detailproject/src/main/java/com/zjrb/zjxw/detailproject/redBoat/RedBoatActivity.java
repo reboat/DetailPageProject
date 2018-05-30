@@ -103,8 +103,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         getIntentData(intent);
-        loadData();
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
     }
 
     /**
@@ -121,10 +119,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
-
-
         }
-
         loadData();
     }
 
@@ -148,6 +143,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
      * 请求详情页数据
      */
     private void loadData() {
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new RedBoatTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override

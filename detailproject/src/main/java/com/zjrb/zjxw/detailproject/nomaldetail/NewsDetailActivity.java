@@ -269,8 +269,8 @@ public class NewsDetailActivity extends BaseActivity implements
      * 请求详情页数据
      */
     private void loadData() {
-        if (mArticleId == null || mArticleId.isEmpty()) return;
         SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        if (mArticleId == null || mArticleId.isEmpty()) return;
         DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {

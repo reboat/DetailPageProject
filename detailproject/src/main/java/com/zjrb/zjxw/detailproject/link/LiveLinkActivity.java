@@ -29,6 +29,7 @@ import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
@@ -46,6 +47,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
@@ -159,6 +161,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      */
     private void loadData() {
         if (mArticleId == null || mArticleId.isEmpty()) return;
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -532,6 +535,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
@@ -581,7 +585,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
-        intent.putExtra("id", columnid);
+        intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

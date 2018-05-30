@@ -23,6 +23,7 @@ import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.RedBoatTopBarHolder;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.utils.T;
@@ -35,6 +36,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -102,6 +104,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
     }
 
     /**
@@ -326,6 +329,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
@@ -377,7 +381,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
-        intent.putExtra("id", columnid);
+        intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

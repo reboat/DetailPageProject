@@ -37,6 +37,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.common.global.RouteManager;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
@@ -87,6 +88,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailActivity extends BaseActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, LocationCallBack {
+    public static final String ZJXW_JS_SHARE_BEAN = "zjxw_js_share_bean";
 
     /**
      * 稿件ID
@@ -271,6 +273,7 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     private void loadData() {
         if (mArticleId == null || mArticleId.isEmpty()) return;
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -773,6 +776,7 @@ public class NewsDetailActivity extends BaseActivity implements
         if (vrManager != null) {
             vrManager.releasePlayer();
         }
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         if (builder != null) {
             //阅读深度
@@ -854,7 +858,7 @@ public class NewsDetailActivity extends BaseActivity implements
     private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
-        intent.putExtra("id", columnid);
+        intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

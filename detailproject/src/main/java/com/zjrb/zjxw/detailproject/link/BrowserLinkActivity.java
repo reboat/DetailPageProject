@@ -139,8 +139,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * 请求详情页数据
      */
     private void loadData() {
-        if (mArticleId == null || mArticleId.isEmpty()) return;
         SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {

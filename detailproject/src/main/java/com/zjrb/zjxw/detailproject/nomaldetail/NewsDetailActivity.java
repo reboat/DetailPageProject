@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -93,6 +92,8 @@ public class NewsDetailActivity extends BaseActivity implements
      * 稿件ID
      */
     public String mArticleId;
+    @BindView(R2.id.vr_container)
+    RelativeLayout vrContainer;
     private String mFromChannel;
 
     @BindView(R2.id.video_container)
@@ -233,7 +234,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
                 String pic = bean.getList_pics().get(0);
                 VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
-                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
+                vrManager = new VRManager(vrSource, this, vrContainer, new VrAnaly(bean));
                 vrManager.changeOrientation(false);
             }
             return;

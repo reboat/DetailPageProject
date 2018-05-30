@@ -14,6 +14,10 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:ratio_w2h="16:9">
+        <RelativeLayout
+            android:id="@+id/vr_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></RelativeLayout>
 
         <ImageView
             android:id="@+id/iv_image"
@@ -49,7 +53,6 @@
                 android:textSize="11dp"
                 android:visibility="gone"
                 tools:text="00:00" />
-
         </LinearLayout>
 
     </com.aliya.view.ratio.RatioFrameLayout>

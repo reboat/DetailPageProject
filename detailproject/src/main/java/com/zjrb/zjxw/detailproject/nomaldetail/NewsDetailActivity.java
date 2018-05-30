@@ -236,7 +236,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
                 String pic = bean.getList_pics().get(0);
                 VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
-                vrManager = new VRManager(vrSource, this, vrContainer, new VrAnaly(bean));
+                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
                 vrManager.changeOrientation(false);
             }
             return;

@@ -94,8 +94,6 @@ public class NewsDetailActivity extends BaseActivity implements
      * 稿件ID
      */
     public String mArticleId;
-    @BindView(R2.id.vr_container)
-    RelativeLayout vrContainer;
     private String mFromChannel;
 
     @BindView(R2.id.video_container)
@@ -220,7 +218,6 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-        // TODO: 2018/4/26 判断vr稿件类型 lujialei 上线后去掉此注释
         String url = bean.getVideo_url();
         if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
             if (TextUtils.isEmpty(url)) {

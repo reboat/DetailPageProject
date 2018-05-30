@@ -20,6 +20,7 @@ import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder4;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
@@ -36,6 +37,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
@@ -138,6 +140,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void loadData() {
         if (mArticleId == null || mArticleId.isEmpty()) return;
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -391,6 +394,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mWebView.stopThreadPool();
         }
         mWebView.destroy();
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
     }
 
     /**

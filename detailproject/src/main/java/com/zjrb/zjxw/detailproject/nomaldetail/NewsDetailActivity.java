@@ -38,6 +38,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.PH;
 import com.zjrb.core.common.global.RouteManager;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
@@ -88,6 +89,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailActivity extends BaseActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, LocationCallBack {
+    public static final String ZJXW_JS_SHARE_BEAN = "zjxw_js_share_bean";
 
     /**
      * 稿件ID
@@ -223,9 +225,7 @@ public class NewsDetailActivity extends BaseActivity implements
             if (TextUtils.isEmpty(url)) {
                 mVideoContainer.setVisibility(View.GONE);
             } else {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 mVideoContainer.setVisibility(View.VISIBLE);
-//                String path = "http://cache.utovr.com/201508270528174780.m3u8";
                 UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
                 if (url.trim().endsWith("m3u8")) {
                     type = UVMediaType.UVMEDIA_TYPE_M3U8;
@@ -272,6 +272,7 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     private void loadData() {
         if (mArticleId == null || mArticleId.isEmpty()) return;
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
@@ -774,6 +775,7 @@ public class NewsDetailActivity extends BaseActivity implements
         if (vrManager != null) {
             vrManager.releasePlayer();
         }
+        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         if (builder != null) {
             //阅读深度
@@ -813,7 +815,6 @@ public class NewsDetailActivity extends BaseActivity implements
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //横屏全屏 去掉topbar
         //横屏去掉topbar
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             hideTopBar();

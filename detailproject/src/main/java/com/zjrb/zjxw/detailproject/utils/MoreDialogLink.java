@@ -35,6 +35,7 @@ import com.zjrb.core.common.permission.IPermissionCallBack;
 import com.zjrb.core.common.permission.IPermissionOperate;
 import com.zjrb.core.common.permission.Permission;
 import com.zjrb.core.common.permission.PermissionManager;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.domain.base.BaseData;
 import com.zjrb.core.nav.Nav;
@@ -48,6 +49,7 @@ import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -554,6 +556,13 @@ public class MoreDialogLink extends BaseDialogFragment {
      * @param bean 分享的信息
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
+        UmengShareBean mJsShareBean = SPHelper.get().getObject(WebJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
+        if (mJsShareBean != null) { // js分享不为空,重新设置js分享信息
+            bean.setImgUri(mJsShareBean.getImgUri())
+                    .setTextContent(mJsShareBean.getTextContent())
+                    .setTitle(mJsShareBean.getTitle())
+                    .setTargetUrl(mJsShareBean.getTargetUrl());
+        }
         if (!bean.isPicShare()) { // 非图片分享
             UMWeb web = new UMWeb(bean.getTargetUrl());
             if (!TextUtils.isEmpty(bean.getTitle())) {

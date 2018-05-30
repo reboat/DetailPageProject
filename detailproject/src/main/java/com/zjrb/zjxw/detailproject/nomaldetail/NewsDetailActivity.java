@@ -856,7 +856,7 @@ public class NewsDetailActivity extends BaseActivity implements
     private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
-        intent.putExtra("id", columnid);
+        intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

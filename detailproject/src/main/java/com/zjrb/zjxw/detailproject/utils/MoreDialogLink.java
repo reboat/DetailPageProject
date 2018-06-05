@@ -639,19 +639,15 @@ public class MoreDialogLink extends BaseDialogFragment {
     private UMImage setUMImage(UmengShareBean bean) {
         UMImage umImage = null;
         if (bean.getBimtap() != null) { // bitmap图片分享
-            Bitmap bitmap = ImageUtils.compressImage(bean.getBimtap(), SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), bean.getBimtap());
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         } else if (!TextUtils.isEmpty(bean.getImgUri())) { // 网络图片分享
-            Bitmap imageBitmap = ImageUtils.getBitmapByUrlSync(bean.getImgUri());
-            Bitmap bitmap = ImageUtils.compressImage(imageBitmap, SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), bean.getImgUri());
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         } else if (bean.getPicId() != 0) { // 资源文件图片分享
-            Bitmap bitmap = ImageUtils.compressImage(ImageUtils.getBitmapById(bean.getPicId()), SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), ImageUtils.getBitmapById(bean.getPicId()));
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         }

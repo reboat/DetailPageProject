@@ -357,20 +357,11 @@ public class NewsDetailActivity extends BaseActivity implements
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
         mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
-        initAdapter(mAdapter);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
                 ).itemView);
         mRvContent.setAdapter(mAdapter);
-    }
-
-    /**
-     * 配置Adapter
-     *
-     * @param adapter 适配器
-     */
-    public void initAdapter(NewsDetailAdapter adapter) {
     }
 
     /**
@@ -407,33 +398,6 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
 
-//    /**
-//     * 订阅
-//     */
-//    @Override
-//    public void onOptSubscribe() {
-//        //如果栏目未订阅
-//        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
-//
-//            @Override
-//            public void onSuccess(Void baseInnerData) {
-//                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
-//            }
-//
-//            @Override
-//            public void onAfter() {
-//                mAdapter.updateSubscribeInfo();
-//            }
-//
-//            @Override
-//            public void onError(String errMsg, int errCode) {
-//                T.showShortNow(NewsDetailActivity.this, errMsg);
-//            }
-//
-//        }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
-//
-//    }
-
     /**
      * WebView加载完毕
      */
@@ -444,13 +408,6 @@ public class NewsDetailActivity extends BaseActivity implements
 
     private Bundle bundle;
 
-//    /**
-//     * 进入栏目列表页
-//     */
-//    @Override
-//    public void onOptClickColumn() {
-//        Nav.with(this).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon().appendQueryParameter("id", String.valueOf(mNewsDetail.getArticle().getColumn_id())).build().toString());
-//    }
 
     /**
      * 进入频道详情页

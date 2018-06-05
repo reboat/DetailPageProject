@@ -218,26 +218,26 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-        String url = bean.getVideo_url();
-        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
-            if (TextUtils.isEmpty(url)) {
-                mVideoContainer.setVisibility(View.GONE);
-            } else {
-                mVideoContainer.setVisibility(View.VISIBLE);
-                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                if (url.trim().endsWith("m3u8")) {
-                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                } else if (url.trim().endsWith("mp4")) {
-                    type = UVMediaType.UVMEDIA_TYPE_MP4;
-                }
-                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
-                String pic = bean.getList_pics().get(0);
-                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
-                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
-                vrManager.changeOrientation(false);
-            }
-            return;
-        }
+//        String url = bean.getVideo_url();
+//        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
+//            if (TextUtils.isEmpty(url)) {
+//                mVideoContainer.setVisibility(View.GONE);
+//            } else {
+//                mVideoContainer.setVisibility(View.VISIBLE);
+//                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
+//                if (url.trim().endsWith("m3u8")) {
+//                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
+//                } else if (url.trim().endsWith("mp4")) {
+//                    type = UVMediaType.UVMEDIA_TYPE_MP4;
+//                }
+//                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
+//                String pic = bean.getList_pics().get(0);
+//                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
+//                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
+//                vrManager.changeOrientation(false);
+//            }
+//            return;
+//        }
 
 
         if (!TextUtils.isEmpty(bean.getVideo_url())) {

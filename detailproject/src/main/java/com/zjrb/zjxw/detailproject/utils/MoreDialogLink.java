@@ -43,13 +43,13 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
 import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -556,7 +556,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * @param bean 分享的信息
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
-        UmengShareBean mJsShareBean = SPHelper.get().getObject(WebJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
+        UmengShareBean mJsShareBean = SPHelper.get().getObject(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
         if (mJsShareBean != null) { // js分享不为空,重新设置js分享信息
             bean.setImgUri(mJsShareBean.getImgUri())
                     .setTextContent(mJsShareBean.getTextContent())

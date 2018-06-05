@@ -26,6 +26,7 @@ import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.fragment.ScanerBottomFragment;
 import com.zjrb.core.ui.widget.ZBWebView;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -37,7 +38,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
@@ -139,7 +139,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -394,7 +394,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mWebView.stopThreadPool();
         }
         mWebView.destroy();
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
     }
 
     /**

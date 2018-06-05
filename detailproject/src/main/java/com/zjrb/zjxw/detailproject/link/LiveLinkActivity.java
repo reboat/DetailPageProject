@@ -37,6 +37,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -47,7 +48,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
@@ -160,7 +160,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -535,7 +535,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }

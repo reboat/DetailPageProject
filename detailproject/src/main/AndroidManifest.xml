@@ -1,5 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-
           package="com.zjrb.zjxw.detailproject">
 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!--录音权限-->
+    <!-- 录音权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- umeng permission start -->
@@ -31,6 +31,7 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!-- umeng permission end -->
 
+
     <!-- 高德地图权限 -->
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -43,7 +44,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <!--普通详情页 保持在栈顶 -->
+        <!-- 普通详情页 保持在栈顶 -->
         <activity
             android:name=".nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -57,16 +58,15 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
 
-                <!--普通详情 path -->
+                <!-- 普通详情 path -->
                 <data android:path="/news.html" />
-                <!--视频详情 path -->
+                <!-- 视频详情 path -->
                 <data android:path="/video.html" />
-                <!--活动详情 path -->
+                <!-- 活动详情 path -->
                 <data android:path="/activity.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -76,7 +76,7 @@
             </intent-filter>
         </activity>
 
-        <!--链接稿-->
+        <!-- 链接稿 -->
         <activity
             android:name=".link.BrowserLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -90,12 +90,12 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
 
-                <!--链接稿 path-->
+                <!-- 链接稿 path -->
                 <data android:path="/link.html" />
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -105,7 +105,7 @@
             </intent-filter>
         </activity>
 
-        <!--链接稿-->
+        <!-- 链接稿 -->
         <activity
             android:name=".link.LiveLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -118,13 +118,12 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-                <!--直播稿 path-->
+                <!-- 直播稿 path -->
                 <data android:path="/live.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -134,7 +133,7 @@
             </intent-filter>
         </activity>
 
-        <!--图集详情页-->
+        <!-- 图集详情页 -->
         <activity
             android:name=".photodetail.AtlasDetailActivity"
             android:launchMode="singleTop">
@@ -146,13 +145,11 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/album.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -162,7 +159,7 @@
             </intent-filter>
         </activity>
 
-        <!--专题详情页-->
+        <!-- 专题详情页 -->
         <activity
             android:name=".subject.SpecialActivity"
             android:launchMode="singleTop">
@@ -174,13 +171,11 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/subject.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -190,7 +185,7 @@
             </intent-filter>
         </activity>
 
-        <!--话题详情页-->
+        <!-- 话题详情页 -->
         <activity
             android:name=".topic.ActivityTopicActivity"
             android:launchMode="singleTop">
@@ -202,13 +197,11 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/topic.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -218,7 +211,7 @@
             </intent-filter>
         </activity>
 
-        <!--红船号详情页-->
+        <!-- 红船号详情页 -->
         <activity
             android:name=".redBoat.RedBoatActivity"
             android:launchMode="singleTop">
@@ -230,13 +223,11 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/red_boat.html" />
-
                 <data android:host="@string/data_host" />
 
-                <!--以下测试 host -->
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -246,8 +237,7 @@
             </intent-filter>
         </activity>
 
-
-        <!--专题列表-->
+        <!-- 专题列表 -->
         <activity android:name=".subject.SpecialListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -262,7 +252,7 @@
             </intent-filter>
         </activity>
 
-        <!--官员详情页-->
+        <!-- 官员详情页 -->
         <activity android:name=".persionaldetail.PersionalDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -272,10 +262,9 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/gy.html" />
                 <data android:path="/persionaldetail/PersionalDetailActivity" />
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
@@ -283,11 +272,10 @@
                 <data android:host="@string/data_host_real" />
                 <data android:host="@string/data_host_zjol" />
                 <data android:host="@string/data_host_zj" />
-
             </intent-filter>
         </activity>
 
-        <!--官员新闻列表-->
+        <!-- 官员新闻列表 -->
         <activity android:name=".persionaldetail.PersionalListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -297,9 +285,8 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-
                 <data android:path="/gy_list.html" />
-                <!--以下测试 host -->
+                <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -309,7 +296,7 @@
             </intent-filter>
         </activity>
 
-        <!--评论列表-->
+        <!-- 评论列表 -->
         <activity
             android:name=".comment.CommentActivity"
             android:screenOrientation="portrait">
@@ -323,11 +310,10 @@
                     android:host="@string/data_host"
                     android:path="/detail/CommentActivity"
                     android:scheme="@string/data_scheme" />
-
             </intent-filter>
         </activity>
 
-        <!--精选评论列表-->
+        <!-- 精选评论列表 -->
         <activity
             android:name=".comment.CommentSelectActivity"
             android:screenOrientation="portrait">
@@ -344,7 +330,11 @@
             </intent-filter>
         </activity>
 
-
+        <receiver
+            android:name=".broadCast.SubscribeReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
     </application>
 
 </manifest>

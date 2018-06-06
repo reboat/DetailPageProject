@@ -41,7 +41,10 @@ dependencies {
 //    compile project(':core-library')
     compile 'cn.daily.android:analytics:5.0.2'
     compile('cn.daily.android:daily-news:5.1.1.9-SNAPSHOT') {
-        exclude group: 'cn.daily.android', module: 'core'
+        exclude group: 'cn.daily.android'
+    }
+    compile ('cn.daily.android:biz-core:5.3.0.1-SNAPSHOT'){
+        transitive false
     }
     compile 'cn.daily.android:daily-db:5.1.0'
     compile 'com.jakewharton:butterknife:8.6.0'

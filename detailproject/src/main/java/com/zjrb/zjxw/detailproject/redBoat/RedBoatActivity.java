@@ -26,6 +26,7 @@ import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -37,7 +38,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -144,7 +144,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new RedBoatTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -301,7 +301,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {

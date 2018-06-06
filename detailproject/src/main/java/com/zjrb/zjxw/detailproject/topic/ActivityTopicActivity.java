@@ -39,6 +39,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.holder.FooterLoadMore;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -52,7 +53,6 @@ import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -194,7 +194,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      * 初始化/拉取数据
      */
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
         mTopBarHolder.setShareVisible(false);
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -627,7 +627,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 }
             }
         }
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }

@@ -43,13 +43,13 @@ import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
 import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
 import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -556,7 +556,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * @param bean 分享的信息
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
-        UmengShareBean mJsShareBean = SPHelper.get().getObject(WebJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
+        UmengShareBean mJsShareBean = SPHelper.get().getObject(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
         if (mJsShareBean != null) { // js分享不为空,重新设置js分享信息
             bean.setImgUri(mJsShareBean.getImgUri())
                     .setTextContent(mJsShareBean.getTextContent())
@@ -639,19 +639,15 @@ public class MoreDialogLink extends BaseDialogFragment {
     private UMImage setUMImage(UmengShareBean bean) {
         UMImage umImage = null;
         if (bean.getBimtap() != null) { // bitmap图片分享
-            Bitmap bitmap = ImageUtils.compressImage(bean.getBimtap(), SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), bean.getBimtap());
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         } else if (!TextUtils.isEmpty(bean.getImgUri())) { // 网络图片分享
-            Bitmap imageBitmap = ImageUtils.getBitmapByUrlSync(bean.getImgUri());
-            Bitmap bitmap = ImageUtils.compressImage(imageBitmap, SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), bean.getImgUri());
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         } else if (bean.getPicId() != 0) { // 资源文件图片分享
-            Bitmap bitmap = ImageUtils.compressImage(ImageUtils.getBitmapById(bean.getPicId()), SHARE_IMG_MAX_SIZE);
-            umImage = new UMImage(UIUtils.getContext(), bitmap);
+            umImage = new UMImage(UIUtils.getContext(), ImageUtils.getBitmapById(bean.getPicId()));
             umImage.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
             return umImage;
         }

@@ -22,6 +22,7 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -34,7 +35,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
@@ -252,7 +252,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     }
 
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mOverlayLayout.setVisibility(View.INVISIBLE);
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -410,7 +410,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

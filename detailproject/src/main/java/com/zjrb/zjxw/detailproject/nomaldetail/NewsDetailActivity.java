@@ -26,7 +26,6 @@ import com.aliya.view.ratio.RatioFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.utovr.player.UVMediaType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -45,6 +44,7 @@ import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.NetUtils;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.T;
@@ -58,7 +58,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
-import com.zjrb.zjxw.detailproject.global.VrAnaly;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -75,7 +74,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
-import daily.zjrb.com.daily_vr.bean.VrSource;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -88,7 +86,6 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailActivity extends BaseActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener, LocationCallBack {
-    public static final String ZJXW_JS_SHARE_BEAN = "zjxw_js_share_bean";
 
     /**
      * 稿件ID
@@ -218,26 +215,26 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-        String url = bean.getVideo_url();
-        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
-            if (TextUtils.isEmpty(url)) {
-                mVideoContainer.setVisibility(View.GONE);
-            } else {
-                mVideoContainer.setVisibility(View.VISIBLE);
-                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                if (url.trim().endsWith("m3u8")) {
-                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
-                } else if (url.trim().endsWith("mp4")) {
-                    type = UVMediaType.UVMEDIA_TYPE_MP4;
-                }
-                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
-                String pic = bean.getList_pics().get(0);
-                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
-                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
-                vrManager.changeOrientation(false);
-            }
-            return;
-        }
+//        String url = bean.getVideo_url();
+//        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
+//            if (TextUtils.isEmpty(url)) {
+//                mVideoContainer.setVisibility(View.GONE);
+//            } else {
+//                mVideoContainer.setVisibility(View.VISIBLE);
+//                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
+//                if (url.trim().endsWith("m3u8")) {
+//                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
+//                } else if (url.trim().endsWith("mp4")) {
+//                    type = UVMediaType.UVMEDIA_TYPE_MP4;
+//                }
+//                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
+//                String pic = bean.getList_pics().get(0);
+//                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
+//                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
+//                vrManager.changeOrientation(false);
+//            }
+//            return;
+//        }
 
 
         if (!TextUtils.isEmpty(bean.getVideo_url())) {
@@ -269,7 +266,7 @@ public class NewsDetailActivity extends BaseActivity implements
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
@@ -730,7 +727,7 @@ public class NewsDetailActivity extends BaseActivity implements
         if (vrManager != null) {
             vrManager.releasePlayer();
         }
-        SPHelper.get().remove(NewsDetailActivity.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         if (builder != null) {
             //阅读深度

@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.common.manager.APICallManager;
 import com.zjrb.core.ui.holder.FooterLoadMore;
@@ -40,8 +39,8 @@ public class SpecialListAdapter extends NewsBaseAdapter implements LoadMoreListe
     }
 
     private boolean noMore(SubjectListBean data) {
-        return data == null || data.getArticle_list() == null
-                || data.getArticle_list().size() < C.PAGE_SIZE;
+        return data == null || data.getArticle_list() == null;
+//                || data.getArticle_list().size() < C.PAGE_SIZE;
     }
 
     @Override

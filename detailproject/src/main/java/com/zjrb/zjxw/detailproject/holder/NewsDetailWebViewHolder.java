@@ -151,6 +151,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                                     imgSrcs[i] = imgSrcs[i].split("[?]")[0];
                                 }
                             }
+                            //设置imageSrc
                             mWebJsInterface.setImgSrcs(imgSrcs);
                         }
                     }
@@ -158,6 +159,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     @Override
                     public void callBack(List<Map<String, String>> imgSrcs) {
                         if (mWebJsInterface != null && imgSrcs != null && imgSrcs.size() > 0) {
+                            //设置imageSrc超链接
                             mWebJsInterface.setImgSrcs(imgSrcs);
                         }
                     }

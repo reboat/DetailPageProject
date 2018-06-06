@@ -40,8 +40,9 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
     }
 
     public boolean noMore(OfficalDetailBean data) {
-        return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null
-                || data.getOfficer().getArticle_list().size() < C.PAGE_SIZE;
+        //TODO 20条将不再作为无数据的依据
+        return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null;
+//                || data.getOfficer().getArticle_list().size() < C.PAGE_SIZE;
     }
 
     public void cancelLoadMore() {

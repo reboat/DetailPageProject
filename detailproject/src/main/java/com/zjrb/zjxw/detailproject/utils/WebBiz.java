@@ -186,6 +186,7 @@ public class WebBiz {
                 if (isNeedOnClick && !ThemeMode.isNightMode()) {
                     node.attr("onClick", "imageBrowse(" + index + ")");
                 }
+                //夜间模式应添加长按模式
                 fitUiModeForImgTag(node, isNeedOnClick, index);
             }
         }

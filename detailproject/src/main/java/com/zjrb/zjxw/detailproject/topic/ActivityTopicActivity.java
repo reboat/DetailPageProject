@@ -570,9 +570,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                 lastMinPublishTime = getLastMinPublishTime();
             }
             mAdapter.addData(commentList, true);
-            if (commentList.size() < C.PAGE_SIZE) {
-                loadMore.setState(LoadMore.TYPE_NO_MORE);
-            }
+            //TODO 20条将不再作为无数据的依据
+//            if (commentList.size() < C.PAGE_SIZE) {
+//                loadMore.setState(LoadMore.TYPE_NO_MORE);
+//            }
 
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);

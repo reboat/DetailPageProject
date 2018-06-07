@@ -231,6 +231,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         // 开启database storage API功能
         settings.setDatabaseEnabled(false);
         settings.setAppCacheEnabled(false);
+        //TODO  WLJ合并为同一个
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

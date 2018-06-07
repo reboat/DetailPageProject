@@ -97,8 +97,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.module_detail_activity_browser_link);
         ButterKnife.bind(this);
         getIntentData(getIntent());
-        initWebview();
         mWebView.setLongClickCallBack(this);
+        initWebview();
         loadData();
     }
 
@@ -127,7 +127,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 }
             }
 
-
         }
     }
 
@@ -136,6 +135,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void initWebview() {
         mWebView.setWebViewClient(new WebViewClient() {
+            private boolean isRedirect; // true : 重定向
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -172,21 +172,30 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                                 .build()
                                 .send();
                     }
+                    if (isRedirect) { // 重定向
+                        view.loadUrl(url);
+                    } else { // 点击跳转
+                        if (ClickTracker.isDoubleClick()) return true;
+                        if (Nav.with(getContext()).to(url)) {
+                            return true;
+                        }
+                    }
 
-                    Nav.with(getContext()).to(url);
                 }
-                return true;
+                return super.shouldOverrideUrlLoading(view, url);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                isRedirect = false;
                 onWebPageComplete();
             }
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                isRedirect = true;
             }
 
         });
@@ -232,8 +241,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
+                //可能被重定向了
                 if (mNewsDetail.getArticle().getDoc_type() == 3) {
                     url = mNewsDetail.getArticle().getWeb_link();
+                } else {
+                    url = mNewsDetail.getArticle().getUrl();
                 }
                 fillData(mNewsDetail);
             }
@@ -272,7 +284,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         //显示标题展示WebView内容等
         mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
-
+//        initWebview();
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }

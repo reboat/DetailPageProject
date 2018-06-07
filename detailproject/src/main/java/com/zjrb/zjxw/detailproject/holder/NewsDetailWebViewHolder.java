@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.holder;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -235,6 +236,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (!TextUtils.isEmpty(url)) {
+                    Uri uri = Uri.parse(url);
+                    if (uri != null && !TextUtils.equals(uri.getScheme(), "http") && !TextUtils.equals(uri.getScheme(), "https")) {
+                        return super.shouldOverrideUrlLoading(view, url);
+                    }
                     //点击话题链接
                     if (url.contains("topic.html?id=")) {
                         new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")

@@ -140,6 +140,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (!TextUtils.isEmpty(url)) {
+                    Uri uri = Uri.parse(url);
+                    if (uri != null && !TextUtils.equals(uri.getScheme(), "http") && !TextUtils.equals(uri.getScheme(), "https")) {
+                        return super.shouldOverrideUrlLoading(view, url);
+                    }
                     //点击话题链接
                     if (url.contains("topic.html?id=")) {
                         new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")

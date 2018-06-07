@@ -55,15 +55,14 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +78,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class AtlasDetailActivity extends BaseActivity implements ViewPager
-        .OnPageChangeListener, View.OnTouchListener, LocationCallBack {
+        .OnPageChangeListener, View.OnTouchListener, LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM {
 
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
@@ -321,18 +320,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .tag(article.getList_tag())
                             .title(article.getList_title())
                             .url(article.getUrl()));
-
-            Map map = new HashMap();
-            map.put("relatedColumn", data.getArticle().getColumn_id());
-            builder = new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
-                    .setEvenName("页面停留时长/阅读深度")
-                    .setObjectID(data.getArticle().getMlf_id() + "")
-                    .setObjectName(data.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(data.getArticle().getChannel_id())
-                    .setClassifyName(data.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setSelfObjectID(data.getArticle().getId() + "");
+            builder = pageStayTime(data);
         }
 
         mData = data;
@@ -465,21 +453,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         //返回
         if (id == R.id.iv_back) {
             if (mData != null && mData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                        .setEvenName("点击返回")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickBack(mData);
             }
 
             finish();
@@ -514,21 +488,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //评论框
         } else if (id == R.id.tv_comment) {
             if (mData != null && mData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
-                        .setEvenName("点击评论输入框")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickCommentBox(mData);
 
                 //评论发表成功
                 Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
@@ -569,61 +529,19 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //点赞
         } else if (id == R.id.menu_prised) {
             if (mData != null && mData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                        .setEvenName("点击点赞")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickPriseIcon(mData);
             }
             fabulous();
             //设置
         } else if (id == R.id.menu_setting) {
             if (mData != null && mData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
-                        .setEvenName("点击更多")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickMoreIcon(mData);
                 MoreDialog.newInstance(mData).show(getSupportFragmentManager(), "MoreDialog");
             }
             //下载
         } else if (id == R.id.iv_top_download) {
             if (mData != null && mData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(this, "A0025", "A0025")
-                        .setEvenName("点击下载按钮")
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id())
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("图集详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickDownLoad(mData);
             }
             loadImage(mIndex);
         }
@@ -698,21 +616,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         calculationMaxHeight();
 
         if (mData != null && mData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
-                    .setEvenName("图片浏览(左右滑动)")
-                    .setObjectID(mData.getArticle().getMlf_id() + "")
-                    .setObjectName(mData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mData.getArticle().getChannel_id())
-                    .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("图集详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "")
-                    .build()
-                    .send();
+            AtlasSlide(mData);
         }
 
     }
@@ -728,21 +632,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
                 setTopBarInOut(View.GONE);
                 if (mData != null && mData.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(this, "A0010", "")
-                            .setEvenName("打开更多图集页面)")
-                            .setObjectID(mData.getArticle().getMlf_id() + "")
-                            .setObjectName(mData.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mData.getArticle().getChannel_id())
-                            .setClassifyName(mData.getArticle().getChannel_name())
-                            .setPageType("更多图集页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mData.getArticle().getId() + "")
-                            .build()
-                            .send();
+                    ClickMoreImage(mData);
                 }
 
 
@@ -912,5 +802,156 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         } else {
             return "" + "," + "" + "," + "";
         }
+    }
+
+    @Override
+    public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+                .setEvenName("页面停留时长/阅读深度")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "");
+    }
+
+    @Override
+    public void ClickBack(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                .setEvenName("点击返回")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickCommentBox(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                .setEvenName("点击评论输入框")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+
+    }
+
+    @Override
+    public void ClickPriseIcon(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                .setEvenName("点击点赞")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickMoreIcon(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                .setEvenName("点击更多")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickDownLoad(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(this, "A0025", "A0025")
+                .setEvenName("点击下载按钮")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("图集详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void AtlasSlide(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
+                .setEvenName("图片浏览(左右滑动)")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("图集详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickMoreImage(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(this, "A0010", "")
+                .setEvenName("打开更多图集页面)")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("更多图集页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .build()
+                .send();
     }
 }

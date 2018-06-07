@@ -69,9 +69,7 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -768,9 +766,6 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
-        Map map = new HashMap();
-        map.put("relatedColumn", bean.getArticle().getColumn_id());
-        map.put("subject", "");
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
@@ -779,6 +774,10 @@ public class NewsDetailActivity extends BaseActivity implements
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "");
     }
 

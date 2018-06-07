@@ -125,13 +125,6 @@ public interface DetailWMHelperInterFace {
         void ClickBack(DraftDetailBean bean);
 
         /**
-         * 点击分享
-         *
-         * @param bean
-         */
-        void ClickShare(DraftDetailBean bean);
-
-        /**
          * 点击进入评论框
          *
          * @param bean

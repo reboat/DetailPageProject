@@ -1,12 +1,17 @@
 package com.zjrb.zjxw.detailproject.link;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,8 +43,10 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
+import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import butterknife.BindView;
@@ -90,6 +97,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.module_detail_activity_browser_link);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        initWebview();
         mWebView.setLongClickCallBack(this);
         loadData();
     }
@@ -120,6 +128,80 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
 
 
+        }
+    }
+
+    /**
+     * 重新拦截webview点击事件
+     */
+    private void initWebview() {
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (!TextUtils.isEmpty(url)) {
+                    //点击话题链接
+                    if (url.contains("topic.html?id=")) {
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
+                                .setEvenName("点击话题标签")
+                                .setPageType("新闻详情页")
+                                .build()
+                                .send();
+
+                        //官员名称
+                    } else if (url.contains("gy.html?id=")) {
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
+                                .setEvenName("点击官员名称")
+                                .setPageType("新闻详情页")
+                                .setOtherInfo(Analytics.newOtherInfo()
+                                        .put("customObjectType", "OfficerType")
+                                        .toString())
+                                .build()
+                                .send();
+                    } else {
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
+                                .setEvenName("链接点击")
+                                .setPageType("新闻详情页")
+                                .setOtherInfo(Analytics.newOtherInfo()
+                                        .put("mediaURL", url)
+                                        .toString())
+                                .build()
+                                .send();
+                    }
+
+                    Nav.with(getContext()).to(url);
+                }
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                onWebPageComplete();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+        });
+    }
+
+    /**
+     * webview加载
+     */
+    private void onWebPageComplete() {
+        Context context = getContext();
+        while (context instanceof ContextThemeWrapper) {
+            if (context instanceof NewsDetailAdapter.CommonOptCallBack) {
+                ((NewsDetailAdapter.CommonOptCallBack) context).onOptPageFinished();
+                return;
+            } else if (context instanceof TopicAdapter.CommonOptCallBack) {
+                ((TopicAdapter.CommonOptCallBack) context).onOptPageFinished();
+                return;
+            }
+            context = ((ContextThemeWrapper) context).getBaseContext();
         }
     }
 

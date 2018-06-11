@@ -1,13 +1,11 @@
 package com.zjrb.zjxw.detailproject.link;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -42,11 +40,10 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import butterknife.BindView;
@@ -62,7 +59,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack {
+public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack, DetailWMHelperInterFace.LinkDetailWM {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -266,7 +263,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         //显示标题展示WebView内容等
         mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
-//        initWebview();
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
@@ -301,41 +297,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         int id = view.getId();
         if (R.id.iv_back == id) {
             onBackPressed();
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
-                        .setEvenName("点击返回")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
             //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
-                        .setEvenName("点击评论，进入评论列表")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickInCommentList();
                 //进入评论列表页面
                 if (bundle == null) {
                     bundle = new Bundle();
@@ -345,43 +310,13 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
             //点赞
         } else if (view.getId() == R.id.menu_prised) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021")
-                        .setEvenName("点击点赞")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
+            ClickPriseIcon();
 
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005")
-                        .setEvenName("点击更多")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickMoreIcon();
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -511,4 +446,85 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     .send();
         }
     }
+
+    @Override
+    public void ClickBack() {
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    public void ClickInCommentList() {
+        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
+                .setEvenName("点击评论，进入评论列表")
+                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickPriseIcon() {
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021")
+                    .setEvenName("点击点赞")
+                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    public void ClickMoreIcon() {
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005")
+                .setEvenName("点击更多")
+                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
 }

@@ -257,38 +257,24 @@ public interface DetailWMHelperInterFace {
     interface LinkDetailWM {
         /**
          * 点击返回
-         *
-         * @param bean
          */
-        void ClickBack(DraftDetailBean bean);
+        void ClickBack();
 
         /**
          * 进入评论列表
-         *
-         * @param bean
          */
-        void ClickInCommentList(DraftDetailBean bean);
+        void ClickInCommentList();
 
         /**
          * 点击点赞
-         *
-         * @param bean
          */
-        void ClickPriseIcon(DraftDetailBean bean);
+        void ClickPriseIcon();
 
         /**
          * 点击更多
-         *
-         * @param bean
          */
-        void ClickMoreIcon(DraftDetailBean bean);
+        void ClickMoreIcon();
 
-        /**
-         * 长按识别二维码
-         *
-         * @param bean
-         */
-        void LongClickScaner(DraftDetailBean bean);
     }
 
     /**

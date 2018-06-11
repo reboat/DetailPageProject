@@ -189,7 +189,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 isRedirect = false;
-                onWebPageComplete();
             }
 
             @Override
@@ -199,23 +198,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
 
         });
-    }
-
-    /**
-     * webview加载
-     */
-    private void onWebPageComplete() {
-        Context context = getContext();
-        while (context instanceof ContextThemeWrapper) {
-            if (context instanceof NewsDetailAdapter.CommonOptCallBack) {
-                ((NewsDetailAdapter.CommonOptCallBack) context).onOptPageFinished();
-                return;
-            } else if (context instanceof TopicAdapter.CommonOptCallBack) {
-                ((TopicAdapter.CommonOptCallBack) context).onOptPageFinished();
-                return;
-            }
-            context = ((ContextThemeWrapper) context).getBaseContext();
-        }
     }
 
     /**

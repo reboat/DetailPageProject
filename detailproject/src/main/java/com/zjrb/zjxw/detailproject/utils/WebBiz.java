@@ -182,12 +182,15 @@ public class WebBiz {
                     }
                 }
 
-                // 夜间模式点击应在遮罩层
-                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+                if (isNeedOnClick) {
                     node.attr("onClick", "imageBrowse(" + index + ")");
                 }
-                //夜间模式应添加长按模式
-                fitUiModeForImgTag(node, isNeedOnClick, index);
+
+                //TODO WLJ  夜间模式添加点击事件
+//                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+//                    node.attr("onClick", "imageBrowse(" + index + ")");
+//                }
+//                fitUiModeForImgTag(node, isNeedOnClick, index);
             }
         }
 
@@ -228,20 +231,19 @@ public class WebBiz {
 
                     }
                 }
-
-                // 夜间模式点击应在遮罩层
-                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+                //TODO WLJ  夜间模式添加点击事件
+                if (isNeedOnClick) {
                     node.attr("onClick", "imageABrowse(" + index + ")");
                 }
-                fitUiModeForImgATag(node, isNeedOnClick, index);
+//                // 夜间模式点击应在遮罩层
+//                if (isNeedOnClick && !ThemeMode.isNightMode()) {
+//                    node.attr("onClick", "imageABrowse(" + index + ")");
+//                }
+//                fitUiModeForImgATag(node, isNeedOnClick, index);
             }
         }
 
         return imgSrcs;
-    }
-
-    private static void replaceWebViewPic(int position, String url) {
-
     }
 
 
@@ -268,7 +270,6 @@ public class WebBiz {
             }
 
             imgBgDiv.attr("class", "zjxw_imgMask");
-
 
             div.appendChild(imgBgDiv);
         }

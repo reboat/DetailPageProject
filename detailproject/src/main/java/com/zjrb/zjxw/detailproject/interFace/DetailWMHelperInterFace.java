@@ -1,6 +1,8 @@
 package com.zjrb.zjxw.detailproject.interFace;
 
+import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 
 import cn.daily.news.analytics.Analytics;
 
@@ -177,57 +179,33 @@ public interface DetailWMHelperInterFace {
          * @param bean
          * @return
          */
-        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
+        Analytics pageStayTime(DraftDetailBean bean);
 
         /**
-         * 点击更多
+         * 分类品频道点击
          *
          * @param bean
          */
-        void ClickMoreIcon(DraftDetailBean bean);
-
-        /**
-         * 点击焦点图
-         *
-         * @param bean
-         */
-        void ClickFocusImage(DraftDetailBean bean);
+        void ClickChannel(SpecialGroupBean bean);
 
         /**
          * 点击专题列表
          *
          * @param bean
          */
-        void ClickSpecialItem(DraftDetailBean bean);
-
-        /**
-         * 点击分享
-         *
-         * @param bean
-         */
-        void ClickShare(DraftDetailBean bean);
+        void ClickSpecialItem(ArticleItemBean bean);
 
         /**
          * 点击收藏（收藏/取消收藏）
          *
          * @param isCollect
-         * @param bean
          */
-        void ClickCollect(boolean isCollect, DraftDetailBean bean);
+        void ClickCollect(boolean isCollect);
 
         /**
          * 点击返回
-         *
-         * @param bean
          */
-        void ClickBack(DraftDetailBean bean);
-
-        /**
-         * 分类标签点击
-         *
-         * @param bean
-         */
-        void ClickItemTag(DraftDetailBean bean);
+        void ClickBack();
 
     }
 
@@ -244,20 +222,6 @@ public interface DetailWMHelperInterFace {
         void SubscribeAnalytics(String eventNme, String eventCode);
 
         /**
-         * 点击相关专题
-         *
-         * @param bean
-         */
-        void ClickRelatSubjectItem(DraftDetailBean bean);
-
-        /**
-         * 点击正文底部频道
-         *
-         * @param bean
-         */
-        void ClickChannel(DraftDetailBean bean);
-
-        /**
          * 统计页面停留时长
          *
          * @param bean
@@ -267,38 +231,23 @@ public interface DetailWMHelperInterFace {
 
         /**
          * 点击点赞
-         *
-         * @param bean
          */
-        void ClickPriseIcon(DraftDetailBean bean);
+        void ClickPriseIcon();
 
         /**
          * 点击更多
-         *
-         * @param bean
          */
-        void ClickMoreIcon(DraftDetailBean bean);
+        void ClickMoreIcon();
 
         /**
          * 点击进入评论框
-         *
-         * @param bean
          */
-        void ClickCommentBox(DraftDetailBean bean);
-
-        /**
-         * 点击分享
-         *
-         * @param bean
-         */
-        void ClickShare(DraftDetailBean bean);
+        void ClickCommentBox();
 
         /**
          * 点击返回
-         *
-         * @param bean
          */
-        void ClickBack(DraftDetailBean bean);
+        void ClickBack();
 
     }
 
@@ -348,45 +297,33 @@ public interface DetailWMHelperInterFace {
     interface LiveDetailWM {
         /**
          * 点击返回
-         *
-         * @param bean
          */
-        void ClickBack(DraftDetailBean bean);
+        void ClickBack();
 
         /**
          * 点击分享
-         *
-         * @param bean
          */
-        void ClickShare(DraftDetailBean bean);
+        void ClickShare();
 
         /**
          * 进入评论列表
-         *
-         * @param bean
          */
-        void ClickInCommentList(DraftDetailBean bean);
+        void ClickInCommentList();
 
         /**
          * 点击点赞
-         *
-         * @param bean
          */
-        void ClickPriseIcon(DraftDetailBean bean);
+        void ClickPriseIcon();
 
         /**
          * 点击更多
-         *
-         * @param bean
          */
-        void ClickMoreIcon(DraftDetailBean bean);
+        void ClickMoreIcon();
 
         /**
          * 点击进入评论框
-         *
-         * @param bean
          */
-        void ClickCommentBox(DraftDetailBean bean);
+        void ClickCommentBox();
 
         /**
          * 订阅相关埋点

@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.topic;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -27,7 +25,6 @@ import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.db.SPHelper;
@@ -50,8 +47,11 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
+import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
@@ -82,7 +82,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class ActivityTopicActivity extends BaseActivity implements
         TopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
-        DetailCommentHolder.deleteCommentListener, LocationCallBack {
+        DetailCommentHolder.deleteCommentListener, LocationCallBack, SubscribeSyncInterFace, DetailWMHelperInterFace.TopicDetailWM {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -118,6 +118,9 @@ public class ActivityTopicActivity extends BaseActivity implements
     private OverlyHolder mOverlyHolder;
     private FloorBarHolder mFloorBarHolder;
 
+    //订阅同步广播
+    private SubscribeReceiver mReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,8 +128,9 @@ public class ActivityTopicActivity extends BaseActivity implements
         ButterKnife.bind(this);
         getIntentData(getIntent());
         initView();
-        loadData();
+        mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
+        loadData();
     }
 
     /**
@@ -202,20 +206,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 if (data == null) return;
                 mTopBarHolder.setShareVisible(true);
                 if (data.getArticle() != null) {
-                    builder = new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
-                            "800021")
-                            .setEvenName("页面停留时长/阅读深度")
-                            .setObjectID(data.getArticle().getMlf_id() + "")
-                            .setObjectName(data.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(data.getArticle().getChannel_id())
-                            .setClassifyName(data.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", data.getArticle().getColumn_id() + "")
-                                    .put("subject", data.getArticle().getId() + "")
-                                    .toString())
-                            .setSelfObjectID(data.getArticle().getId() + "");
+                    builder = pageStayTime(data);
                 }
                 fillData(data);
             }
@@ -360,42 +351,12 @@ public class ActivityTopicActivity extends BaseActivity implements
         if (ClickTracker.isDoubleClick()) return;
         //点赞
         if (view.getId() == R.id.menu_prised) {
-            if (mDetailData != null && mDetailData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
-                        .setEvenName("点击点赞")
-                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                        .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mDetailData.getArticle().getChannel_id())
-                        .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "SubjectType")
-                                .put("subject", mDetailData.getArticle().getId() + "")
-                                .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
+            ClickPriseIcon();
             onOptFabulous();
             //更多
         } else if (view.getId() == R.id.menu_setting) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
-                        .setEvenName("点击更多")
-                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                        .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mDetailData.getArticle().getChannel_id())
-                        .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
-                                .put("subject", mDetailData.getArticle().getId() + "")
-                                .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickMoreIcon();
                 MoreDialog.newInstance(mDetailData).setWebViewCallBack(mAdapter.getWebViewHolder
                         (), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(),
                         "MoreDialog");
@@ -403,21 +364,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
-                        .setEvenName("点击评论输入框")
-                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                        .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mDetailData.getArticle().getChannel_id())
-                        .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
-                                .put("subject", mDetailData.getArticle().getId() + "")
-                                .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                        .build()
-                        .send();
+                ClickCommentBox();
 
                 //评论发表成功
                 Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
@@ -473,28 +420,12 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
 
         } else if (view.getId() == R.id.iv_top_back) {
-            if (mDetailData != null && mDetailData.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
-                        .setEvenName("点击返回")
-                        .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                        .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mDetailData.getArticle().getChannel_id())
-                        .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
-                                .put("subject", mDetailData.getArticle().getId() + "")
-                                .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                        .build()
-                        .send();
-            }
+            ClickBack();
             finish();
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
-                subscribeAnalytics("点击取消订阅栏目", "A0014");
+                SubscribeAnalytics("点击取消订阅栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -512,7 +443,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
-                    subscribeAnalytics("点击订阅栏目", "A0014");
+                    SubscribeAnalytics("点击订阅栏目", "A0014");
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override
@@ -533,7 +464,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            subscribeAnalytics("点击进入栏目详情页", "800031");
+            SubscribeAnalytics("点击进入栏目详情页", "800031");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -633,28 +564,6 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     /**
-     * 订阅相关埋点
-     *
-     * @param eventNme
-     */
-    private void subscribeAnalytics(String eventNme, String eventCode) {
-        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
-                .setEvenName(eventNme)
-                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
-                .setObjectName(mDetailData.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mDetailData.getArticle().getChannel_id())
-                .setClassifyName(mDetailData.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "RelatedColumnType")
-                        .toString())
-                .setSelfObjectID(mDetailData.getArticle().getId() + "")
-                .build()
-                .send();
-    }
-
-    /**
      * 点击评论时,获取用户所在位置
      */
     @Override
@@ -677,32 +586,148 @@ public class ActivityTopicActivity extends BaseActivity implements
     private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
-        intent.putExtra("id", (long )columnid);
+        intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+
     /**
-     * topbar栏目订阅同步广播
+     * 订阅同步
+     *
+     * @param intent
      */
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
-                long id = intent.getLongExtra("id", 0);
-                boolean subscribe = intent.getBooleanExtra("subscribe", false);
-                String subscriptionText = subscribe ? "已订阅" : "+订阅";
-                //确定是该栏目需要同步
-                if (id == mDetailData.getArticle().getColumn_id()) {
-                    mTopBarHolder.getSubscribe().setSelected(subscribe);
-                    mTopBarHolder.getSubscribe().setText(subscriptionText);
-                    if(subscribe){
-                        subscribeAnalytics("点击订阅栏目", "A0014");
-                    }else{
-                        subscribeAnalytics("点击取消订阅栏目", "A0014");
-                    }
+    @Override
+    public void subscribeSync(Intent intent) {
+        if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
+            long id = intent.getLongExtra("id", 0);
+            boolean subscribe = intent.getBooleanExtra("subscribe", false);
+            String subscriptionText = subscribe ? "已订阅" : "+订阅";
+            //确定是该栏目需要同步
+            if (id == mDetailData.getArticle().getColumn_id()) {
+                mTopBarHolder.getSubscribe().setSelected(subscribe);
+                mTopBarHolder.getSubscribe().setText(subscriptionText);
+                if (subscribe) {
+                    SubscribeAnalytics("点击订阅栏目", "A0014");
+                } else {
+                    SubscribeAnalytics("点击取消订阅栏目", "A0014");
                 }
             }
         }
-    };
+    }
 
+    @Override
+    public void SubscribeAnalytics(String eventNme, String eventCode) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
+                .setEvenName(eventNme)
+                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                .setObjectName(mDetailData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mDetailData.getArticle().getChannel_id())
+                .setClassifyName(mDetailData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "RelatedColumnType")
+                        .toString())
+                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
+                "800021")
+                .setEvenName("页面停留时长/阅读深度")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", bean.getArticle().getId() + "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "");
+    }
+
+    @Override
+    public void ClickPriseIcon() {
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+                    .setEvenName("点击点赞")
+                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                    .setObjectName(mDetailData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mDetailData.getArticle().getChannel_id())
+                    .setClassifyName(mDetailData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", "SubjectType")
+                            .put("subject", mDetailData.getArticle().getId() + "")
+                            .toString())
+                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    public void ClickMoreIcon() {
+        new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+                .setEvenName("点击更多")
+                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                .setObjectName(mDetailData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mDetailData.getArticle().getChannel_id())
+                .setClassifyName(mDetailData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                        .put("subject", mDetailData.getArticle().getId() + "")
+                        .toString())
+                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickCommentBox() {
+        new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+                .setEvenName("点击评论输入框")
+                .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                .setObjectName(mDetailData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mDetailData.getArticle().getChannel_id())
+                .setClassifyName(mDetailData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                        .put("subject", mDetailData.getArticle().getId() + "")
+                        .toString())
+                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickBack() {
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                    .setEvenName("点击返回")
+                    .setObjectID(mDetailData.getArticle().getMlf_id() + "")
+                    .setObjectName(mDetailData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mDetailData.getArticle().getChannel_id())
+                    .setClassifyName(mDetailData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
+                            .put("subject", mDetailData.getArticle().getId() + "")
+                            .toString())
+                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                    .build()
+                    .send();
+        }
+    }
 }

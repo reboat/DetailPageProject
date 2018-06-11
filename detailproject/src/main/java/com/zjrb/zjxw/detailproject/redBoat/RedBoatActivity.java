@@ -35,8 +35,10 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
@@ -62,7 +64,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * @date 2018/3/12 2007
  */
 
-public class RedBoatActivity extends BaseActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM {
+public class RedBoatActivity extends BaseActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
 
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
@@ -81,6 +83,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     private RedBoatAdapter mAdapter;
     private Analytics mAnalytics;
     private float mScale;
+    private SubscribeReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,9 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         setTranslucenceStatusBarBg();
         setContentView(R.layout.module_detail_redboat_activity);
         ButterKnife.bind(this);
-        getIntentData(getIntent());
+        mReceiver =  new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
+        getIntentData(getIntent());
     }
 
     @Override
@@ -333,30 +337,24 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    /**
-     * topbar栏目订阅同步广播
-     */
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
-                long id = intent.getLongExtra("id", 0);
-                boolean subscribe = intent.getBooleanExtra("subscribe", false);
-                String subscriptionText = subscribe ? "已订阅" : "+订阅";
-                //确定是该栏目需要同步
-                if (id == mNewsDetail.getArticle().getColumn_id()) {
-                    topHolder.getSubscribe().setSelected(subscribe);
-                    topHolder.getSubscribe().setText(subscriptionText);
-                    if (subscribe) {
-                        SubscribeAnalytics("点击订阅栏目", "A0014");
-                    } else {
-                        SubscribeAnalytics("点击取消订阅栏目", "A0014");
-                    }
+    @Override
+    public void subscribeSync(Intent intent) {
+        if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
+            long id = intent.getLongExtra("id", 0);
+            boolean subscribe = intent.getBooleanExtra("subscribe", false);
+            String subscriptionText = subscribe ? "已订阅" : "+订阅";
+            //确定是该栏目需要同步
+            if (id == mNewsDetail.getArticle().getColumn_id()) {
+                topHolder.getSubscribe().setSelected(subscribe);
+                topHolder.getSubscribe().setText(subscriptionText);
+                if (subscribe) {
+                    SubscribeAnalytics("点击订阅栏目", "A0014");
+                } else {
+                    SubscribeAnalytics("点击取消订阅栏目", "A0014");
                 }
             }
         }
-    };
-
+    }
 
     /**
      * 埋点相关
@@ -418,4 +416,5 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 .build()
                 .send();
     }
+
 }

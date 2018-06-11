@@ -298,7 +298,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                         .setSingle(false)
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTextContent(mNewsDetail.getArticle().getSummary())
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
                         .setTargetUrl(url)
                         .setAnalyticsBean(bean)

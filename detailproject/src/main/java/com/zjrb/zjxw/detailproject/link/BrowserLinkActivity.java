@@ -1,15 +1,12 @@
 package com.zjrb.zjxw.detailproject.link;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +41,7 @@ import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
+import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import butterknife.BindView;
@@ -54,7 +52,7 @@ import cn.daily.news.analytics.Analytics;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
- * 链接稿 - Activity
+ * 普通链接稿 - Activity
  * <p>
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
@@ -95,7 +93,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         ButterKnife.bind(this);
         getIntentData(getIntent());
         mWebView.setLongClickCallBack(this);
-        initWebview();
+        mWebView.setWebViewClient(new InterceptWebviewClient());
         loadData();
     }
 
@@ -125,76 +123,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
 
         }
-    }
-
-    /**
-     * 重新拦截webview点击事件
-     */
-    private void initWebview() {
-        mWebView.setWebViewClient(new WebViewClient() {
-            private boolean isRedirect; // true : 重定向
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (!TextUtils.isEmpty(url)) {
-                    Uri uri = Uri.parse(url);
-                    if (uri != null && !TextUtils.equals(uri.getScheme(), "http") && !TextUtils.equals(uri.getScheme(), "https")) {
-                        return super.shouldOverrideUrlLoading(view, url);
-                    }
-                    //点击话题链接
-                    if (url.contains("topic.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
-                                .setEvenName("点击话题标签")
-                                .setPageType("新闻详情页")
-                                .build()
-                                .send();
-
-                        //官员名称
-                    } else if (url.contains("gy.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
-                                .setEvenName("点击官员名称")
-                                .setPageType("新闻详情页")
-                                .setOtherInfo(Analytics.newOtherInfo()
-                                        .put("customObjectType", "OfficerType")
-                                        .toString())
-                                .build()
-                                .send();
-                    } else {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
-                                .setEvenName("链接点击")
-                                .setPageType("新闻详情页")
-                                .setOtherInfo(Analytics.newOtherInfo()
-                                        .put("mediaURL", url)
-                                        .toString())
-                                .build()
-                                .send();
-                    }
-                    if (isRedirect) { // 重定向
-                        view.loadUrl(url);
-                    } else { // 点击跳转
-                        if (ClickTracker.isDoubleClick()) return true;
-                        if (Nav.with(getContext()).to(url)) {
-                            return true;
-                        }
-                    }
-
-                }
-                return super.shouldOverrideUrlLoading(view, url);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                isRedirect = false;
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-                isRedirect = true;
-            }
-
-        });
     }
 
     /**

@@ -41,7 +41,7 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
 
     public boolean noMore(OfficalDetailBean data) {
         //TODO 20条将不再作为无数据的依据
-        return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null;
+        return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null || data.getOfficer().getArticle_list().size() == 0;
 //                || data.getOfficer().getArticle_list().size() < C.PAGE_SIZE;
     }
 

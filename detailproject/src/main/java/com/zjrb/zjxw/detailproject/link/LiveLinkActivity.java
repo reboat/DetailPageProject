@@ -70,7 +70,8 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack, LocationCallBack, SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
+public class LiveLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack, LocationCallBack,
+        SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;

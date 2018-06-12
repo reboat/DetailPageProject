@@ -82,7 +82,8 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class ActivityTopicActivity extends BaseActivity implements
         TopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
-        DetailCommentHolder.deleteCommentListener, LocationCallBack, SubscribeSyncInterFace, DetailWMHelperInterFace.TopicDetailWM {
+        DetailCommentHolder.deleteCommentListener, LocationCallBack,
+        SubscribeSyncInterFace, DetailWMHelperInterFace.TopicDetailWM {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -502,6 +503,9 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             mAdapter.addData(commentList, true);
             //TODO 20条将不再作为无数据的依据
+            if (commentList.size() == 0) {
+                loadMore.setState(LoadMore.TYPE_NO_MORE);
+            }
 //            if (commentList.size() < C.PAGE_SIZE) {
 //                loadMore.setState(LoadMore.TYPE_NO_MORE);
 //            }

@@ -85,6 +85,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private String url;
 
+    private String mFromChannel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +98,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         mWebView.setWebViewClient(new InterceptWebviewClient());
         loadData();
     }
-
-    private String mFromChannel;
 
 
     @Override

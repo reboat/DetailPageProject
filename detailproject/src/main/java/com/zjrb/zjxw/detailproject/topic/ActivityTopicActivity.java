@@ -522,7 +522,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      */
     @Override
     public void onLoadMore(LoadingCallBack<CommentRefreshBean> callback) {
-        new CommentListTask(callback, true).setTag(this).exe(mArticleId, lastMinPublishTime);
+        new CommentListTask(callback, false).setTag(this).exe(mArticleId, lastMinPublishTime);
     }
 
     /**

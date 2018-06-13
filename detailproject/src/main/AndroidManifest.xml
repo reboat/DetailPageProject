@@ -214,6 +214,7 @@
         <!-- 红船号详情页 -->
         <activity
             android:name=".redBoat.RedBoatActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -330,11 +331,6 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".broadCast.SubscribeReceiver"
-            android:enabled="true"
-            android:exported="true">
-        </receiver>
     </application>
 
 </manifest>

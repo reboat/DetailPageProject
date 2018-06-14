@@ -236,6 +236,8 @@ public class ActivityTopicActivity extends BaseActivity implements
                             .tag(article.getList_tag())
                             .title(article.getList_title())
                             .url(article.getUrl()));
+            //设置互动的加载更多
+            lastMinPublishTime = data.getArticle().getSort_number();
         }
 
         mDetailData = data;
@@ -488,6 +490,7 @@ public class ActivityTopicActivity extends BaseActivity implements
 
     private long lastMinPublishTime;
 
+
     /**
      * 互动评论加载更多成功
      *
@@ -499,7 +502,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         if (data != null && data.getComments() != null) {
             List<HotCommentsBean> commentList = data.getComments();
             if (commentList.size() > 0) {
-                lastMinPublishTime = getLastMinPublishTime();
+                lastMinPublishTime = getLastCommentMinPublishTime(commentList);
             }
             mAdapter.addData(commentList, true);
             //TODO 20条将不再作为无数据的依据
@@ -525,21 +528,20 @@ public class ActivityTopicActivity extends BaseActivity implements
         new CommentListTask(callback, false).setTag(this).exe(mArticleId, lastMinPublishTime);
     }
 
+
     /**
-     * @return 获取最后一次刷新的时间戳
+     * @return 获取最后一次互动评论刷新的时间戳
      */
-    private Long getLastMinPublishTime() {
-        int size = mAdapter.getDataSize();
+    private long getLastCommentMinPublishTime(List<HotCommentsBean> list) {
+        int size = list.size();
         if (size > 0) {
             int count = 1;
             while (size - count >= 0) {
-                Object data = mAdapter.getData(size - count++);
-                if (data instanceof HotCommentsBean) {
-                    return ((HotCommentsBean) data).getSort_number();
-                }
+                HotCommentsBean data = list.get(size - count++);
+                return data.getSort_number();
             }
         }
-        return null;
+        return 0;
     }
 
     /**

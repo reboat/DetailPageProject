@@ -237,7 +237,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                             .title(article.getList_title())
                             .url(article.getUrl()));
             //设置互动的加载更多
-            lastMinPublishTime = data.getArticle().getSort_number();
+            lastMinPublishTime = getLastCommentMinPublishTime(data.getArticle().getTopic_comment_list());
         }
 
         mDetailData = data;
@@ -488,7 +488,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
-    private long lastMinPublishTime;
+    private long lastMinPublishTime = 0L;
 
 
     /**
@@ -533,14 +533,17 @@ public class ActivityTopicActivity extends BaseActivity implements
      * @return 获取最后一次互动评论刷新的时间戳
      */
     private long getLastCommentMinPublishTime(List<HotCommentsBean> list) {
-        int size = list.size();
-        if (size > 0) {
-            int count = 1;
-            while (size - count >= 0) {
-                HotCommentsBean data = list.get(size - count++);
-                return data.getSort_number();
+        if(list != null && list.size() > 0){
+            int size = list.size();
+            if (size > 0) {
+                int count = 1;
+                while (size - count >= 0) {
+                    HotCommentsBean data = list.get(size - count++);
+                    return data.getSort_number();
+                }
             }
         }
+
         return 0;
     }
 

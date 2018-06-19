@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.player.PlayerManager;
+import com.aliya.player.utils.ExtraData;
 import com.aliya.player.utils.Recorder;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
@@ -279,6 +280,7 @@ public class NewsDetailActivity extends BaseActivity implements
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
             if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
+                com.aliya.player.utils.ExtraData.setImageUrl(bean.getFirstPic());
                 PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), bean);
                 PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             }

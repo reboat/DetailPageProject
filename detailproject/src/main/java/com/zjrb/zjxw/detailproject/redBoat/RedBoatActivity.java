@@ -350,7 +350,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 if (subscribe) {
                     SubscribeAnalytics("点击订阅栏目", "A0014");
                 } else {
-                    SubscribeAnalytics("点击取消订阅栏目", "A0014");
+                    SubscribeAnalytics("点击取消订阅栏目", "A0114");
                 }
             }
         }
@@ -385,7 +385,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 .setEvenName("点击返回")
                 .setObjectID(bean.getArticle().getGuid() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
@@ -403,7 +402,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     public void SubscribeAnalytics(String eventNme, String eventCode) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
                 .setEvenName(eventNme)
-                .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                .setObjectID(mNewsDetail.getArticle().getGuid() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
                 .setClassifyID(mNewsDetail.getArticle().getChannel_id())

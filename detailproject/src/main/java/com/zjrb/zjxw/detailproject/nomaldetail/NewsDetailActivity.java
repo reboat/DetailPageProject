@@ -575,7 +575,6 @@ public class NewsDetailActivity extends BaseActivity implements
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-                // TODO: 2018/6/19 获取网络状态
                 if (NetUtils.isWifi()){
                     PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
                     PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());

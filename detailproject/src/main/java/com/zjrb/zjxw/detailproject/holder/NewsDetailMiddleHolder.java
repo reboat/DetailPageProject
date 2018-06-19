@@ -271,7 +271,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             } else if (share_media == SHARE_MEDIA.MORE) { // 更多
                 WMCode = "800005";
                 UMCode = "800005";
-                eventName = "点击更多";
+                eventName = "点击\"更多\"";
             }
             new Analytics.AnalyticsBuilder(itemView.getContext(), WMCode, UMCode)
                     .setEvenName(eventName)
@@ -292,11 +292,4 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         }
     }
 
-//    /**
-//     * 局部刷新订阅状态
-//     */
-//    @Override
-//    public void bindSubscribe() {
-//        mTvColumnSubscribe.setVisibility(View.GONE);
-//    }
 }

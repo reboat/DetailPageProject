@@ -7,6 +7,7 @@ import com.aliya.player.Extra;
 import com.aliya.player.PlayerCallback;
 import com.aliya.player.ui.PlayerView;
 import com.trs.tasdk.entity.ObjectType;
+import com.utovr.gson.Gson;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
@@ -62,7 +63,8 @@ PlayerAnalytics implements PlayerCallback {
     }
 
     private void analytics(PlayerView view, String eventName, String eventCode, String umengID) {
-        DraftDetailBean.ArticleBean extra = Extra.getExtraData(view);
+        String s = Extra.getExtraData(view);
+        DraftDetailBean.ArticleBean extra = (DraftDetailBean.ArticleBean) new Gson().fromJson(s,DraftDetailBean.ArticleBean.class);
         if (extra != null) {
             Analytics.newBuilder(getContext(view), eventCode, umengID)
                     .setObjectID(extra.getMlf_id())

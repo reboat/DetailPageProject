@@ -39,7 +39,8 @@ public class SpecialListAdapter extends NewsBaseAdapter implements LoadMoreListe
     }
 
     private boolean noMore(SubjectListBean data) {
-        return data == null || data.getArticle_list() == null;
+        //TODO  WLJ 20条不再作为依据
+        return data == null || data.getArticle_list() == null || data.getArticle_list().size() == 0;
 //                || data.getArticle_list().size() < C.PAGE_SIZE;
     }
 

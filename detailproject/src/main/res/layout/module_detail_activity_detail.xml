@@ -21,6 +21,8 @@
             android:scaleType="fitXY"
             />
 
+
+
         <LinearLayout
             android:id="@+id/iv_type_video"
             android:layout_width="58dp"
@@ -49,6 +51,18 @@
                 android:visibility="gone"
                 tools:text="00:00" />
         </LinearLayout>
+
+        <!--网络提醒-->
+        <include layout="@layout/vr_layout_start_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/ll_net_hint"
+            android:visibility="gone"
+            ></include>
+
     </com.aliya.view.ratio.RatioFrameLayout>
 
     <FrameLayout

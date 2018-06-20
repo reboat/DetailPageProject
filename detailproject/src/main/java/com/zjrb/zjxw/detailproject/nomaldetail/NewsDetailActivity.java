@@ -1,9 +1,13 @@
 package com.zjrb.zjxw.detailproject.nomaldetail;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -13,11 +17,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.player.PlayerManager;
+import com.aliya.player.utils.Recorder;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
@@ -110,6 +116,12 @@ public class NewsDetailActivity extends BaseActivity implements
     FrameLayout mView;
     @BindView(R2.id.tv_duration)
     TextView mTvDuration;
+    @BindView(R2.id.ll_net_hint)
+    LinearLayout llNetHint;
+    @BindView(R2.id.iv_type_video)
+    LinearLayout llStart;
+    @BindView(R2.id.tv_net_hint)
+    TextView tvNetHint;
 
 
     /**
@@ -158,8 +170,23 @@ public class NewsDetailActivity extends BaseActivity implements
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
 
+        setBreoadcast();
+
         getIntentData(getIntent());
         loadData();
+    }
+
+    /**
+     * 设置网络监听
+     */
+    private BroadcastReceiver networkChangeReceiver;
+    public void setBreoadcast() {
+        networkChangeReceiver = new NetworkChangeReceiver();
+        IntentFilter filter=new IntentFilter();
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, filter);
     }
 
     /**
@@ -460,7 +487,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title,R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -548,8 +575,21 @@ public class NewsDetailActivity extends BaseActivity implements
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-                PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
-                PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+                // TODO: 2018/6/19 获取网络状态
+                if (NetUtils.isWifi()){
+                    PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
+                    PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+                    return;
+                }
+                if (NetUtils.isMobile()){
+                    llStart.setVisibility(View.GONE);
+                    llNetHint.setVisibility(View.VISIBLE);
+                    tvNetHint.setText("用流量播放");
+                    tvNetHint.setVisibility(View.VISIBLE);
+                }
+
+
+
             }
         } else if (view.getId() == R.id.iv_top_bar_back) {
             //点击返回操作
@@ -604,6 +644,13 @@ public class NewsDetailActivity extends BaseActivity implements
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
+        } else if (view.getId() == R.id.ll_net_hint){//网络提醒下点击播放
+            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
+            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+            if (NetUtils.isMobile()){
+                Recorder.get().allowMobileTraffic(mNewsDetail.getArticle().getVideo_url());
+            }
+
         }
     }
 
@@ -647,6 +694,10 @@ public class NewsDetailActivity extends BaseActivity implements
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }
+        }
+        if (networkChangeReceiver != null){
+            unregisterReceiver(networkChangeReceiver);
+            networkChangeReceiver = null;
         }
         localBroadcastManager.unregisterReceiver(receive);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
@@ -893,6 +944,21 @@ public class NewsDetailActivity extends BaseActivity implements
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                 .build()
                 .send();
+    }
+
+    //网络监听
+    public class NetworkChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (NetUtils.isMobile() && tvNetHint.getVisibility() == View.VISIBLE){
+                tvNetHint.setText("用流量播放");
+                return;
+            }
+            if (NetUtils.isWifi() && tvNetHint.getVisibility() == View.VISIBLE){
+                tvNetHint.setText("已切换至wifi");
+                return;
+            }
+        }
     }
 }
 

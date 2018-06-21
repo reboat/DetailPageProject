@@ -29,6 +29,7 @@ import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
+import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
@@ -279,7 +280,7 @@ public class NewsDetailActivity extends BaseActivity implements
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
             if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
-                PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), bean);
+                PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), new Gson().toJson(bean));
                 PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             }
         } else {
@@ -576,7 +577,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
                 if (NetUtils.isWifi()){
-                    PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
+                    PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                     PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
                     return;
                 }
@@ -644,7 +645,7 @@ public class NewsDetailActivity extends BaseActivity implements
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
         } else if (view.getId() == R.id.ll_net_hint){//网络提醒下点击播放
-            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), mNewsDetail.getArticle());
+            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             if (NetUtils.isMobile()){
                 Recorder.get().allowMobileTraffic(mNewsDetail.getArticle().getVideo_url());

@@ -26,6 +26,7 @@ import com.zjrb.core.ui.fragment.ScanerBottomFragment;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.core.utils.webjs.LongClickCallBack;
 import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
@@ -241,36 +242,39 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     if (uri != null && !TextUtils.equals(uri.getScheme(), "http") && !TextUtils.equals(uri.getScheme(), "https")) {
                         return super.shouldOverrideUrlLoading(view, url);
                     }
-                    //点击话题链接
-                    if (url.contains("topic.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
-                                .setEvenName("点击话题标签")
-                                .setPageType("新闻详情页")
-                                .build()
-                                .send();
 
-                        //官员名称
-                    } else if (url.contains("gy.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
-                                .setEvenName("点击官员名称")
-                                .setPageType("新闻详情页")
-                                .setOtherInfo(Analytics.newOtherInfo()
-                                        .put("customObjectType", "OfficerType")
-                                        .toString())
-                                .build()
-                                .send();
-                    } else {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
-                                .setEvenName("链接点击")
-                                .setPageType("新闻详情页")
-                                .setOtherInfo(Analytics.newOtherInfo()
-                                        .put("mediaURL", url)
-                                        .toString())
-                                .build()
-                                .send();
+                    if (ClickTracker.isDoubleClick()) return true;
+                    if (Nav.with(itemView.getContext()).to(url)) {
+                        //点击话题链接
+                        if (url.contains("topic.html?id=")) {
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
+                                    .setEvenName("点击话题标签")
+                                    .setPageType("新闻详情页")
+                                    .build()
+                                    .send();
+
+                            //官员名称
+                        } else if (url.contains("gy.html?id=")) {
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
+                                    .setEvenName("点击官员名称")
+                                    .setPageType("新闻详情页")
+                                    .setOtherInfo(Analytics.newOtherInfo()
+                                            .put("customObjectType", "OfficerType")
+                                            .toString())
+                                    .build()
+                                    .send();
+                        } else {
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
+                                    .setEvenName("链接点击")
+                                    .setPageType("新闻详情页")
+                                    .setOtherInfo(Analytics.newOtherInfo()
+                                            .put("mediaURL", url)
+                                            .toString())
+                                    .build()
+                                    .send();
+                        }
+                        return true;
                     }
-
-                    Nav.with(itemView.getContext()).to(url);
                 }
                 return true;
             }

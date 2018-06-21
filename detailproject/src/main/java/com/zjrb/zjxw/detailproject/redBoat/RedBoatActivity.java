@@ -253,7 +253,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             //已订阅状态->取消订阅
             //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击取消订阅栏目", "A0014");
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0014");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -270,7 +270,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                SubscribeAnalytics("点击订阅栏目", "A0014");
+                SubscribeAnalytics("点击\"订阅\"栏目", "A0114");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -348,9 +348,9 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
                 if (subscribe) {
-                    SubscribeAnalytics("点击订阅栏目", "A0014");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
                 } else {
-                    SubscribeAnalytics("点击取消订阅栏目", "A0114");
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
                 }
             }
         }
@@ -404,7 +404,6 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getGuid() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
                 .setClassifyID(mNewsDetail.getArticle().getChannel_id())
                 .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                 .setPageType("新闻详情页")

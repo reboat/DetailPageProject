@@ -27,6 +27,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.task.ArticShareTask;
+import com.zjrb.core.api.task.RedBoatShareTask;
 import com.zjrb.core.common.base.LifecycleActivity;
 import com.zjrb.core.common.biz.UserBiz;
 import com.zjrb.core.common.global.IKey;
@@ -510,36 +511,34 @@ public class MoreDialogLink extends BaseDialogFragment {
             dismissAllDialog();
             T.showShortNow(UIUtils.getApp(), "分享成功");
             setAnalytics(share_media, true);
+            if (mBeanShare.getCallback() != null) {
+                mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
+            }
             //稿件分享成功后，登录用户获取积分
-            if (UserBiz.get().isLoginUser() && mBeanShare.isNeedScored()) {
-                new ArticShareTask(new APICallBack<BaseData>() {
+            if (mBeanShare.isRedBoat()) {
+                new RedBoatShareTask(new APICallBack<BaseData>() {
                     @Override
                     public void onSuccess(BaseData bean) {
-                        //JS分享专用
-                        if (mBeanShare.getCallback() != null) {
-                            mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
-                        }
-                        dismissAllDialog();
                     }
-
-                    @Override
-                    public void onError(String errMsg, int errCode) {
-                        //JS分享专用
-                        if (mBeanShare.getCallback() != null) {
-                            mBeanShare.getCallback().callback_zjxw_js_reweet("FAIL");
-                        }
-                    }
-                }).setTag(this).exe(System.currentTimeMillis(), mBeanShare.getArticleId() != null ? mBeanShare.getArticleId() : "");
+                }).setTag(this).exe(System.currentTimeMillis(), mBeanShare.getArticleId() != null ?
+                        mBeanShare.getArticleId() : "");
             } else {
-                if (mBeanShare.getCallback() != null) {
-                    mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
-                }
+                new ArticShareTask(new APICallBack<BaseData>() {
+                    @Override
+                    public void onSuccess(BaseData data) {
+
+                    }
+                }).setTag(this).exe(mBeanShare.getArticleId() != null ?
+                        mBeanShare.getArticleId() : "", mBeanShare.getTargetUrl());
             }
 
         }
 
         @Override
         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            if (mBeanShare.getCallback() != null) {
+                mBeanShare.getCallback().callback_zjxw_js_reweet("FAIL");
+            }
             setAnalytics(share_media, false);
             T.showShortNow(UIUtils.getApp(), "分享失败");
             dismissAllDialog();

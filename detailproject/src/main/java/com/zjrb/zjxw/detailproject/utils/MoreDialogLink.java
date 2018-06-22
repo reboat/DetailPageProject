@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -27,9 +26,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.task.ArticShareTask;
-import com.zjrb.core.api.task.RedBoatShareTask;
 import com.zjrb.core.common.base.LifecycleActivity;
-import com.zjrb.core.common.biz.UserBiz;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.common.permission.IPermissionCallBack;
@@ -324,7 +321,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         } else if (i == R.id.ll_module_core_me_sina) {
             checkShare(SHARE_MEDIA.SINA);
 
-        } else if (i== R.id.ll_module_core_me_dingding) {
+        } else if (i == R.id.ll_module_core_me_dingding) {
             checkShare(SHARE_MEDIA.DINGTALK);
         }
     }
@@ -515,23 +512,13 @@ public class MoreDialogLink extends BaseDialogFragment {
                 mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
             }
             //稿件分享成功后，登录用户获取积分
-            if (mBeanShare.isRedBoat()) {
-                new RedBoatShareTask(new APICallBack<BaseData>() {
-                    @Override
-                    public void onSuccess(BaseData bean) {
-                    }
-                }).setTag(this).exe(System.currentTimeMillis(), mBeanShare.getArticleId() != null ?
-                        mBeanShare.getArticleId() : "");
-            } else {
-                new ArticShareTask(new APICallBack<BaseData>() {
-                    @Override
-                    public void onSuccess(BaseData data) {
+            new ArticShareTask(new APICallBack<BaseData>() {
+                @Override
+                public void onSuccess(BaseData data) {
 
-                    }
-                }).setTag(this).exe(mBeanShare.getArticleId() != null ?
-                        mBeanShare.getArticleId() : "", mBeanShare.getTargetUrl());
-            }
-
+                }
+            }).setTag(this).exe(mBeanShare.getArticleId() != null ?
+                    mBeanShare.getArticleId() : "", mBeanShare.getTargetUrl());
         }
 
         @Override

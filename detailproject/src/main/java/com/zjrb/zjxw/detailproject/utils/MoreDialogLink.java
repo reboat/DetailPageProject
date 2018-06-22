@@ -580,13 +580,16 @@ public class MoreDialogLink extends BaseDialogFragment {
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
         UmengShareBean mJsShareBean = SPHelper.get().getObject(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
-        if (mJsShareBean != null) { // js分享不为空,重新设置js分享信息
+        if (mJsShareBean != null && !TextUtils.isEmpty(mJsShareBean.getTargetUrl()) && !TextUtils.isEmpty(mJsShareBean.getTitle())) { // js分享不为空,重新设置js分享信息,这里跟ios逻辑统一,只要标题和链接有一个为空,就用原生分享
             bean.setImgUri(mJsShareBean.getImgUri())
                     .setTextContent(mJsShareBean.getTextContent())
                     .setTitle(mJsShareBean.getTitle())
                     .setTargetUrl(mJsShareBean.getTargetUrl());
         }
         if (!bean.isPicShare()) { // 非图片分享
+            if (TextUtils.isEmpty(bean.getTargetUrl())) { // 跟ios统一,targetUrl为空,默认跳官网
+                bean.setTargetUrl("http://zj.zjol.com.cn");
+            }
             UMWeb web = new UMWeb(bean.getTargetUrl());
             if (!TextUtils.isEmpty(bean.getTitle())) {
                 web.setTitle(bean.getTitle());//标题

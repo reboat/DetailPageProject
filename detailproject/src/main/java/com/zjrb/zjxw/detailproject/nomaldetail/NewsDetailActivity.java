@@ -600,7 +600,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击取消订阅栏目", "A0014");
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -617,7 +617,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                SubscribeAnalytics("点击订阅栏目", "A0014");
+                SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -778,9 +778,9 @@ public class NewsDetailActivity extends BaseActivity implements
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
                 if (subscribe) {
-                    SubscribeAnalytics("点击订阅栏目", "A0014");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
                 } else {
-                    SubscribeAnalytics("点击取消订阅栏目", "A0014");
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
                 }
             }
         }

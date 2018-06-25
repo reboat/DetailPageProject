@@ -69,17 +69,17 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
      *
      * @return
      */
-    private int getLastOneTag() {
+    private long getLastOneTag() {
         int size = getDataSize();
         if (size > 0) {
             int count = 1;
             while (size - count >= 0) {
                 Object data = getData(size - count++);
                 if (data instanceof ArticleItemBean) {
-                    return ((ArticleItemBean) data).getId();
+                    return ((ArticleItemBean) data).getSort_number();
                 }
             }
         }
-        return -1;
+        return -1L;
     }
 }

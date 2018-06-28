@@ -719,7 +719,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                                         neverAskPerms) {
 
                                 }
-                            }, Permission.STORAGE_WRITE);
+                            }, Permission.STORAGE_READE, Permission.STORAGE_WRITE);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

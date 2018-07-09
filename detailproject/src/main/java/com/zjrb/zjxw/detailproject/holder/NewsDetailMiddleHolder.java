@@ -110,8 +110,8 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             mListData = new ArrayList<>();
             mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
+            mListData.add(new DetailShareBean("钉钉", SHARE_MEDIA.DINGTALK));
             mListData.add(new DetailShareBean("QQ", SHARE_MEDIA.QQ));
-            mListData.add(new DetailShareBean("微博", SHARE_MEDIA.SINA));
             mListData.add(new DetailShareBean("更多", SHARE_MEDIA.MORE));
         }
 

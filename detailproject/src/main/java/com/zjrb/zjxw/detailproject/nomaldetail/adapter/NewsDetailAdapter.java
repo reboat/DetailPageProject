@@ -272,7 +272,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (datas.get(position) instanceof RelatedNewsBean) {
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009","RelatedContentClick",false)
                         .setEvenName("点击相关新闻列表")
                         .setObjectID(((RelatedNewsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
@@ -285,6 +285,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(((RelatedNewsBean) datas.get(position)).getId() + "")
+                        .newsID(detailBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(detailBean.getArticle().getId() + "")
+                        .newsTitle(detailBean.getArticle().getDoc_title())
+                        .selfChannelID(detailBean.getArticle().getChannel_id())
+                        .channelName(detailBean.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .relatedContentClick("相关新闻")
                         .build()
                         .send();
                 Nav.with(UIUtils.getActivity()).to(url);
@@ -292,7 +299,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010","RelatedContentClick",false)
                         .setEvenName("点击相关专题列表")
                         .setObjectID(((RelatedSubjectsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedSubjectsBean) datas.get(position)).getTitle())
@@ -305,6 +312,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
                                 .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
                                 .toString())
                         .setSelfObjectID(((RelatedSubjectsBean) datas.get(position)).getId() + "")
+                        .newsID(detailBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(detailBean.getArticle().getId() + "")
+                        .newsTitle(detailBean.getArticle().getDoc_title())
+                        .selfChannelID(detailBean.getArticle().getChannel_id())
+                        .channelName(detailBean.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .relatedContentClick("相关专题")
                         .build()
                         .send();
                 Nav.with(UIUtils.getActivity()).to(url);

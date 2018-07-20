@@ -370,7 +370,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 ClickCommentBox();
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                         .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -382,7 +382,13 @@ public class ActivityTopicActivity extends BaseActivity implements
                                 .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
                                 .put("subject", mDetailData.getArticle().getId() + "")
                                 .toString())
-                        .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                        .setSelfObjectID(mDetailData.getArticle().getId() + "").newsID(mDetailData.getArticle().getMlf_id() + "")
+                        .selfNewsID(mDetailData.getArticle().getId() + "")
+                        .newsTitle(mDetailData.getArticle().getDoc_title())
+                        .selfChannelID(mDetailData.getArticle().getChannel_id())
+                        .channelName(mDetailData.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .commentType("文章")
                         .build();
 
                 //进入评论编辑页面(不针对某条评论)
@@ -428,7 +434,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -446,7 +452,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                         @Override
@@ -467,7 +473,7 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            SubscribeAnalytics("点击进入栏目详情页", "800031");
+            SubscribeAnalytics("点击进入栏目详情页", "800031", "ToDetailColumn", "");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -533,7 +539,7 @@ public class ActivityTopicActivity extends BaseActivity implements
      * @return 获取最后一次互动评论刷新的时间戳
      */
     private long getLastCommentMinPublishTime(List<HotCommentsBean> list) {
-        if(list != null && list.size() > 0){
+        if (list != null && list.size() > 0) {
             int size = list.size();
             if (size > 0) {
                 int count = 1;
@@ -616,17 +622,17 @@ public class ActivityTopicActivity extends BaseActivity implements
                 mTopBarHolder.getSubscribe().setSelected(subscribe);
                 mTopBarHolder.getSubscribe().setText(subscriptionText);
                 if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0114");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0114", "SubColumn", "订阅");
                 } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0014");
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0014", "SubColumn", "取消订阅");
                 }
             }
         }
     }
 
     @Override
-    public void SubscribeAnalytics(String eventNme, String eventCode) {
-        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
+    public void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode, scEventName, false)
                 .setEvenName(eventNme)
                 .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                 .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -638,6 +644,10 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .put("customObjectType", "RelatedColumnType")
                         .toString())
                 .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .columnID(mDetailData.getArticle().getColumn_id() + "")
+                .columnName(mDetailData.getArticle().getColumn_name())
+                .pageType("新闻详情页")
+                .operationType(operationType)
                 .build()
                 .send();
     }
@@ -645,7 +655,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
-                "800021")
+                "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -657,13 +667,20 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", bean.getArticle().getId() + "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "");
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl("新闻链接");
     }
 
     @Override
     public void ClickPriseIcon() {
         if (mDetailData != null && mDetailData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                     .setEvenName("点击点赞")
                     .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                     .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -675,7 +692,13 @@ public class ActivityTopicActivity extends BaseActivity implements
                             .put("relatedColumn", "SubjectType")
                             .put("subject", mDetailData.getArticle().getId() + "")
                             .toString())
-                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                    .setSelfObjectID(mDetailData.getArticle().getId() + "").newsID(mDetailData.getArticle().getMlf_id() + "")
+                    .selfNewsID(mDetailData.getArticle().getId() + "")
+                    .newsTitle(mDetailData.getArticle().getDoc_title())
+                    .selfChannelID(mDetailData.getArticle().getChannel_id())
+                    .channelName(mDetailData.getArticle().getChannel_name())
+                    .pageType("新闻详情页")
+                    .supportType("点赞")
                     .build()
                     .send();
         }
@@ -683,7 +706,7 @@ public class ActivityTopicActivity extends BaseActivity implements
 
     @Override
     public void ClickMoreIcon() {
-        new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005", "AppTabClick", false)
                 .setEvenName("点击更多")
                 .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                 .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -695,14 +718,15 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
                         .put("subject", mDetailData.getArticle().getId() + "")
                         .toString())
-                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .setSelfObjectID(mDetailData.getArticle().getId() + "").pageType("新闻详情页")
+                .clickTabName("更多")
                 .build()
                 .send();
     }
 
     @Override
     public void ClickCommentBox() {
-        new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
                 .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                 .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -714,7 +738,8 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
                         .put("subject", mDetailData.getArticle().getId() + "")
                         .toString())
-                .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                .setSelfObjectID(mDetailData.getArticle().getId() + "").pageType("新闻详情页")
+                .clickTabName("评论输入框")
                 .build()
                 .send();
     }
@@ -722,7 +747,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     public void ClickBack() {
         if (mDetailData != null && mDetailData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                     .setEvenName("点击返回")
                     .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                     .setObjectName(mDetailData.getArticle().getDoc_title())
@@ -734,7 +759,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                             .put("relatedColumn", mDetailData.getArticle().getColumn_id() + "")
                             .put("subject", mDetailData.getArticle().getId() + "")
                             .toString())
-                    .setSelfObjectID(mDetailData.getArticle().getId() + "")
+                    .setSelfObjectID(mDetailData.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                     .build()
                     .send();
         }

@@ -219,7 +219,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 if (detailBean != null && detailBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010")
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010","RelatedContentClick",false)
                             .setEvenName("点击相关专题列表")
                             .setObjectID(detailBean.getArticle().getMlf_id() + "")
                             .setObjectName(detailBean.getArticle().getDoc_title())
@@ -231,7 +231,13 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                                     .put("customObjectType", "SubjectType")
                                     .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
                                     .toString())
-                            .setSelfObjectID(detailBean.getArticle().getId() + "")
+                            .setSelfObjectID(detailBean.getArticle().getId() + "").newsID(detailBean.getArticle().getMlf_id() + "")
+                            .selfNewsID(detailBean.getArticle().getId() + "")
+                            .newsTitle(detailBean.getArticle().getDoc_title())
+                            .selfChannelID(detailBean.getArticle().getChannel_id())
+                            .channelName(detailBean.getArticle().getChannel_name())
+                            .pageType("新闻详情页")
+                            .relatedContentClick("相关专题")
                             .build()
                             .send();
                 }
@@ -249,7 +255,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                     .COMMENT_SELECT_ACTIVITY);
         } else if (datas.get(position) instanceof DraftDetailBean) {
             if (detailBean != null && detailBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012","RelatedContentClick",false)
                         .setEvenName("点击正文底部频道名称")
                         .setObjectID(detailBean.getArticle().getChannel_id())
                         .setObjectName(detailBean.getArticle().getChannel_name())
@@ -262,6 +268,13 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(detailBean.getArticle().getId() + "")
+                        .newsID(detailBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(detailBean.getArticle().getId() + "")
+                        .newsTitle(detailBean.getArticle().getDoc_title())
+                        .selfChannelID(detailBean.getArticle().getChannel_id())
+                        .channelName(detailBean.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .relatedContentClick("所属频道")
                         .build()
                         .send();
             }

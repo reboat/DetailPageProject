@@ -358,7 +358,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
         if (mNewsDetail != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024")
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024","PictureRelatedOperation",false)
                     .setEvenName("识别二维码图片")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -370,6 +370,13 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .put("mediaURL", imgUrl)
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .newsID(mNewsDetail.getArticle().getMlf_id()+"")
+                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
+                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
+                    .channelName(mNewsDetail.getArticle().getChannel_name())
+                    .pageType("新闻详情页")
+                    .operationType("识别二维码")
                     .build()
                     .send();
         }
@@ -378,7 +385,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void ClickBack() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001")
+            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
                     .setEvenName("点击返回")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -390,7 +397,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                             .put("subject", "")
                             .toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "").pageType("新闻详情页")
+                    .clickTabName("返回")
                     .build()
                     .send();
         }
@@ -398,7 +406,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void ClickInCommentList() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004")
+        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004","AppTabClick",false)
                 .setEvenName("点击评论，进入评论列表")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -411,6 +419,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .pageType("新闻详情页")
+                .clickTabName("评论按钮")
                 .build()
                 .send();
     }
@@ -418,7 +428,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void ClickPriseIcon() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021")
+            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
                     .setEvenName("点击点赞")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -431,6 +441,13 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .put("subject", "")
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                    .newsID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
+                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
+                    .channelName(mNewsDetail.getArticle().getChannel_name())
+                    .pageType("新闻详情页")
+                    .supportType("点赞")
                     .build()
                     .send();
         }
@@ -438,7 +455,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void ClickMoreIcon() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005")
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
                 .setEvenName("点击更多")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -451,6 +468,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .pageType("新闻详情页")
+                .clickTabName("更多")
                 .build()
                 .send();
     }

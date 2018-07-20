@@ -205,7 +205,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         if (i == R.id.ll_module_core_more_collect) {
             if (mBean != null && mBean.getArticle() != null) {
                 if (!mBean.getArticle().isFollowed()) {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024")
+                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
                             .setEvenName("点击收藏")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
@@ -218,10 +218,17 @@ public class MoreDialogLink extends BaseDialogFragment {
                                     .put("subject", "")
                                     .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .newsID(mBean.getArticle().getMlf_id() + "")
+                            .selfNewsID(mBean.getArticle().getId() + "")
+                            .newsTitle(mBean.getArticle().getDoc_title())
+                            .selfChannelID(mBean.getArticle().getChannel_id())
+                            .channelName(mBean.getArticle().getChannel_name())
+                            .pageType("新闻详情页")
+                            .operationType("收藏")
                             .build()
                             .send();
                 } else {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124")
+                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124", "Collect", false)
                             .setEvenName("取消收藏")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
@@ -233,7 +240,13 @@ public class MoreDialogLink extends BaseDialogFragment {
                                     .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .setSelfObjectID(mBean.getArticle().getId() + "").newsID(mBean.getArticle().getMlf_id() + "")
+                            .selfNewsID(mBean.getArticle().getId() + "")
+                            .newsTitle(mBean.getArticle().getDoc_title())
+                            .selfChannelID(mBean.getArticle().getChannel_id())
+                            .channelName(mBean.getArticle().getChannel_name())
+                            .pageType("新闻详情页")
+                            .operationType("取消收藏")
                             .build()
                             .send();
                 }
@@ -245,7 +258,7 @@ public class MoreDialogLink extends BaseDialogFragment {
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020")
+                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
                             .setEvenName("点击开启夜间模式")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
@@ -258,12 +271,15 @@ public class MoreDialogLink extends BaseDialogFragment {
                                     .put("subject", "")
                                     .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
+                            .pageType("新闻详情页")
+                            .clickTabName("夜间模式设置")
+                            .elementStatus("开")
                             .build()
                             .send();
                 }
             } else {//关闭夜间模式
                 if (mBean != null & mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getContext(), "800006", "800006")
+                    new Analytics.AnalyticsBuilder(getContext(), "800006", "800006", null, false)
                             .setEvenName("点击关闭夜间模式")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
@@ -278,13 +294,19 @@ public class MoreDialogLink extends BaseDialogFragment {
                             .setSelfObjectID(mBean.getArticle().getId() + "")
                             .build()
                             .send();
+                    new Analytics.AnalyticsBuilder(getContext(), null, null, "WithStatusElementClick", false)
+                            .pageType("新闻详情页")
+                            .clickTabName("夜间模式设置")
+                            .elementStatus("关")
+                            .build()
+                            .send();
                 }
             }
             dismissAllDialog();
 
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800007", "800007")
+                new Analytics.AnalyticsBuilder(getContext(), "800007", "800007", "AppTabClick", false)
                         .setEvenName("点击反馈问题")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -297,6 +319,8 @@ public class MoreDialogLink extends BaseDialogFragment {
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .pageType("新闻详情页")
+                        .clickTabName("反馈问题")
                         .build()
                         .send();
             }
@@ -445,6 +469,7 @@ public class MoreDialogLink extends BaseDialogFragment {
             String WMCode = "";
             String UMCode = "";
             String eventDetail = "";
+            String shareClass = "文章";
             if (share_media == SHARE_MEDIA.WEIXIN) {
                 WMCode = "A0022";
                 UMCode = "60003";
@@ -476,7 +501,10 @@ public class MoreDialogLink extends BaseDialogFragment {
                 eventName = "钉钉分享";
                 eventDetail = "钉钉";
             }
-            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode)
+            if (!TextUtils.isEmpty(mBeanShare.getAnalyticsBean().getPageType()) && mBeanShare.getAnalyticsBean().getPageType().equals("官员页面")) {
+                shareClass = "官员";
+            }
+            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode, "NewsShare", false)
                     .setEvenName(eventName)
                     .setObjectID(mBeanShare.getAnalyticsBean().getObjectID())
                     .setObjectName(mBeanShare.getAnalyticsBean().getObjectName())
@@ -488,6 +516,14 @@ public class MoreDialogLink extends BaseDialogFragment {
                     .setSelfObjectID(mBeanShare.getAnalyticsBean().getSelfobjectID())
                     .setIscuccesee(isTrue)
                     .setEventDetail(eventDetail)
+                    .newsID(mBeanShare.getAnalyticsBean().getObjectID())
+                    .selfNewsID(mBeanShare.getArticleId())
+                    .newsTitle(mBeanShare.getTitle())
+                    .selfChannelID(mBeanShare.getAnalyticsBean().getClassifyID())
+                    .channelName(mBeanShare.getAnalyticsBean().getClassifyName())
+                    .pageType(mBeanShare.getAnalyticsBean().getPageType())
+                    .shareType(eventDetail)
+                    .shareClass(shareClass)
                     .build()
                     .send();
         }

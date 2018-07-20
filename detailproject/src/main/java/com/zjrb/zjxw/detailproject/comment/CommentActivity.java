@@ -259,7 +259,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(this, "800002", "800002")
+                new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -269,7 +269,8 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "").pageType("评论列表页")
+                        .clickTabName("评论输入框")
                         .build()
                         .send();
             }
@@ -358,7 +359,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(CommentActivity.this, "A0023", "A0023")
+                    new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
                             .setEvenName("发表评论")
                             .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                             .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -368,7 +369,13 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                             .setOtherInfo(Analytics.newOtherInfo()
                                     .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                     .toString())
-                            .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                            .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
+                            .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                            .newsTitle(mNewsDetail.getArticle().getDoc_title())
+                            .selfChannelID(mNewsDetail.getArticle().getChannel_id())
+                            .channelName(mNewsDetail.getArticle().getChannel_name())
+                            .pageType("评论列表页")
+                            .commentType("文章")
                             .build()
                             .send();
                 }

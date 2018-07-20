@@ -38,8 +38,10 @@ public interface DetailWMHelperInterFace {
          *
          * @param eventNme
          * @param eventCode
+         * @param scEventName
+         * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode);
+        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
     }
 
     /**
@@ -52,8 +54,10 @@ public interface DetailWMHelperInterFace {
          *
          * @param eventNme
          * @param eventCode
+         * @param scEventName
+         * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode);
+        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
 
 
         /**
@@ -218,8 +222,10 @@ public interface DetailWMHelperInterFace {
          *
          * @param eventNme
          * @param eventCode
+         * @param scEventName
+         * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode);
+        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
 
         /**
          * 统计页面停留时长
@@ -316,7 +322,9 @@ public interface DetailWMHelperInterFace {
          *
          * @param eventNme
          * @param eventCode
+         * @param scEventName
+         * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode);
+        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
     }
 }

@@ -40,7 +40,7 @@ public class InterceptWebviewClient extends WebViewClient {
                 if (Nav.with(getContext()).to(url)) {
                     //点击话题链接
                     if (url.contains("topic.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016",null,false)
                                 .setEvenName("点击话题标签")
                                 .setPageType("新闻详情页")
                                 .build()
@@ -48,7 +48,7 @@ public class InterceptWebviewClient extends WebViewClient {
 
                         //官员名称
                     } else if (url.contains("gy.html?id=")) {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017",null,false)
                                 .setEvenName("点击官员名称")
                                 .setPageType("新闻详情页")
                                 .setOtherInfo(Analytics.newOtherInfo()
@@ -57,12 +57,14 @@ public class InterceptWebviewClient extends WebViewClient {
                                 .build()
                                 .send();
                     } else {
-                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
+                        new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015","RelatedContentClick",false)
                                 .setEvenName("链接点击")
                                 .setPageType("新闻详情页")
                                 .setOtherInfo(Analytics.newOtherInfo()
                                         .put("mediaURL", url)
                                         .toString())
+                                .pageType("新闻详情页")
+                                .relatedContentClick("链接")
                                 .build()
                                 .send();
                     }

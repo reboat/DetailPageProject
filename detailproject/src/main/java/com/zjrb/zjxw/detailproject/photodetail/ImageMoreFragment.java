@@ -129,7 +129,7 @@ public class ImageMoreFragment extends BaseFragment {
     public void onBack() {
         if (getActivity() != null) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
                         .setEvenName("点击返回")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -141,7 +141,7 @@ public class ImageMoreFragment extends BaseFragment {
                                 .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .setSelfObjectID(mBean.getArticle().getId() + "").clickTabName("返回")
                         .build()
                         .send();
             }

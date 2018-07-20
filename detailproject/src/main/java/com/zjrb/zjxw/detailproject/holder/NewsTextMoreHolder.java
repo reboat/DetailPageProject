@@ -64,7 +64,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
         //点击精选更多
         if (view.getId() == R.id.menu_comment) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800013", "800013")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800013", "800013","AppTabClick",false)
                         .setEvenName("点击精选的全部按钮")
                         .setObjectID(mBean.getArticle().getChannel_id())
                         .setObjectName(mBean.getArticle().getChannel_name())
@@ -77,6 +77,13 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
+                        .newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .clickTabName("全部")
                         .build()
                         .send();
 

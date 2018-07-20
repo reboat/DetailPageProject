@@ -253,7 +253,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             //已订阅状态->取消订阅
             //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114","SubColumn","取消订阅");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -270,7 +270,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
+                SubscribeAnalytics("点击\"订阅\"栏目", "A0014","SubColumn","订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -292,7 +292,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             }
             //进入栏目
         } else if (v.getId() == R.id.tv_top_bar_title) {
-            SubscribeAnalytics("点击进入栏目详情页", "800031");
+            SubscribeAnalytics("点击进入栏目详情页", "800031","ToDetailColumn","");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -348,9 +348,9 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
                 if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014","SubColumn","订阅");
                 } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114");
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114","SubColumn","取消订阅");
                 }
             }
         }
@@ -364,7 +364,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
      */
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getGuid() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -376,12 +376,18 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "");
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl("新闻链接");
     }
 
     @Override
     public void ClickBack(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
                 .setEvenName("点击返回")
                 .setObjectID(bean.getArticle().getGuid() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -392,15 +398,15 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                 .build()
                 .send();
 
     }
 
     @Override
-    public void SubscribeAnalytics(String eventNme, String eventCode) {
-        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode)
+    public void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode,scEventName,false)
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getGuid() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -411,6 +417,10 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .put("customObjectType", "RelatedColumnType")
                         .toString())
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                .columnID(mNewsDetail.getArticle().getColumn_id() + "")
+                .columnName(mNewsDetail.getArticle().getColumn_name())
+                .pageType("新闻详情页")
+                .operationType(operationType)
                 .build()
                 .send();
     }

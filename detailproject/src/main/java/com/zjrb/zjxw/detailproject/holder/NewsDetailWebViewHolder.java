@@ -247,7 +247,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     if (Nav.with(itemView.getContext()).to(url)) {
                         //点击话题链接
                         if (url.contains("topic.html?id=")) {
-                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016")
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016",null,false)
                                     .setEvenName("点击话题标签")
                                     .setPageType("新闻详情页")
                                     .build()
@@ -255,7 +255,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
                             //官员名称
                         } else if (url.contains("gy.html?id=")) {
-                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017")
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017",null,false)
                                     .setEvenName("点击官员名称")
                                     .setPageType("新闻详情页")
                                     .setOtherInfo(Analytics.newOtherInfo()
@@ -264,12 +264,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                                     .build()
                                     .send();
                         } else {
-                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015")
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015", "RelatedContentClick", false)
                                     .setEvenName("链接点击")
                                     .setPageType("新闻详情页")
                                     .setOtherInfo(Analytics.newOtherInfo()
                                             .put("mediaURL", url)
-                                            .toString())
+                                            .toString()).pageType("新闻详情页")
+                                    .relatedContentClick("链接")
                                     .build()
                                     .send();
                         }
@@ -493,7 +494,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
         if (mData != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024")
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
                     .setEvenName("识别二维码图片")
                     .setObjectID(mData.getArticle().getMlf_id() + "")
                     .setObjectName(mData.getArticle().getDoc_title())
@@ -504,7 +505,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("mediaURL", imgUrl)
                             .toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "")
+                    .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
+                    .selfNewsID(mData.getArticle().getId() + "")
+                    .newsTitle(mData.getArticle().getDoc_title())
+                    .selfChannelID(mData.getArticle().getChannel_id())
+                    .channelName(mData.getArticle().getChannel_name())
+                    .pageType("新闻详情页")
+                    .operationType("识别二维码")
                     .build()
                     .send();
         }

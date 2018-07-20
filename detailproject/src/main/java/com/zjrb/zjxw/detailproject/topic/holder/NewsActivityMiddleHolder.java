@@ -73,7 +73,7 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0114", "A0114")
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0114", "A0114","SubColumn",false)
                             .setEvenName("点击\"订阅\"")
                             .setObjectID(mData.getArticle().getColumn_id()+"")
                             .setObjectName(mData.getArticle().getColumn_name())
@@ -81,6 +81,10 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
                             .setOtherInfo(Analytics.newOtherInfo()
                                     .put("customObjectType", "RelatedColumnType")
                                     .toString())
+                            .columnID(mData.getArticle().getColumn_id()+"")
+                            .columnName(mData.getArticle().getColumn_name())
+                            .pageType("订阅首页")
+                            .operationType("取消订阅")
                             .build()
                             .send();
                     callback.onOptSubscribe();

@@ -79,7 +79,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         public void onClick(View view) {
             if (ClickTracker.isDoubleClick()) return;
             if (view.getId() == R.id.ry_container && mData != null && !TextUtils.isEmpty(mData.getUri_scheme())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011","AppContentClick",false)
                         .setEvenName("更多图集页面，点击单个图集稿件)")
                         .setObjectID(mData.getMlf_id() + "")
                         .setObjectName(mData.getTitle())
@@ -92,6 +92,12 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getId() + "")
+                        .newsID(mData.getMlf_id()+"")
+                        .selfNewsID(mData.getId()+"")
+                        .newsTitle(mData.getTitle())
+                        .pageType("图集列表页")
+                        .objectType("图片新闻列表")
+                        .pubUrl(mData.getUri_scheme())
                         .build()
                         .send();
             }

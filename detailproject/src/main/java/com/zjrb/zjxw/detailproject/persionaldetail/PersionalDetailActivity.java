@@ -114,13 +114,14 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "")
+                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "", "OfficialDetailPageStay", false)
                         .setEvenName("打开单个官员详情页")
                         .setObjectID(data.getOfficer().getId() + "")
                         .setPageType("官员页面")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", "OfficerType")
                                 .toString())
+                        .pageType("官员页面")
                         .build()
                         .send();
                 initView(data);
@@ -170,6 +171,11 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
     }
@@ -190,13 +196,15 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             }
         } else {
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
-                new Analytics.AnalyticsBuilder(this, "800018", "800018")
+                new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
                         .setEvenName("点击分享")
                         .setObjectID(bean.getOfficer().getId() + "")
                         .setPageType("官员页面")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", "OfficerType")
                                 .toString())
+                        .pageType("官员页面")
+                        .clickTabName("分享")
                         .build()
                         .send();
 
@@ -302,7 +310,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
             tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
             if (bean != null && bean.getOfficer() != null) {
-                new Analytics.AnalyticsBuilder(this, "210003", "210003")
+                new Analytics.AnalyticsBuilder(this, "210003", "210003","OfficialDetailClick",false)
                         .setEvenName("点击官员任职履历标签")
                         .setObjectID(bean.getOfficer().getId() + "")
                         .setPageType("官员页面")
@@ -310,6 +318,9 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                                 .put("customObjectType", "OfficerType")
                                 .toString())
                         .setSearch("任职履历")
+                        .officialName(bean.getOfficer().getName())
+                        .officialID(bean.getOfficer().getId()+"")
+                        .pageType("官员页面")
                         .build()
                         .send();
             }

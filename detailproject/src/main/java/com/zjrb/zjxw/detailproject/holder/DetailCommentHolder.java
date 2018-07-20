@@ -97,6 +97,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     private DraftDetailBean mBean;
 
     private String pageType = "新闻详情页";
+    private String scPageType = "新闻详情页";
 
     /**
      * 话题稿专用构造器
@@ -124,6 +125,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         this.articleId = articleId;
         if (!TextUtils.isEmpty(s)) {
             pageType = s;
+            if (s.equals("评论页")) {
+                scPageType = "评论列表页";
+            }
         }
         mBean = bean;
     }
@@ -270,7 +274,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else if (view.getId() == R.id.tv_delete) {
             //弹框
             if (mBean != null && mBean.getArticle() != null && mData != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123", "CommentDeleted", false)
                         .setEvenName("删除评论")
                         .setObjectID(mBean.getArticle().getMlf_id())
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -284,6 +288,12 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
+                        .newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType(scPageType)
                         .build()
                         .send();
             }
@@ -291,7 +301,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复评论者
         } else if (view.getId() == R.id.ly_replay) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("热门评论点击回复")
                         .setObjectID(mBean.getArticle().getMlf_id())
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -305,11 +315,18 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
                         .setAttachObjectId(mData.getId())
+                        .newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType(scPageType)
+                        .commentType("评论")
                         .build()
                         .send();
 
 
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003")
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("回复评论，且发送成功")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -322,7 +339,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId())
+                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType(scPageType)
+                        .commentType("文章")
                         .build();
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
@@ -347,7 +370,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复回复者
         } else {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("热门评论点击回复")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -360,11 +383,17 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId())
+                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType(scPageType)
+                        .commentType("评论")
                         .build()
                         .send();
 
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003")
+                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("回复评论，且发送成功")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())
@@ -377,7 +406,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId())
+                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
+                        .selfNewsID(mBean.getArticle().getId() + "")
+                        .newsTitle(mBean.getArticle().getDoc_title())
+                        .selfChannelID(mBean.getArticle().getChannel_id())
+                        .channelName(mBean.getArticle().getChannel_name())
+                        .pageType(scPageType)
+                        .commentType("文章")
                         .build();
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
@@ -411,6 +446,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     /**
      * 测量textview宽度
+     *
      * @param tv
      * @return
      */

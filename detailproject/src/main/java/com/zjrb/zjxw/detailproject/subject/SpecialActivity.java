@@ -327,7 +327,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public Analytics pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -339,14 +339,20 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", bean.getArticle().getId() + "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl("新闻链接")
                 .build();
     }
 
     @Override
     public void ClickChannel(SpecialGroupBean bean) {
         if (mArticle != null) {
-            new Analytics.AnalyticsBuilder(this, "900001", "900001")
+            new Analytics.AnalyticsBuilder(this, "900001", "900001","SubjectDetailClick",false)
                     .setEvenName("专题详情页，分类标签点击")
                     .setObjectType(ObjectType.NewsType)
                     .setObjectID(mArticle.getMlf_id() + "")
@@ -358,6 +364,13 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .put("subject", mArticle.getId() + "")
                             .toString())
                     .setSelfObjectID(mArticle.getId() + "")
+                    .newsID(mArticle.getMlf_id() + "")
+                    .selfNewsID(mArticle.getId() + "")
+                    .newsTitle(mArticle.getDoc_title())
+                    .selfChannelID(mArticle.getChannel_id())
+                    .channelName(mArticle.getChannel_name())
+                    .pageType("专题详情页")
+                    .classTagClick(bean.getGroup_name())
                     .build()
                     .send();
         }
@@ -365,7 +378,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void ClickSpecialItem(ArticleItemBean bean) {
-        new Analytics.AnalyticsBuilder(this, "200007", "200007")
+        new Analytics.AnalyticsBuilder(this, "200007", "200007","AppContentClick",false)
                 .setEvenName("专题详情页，新闻列表点击")
                 .setObjectID(bean.getMlf_id() + "")
                 .setObjectName(bean.getDoc_title())
@@ -376,6 +389,14 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getId() + "")
+                .newsID(bean.getMlf_id() + "")
+                .selfNewsID(bean.getId() + "")
+                .newsTitle(bean.getDoc_title())
+                .selfChannelID(bean.getChannel_id())
+                .channelName(bean.getChannel_name())
+                .pageType("专题列表页")
+                .objectType("专题新闻列表")
+                .pubUrl(bean.getUrl())
                 .build()
                 .send();
     }
@@ -383,7 +404,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void ClickCollect(boolean isCollect) {
         if (!isCollect) {
-            new Analytics.AnalyticsBuilder(this, "A0024", "A0024")
+            new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024","Collect",false)
                     .setEvenName("点击收藏")
                     .setObjectID(mArticle.getMlf_id() + "")
                     .setObjectName(mArticle.getDoc_title())
@@ -395,11 +416,17 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .put("relatedColumn", "SubjectType")
                             .put("subject", mArticle.getId() + "")
                             .toString())
-                    .setSelfObjectID(mArticle.getId() + "")
+                    .setSelfObjectID(mArticle.getId() + "") .newsID(mArticle.getMlf_id() + "")
+                    .selfNewsID(mArticle.getId()+"")
+                    .newsTitle(mArticle.getDoc_title())
+                    .selfChannelID(mArticle.getChannel_id())
+                    .channelName(mArticle.getChannel_name())
+                    .pageType("专题详情页")
+                    .operationType("收藏")
                     .build()
                     .send();
         } else {
-            new Analytics.AnalyticsBuilder(this, "A0124", "A0124")
+            new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124","Collect",false)
                     .setEvenName("取消收藏")
                     .setObjectID(mArticle.getMlf_id() + "")
                     .setObjectName(mArticle.getDoc_title())
@@ -411,7 +438,13 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .put("relatedColumn", "SubjectType")
                             .put("subject", mArticle.getId() + "")
                             .toString())
-                    .setSelfObjectID(mArticle.getId() + "")
+                    .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
+                    .selfNewsID(mArticle.getId()+"")
+                    .newsTitle(mArticle.getDoc_title())
+                    .selfChannelID(mArticle.getChannel_id())
+                    .channelName(mArticle.getChannel_name())
+                    .pageType("专题详情页")
+                    .operationType("取消收藏")
                     .build()
                     .send();
         }
@@ -420,7 +453,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public void ClickBack() {
-        new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
                 .setEvenName("点击返回")
                 .setObjectID(mArticle.getMlf_id() + "")
                 .setObjectName(mArticle.getDoc_title())
@@ -432,7 +465,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                         .put("relatedColumn", mArticle.getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(mArticle.getId() + "")
+                .setSelfObjectID(mArticle.getId() + "").pageType("新闻详情页").clickTabName("返回")
                 .build()
                 .send();
     }

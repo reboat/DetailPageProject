@@ -197,7 +197,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             //专题详情页焦点图点击
         } else if (v.getId() == R.id.layout_focus) {
             if (mArticle != null && !TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003")
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003","AppContentClick",false)
                         .setEvenName("专题详情页，焦点图点击")
                         .setObjectID(mArticle.getMlf_id() + "")
                         .setObjectName(mArticle.getDoc_title())
@@ -210,6 +210,14 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                                 .put("subject", mArticle.getId() + "")
                                 .toString())
                         .setSelfObjectID(mArticle.getId() + "")
+                        .newsID(mArticle.getMlf_id() + "")
+                        .selfNewsID(mArticle.getId() + "")
+                        .newsTitle(mArticle.getDoc_title())
+                        .selfChannelID(mArticle.getChannel_id())
+                        .channelName(mArticle.getChannel_name())
+                        .pageType("专题详情页")
+                        .objectType("焦点图")
+                        .pubUrl(mArticle.getSubject_focus_url())
                         .build()
                         .send();
                 Nav.with(v.getContext()).to(mArticle.getSubject_focus_url());

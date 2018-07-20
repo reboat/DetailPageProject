@@ -491,7 +491,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 ClickCommentBox(mData);
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023")
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mData.getArticle().getMlf_id() + "")
                         .setObjectName(mData.getArticle().getDoc_title())
@@ -503,7 +503,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                                 .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
+                        .selfNewsID(mData.getArticle().getId()+"")
+                        .newsTitle(mData.getArticle().getDoc_title())
+                        .selfChannelID(mData.getArticle().getChannel_id())
+                        .channelName(mData.getArticle().getChannel_name())
+                        .pageType("新闻详情页")
+                        .commentType("文章")
                         .build();
 
                 try {
@@ -806,7 +812,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021")
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -818,12 +824,18 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "");
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl("新闻链接");
     }
 
     @Override
     public void ClickBack(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "800001", "800001")
+        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
                 .setEvenName("点击返回")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -835,14 +847,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                 .build()
                 .send();
     }
 
     @Override
     public void ClickCommentBox(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "800002", "800002")
+        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
                 .setEvenName("点击评论输入框")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -854,7 +866,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("评论输入框")
                 .build()
                 .send();
 
@@ -862,7 +874,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "A0021", "A0021")
+        new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -874,14 +886,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId()+"")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .supportType("点赞")
                 .build()
                 .send();
     }
 
     @Override
     public void ClickMoreIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "800005", "800005")
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
                 .setEvenName("点击更多")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -893,14 +911,15 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页")
+                .clickTabName("更多")
                 .build()
                 .send();
     }
 
     @Override
     public void ClickDownLoad(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "A0025", "A0025")
+        new Analytics.AnalyticsBuilder(this, "A0025", "A0025","PictureRelatedOperation",false)
                 .setEvenName("点击下载按钮")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -913,13 +932,20 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "")
+                .newsID(bean.getArticle().getMlf_id()+"")
+                .selfNewsID(bean.getArticle().getId()+"")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("图集详情页")
+                .operationType("点击图片下载")
                 .build()
                 .send();
     }
 
     @Override
     public void AtlasSlide(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "A0010", "A0010")
+        new Analytics.AnalyticsBuilder(this, "A0010", "A0010","PictureRelatedOperation",false)
                 .setEvenName("图片浏览(左右滑动)")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -931,14 +957,21 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").clickTabName("返回")
+                .newsID(bean.getArticle().getMlf_id()+"")
+                .selfNewsID(bean.getArticle().getId()+"")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("图集详情页")
+                .operationType("图片浏览(左右滑动)")
                 .build()
                 .send();
     }
 
     @Override
     public void ClickMoreImage(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "A0010", "")
+        new Analytics.AnalyticsBuilder(this, "800011", "800011","AppContentClick",false)
                 .setEvenName("打开更多图集页面)")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -951,6 +984,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "")
+                .newsID(bean.getArticle().getMlf_id()+"")
+                .selfNewsID(bean.getArticle().getId()+"")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("图集列表")
+                .objectType("图集新闻列表")
+                .pubUrl(bean.getArticle().getUrl())
                 .build()
                 .send();
     }

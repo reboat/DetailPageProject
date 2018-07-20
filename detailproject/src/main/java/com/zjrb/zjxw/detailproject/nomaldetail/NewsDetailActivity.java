@@ -845,7 +845,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .pubUrl("新闻链接");
+                .pubUrl(bean.getArticle().getUrl());
     }
 
     @Override

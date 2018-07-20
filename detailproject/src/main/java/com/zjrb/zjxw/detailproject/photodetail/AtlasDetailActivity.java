@@ -784,6 +784,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         if (mData != null && mData.getArticle() != null) {
             if (builder != null) {
                 builder.setPercentage(mReadingScale + "");
+                builder.readPercent(mReadingScale + "");
                 mAnalytics = builder.build();
                 if (mAnalytics != null) {
                     mAnalytics.sendWithDuration();

@@ -567,6 +567,7 @@ public class ActivityTopicActivity extends BaseActivity implements
         if (mDetailData != null && mDetailData.getArticle() != null) {
             if (builder != null) {
                 builder.setPercentage(mScale + "");
+                builder.readPercent(mScale + "");
                 mAnalytics = builder.build();
                 if (mAnalytics != null) {
                     mAnalytics.sendWithDuration();

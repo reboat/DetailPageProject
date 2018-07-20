@@ -696,6 +696,7 @@ public class NewsDetailActivity extends BaseActivity implements
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 builder.setPercentage(mScale + "");
             }
+            builder.readPercent(mScale + "");
             Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();

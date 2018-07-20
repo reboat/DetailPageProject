@@ -22,12 +22,14 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.RedBoatTopBarHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
+import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -309,6 +311,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 builder.setPercentage(mScale + "");
             }
+            builder.readPercent(mScale + "");
             mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
@@ -382,7 +385,13 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .pubUrl(bean.getArticle().getUrl());
+                .pubUrl(bean.getArticle().getUrl())
+//                .publishTime(TimeUtils.getTime(bean.getArticle().getPublished_at(), C.DATE_FORMAT_1))
+//                .newsSource(bean.getArticle().getSource())
+//                .newsType(bean.getArticle().getDoc_type()+"")
+//                .author(bean.getArticle().getAuthor())
+//                .relatedColumn(bean.getArticle().getColumn_name())
+                ;
     }
 
     @Override

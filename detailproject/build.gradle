@@ -39,7 +39,7 @@ dependencies {
         exclude group: 'cn.daily.android:analytics', module: 'analytics'
     }
 //    compile project(':core-library')
-    compile 'cn.daily.android:analytics:5.4.0.4-SNAPSHOT'
+    compile 'cn.daily.android:analytics:5.4.0.6-SNAPSHOT'
     compile('cn.daily.android:daily-news:5.1.1.9-SNAPSHOT') {
         exclude group: 'cn.daily.android'
     }

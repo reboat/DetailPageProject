@@ -1,12 +1,15 @@
 package com.zhejiangdaily;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.SettingManager;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.webjs.AudioDialog;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -30,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        AudioDialog.newInstance().show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "MoreDialog");
 //        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
 //        Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791
@@ -94,9 +98,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                Nav.with(this).to("https://zjprev.8531.cn/red_boat.html?id=100003112");
 //        Nav.with(this).to("https://zjprev.8531.cn/album.html?id=805038");
 
-                SettingManager.getInstance().setOpenHttps(true);
-                SettingManager.getInstance().setHost("apibeta.8531.cn");
-                Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=4387");
+//                SettingManager.getInstance().setOpenHttps(true);
+//                SettingManager.getInstance().setHost("apibeta.8531.cn");
+//                Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=4387");
 //        Nav.with(this).to("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526897239104&di=0179b498871055748b07edca4061e366&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20131211%2F20131211092723-939931253.jpg");
 //                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
         //红船号详情页

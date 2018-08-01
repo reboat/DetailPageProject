@@ -36,7 +36,7 @@ PlayerAnalytics implements PlayerCallback {
 
     @Override
     public void onPause(PlayerView view) {
-        analytics(view, "点击视频播放框上暂停按钮", "A0042", "400004","VideoPlayer","播放");
+        analytics(view, "点击视频播放框上暂停按钮", "A0042", "400004","VideoPlayer","暂停");
     }
 
     @Override

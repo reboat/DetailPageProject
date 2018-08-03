@@ -159,7 +159,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      * 顶部标题
      */
     private CommonTopBarHolder topBarHolder;
-
+    Analytics.AnalyticsBuilder builder;
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topBarHolder = TopBarFactory.createCommonTopBar(view, this);
@@ -178,6 +178,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
+                builder = pageStayTime(draftDetailBean);
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
@@ -295,7 +296,8 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                         .setTextContent(mNewsDetail.getArticle().getSummary())
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
                         .setTargetUrl(url)
-                        .setAnalyticsBean(bean)
+                        .setAnalyticsBean(bean).setEventName("NewsShare")
+                        .setShareType("文章")
                 );
                 ClickShare();
             }
@@ -464,6 +466,12 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        if (builder != null) {
+            Analytics mAnalytics = builder.build();
+            if (mAnalytics != null) {
+                mAnalytics.sendWithDuration();
+            }
+        }
     }
 
     /**
@@ -704,5 +712,28 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                     .build()
                     .send();
         }
+    }
+
+    @Override
+    public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
+                .setEvenName("页面停留时长/阅读深度")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl(bean.getArticle().getUrl());
     }
 }

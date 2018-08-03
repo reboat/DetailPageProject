@@ -288,6 +288,14 @@ public interface DetailWMHelperInterFace {
      */
     interface LiveDetailWM {
         /**
+         * 统计页面停留时长
+         *
+         * @param bean
+         * @return
+         */
+        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
+
+        /**
          * 点击返回
          */
         void ClickBack();

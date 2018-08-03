@@ -425,7 +425,8 @@ public class ActivityTopicActivity extends BaseActivity implements
                         .setTextContent(mDetailData.getArticle().getSummary())
                         .setTitle(mDetailData.getArticle().getDoc_title())
                         .setAnalyticsBean(bean)
-                        .setTargetUrl(mDetailData.getArticle().getUrl()));
+                        .setTargetUrl(mDetailData.getArticle().getUrl()).setEventName("NewsShare")
+                        .setShareType("文章"));
             }
 
         } else if (view.getId() == R.id.iv_top_back) {

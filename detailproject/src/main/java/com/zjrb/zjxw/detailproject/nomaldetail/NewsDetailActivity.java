@@ -574,7 +574,8 @@ public class NewsDetailActivity extends BaseActivity implements
                         .setAnalyticsBean(bean)
                         .setTextContent(mNewsDetail.getArticle().getSummary())
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(mNewsDetail.getArticle().getUrl()));
+                        .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
+                        .setShareType("文章"));
                 //点击分享操作
                 ClickShare(mNewsDetail);
             }

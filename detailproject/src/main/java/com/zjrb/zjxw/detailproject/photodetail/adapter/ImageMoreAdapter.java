@@ -96,7 +96,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
                         .selfNewsID(mData.getId()+"")
                         .newsTitle(mData.getTitle())
                         .pageType("图集列表页")
-                        .objectType("图片新闻列表")
+                        .objectType("图集新闻列表")
                         .pubUrl(mData.getUri_scheme())
                         .build()
                         .send();

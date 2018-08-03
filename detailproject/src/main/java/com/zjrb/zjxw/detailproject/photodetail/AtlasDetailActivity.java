@@ -482,7 +482,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                                 .getDescription())
                         .setTitle(mData.getArticle().getDoc_title())
                         .setTargetUrl(mData.getArticle().getUrl())
-                        .setAnalyticsBean(bean)
+                        .setAnalyticsBean(bean).setEventName("NewsShare")
+                        .setShareType("文章")
                 );
             }
             //评论框

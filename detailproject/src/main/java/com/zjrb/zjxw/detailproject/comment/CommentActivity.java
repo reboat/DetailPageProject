@@ -48,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
+import static com.zjrb.core.utils.UIUtils.getContext;
+
 
 /**
  * 评论列表页面
@@ -109,7 +111,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         ButterKnife.bind(this);
         initData();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRefreshReceiver,new IntentFilter("refresh_comment"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRefreshReceiver, new IntentFilter("refresh_comment"));
     }
 
     @Override
@@ -259,7 +261,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
+                new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
                         .setEvenName("点击评论输入框")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -281,6 +283,27 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             }
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
+                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018", "PageShare", false)
+                        .setEvenName("点击分享")
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setPageType("评论页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .toString())
+                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+                        .newsID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .selfNewsID(mNewsDetail.getArticle().getId() + "")
+                        .newsTitle(mNewsDetail.getArticle().getDoc_title())
+                        .selfChannelID(mNewsDetail.getArticle().getChannel_id())
+                        .channelName(mNewsDetail.getArticle().getChannel_name())
+                        .pageType("评论列表页")
+                        .clickTabName("分享")
+                        .build()
+                        .send();
+
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -288,7 +311,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType("评论列表页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")
@@ -302,7 +325,9 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setTextContent(mBean.getShare_article_info().getSummary())
                         .setTitle(mBean.getShare_article_info().getList_title())
                         .setAnalyticsBean(bean)
-                        .setTargetUrl(mBean.getShare_article_info().getUrl()));
+                        .setTargetUrl(mBean.getShare_article_info().getUrl())
+                        .setShareType("评论")
+                        .setEventName("PageShare"));
             }
 
         }
@@ -359,7 +384,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
+                    new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
                             .setEvenName("发表评论")
                             .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                             .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -370,7 +395,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                                     .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                     .toString())
                             .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                            .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                            .selfNewsID(mNewsDetail.getArticle().getId() + "")
                             .newsTitle(mNewsDetail.getArticle().getDoc_title())
                             .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                             .channelName(mNewsDetail.getArticle().getChannel_name())

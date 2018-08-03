@@ -144,7 +144,7 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
         if (mAdapter != null) {
             if (mBean != null && mBean.getArticle_list() != null && mBean.getArticle_list().size() >= position) {
                 ArticleItemBean bean = mBean.getArticle_list().get(position);
-                new Analytics.AnalyticsBuilder(this, "900002", "900002","AppTabClick",false)
+                new Analytics.AnalyticsBuilder(this, "200007", "200007","AppContentClick",false)
                         .setEvenName("点击更多进入专题列表页面后，新闻列表点击")
                         .setObjectID(bean.getMlf_id() + "")
                         .setObjectName(bean.getDoc_title())

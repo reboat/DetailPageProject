@@ -174,7 +174,8 @@ public class ImageMoreFragment extends BaseFragment {
                             .getDescription())
                     .setTitle(mBean.getArticle().getDoc_title())
                     .setTargetUrl(mBean.getArticle().getUrl())
-                    .setAnalyticsBean(bean)
+                    .setAnalyticsBean(bean).setEventName("NewsShare")
+                    .setShareType("文章")
             );
         }
     }

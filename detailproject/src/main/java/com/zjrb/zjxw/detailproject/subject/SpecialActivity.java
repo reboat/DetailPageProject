@@ -176,7 +176,8 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .setTextContent(mArticle.getSummary())
                             .setTitle(mArticle.getDoc_title())
                             .setAnalyticsBean(bean)
-                            .setTargetUrl(mArticle.getUrl()));
+                            .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
+                            .setShareType("文章"));
                 }
 
             } else if (view.getId() == R.id.iv_top_collect) {
@@ -404,28 +405,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     @Override
     public void ClickCollect(boolean isCollect) {
         if (!isCollect) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
-                    .setEvenName("点击收藏")
-                    .setObjectID(mArticle.getMlf_id() + "")
-                    .setObjectName(mArticle.getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mArticle.getChannel_id())
-                    .setClassifyName(mArticle.getChannel_name())
-                    .setPageType("专题详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", "SubjectType")
-                            .put("subject", mArticle.getId() + "")
-                            .toString())
-                    .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
-                    .selfNewsID(mArticle.getId() + "")
-                    .newsTitle(mArticle.getDoc_title())
-                    .selfChannelID(mArticle.getChannel_id())
-                    .channelName(mArticle.getChannel_name())
-                    .pageType("专题详情页")
-                    .operationType("收藏")
-                    .build()
-                    .send();
-        } else {
             new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124", "Collect", false)
                     .setEvenName("取消收藏")
                     .setObjectID(mArticle.getMlf_id() + "")
@@ -445,6 +424,28 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     .channelName(mArticle.getChannel_name())
                     .pageType("专题详情页")
                     .operationType("取消收藏")
+                    .build()
+                    .send();
+        } else {
+            new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
+                    .setEvenName("点击收藏")
+                    .setObjectID(mArticle.getMlf_id() + "")
+                    .setObjectName(mArticle.getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mArticle.getChannel_id())
+                    .setClassifyName(mArticle.getChannel_name())
+                    .setPageType("专题详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", "SubjectType")
+                            .put("subject", mArticle.getId() + "")
+                            .toString())
+                    .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
+                    .selfNewsID(mArticle.getId() + "")
+                    .newsTitle(mArticle.getDoc_title())
+                    .selfChannelID(mArticle.getChannel_id())
+                    .channelName(mArticle.getChannel_name())
+                    .pageType("专题详情页")
+                    .operationType("收藏")
                     .build()
                     .send();
         }

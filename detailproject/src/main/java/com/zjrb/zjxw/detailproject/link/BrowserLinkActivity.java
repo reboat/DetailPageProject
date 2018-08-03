@@ -266,7 +266,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                         .setTextContent(getString(R.string.module_detail_share_content_from))
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
                         .setTargetUrl(url)
-                        .setAnalyticsBean(bean);
+                        .setAnalyticsBean(bean).setEventName("NewsShare")
+                        .setShareType("文章");
 
                 MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).show(getSupportFragmentManager(), "MoreDialog");
             }

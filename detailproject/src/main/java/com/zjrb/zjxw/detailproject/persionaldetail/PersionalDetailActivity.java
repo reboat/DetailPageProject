@@ -105,6 +105,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
         }
     }
 
+    Analytics.AnalyticsBuilder builder;
+
     /**
      * 加载数据
      */
@@ -114,16 +116,14 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "OfficialDetailPageStay", false)
+                builder = new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "OfficialDetailPageStay", true)
                         .setEvenName("打开单个官员详情页")
                         .setObjectID(data.getOfficer().getId() + "")
                         .setPageType("官员页面")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", "OfficerType")
                                 .toString())
-                        .pageType("官员页面")
-                        .build()
-                        .send();
+                        .pageType("官员页面");
                 initView(data);
             }
 
@@ -173,6 +173,12 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (builder != null) {
+            Analytics mAnalytics = builder.build();
+            if (mAnalytics != null) {
+                mAnalytics.sendWithDuration();
+            }
+        }
     }
 
     @Override
@@ -194,7 +200,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getDetail_url())) {
                 Nav.with(this).to(bean.getOfficer().getDetail_url());
             }
-        } else {
+        } else {//点击分享
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
                 new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
                         .setEvenName("点击分享")
@@ -215,7 +221,10 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                         .setImgUri(bean.getOfficer().getList_pic())
                         .setTextContent(getString(R.string.module_detail_share_content_from))
                         .setTitle(bean.getOfficer().getName())
-                        .setTargetUrl(bean.getOfficer().getShare_url()));
+                        .setTargetUrl(bean.getOfficer().getShare_url())
+                        .setShareContentID(bean.getOfficer().getId() + "")
+                        .setShareType("官员")
+                        .setEventName("PageShare"));
             }
 
         }
@@ -309,21 +318,21 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right);
             tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
             tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
-            if (bean != null && bean.getOfficer() != null) {
-                new Analytics.AnalyticsBuilder(this, "210003", "210003","OfficialDetailClick",false)
-                        .setEvenName("点击官员任职履历标签")
-                        .setObjectID(bean.getOfficer().getId() + "")
-                        .setPageType("官员页面")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("customObjectType", "OfficerType")
-                                .toString())
-                        .setSearch("任职履历")
-                        .officialName(bean.getOfficer().getName())
-                        .officialID(bean.getOfficer().getId()+"")
-                        .pageType("官员页面")
-                        .build()
-                        .send();
-            }
+        }
+        if (bean != null && bean.getOfficer() != null) {
+            new Analytics.AnalyticsBuilder(this, "210003", "210003", "OfficialDetailClick", false)
+                    .setEvenName("点击官员任职履历标签")
+                    .setObjectID(bean.getOfficer().getId() + "")
+                    .setPageType("官员页面")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("customObjectType", "OfficerType")
+                            .toString())
+                    .setSearch("任职履历")
+                    .officialName(bean.getOfficer().getName())
+                    .officialID(bean.getOfficer().getId() + "")
+                    .pageType("官员页面")
+                    .build()
+                    .send();
         }
 
     }

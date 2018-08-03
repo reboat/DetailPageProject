@@ -209,7 +209,8 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                     .setTextContent(article.getSummary())
                     .setTitle(article.getDoc_title())
                     .setPlatform(mListData.get(position).getPlatform())
-                    .setTargetUrl(article.getUrl()));
+                    .setTargetUrl(article.getUrl()).setEventName("NewsShare")
+                    .setShareType("文章"));
 
         }
     }

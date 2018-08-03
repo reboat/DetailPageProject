@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zjrb.core.common.base.BaseActivity;
+import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.nav.Nav;
+import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.utils.SettingManager;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.webjs.AudioDialog;
@@ -33,7 +35,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        AudioDialog.newInstance().show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "MoreDialog");
+//        AudioDialog.newInstance().show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "MoreDialog");
+        CommentWindowDialog.newInstance(new CommentDialogBean("740555", null)).show((
+                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
+                "CommentWindowDialog");
 //        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
 //        Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791

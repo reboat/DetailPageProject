@@ -141,7 +141,7 @@ public class ImageMoreFragment extends BaseFragment {
                                 .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "").clickTabName("返回")
+                        .setSelfObjectID(mBean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                         .build()
                         .send();
             }

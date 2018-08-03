@@ -114,7 +114,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "", "OfficialDetailPageStay", false)
+                new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "OfficialDetailPageStay", false)
                         .setEvenName("打开单个官员详情页")
                         .setObjectID(data.getOfficer().getId() + "")
                         .setPageType("官员页面")

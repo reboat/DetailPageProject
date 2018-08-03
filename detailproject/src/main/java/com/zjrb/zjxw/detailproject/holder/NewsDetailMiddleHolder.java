@@ -149,7 +149,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
 //            } else
             if (view.getId() == R.id.ry_channel) {
                 if (mData != null && mData.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012","RelatedContentClick",false)
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
                             .setEvenName("点击正文底部频道名称")
                             .setObjectID(mData.getArticle().getChannel_id())
                             .setObjectName(mData.getArticle().getChannel_name())
@@ -245,6 +245,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
      */
     private void setAnalytics(SHARE_MEDIA share_media) {
         if (mData != null && mData.getArticle() != null) {
+            boolean isMore = false;
             String eventName = "";
             String WMCode = "";
             String UMCode = "";
@@ -287,6 +288,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 eventName = "点击\"更多\"";
                 scEventName = "AppTabClick";
                 clickTab = "更多";
+                isMore = true;
             }
             new Analytics.AnalyticsBuilder(itemView.getContext(), WMCode, UMCode, scEventName, false)
                     .setEvenName(eventName)
@@ -302,14 +304,14 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                             .toString())
                     .setSelfObjectID(mData.getArticle().getId() + "")
                     .setEventDetail(eventDetail)
-                    .newsID(mData.getArticle().getMlf_id() + "")
-                    .selfNewsID(mData.getArticle().getId() + "")
-                    .newsTitle(mData.getArticle().getDoc_title())
-                    .selfChannelID(mData.getArticle().getChannel_id())
-                    .channelName(mData.getArticle().getChannel_name())
+                    .newsID(isMore ? "" : mData.getArticle().getMlf_id() + "")
+                    .selfNewsID(isMore ? "" : mData.getArticle().getId() + "")
+                    .newsTitle(isMore ? "" : mData.getArticle().getDoc_title())
+                    .selfChannelID(isMore ? "" : mData.getArticle().getChannel_id())
+                    .channelName(isMore ? "" : mData.getArticle().getChannel_name())
                     .pageType("新闻详情页")
-                    .shareType(eventDetail)
-                    .shareClass("文章")
+                    .shareType(isMore ? "" : eventDetail)
+                    .shareClass(isMore ? "" : "文章")
                     .clickTabName(clickTab)
                     .build()
                     .send();

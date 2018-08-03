@@ -595,7 +595,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                     .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                     .channelName(mNewsDetail.getArticle().getChannel_name())
                     .pageType("新闻详情页")
-                    .supportType("点赞")
+                    .supportType("文章")
                     .build()
                     .send();
         }

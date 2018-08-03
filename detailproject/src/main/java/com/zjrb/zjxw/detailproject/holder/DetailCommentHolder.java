@@ -23,6 +23,7 @@ import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -263,6 +264,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     @OnClick({R2.id.tv_thumb_up, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply})
     public void onClick(View view) {
+        if (ClickTracker.isDoubleClick()) return;
         //点赞
         if (view.getId() == R.id.tv_thumb_up) {
             if (!mData.isLiked()) {

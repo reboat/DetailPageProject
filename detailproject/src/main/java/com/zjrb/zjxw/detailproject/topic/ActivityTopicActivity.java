@@ -699,7 +699,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                     .selfChannelID(mDetailData.getArticle().getChannel_id())
                     .channelName(mDetailData.getArticle().getChannel_name())
                     .pageType("新闻详情页")
-                    .supportType("点赞")
+                    .supportType("文章")
                     .build()
                     .send();
         }

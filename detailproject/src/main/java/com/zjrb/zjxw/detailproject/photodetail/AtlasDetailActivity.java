@@ -893,7 +893,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .supportType("点赞")
+                .supportType("文章")
                 .build()
                 .send();
     }
@@ -958,7 +958,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").clickTabName("返回")
+                .setSelfObjectID(bean.getArticle().getId() + "")
                 .newsID(bean.getArticle().getMlf_id()+"")
                 .selfNewsID(bean.getArticle().getId()+"")
                 .newsTitle(bean.getArticle().getDoc_title())

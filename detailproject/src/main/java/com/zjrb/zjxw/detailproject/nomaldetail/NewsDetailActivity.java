@@ -889,7 +889,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                 .channelName(mNewsDetail.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .supportType("点赞")
+                .supportType("文章")
                 .build()
                 .send();
     }
@@ -967,7 +967,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(mNewsDetail.getArticle().getId() + "").clickTabName("返回")
+                .setSelfObjectID(mNewsDetail.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                 .build()
                 .send();
     }

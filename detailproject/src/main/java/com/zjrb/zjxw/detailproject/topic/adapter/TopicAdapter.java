@@ -92,7 +92,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                         .isTopic_comment_has_more(), detailBean);
             case VIEW_TYPE_COMMENT:
                 return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle()
-                        .getId()));
+                        .getId()),detailBean);
             case VIEW_TYPE_NO_COMMENT:
                 return new NewsNoCommentTextHolder(parent);
             default:

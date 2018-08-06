@@ -62,7 +62,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点击精选更多
-        if (view.getId() == R.id.menu_comment) {
+        if (view.getId() == R.id.tv_all) {
             if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800013", "800013","AppTabClick",false)
                         .setEvenName("点击精选的全部按钮")

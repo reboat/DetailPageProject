@@ -112,6 +112,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         this.articleId = articleId;
     }
 
+    //TODO  WLJ 可以减少id的参数，直接传bean
+
     /**
      * 评论列表专用构造器
      *

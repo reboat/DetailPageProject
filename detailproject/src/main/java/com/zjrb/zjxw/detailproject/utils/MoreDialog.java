@@ -257,7 +257,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 eventName = "钉钉分享";
                 eventDetail = "钉钉";
             }
-            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode,"NewsShare",false)
+            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode, "NewsShare", false)
                     .setEvenName(eventName)
                     .setObjectID(getMlfID(article))
                     .setObjectName(article.getDoc_title())
@@ -272,7 +272,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                     .setSelfObjectID(article.getId() + "")
                     .setEventDetail(eventDetail)
                     .newsID(getMlfID(article))
-                    .selfNewsID(article.getId()+"")
+                    .selfNewsID(article.getId() + "")
                     .newsTitle(article.getDoc_title())
                     .selfChannelID(article.getChannel_id())
                     .channelName(article.getChannel_name())
@@ -376,7 +376,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             if (mBean != null && mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();
                 if (!mBean.getArticle().isFollowed()) {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024","Collect",false)
+                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
                             .setEvenName("点击收藏")
                             .setObjectID(getMlfID(article))
                             .setObjectName(article.getDoc_title())
@@ -388,8 +388,8 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                                     .put("relatedColumn", article.getColumn_id() + "")
                                     .put("subject", "")
                                     .toString())
-                            .setSelfObjectID(article.getId() + "") .newsID(mBean.getArticle().getMlf_id() + "")
-                            .selfNewsID(mBean.getArticle().getId()+"")
+                            .setSelfObjectID(article.getId() + "").newsID(mBean.getArticle().getMlf_id() + "")
+                            .selfNewsID(mBean.getArticle().getId() + "")
                             .newsTitle(mBean.getArticle().getDoc_title())
                             .selfChannelID(mBean.getArticle().getChannel_id())
                             .channelName(mBean.getArticle().getChannel_name())
@@ -398,7 +398,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .build()
                             .send();
                 } else {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124","Collect",false)
+                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124", "Collect", false)
                             .setEvenName("取消收藏")
                             .setObjectID(getMlfID(article))
                             .setObjectName(article.getDoc_title())
@@ -411,7 +411,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                                     .put("subject", "")
                                     .toString())
                             .setSelfObjectID(article.getId() + "").newsID(mBean.getArticle().getMlf_id() + "")
-                            .selfNewsID(mBean.getArticle().getId()+"")
+                            .selfNewsID(mBean.getArticle().getId() + "")
                             .newsTitle(mBean.getArticle().getDoc_title())
                             .selfChannelID(mBean.getArticle().getChannel_id())
                             .channelName(mBean.getArticle().getChannel_name())
@@ -433,28 +433,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {
                     DraftDetailBean.ArticleBean article = mBean.getArticle();
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020","WithStatusElementClick",false)
-                            .setEvenName("点击开启夜间模式")
-                            .setObjectID(getMlfID(article))
-                            .setObjectName(article.getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(article.getChannel_id())
-                            .setClassifyName(article.getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", article.getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(article.getId() + "").pageType("新闻详情页")
-                            .clickTabName("夜间模式设置")
-                            .elementStatus("开")
-                            .build()
-                            .send();
-                }
-            } else {//关闭夜间模式
-                if (mBean != null & mBean.getArticle() != null) {
-                    DraftDetailBean.ArticleBean article = mBean.getArticle();
-                    new Analytics.AnalyticsBuilder(getContext(), "800006", "800006",null,false)
+                    new Analytics.AnalyticsBuilder(getContext(), "800006", "800006", null, false)
                             .setEvenName("点击关闭夜间模式")
                             .setObjectID(getMlfID(article))
                             .setObjectName(article.getDoc_title())
@@ -476,13 +455,34 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                             .build()
                             .send();
                 }
+            } else {//关闭夜间模式
+                if (mBean != null & mBean.getArticle() != null) {
+                    DraftDetailBean.ArticleBean article = mBean.getArticle();
+                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
+                            .setEvenName("点击开启夜间模式")
+                            .setObjectID(getMlfID(article))
+                            .setObjectName(article.getDoc_title())
+                            .setObjectType(ObjectType.NewsType)
+                            .setClassifyID(article.getChannel_id())
+                            .setClassifyName(article.getChannel_name())
+                            .setPageType("新闻详情页")
+                            .setOtherInfo(Analytics.newOtherInfo()
+                                    .put("relatedColumn", article.getColumn_id() + "")
+                                    .put("subject", "")
+                                    .toString())
+                            .setSelfObjectID(article.getId() + "").pageType("新闻详情页")
+                            .clickTabName("夜间模式设置")
+                            .elementStatus("开")
+                            .build()
+                            .send();
+                }
             }
             dismissFragmentDialog();
             //返回键
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();
-                new Analytics.AnalyticsBuilder(getContext(), "800007", "800007","AppTabClick",false)
+                new Analytics.AnalyticsBuilder(getContext(), "800007", "800007", "AppTabClick", false)
                         .setEvenName("点击反馈问题")
                         .setObjectID(getMlfID(article))
                         .setObjectName(article.getDoc_title())
@@ -494,7 +494,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                                 .put("relatedColumn", article.getColumn_id() + "")
                                 .put("subject", "")
                                 .toString())
-                        .setSelfObjectID(article.getId() + "") .pageType("新闻详情页")
+                        .setSelfObjectID(article.getId() + "").pageType("新闻详情页")
                         .clickTabName("反馈问题")
                         .build()
                         .send();
@@ -557,7 +557,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             }
             if (mBean != null && mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();
-                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022","FontSizeSet",false)
+                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022", "FontSizeSet", false)
                         .setEvenName("点击字体调节")
                         .setObjectID(getMlfID(article))
                         .setObjectName(article.getDoc_title())
@@ -587,7 +587,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             }
             if (mBean != null && mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();
-                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022","FontSizeSet",false)
+                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022", "FontSizeSet", false)
                         .setEvenName("点击字体调节")
                         .setObjectID(getMlfID(article))
                         .setObjectName(article.getDoc_title())
@@ -600,7 +600,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(article.getId() + "")
-                        .setEventDetail("m") .pageType("新闻详情页")
+                        .setEventDetail("m").pageType("新闻详情页")
                         .clickTabName("字体大小设置")
                         .elementStatus("中")
                         .build()
@@ -616,7 +616,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             }
             if (mBean != null && mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();
-                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022","FontSizeSet",false)
+                new Analytics.AnalyticsBuilder(getContext(), "700022", "700022", "FontSizeSet", false)
                         .setEvenName("点击字体调节")
                         .setObjectID(getMlfID(article))
                         .setObjectName(article.getDoc_title())
@@ -629,7 +629,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(article.getId() + "")
-                        .setEventDetail("l") .pageType("新闻详情页")
+                        .setEventDetail("l").pageType("新闻详情页")
                         .clickTabName("字体大小设置")
                         .elementStatus("大")
                         .build()

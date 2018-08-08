@@ -156,7 +156,13 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
                                 .toString())
                         .setSelfObjectID(bean.getId() + "")
                         .pageType("专题详情页")
-                        .clickTabName("更多")
+                        .objectType("专题新闻列表")
+                        .pubUrl(bean.getUrl())
+                        .newsID(bean.getMlf_id() + "")
+                        .selfNewsID(bean.getId() + "")
+                        .newsTitle(bean.getDoc_title())
+                        .selfChannelID(bean.getChannel_id())
+                        .channelName(bean.getChannel_name())
                         .build()
                         .send();
             }

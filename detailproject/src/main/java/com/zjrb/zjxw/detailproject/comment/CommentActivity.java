@@ -283,7 +283,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             }
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018", "PageShare", false)
+                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018", "AppTabClick", false)
                         .setEvenName("点击分享")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())

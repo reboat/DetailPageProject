@@ -230,33 +230,33 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                         .clickTabName("更多")
                         .build()
                         .send();
-            } else {
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mData.getArticle().getMlf_id() + "")
-                        .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mData.getArticle().getChannel_id() + "")
-                        .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mData.getArticle().getId() + "");
 
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(true)
-                        .setAnalyticsBean(bean)
-                        .setArticleId(mData.getArticle().getId() + "")
-                        .setImgUri(mData.getArticle().getFirstPic())
-                        .setTextContent(mData.getArticle().getSummary())
-                        .setTitle(mData.getArticle().getDoc_title())
-                        .setPlatform(mListData.get(position).getPlatform())
-                        .setTargetUrl(mData.getArticle().getUrl())
-                        .setEventName("NewsShare")
-                        .setShareType("文章"));
             }
+            //分享专用bean
+            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                    .setObjectID(mData.getArticle().getMlf_id() + "")
+                    .setObjectName(mData.getArticle().getDoc_title())
+                    .setObjectType(ObjectType.NewsType)
+                    .setClassifyID(mData.getArticle().getChannel_id() + "")
+                    .setClassifyName(mData.getArticle().getChannel_name())
+                    .setPageType("新闻详情页")
+                    .setOtherInfo(Analytics.newOtherInfo()
+                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                            .put("subject", "")
+                            .toString())
+                    .setSelfobjectID(mData.getArticle().getId() + "");
+
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(true)
+                    .setAnalyticsBean(bean)
+                    .setArticleId(mData.getArticle().getId() + "")
+                    .setImgUri(mData.getArticle().getFirstPic())
+                    .setTextContent(mData.getArticle().getSummary())
+                    .setTitle(mData.getArticle().getDoc_title())
+                    .setPlatform(mListData.get(position).getPlatform())
+                    .setTargetUrl(mData.getArticle().getUrl())
+                    .setEventName("NewsShare")
+                    .setShareType("文章"));
 
         }
     }

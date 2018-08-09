@@ -82,7 +82,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
                         .newsTitle(mBean.getArticle().getDoc_title())
                         .selfChannelID(mBean.getArticle().getChannel_id())
                         .channelName(mBean.getArticle().getChannel_name())
-                        .pageType("新闻详情页")
+                        .pageType("话题详情页")
                         .clickTabName("全部")
                         .build()
                         .send();

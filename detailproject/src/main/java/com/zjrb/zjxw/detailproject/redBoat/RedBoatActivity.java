@@ -379,18 +379,13 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getGuid() + "")
                 .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
                 .pubUrl(bean.getArticle().getUrl())
-//                .publishTime(TimeUtils.getTime(bean.getArticle().getPublished_at(), C.DATE_FORMAT_1))
-//                .newsSource(bean.getArticle().getSource())
-//                .newsType(bean.getArticle().getDoc_type()+"")
-//                .author(bean.getArticle().getAuthor())
-//                .relatedColumn(bean.getArticle().getColumn_name())
                 ;
     }
 

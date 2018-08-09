@@ -211,113 +211,54 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
-//            setAnalytics(mListData.get(position).getPlatform());
-            //分享专用bean
-            OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                    .setObjectID(mData.getArticle().getMlf_id() + "")
-                    .setObjectName(mData.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mData.getArticle().getChannel_id() + "")
-                    .setClassifyName(mData.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfobjectID(mData.getArticle().getId() + "");
+            if (position == 4) {
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800005", "800005", "AppTabClick", false)
+                        .setEvenName("点击更多")
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id())
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfObjectID(mData.getArticle().getId() + "")
+                        .setEventDetail("更多")
+                        .pageType("新闻详情页")
+                        .clickTabName("更多")
+                        .build()
+                        .send();
+            } else {
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mData.getArticle().getMlf_id() + "")
+                        .setObjectName(mData.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.NewsType)
+                        .setClassifyID(mData.getArticle().getChannel_id() + "")
+                        .setClassifyName(mData.getArticle().getChannel_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mData.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfobjectID(mData.getArticle().getId() + "");
 
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(true)
-                    .setAnalyticsBean(bean)
-                    .setArticleId(mData.getArticle().getId() + "")
-                    .setImgUri(mData.getArticle().getFirstPic())
-                    .setTextContent(mData.getArticle().getSummary())
-                    .setTitle(mData.getArticle().getDoc_title())
-                    .setPlatform(mListData.get(position).getPlatform())
-                    .setTargetUrl(mData.getArticle().getUrl())
-                    .setEventName("NewsShare")
-                    .setShareType("文章"));
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(true)
+                        .setAnalyticsBean(bean)
+                        .setArticleId(mData.getArticle().getId() + "")
+                        .setImgUri(mData.getArticle().getFirstPic())
+                        .setTextContent(mData.getArticle().getSummary())
+                        .setTitle(mData.getArticle().getDoc_title())
+                        .setPlatform(mListData.get(position).getPlatform())
+                        .setTargetUrl(mData.getArticle().getUrl())
+                        .setEventName("NewsShare")
+                        .setShareType("文章"));
+            }
 
         }
     }
-
-
-//    /**
-//     * 设置网脉埋点
-//     */
-//    private void setAnalytics(SHARE_MEDIA share_media) {
-//        if (mData != null && mData.getArticle() != null) {
-//            boolean isMore = false;
-//            String eventName = "";
-//            String WMCode = "";
-//            String UMCode = "";
-//            String eventDetail = "";
-//            String scEventName = "";
-//            String clickTab = "";
-//            if (share_media == SHARE_MEDIA.WEIXIN) {
-//                WMCode = "A0022";
-//                UMCode = "60003";
-//                eventName = "微信分享";
-//                eventDetail = "微信";
-//                scEventName = "NewsShare";
-//            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-//                WMCode = "A0022";
-//                UMCode = "60004";
-//                eventName = "朋友圈分享";
-//                eventDetail = "朋友圈";
-//                scEventName = "NewsShare";
-//            } else if (share_media == SHARE_MEDIA.QQ) {
-//                WMCode = "A0022";
-//                UMCode = "800020";
-//                eventName = "QQ分享";
-//                eventDetail = "QQ";
-//                scEventName = "NewsShare";
-//            } else if (share_media == SHARE_MEDIA.SINA) {
-//                WMCode = "A0022";
-//                UMCode = "60001";
-//                eventName = "新浪微博分享";
-//                eventDetail = "新浪微博";
-//                scEventName = "NewsShare";
-//            } else if (share_media == SHARE_MEDIA.QZONE) {
-//                WMCode = "A0022";
-//                UMCode = "800019";
-//                eventName = "QQ空间分享";
-//                eventDetail = "QQ空间";
-//                scEventName = "NewsShare";
-//            } else if (share_media == SHARE_MEDIA.MORE) { // 更多
-//                WMCode = "800005";
-//                UMCode = "800005";
-//                eventName = "点击\"更多\"";
-//                scEventName = "AppTabClick";
-//                clickTab = "更多";
-//                isMore = true;
-//            }
-//            new Analytics.AnalyticsBuilder(itemView.getContext(), WMCode, UMCode, scEventName, false)
-//                    .setEvenName(eventName)
-//                    .setObjectID(mData.getArticle().getMlf_id() + "")
-//                    .setObjectName(mData.getArticle().getDoc_title())
-//                    .setObjectType(ObjectType.NewsType)
-//                    .setClassifyID(mData.getArticle().getChannel_id())
-//                    .setClassifyName(mData.getArticle().getChannel_name())
-//                    .setPageType("新闻详情页")
-//                    .setOtherInfo(Analytics.newOtherInfo()
-//                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-//                            .put("subject", "")
-//                            .toString())
-//                    .setSelfObjectID(mData.getArticle().getId() + "")
-//                    .setEventDetail(eventDetail)
-//                    .newsID(isMore ? "" : mData.getArticle().getMlf_id() + "")
-//                    .selfNewsID(isMore ? "" : mData.getArticle().getId() + "")
-//                    .newsTitle(isMore ? "" : mData.getArticle().getDoc_title())
-//                    .selfChannelID(isMore ? "" : mData.getArticle().getChannel_id())
-//                    .channelName(isMore ? "" : mData.getArticle().getChannel_name())
-//                    .pageType("新闻详情页")
-//                    .shareType(isMore ? "" : eventDetail)
-//                    .shareClass(isMore ? "" : "文章")
-//                    .clickTabName(clickTab)
-//                    .build()
-//                    .send();
-//        }
-//    }
 
 }

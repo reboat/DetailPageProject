@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
@@ -35,6 +37,8 @@ import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,6 +103,20 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
+
+    /**
+     * 评论标签
+     */
+    private String comment_tag = "";
+    /**
+     * 剩余内容
+     */
+    private String no_comment_tag = "";
+
+    /**
+     * 评论标签正则表达式
+     */
+    private final String COMMENT_TAG = "^[a-zA-Z0-9_\\u4e00-\\u9fa5]+$";
 
     /**
      * 话题稿专用构造器
@@ -174,7 +192,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mLyComment.setVisibility(View.VISIBLE);
             //回复者评论
             if (mData.getContent() != null) {
-                mContent.setText(mData.getContent());
+                doCommentTag(mData.getContent());
+                if (ThemeMode.isNightMode()) {
+                    mContent.setText(Html.fromHtml("<font color=#4b7aae>" + comment_tag + "</font>" + "<font color=#5c5c5c>" + no_comment_tag + "</font>"));
+                } else {
+                    mContent.setText(Html.fromHtml("<font color=#036ce2>" + comment_tag + "</font>" + "<font color=#000000>" + no_comment_tag + "</font>"));
+                }
+//                mContent.setText(mData.getContent());
             }
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
@@ -206,7 +230,19 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mTvCommentContent.setVisibility(View.VISIBLE);
                 mLyComment.setVisibility(View.VISIBLE);
                 mReply.setVisibility(View.VISIBLE);
-                mTvCommentContent.setText(mData.getParent_content());
+
+                //父评论内容
+                if (!TextUtils.isEmpty(mData.getParent_content())) {
+                    doCommentTag(mData.getParent_content());
+                    if (ThemeMode.isNightMode()) {
+                        mTvCommentContent.setText(Html.fromHtml("<font color=#4b7aae>" + comment_tag + "</font>" + "<font color=#5c5c5c>" + no_comment_tag + "</font>"));
+                    } else {
+                        mTvCommentContent.setText(Html.fromHtml("<font color=#036ce2>" + comment_tag + "</font>" + "<font color=#000000>" + no_comment_tag + "</font>"));
+                    }
+                }
+
+//              mTvCommentContent.setText(mData.getParent_content());
+
                 //父评论昵称
                 if (mData.getParent_account_type() == 1) {//主持人
                     mIvGuest.setVisibility(View.VISIBLE);
@@ -527,6 +563,49 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else {
             return "" + "," + "" + "," + "";
+        }
+    }
+
+    /**
+     * 解析标签
+     *
+     * @param s
+     */
+    private void doCommentTag(String s) {
+        //如果标签有内容，则进行清除
+        comment_tag = "";
+        no_comment_tag = s;
+
+        if (!TextUtils.isEmpty(s)) {
+            for (int i = 0; i < s.length(); i++) {
+                if (s.length() == 1 || s.charAt(0) != '#') {
+                    break;
+                } else {
+                    //如果第二个也是#，跳出
+                    if (i == 1 && s.charAt(1) == '#') {
+                        break;
+                    }
+                    //循环遍历，找到即退出
+                    if (i > 1 && i <= 101 && s.charAt(i) == '#') {
+                        //如果匹配
+                        if (Pattern.compile(COMMENT_TAG).matcher(s.substring(1, i)).matches()) {
+                            //最后一个字符是'#'
+                            if (s.length() == i + 1) {
+                                comment_tag = s;
+                                no_comment_tag = "";
+                            } else {
+                                comment_tag = s.substring(0, i + 1);
+                                no_comment_tag = s.substring(i + 1);
+                            }
+                            break;
+                        }
+                    }
+                    //超过101位则不再进行判定
+                    if (i > 101) {
+                        break;
+                    }
+                }
+            }
         }
     }
 }

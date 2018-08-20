@@ -283,7 +283,8 @@ public class MoreDialogLink extends BaseDialogFragment {
             } else {//关闭夜间模式
                 if (mBean != null & mBean.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("点击开启夜间模式")
+                            .setEvenName("夜间模式设置")
+                            .setEventDetail("开")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
                             .setObjectType(ObjectType.NewsType)

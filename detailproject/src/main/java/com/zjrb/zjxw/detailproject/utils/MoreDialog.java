@@ -459,7 +459,8 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 if (mBean != null & mBean.getArticle() != null) {
                     DraftDetailBean.ArticleBean article = mBean.getArticle();
                     new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("点击开启夜间模式")
+                            .setEvenName("夜间模式设置")
+                            .setEventDetail("开")
                             .setObjectID(getMlfID(article))
                             .setObjectName(article.getDoc_title())
                             .setObjectType(ObjectType.NewsType)

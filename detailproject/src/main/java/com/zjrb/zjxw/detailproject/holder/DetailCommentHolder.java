@@ -1,9 +1,12 @@
 package com.zjrb.zjxw.detailproject.holder;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +20,10 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.SPHelper;
+import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
 import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
@@ -35,6 +41,9 @@ import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,6 +108,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
+
+    /**
+     * 评论标签正则表达式
+     */
+    private final String COMMENT_TAG = "#[\\u4e00-\\u9fa5A-Za-z0-9_]{1,100}$*#";
 
     /**
      * 话题稿专用构造器
@@ -174,7 +188,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mLyComment.setVisibility(View.VISIBLE);
             //回复者评论
             if (mData.getContent() != null) {
-                mContent.setText(mData.getContent());
+                mContent.setText(doCommentTag(mData.getContent()));
             }
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
@@ -206,7 +220,12 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mTvCommentContent.setVisibility(View.VISIBLE);
                 mLyComment.setVisibility(View.VISIBLE);
                 mReply.setVisibility(View.VISIBLE);
-                mTvCommentContent.setText(mData.getParent_content());
+
+                //父评论内容
+                if (!TextUtils.isEmpty(mData.getParent_content())) {
+                    mTvCommentContent.setText(doCommentTag(mData.getContent()));
+                }
+
                 //父评论昵称
                 if (mData.getParent_account_type() == 1) {//主持人
                     mIvGuest.setVisibility(View.VISIBLE);
@@ -527,6 +546,32 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else {
             return "" + "," + "" + "," + "";
+        }
+    }
+
+    /**
+     * 评论标签算法
+     *
+     * @param s
+     * @return
+     */
+    private SpannableString doCommentTag(String s) {
+        SpannableString spannableString = new SpannableString(s);
+        ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        Pattern datePattern = Pattern.compile(TextUtils.isEmpty(sp.comment_pattern) ? COMMENT_TAG : sp.comment_pattern);
+        Matcher dateMatcher = datePattern.matcher(s);
+        while (dateMatcher.find()) {
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);
+            break;
+        }
+        return spannableString;
+    }
+
+    private String getcolor() {
+        if (ThemeMode.isNightMode()) {
+            return "#4b7aae";
+        } else {
+            return "#036ce2";
         }
     }
 }

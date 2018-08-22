@@ -583,19 +583,23 @@ public class NewsDetailActivity extends BaseActivity implements
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-                if (NetUtils.isWifi()){
+
+                if (NetUtils.isAvailable()){
+                    if (NetUtils.isMobile()){
+                        llStart.setVisibility(View.GONE);
+                        llNetHint.setVisibility(View.VISIBLE);
+                        tvNetHint.setText("用流量播放");
+                        tvNetHint.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                    if (NetUtils.isWifi()){
+                        PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
+                        PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+                        return;
+                    }
                     PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                     PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                    return;
                 }
-                if (NetUtils.isMobile()){
-                    llStart.setVisibility(View.GONE);
-                    llNetHint.setVisibility(View.VISIBLE);
-                    tvNetHint.setText("用流量播放");
-                    tvNetHint.setVisibility(View.VISIBLE);
-                }
-
-
 
             }
         } else if (view.getId() == R.id.iv_top_bar_back) {

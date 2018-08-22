@@ -35,7 +35,7 @@ dependencies {
 
     compile 'com.android.support:percent:25.3.1'
     compile('cn.daily.android:scaner-library:5.3.0.15-SNAPSHOT')
-    compile('cn.daily.android:core-library:5.4.0.20-SNAPSHOT') {
+    compile('cn.daily.android:core-library:5.5.0.1-SNAPSHOT') {
         exclude group: 'cn.daily.android:analytics', module: 'analytics'
     }
 

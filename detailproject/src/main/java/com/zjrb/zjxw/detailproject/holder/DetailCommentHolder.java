@@ -20,7 +20,9 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.domain.CommentDialogBean;
 import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
@@ -555,7 +557,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      */
     private SpannableString doCommentTag(String s) {
         SpannableString spannableString = new SpannableString(s);
-        Pattern datePattern = Pattern.compile(COMMENT_TAG);
+        ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        Pattern datePattern = Pattern.compile(TextUtils.isEmpty(sp.comment_pattern) ? COMMENT_TAG : sp.comment_pattern);
         Matcher dateMatcher = datePattern.matcher(s);
         while (dateMatcher.find()) {
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);

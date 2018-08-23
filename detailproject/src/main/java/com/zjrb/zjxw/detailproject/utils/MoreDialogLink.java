@@ -576,11 +576,27 @@ public class MoreDialogLink extends BaseDialogFragment {
 
 
     /**
+     * 是否使用js分享  当js下发非图片分享时,只要标题和链接有一个为空,就用原生分享;当下发的是图片分享时且图片链接不为空,不需要判断标题和链接是否为空
+     * @param mJsShareBean
+     * @return
+     */
+    private boolean isUseJsShare(UmengShareBean mJsShareBean) {
+        if (mJsShareBean == null) {
+            return false;
+        }
+        if (!mJsShareBean.isPicShare()) { // 非图片分享,标题及链接都不为空时使用js分享,当有一个为空时使用原生分享
+            return !TextUtils.isEmpty(mJsShareBean.getTargetUrl()) && !TextUtils.isEmpty(mJsShareBean.getTitle());
+        } else { // 图片分享,当下发的图片链接不为空时,使用js分享
+            return !TextUtils.isEmpty(mJsShareBean.getImgUri());
+        }
+    }
+
+    /**
      * @param bean 分享的信息
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
         UmengShareBean mJsShareBean = SPHelper.get().getObject(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
-        if (mJsShareBean != null && !TextUtils.isEmpty(mJsShareBean.getTargetUrl()) && !TextUtils.isEmpty(mJsShareBean.getTitle())) { // js分享不为空,重新设置js分享信息,这里跟ios逻辑统一,只要标题和链接有一个为空,就用原生分享
+        if (isUseJsShare(mJsShareBean)) {
             bean.setImgUri(mJsShareBean.getImgUri())
                     .setPicShare(mJsShareBean.isPicShare())
                     .setTextContent(mJsShareBean.getTextContent())

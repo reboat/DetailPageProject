@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.dailyplayer.vertical.VerticalManager;
 import com.aliya.player.PlayerManager;
 import com.aliya.player.utils.Recorder;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
@@ -247,26 +248,20 @@ public class NewsDetailActivity extends BaseActivity implements
      * 初始化视频
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
-//        String url = bean.getVideo_url();
-//        if (bean.getVideo_type() == 2) {//video 2 vr类型 1或者空 普通视频
-//            if (TextUtils.isEmpty(url)) {
-//                mVideoContainer.setVisibility(View.GONE);
-//            } else {
-//                mVideoContainer.setVisibility(View.VISIBLE);
-//                UVMediaType type = UVMediaType.UVMEDIA_TYPE_M3U8;
-//                if (url.trim().endsWith("m3u8")) {
-//                    type = UVMediaType.UVMEDIA_TYPE_M3U8;
-//                } else if (url.trim().endsWith("mp4")) {
-//                    type = UVMediaType.UVMEDIA_TYPE_MP4;
-//                }
-//                long duration = bean.getVideo_duration() > 0 ? bean.getVideo_duration() : 0;
-//                String pic = bean.getList_pics().get(0);
-//                VrSource vrSource = new VrSource(type, url, duration, pic, SettingManager.getInstance().isAutoPlayVideoWithWifi());
-//                vrManager = new VRManager(vrSource, this, mVideoContainer, new VrAnaly(bean));
-//                vrManager.changeOrientation(false);
-//            }
-//            return;
-//        }
+        String url = bean.getVideo_url();
+        if (!TextUtils.isEmpty(url)){
+            Uri uri = Uri.parse(url);
+            String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
+            if (true/*!TextUtils.isEmpty(type)*/){
+//                boolean isVertical = Integer.valueOf(type)==1;
+                if (true){
+                    mVideoContainer.setVisibility(View.VISIBLE);
+                    VerticalManager.getInstance().init(mVideoContainer,url,bean.getFirstPic(),bean.getDoc_title());
+                    return;
+                }
+            }
+
+        }
 
 
         if (!TextUtils.isEmpty(bean.getVideo_url())) {
@@ -583,19 +578,23 @@ public class NewsDetailActivity extends BaseActivity implements
             //重新加载
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-                if (NetUtils.isWifi()){
+
+                if (NetUtils.isAvailable()){
+                    if (NetUtils.isMobile()){
+                        llStart.setVisibility(View.GONE);
+                        llNetHint.setVisibility(View.VISIBLE);
+                        tvNetHint.setText("用流量播放");
+                        tvNetHint.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                    if (NetUtils.isWifi()){
+                        PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
+                        PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+                        return;
+                    }
                     PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                     PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                    return;
                 }
-                if (NetUtils.isMobile()){
-                    llStart.setVisibility(View.GONE);
-                    llNetHint.setVisibility(View.VISIBLE);
-                    tvNetHint.setText("用流量播放");
-                    tvNetHint.setVisibility(View.VISIBLE);
-                }
-
-
 
             }
         } else if (view.getId() == R.id.iv_top_bar_back) {

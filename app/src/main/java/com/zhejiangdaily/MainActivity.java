@@ -109,9 +109,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        Nav.with(this).to("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526897239104&di=0179b498871055748b07edca4061e366&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20131211%2F20131211092723-939931253.jpg");
 //                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
         //红船号详情页
-//                SettingManager.getInstance().setOpenHttps(true);
-//                SettingManager.getInstance().setHost("api-new.8531.cn");
-//                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
+                SettingManager.getInstance().setOpenHttps(true);
+                SettingManager.getInstance().setHost("api-new.8531.cn");
+                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
 
 
 //                Nav.with(this).to("https://zj.zjol.com.cn/news.html?id=920034");

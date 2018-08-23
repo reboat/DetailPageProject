@@ -109,10 +109,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
 
-    /**
-     * 评论标签正则表达式
-     */
-    private final String COMMENT_TAG = "#[\\u4e00-\\u9fa5A-Za-z0-9_]{1,100}$*#";
+//    /**
+//     * 评论标签正则表达式
+//     */
+//    private final String COMMENT_TAG = "#[\\u4e00-\\u9fa5A-Za-z0-9_]{1,100}$*#";
 
     /**
      * 话题稿专用构造器
@@ -558,7 +558,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     private SpannableString doCommentTag(String s) {
         SpannableString spannableString = new SpannableString(s);
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-        Pattern datePattern = Pattern.compile(TextUtils.isEmpty(sp.comment_pattern) ? COMMENT_TAG : sp.comment_pattern);
+        //如果正则为空，则清除标签
+        if (TextUtils.isEmpty(sp.comment_pattern)) {
+            SPHelper.get().put("comment_tag", "").commit();
+        }
+        Pattern datePattern = Pattern.compile(sp.comment_pattern);
         Matcher dateMatcher = datePattern.matcher(s);
         while (dateMatcher.find()) {
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);

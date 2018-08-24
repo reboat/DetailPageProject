@@ -252,9 +252,9 @@ public class NewsDetailActivity extends BaseActivity implements
         if (!TextUtils.isEmpty(url)){
             Uri uri = Uri.parse(url);
             String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
-            if (true/*!TextUtils.isEmpty(type)*/){
-//                boolean isVertical = Integer.valueOf(type)==1;
-                if (true){
+            if (!TextUtils.isEmpty(type)){
+                boolean isVertical = Integer.valueOf(type)==1;
+                if (isVertical){
                     mVideoContainer.setVisibility(View.VISIBLE);
                     VerticalManager.getInstance().init(mVideoContainer,url,bean.getFirstPic(),bean.getDoc_title());
                     return;

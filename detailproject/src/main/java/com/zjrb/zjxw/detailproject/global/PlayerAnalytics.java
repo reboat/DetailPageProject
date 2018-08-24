@@ -3,9 +3,9 @@ package com.zjrb.zjxw.detailproject.global;
 import android.content.Context;
 import android.view.View;
 
-import com.aliya.player.Extra;
-import com.aliya.player.PlayerCallback;
-import com.aliya.player.ui.PlayerView;
+import com.aliya.dailyplayer.Extra;
+import com.aliya.dailyplayer.PlayerCallback;
+import com.aliya.dailyplayer.ui.PlayerView;
 import com.trs.tasdk.entity.ObjectType;
 import com.utovr.gson.Gson;
 import com.zjrb.core.utils.UIUtils;

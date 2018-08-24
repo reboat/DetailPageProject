@@ -22,9 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aliya.dailyplayer.PlayerManager;
+import com.aliya.dailyplayer.utils.Recorder;
 import com.aliya.dailyplayer.vertical.VerticalManager;
-import com.aliya.player.PlayerManager;
-import com.aliya.player.utils.Recorder;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;

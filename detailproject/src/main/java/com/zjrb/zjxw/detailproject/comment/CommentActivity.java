@@ -311,7 +311,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("评论列表页")
+                        .setPageType("评论页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")

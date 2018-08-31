@@ -258,8 +258,9 @@ public class MoreDialogLink extends BaseDialogFragment {
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getContext(), "800006", "800006", null, false)
-                            .setEvenName("点击关闭夜间模式")
+                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
+                            .setEvenName("夜间模式设置")
+                            .setEventDetail("关")
                             .setObjectID(mBean.getArticle().getMlf_id() + "")
                             .setObjectName(mBean.getArticle().getDoc_title())
                             .setObjectType(ObjectType.NewsType)
@@ -271,9 +272,6 @@ public class MoreDialogLink extends BaseDialogFragment {
                                     .put("subject", "")
                                     .toString())
                             .setSelfObjectID(mBean.getArticle().getId() + "")
-                            .build()
-                            .send();
-                    new Analytics.AnalyticsBuilder(getContext(), null, null, "WithStatusElementClick", false)
                             .pageType("新闻详情页")
                             .clickTabName("夜间模式设置")
                             .elementStatus("关")
@@ -474,32 +472,32 @@ public class MoreDialogLink extends BaseDialogFragment {
             if (share_media == SHARE_MEDIA.WEIXIN) {
                 WMCode = "A0022";
                 UMCode = "60003";
-                eventName = "微信分享成功";
+                eventName = "微信分享；微信分享成功";
                 eventDetail = "微信";
             } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
                 WMCode = "A0022";
                 UMCode = "60004";
-                eventName = "朋友圈分享成功";
+                eventName = "朋友圈分享；朋友圈分享成功";
                 eventDetail = "朋友圈";
             } else if (share_media == SHARE_MEDIA.QQ) {
                 WMCode = "A0022";
                 UMCode = "800020";
-                eventName = "QQ分享成功";
+                eventName = "QQ分享；QQ分享成功";
                 eventDetail = "QQ";
             } else if (share_media == SHARE_MEDIA.SINA) {
                 WMCode = "A0022";
                 UMCode = "60001";
-                eventName = "新浪微博分享成功";
-                eventDetail = "新浪微博";
+                eventName = "微博分享；微博分享成功";
+                eventDetail = "微博";
             } else if (share_media == SHARE_MEDIA.QZONE) {
                 WMCode = "A0022";
                 UMCode = "800019";
-                eventName = "QQ空间分享成功";
+                eventName = "QQ空间分享;QQ空间分享成功";
                 eventDetail = "QQ空间";
             } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
                 WMCode = "A0022";
                 UMCode = "800032";
-                eventName = "钉钉分享";
+                eventName = "钉钉分享;钉钉分享成功";
                 eventDetail = "钉钉";
             }
             if (!TextUtils.isEmpty(mBeanShare.getAnalyticsBean().getPageType()) && mBeanShare.getAnalyticsBean().getPageType().equals("官员页面")) {

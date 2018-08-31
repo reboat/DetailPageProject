@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -260,7 +261,6 @@ public class NewsDetailActivity extends BaseActivity implements
                     return;
                 }
             }
-
         }
 
 
@@ -581,10 +581,15 @@ public class NewsDetailActivity extends BaseActivity implements
 
                 if (NetUtils.isAvailable()){
                     if (NetUtils.isMobile()){
-                        llStart.setVisibility(View.GONE);
-                        llNetHint.setVisibility(View.VISIBLE);
-                        tvNetHint.setText("用流量播放");
-                        tvNetHint.setVisibility(View.VISIBLE);
+                        if (Recorder.get().isAllowMobileTraffic(mNewsDetail.getArticle().getVideo_url())){
+                            PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
+                            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+                        }else {
+                            llStart.setVisibility(View.GONE);
+                            llNetHint.setVisibility(View.VISIBLE);
+                            tvNetHint.setText("用流量播放");
+                            tvNetHint.setVisibility(View.VISIBLE);
+                        }
                         return;
                     }
                     if (NetUtils.isWifi()){
@@ -976,6 +981,7 @@ public class NewsDetailActivity extends BaseActivity implements
     public class NetworkChangeReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             if (NetUtils.isMobile() && tvNetHint.getVisibility() == View.VISIBLE){
                 tvNetHint.setText("用流量播放");
                 return;

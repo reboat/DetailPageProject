@@ -224,7 +224,8 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                         .setTargetUrl(bean.getOfficer().getShare_url())
                         .setShareContentID(bean.getOfficer().getId() + "")
                         .setShareType("官员")
-                        .setEventName("PageShare"));
+                        .setEventName("PageShare")
+                );
             }
 
         }

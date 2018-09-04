@@ -223,7 +223,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
                 //父评论内容
                 if (!TextUtils.isEmpty(mData.getParent_content())) {
-                    mTvCommentContent.setText(doCommentTag(mData.getContent()));
+                    mTvCommentContent.setText(doCommentTag(mData.getParent_content()));
                 }
 
                 //父评论昵称

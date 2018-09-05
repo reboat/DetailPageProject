@@ -188,7 +188,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mLyComment.setVisibility(View.VISIBLE);
             //回复者评论
             if (mData.getContent() != null) {
-                mContent.setText(doCommentTag(mData.getContent()));
+                mContent.setText(doCommentTag(mData.getContent()) != null ? doCommentTag(mData.getContent()) : mData.getContent());
             }
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
@@ -223,7 +223,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
                 //父评论内容
                 if (!TextUtils.isEmpty(mData.getParent_content())) {
-                    mTvCommentContent.setText(doCommentTag(mData.getParent_content()));
+                    mTvCommentContent.setText(doCommentTag(mData.getParent_content()) != null ? doCommentTag(mData.getParent_content()) : mData.getParent_content());
                 }
 
                 //父评论昵称
@@ -563,6 +563,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             SPHelper.get().put("comment_tag", "").commit();
         }
         Pattern datePattern = Pattern.compile(sp.comment_pattern);
+        if (datePattern == null) return null;
         Matcher dateMatcher = datePattern.matcher(s);
         while (dateMatcher.find()) {
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);

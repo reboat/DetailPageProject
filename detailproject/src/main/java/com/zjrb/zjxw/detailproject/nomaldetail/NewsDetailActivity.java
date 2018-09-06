@@ -258,7 +258,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 boolean isVertical = Integer.valueOf(type)==1;
                 if (isVertical){
                     mVideoContainer.setVisibility(View.VISIBLE);
-                    VerticalManager.getInstance().init(mVideoContainer,url,String.valueOf(bean.getVideo_duration()),bean.getFirstPic(),bean.getDoc_title());
+                    VerticalManager.getInstance().init(mVideoContainer,url,String.valueOf(Format.duration(bean.getVideo_duration() * 1000)),bean.getFirstPic(),bean.getDoc_title());
                     if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()){
                         VFullscreenActivity.startActivity(getContext(),url,bean.getDoc_title());
                     }

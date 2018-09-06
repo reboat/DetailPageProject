@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.dailyplayer.PlayerManager;
+import com.aliya.dailyplayer.VFullscreenActivity;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.aliya.dailyplayer.vertical.VerticalManager;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
@@ -258,6 +259,9 @@ public class NewsDetailActivity extends BaseActivity implements
                 if (isVertical){
                     mVideoContainer.setVisibility(View.VISIBLE);
                     VerticalManager.getInstance().init(mVideoContainer,url,bean.getFirstPic(),bean.getDoc_title());
+                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()){
+                        VFullscreenActivity.startActivity(getContext(),url,bean.getDoc_title());
+                    }
                     return;
                 }
             }

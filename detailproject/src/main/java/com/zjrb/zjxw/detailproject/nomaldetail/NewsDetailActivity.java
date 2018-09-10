@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -23,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.VFullscreenActivity;
@@ -88,8 +88,9 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
+
+import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
 import static com.aliya.dailyplayer.VFullscreenActivity.REQUEST_CODE;
-import static com.aliya.player.FullscreenActivity.KEY_URL;
 import static com.umeng.socialize.common.SocializeConstants.KEY_TITLE;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -991,7 +992,7 @@ public class NewsDetailActivity extends BaseActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == VFullscreenActivity.REQUEST_CODE&&resultCode==RESULT_OK){
+        if (requestCode == REQUEST_CODE&&resultCode==RESULT_OK){
             VerticalManager.getInstance().initUI();
         }
     }

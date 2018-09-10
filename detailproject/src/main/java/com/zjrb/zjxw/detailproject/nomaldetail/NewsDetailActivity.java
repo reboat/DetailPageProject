@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -87,6 +88,9 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
+import static com.aliya.dailyplayer.VFullscreenActivity.REQUEST_CODE;
+import static com.aliya.player.FullscreenActivity.KEY_URL;
+import static com.umeng.socialize.common.SocializeConstants.KEY_TITLE;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
 
@@ -258,9 +262,12 @@ public class NewsDetailActivity extends BaseActivity implements
                 boolean isVertical = Integer.valueOf(type)==1;
                 if (isVertical){
                     mVideoContainer.setVisibility(View.VISIBLE);
-                    VerticalManager.getInstance().init(mVideoContainer,url,String.valueOf(Format.duration(bean.getVideo_duration() * 1000)),bean.getFirstPic(),bean.getDoc_title());
+                    VerticalManager.getInstance().init(this,mVideoContainer,url,String.valueOf(Format.duration(bean.getVideo_duration() * 1000)),bean.getFirstPic(),bean.getDoc_title());
                     if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()){
-                        VFullscreenActivity.startActivity(getContext(),url,bean.getDoc_title());
+                        Intent intent = new Intent(this, VFullscreenActivity.class);
+                        intent.putExtra(KEY_URL, url);
+                        intent.putExtra(KEY_TITLE,bean.getDoc_title());
+                        ActivityCompat.startActivityForResult(this, intent,REQUEST_CODE, null);
                     }
                     return;
                 }
@@ -979,6 +986,14 @@ public class NewsDetailActivity extends BaseActivity implements
                 .setSelfObjectID(mNewsDetail.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
                 .build()
                 .send();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VFullscreenActivity.REQUEST_CODE&&resultCode==RESULT_OK){
+            VerticalManager.getInstance().initUI();
+        }
     }
 
     //网络监听

@@ -44,7 +44,7 @@ dependencies {
 //    }
     compile 'cn.daily.android:analytics:5.4.0.8-SNAPSHOT'
 
-    compile('cn.daily.android:android-player:0.3.0.28') {
+    compile('cn.daily.android:android-player:0.3.0.37') {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
     }

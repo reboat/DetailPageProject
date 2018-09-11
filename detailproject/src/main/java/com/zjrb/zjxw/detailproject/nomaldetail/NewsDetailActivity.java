@@ -989,13 +989,6 @@ public class NewsDetailActivity extends BaseActivity implements
                 .send();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE&&resultCode==RESULT_OK){
-            VerticalManager.getInstance().initUI();
-        }
-    }
 
     //网络监听
     public class NetworkChangeReceiver extends BroadcastReceiver {

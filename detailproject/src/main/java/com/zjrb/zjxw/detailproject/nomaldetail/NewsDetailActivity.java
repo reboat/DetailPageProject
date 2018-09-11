@@ -89,9 +89,9 @@ import cn.daily.news.analytics.Analytics;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
 
+import static com.aliya.dailyplayer.VFullscreenActivity.KEY_TITLE;
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
 import static com.aliya.dailyplayer.VFullscreenActivity.REQUEST_CODE;
-import static com.umeng.socialize.common.SocializeConstants.KEY_TITLE;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
 

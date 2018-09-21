@@ -561,9 +561,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         //如果正则为空，则清除标签
         if (TextUtils.isEmpty(sp.comment_pattern)) {
             SPHelper.get().put("comment_tag", "").commit();
+            return spannableString;
         }
         Pattern datePattern = Pattern.compile(sp.comment_pattern);
-        if (datePattern == null) return null;
+        if (datePattern == null || TextUtils.isEmpty(s)) return null;
         Matcher dateMatcher = datePattern.matcher(s);
         while (dateMatcher.find()) {
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);

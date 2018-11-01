@@ -714,7 +714,7 @@ public class MoreDialogLink extends BaseDialogFragment {
                 return false;
             }
         } else if (platform == SHARE_MEDIA.DINGTALK) {
-            if (!AppUtils.isInstall("com.alibaba.android.rimet")) { // 旧版本使用友盟api存在问题
+            if (mShareAPI != null && !mShareAPI.isInstall(UIUtils.getActivity(), SHARE_MEDIA.DINGTALK)) {
                 T.showShortNow(UIUtils.getApp(), "未安装钉钉客户端");
                 return false;
             }

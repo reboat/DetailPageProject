@@ -134,7 +134,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         } else {
             mView.setVisibility(View.VISIBLE);
             mTextView.setVisibility(View.VISIBLE);
-            if (getDataSize() >= 99999) {
+            if (commentCount > 99999) {
                 mTextView.setText("99999+条评论");
             } else {
                 mTextView.setText(commentCount + "条评论");

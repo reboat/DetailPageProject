@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -114,6 +115,13 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        mFloorBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         mWebView.setLongClickCallBack(this);
         mWebView.setWebViewClient(new InterceptWebviewClient());
         mReceiver = new SubscribeReceiver(this);

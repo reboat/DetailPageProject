@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: 'http://10.100.62.98:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.4/publish-0.0.4.gradle'
 apply plugin: 'com.jakewharton.butterknife'
-//apply from: "${rootDir}/public.gradle"
 
 
 android {
@@ -35,13 +34,11 @@ dependencies {
 
     compile 'com.android.support:percent:25.3.1'
     compile('cn.daily.android:scaner-library:5.3.0.15-SNAPSHOT')
+
     compile('cn.daily.android:core-library:5.5.0.1-SNAPSHOT') {
         exclude group: 'cn.daily.android:analytics', module: 'analytics'
     }
 
-//    compile('cn.daily.android:analytics:5.4.0.8-SNAPSHOT'){
-//        exclude group: 'com.android.support'
-//    }
     compile 'cn.daily.android:analytics:5.4.0.8-SNAPSHOT'
 
     compile('cn.daily.android:android-player:0.3.0.44') {
@@ -57,9 +54,11 @@ dependencies {
     compile 'cn.daily.android:daily-db:5.1.0'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+
     compile ('cn.daily.android:daily-vr:5.3.1.4-SNAPSHOT'){
         exclude group: 'cn.daily.android'
     }
+
     compile 'cn.daily.android:location:1.0.6-SNAPSHOT'
 }
 

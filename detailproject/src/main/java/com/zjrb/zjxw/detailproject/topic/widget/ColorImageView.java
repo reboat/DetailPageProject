@@ -7,13 +7,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.support.annotation.AttrRes;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.aliya.uimode.intef.UiModeChangeListener;
 import com.zjrb.zjxw.detailproject.topic.utils.ArgbUtils;
-import com.zjrb.zjxw.detailproject.topic.utils.AttrUtils;
 
 /**
  * 可变色 - ImageView
@@ -65,7 +65,7 @@ public class ColorImageView extends AppCompatImageView implements UiModeChangeLi
         invalidate();
     }
 
-    public void setAttrId(@AttrRes int startId, @AttrRes int endId) {
+    public void setAttrId(@ColorRes int startId, @ColorRes int endId) {
         startAttrId = startId;
         endAttrId = endId;
     }
@@ -77,8 +77,8 @@ public class ColorImageView extends AppCompatImageView implements UiModeChangeLi
 
         mFraction = fraction;
         setApplyMaskColor(ArgbUtils.evaluate(fraction,
-                AttrUtils.getColor(getTheme(), startAttrId),
-                AttrUtils.getColor(getTheme(), endAttrId)));
+                ContextCompat.getColor(getContext(), startAttrId),
+                ContextCompat.getColor(getContext(), endAttrId)));
     }
 
     private Resources.Theme getTheme() {

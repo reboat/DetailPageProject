@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.uimode.mode.Attr;
 import com.aliya.uimode.utils.UiModeUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.common.base.BaseRecyclerAdapter;
@@ -23,7 +24,6 @@ import java.util.List;
  */
 
 public final class DetailShareAdapter extends BaseRecyclerAdapter {
-
 
     /**
      * 构造方法
@@ -64,19 +64,19 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 tv_title.setText(mData.getContent());
             }
             if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_friend);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_friend_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wx);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_wechat_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qq);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_qq_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_wb);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_sina_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_qzone);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_space_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.DINGTALK) {
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_dingding);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_dingding_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.MORE) { // 更多
-                UiModeUtils.applyImageSrc(iv_img, R.attr.module_detail_share_more);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_more_btn);
             }
 
         }

@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.redBoat;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -22,14 +20,12 @@ import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.base.toolbar.holder.RedBoatTopBarHolder;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.C;
 import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -218,7 +214,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         //web
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
+        mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_343434));
         mAdapter = new RedBoatAdapter(datas,
                 !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
         mAdapter.setEmptyView(new EmptyPageHolder(mRvContent,

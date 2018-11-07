@@ -86,7 +86,7 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
 
     private void initView() {
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
-        lvNotice.addItemDecoration(new ListSpaceDivider(0.5, R.attr.dc_dddddd, true));
+        lvNotice.addItemDecoration(new ListSpaceDivider(0.5, R.color._dddddd_343434, true));
         //添加刷新头
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);

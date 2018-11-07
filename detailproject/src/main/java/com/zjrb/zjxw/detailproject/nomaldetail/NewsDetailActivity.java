@@ -388,7 +388,7 @@ public class NewsDetailActivity extends BaseActivity implements
         //web
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
-        mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.attr.dc_dddddd));
+        mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
         mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,

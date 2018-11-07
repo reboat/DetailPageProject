@@ -81,7 +81,7 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
 
     private void init() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+        mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.color._dddddd_343434, true));
         mRefresh = new HeaderRefresh(mRecycler);
         mRefresh.setOnRefreshListener(this);
         loadData(true);

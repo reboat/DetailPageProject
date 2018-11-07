@@ -216,11 +216,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.setScrollContainer(false);
         // 夜间模式
         if (ThemeMode.isNightMode()) {
-            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
-                    .bc_202124_night));
+            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color._ffffff_202124));
         } else {
             mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
-                    .bc_ffffff));
+                    ._ffffff_191919));
         }
 
         settings = mWebView.getSettings();

@@ -24,6 +24,7 @@ import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.api.callback.APICallBack;
+import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -60,6 +61,7 @@ import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
+import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 
 import java.util.List;
@@ -202,6 +204,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         return topHolder.getView();
     }
 
+
     /**
      * 显示顶部栏显示/隐藏
      *
@@ -213,6 +216,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
 
     private String mFromChannel;
+    private boolean isRedAlbum = false;
 
     /**
      * @param intent 获取传递数据
@@ -227,9 +231,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
+                //红船号图集
+                if (!TextUtils.isEmpty(data.getPath()) && data.getPath().contains("/red_boat_album.html")) {
+                    isRedAlbum = true;
+                }
             }
-
-
         }
     }
 
@@ -250,7 +256,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     /**
-     * singleTop启动模式下复用页面
+     * singleTop启动模式下复用页面,普通图集与红船号图集复用图集
      *
      * @param intent
      */
@@ -270,35 +276,69 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     private void loadData() {
         AtlasLoad holder = new AtlasLoad(mViewPager, mContainer);
         //获取详情页
-        new DraftDetailTask(new APICallBack<DraftDetailBean>() {
-            @Override
-            public void onSuccess(DraftDetailBean atlasDetailEntity) {
-                if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
-                        || atlasDetailEntity.getArticle().getAlbum_image_list() == null
-                        || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
-                    return;
+        if (!isRedAlbum) {
+            new DraftDetailTask(new APICallBack<DraftDetailBean>() {
+                @Override
+                public void onSuccess(DraftDetailBean atlasDetailEntity) {
+                    if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
+                            || atlasDetailEntity.getArticle().getAlbum_image_list() == null
+                            || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                        return;
+                    }
+
+                    //设置下载按钮
+                    if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
+                            !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                        mIvDownLoad.setVisibility(View.VISIBLE);
+                    } else {
+                        mIvDownLoad.setVisibility(View.GONE);
+                    }
+                    fillData(atlasDetailEntity);
                 }
 
-                //设置下载按钮
-                if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
-                        !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
-                    mIvDownLoad.setVisibility(View.VISIBLE);
-                } else {
-                    mIvDownLoad.setVisibility(View.GONE);
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    //图集撤稿
+                    if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                        showEmptyNewsDetail();
+                    } else {
+                        T.showShortNow(AtlasDetailActivity.this, errMsg);
+                    }
                 }
-                fillData(atlasDetailEntity);
-            }
+            }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId, mFromChannel);
+        } else {//红船号图集
+            new RedBoatTask(new APIExpandCallBack<DraftDetailBean>() {
+                @Override
+                public void onSuccess(DraftDetailBean atlasDetailEntity) {
+                    if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
+                            || atlasDetailEntity.getArticle().getAlbum_image_list() == null
+                            || atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                        return;
+                    }
 
-            @Override
-            public void onError(String errMsg, int errCode) {
-                //图集撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
-                    showEmptyNewsDetail();
-                } else {
-                    T.showShortNow(AtlasDetailActivity.this, errMsg);
+                    //设置下载按钮
+                    if (atlasDetailEntity.getArticle().getAlbum_image_list() != null &&
+                            !atlasDetailEntity.getArticle().getAlbum_image_list().isEmpty()) {
+                        mIvDownLoad.setVisibility(View.VISIBLE);
+                    } else {
+                        mIvDownLoad.setVisibility(View.GONE);
+                    }
+                    fillData(atlasDetailEntity);
+
                 }
-            }
-        }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId, mFromChannel);
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    //撤稿
+                    if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                        showEmptyNewsDetail();
+                    } else {
+                        T.showShortNow(AtlasDetailActivity.this, errMsg);
+                    }
+                }
+            }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+        }
+
     }
 
     private Analytics mAnalytics;
@@ -409,8 +449,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
-        //评论数量
-        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+        //评论数量 红船号图集不显示
+        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general()) && !isRedAlbum) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
             mTvCommentsNum.setText(data.getArticle().getComment_count_general());
         } else {
@@ -418,7 +458,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
 
         //是否已点赞
-        if (data.getArticle().isLike_enabled()) {
+        if (data.getArticle().isLike_enabled() && !isRedAlbum) {
             mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
@@ -426,7 +466,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
         }
 
         //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
+        if (data.getArticle().getComment_level() == 0 || isRedAlbum) {
             mFyContainer.setVisibility(View.GONE);
             mMenuComment.setVisibility(View.GONE);
             mTvCommentsNum.setVisibility(View.GONE);
@@ -492,7 +532,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 ClickCommentBox(mData);
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mData.getArticle().getMlf_id() + "")
                         .setObjectName(mData.getArticle().getDoc_title())
@@ -505,7 +545,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
-                        .selfNewsID(mData.getArticle().getId()+"")
+                        .selfNewsID(mData.getArticle().getId() + "")
                         .newsTitle(mData.getArticle().getDoc_title())
                         .selfChannelID(mData.getArticle().getChannel_id())
                         .channelName(mData.getArticle().getChannel_name())
@@ -837,7 +877,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickBack(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                 .setEvenName("点击返回")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -856,7 +896,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickCommentBox(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -876,7 +916,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -889,7 +929,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
-                .selfNewsID(bean.getArticle().getId()+"")
+                .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
@@ -901,7 +941,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickMoreIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005", "AppTabClick", false)
                 .setEvenName("点击更多")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -921,7 +961,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickDownLoad(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "A0025", "A0025","PictureRelatedOperation",false)
+        new Analytics.AnalyticsBuilder(this, "A0025", "A0025", "PictureRelatedOperation", false)
                 .setEvenName("点击下载按钮")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -934,8 +974,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id()+"")
-                .selfNewsID(bean.getArticle().getId()+"")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
@@ -947,7 +987,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void AtlasSlide(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "A0010", "A0010","PictureRelatedOperation",false)
+        new Analytics.AnalyticsBuilder(this, "A0010", "A0010", "PictureRelatedOperation", false)
                 .setEvenName("图片浏览(左右滑动)")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -960,8 +1000,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id()+"")
-                .selfNewsID(bean.getArticle().getId()+"")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
@@ -973,7 +1013,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickMoreImage(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(this, "800011", "800011","AppContentClick",false)
+        new Analytics.AnalyticsBuilder(this, "800011", "800011", "AppContentClick", false)
                 .setEvenName("打开更多图集页面)")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -986,8 +1026,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id()+"")
-                .selfNewsID(bean.getArticle().getId()+"")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())

@@ -39,7 +39,7 @@
                 android:gravity="top|left"
                 android:includeFontPadding="false"
                 android:maxLines="1"
-                android:textColor="?attr/module_detail_tc_4d95fa"
+                android:textColor="@color/_4d95fa_315277"
                 android:textSize="@dimen/ts_12sp"
                 tools:text="你好你好你好你好" />
 

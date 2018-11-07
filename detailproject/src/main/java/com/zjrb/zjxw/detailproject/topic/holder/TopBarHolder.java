@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -13,7 +14,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.topic.utils.ArgbUtils;
-import com.zjrb.zjxw.detailproject.topic.utils.AttrUtils;
 import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 
 import butterknife.BindView;
@@ -48,10 +48,10 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
     public TopBarHolder(View itemView) {
         this.itemView = itemView;
         ButterKnife.bind(this, itemView);
-        mIvTopBack.setAttrId(R.attr.module_detail_color_ffffff_7a7b7d,
-                R.attr.module_detail_color_484848_7a7b7d);
-        mIvTopShare.setAttrId(R.attr.module_detail_color_ffffff_7a7b7d,
-                R.attr.module_detail_color_484848_7a7b7d);
+        mIvTopBack.setAttrId(R.color._ffffff_7a7b7d,
+                R.color._484848_7a7b7d);
+        mIvTopShare.setAttrId(R.color._ffffff_7a7b7d,
+                R.color._484848_7a7b7d);
         mIvTopBack.setOnUiModeChangeListener(this);
     }
 
@@ -100,7 +100,7 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
 
     public void setFraction(float fraction) {
         itemView.setBackgroundColor(ArgbUtils.evaluate(fraction, Color.TRANSPARENT,
-                AttrUtils.getColor(getTheme(), R.attr.module_detail_color_ffffff_202124)));
+                ContextCompat.getColor(itemView.getContext(),R.color._ffffff_202124)));
         mTopLine.setAlpha(fraction);
         mIvTopBack.setFraction(fraction);
         mIvTopShare.setFraction(fraction);

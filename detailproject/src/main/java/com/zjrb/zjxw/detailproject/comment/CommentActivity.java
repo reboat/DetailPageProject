@@ -48,8 +48,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
-import static com.zjrb.core.utils.UIUtils.getContext;
-
 
 /**
  * 评论列表页面
@@ -162,7 +160,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      */
     private void initData() {
         mRvContent.setLayoutManager(new LinearLayoutManager(CommentActivity.this));
-        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.attr.dc_dddddd));
+        mRvContent.addItemDecoration(new NewsDetailCommentDivider(0.5f, R.color._dddddd_7a7b7d));
         head = UIUtils.inflate(R.layout.module_detail_comment_head, mRvContent, false);
         //添加刷新头
         refresh = new HeaderRefresh(mRvContent);
@@ -200,7 +198,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").attrId(R.attr.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.ic_comment_empty)
                     ).itemView);
             mRvContent.setAdapter(mCommentAdapter);
         } else {

@@ -147,6 +147,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/album.html" />
+                <data android:path="/red_boat_album.html" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->

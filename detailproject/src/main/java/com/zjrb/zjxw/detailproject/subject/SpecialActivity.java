@@ -134,7 +134,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      */
     private void initView() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new SpecialSpaceDivider(0.5f, R.attr.dc_dddddd));
+        mRecycler.addItemDecoration(new SpecialSpaceDivider(0.5f, R.color._dddddd_343434));
     }
 
     @Override

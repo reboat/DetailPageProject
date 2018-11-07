@@ -88,7 +88,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      */
     private void init() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.attr.dc_dddddd, true));
+        mRecycler.addItemDecoration(new ListSpaceDivider(0.5d, R.color._dddddd_343434, true));
         //添加刷新头
         refresh = new HeaderRefresh(mRecycler);
         refresh.setOnRefreshListener(this);
@@ -107,7 +107,7 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
             mAdapter.setHeaderRefresh(refresh.getItemView());
             mAdapter.setEmptyView(
                     new EmptyPageHolder(mRecycler,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").attrId(R.attr.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据").resId(R.mipmap.ic_comment_empty)
                     ).itemView);
             mRecycler.setAdapter(mAdapter);
         } else {

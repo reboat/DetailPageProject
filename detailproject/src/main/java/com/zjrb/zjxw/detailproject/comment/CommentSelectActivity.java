@@ -128,7 +128,7 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").attrId(R.attr.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.ic_comment_empty)
                     ).itemView);
             mRvContent.setAdapter(mCommentAdapter);
         } else {

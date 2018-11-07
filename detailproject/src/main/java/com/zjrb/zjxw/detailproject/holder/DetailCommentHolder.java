@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliya.uimode.mode.Attr;
 import com.aliya.uimode.utils.UiModeUtils;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
@@ -109,11 +110,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
 
-//    /**
-//     * 评论标签正则表达式
-//     */
-//    private final String COMMENT_TAG = "#[\\u4e00-\\u9fa5A-Za-z0-9_]{1,100}$*#";
-
     /**
      * 话题稿专用构造器
      *
@@ -193,10 +189,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvHost, R.attr.module_detail_activity_host);
+                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC,R.mipmap.module_detail_activity_host);
             } else if (mData.getAccount_type() == 2) {//嘉宾
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applyImageSrc(mIvHost, R.attr.module_detail_activity_guest);
+                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC,R.mipmap.module_detail_activity_guest);
             } else if (mData.getAccount_type() == 3) {
                 if (mData.getNick_name() != null) {
                     mIvHost.setVisibility(View.GONE);
@@ -229,10 +225,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 //父评论昵称
                 if (mData.getParent_account_type() == 1) {//主持人
                     mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_host);
+                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC,R.mipmap.module_detail_activity_host);
                 } else if (mData.getParent_account_type() == 2) {//嘉宾
                     mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applyImageSrc(mIvGuest, R.attr.module_detail_activity_guest);
+                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC,R.mipmap.module_detail_activity_guest);
                 } else if (mData.getAccount_type() == 3) {
                     if (mData.getParent_nick_name() != null) {
                         mIvGuest.setVisibility(View.GONE);

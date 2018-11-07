@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,7 +11,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.topic.utils.ArgbUtils;
-import com.zjrb.zjxw.detailproject.topic.utils.AttrUtils;
 
 import java.util.List;
 
@@ -35,15 +35,15 @@ public class OverlyHolder {
     public View itemView;
 
     private static final int BC_START = Color.parseColor("#cc000000");
-    private static final int ATTR_BC_END = R.attr.module_detail_color_ffffff_202124;
+    private static final int ATTR_BC_END = R.color._ffffff_202124;
 
     // 标题 颜色
-    private static final int ATTR_TTC_START = R.attr.module_detail_color_ffffff_7a7b7d;
-    private static final int ATTR_TTC_END = R.attr.module_detail_color_000000_7a7b7d;
+    private static final int ATTR_TTC_START = R.color._ffffff_7a7b7d;
+    private static final int ATTR_TTC_END = R.color._000000_7a7b7d;
 
     // 主持人／嘉宾 颜色
-    private static final int ATTR_HTC_START = R.attr.module_detail_color_d2d2d2_5c5c5c;
-    private static final int ATTR_HTC_END = R.attr.module_detail_color_999999_5c5c5c;
+    private static final int ATTR_HTC_START = R.color._d2d2d2_5c5c5c;
+    private static final int ATTR_HTC_END = R.color._999999_5c5c5c;
 
     public OverlyHolder(View itemView) {
         this.itemView = itemView;
@@ -117,21 +117,21 @@ public class OverlyHolder {
         }
         bg.setColors(new int[]{
                 ArgbUtils.evaluate(fraction,
-                        Color.TRANSPARENT, AttrUtils.getColor(getTheme(), ATTR_BC_END)),
+                        Color.TRANSPARENT, ContextCompat.getColor(itemView.getContext(), ATTR_BC_END)),
                 ArgbUtils.evaluate(fraction,
-                        BC_START, AttrUtils.getColor(getTheme(), ATTR_BC_END))});
+                        BC_START, ContextCompat.getColor(itemView.getContext(), ATTR_BC_END))});
         // 背景
         itemView.setBackground(bg);
 
         // 标题
         mTvTitle.setTextColor(ArgbUtils.evaluate(fraction,
-                AttrUtils.getColor(getTheme(), ATTR_TTC_START),
-                AttrUtils.getColor(getTheme(), ATTR_TTC_END)));
+                ContextCompat.getColor(mTvTitle.getContext(), ATTR_TTC_START),
+                ContextCompat.getColor(mTvTitle.getContext(), ATTR_TTC_END)));
 
         // 主持人/嘉宾
         int hostColor = ArgbUtils.evaluate(fraction,
-                AttrUtils.getColor(getTheme(), ATTR_HTC_START),
-                AttrUtils.getColor(getTheme(), ATTR_HTC_END));
+                ContextCompat.getColor(mTvTitle.getContext(), ATTR_HTC_START),
+                ContextCompat.getColor(mTvTitle.getContext(), ATTR_HTC_END));
         mTvHost.setTextColor(hostColor);
         mTvGuest.setTextColor(hostColor);
     }

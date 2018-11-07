@@ -559,7 +559,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         SpannableString spannableString = new SpannableString(s);
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
         //如果正则为空，则清除标签
-        if (TextUtils.isEmpty(sp.comment_pattern)) {
+        if (sp == null || TextUtils.isEmpty(sp.comment_pattern)) {
             SPHelper.get().put("comment_tag", "").commit();
             return spannableString;
         }

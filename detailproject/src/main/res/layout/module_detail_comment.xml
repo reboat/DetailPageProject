@@ -5,7 +5,7 @@
     android:id="@+id/activity_comment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/bc_202124"
+    android:background="@color/_ffffff_202124"
     >
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_marginTop="5dp"
         android:gravity="left"
         android:lineSpacingMultiplier="1.1"
-        android:textColor="?attr/tc_000000"
+        android:textColor="@color/_000000_7a7b7d"
         android:textSize="@dimen/ts_22sp"
         tools:text="浙江出现新一轮浙江出现新一轮" />
 
@@ -28,7 +28,7 @@
         android:layout_below="@+id/tv_title"
         android:layout_marginLeft="11dp"
         android:layout_marginTop="7dp"
-        android:textColor="?attr/tc_484848"
+        android:textColor="@color/_484848_7a7b7d"
         android:textSize="@dimen/ts_14sp"
         tools:text="23条评论" />
 
@@ -49,14 +49,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
-        android:background="?attr/bc_ffffff"
+        android:background="@color/_ffffff_191919"
         android:fitsSystemWindows="true"
         app:fitType="bottom">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="?attr/dc_dddddd" />
+            android:background="@color/_dddddd_343434" />
 
         <TextView
             android:id="@+id/tv_comment"
@@ -66,7 +66,7 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginTop="8dp"
-            android:background="?attr/module_detail_edit_bg"
+            android:background="@drawable/module_detail_edit_bg"
             android:drawableLeft="@mipmap/module_detail_commentedit_left"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
@@ -74,8 +74,8 @@
             android:paddingBottom="6.5dp"
             android:paddingLeft="16dp"
             android:paddingTop="5.5dp"
-            android:textColor="?attr/tc_484848"
-            android:textColorHint="?attr/tc_999999"
+            android:textColor="@color/_484848_7a7b7d"
+            android:textColorHint="@color/_999999_5c5c5c"
             />
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>

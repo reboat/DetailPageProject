@@ -21,7 +21,7 @@
             android:maxEms="3"
             android:paddingBottom="3dp"
             android:paddingTop="3dp"
-            android:textColor="?attr/tc_484848"
+            android:textColor="@color/_484848_7a7b7d"
             android:textSize="@dimen/ts_14sp"
             tools:text="2017年" />
 
@@ -33,7 +33,7 @@
             android:maxEms="3"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:textColor="?attr/tc_999999"
+            android:textColor="@color/_999999_5c5c5c"
             android:textSize="@dimen/ts_12sp"
             tools:text="4月" />
 
@@ -51,13 +51,13 @@
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:background="?attr/bc_dddddd" />
+            android:background="@color/_dddddd_7a7b7d" />
 
         <ImageView
             android:layout_width="7dp"
             android:layout_height="7dp"
             android:layout_centerInParent="true"
-            android:src="?attr/module_detail_persional_info_item_bg" />
+            android:src="@drawable/module_detail_persional_info_item_bg" />
 
     </RelativeLayout>
 
@@ -72,7 +72,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
-        android:textColor="?attr/tc_000000"
+        android:textColor="@color/_000000_7a7b7d"
         android:textSize="@dimen/ts_16sp"
         tools:text="浙江省委书记" />
 

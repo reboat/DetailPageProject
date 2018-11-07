@@ -5,7 +5,7 @@
               android:id="@+id/ly_container"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="?attr/bc_ffffff"
+              android:background="@color/_ffffff_191919"
               android:fitsSystemWindows="true"
               android:orientation="vertical"
               app:fitType="bottom">
@@ -14,7 +14,7 @@
         android:id="@+id/lly_reporter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bc_f5f5f5">
+        android:background="@color/_f5f5f5_191919">
 
         <ImageView
             android:id="@+id/iv_avatar"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
-                android:textColor="?attr/tc_000000"
+                android:textColor="@color/_000000_7a7b7d"
                 android:textSize="@dimen/ts_16sp"
                 android:textStyle="bold"
                 tools:text="车俊" />
@@ -53,7 +53,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="9dp"
                 android:layout_toRightOf="@+id/tv_name"
-                android:textColor="?attr/module_detail_tc_808080"
+                android:textColor="@color/_808080_5c5c5c"
                 android:textSize="@dimen/ts_14sp"
                 tools:text="男" />
 
@@ -70,7 +70,7 @@
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
-            android:textColor="?attr/tc_000000"
+            android:textColor="@color/_000000_7a7b7d"
             android:textSize="@dimen/ts_14sp"
             tools:text="时间节点和较大精力了发生的好了去基本都是肯定 拉京东方家世界发酵素浪费，啊框架使得卡萨丁。看JHDkwj到了" />
 
@@ -84,7 +84,7 @@
             android:drawableRight="@mipmap/module_detail_offical_more"
             android:gravity="center"
             android:text="@string/module_detail_offical_more"
-            android:textColor="?attr/tc_484848"
+            android:textColor="@color/_484848_7a7b7d"
             android:textSize="@dimen/ts_11sp"
             tools:text="更多" />
 
@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="13dp"
-        android:background="?attr/dc_dddddd" />
+        android:background="@color/_dddddd_7a7b7d" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

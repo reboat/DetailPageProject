@@ -5,7 +5,7 @@
     android:id="@+id/top_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/bc_202124">
+    android:background="@color/_ffffff_202124">
 
     <!--宽高比为3:2-->
     <ImageView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:lineSpacingMultiplier="1.1"
-            android:textColor="?attr/tc_000000"
+            android:textColor="@color/_000000_7a7b7d"
             android:textSize="@dimen/ts_22sp"
             android:textStyle="bold"/>
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="?attr/tc_999999"
+            android:textColor="@color/_999999_5c5c5c"
             android:textSize="@dimen/ts_14sp"/>
     </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
@@ -58,7 +58,7 @@
         android:maxLines="1"
         android:paddingBottom="5dp"
         android:paddingTop="5dp"
-        android:textColor="?attr/tc_999999"
+        android:textColor="@color/_999999_5c5c5c"
         android:textSize="@dimen/ts_14sp"/>
 
 </RelativeLayout>

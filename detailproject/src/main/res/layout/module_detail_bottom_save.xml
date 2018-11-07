@@ -2,18 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="?attr/bc_f5f5f5"
+              android:background="@color/_f5f5f5_191919"
               android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="?attr/bc_ffffff"
+        android:background="@color/_ffffff_202124"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:text="@string/module_detail_save_pic"
-        android:textColor="?attr/tc_484848"
+        android:textColor="@color/_484848_7a7b7d"
         android:textSize="@dimen/ts_16sp"/>
 
     <View
@@ -24,11 +24,11 @@
         android:id="@+id/tv_cancel"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="?attr/bc_ffffff"
+        android:background="@color/_ffffff_202124"
         android:foreground="?attr/selectableItemBackground"
         android:gravity="center"
         android:text="@string/module_detail_save_cancel"
-        android:textColor="?attr/tc_484848"
+        android:textColor="@color/_484848_7a7b7d"
         android:textSize="@dimen/ts_14sp"/>
 
 </LinearLayout>

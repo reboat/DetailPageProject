@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_marginBottom="17dp"
-              android:background="?attr/bc_202124"
+              android:background="@color/_ffffff_202124"
               android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_height="0.5dp"
             android:layout_marginLeft="17.5dp"
             android:layout_weight="1"
-            android:background="?attr/bc_dddddd"
+            android:background="@color/_dddddd_7a7b7d"
             />
 
         <TextView
@@ -29,7 +29,7 @@
             android:paddingLeft="21.5dp"
             android:paddingRight="21.5dp"
             android:text="@string/module_detail_share_to"
-            android:textColor="?attr/tc_999999"
+            android:textColor="@color/_999999_5c5c5c"
             android:textSize="@dimen/ts_14sp"
             tools:text="分享至" />
 
@@ -38,7 +38,7 @@
             android:layout_height="0.5dp"
             android:layout_marginRight="17.5dp"
             android:layout_weight="1"
-            android:background="?attr/bc_dddddd" />
+            android:background="@color/_dddddd_7a7b7d" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -57,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="13dp"
-        android:background="?attr/bc_ffffff"
+        android:background="@color/_ffffff_191919"
         android:visibility="gone"
         >
 
@@ -73,7 +73,7 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
             android:maxWidth="150dp"
-            android:textColor="?attr/tc_484848"
+            android:textColor="@color/_484848_7a7b7d"
             android:textSize="@dimen/ts_14sp"
             tools:text="杭州频道" />
 
@@ -83,13 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:background="?attr/module_detail_subscribe_red"
+            android:background="@drawable/module_detail_subscribe_red"
             android:foreground="?android:attr/actionBarItemBackground"
             android:gravity="center"
             android:paddingBottom="7.5dp"
             android:paddingTop="7.5dp"
             android:text="@string/module_detail_to_see"
-            android:textColor="?attr/tc_f44b50"
+            android:textColor="@color/_f44b50_8e3636"
             android:textSize="@dimen/ts_11sp"
             tools:text="去看" />
     </RelativeLayout>

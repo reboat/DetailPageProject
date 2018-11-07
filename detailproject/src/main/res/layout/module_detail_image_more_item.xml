@@ -11,7 +11,7 @@
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/tc_484848"
+        android:background="@color/_484848_7a7b7d"
         android:scaleType="fitXY"
         app:ratio_w2h="177:118"
          />
@@ -30,7 +30,7 @@
         android:maxLines="2"
         android:paddingBottom="4dp"
         android:paddingTop="4dp"
-        android:textColor="?attr/module_detail_tc_item_title"
+        android:textColor="@color/module_detail_tc_item_title"
         tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全" />
 
 </RelativeLayout>

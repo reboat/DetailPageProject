@@ -52,6 +52,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'cn.daily.android:detail-library:5.5.2.share-SNAPSHOT'
 //    compile project(':core-library')
-    compile project(':detailproject')
+//    compile project(':detailproject')
 }

@@ -9,7 +9,7 @@
         android:id="@+id/tv_empty_states"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/bc_a4a3a3"
+        android:background="@color/_a4a3a3_484848"
         android:drawableLeft="@mipmap/module_detail_draft_delete"
         android:drawablePadding="10dp"
         android:gravity="center|left"
@@ -17,7 +17,7 @@
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:paddingTop="15dp"
-        android:textColor="?attr/tc_ffffff"
+        android:textColor="@color/_ffffff_999999"
         android:textSize="@dimen/ts_11sp"
         tools:text="很抱歉，来晚一步，这篇已经不在了" />
 

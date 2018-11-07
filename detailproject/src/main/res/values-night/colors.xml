@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--5.6版本新资源-->
+    <color  name="_808080_494949">#494949</color>
+    <color  name="_dddddd_5c5c5c">#5c5c5c</color>
+    <color  name="_66f4f5f6_7f222222">#7f222222</color>
+    <color  name="_dddddd_f4f5f6">#f4f5f6</color>
+    <color  name="_f4f5f6_191919">#191919</color>
+    <color  name="_dddddd_7a7b7d">#7a7b7d</color>
+    <color  name="_e85757_8e3636">#8e3636</color>
+    <color  name="_e2e2e2_0b0b0b">#0b0b0b</color>
+    <color  name="_777777">#777777</color>
+    <color  name="_cccbcb">#cccbcb</color>
+    <color  name="_f44b50_7a7b7d">#7a7b7d</color>
+    <color  name="_f5f5f5_343434">#343434</color>
+    <color  name="_000000">#000000</color>
+    <color  name="_d2d2d2_5c5c5c">#5c5c5c</color>
+    <color  name="_999999_5c5c5c">#5c5c5c</color>
+    <color  name="_ffffff_191919">#191919</color>
+    <color  name="_a4a3a3_484848">#484848</color>
+    <color  name="_ffffff_999999">#999999</color>
+    <color  name="_4d95fa_315277">#315277</color>
+    <color  name="_ffffff_202124">#202124</color>
+    <color  name="_808080_5c5c5c">#5c5c5c</color>
+    <color  name="_7F000000">#7F000000</color>
+    <color  name="_d7d7d7_7a7b7d">#7a7b7d</color>
+    <color  name="_9f9f9f_5c5c5c">#5c5c5c</color>
+    <color  name="_33ffffff_191919">#191919</color>
+    <color  name="_7f000000_7f191919">#7f191919</color>
+
+
+</resources>

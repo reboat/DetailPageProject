@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6.5dp"
         android:scaleType="fitXY"
-        android:src="?attr/module_detail_share_friend"
+        android:src="@mipmap/module_detail_me_friend_btn"
         app:iv_maskColor="@android:color/transparent"
         />
 
@@ -25,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="?attr/tc_999999"
+        android:textColor="@color/_999999_5c5c5c"
         android:textSize="11sp"
         tools:text="QQ空间"/>
 </RelativeLayout>

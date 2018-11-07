@@ -5,7 +5,7 @@
                                              android:id="@+id/ry_container"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="?attr/bc_202124">
+                                             android:background="@color/_ffffff_202124">
 
     <com.aliya.view.fitsys.FitWindowsRecyclerView
         android:id="@+id/recycler"
@@ -51,7 +51,7 @@
                     android:layout_height="19.4dp"
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/tv_top_bar_title"
-                    android:src="?attr/module_core_subscribe_icon"
+                    android:src="@mipmap/ic_top_bar_redboat_icon"
                     app:iv_maskColor="@android:color/transparent"
                     tools:src="@mipmap/ic_launcher" />
 
@@ -64,7 +64,7 @@
                     android:layout_marginRight="8dp"
                     android:maxWidth="140dp"
                     android:singleLine="true"
-                    android:textColor="?attr/tc_484848"
+                    android:textColor="@color/_484848_7a7b7d"
                     android:textSize="@dimen/ts_14sp"
                     tools:text="联合国科教文组织提出" />
 
@@ -75,11 +75,11 @@
                     android:layout_height="21dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_top_bar_title"
-                    android:background="?attr/selector_module_core_topbar_subscribe"
+                    android:background="@drawable/selector_module_core_topbar_subscribe"
                     android:foreground="?android:attr/actionBarItemBackground"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:textColor="?attr/bc_ffffff"
+                    android:textColor="@color/_ffffff_191919"
                     android:textSize="@dimen/ts_10sp"
                     tools:text="+订阅" />
 
@@ -99,7 +99,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_gravity="bottom"
-                android:background="?attr/dc_dddddd" />
+                android:background="@color/_dddddd_343434" />
 
         </com.aliya.view.fitsys.FitWindowsFrameLayout>
 

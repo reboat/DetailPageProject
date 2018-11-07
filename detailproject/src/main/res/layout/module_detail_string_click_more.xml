@@ -12,6 +12,6 @@
     android:layout_marginTop="35dp"
     android:gravity="center_horizontal"
     android:padding="2dp"
-    android:textColor="?attr/module_detail_tc_4d95fa"
+    android:textColor="@color/_4d95fa_315277"
     android:textSize="14sp"
     tools:text="点击查看更多评论" />

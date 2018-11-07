@@ -16,7 +16,7 @@
     android:paddingRight="7dp"
     android:paddingTop="10dp"
     android:textSize="@dimen/ts_14sp"
-    android:textColor="?attr/module_news_tc_item_title"
+    android:textColor="@drawable/module_news_tc_item_title"
     tools:text="张高丽夏宝龙车张 "
     />
 

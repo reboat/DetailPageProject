@@ -4,7 +4,7 @@
     android:id="@+id/activity_comment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/bc_202124"
+    android:background="@color/_ffffff_202124"
     >
 
     <android.support.v7.widget.RecyclerView

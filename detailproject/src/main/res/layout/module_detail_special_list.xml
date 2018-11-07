@@ -3,6 +3,6 @@
     android:id="@+id/lv_notice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/bc_ffffff"
+    android:background="@color/_ffffff_191919"
     android:fitsSystemWindows="true"
     app:fitType="bottom" />

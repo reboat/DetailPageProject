@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/bc_ffffff"
+    android:background="@color/_ffffff_191919"
     android:orientation="vertical"
     android:paddingBottom="5dp">
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.1"
         android:padding="10dp"
-        android:textColor="?attr/tc_000000"
+        android:textColor="@color/_000000_7a7b7d"
         android:textSize="19sp"
         android:textStyle="bold"
         tools:text="收到就好是电视剧多少大好时机第三季度手机号电视剧版惊世毒妃是费劲那吧 看卡萨丁设计费吧是否  " />
@@ -37,7 +37,7 @@
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
-        android:textColor="?attr/tc_999999"
+        android:textColor="@color/_999999_5c5c5c"
         android:textSize="@dimen/ts_14sp"
         tools:text="加深对建设电视剧搭框架卡拉翰是否来看看交互的斯凯方式复健科说服力加深对菲利克斯冯老师发胜多负少 防守打法地方是否水电费少妇群无法请问请问，王企鹅啊无法无法挖坟我的v💰发" />
 
@@ -68,7 +68,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dp"
             android:text="@string/module_detail_text_down"
-            android:textColor="?attr/tc_484848" />
+            android:textColor="@color/_484848_7a7b7d" />
 
     </LinearLayout>
 
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="?attr/module_detail_color_7f000000_7f191919"
+            android:background="@color/_7f000000_7f191919"
             android:ellipsize="end"
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
@@ -109,7 +109,7 @@
             android:paddingLeft="18dp"
             android:paddingRight="18dp"
             android:paddingTop="7dp"
-            android:textColor="?attr/tc_ffffff"
+            android:textColor="@color/_ffffff_7a7b7d"
             tools:text="夏宝龙：奋力打好小城镇环境综合整治的具体啦了工作在开化东阳调研时强调化东" />
 
     </com.aliya.view.ratio.RatioFrameLayout>

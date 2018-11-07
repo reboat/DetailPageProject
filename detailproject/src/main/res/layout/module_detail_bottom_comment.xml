@@ -14,12 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="?attr/bc_ffffff">
+        android:background="@color/_ffffff_202124">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="?attr/dc_dddddd" />
+            android:background="@color/_dddddd_5c5c5c" />
 
         <FrameLayout
             android:id="@+id/fl_comment"
@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_toLeftOf="@+id/menu_comment"
-            android:background="?attr/module_detail_edit_bg">
+            android:background="@drawable/module_detail_edit_bg">
 
             <TextView
                 android:id="@+id/tv_comment"
@@ -40,7 +40,7 @@
                 android:gravity="center_vertical|left"
                 android:paddingLeft="20dp"
                 android:text="@string/module_detail_comment_hint"
-                android:textColor="?attr/tc_999999"
+                android:textColor="@color/_999999_5c5c5c"
                 android:textSize="@dimen/ts_14sp" />
 
         </FrameLayout>
@@ -52,7 +52,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_toLeftOf="@+id/menu_prised"
-            android:src="?attr/module_detail_news_comment"
+            android:src="@mipmap/module_detail_ic_comment"
             app:iv_maskColor="@android:color/transparent" />
 
         <TextView
@@ -63,12 +63,12 @@
             android:layout_marginLeft="-10dp"
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/menu_comment"
-            android:background="?attr/module_detail_comment_num"
+            android:background="@drawable/module_detail_comment_num"
             android:paddingBottom="1dp"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:paddingTop="1dp"
-            android:textColor="?attr/tc_ffffff"
+            android:textColor="@color/_ffffff_aaaaaa"
             android:textSize="@dimen/ts_10sp"
             android:visibility="gone"
             tools:text="1" />
@@ -81,7 +81,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toLeftOf="@+id/menu_setting"
-            android:src="?attr/module_detail_news_prise"
+            android:src="@drawable/module_detail_news_prise"
             app:iv_maskColor="@android:color/transparent" />
 
         <ImageView
@@ -94,7 +94,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="12dp"
-            android:src="?attr/module_detail_news_more"
+            android:src="@mipmap/module_detail_ic_more"
             app:iv_maskColor="@android:color/transparent" />
     </RelativeLayout>
 </com.aliya.view.fitsys.FitWindowsRelativeLayout>

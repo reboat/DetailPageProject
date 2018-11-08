@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply from: "${rootDir}/public.gradle"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     signingConfigs {
             release {
@@ -17,7 +17,7 @@ android {
     defaultConfig {
         applicationId "com.dialy.android.detail"
         minSdkVersion 17
-        targetSdkVersion 25
+        targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
         versionName "1.0"
@@ -46,13 +46,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'cn.daily.android:detail-library:5.5.2.share-SNAPSHOT'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'cn.daily.android:detail-library:5.5.2.share-SNAPSHOT'
 //    compile project(':core-library')
 //    compile project(':detailproject')
 }

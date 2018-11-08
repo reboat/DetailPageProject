@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/module_detail_text_indicator"
-            app:iv_maskColor="@color/tc_484848_night" />
+            app:iv_maskColor="@color/_7a7b7d" />
 
         <TextView
             android:id="@+id/tv_indicator"

@@ -4,10 +4,7 @@ buildscript {
         jcenter()
         mavenCentral()
         mavenLocal()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
@@ -23,10 +20,7 @@ allprojects {
         jcenter()
         maven { url "http://10.100.62.98:8086/nexus/content/groups/public" }
         maven { url 'http://pre.haier.com/nexus/content/repositories/qdmobile-release/' }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        google()
     }
 }
 

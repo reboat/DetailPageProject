@@ -1,3 +1,5 @@
+import java.util.concurrent.TimeUnit
+
 apply plugin: 'com.android.library'
 apply from: 'http://10.100.62.98:8086/nexus/service/local/repositories/releases/content/cn/daily/android/publish/0.0.4/publish-0.0.4.gradle'
 apply plugin: 'com.jakewharton.butterknife'
@@ -28,6 +30,14 @@ android {
         }
     }
 }
+
+//configurations.all {
+//    //设置module缓存时间
+//    resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
+//    resolutionStrategy {
+//        force 'com.android.support:appcompat-v7:28.0.0'
+//    }
+//}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])

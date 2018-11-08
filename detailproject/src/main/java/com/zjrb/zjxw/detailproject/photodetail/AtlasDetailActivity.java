@@ -232,7 +232,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
                 //红船号图集
-                if (!TextUtils.isEmpty(data.getPath()) && data.getPath().contains("/red_boat_album.html")) {
+                if (!TextUtils.isEmpty(data.getPath()) && data.getPath().equals("/red_boat_album.html")) {
                     isRedAlbum = true;
                 }
             }

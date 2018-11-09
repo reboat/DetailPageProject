@@ -41,7 +41,7 @@ public interface DetailWMHelperInterFace {
          * @param scEventName
          * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
+        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
     }
 
     /**
@@ -57,7 +57,7 @@ public interface DetailWMHelperInterFace {
          * @param scEventName
          * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
+        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
 
 
         /**
@@ -171,6 +171,13 @@ public interface DetailWMHelperInterFace {
          * @param bean
          */
         void ClickMoreImage(DraftDetailBean bean);
+
+        /**
+         * 点击分享按钮
+         *
+         * @param bean
+         */
+        void ClickShareTab(DraftDetailBean bean);
     }
 
     /**
@@ -225,7 +232,7 @@ public interface DetailWMHelperInterFace {
          * @param scEventName
          * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
+        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
 
         /**
          * 统计页面停留时长
@@ -333,6 +340,6 @@ public interface DetailWMHelperInterFace {
          * @param scEventName
          * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType);
+        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
     }
 }

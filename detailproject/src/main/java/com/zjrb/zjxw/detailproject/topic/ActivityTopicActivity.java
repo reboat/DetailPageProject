@@ -657,7 +657,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
-                "800021", "ViewAppNewsDetail", true)
+                "800021", "PageStay", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())

@@ -160,6 +160,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
                         if (params != null) {
                             params.height += duration;
+//                            if(params.height >= UIUtils.getScreenH() / 2){
+//                                params.height = UIUtils.getScreenH() / 2;
+//                            }
                             if (params.height <= mMinHeight) {
                                 params.height = mMinHeight;
                                 mScrollView.setLayoutParams(params);
@@ -500,6 +503,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             //分享
         } else if (id == R.id.iv_share) {
             if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
+                //点击分享按钮埋点
+                ClickShareTab(mData);
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mData.getArticle().getMlf_id() + "")
@@ -507,7 +512,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mData.getArticle().getChannel_id() + "")
                         .setClassifyName(mData.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
+                        .setPageType("图集详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mData.getArticle().getColumn_id() + "")
                                 .put("subject", "")
@@ -854,7 +859,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -1033,6 +1038,33 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("图集列表")
                 .objectType("图集新闻列表")
+                .pubUrl(bean.getArticle().getUrl())
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickShareTab(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
+                .setEvenName("点击\"分享\"")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("图集详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("图集详情页")
+                .objectType("图集详情页")
                 .pubUrl(bean.getArticle().getUrl())
                 .build()
                 .send();

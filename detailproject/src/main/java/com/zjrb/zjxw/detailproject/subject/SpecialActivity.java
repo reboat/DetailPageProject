@@ -328,7 +328,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
 
     @Override
     public Analytics pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
                 .setEvenName("页面停留时长")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())

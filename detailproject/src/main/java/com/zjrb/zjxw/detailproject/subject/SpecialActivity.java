@@ -324,11 +324,15 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
+        if(mArticle != null){
+            mAnalytics = pageStayTime2(mArticle);
+            mAnalytics.sendWithDuration();
+        }
     }
 
     @Override
     public Analytics pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -345,8 +349,26 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                 .newsTitle(bean.getArticle().getDoc_title())
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
-                .pageType("新闻详情页")
+                .pageType("专题详情页")
                 .pubUrl(bean.getArticle().getUrl())
+                .build();
+    }
+
+    public Analytics pageStayTime2(DraftDetailBean.ArticleBean bean) {
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
+                .setEvenName("专题详情页，页面停留时长")
+                .setObjectID(bean.getMlf_id() + "")
+                .setObjectName(bean.getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getChannel_id())
+                .setClassifyName(bean.getChannel_name())
+                .setPageType("专题详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getColumn_id() + "")
+                        .put("subject", bean.getId() + "")
+                        .toString())
+                .setSelfObjectID(bean.getId() + "")
+                .pageType("专题详情页")
                 .build();
     }
 

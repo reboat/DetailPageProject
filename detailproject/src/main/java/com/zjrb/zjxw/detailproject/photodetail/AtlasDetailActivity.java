@@ -237,6 +237,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 //红船号图集
                 if (!TextUtils.isEmpty(data.getPath()) && data.getPath().equals("/red_boat_album.html")) {
                     isRedAlbum = true;
+                }else{
+                    isRedAlbum= false;
                 }
             }
         }

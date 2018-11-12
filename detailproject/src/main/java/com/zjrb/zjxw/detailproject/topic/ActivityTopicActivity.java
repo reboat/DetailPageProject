@@ -574,6 +574,15 @@ public class ActivityTopicActivity extends BaseActivity implements
                     mAnalytics.sendWithDuration();
                 }
             }
+
+            //5.6SB需求
+            builder = pageStayTime2(mDetailData);
+            if (builder != null) {
+                mAnalytics = builder.build();
+                if (mAnalytics != null) {
+                    mAnalytics.sendWithDuration();
+                }
+            }
         }
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
@@ -657,7 +666,7 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
-                "800021", "PageStay", true)
+                "800021", "ViewAppNewsDetail", true)
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -677,6 +686,24 @@ public class ActivityTopicActivity extends BaseActivity implements
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
                 .pubUrl(bean.getArticle().getUrl());
+    }
+
+    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(ActivityTopicActivity.this, "A0010",
+                "800021", "PageStay", true)
+                .setEvenName("新闻详情页停留时长")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", bean.getArticle().getId() + "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("新闻详情页");
     }
 
     @Override

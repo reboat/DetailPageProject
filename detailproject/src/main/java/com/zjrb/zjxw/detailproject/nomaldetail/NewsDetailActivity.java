@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -36,6 +37,7 @@ import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.api.callback.LocationCallBack;
 import com.zjrb.core.common.base.BaseActivity;
@@ -65,6 +67,7 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.AntiCheatingBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.broadCast.VideoReceiver;
@@ -75,6 +78,7 @@ import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.interFace.VideoBCnterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.task.AntiCheatingTask;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
@@ -87,6 +91,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.global.Key;
+import cn.daily.news.biz.core.utils.YiDunUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
 
@@ -328,6 +334,7 @@ public class NewsDetailActivity extends BaseActivity implements
                     initVideo(mNewsDetail.getArticle());
                 }
                 fillData(mNewsDetail);
+                synYiDunToken(mArticleId);
             }
 
             @Override
@@ -430,6 +437,24 @@ public class NewsDetailActivity extends BaseActivity implements
         }
     }
 
+    /**
+     * 上传反作弊易盾token
+     * @param id 稿件id
+     */
+    public void synYiDunToken(String id){
+        final String ArticleId = id;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new AntiCheatingTask(new APICallBack<AntiCheatingBean>(){
+                    @Override
+                    public void onSuccess(AntiCheatingBean bean){
+                        return;
+                    }
+                }).setTag(this).exe(ArticleId, YiDunUtils.getToken(Key.YiDun.Type.READING));
+            }
+        },3000);
+    }
 
     /**
      * WebView加载完毕

@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.link;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.api.base.APIGetTask;
+import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.core.api.callback.APIExpandCallBack;
 import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.toolbar.TopBarFactory;
@@ -35,14 +38,18 @@ import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.bean.AntiCheatingBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.ErrorCode;
 import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.task.AntiCheatingTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
+import cn.daily.news.biz.core.utils.YiDunUtils;
+import cn.daily.news.biz.core.global.Key.YiDun.Type;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,6 +162,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     url = mNewsDetail.getArticle().getUrl();
                 }
                 fillData(mNewsDetail);
+                synYiDunToken(mArticleId);
             }
 
             @Override
@@ -215,6 +223,24 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    /**
+     * 上传反作弊易盾token
+     * @param id 稿件id
+     */
+    public void synYiDunToken(String id){
+        final String ArticleId = id;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new AntiCheatingTask(new APICallBack<AntiCheatingBean>(){
+                    @Override
+                    public void onSuccess(AntiCheatingBean bean){
+                        return;
+                    }
+                }).setTag(this).exe(ArticleId, YiDunUtils.getToken(Type.READING));
+            }
+        },3000);
+    }
 
     private Bundle bundle;
 

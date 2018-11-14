@@ -65,6 +65,7 @@ import com.zjrb.zjxw.detailproject.topic.holder.OverlyHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
 import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import java.util.List;
 
@@ -210,6 +211,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                     builder = pageStayTime(data);
                 }
                 fillData(data);
+                YiDunToken.synYiDunToken(mArticleId);
             }
 
             @Override

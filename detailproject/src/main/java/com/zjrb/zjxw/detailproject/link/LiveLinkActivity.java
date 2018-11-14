@@ -57,6 +57,7 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,6 +192,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                     url = mNewsDetail.getArticle().getLive_url();
                 }
                 fillData(mNewsDetail);
+                YiDunToken.synYiDunToken(mArticleId);
             }
 
             @Override

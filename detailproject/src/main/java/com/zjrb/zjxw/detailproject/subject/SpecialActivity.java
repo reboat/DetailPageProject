@@ -40,6 +40,7 @@ import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import java.util.List;
 
@@ -198,6 +199,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
             @Override
             public void onSuccess(DraftDetailBean data) {
                 fillData(data);
+                YiDunToken.synYiDunToken(mArticleId);
             }
 
             @Override

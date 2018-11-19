@@ -55,7 +55,10 @@ dependencies {
     implementation('cn.daily.android:daily-news:5.6.0.6') {
         exclude group: 'cn.daily.android'
     }
-    api 'cn.daily.android:biz-core:5.6.0.3'
+
+    implementation ('cn.daily.android:biz-core:5.6.0.3'){
+        transitive false
+    }
 
     implementation 'cn.daily.android:daily-db:5.1.0'
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'

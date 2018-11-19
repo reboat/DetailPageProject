@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.os.Handler;
+import android.text.TextUtils;
 
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.zjxw.detailproject.bean.AntiCheatingBean;
@@ -14,11 +15,10 @@ public class YiDunToken {
      * 3秒后上传携带易盾反作弊token的网络请求
      * @param id 稿件id
      */
-    public static void synYiDunToken(String id){
-        if(id == null || id == ""){
+    public static void synYiDunToken(final String id){
+        if(TextUtils.isEmpty(id)){
             return;
         }
-        final String ArticleId = id;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -27,7 +27,7 @@ public class YiDunToken {
                     public void onSuccess(AntiCheatingBean bean){
                         return;
                     }
-                }).setTag(this).exe(ArticleId, YiDunUtils.getToken(Key.YiDun.Type.READING));
+                }).setTag(this).exe(id, YiDunUtils.getToken(Key.YiDun.Type.READING));
             }
         },3000);
     }

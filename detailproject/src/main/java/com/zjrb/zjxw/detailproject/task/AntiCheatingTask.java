@@ -1,13 +1,11 @@
 package com.zjrb.zjxw.detailproject.task;
 
-import com.zjrb.core.api.APIManager;
 import com.zjrb.core.api.base.APIGetTask;
 import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.zjxw.detailproject.bean.AntiCheatingBean;
 
-public class AntiCheatingTask extends APIGetTask<AntiCheatingBean> {
+public class AntiCheatingTask extends APIGetTask<Void> {
 
-    public AntiCheatingTask(LoadingCallBack<AntiCheatingBean> callBack){
+    public AntiCheatingTask(LoadingCallBack<Void> callBack){
         super(callBack);
     }
 

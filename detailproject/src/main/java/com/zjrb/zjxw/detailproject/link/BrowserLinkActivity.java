@@ -43,6 +43,7 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -158,6 +159,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                     url = mNewsDetail.getArticle().getUrl();
                 }
                 fillData(mNewsDetail);
+                YiDunToken.synYiDunToken(mArticleId);
             }
 
             @Override
@@ -217,7 +219,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
-
 
     private Bundle bundle;
 

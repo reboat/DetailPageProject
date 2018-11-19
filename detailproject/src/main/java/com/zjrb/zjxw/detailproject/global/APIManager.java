@@ -97,7 +97,6 @@ public class APIManager {
          * 文件上传
          */
         public static final String UPLOAD_PATH = "/api/file/upload";
-
     }
 
 }

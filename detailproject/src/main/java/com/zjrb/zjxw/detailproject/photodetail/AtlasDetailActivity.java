@@ -63,6 +63,7 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import java.util.List;
 
@@ -299,6 +300,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         mIvDownLoad.setVisibility(View.GONE);
                     }
                     fillData(atlasDetailEntity);
+                    YiDunToken.synYiDunToken(mArticleId);
                 }
 
                 @Override
@@ -329,7 +331,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         mIvDownLoad.setVisibility(View.GONE);
                     }
                     fillData(atlasDetailEntity);
-
+                    YiDunToken.synYiDunToken(mArticleId);
                 }
 
                 @Override

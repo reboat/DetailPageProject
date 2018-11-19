@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -79,6 +80,7 @@ import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -328,6 +330,7 @@ public class NewsDetailActivity extends BaseActivity implements
                     initVideo(mNewsDetail.getArticle());
                 }
                 fillData(mNewsDetail);
+                YiDunToken.synYiDunToken(mArticleId);
             }
 
             @Override
@@ -429,7 +432,6 @@ public class NewsDetailActivity extends BaseActivity implements
             mMenuComment.setVisibility(View.VISIBLE);
         }
     }
-
 
     /**
      * WebView加载完毕

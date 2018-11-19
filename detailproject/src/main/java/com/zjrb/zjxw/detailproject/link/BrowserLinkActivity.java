@@ -137,6 +137,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
         return topBarHolder.getView();
     }
 
+    Analytics.AnalyticsBuilder builder;
+
     /**
      * 请求详情页数据
      */
@@ -148,6 +150,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
+                builder = pageStayTime(draftDetailBean);
                 //可能被重定向了
                 if (mNewsDetail.getArticle().getDoc_type() == 3) {
                     url = mNewsDetail.getArticle().getWeb_link();
@@ -338,6 +341,22 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             mWebView.stopThreadPool();
         }
         mWebView.destroy();
+        //统计时长
+        if (builder != null) {
+            Analytics mAnalytics = builder.build();
+            if (mAnalytics != null) {
+                mAnalytics.sendWithDuration();
+            }
+        }
+        //5.6SB需求
+        if (mNewsDetail != null) {
+            builder = pageStayTime2(mNewsDetail);
+            Analytics mAnalytics = builder.build();
+            if (mAnalytics != null) {
+                mAnalytics.sendWithDuration();
+            }
+        }
+
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
     }
 
@@ -359,7 +378,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
      */
     private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
         if (mNewsDetail != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024","PictureRelatedOperation",false)
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
                     .setEvenName("识别二维码图片")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -371,8 +390,8 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .put("mediaURL", imgUrl)
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .newsID(mNewsDetail.getArticle().getMlf_id()+"")
-                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .newsID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
                     .newsTitle(mNewsDetail.getArticle().getDoc_title())
                     .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                     .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -386,7 +405,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void ClickBack() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
+            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                     .setEvenName("点击返回")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -407,7 +426,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void ClickInCommentList() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004", "AppTabClick", false)
                 .setEvenName("点击评论，进入评论列表")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -429,7 +448,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void ClickPriseIcon() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
+            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                     .setEvenName("点击点赞")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -443,7 +462,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                     .newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
                     .newsTitle(mNewsDetail.getArticle().getDoc_title())
                     .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                     .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -456,7 +475,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void ClickMoreIcon() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005", "AppTabClick", false)
                 .setEvenName("点击更多")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -473,6 +492,46 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 .clickTabName("更多")
                 .build()
                 .send();
+    }
+
+
+    public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
+                .setEvenName("页面停留时长/阅读深度")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .pubUrl(bean.getArticle().getUrl());
+    }
+
+    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
+        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
+                .setEvenName("新闻详情页停留时长")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("新闻详情页");
     }
 
 }

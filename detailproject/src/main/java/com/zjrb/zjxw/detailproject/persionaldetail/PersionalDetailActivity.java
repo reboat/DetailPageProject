@@ -116,7 +116,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                builder = new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "ViewAppNewsDetail", true)
+                builder = new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "PageStay", true)
                         .setEvenName("打开单个官员详情页")
                         .setObjectID(data.getOfficer().getId() + "")
                         .setPageType("官员页面")
@@ -173,22 +173,6 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (builder != null) {
-            Analytics mAnalytics = builder.build();
-            if (mAnalytics != null) {
-                mAnalytics.sendWithDuration();
-            }
-        }
-
-        //5.6SB需求
-        builder = new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "PageStay", true)
-                .setEvenName("打开单个官员详情页")
-                .setObjectID(bean.getOfficer().getId() + "")
-                .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", "OfficerType")
-                        .toString())
-                .pageType("官员页面");
         if (builder != null) {
             Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {

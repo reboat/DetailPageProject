@@ -36,10 +36,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 //        AudioDialog.newInstance().show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "MoreDialog");
-        CommentWindowDialog.newInstance(new CommentDialogBean("740555", null)).show((
-                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
-                "CommentWindowDialog");
-//        Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=741050");
+//        CommentWindowDialog.newInstance(new CommentDialogBean("740555", null)).show((
+//                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
+//                "CommentWindowDialog");
+        Nav.with(this).to("http://mmlive.tmuyun.com/Aliplayer.html");
 //        Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=785088"); // 741791
@@ -109,9 +109,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        Nav.with(this).to("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1526897239104&di=0179b498871055748b07edca4061e366&imgtype=0&src=http%3A%2F%2Fpic.baike.soso.com%2Fp%2F20131211%2F20131211092723-939931253.jpg");
 //                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
         //红船号详情页
-                SettingManager.getInstance().setOpenHttps(true);
-                SettingManager.getInstance().setHost("api-new.8531.cn");
-                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
+//                SettingManager.getInstance().setOpenHttps(true);
+//                SettingManager.getInstance().setHost("api-new.8531.cn");
+//                Nav.with(this).to("https://zj.zjol.com.cn/video.html?id=925559");
 
 
 //                Nav.with(this).to("https://zj.zjol.com.cn/news.html?id=920034");

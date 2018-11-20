@@ -139,6 +139,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     }
 
     Analytics.AnalyticsBuilder builder;
+    Analytics.AnalyticsBuilder builder1;
 
     /**
      * 请求详情页数据
@@ -152,6 +153,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = pageStayTime(draftDetailBean);
+                builder1 = pageStayTime2(draftDetailBean);
                 //可能被重定向了
                 if (mNewsDetail.getArticle().getDoc_type() == 3) {
                     url = mNewsDetail.getArticle().getWeb_link();
@@ -350,11 +352,10 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             }
         }
         //5.6SB需求
-        if (mNewsDetail != null) {
-            builder = pageStayTime2(mNewsDetail);
-            Analytics mAnalytics = builder.build();
-            if (mAnalytics != null) {
-                mAnalytics.sendWithDuration();
+        if (builder1 != null) {
+            Analytics mAnalytics1 = builder1.build();
+            if (mAnalytics1 != null) {
+                mAnalytics1.sendWithDuration();
             }
         }
 

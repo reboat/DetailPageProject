@@ -169,6 +169,8 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      */
     private CommonTopBarHolder topBarHolder;
     Analytics.AnalyticsBuilder builder;
+    Analytics.AnalyticsBuilder builder1;
+
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topBarHolder = TopBarFactory.createCommonTopBar(view, this);
@@ -188,6 +190,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = pageStayTime(draftDetailBean);
+                builder1 = pageStayTime2(draftDetailBean);
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
@@ -336,7 +339,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 ClickCommentBox();
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -350,7 +353,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
                         .newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                        .selfNewsID(mNewsDetail.getArticle().getId() + "")
                         .newsTitle(mNewsDetail.getArticle().getDoc_title())
                         .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                         .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -483,11 +486,10 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             }
         }
         //5.6SB需求
-        if(mNewsDetail != null){
-            builder = pageStayTime2(mNewsDetail);
-            Analytics mAnalytics = builder.build();
-            if (mAnalytics != null) {
-                mAnalytics.sendWithDuration();
+        if (builder1 != null) {
+            Analytics mAnalytics1 = builder1.build();
+            if (mAnalytics1 != null) {
+                mAnalytics1.sendWithDuration();
             }
         }
     }
@@ -541,7 +543,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void ClickBack() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
+            new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                     .setEvenName("点击返回")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -562,7 +564,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void ClickShare() {
         //点击分享操作
-        new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击分享")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -582,7 +584,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void ClickInCommentList() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004", "AppTabClick", false)
                 .setEvenName("点击评论，进入评论列表")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -603,7 +605,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void ClickPriseIcon() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
+            new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                     .setEvenName("点击点赞")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -616,7 +618,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                             .put("subject", "")
                             .toString())
                     .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
                     .newsTitle(mNewsDetail.getArticle().getDoc_title())
                     .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                     .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -630,7 +632,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void ClickMoreIcon() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
+            new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005", "AppTabClick", false)
                     .setEvenName("点击更多")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -651,7 +653,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void ClickCommentBox() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -709,7 +711,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      */
     private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
         if (mNewsDetail != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024","PictureRelatedOperation",false)
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
                     .setEvenName("识别二维码图片")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                     .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -720,8 +722,8 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("mediaURL", imgUrl)
                             .toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id()+"")
-                    .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
+                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
                     .newsTitle(mNewsDetail.getArticle().getDoc_title())
                     .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                     .channelName(mNewsDetail.getArticle().getChannel_name())

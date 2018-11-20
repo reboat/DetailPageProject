@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -24,7 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.VFullscreenActivity;
@@ -90,7 +88,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import daily.zjrb.com.daily_vr.player.VRManager;
-
 
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_TITLE;
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
@@ -198,9 +195,10 @@ public class NewsDetailActivity extends BaseActivity implements
      * 设置网络监听
      */
     private BroadcastReceiver networkChangeReceiver;
+
     public void setBreoadcast() {
         networkChangeReceiver = new NetworkChangeReceiver();
-        IntentFilter filter=new IntentFilter();
+        IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -265,19 +263,19 @@ public class NewsDetailActivity extends BaseActivity implements
      */
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
-        if (!TextUtils.isEmpty(url)){
+        if (!TextUtils.isEmpty(url)) {
             Uri uri = Uri.parse(url);
             String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
-            if (!TextUtils.isEmpty(type)){
-                boolean isVertical = Integer.valueOf(type)==1;
-                if (isVertical){
+            if (!TextUtils.isEmpty(type)) {
+                boolean isVertical = Integer.valueOf(type) == 1;
+                if (isVertical) {
                     mVideoContainer.setVisibility(View.VISIBLE);
-                    VerticalManager.getInstance().init(this,mVideoContainer,url,String.valueOf(Format.duration(bean.getVideo_duration() * 1000)),bean.getFirstPic(),bean.getDoc_title());
-                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()){
+                    VerticalManager.getInstance().init(this, mVideoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
+                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
                         Intent intent = new Intent(this, VFullscreenActivity.class);
                         intent.putExtra(KEY_URL, url);
-                        intent.putExtra(KEY_TITLE,bean.getDoc_title());
-                        ActivityCompat.startActivityForResult(this, intent,REQUEST_CODE, null);
+                        intent.putExtra(KEY_TITLE, bean.getDoc_title());
+                        ActivityCompat.startActivityForResult(this, intent, REQUEST_CODE, null);
                     }
                     return;
                 }
@@ -309,6 +307,7 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
     Analytics.AnalyticsBuilder builder;
+    Analytics.AnalyticsBuilder builder1;
 
     /**
      * 请求详情页数据
@@ -322,6 +321,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = pageStayTime(draftDetailBean);
+                builder1 = pageStayTime2(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -504,7 +504,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title,R2.id.ll_net_hint})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -539,7 +539,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 ClickCommentBox(mNewsDetail);
 
                 //评论发表成功
-                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
+                Analytics analytics = new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
                         .setEvenName("发表评论，且发送成功")
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -552,7 +552,7 @@ public class NewsDetailActivity extends BaseActivity implements
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                        .selfNewsID(mNewsDetail.getArticle().getId() + "")
                         .newsTitle(mNewsDetail.getArticle().getDoc_title())
                         .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                         .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -600,12 +600,12 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
 
-                if (NetUtils.isAvailable()){
-                    if (NetUtils.isMobile()){
-                        if (Recorder.get().isAllowMobileTraffic(mNewsDetail.getArticle().getVideo_url())){
+                if (NetUtils.isAvailable()) {
+                    if (NetUtils.isMobile()) {
+                        if (Recorder.get().isAllowMobileTraffic(mNewsDetail.getArticle().getVideo_url())) {
                             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                        }else {
+                        } else {
                             llStart.setVisibility(View.GONE);
                             llNetHint.setVisibility(View.VISIBLE);
                             tvNetHint.setText("用流量播放");
@@ -613,7 +613,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         }
                         return;
                     }
-                    if (NetUtils.isWifi()){
+                    if (NetUtils.isWifi()) {
                         PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                         PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
                         return;
@@ -632,7 +632,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114","SubColumn","取消订阅");
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
                     @Override
@@ -649,7 +649,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                SubscribeAnalytics("点击\"订阅\"栏目", "A0014","SubColumn","订阅");
+                SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
 
@@ -671,15 +671,15 @@ public class NewsDetailActivity extends BaseActivity implements
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
-            SubscribeAnalytics("点击进入栏目详情页", "800031","ToDetailColumn","");
+            SubscribeAnalytics("点击进入栏目详情页", "800031", "ToDetailColumn", "");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
-        } else if (view.getId() == R.id.ll_net_hint){//网络提醒下点击播放
+        } else if (view.getId() == R.id.ll_net_hint) {//网络提醒下点击播放
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-            if (NetUtils.isMobile()){
+            if (NetUtils.isMobile()) {
                 Recorder.get().allowMobileTraffic(mNewsDetail.getArticle().getVideo_url());
             }
 
@@ -727,17 +727,20 @@ public class NewsDetailActivity extends BaseActivity implements
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }
-            //时长 fuck WM 5.6新增
+        }
+
+        //时长 fuck WM 5.6新增
+        if (builder1 != null) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                builder = pageStayTime2(mNewsDetail);
-                Analytics mAnalytics2 = builder.build();
+                Analytics mAnalytics2 = builder1.build();
                 if (mAnalytics2 != null) {
                     mAnalytics2.sendWithDuration();
                 }
 
             }
         }
-        if (networkChangeReceiver != null){
+
+        if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);
             networkChangeReceiver = null;
         }
@@ -820,9 +823,9 @@ public class NewsDetailActivity extends BaseActivity implements
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
                 if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014","SubColumn","订阅");
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114","SubColumn","取消订阅");
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 }
             }
         }
@@ -840,8 +843,8 @@ public class NewsDetailActivity extends BaseActivity implements
 
 
     @Override
-    public void SubscribeAnalytics(String eventNme, String eventCode,String scEventName,String operationType) {
-        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode,scEventName,false)
+    public void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode, scEventName, false)
                 .setEvenName(eventNme)
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -903,7 +906,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickInCommentList(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800004", "800004", "AppTabClick", false)
                 .setEvenName("点击评论，进入评论列表")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -923,7 +926,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021","Support",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -936,7 +939,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         .put("subject", "")
                         .toString())
                 .setSelfObjectID(bean.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                .selfNewsID(mNewsDetail.getArticle().getId()+"")
+                .selfNewsID(mNewsDetail.getArticle().getId() + "")
                 .newsTitle(mNewsDetail.getArticle().getDoc_title())
                 .selfChannelID(mNewsDetail.getArticle().getChannel_id())
                 .channelName(mNewsDetail.getArticle().getChannel_name())
@@ -948,7 +951,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickMoreIcon(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800005", "800005", "AppTabClick", false)
                 .setEvenName("点击更多")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -968,7 +971,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickCommentBox(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -987,7 +990,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickShare(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getContext(), "800018", "800018","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getContext(), "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击分享")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
@@ -1007,7 +1010,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickBack(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                 .setEvenName("点击返回")
                 .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                 .setObjectName(mNewsDetail.getArticle().getDoc_title())
@@ -1030,11 +1033,11 @@ public class NewsDetailActivity extends BaseActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if (NetUtils.isMobile() && tvNetHint.getVisibility() == View.VISIBLE){
+            if (NetUtils.isMobile() && tvNetHint.getVisibility() == View.VISIBLE) {
                 tvNetHint.setText("用流量播放");
                 return;
             }
-            if (NetUtils.isWifi() && tvNetHint.getVisibility() == View.VISIBLE){
+            if (NetUtils.isWifi() && tvNetHint.getVisibility() == View.VISIBLE) {
                 tvNetHint.setText("已切换至wifi");
                 return;
             }

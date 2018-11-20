@@ -196,6 +196,9 @@ public class ActivityTopicActivity extends BaseActivity implements
     private Analytics.AnalyticsBuilder builder;
     private Analytics mAnalytics;
 
+    private Analytics.AnalyticsBuilder builder1;
+    private Analytics mAnalytics1;
+
     /**
      * 初始化/拉取数据
      */
@@ -209,6 +212,7 @@ public class ActivityTopicActivity extends BaseActivity implements
                 mTopBarHolder.setShareVisible(true);
                 if (data.getArticle() != null) {
                     builder = pageStayTime(data);
+                    builder1 = pageStayTime2(data);
                 }
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
@@ -578,13 +582,14 @@ public class ActivityTopicActivity extends BaseActivity implements
             }
 
             //5.6SB需求
-            builder = pageStayTime2(mDetailData);
-            if (builder != null) {
-                mAnalytics = builder.build();
-                if (mAnalytics != null) {
-                    mAnalytics.sendWithDuration();
+            if (builder1 != null) {
+                mAnalytics1 = builder1.build();
+                if (mAnalytics1 != null) {
+                    mAnalytics1.sendWithDuration();
                 }
             }
+
+
         }
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();

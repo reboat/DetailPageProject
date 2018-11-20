@@ -275,7 +275,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private Analytics.AnalyticsBuilder builder;
-
+    private Analytics.AnalyticsBuilder builder1;
     /**
      * 获取图集数据
      */
@@ -349,7 +349,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private Analytics mAnalytics;
-
+    private Analytics mAnalytics1;
     /**
      * @param data 获取图集详情页数据
      */
@@ -368,6 +368,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .title(article.getList_title())
                             .url(article.getUrl()));
             builder = pageStayTime(data);
+            builder1 = pageStayTime2(data);
         }
 
         mData = data;
@@ -842,11 +843,10 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
 
             //5.6SB需求
-            builder = pageStayTime2(mData);
-            if (builder != null) {
-                mAnalytics = builder.build();
-                if (mAnalytics != null) {
-                    mAnalytics.sendWithDuration();
+            if (builder1 != null) {
+                mAnalytics1 = builder1.build();
+                if (mAnalytics1 != null) {
+                    mAnalytics1.sendWithDuration();
                 }
             }
         }

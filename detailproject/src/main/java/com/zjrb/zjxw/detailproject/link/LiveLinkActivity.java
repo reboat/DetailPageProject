@@ -760,17 +760,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
                 .setEvenName("新闻详情页停留时长")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
                 .pageType("新闻详情页");
     }
 }

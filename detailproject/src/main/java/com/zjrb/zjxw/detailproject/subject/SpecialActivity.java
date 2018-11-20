@@ -359,17 +359,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     public Analytics pageStayTime2(DraftDetailBean.ArticleBean bean) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
                 .setEvenName("专题详情页，页面停留时长")
-                .setObjectID(bean.getMlf_id() + "")
-                .setObjectName(bean.getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getChannel_id())
-                .setClassifyName(bean.getChannel_name())
                 .setPageType("专题详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getColumn_id() + "")
-                        .put("subject", bean.getId() + "")
-                        .toString())
-                .setSelfObjectID(bean.getId() + "")
                 .pageType("专题详情页")
                 .build();
     }

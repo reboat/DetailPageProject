@@ -729,7 +729,6 @@ public class NewsDetailActivity extends BaseActivity implements
             }
         }
 
-        //时长 fuck WM 5.6新增
         if (builder1 != null) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 Analytics mAnalytics2 = builder1.build();

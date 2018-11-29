@@ -238,8 +238,8 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 //红船号图集
                 if (!TextUtils.isEmpty(data.getPath()) && data.getPath().equals("/red_boat_album.html")) {
                     isRedAlbum = true;
-                }else{
-                    isRedAlbum= false;
+                } else {
+                    isRedAlbum = false;
                 }
             }
         }
@@ -276,6 +276,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     private Analytics.AnalyticsBuilder builder;
     private Analytics.AnalyticsBuilder builder1;
+
     /**
      * 获取图集数据
      */
@@ -343,13 +344,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         T.showShortNow(AtlasDetailActivity.this, errMsg);
                     }
                 }
-            }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+            }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId);
         }
 
     }
 
     private Analytics mAnalytics;
     private Analytics mAnalytics1;
+
     /**
      * @param data 获取图集详情页数据
      */

@@ -639,11 +639,11 @@ public class ActivityTopicActivity extends BaseActivity implements
             if (id == mDetailData.getArticle().getColumn_id()) {
                 mTopBarHolder.getSubscribe().setSelected(subscribe);
                 mTopBarHolder.getSubscribe().setText(subscriptionText);
-                if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0114", "SubColumn", "订阅");
-                } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0014", "SubColumn", "取消订阅");
-                }
+//                if (subscribe) {
+//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0114", "SubColumn", "订阅");
+//                } else {
+//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0014", "SubColumn", "取消订阅");
+//                }
             }
         }
     }

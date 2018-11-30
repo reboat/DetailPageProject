@@ -531,11 +531,11 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topBarHolder.getSubscribe().setSelected(subscribe);
                 topBarHolder.getSubscribe().setText(subscriptionText);
-                if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-                } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                }
+//                if (subscribe) {
+//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+//                } else {
+//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+//                }
             }
         }
     }

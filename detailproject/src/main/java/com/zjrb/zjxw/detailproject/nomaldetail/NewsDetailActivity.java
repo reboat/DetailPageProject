@@ -811,6 +811,11 @@ public class NewsDetailActivity extends BaseActivity implements
         }
     }
 
+    /**
+     * 广播修改订阅状态
+     *
+     * @param intent
+     */
     @Override
     public void subscribeSync(Intent intent) {
         if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
@@ -821,11 +826,11 @@ public class NewsDetailActivity extends BaseActivity implements
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
-                if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-                } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                }
+//                if (subscribe) {
+//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+//                } else {
+//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+//                }
             }
         }
     }

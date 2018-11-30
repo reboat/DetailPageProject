@@ -235,7 +235,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_toLeftOf="@id/tv_delete"
                 android:layout_toRightOf="@id/tv_location"
-                android:drawableLeft="@mipmap/module_detail_comment_prise"
+                android:drawableLeft="@drawable/module_detail_comment_prise"
                 android:drawablePadding="7dp"
                 android:maxLines="1"
                 android:paddingBottom="8dp"

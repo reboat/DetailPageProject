@@ -358,11 +358,11 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
-                if (subscribe) {
-                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-                } else {
-                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                }
+//                if (subscribe) {
+//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+//                } else {
+//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+//                }
             }
         }
     }

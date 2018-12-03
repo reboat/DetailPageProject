@@ -275,7 +275,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private Analytics.AnalyticsBuilder builder;
-    private Analytics.AnalyticsBuilder builder1;
+//    private Analytics.AnalyticsBuilder builder1;
 
     /**
      * 获取图集数据
@@ -370,7 +370,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .title(article.getList_title())
                             .url(article.getUrl()));
             builder = pageStayTime(data);
-            builder1 = pageStayTime2(data);
+//            builder1 = pageStayTime2(data);
         }
 
         mData = data;
@@ -845,12 +845,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
             }
 
             //5.6SB需求
-            if (builder1 != null) {
-                mAnalytics1 = builder1.build();
-                if (mAnalytics1 != null) {
-                    mAnalytics1.sendWithDuration();
-                }
-            }
+//            if (builder1 != null) {
+//                mAnalytics1 = builder1.build();
+//                if (mAnalytics1 != null) {
+//                    mAnalytics1.sendWithDuration();
+//                }
+//            }
         }
 
     }
@@ -1079,25 +1079,9 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     public void ClickShareTab(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击\"分享\"")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("图集详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id() + "")
-                .selfNewsID(bean.getArticle().getId() + "")
-                .newsTitle(bean.getArticle().getDoc_title())
-                .selfChannelID(bean.getArticle().getChannel_id())
-                .channelName(bean.getArticle().getChannel_name())
                 .pageType("图集详情页")
-                .objectType("图集详情页")
-                .pubUrl(bean.getArticle().getUrl())
+                .clickTabName("分享")
                 .build()
                 .send();
     }

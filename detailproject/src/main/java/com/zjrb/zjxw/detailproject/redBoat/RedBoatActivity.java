@@ -77,7 +77,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
     private RedBoatTopBarHolder topHolder;
     private Analytics.AnalyticsBuilder builder;
-    private Analytics.AnalyticsBuilder builder1;
+    //    private Analytics.AnalyticsBuilder builder1;
     private DraftDetailBean mNewsDetail;
     private RedBoatAdapter mAdapter;
     private Analytics mAnalytics;
@@ -154,7 +154,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = pageStayTime(draftDetailBean);
-                builder1 = pageStayTime2(draftDetailBean);
+//                builder1 = pageStayTime2(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -318,13 +318,13 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
         }
 
-        if (builder1 != null) {
-            //5.6 SB需求
-            mAnalytics1 = builder1.build();
-            if (mAnalytics1 != null) {
-                mAnalytics1.sendWithDuration();
-            }
-        }
+//        if (builder1 != null) {
+//            //5.6 SB需求
+//            mAnalytics1 = builder1.build();
+//            if (mAnalytics1 != null) {
+//                mAnalytics1.sendWithDuration();
+//            }
+//        }
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 

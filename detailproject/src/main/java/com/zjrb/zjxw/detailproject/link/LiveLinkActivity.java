@@ -169,7 +169,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
      */
     private CommonTopBarHolder topBarHolder;
     Analytics.AnalyticsBuilder builder;
-    Analytics.AnalyticsBuilder builder1;
+//    Analytics.AnalyticsBuilder builder1;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
@@ -190,7 +190,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = pageStayTime(draftDetailBean);
-                builder1 = pageStayTime2(draftDetailBean);
+//                builder1 = pageStayTime2(draftDetailBean);
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
@@ -486,12 +486,12 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             }
         }
         //5.6SB需求
-        if (builder1 != null) {
-            Analytics mAnalytics1 = builder1.build();
-            if (mAnalytics1 != null) {
-                mAnalytics1.sendWithDuration();
-            }
-        }
+//        if (builder1 != null) {
+//            Analytics mAnalytics1 = builder1.build();
+//            if (mAnalytics1 != null) {
+//                mAnalytics1.sendWithDuration();
+//            }
+//        }
     }
 
     /**

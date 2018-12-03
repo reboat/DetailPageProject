@@ -307,7 +307,7 @@ public class NewsDetailActivity extends BaseActivity implements
     }
 
     Analytics.AnalyticsBuilder builder;
-    Analytics.AnalyticsBuilder builder1;
+//    Analytics.AnalyticsBuilder builder1;
 
     /**
      * 请求详情页数据
@@ -321,7 +321,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = pageStayTime(draftDetailBean);
-                builder1 = pageStayTime2(draftDetailBean);
+//                builder1 = pageStayTime2(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -729,15 +729,15 @@ public class NewsDetailActivity extends BaseActivity implements
             }
         }
 
-        if (builder1 != null) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                Analytics mAnalytics2 = builder1.build();
-                if (mAnalytics2 != null) {
-                    mAnalytics2.sendWithDuration();
-                }
-
-            }
-        }
+//        if (builder1 != null) {
+//            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+//                Analytics mAnalytics2 = builder1.build();
+//                if (mAnalytics2 != null) {
+//                    mAnalytics2.sendWithDuration();
+//                }
+//
+//            }
+//        }
 
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);

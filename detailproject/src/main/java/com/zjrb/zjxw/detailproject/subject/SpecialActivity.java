@@ -75,7 +75,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private SpecialAdapter mAdapter;
 
     private Analytics mAnalytics;
-    private Analytics mAnalytics1;
+//    private Analytics mAnalytics1;
     /**
      * 稿件ID
      */
@@ -231,7 +231,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .url(mArticle.getUrl())
             );
             mAnalytics = pageStayTime(data);
-            mAnalytics1 = pageStayTime2(data.getArticle());
+//            mAnalytics1 = pageStayTime2(data.getArticle());
         }
         bindCollect();
         mTopBar.setRightVisible(true);
@@ -327,9 +327,9 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
-        if (mAnalytics1 != null) {
-            mAnalytics1.sendWithDuration();
-        }
+//        if (mAnalytics1 != null) {
+//            mAnalytics1.sendWithDuration();
+//        }
     }
 
     @Override

@@ -70,7 +70,7 @@ dependencies {
 
     implementation 'cn.daily.android:location:5.3.0'
 
-    implementation('cn.daily.android:core-library:5.6.0.8') {
+    implementation('cn.daily.android:core-library:5.6.0.25') {
         exclude group: 'cn.daily.android:analytics', module: 'analytics'
     }
 }

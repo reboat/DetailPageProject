@@ -141,6 +141,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
+        //可以用webview组件中的方法代替
+        //先解析后加载，链接稿无法这样操作
         String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent
                         ()) ? "" : mData.getArticle().getContent(),
                 new WebBiz.ImgSrcsCallBack() {
@@ -180,6 +182,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                         audioCount = count;
                     }
                 });
+        //拼接部分自行实现
         ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
         css_js = "";
         String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" " +
@@ -246,7 +249,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                     if (Nav.with(itemView.getContext()).to(url)) {
                         //点击话题链接
                         if (url.contains("topic.html?id=")) {
-                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016",null,false)
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016", null, false)
                                     .setEvenName("点击话题标签")
                                     .setPageType("新闻详情页")
                                     .build()
@@ -254,7 +257,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
                             //官员名称
                         } else if (url.contains("gy.html?id=")) {
-                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017",null,false)
+                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017", null, false)
                                     .setEvenName("点击官员名称")
                                     .setPageType("新闻详情页")
                                     .setOtherInfo(Analytics.newOtherInfo()

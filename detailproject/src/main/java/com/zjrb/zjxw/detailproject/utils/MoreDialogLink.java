@@ -42,7 +42,6 @@ import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
 import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
 import com.zjrb.core.ui.widget.web.ZBJsInterface;
-import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
 import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
@@ -99,6 +98,8 @@ public class MoreDialogLink extends BaseDialogFragment {
     private DraftDetailBean mBean;
     private UmengShareBean mBeanShare;
 
+    private MoreDialog.IWebViewDN callback;
+
     /**
      * @return
      */
@@ -116,6 +117,17 @@ public class MoreDialogLink extends BaseDialogFragment {
         Bundle args = new Bundle();
         args.putSerializable(IKey.FRAGMENT_ARGS, bean);
         fragment.setArguments(args);
+        return fragment;
+    }
+
+    /**
+     * 设置webview回调
+     *
+     * @param callback
+     * @return
+     */
+    public MoreDialogLink setWebViewCallBack(MoreDialog.IWebViewDN callback) {
+        this.callback = callback;
         return fragment;
     }
 
@@ -255,6 +267,9 @@ public class MoreDialogLink extends BaseDialogFragment {
             newsTopicCollect();
         } else if (i == R.id.ll_module_core_more_night) {
             ThemeMode.setUiMode(!ThemeMode.isNightMode());
+            if (callback != null) {
+                callback.onChangeTheme();
+            }
             //点击开启夜间模式
             if (!ThemeMode.isNightMode()) {
                 if (mBean != null & mBean.getArticle() != null) {
@@ -575,6 +590,7 @@ public class MoreDialogLink extends BaseDialogFragment {
 
     /**
      * 是否使用js分享  当js下发非图片分享时,只要标题和链接有一个为空,就用原生分享;当下发的是图片分享时且图片链接不为空,不需要判断标题和链接是否为空
+     *
      * @param mJsShareBean
      * @return
      */

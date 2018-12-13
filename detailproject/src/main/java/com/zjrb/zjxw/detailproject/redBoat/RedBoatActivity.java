@@ -44,7 +44,6 @@ import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
-import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import java.util.ArrayList;
@@ -274,7 +273,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .setAnalyticsBean(bean).setEventName("NewsShare")
                         .setShareType("文章");
 
-                MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).show(getSupportFragmentManager(), "MoreDialog");
+                MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).setWebViewCallBack(mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
 //                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             }
             //点击订阅/取消订阅

@@ -185,8 +185,6 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
         if (mBean != null && mBean.getArticle() != null && !TextUtils.isEmpty(mBean.getArticle().getUrl())) {
-            //TODO WLJ  分享埋点合并
-//            setAnalytics(mListData.get(position).getPlatform());
             //红船号分享专用bean
             DraftDetailBean.ArticleBean article = mBean.getArticle();
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
@@ -215,76 +213,6 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
         }
     }
-
-
-//    /**
-//     * 设置网脉埋点
-//     */
-//    private void setAnalytics(SHARE_MEDIA share_media) {
-//        if (mBean != null && mBean.getArticle() != null) {
-//            DraftDetailBean.ArticleBean article = mBean.getArticle();
-//            String eventName = "";
-//            String WMCode = "";
-//            String UMCode = "";
-//            String eventDetail = "";
-//            if (share_media == SHARE_MEDIA.WEIXIN) {
-//                WMCode = "A0022";
-//                UMCode = "60003";
-//                eventName = "微信分享";
-//                eventDetail = "微信";
-//            } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
-//                WMCode = "A0022";
-//                UMCode = "60004";
-//                eventName = "朋友圈分享";
-//                eventDetail = "朋友圈";
-//            } else if (share_media == SHARE_MEDIA.QQ) {
-//                WMCode = "A0022";
-//                UMCode = "800020";
-//                eventName = "QQ分享";
-//                eventDetail = "QQ";
-//            } else if (share_media == SHARE_MEDIA.SINA) {
-//                WMCode = "A0022";
-//                UMCode = "60001";
-//                eventName = "新浪微博分享";
-//                eventDetail = "新浪微博";
-//            } else if (share_media == SHARE_MEDIA.QZONE) {
-//                WMCode = "A0022";
-//                UMCode = "800019";
-//                eventName = "QQ空间分享";
-//                eventDetail = "QQ空间";
-//            } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
-//                WMCode = "A0022";
-//                UMCode = "800032";
-//                eventName = "钉钉分享";
-//                eventDetail = "钉钉";
-//            }
-//            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode, "NewsShare", false)
-//                    .setEvenName(eventName)
-//                    .setObjectID(getMlfID(article))
-//                    .setObjectName(article.getDoc_title())
-//                    .setObjectType(ObjectType.NewsType)
-//                    .setClassifyID(article.getChannel_id())
-//                    .setClassifyName(article.getChannel_name())
-//                    .setPageType("新闻详情页")
-//                    .setOtherInfo(Analytics.newOtherInfo()
-//                            .put("relatedColumn", article.getColumn_id() + "")
-//                            .put("subject", "")
-//                            .toString())
-//                    .setSelfObjectID(article.getId() + "")
-//                    .setEventDetail(eventDetail)
-//                    .newsID(getMlfID(article))
-//                    .selfNewsID(article.getId() + "")
-//                    .newsTitle(article.getDoc_title())
-//                    .selfChannelID(article.getChannel_id())
-//                    .channelName(article.getChannel_name())
-//                    .pageType("新闻详情页")
-//                    .shareType(eventDetail)
-//                    .shareClass("文章")
-//                    .build()
-//                    .send();
-//        }
-//    }
-
 
     /**
      * 初始化滚动列表数据

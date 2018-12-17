@@ -25,6 +25,7 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
+import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
@@ -252,6 +253,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
@@ -267,14 +269,13 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                         .setSingle(false)
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTextContent(mNewsDetail.getArticle().getSummary())
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(mNewsDetail.getArticle().getWeb_link())
+                        .setTargetUrl(mNewsDetail.getArticle().getUrl())
                         .setAnalyticsBean(bean).setEventName("NewsShare")
                         .setShareType("文章");
 
                 MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).setWebViewCallBack(mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
-//                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             }
             //点击订阅/取消订阅
         } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {

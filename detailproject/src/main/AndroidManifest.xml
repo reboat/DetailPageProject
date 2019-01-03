@@ -247,8 +247,9 @@
         </activity>
 
         <!-- 专题列表 -->
-        <activity android:name=".subject.SpecialListActivity"
-                  android:configChanges="uiMode" >
+        <activity
+            android:name=".subject.SpecialListActivity"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -263,8 +264,9 @@
         </activity>
 
         <!-- 官员详情页 -->
-        <activity android:name=".persionaldetail.PersionalDetailActivity"
-                  android:configChanges="uiMode" >
+        <activity
+            android:name=".persionaldetail.PersionalDetailActivity"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -287,8 +289,9 @@
         </activity>
 
         <!-- 官员新闻列表 -->
-        <activity android:name=".persionaldetail.PersionalListActivity"
-                  android:configChanges="uiMode" >
+        <activity
+            android:name=".persionaldetail.PersionalListActivity"
+            android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -341,6 +344,32 @@
                     android:host="@string/data_host"
                     android:path="/detail/CommentSelectActivity"
                     android:scheme="@string/data_scheme" />
+            </intent-filter>
+        </activity>
+
+        <!--广告详情页-->
+        <activity
+            android:name=".addetai.AdDetailActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/advert.html" />
+                <data android:path="/addetai/AdDetailActivity" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
             </intent-filter>
         </activity>
 

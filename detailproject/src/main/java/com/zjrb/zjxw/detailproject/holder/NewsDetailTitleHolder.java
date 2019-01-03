@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
@@ -33,6 +34,8 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBean> {
+    @BindView(R2.id.top_container)
+    RelativeLayout mRyContainer;
     @BindView(R2.id.iv_top_bg)
     ImageView mIvTopBg;
     @BindView(R2.id.tv_title)
@@ -56,6 +59,11 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
+        if (mData == null) {
+            mRyContainer.setVisibility(View.GONE);
+        } else {
+            mRyContainer.setVisibility(View.VISIBLE);
+        }
 
         //顶部焦点图(可以不填写)
         if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getArticle_pic())) {
@@ -89,7 +97,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
@@ -97,7 +105,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             mTvChannelName.setVisibility(View.GONE);
         }
 
-        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
+        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
             mTvReadNum.setVisibility(View.VISIBLE);
             mTvReadNum.setText(mData.getArticle().getRead_count_general());
         } else {
@@ -111,7 +119,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012","RelatedContentClick",false)
+            new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
                     .setEvenName("点击稿件标题下频道名称")
                     .setObjectID(mData.getArticle().getChannel_id())
                     .setObjectName(mData.getArticle().getChannel_name())

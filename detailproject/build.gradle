@@ -73,6 +73,8 @@ dependencies {
     implementation('cn.daily.android:core-library:5.6.0.25') {
         exclude group: 'cn.daily.android:analytics', module: 'analytics'
     }
+
+    implementation 'cn.daily.android:ad:0.0.13'
 }
 
 

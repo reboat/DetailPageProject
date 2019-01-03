@@ -72,6 +72,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private boolean isShowAll;
     private boolean mHasVideoUrl = false;
     private boolean isRedBoat = false;//是否是红船号的适配器
+    private boolean isAdDetail = false;
 
     public void setRedBoat(boolean redBoat) {
         isRedBoat = redBoat;
@@ -79,9 +80,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     private NewsRelateNewsHolder relateNewsHolder;
 
-    public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
+    public NewsDetailAdapter(List datas, boolean hasVideoUrl, boolean isAdDetail) {
         super(datas);
         mHasVideoUrl = hasVideoUrl;
+        this.isAdDetail = isAdDetail;
         setOnItemClickListener(this);
     }
 
@@ -125,8 +127,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     @Override
     public int getAbsItemViewType(int position) {
+        //如果是广告，则只有webview
         if (position == 0) {
-            return VIEW_TYPE_TOP;
+            if (isAdDetail) {
+                return VIEW_TYPE_WEB_VIEW;
+            } else {
+                return VIEW_TYPE_TOP;
+            }
         } else if (position == 1) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;

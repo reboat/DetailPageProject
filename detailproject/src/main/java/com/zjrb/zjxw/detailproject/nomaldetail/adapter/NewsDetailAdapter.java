@@ -60,9 +60,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int VIEW_TYPE_STRING_CLICK_MORE = 9;
     //占位
     public static final int VIEW_REPLEASE = 10;
-
-    //    //订阅
-//    public static final String PAYLOADS_SUBSCRIBE = "update_subscribe";
     //恢复
     public static final String PAYLOADS_RESUME = "on_resume";
     //暂停
@@ -161,11 +158,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             isNeedSuperBind = false;
             for (int i = 0; i < payloads.size(); i++) {
                 Object payload = payloads.get(i);
-//                if (PAYLOADS_SUBSCRIBE.equals(payload)) {
-//                    if (holder instanceof IBindSubscribe) {
-//                        ((IBindSubscribe) holder).bindSubscribe();
-//                    }
-//                } else
                 if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
                         ((ILifecycle) holder).onResume();
@@ -225,17 +217,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
-//    /**
-//     * 刷新订阅部分item
-//     */
-//    public void updateSubscribeInfo() {
-//        notifyItemChanged(0, PAYLOADS_SUBSCRIBE);
-//        if (mMiddleHolderPosition != NO_POSITION) {
-//            notifyItemChanged(mMiddleHolderPosition, PAYLOADS_SUBSCRIBE);
-//        }
-//
-//    }
-
     /**
      * webview恢复监听
      */
@@ -272,7 +253,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (datas.get(position) instanceof RelatedNewsBean) {
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009","RelatedContentClick",false)
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009", "RelatedContentClick", false)
                         .setEvenName("点击相关新闻列表")
                         .setObjectID(((RelatedNewsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
@@ -299,7 +280,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010","RelatedContentClick",false)
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010", "RelatedContentClick", false)
                         .setEvenName("点击相关专题列表")
                         .setObjectID(((RelatedSubjectsBean) datas.get(position)).getMlf_id())
                         .setObjectName(((RelatedSubjectsBean) datas.get(position)).getTitle())
@@ -344,14 +325,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         notifyItemRemoved(position);
     }
 
-//    /**
-//     * 订阅
-//     */
-//    public interface IBindSubscribe {
-//
-//        void bindSubscribe();
-//    }
-
     /**
      * 视频生命周期监听
      */
@@ -369,20 +342,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
      * @date 2017/5/15 下午8:53.
      */
     public interface CommonOptCallBack {
-//        /**
-//         * 订阅操作
-//         */
-//        void onOptSubscribe();
 
         /**
          * WebView加载完毕操作
          */
         void onOptPageFinished();
-
-//        /**
-//         * 点击栏目操作
-//         */
-//        void onOptClickColumn();
 
         /**
          * 点击频道操作

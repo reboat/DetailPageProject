@@ -19,10 +19,10 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.zxing.Result;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.R;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.utils.ThreadManager;
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoView;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoViewAttacher;
 
@@ -33,9 +33,8 @@ import cn.daily.news.update.util.NetUtils;
 
 /**
  * 图片详情预览
- *
- * @author a_liYa
- * @date 16/10/23 下午10:23.
+ * Created by wanglinjie.
+ * create time:2017/8/27  上午10:14
  */
 public class ImagePreviewFragment extends DailyFragment implements PhotoViewAttacher.OnViewTapListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -92,16 +91,16 @@ public class ImagePreviewFragment extends DailyFragment implements PhotoViewAtta
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.module_core_fragment_image_preview, container, false);
+        return inflater.inflate(R.layout.module_detail_fragment_image_preview, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mIvPreImage = (PhotoView) view.findViewById(R.id.iv_pre_image);
+        mIvPreImage = view.findViewById(R.id.iv_pre_image);
         mProgressBarContainer = view.findViewById(R.id.iv_pre_progressBar_container);
         mProgressBarContainer.setOnClickListener(this);
-        mTipView = (TextView) view.findViewById(R.id.iv_pre_tip);
+        mTipView = view.findViewById(R.id.iv_pre_tip);
         init();
     }
 
@@ -213,7 +212,7 @@ public class ImagePreviewFragment extends DailyFragment implements PhotoViewAtta
      */
     private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
         if (isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024","PictureRelatedOperation",false)
+            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
                     .setEvenName("识别二维码图片")
                     .setObjectID(id)
                     .setObjectType(ObjectType.PictureType)

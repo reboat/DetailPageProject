@@ -171,8 +171,8 @@ public class NewsDetailActivity extends DailyActivity implements
 
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         receive = new VideoReceiver(this);
-        IntentFilter intentFilter = new IntentFilter(UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video));
-        intentFilter.addAction(UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video));
+        IntentFilter intentFilter = new IntentFilter(UIUtils.getString(R.string.intent_action_close_video));
+        intentFilter.addAction(UIUtils.getString(R.string.intent_action_open_video));
         localBroadcastManager.registerReceiver(receive, intentFilter);
 
         mReceiver = new SubscribeReceiver(this);
@@ -845,9 +845,9 @@ public class NewsDetailActivity extends DailyActivity implements
     @Override
     public void videoBC(Intent intent) {
         String action = intent.getAction();
-        if (UIUtils.getString(com.zjrb.core.R.string.intent_action_close_video).equals(action)) {
+        if (UIUtils.getString(R.string.intent_action_close_video).equals(action)) {
             mVideoContainer.setVisibility(View.GONE);
-        } else if (UIUtils.getString(com.zjrb.core.R.string.intent_action_open_video).equals(action)) {
+        } else if (UIUtils.getString(R.string.intent_action_open_video).equals(action)) {
             mVideoContainer.setVisibility(View.VISIBLE);
         }
     }

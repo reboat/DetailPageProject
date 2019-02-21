@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <com.zjrb.zjxw.detailproject.widget.photoview.PhotoView
+        android:id="@+id/iv_pre_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/iv_pre_progressBar_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/module_core_ic_load_zhe" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/iv_pre_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/_999999_434343"
+            android:text="加载..." />
+    </LinearLayout>
+
+</FrameLayout>

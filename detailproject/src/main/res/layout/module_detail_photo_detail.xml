@@ -12,7 +12,7 @@
     android:fitsSystemWindows="true"
     >
 
-    <com.zjrb.core.ui.widget.photoview.HackyViewPager
+    <com.zjrb.zjxw.detailproject.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

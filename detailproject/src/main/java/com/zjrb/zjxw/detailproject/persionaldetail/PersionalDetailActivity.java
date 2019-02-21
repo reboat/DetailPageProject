@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
@@ -57,12 +55,8 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     TextView tvName;
     @BindView(R2.id.tv_sex)
     TextView tvSex;
-    @BindView(R2.id.ly_name)
-    LinearLayout lyName;
     @BindView(R2.id.tv_content)
     TextView tvContent;
-    @BindView(R2.id.lly_reporter)
-    RelativeLayout llyReporter;
     @BindView(R2.id.tabLayout)
     TabLayout tabLayout;
     @BindView(R2.id.viewpager)

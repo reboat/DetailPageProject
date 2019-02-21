@@ -96,7 +96,7 @@
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
             android:paddingTop="10dp"
-            app:iv_maskColor="@color/color_5c5c5c"
+            app:iv_maskColor="@color/_5c5c5c"
             />
 
         <TextView

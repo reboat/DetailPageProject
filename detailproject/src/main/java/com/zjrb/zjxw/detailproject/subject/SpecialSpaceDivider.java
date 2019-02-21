@@ -12,9 +12,8 @@ import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 
 /**
  * 专题详情页 - 分割线
- *
- * @author a_liYa
- * @date 2017/10/12 下午5:26.
+ * Created by wanglinjie.
+ * create time:2017/8/27 下午5:26.
  */
 public class SpecialSpaceDivider extends ListSpaceDivider {
 

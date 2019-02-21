@@ -33,7 +33,7 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.zjrb.core.ui.widget.load.LoadAnim
+        <com.zjrb.core.load.LoadAnim
             android:id="@+id/layout_loading"
             android:layout_width="90dp"
             android:layout_height="90dp"

@@ -25,9 +25,8 @@ import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 专题详情页 - Adapter
- *
- * @author a_liYa
- * @date 2017/10/11 上午10:37.
+ * Created by wanglinjie.
+ * create time:2017/8/27  上午10:37.
  */
 public class SpecialAdapter extends NewsBaseAdapter {
 

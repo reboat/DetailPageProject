@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -52,7 +51,6 @@ import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.BaseData;
 import cn.daily.news.biz.core.nav.Nav;
-import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.ShareOnResultCallback;
 import cn.daily.news.biz.core.share.UmengShareBean;
@@ -63,21 +61,9 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 
 public class MoreDialogLink extends BaseDialogFragment {
 
-    public static final int SHARE_IMG_MAX_SIZE = 32; // 分享图片最大尺寸,微信分享要求分享的图片最大不能超过32k
-
     protected Dialog dialog;
     @BindView(R2.id.iv_module_core_more_collect)
     ImageView ivCollect;
-    @BindView(R2.id.ll_module_core_more_collect)
-    LinearLayout llModuleCoreMoreCollect;
-    @BindView(R2.id.iv_module_core_more_theme)
-    ImageView ivModuleCoreMoreTheme;
-    @BindView(R2.id.ll_module_core_more_night)
-    LinearLayout llModuleCoreMoreNight;
-    @BindView(R2.id.iv_module_core_more_feed_back)
-    ImageView ivModuleCoreMoreFeedBack;
-    @BindView(R2.id.ll_module_core_more_feed_back)
-    LinearLayout llModuleCoreMoreFeedBack;
     @BindView(R2.id.ll_module_core_me_friend)
     LinearLayout llModuleCoreMeFriend;
     @BindView(R2.id.ll_module_core_me_wechat)
@@ -90,8 +76,6 @@ public class MoreDialogLink extends BaseDialogFragment {
     LinearLayout llModuleCoreMeSina;
     @BindView(R2.id.ll_module_core_me_dingding)
     LinearLayout llModuleCoreMeDingDing;
-    @BindView(R2.id.btn_dialog_close)
-    Button btnDialogClose;
 
     private DraftDetailBean mBean;
     private UmengShareBean mBeanShare;
@@ -650,13 +634,13 @@ public class MoreDialogLink extends BaseDialogFragment {
                 }
                 web.setThumb(new UMImage(UIUtils.getContext(), url));  //缩略图
             } else {
-                web.setThumb(new UMImage(UIUtils.getContext(), com.zjrb.core.R.mipmap.ic_share));
+                web.setThumb(new UMImage(UIUtils.getContext(), R.mipmap.ic_share));
             }
             //分享描述
             if (!TextUtils.isEmpty(bean.getTextContent())) {
                 web.setDescription(bean.getTextContent());
             } else {
-                web.setDescription(UIUtils.getContext().getString(com.zjrb.core.R.string.module_core_share_content_from));
+                web.setDescription(UIUtils.getContext().getString(R.string.module_core_share_content_from));
             }
 
             if (umShareListener != null) {

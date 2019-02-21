@@ -28,7 +28,7 @@
             android:minHeight="@dimen/toolbar_normal_height"
             app:fitType="top">
 
-            <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView
+            <com.zjrb.zjxw.detailproject.widget.ColorImageView
                 android:id="@+id/iv_top_back"
                 android:layout_width="42dp"
                 android:layout_height="@dimen/toolbar_normal_height"
@@ -86,7 +86,7 @@
             </com.aliya.view.fitsys.FitWindowsRelativeLayout>
 
 
-            <com.zjrb.zjxw.detailproject.topic.widget.ColorImageView
+            <com.zjrb.zjxw.detailproject.widget.ColorImageView
                 android:id="@+id/iv_top_share"
                 android:layout_width="42dp"
                 android:layout_height="@dimen/toolbar_normal_height"

@@ -19,9 +19,8 @@ import butterknife.ButterKnife;
 
 /**
  * 悬浮布局 view holder
- *
- * @author a_liYa
- * @date 2017/11/1 13:31.
+ * Created by wanglinjie.
+ * create time:2018/1/11 14:22. 13:31.
  */
 public class OverlyHolder {
 

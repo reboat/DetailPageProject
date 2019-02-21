@@ -15,9 +15,8 @@ import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 专题列表 Adapter
- *
- * @author a_liYa
- * @date 2017/10/10 下午5:14.
+ * Created by wanglinjie.
+ * create time:2017/8/27 下午5:14.
  */
 public class SpecialListAdapter extends NewsBaseAdapter implements LoadMoreListener<SubjectListBean> {
 

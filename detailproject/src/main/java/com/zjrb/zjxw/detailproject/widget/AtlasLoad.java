@@ -11,14 +11,14 @@ import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import com.core.network.api.ApiTask;
-import com.zjrb.core.R;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.R;
 
 import cn.daily.news.biz.core.constant.APICode;
 import cn.daily.news.biz.core.network.compatible.ILoad;
 
 /**
- * 浙江新闻 - LoadViewHolder
+ * 图集加载器 - LoadViewHolder
  *
  * @author a_liYa
  * @date 2016/12/13 20:38.

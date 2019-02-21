@@ -14,9 +14,8 @@ import java.util.List;
 
 /**
  * 专题悬浮助手
- *
- * @author a_liYa
- * @date 2017/10/12 15:34.
+ * Created by wanglinjie.
+ * create time:2017/8/27 15:34.
  */
 public class OverlayHelper extends RecyclerView.OnScrollListener {
 

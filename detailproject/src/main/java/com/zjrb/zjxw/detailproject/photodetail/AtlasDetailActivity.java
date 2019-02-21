@@ -103,8 +103,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     LinearLayout mContainerBottom;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.tv_comment)
-    TextView mTvComment;
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
     @BindView(R2.id.fl_comment)

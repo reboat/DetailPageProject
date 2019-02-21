@@ -7,9 +7,8 @@ import com.zjrb.zjxw.detailproject.R;
 
 /**
  * 底部占位 - footer
- *
- * @author a_liYa
- * @date 2018/1/11 14:22.
+ * Created by wanglinjie.
+ * create time:2018/1/11 14:22.
  */
 public class FooterPlaceHolder extends PageItem {
 

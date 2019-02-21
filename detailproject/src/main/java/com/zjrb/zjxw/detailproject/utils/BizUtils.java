@@ -10,8 +10,6 @@ import android.view.animation.OvershootInterpolator;
  * create time:2017/7/28  上午11:18
  */
 public class BizUtils {
-
-
     /**
      * 统一执行选择器切换动画
      *

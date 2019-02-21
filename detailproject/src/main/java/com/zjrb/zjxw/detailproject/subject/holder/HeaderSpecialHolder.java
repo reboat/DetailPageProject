@@ -33,9 +33,8 @@ import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 专题详情页 - header
- *
- * @author a_liYa
- * @date 2017/10/11 下午2:31.
+ * Created by wanglinjie.
+ * create time:2017/8/27 下午2:31.
  */
 public class HeaderSpecialHolder extends PageItem implements OnItemClickListener, View
         .OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {

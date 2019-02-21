@@ -5,9 +5,8 @@ import java.util.List;
 
 /**
  * 专题组 - JavaBean
- *
- * @author a_liYa
- * @date 2017/10/11 10:43.
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:12
  */
 public class SpecialGroupBean implements Serializable {
 

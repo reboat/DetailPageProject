@@ -4,7 +4,7 @@ package com.zjrb.zjxw.detailproject.bean;
 /**
  * 稿件Bean
  *
- * @author a_liYa
+ * Created by wanglinjie.
  * @date 2017/10/10 下午5:26.
  */
 public class ArticleItemBean extends com.zjrb.daily.news.bean.ArticleItemBean {

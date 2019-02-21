@@ -51,17 +51,14 @@ import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 专题详情页
- *
- * @author a_liYa
- * @date 2017/10/12 上午8:51.
+ * Created by wanglinjie.
+ * create time:2017/8/27 上午8:51.
  */
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
         HeaderSpecialHolder.OnClickChannelListener, View.OnClickListener, DetailWMHelperInterFace.SpercialDetailWM {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
-    @BindView(R2.id.ly_container)
-    ViewGroup lyContainer;
     @BindView(R2.id.recycler_copy)
     RecyclerView mRecyclerTabCopy;
     @BindView(R2.id.group_copy)

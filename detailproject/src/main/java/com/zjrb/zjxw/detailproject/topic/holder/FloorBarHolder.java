@@ -7,9 +7,8 @@ import android.view.animation.Interpolator;
 
 /**
  * 底部 bar view holder
- *
- * @author a_liYa
- * @date 2017/11/1 18:51.
+ * Created by wanglinjie.
+ * create time:2017/8/27 18:51.
  */
 public class FloorBarHolder {
 

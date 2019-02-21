@@ -15,9 +15,8 @@ import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 官员相关新闻 - Adapter
- *
- * @author a_liYa
- * @date 2017/10/15 下午4:06.
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:12
  */
 public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
         LoadMoreListener<OfficalDetailBean> {

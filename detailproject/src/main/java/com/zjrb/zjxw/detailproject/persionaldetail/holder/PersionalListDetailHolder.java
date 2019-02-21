@@ -32,7 +32,6 @@ import cn.daily.news.biz.core.nav.Nav;
  * Created by wanglinjie.
  * create time:2017/7/28  下午12:28
  */
-
 public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalListBean.OfficerListBean> {
 
 
@@ -42,10 +41,6 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
     TextView mTvName;
     @BindView(R2.id.tv_job)
     TextView mTvJob;
-    @BindView(R2.id.ly_name)
-    LinearLayout mLyName;
-    @BindView(R2.id.lly_reporter)
-    RelativeLayout mLlyReporter;
 
     public PersionalListDetailHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_persional_holder1, parent, false));

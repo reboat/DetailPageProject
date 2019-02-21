@@ -21,9 +21,8 @@ import butterknife.ButterKnife;
 
 /**
  * top bar view holder
- *
- * @author a_liYa
- * @date 2017/11/1 09:46.
+ * Created by wanglinjie.
+ * create time:2018/1/11 09:46.
  */
 public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
 

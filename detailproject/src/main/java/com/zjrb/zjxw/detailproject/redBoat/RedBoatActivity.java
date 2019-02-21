@@ -57,10 +57,8 @@ import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 类描述：红船号详情页
- *
- * @author jinzifu
- * @Email jinzifu123@163.com
- * @date 2018/3/12 2007
+ * Created by wanglinjie.
+ * create time:2017/8/27  上午10:14
  */
 
 public class RedBoatActivity extends DailyActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
@@ -78,7 +76,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
 
     private RedBoatTopBarHolder topHolder;
     private Analytics.AnalyticsBuilder builder;
-    //    private Analytics.AnalyticsBuilder builder1;
     private DraftDetailBean mNewsDetail;
     private RedBoatAdapter mAdapter;
     private Analytics mAnalytics;
@@ -155,7 +152,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = pageStayTime(draftDetailBean);
-//                builder1 = pageStayTime2(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -358,14 +354,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
             }
 
         }
-
-//        if (builder1 != null) {
-//            //5.6 SB需求
-//            mAnalytics1 = builder1.build();
-//            if (mAnalytics1 != null) {
-//                mAnalytics1.sendWithDuration();
-//            }
-//        }
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }
 
@@ -399,11 +387,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 topHolder.getSubscribe().setText(subscriptionText);
-//                if (subscribe) {
-//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-//                } else {
-//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-//                }
             }
         }
     }

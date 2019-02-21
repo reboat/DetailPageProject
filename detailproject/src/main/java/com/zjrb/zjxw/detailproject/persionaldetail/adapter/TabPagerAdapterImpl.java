@@ -13,9 +13,8 @@ import java.util.List;
  * 封装TabLayout + ViewPager 适配器的 FragmentPagerAdapter简单实现类
  * <p>
  * (适用页面少,自动保存到内存)
- *
- * @author a_liYa
- * @date 2016/5/1 12:27.
+ * Created by wanglinjie.
+ * create time:2017/7/17  上午10:12
  */
 public class TabPagerAdapterImpl extends FragmentPagerAdapter {
 

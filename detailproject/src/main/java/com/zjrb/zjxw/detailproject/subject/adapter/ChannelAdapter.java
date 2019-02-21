@@ -12,9 +12,8 @@ import java.util.List;
 
 /**
  * 专题 - 频道 - Adapter
- *
- * @author a_liYa
- * @date 2017/10/11 下午7:37.
+ * Created by wanglinjie.
+ * create time:2017/8/27  上午10:14
  */
 public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
 

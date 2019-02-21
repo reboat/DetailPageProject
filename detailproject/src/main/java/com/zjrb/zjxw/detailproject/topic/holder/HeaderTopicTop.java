@@ -19,9 +19,8 @@ import cn.daily.news.biz.core.glide.AppGlideOptions;
 
 /**
  * 话题 - top
- *
- * @author a_liYa
- * @date 2017/10/31 19:14.
+ * Created by wanglinjie.
+ * create time:2018/1/11 19:14.
  */
 public class HeaderTopicTop extends PageItem implements View.OnAttachStateChangeListener, View
         .OnLayoutChangeListener {

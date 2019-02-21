@@ -31,9 +31,8 @@ import cn.daily.news.biz.core.constant.IKey;
 
 /**
  * 专题列表页面
- *
- * @author a_liYa
- * @date 2017/10/11 上午9:39.
+ * Created by wanglinjie.
+ * create time:2017/8/27 上午9:39.
  */
 public class SpecialListActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener,
         OnItemClickListener {

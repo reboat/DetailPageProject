@@ -5,7 +5,7 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.daily.news.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;

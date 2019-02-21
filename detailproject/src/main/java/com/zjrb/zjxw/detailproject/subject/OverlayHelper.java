@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.zjrb.core.common.base.OverlayViewHolder;
+import com.zjrb.core.recycleView.OverlayViewHolder;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
@@ -46,7 +46,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
             int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
             for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
-                if(recyclerView.findViewHolderForAdapterPosition(i) != null){
+                if (recyclerView.findViewHolderForAdapterPosition(i) != null) {
                     int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
                     boolean visible = mRecyclerTabCopy.getVisibility() == View.VISIBLE;
                     if (top > (visible ? mRecyclerTabCopy.getHeight() : 0)) {

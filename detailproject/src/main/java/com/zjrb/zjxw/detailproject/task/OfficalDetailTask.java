@@ -1,11 +1,11 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
-import com.zjrb.zjxw.detailproject.global.C;
+
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 /**
  * 官员详情 - Task
@@ -23,7 +23,7 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
      *               start:上一次请求最后一条新闻的ID
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         put("id", params[0]);
         //下拉刷新默认不传时间戳
         if (params.length > 1 && params[1] != null) {
@@ -32,7 +32,7 @@ public class OfficalDetailTask extends APIGetTask<OfficalDetailBean> {
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.OFFICAL_DETAIL;
     }
 }

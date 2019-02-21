@@ -1,21 +1,21 @@
-package com.zjrb.zjxw.detailproject.broadCast;
+package com.zjrb.zjxw.detailproject.boardcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.zjrb.zjxw.detailproject.interFace.VideoBCnterFace;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 
 /**
  * 订阅同步广播
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class VideoReceiver extends BroadcastReceiver {
+public class SubscribeReceiver extends BroadcastReceiver {
 
-    private VideoBCnterFace interFace;
+    private SubscribeSyncInterFace interFace;
 
-    public VideoReceiver(VideoBCnterFace interFace) {
+    public SubscribeReceiver(SubscribeSyncInterFace interFace) {
         this.interFace = interFace;
     }
 
@@ -23,7 +23,7 @@ public class VideoReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
-        interFace.videoBC(intent);
+        interFace.subscribeSync(intent);
     }
 
 }

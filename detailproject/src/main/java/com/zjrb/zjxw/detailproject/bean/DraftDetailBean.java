@@ -3,10 +3,10 @@ package com.zjrb.zjxw.detailproject.bean;
 
 import android.text.TextUtils;
 
-import com.zjrb.core.domain.base.BaseData;
-
 import java.io.Serializable;
 import java.util.List;
+
+import cn.daily.news.biz.core.model.BaseData;
 
 /**
  * 稿件详情bean

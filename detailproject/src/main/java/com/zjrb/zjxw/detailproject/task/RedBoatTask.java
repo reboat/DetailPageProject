@@ -1,9 +1,10 @@
 package com.zjrb.zjxw.detailproject.task;
 
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 /**
  * 类描述：红船号
@@ -19,14 +20,14 @@ public class RedBoatTask extends APIGetTask<DraftDetailBean> {
     }
 
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
             put("article_id", params[0]);
         }
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.REDBOAT_NEWS_DETAIL;
     }
 }

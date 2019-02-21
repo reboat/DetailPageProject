@@ -5,10 +5,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -20,9 +18,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
 
 /**
- * 新闻详情页中间内容
+ * 话题详情页中间内容
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */

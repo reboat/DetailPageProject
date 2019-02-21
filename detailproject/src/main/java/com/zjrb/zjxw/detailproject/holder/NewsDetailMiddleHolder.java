@@ -10,12 +10,9 @@ import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -32,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
 
 /**
  * 新闻详情页中间内容
@@ -44,14 +44,8 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     RecyclerView mRecyleView;
     @BindView(R2.id.tv_channel_name)
     TextView mTvChannelName;
-    //    @BindView(R2.id.tv_column_name)
-//    TextView mTvColumnName;
-//    @BindView(R2.id.tv_column_subscribe)
-//    TextView mTvColumnSubscribe;
     @BindView(R2.id.ry_channel)
     RelativeLayout mRyChannel;
-//    @BindView(R2.id.ry_subscribe)
-//    RelativeLayout mRySubscribe;
 
     /**
      * 分享数据列表
@@ -74,22 +68,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     public void bindView() {
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
-
-        //栏目已关联(栏目id>0即表示频道有关联内容)
-//        if (mData.getArticle().getColumn_id() > 0
-//                && !TextUtils.isEmpty(mData.getArticle().getColumn_name())) {
-//            mRySubscribe.setVisibility(View.VISIBLE);
-//            mTvColumnName.setText(mData.getArticle().getColumn_name());
-//            //已订阅不显示入口
-//            if (!mData.getArticle().isColumn_subscribed()) {
-//                mTvColumnSubscribe.setVisibility(View.VISIBLE);
-//                mTvColumnSubscribe.setText(itemView.getContext().getString(R.string.module_detail_subscribe));
-//            }
-//
-//        } else {
-//            mRySubscribe.setVisibility(View.GONE);
-//        }
-
         //频道名称
         if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mRyChannel.setVisibility(View.VISIBLE);
@@ -130,23 +108,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         NewsDetailAdapter.CommonOptCallBack callback;
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
-            //频道订阅
-//            if (view.getId() == R.id.tv_column_subscribe) {
-//                if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
-//                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0014", "A0014")
-//                            .setEvenName("点击订阅")
-//                            .setObjectID(mData.getArticle().getColumn_id() + "")
-//                            .setObjectName(mData.getArticle().getColumn_name())
-//                            .setPageType("新闻详情页")
-//                            .setOtherInfo(Analytics.newOtherInfo()
-//                                    .put("customObjectType", "RelatedColumnType")
-//                                    .toString())
-//                            .build()
-//                            .send();
-//                    callback.onOptSubscribe();
-//                }
-//                //进入频道详情页
-//            } else
             if (view.getId() == R.id.ry_channel) {
                 if (mData != null && mData.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
@@ -173,22 +134,6 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
                 }
                 callback.onOptClickChannel();
             }
-//            else {
-//                if (mData != null && mData.getArticle() != null) {
-//                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800031", "800031")
-//                            .setEvenName("点击进入栏目详情页")
-//                            .setObjectID(mData.getArticle().getColumn_id() + "")
-//                            .setObjectName(mData.getArticle().getColumn_name())
-//                            .setPageType("新闻详情页")
-//                            .setOtherInfo(Analytics.newOtherInfo()
-//                                    .put("customObjectType", "RelatedColumnType")
-//                                    .toString())
-//                            .build()
-//                            .send();
-//                }
-//                //进入栏目详情页
-//                callback.onOptClickColumn();
-//            }
         }
     }
 

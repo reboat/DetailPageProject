@@ -1,11 +1,12 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.global.C;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 /**
  * 稿件专题分组列表 - Task
@@ -24,7 +25,7 @@ public class DraftTopicListTask extends APIGetTask<SubjectListBean> {
      *               size:分页条数(int)
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         put("group_id", params[0]);
         if (params.length > 1) {
             put("start", params[1]);
@@ -33,7 +34,7 @@ public class DraftTopicListTask extends APIGetTask<SubjectListBean> {
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.SUBJECT_LIST;
     }
 }

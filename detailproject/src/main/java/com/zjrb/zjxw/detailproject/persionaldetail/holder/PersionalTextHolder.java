@@ -4,8 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.nav.Nav;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -16,6 +15,7 @@ import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 官员holder2(纯文本)

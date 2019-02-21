@@ -10,12 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
+import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -25,13 +20,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
 
 /**
  * 更多图集
  * Created by wanglinjie.
  * create time:2017/8/27  上午10:14
  */
-public class ImageMoreFragment extends BaseFragment {
+public class ImageMoreFragment extends DailyFragment {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
@@ -91,45 +91,14 @@ public class ImageMoreFragment extends BaseFragment {
         if (mBean == null || mBean.getArticle() == null || mBean.getArticle().getRelated_news() == null || mBean.getArticle().getRelated_news().isEmpty())
             return;
         mAdapter = new ImageMoreAdapter(mBean.getArticle().getRelated_news());
-//        mAdapter.setOnItemClickListener(this);
         lvNotice.setAdapter(mAdapter);
     }
-
-
-//    /**
-//     * @param itemView
-//     * @param position 更多图集点击
-//     */
-//    @Override
-//    public void onItemClick(View itemView, int position) {
-//        if (ClickTracker.isDoubleClick()) return;
-//        if (mAdapter.getData() != null && !mAdapter.getData().isEmpty()) {
-//            if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getRelated_news() != null && mBean.getArticle().getRelated_news().get(position) != null) {
-//                new Analytics.AnalyticsBuilder(getContext(), "800011", "800011")
-//                        .setEvenName("更多图集页面，点击单个图集稿件)")
-//                        .setObjectID(mBean.getArticle().getRelated_news().get(position).getMlf_id() + "")
-//                        .setObjectName(mBean.getArticle().getRelated_news().get(position).getTitle())
-//                        .setObjectType(ObjectType.NewsType)
-//                        .setClassifyID(mBean.getArticle().getChannel_id())
-//                        .setClassifyName(mBean.getArticle().getChannel_name())
-//                        .setPageType("更多图集页")
-//                        .setOtherInfo(Analytics.newOtherInfo()
-//                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-//                                .put("subject", "")
-//                                .toString())
-//                        .setSelfObjectID(mBean.getArticle().getRelated_news().get(position).getId() + "")
-//                        .build()
-//                        .send();
-//            }
-//            Nav.with(UIUtils.getActivity()).to(((RelatedNewsBean) mAdapter.getData().get(position)).getUri_scheme());
-//        }
-//    }
 
     @OnClick(R2.id.iv_back)
     public void onBack() {
         if (getActivity() != null) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001","AppTabClick",false)
+                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
                         .setEvenName("点击返回")
                         .setObjectID(mBean.getArticle().getMlf_id() + "")
                         .setObjectName(mBean.getArticle().getDoc_title())

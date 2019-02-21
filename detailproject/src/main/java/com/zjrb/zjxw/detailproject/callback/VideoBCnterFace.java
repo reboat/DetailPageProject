@@ -1,9 +1,9 @@
-package com.zjrb.zjxw.detailproject.interFace;
+package com.zjrb.zjxw.detailproject.callback;
 
 import android.content.Intent;
 
 /**
- * 视频广播处理
+ * 视频广播处w∑理
  * Created by wanglinjie.
  * create time:2018/6/6  下午3:35
  */

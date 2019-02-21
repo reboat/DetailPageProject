@@ -2,16 +2,16 @@ package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.common.manager.APICallManager;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
+
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 官员相关新闻 - Adapter
@@ -42,7 +42,6 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
     public boolean noMore(OfficalDetailBean data) {
         //TODO 20条将不再作为无数据的依据
         return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null || data.getOfficer().getArticle_list().size() == 0;
-//                || data.getOfficer().getArticle_list().size() < C.PAGE_SIZE;
     }
 
     public void cancelLoadMore() {

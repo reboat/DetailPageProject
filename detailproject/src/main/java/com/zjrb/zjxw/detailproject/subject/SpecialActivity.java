@@ -13,16 +13,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.toolbar.holder.TopBarWhiteStyle;
-import com.zjrb.core.common.global.IKey;
+import com.zjrb.core.base.toolbar.TopBarWhiteStyle;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -33,8 +27,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
@@ -47,6 +40,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -56,7 +55,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * @author a_liYa
  * @date 2017/10/12 上午8:51.
  */
-public class SpecialActivity extends BaseActivity implements OnItemClickListener,
+public class SpecialActivity extends DailyActivity implements OnItemClickListener,
         HeaderSpecialHolder.OnClickChannelListener, View.OnClickListener, DetailWMHelperInterFace.SpercialDetailWM {
 
     @BindView(R2.id.recycler)
@@ -75,7 +74,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private SpecialAdapter mAdapter;
 
     private Analytics mAnalytics;
-//    private Analytics mAnalytics1;
     /**
      * 稿件ID
      */
@@ -195,11 +193,16 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mOverlayLayout.setVisibility(View.INVISIBLE);
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean data) {
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -231,7 +234,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                             .url(mArticle.getUrl())
             );
             mAnalytics = pageStayTime(data);
-//            mAnalytics1 = pageStayTime2(data.getArticle());
         }
         bindCollect();
         mTopBar.setRightVisible(true);
@@ -260,7 +262,7 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
      * 专题收藏
      */
     private void collectTask() {
-        new DraftCollectTask(new APIExpandCallBack<Void>() {
+        new DraftCollectTask(new LoadingCallBack<Void>() {
 
             @Override
             public void onSuccess(Void data) {
@@ -270,6 +272,11 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
                     T.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
                     bindCollect();
                 }
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -327,9 +334,6 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
-//        if (mAnalytics1 != null) {
-//            mAnalytics1.sendWithDuration();
-//        }
     }
 
     @Override

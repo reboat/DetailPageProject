@@ -8,18 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsNoCommentTextHolder;
@@ -32,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 话题稿Adapter
@@ -92,7 +92,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                         .isTopic_comment_has_more(), detailBean);
             case VIEW_TYPE_COMMENT:
                 return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle()
-                        .getId()),detailBean);
+                        .getId()), detailBean);
             case VIEW_TYPE_NO_COMMENT:
                 return new NewsNoCommentTextHolder(parent);
             default:
@@ -115,8 +115,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     public int getAbsItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_WEB_VIEW;
-        }
-        else if (getData(position) instanceof String && !getData(position).toString().equals
+        } else if (getData(position) instanceof String && !getData(position).toString().equals
                 ("精选") && !getData(position).toString().equals
                 ("暂无评论")) {
             return VIEW_TYPE_STRING;
@@ -219,7 +218,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 if (detailBean != null && detailBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010","RelatedContentClick",false)
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010", "RelatedContentClick", false)
                             .setEvenName("点击相关专题列表")
                             .setObjectID(detailBean.getArticle().getMlf_id() + "")
                             .setObjectName(detailBean.getArticle().getDoc_title())
@@ -255,7 +254,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                     .COMMENT_SELECT_ACTIVITY);
         } else if (datas.get(position) instanceof DraftDetailBean) {
             if (detailBean != null && detailBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012","RelatedContentClick",false)
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
                         .setEvenName("点击正文底部频道名称")
                         .setObjectID(detailBean.getArticle().getChannel_id())
                         .setObjectName(detailBean.getArticle().getChannel_name())

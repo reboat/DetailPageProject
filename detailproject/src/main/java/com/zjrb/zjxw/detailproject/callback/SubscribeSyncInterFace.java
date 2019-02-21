@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.interFace;
+package com.zjrb.zjxw.detailproject.callback;
 
 import android.content.Intent;
 

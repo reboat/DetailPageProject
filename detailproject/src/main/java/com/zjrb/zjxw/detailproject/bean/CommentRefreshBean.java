@@ -1,10 +1,10 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseData;
-
 import java.io.Serializable;
 import java.util.List;
+
+import cn.daily.news.biz.core.model.BaseData;
 
 /**
  * 评论列表bean

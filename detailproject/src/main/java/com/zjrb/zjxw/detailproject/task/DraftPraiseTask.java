@@ -1,9 +1,10 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**
  * 稿件点赞 - Task
@@ -22,14 +23,14 @@ public class DraftPraiseTask extends APIPostTask<Void> {
      *               urlScheme:标识红船号稿件与普通稿件
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         put("id", params[0]);
         put("action",params[1]);
         put("url_scheme", params[2]);
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.DRAFT_LIKE;
     }
 }

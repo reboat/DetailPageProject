@@ -4,8 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.adapter.ItemClickCallback;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.ItemClickCallback;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;

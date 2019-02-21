@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/_ffffff_202124"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/_f5f5f5_191919">
+
+        <ImageView
+            android:id="@+id/iv_close_window"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left|center_vertical"
+            android:foreground="?attr/actionBarItemBackground"
+            android:padding="10dp"
+            android:src="@mipmap/module_core_comment_close" />
+
+        <TextView
+            android:id="@+id/tv_replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/_484848_7a7b7d"
+            android:textSize="@dimen/ts_14sp"
+            tools:text="发表评论" />
+
+        <ImageView
+            android:id="@+id/iv_send_comment"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="right|center_vertical"
+            android:foreground="?attr/actionBarItemBackground"
+            android:padding="10dp"
+            android:src="@drawable/module_core_comment_dialog" />
+
+    </FrameLayout>
+
+
+    <EditText
+        android:id="@+id/et_input_comment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@null"
+        android:gravity="start|top"
+        android:hint="@string/module_detail_comment_window_hint"
+        android:lineSpacingExtra="3dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/_484848_7a7b7d"
+        android:textColorHint="@color/_999999_7a7b7d"
+        android:textSize="@dimen/ts_14sp" />
+
+    <TextView
+        android:id="@+id/tv_comment_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="14.5dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:text="0/250"
+        android:textColor="@color/_484848_7a7b7d"
+        android:textSize="14sp" />
+
+</LinearLayout>

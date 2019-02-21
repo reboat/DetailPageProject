@@ -35,27 +35,10 @@ import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.PH;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
-import com.zjrb.core.utils.NetUtils;
-import com.zjrb.core.utils.SettingManager;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -65,20 +48,23 @@ import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
-import com.zjrb.zjxw.detailproject.broadCast.VideoReceiver;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
+import com.zjrb.zjxw.detailproject.boardcast.VideoReceiver;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.callback.VideoBCnterFace;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
-import com.zjrb.zjxw.detailproject.interFace.VideoBCnterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +73,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.db.SettingManager;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
+import cn.daily.news.update.util.NetUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_TITLE;
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
@@ -100,7 +99,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class NewsDetailActivity extends BaseActivity implements
+public class NewsDetailActivity extends DailyActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener,
         LocationCallBack, DetailWMHelperInterFace.NewsDetailWM, SubscribeSyncInterFace, VideoBCnterFace {
     @BindView(R2.id.video_container)
@@ -244,7 +243,7 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createCommonTopBar(view, this);
+        topHolder = BIZTopBarFactory.createCommonTopBar(view, this);
         return topHolder.getView();
     }
 
@@ -271,7 +270,7 @@ public class NewsDetailActivity extends BaseActivity implements
                 if (isVertical) {
                     mVideoContainer.setVisibility(View.VISIBLE);
                     VerticalManager.getInstance().init(this, mVideoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
-                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
+                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
                         Intent intent = new Intent(this, VFullscreenActivity.class);
                         intent.putExtra(KEY_URL, url);
                         intent.putExtra(KEY_TITLE, bean.getDoc_title());
@@ -293,7 +292,7 @@ public class NewsDetailActivity extends BaseActivity implements
             }
             GlideApp.with(mivVideoBG).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(mivVideoBG);
-            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi()) {
+            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
                 PlayerManager.get().play(mVideoContainer, bean.getVideo_url(), new Gson().toJson(bean));
                 PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             }
@@ -301,13 +300,12 @@ public class NewsDetailActivity extends BaseActivity implements
             mVideoContainer.setVisibility(View.GONE);
         }
 
-        if (!NetUtils.isAvailable()) {
+        if (!NetUtils.isAvailable(getApplication())) {
             T.showShort(getContext(), getString(R.string.module_detail_no_network));
         }
     }
 
     Analytics.AnalyticsBuilder builder;
-//    Analytics.AnalyticsBuilder builder1;
 
     /**
      * 请求详情页数据
@@ -315,13 +313,12 @@ public class NewsDetailActivity extends BaseActivity implements
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        DraftDetailTask task = new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        DraftDetailTask task = new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = pageStayTime(draftDetailBean);
-//                builder1 = pageStayTime2(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -331,6 +328,11 @@ public class NewsDetailActivity extends BaseActivity implements
                 }
                 fillData(mNewsDetail);
                 YiDunToken.synYiDunToken(mArticleId);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -479,7 +481,12 @@ public class NewsDetailActivity extends BaseActivity implements
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<Void>() {
+        new DraftPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -600,8 +607,8 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.iv_type_video) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
 
-                if (NetUtils.isAvailable()) {
-                    if (NetUtils.isMobile()) {
+                if (NetUtils.isAvailable(getApplication())) {
+                    if (NetUtils.isMobile(getApplication())) {
                         if (Recorder.get().isAllowMobileTraffic(mNewsDetail.getArticle().getVideo_url())) {
                             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
@@ -613,7 +620,7 @@ public class NewsDetailActivity extends BaseActivity implements
                         }
                         return;
                     }
-                    if (NetUtils.isWifi()) {
+                    if (NetUtils.isWifi(getApplication())) {
                         PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
                         PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
                         return;
@@ -633,13 +640,18 @@ public class NewsDetailActivity extends BaseActivity implements
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
                 SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
 
                     @Override
@@ -651,13 +663,18 @@ public class NewsDetailActivity extends BaseActivity implements
             } else {//未订阅状态->订阅
                 SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
                             topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
 
                         @Override
@@ -679,7 +696,7 @@ public class NewsDetailActivity extends BaseActivity implements
         } else if (view.getId() == R.id.ll_net_hint) {//网络提醒下点击播放
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-            if (NetUtils.isMobile()) {
+            if (NetUtils.isMobile(getApplication())) {
                 Recorder.get().allowMobileTraffic(mNewsDetail.getArticle().getVideo_url());
             }
 
@@ -728,16 +745,6 @@ public class NewsDetailActivity extends BaseActivity implements
                 mAnalytics.sendWithDuration();
             }
         }
-
-//        if (builder1 != null) {
-//            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//                Analytics mAnalytics2 = builder1.build();
-//                if (mAnalytics2 != null) {
-//                    mAnalytics2.sendWithDuration();
-//                }
-//
-//            }
-//        }
 
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);
@@ -1027,11 +1034,11 @@ public class NewsDetailActivity extends BaseActivity implements
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if (NetUtils.isMobile() && tvNetHint.getVisibility() == View.VISIBLE) {
+            if (NetUtils.isMobile(getApplication()) && tvNetHint.getVisibility() == View.VISIBLE) {
                 tvNetHint.setText("用流量播放");
                 return;
             }
-            if (NetUtils.isWifi() && tvNetHint.getVisibility() == View.VISIBLE) {
+            if (NetUtils.isWifi(getApplication()) && tvNetHint.getVisibility() == View.VISIBLE) {
                 tvNetHint.setText("已切换至wifi");
                 return;
             }

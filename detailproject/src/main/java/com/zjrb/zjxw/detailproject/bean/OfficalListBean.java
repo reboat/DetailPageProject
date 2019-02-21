@@ -1,9 +1,10 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseData;
 
 import java.util.List;
+
+import cn.daily.news.biz.core.model.BaseData;
 
 /**
  * 所有官员列表bean

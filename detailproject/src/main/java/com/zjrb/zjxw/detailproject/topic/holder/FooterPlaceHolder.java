@@ -2,7 +2,7 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.common.base.page.PageItem;
+import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.zjxw.detailproject.R;
 
 /**

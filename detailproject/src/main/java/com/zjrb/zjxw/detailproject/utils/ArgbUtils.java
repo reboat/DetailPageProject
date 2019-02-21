@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.topic.utils;
+package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.ArgbEvaluator;
 import android.view.animation.AccelerateDecelerateInterpolator;

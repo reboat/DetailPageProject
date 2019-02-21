@@ -15,19 +15,10 @@ import android.widget.RelativeLayout;
 
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.RedBoatTopBarHolder;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.IKey;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -36,10 +27,9 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
@@ -54,6 +44,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -65,7 +63,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * @date 2018/3/12 2007
  */
 
-public class RedBoatActivity extends BaseActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
+public class RedBoatActivity extends DailyActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
 
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
@@ -101,7 +99,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createRedBoatTopBar(view, this);
+        topHolder = BIZTopBarFactory.createRedBoatTopBar(view, this);
         return topHolder.getView();
     }
 
@@ -151,7 +149,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new RedBoatTask(new APIExpandCallBack<DraftDetailBean>() {
+        new RedBoatTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
@@ -163,6 +161,11 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                 }
                 mNewsDetail = draftDetailBean;
                 fillData(mNewsDetail);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -283,13 +286,18 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
                 SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
 
                     @Override
@@ -301,13 +309,18 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
             } else {//未订阅状态->订阅
                 SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
                             topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
 
                         @Override

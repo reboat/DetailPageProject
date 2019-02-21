@@ -1,10 +1,10 @@
 package com.zjrb.zjxw.detailproject.task;
 
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.api.okhttp.CachePolicy;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
 /**
  * 获取详情页
@@ -27,19 +27,18 @@ public class DraftDetailTask extends APIGetTask<DraftDetailBean> {
      * @param params id:稿件id(int)
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         if (params != null && params.length > 0) {
             if (isRedBoat) put("article_id", params[0]);
             else {
                 put("id", params[0]);
                 put("from_channel", params[1]);
-//            cachePolicy(CachePolicy.NO_CACHE);
             }
         }
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         if (isRedBoat) return APIManager.endpoint.REDBOAT_NEWS_DETAIL;
         else return APIManager.endpoint.NEWS_DETAIL;
     }

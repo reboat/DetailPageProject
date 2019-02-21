@@ -14,30 +14,18 @@ import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder4;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.fragment.ScanerBottomFragment;
-import com.zjrb.core.ui.widget.ZBWebView;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.LongClickCallBack;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
@@ -49,6 +37,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -58,7 +54,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack, DetailWMHelperInterFace.LinkDetailWM {
+public class BrowserLinkActivity extends DailyActivity implements View.OnClickListener, LongClickCallBack, DetailWMHelperInterFace.LinkDetailWM {
 
     @BindView(R2.id.web_view)
     ZBWebView mWebView;
@@ -133,7 +129,7 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder = TopBarFactory.createDefault4(view, this);
+        topBarHolder = BIZTopBarFactory.createDefault4(view, this);
         topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.GONE);
         return topBarHolder.getView();
     }
@@ -147,13 +143,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new LoadingCallBack <DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = pageStayTime(draftDetailBean);
-//                builder1 = pageStayTime2(draftDetailBean);
                 //可能被重定向了
                 if (mNewsDetail.getArticle().getDoc_type() == 3) {
                     url = mNewsDetail.getArticle().getWeb_link();
@@ -162,6 +157,11 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 }
                 fillData(mNewsDetail);
                 YiDunToken.synYiDunToken(mArticleId);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -290,7 +290,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<Void>() {
+        new DraftPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -351,13 +356,6 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
                 mAnalytics.sendWithDuration();
             }
         }
-        //5.6SB需求
-//        if (builder1 != null) {
-//            Analytics mAnalytics1 = builder1.build();
-//            if (mAnalytics1 != null) {
-//                mAnalytics1.sendWithDuration();
-//            }
-//        }
 
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
     }

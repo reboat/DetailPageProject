@@ -10,11 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -31,6 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 撤稿空态页面
@@ -38,7 +38,7 @@ import butterknife.OnClick;
  * create time:2017/9/2  下午9:53
  */
 
-public class EmptyStateFragment extends BaseFragment implements OnItemClickListener {
+public class EmptyStateFragment extends DailyFragment implements OnItemClickListener {
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
     @BindView(R2.id.layout_title_bar)
@@ -119,7 +119,7 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
      * 获取频道热门列表
      */
     private void loadData() {
-        new DraftRankListTask(new APIExpandCallBack<DraftHotTopNewsBean>() {
+        new DraftRankListTask(new LoadingCallBack<DraftHotTopNewsBean>() {
             @Override
             public void onSuccess(DraftHotTopNewsBean bean) {
                 if (bean == null) {
@@ -137,6 +137,11 @@ public class EmptyStateFragment extends BaseFragment implements OnItemClickListe
                         adapter.notifyDataSetChanged();
                     }
                 }
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override

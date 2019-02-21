@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.C;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -19,13 +17,13 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
 
 /**
  * 类描述：红船号详情页title - ViewHolder
- *
- * @author jinzifu
- * @Email jinzifu123@163.com
- * @date 2018/3/15 1614
+ * Created by wanglinjie.
+ * create time:2017/7/18  上午09:14
  */
 
 public class RedBoatDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBean> {

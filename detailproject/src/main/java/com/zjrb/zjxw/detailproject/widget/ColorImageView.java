@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.topic.widget;
+package com.zjrb.zjxw.detailproject.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,7 +13,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.aliya.uimode.intef.UiModeChangeListener;
-import com.zjrb.zjxw.detailproject.topic.utils.ArgbUtils;
+import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
 
 /**
  * 可变色 - ImageView

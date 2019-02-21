@@ -97,6 +97,11 @@ public class APIManager {
          * 文件上传
          */
         public static final String UPLOAD_PATH = "/api/file/upload";
+
+        /**
+         * 文章分享
+         */
+        public static final String ARTIC_SHARE = "/api/favorite/share_news";
     }
 
 }

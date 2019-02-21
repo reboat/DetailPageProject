@@ -8,18 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.utils.T;
-import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
@@ -27,11 +19,16 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentSelectAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
 
 
 /**
@@ -40,7 +37,7 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentSelectActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
+public class CommentSelectActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -83,7 +80,7 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder = BIZTopBarFactory.createDefault1(view, this);
         topHolder.setViewVisible(topHolder.getShareView(), View.GONE);
         topHolder.setViewVisible(topHolder.getTitleView(), View.VISIBLE);
         topHolder.getTitleView().setText("精选");
@@ -142,10 +139,16 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
      * 下拉刷新取评论数据
      */
     private void requestData(boolean isFirst) {
-        new CommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
+        new CommentListTask(new LoadingCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
                 bindData(commentRefreshBean);
+                refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -153,10 +156,6 @@ public class CommentSelectActivity extends BaseActivity implements HeaderRefresh
                 T.showShort(getBaseContext(), errMsg);
             }
 
-            @Override
-            public void onAfter() {
-                refresh.setRefreshing(false);
-            }
         }, true).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }
 

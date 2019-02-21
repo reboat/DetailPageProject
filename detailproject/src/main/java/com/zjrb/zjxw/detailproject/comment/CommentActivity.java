@@ -18,20 +18,9 @@ import android.widget.TextView;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -39,14 +28,25 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
 
 
 /**
@@ -55,7 +55,7 @@ import cn.daily.news.analytics.Analytics;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, LocationCallBack {
+public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, LocationCallBack {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;
@@ -125,7 +125,7 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault1(view, this);
+        topHolder = BIZTopBarFactory.createDefault1(view, this);
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         return topHolder.getView();
     }
@@ -215,21 +215,22 @@ public class CommentActivity extends BaseActivity implements HeaderRefresh.OnRef
      * 下拉刷新取评论数据
      */
     private void requestData(boolean isFirst) {
-        new CommentListTask(new APIExpandCallBack<CommentRefreshBean>() {
+        new CommentListTask(new LoadingCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
                 bindData(commentRefreshBean);
                 mRvContent.scrollToPosition(0);
+                refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(getBaseContext(), errMsg);
-            }
-
-            @Override
-            public void onAfter() {
-                refresh.setRefreshing(false);
             }
         }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }

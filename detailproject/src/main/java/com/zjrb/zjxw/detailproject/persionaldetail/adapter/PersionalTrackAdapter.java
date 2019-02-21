@@ -4,8 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -86,26 +86,26 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
         @Override
         public void bindView() {
             //任职年份
-            if(!mData.isSameYear()){
+            if (!mData.isSameYear()) {
                 mTvYear.setText(mData.getYear() + "年");
-            }else{
+            } else {
                 mTvYear.setVisibility(View.GONE);
             }
 
             //任职月份
-            if(mData.getMonth() < 10){
-                mTvMonth.setText("0"+mData.getMonth() + "月");
-            }else{
+            if (mData.getMonth() < 10) {
+                mTvMonth.setText("0" + mData.getMonth() + "月");
+            } else {
                 mTvMonth.setText(mData.getMonth() + "月");
             }
 
             //官员地点
-            if(mData.getLocation() != null){
+            if (mData.getLocation() != null) {
                 mTvPersionalInfo.setText("[" + mData.getLocation() + "] ");
             }
 
             //官员职务
-            if(mData.getTitle() != null ){
+            if (mData.getTitle() != null) {
                 mTvPersionalInfo.append(mData.getTitle());
             }
 

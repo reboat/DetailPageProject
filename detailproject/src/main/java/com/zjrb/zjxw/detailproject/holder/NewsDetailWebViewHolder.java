@@ -15,20 +15,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.biz.ResourceBiz;
-import com.zjrb.core.common.biz.SettingBiz;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.db.ThemeMode;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.fragment.ScanerBottomFragment;
-import com.zjrb.core.ui.widget.ZBWebView;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.LongClickCallBack;
-import com.zjrb.core.utils.webjs.WebJsInterface;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -36,6 +27,7 @@ import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
 
 import java.util.List;
@@ -44,6 +36,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.db.ThemeMode;
+import cn.daily.news.biz.core.model.ResourceBiz;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 

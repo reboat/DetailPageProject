@@ -3,10 +3,8 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -14,6 +12,8 @@ import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
 
 /**
  * 相关专题holder

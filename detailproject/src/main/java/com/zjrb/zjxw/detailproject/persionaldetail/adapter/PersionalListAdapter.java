@@ -2,14 +2,12 @@ package com.zjrb.zjxw.detailproject.persionaldetail.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.common.manager.APICallManager;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.zjxw.detailproject.bean.OfficalArticlesBean;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
 import com.zjrb.zjxw.detailproject.persionaldetail.holder.PersionalListDetailHolder;
@@ -19,6 +17,9 @@ import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 所有官员列表适配器

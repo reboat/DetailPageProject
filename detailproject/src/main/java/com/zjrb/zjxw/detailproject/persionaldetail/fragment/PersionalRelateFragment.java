@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.other.NewsUtils;
@@ -27,13 +24,16 @@ import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.constant.IKey;
 
 /**
  * 官员相关新闻fragment
  * Created by wanglinjie.
  * create time:2017/8/27  上午10:14
  */
-public class PersionalRelateFragment extends BaseFragment implements HeaderRefresh
+public class PersionalRelateFragment extends DailyFragment implements HeaderRefresh
         .OnRefreshListener, OnItemClickListener {
 
     @BindView(R2.id.lv_notice)
@@ -113,21 +113,22 @@ public class PersionalRelateFragment extends BaseFragment implements HeaderRefre
      * 下拉刷新
      */
     private void initData() {
-        new OfficalDetailTask(new APIExpandCallBack<OfficalDetailBean>() {
+        new OfficalDetailTask(new LoadingCallBack<OfficalDetailBean>() {
 
             @Override
             public void onSuccess(OfficalDetailBean bean) {
                 bindData(bean);
+                refresh.setRefreshing(false);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
-            }
-
-            @Override
-            public void onAfter() {
-                refresh.setRefreshing(false);
             }
 
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).exe(official_id);

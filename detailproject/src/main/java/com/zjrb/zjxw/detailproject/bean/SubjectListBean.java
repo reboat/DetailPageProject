@@ -1,10 +1,11 @@
 package com.zjrb.zjxw.detailproject.bean;
 
 
-import com.zjrb.core.domain.base.BaseData;
 import com.zjrb.daily.news.bean.ArticleItemBean;
 
 import java.util.List;
+
+import cn.daily.news.biz.core.model.BaseData;
 
 /**
  * 专题列表bean

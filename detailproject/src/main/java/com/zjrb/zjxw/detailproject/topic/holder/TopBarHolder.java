@@ -13,8 +13,8 @@ import com.zjrb.core.ui.widget.CircleImageView;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.topic.utils.ArgbUtils;
-import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
+import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
+import com.zjrb.zjxw.detailproject.widget.ColorImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

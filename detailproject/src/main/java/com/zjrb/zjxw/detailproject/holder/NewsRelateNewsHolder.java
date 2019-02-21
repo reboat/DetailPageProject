@@ -6,11 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.base.adapter.ItemClickCallback;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.ItemClickCallback;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
@@ -19,6 +17,8 @@ import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
 
 /**
  * 相关新闻holder
@@ -54,7 +54,7 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
         }
     }
 
-    public TextView getTitle(){
+    public TextView getTitle() {
         return mTitle;
     }
 

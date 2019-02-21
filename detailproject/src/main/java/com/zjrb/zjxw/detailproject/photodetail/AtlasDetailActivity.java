@@ -23,47 +23,36 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder3;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.common.permission.IPermissionCallBack;
-import com.zjrb.core.common.permission.Permission;
-import com.zjrb.core.common.permission.PermissionManager;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.anim.viewpager.DepthPageTransformer;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.load.AtlasLoad;
-import com.zjrb.core.ui.widget.photoview.HackyViewPager;
-import com.zjrb.core.utils.DownloadUtil;
-import com.zjrb.core.utils.PathUtil;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.permission.IPermissionCallBack;
+import com.zjrb.core.permission.Permission;
+import com.zjrb.core.permission.PermissionManager;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.BottomSaveDialogFragment;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.PathUtil;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.widget.AtlasLoad;
+import com.zjrb.zjxw.detailproject.widget.BottomSaveDialogFragment;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
+import com.zjrb.zjxw.detailproject.widget.DepthPageTransformer;
+import com.zjrb.zjxw.detailproject.widget.photoview.HackyViewPager;
 
 import java.util.List;
 
@@ -71,6 +60,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
+import cn.daily.news.update.util.DownloadUtil;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -80,7 +80,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class AtlasDetailActivity extends BaseActivity implements ViewPager
+public class AtlasDetailActivity extends DailyActivity implements ViewPager
         .OnPageChangeListener, View.OnTouchListener, LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM {
 
     @BindView(R2.id.ry_container)
@@ -161,9 +161,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
                         if (params != null) {
                             params.height += duration;
-//                            if(params.height >= UIUtils.getScreenH() / 2){
-//                                params.height = UIUtils.getScreenH() / 2;
-//                            }
                             if (params.height <= mMinHeight) {
                                 params.height = mMinHeight;
                                 mScrollView.setLayoutParams(params);
@@ -200,7 +197,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = TopBarFactory.createDefault3(view, this);
+        topHolder = BIZTopBarFactory.createDefault3(view, this);
         mTvTitleTop = topHolder.getTitleView();
         mIvDownLoad = topHolder.getDownView();
         mIvShare = topHolder.getShareView();
@@ -275,7 +272,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private Analytics.AnalyticsBuilder builder;
-//    private Analytics.AnalyticsBuilder builder1;
 
     /**
      * 获取图集数据
@@ -315,7 +311,7 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 }
             }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId, mFromChannel);
         } else {//红船号图集
-            new RedBoatTask(new APIExpandCallBack<DraftDetailBean>() {
+            new RedBoatTask(new LoadingCallBack<DraftDetailBean>() {
                 @Override
                 public void onSuccess(DraftDetailBean atlasDetailEntity) {
                     if (atlasDetailEntity == null || atlasDetailEntity.getArticle() == null
@@ -336,6 +332,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                 }
 
                 @Override
+                public void onCancel() {
+
+                }
+
+                @Override
                 public void onError(String errMsg, int errCode) {
                     //撤稿
                     if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
@@ -350,7 +351,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     }
 
     private Analytics mAnalytics;
-    private Analytics mAnalytics1;
 
     /**
      * @param data 获取图集详情页数据
@@ -370,7 +370,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                             .title(article.getList_title())
                             .url(article.getUrl()));
             builder = pageStayTime(data);
-//            builder1 = pageStayTime2(data);
         }
 
         mData = data;
@@ -843,14 +842,6 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                     mAnalytics.sendWithDuration();
                 }
             }
-
-            //5.6SB需求
-//            if (builder1 != null) {
-//                mAnalytics1 = builder1.build();
-//                if (mAnalytics1 != null) {
-//                    mAnalytics1.sendWithDuration();
-//                }
-//            }
         }
 
     }

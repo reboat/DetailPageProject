@@ -2,7 +2,7 @@ package com.zjrb.zjxw.detailproject.topic.holder;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.zjxw.detailproject.R;
 
 import butterknife.ButterKnife;

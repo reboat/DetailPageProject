@@ -7,10 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.core.common.base.BaseFragment;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -18,13 +16,15 @@ import com.zjrb.zjxw.detailproject.persionaldetail.adapter.PersionalTrackAdapter
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.constant.IKey;
 
 /**
  * 官员履历fragment
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class PersionalDetailInfoFragment extends BaseFragment {
+public class PersionalDetailInfoFragment extends DailyFragment {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;

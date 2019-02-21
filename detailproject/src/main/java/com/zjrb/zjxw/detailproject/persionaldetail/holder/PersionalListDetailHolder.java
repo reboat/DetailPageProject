@@ -9,23 +9,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.PH;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.nav.Nav;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 官员列表头部详情holder1
@@ -92,7 +92,7 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
      * @param context
      */
     private void clickMore(Context context) {
-        new Analytics.AnalyticsBuilder(context, "800014", "800014","AppTabClick",false)
+        new Analytics.AnalyticsBuilder(context, "800014", "800014", "AppTabClick", false)
                 .setEvenName("点击更多查看官员详细信息")
                 .setPageType("官员页面")
                 .setOtherInfo(Analytics.newOtherInfo()

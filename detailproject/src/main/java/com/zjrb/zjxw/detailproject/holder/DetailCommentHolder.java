@@ -18,16 +18,10 @@ import com.aliya.uimode.utils.UiModeUtils;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.db.ThemeMode;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.dialog.ConfirmDialog;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -35,6 +29,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.comment.CommentSelectActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
@@ -42,6 +37,9 @@ import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
+import com.zjrb.zjxw.detailproject.widget.ConfirmDialog;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +48,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.db.ThemeMode;
+import cn.daily.news.biz.core.model.ResourceBiz;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -189,10 +189,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC,R.mipmap.module_detail_activity_host);
+                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
             } else if (mData.getAccount_type() == 2) {//嘉宾
                 mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC,R.mipmap.module_detail_activity_guest);
+                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
             } else if (mData.getAccount_type() == 3) {
                 if (mData.getNick_name() != null) {
                     mIvHost.setVisibility(View.GONE);
@@ -225,10 +225,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 //父评论昵称
                 if (mData.getParent_account_type() == 1) {//主持人
                     mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC,R.mipmap.module_detail_activity_host);
+                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
                 } else if (mData.getParent_account_type() == 2) {//嘉宾
                     mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC,R.mipmap.module_detail_activity_guest);
+                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
                 } else if (mData.getAccount_type() == 3) {
                     if (mData.getParent_nick_name() != null) {
                         mIvGuest.setVisibility(View.GONE);
@@ -445,7 +445,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      *                   评论点赞
      */
     private void praiseComment(String comment_id) {
-        new CommentPraiseTask(new APIExpandCallBack<Void>() {
+        new CommentPraiseTask(new LoadingCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
                 BizUtils.switchSelectorAnim(mThumb, true);//设置点赞动画
@@ -454,6 +454,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mData.setLiked(true);
                 mThumb.setText(mData.getLike_count() + "");
                 T.showShort(itemView.getContext(), "点赞成功");
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -481,7 +486,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      * @param comment_id
      */
     private void deleteComment(final String comment_id, final int position) {
-        new CommentDeleteTask(new APIExpandCallBack<Void>() {
+        new CommentDeleteTask(new LoadingCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
                 if (itemView.getContext() instanceof CommentActivity) {
@@ -493,6 +498,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 } else if (itemView.getContext() instanceof CommentSelectActivity) {
                     ((CommentSelectActivity) itemView.getContext()).onDeleteComment(position);
                 }
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -553,7 +563,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
      */
     private SpannableString doCommentTag(String s) {
         SpannableString spannableString = new SpannableString(s);
-        ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
+        ResourceBiz sp = SPHelper.get().getObject("initialization_resources");
         //如果正则为空，则清除标签
         if (sp == null || TextUtils.isEmpty(sp.comment_pattern)) {
             SPHelper.get().put("comment_tag", "").commit();

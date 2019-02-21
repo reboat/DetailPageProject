@@ -16,19 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.DefaultTopBarHolder1;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.PH;
-import com.zjrb.core.db.BundleHelper;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.utils.BundleHelper;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -43,13 +33,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
 
 /**
  * 官员详情页
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class PersionalDetailActivity extends BaseActivity implements ViewPager
+public class PersionalDetailActivity extends DailyActivity implements ViewPager
         .OnPageChangeListener {
     @BindView(R2.id.iv_avatar)
     ImageView ivAvatar;
@@ -111,7 +111,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
      * 加载数据
      */
     private void loadData() {
-        new OfficalDetailTask(new APIExpandCallBack<OfficalDetailBean>() {
+        new OfficalDetailTask(new LoadingCallBack<OfficalDetailBean>() {
 
             @Override
             public void onSuccess(OfficalDetailBean data) {
@@ -125,6 +125,11 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
                                 .toString())
                         .pageType("官员页面");
                 initView(data);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -164,7 +169,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topbarHolder = TopBarFactory.createDefault1(view, this);
+        topbarHolder = BIZTopBarFactory.createDefault1(view, this);
         topbarHolder.setViewVisible(topbarHolder.getShareView(), View.VISIBLE);
         return topbarHolder.getView();
     }

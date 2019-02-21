@@ -1,8 +1,13 @@
 package com.zjrb.zjxw.detailproject.task;
 
-import com.zjrb.core.api.base.APIGetTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
 
+import com.zjrb.core.load.LoadingCallBack;
+
+import cn.daily.news.biz.core.network.compatible.APIGetTask;
+
+/**
+ * 网易易盾
+ */
 public class AntiCheatingTask extends APIGetTask<Void> {
 
     public AntiCheatingTask(LoadingCallBack<Void> callBack){
@@ -10,13 +15,13 @@ public class AntiCheatingTask extends APIGetTask<Void> {
     }
 
     @Override
-    protected void onSetupParams(Object... params){
+    public void onSetupParams(Object... params){
         put("article_id",params[0]);
         put("check_token",params[1]);
     }
 
     @Override
-    protected String getApi(){
+    public String getApi(){
         return "/api/anti_cheating/read_news";
     }
 

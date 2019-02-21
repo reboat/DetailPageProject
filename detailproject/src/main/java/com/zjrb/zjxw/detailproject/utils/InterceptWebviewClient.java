@@ -6,11 +6,11 @@ import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.zjrb.core.nav.Nav;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.nav.Nav;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 

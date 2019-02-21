@@ -2,13 +2,11 @@ package com.zjrb.zjxw.detailproject.comment.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.common.manager.APICallManager;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
@@ -18,6 +16,8 @@ import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
 
 import java.util.List;
+
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 评论页Adapter

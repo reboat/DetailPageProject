@@ -1,9 +1,10 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**
  * 频道订阅
@@ -21,13 +22,13 @@ public class ColumnSubscribeTask extends APIPostTask<Void> {
      *               do_subscribe:订阅/取消订阅(boolean)
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         put("column_id", params[0]);
         put("do_subscribe", params[1]);
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.COLUMN_SUBSCRIBE;
     }
 }

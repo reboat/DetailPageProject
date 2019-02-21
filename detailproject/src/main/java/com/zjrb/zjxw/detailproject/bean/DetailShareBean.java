@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.bean;
 
 import android.support.annotation.NonNull;
 
+
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.Serializable;

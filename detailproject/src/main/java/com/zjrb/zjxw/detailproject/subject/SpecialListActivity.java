@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.base.toolbar.TopBarFactory;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.bean.ArticleItemBean;
 import com.zjrb.daily.news.other.NewsUtils;
@@ -28,6 +25,9 @@ import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.constant.IKey;
 
 /**
  * 专题列表页面
@@ -35,7 +35,7 @@ import cn.daily.news.analytics.Analytics;
  * @author a_liYa
  * @date 2017/10/11 上午9:39.
  */
-public class SpecialListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener,
+public class SpecialListActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener,
         OnItemClickListener {
 
     @BindView(R2.id.lv_notice)
@@ -90,18 +90,25 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
     private SubjectListBean mBean;
 
     private void loadData(boolean isFirst) {
-        new DraftTopicListTask(new APIExpandCallBack<SubjectListBean>() {
+        new DraftTopicListTask(new LoadingCallBack<SubjectListBean>() {
             @Override
-            public void onSuccess(SubjectListBean bean) {
-                bindData(bean);
+            public void onCancel() {
+
             }
 
             @Override
-            public void onAfter() {
+            public void onError(String errMsg, int errCode) {
+
+            }
+
+            @Override
+            public void onSuccess(SubjectListBean bean) {
+                bindData(bean);
                 if (mRefresh != null) {
                     mRefresh.setRefreshing(false);
                 }
             }
+
         }).setTag(this)
                 .setShortestTime(isFirst ? 0 : C.REFRESH_SHORTEST_TIME)
                 .bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null)
@@ -144,7 +151,7 @@ public class SpecialListActivity extends BaseActivity implements HeaderRefresh.O
         if (mAdapter != null) {
             if (mBean != null && mBean.getArticle_list() != null && mBean.getArticle_list().size() >= position) {
                 ArticleItemBean bean = mBean.getArticle_list().get(position);
-                new Analytics.AnalyticsBuilder(this, "200007", "200007","AppContentClick",false)
+                new Analytics.AnalyticsBuilder(this, "200007", "200007", "AppContentClick", false)
                         .setEvenName("点击更多进入专题列表页面后，新闻列表点击")
                         .setObjectID(bean.getMlf_id() + "")
                         .setObjectName(bean.getDoc_title())

@@ -20,37 +20,24 @@ import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.base.toolbar.holder.CommonTopBarHolder;
+import com.zjrb.core.base.toolbar.CommonTopBarHolder;
+import com.zjrb.core.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.fragment.ScanerBottomFragment;
-import com.zjrb.core.ui.widget.ZBWebView;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.core.utils.webjs.LongClickCallBack;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -58,11 +45,20 @@ import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -72,7 +68,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends BaseActivity implements View.OnClickListener, LongClickCallBack, LocationCallBack,
+public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, LongClickCallBack, LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
 
     @BindView(R2.id.web_view)
@@ -184,7 +180,7 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
@@ -196,6 +192,11 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 }
                 fillData(mNewsDetail);
                 YiDunToken.synYiDunToken(mArticleId);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -371,13 +372,18 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             //已订阅状态->取消订阅
             if (topBarHolder.getSubscribe().isSelected()) {
                 SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topBarHolder.getSubscribe().setSelected(false);
                         topBarHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
 
                     @Override
@@ -389,13 +395,18 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             } else {//未订阅状态->订阅
                 SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topBarHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topBarHolder.getSubscribe().setSelected(true);
                             topBarHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
 
                         @Override
@@ -427,7 +438,12 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<Void>() {
+        new DraftPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -485,13 +501,6 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
                 mAnalytics.sendWithDuration();
             }
         }
-        //5.6SB需求
-//        if (builder1 != null) {
-//            Analytics mAnalytics1 = builder1.build();
-//            if (mAnalytics1 != null) {
-//                mAnalytics1.sendWithDuration();
-//            }
-//        }
     }
 
     /**

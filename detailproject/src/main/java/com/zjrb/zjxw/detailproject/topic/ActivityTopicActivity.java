@@ -20,23 +20,12 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.api.callback.LocationCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.listener.LoadMoreListener;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.FooterLoadMore;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -47,11 +36,11 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.broadCast.SubscribeReceiver;
-import com.zjrb.zjxw.detailproject.global.ErrorCode;
+import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
+import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
-import com.zjrb.zjxw.detailproject.interFace.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.interFace.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
@@ -63,9 +52,11 @@ import com.zjrb.zjxw.detailproject.topic.holder.FooterPlaceHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.HeaderTopicTop;
 import com.zjrb.zjxw.detailproject.topic.holder.OverlyHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
-import com.zjrb.zjxw.detailproject.topic.widget.ColorImageView;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.widget.ColorImageView;
+import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
+import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import java.util.List;
 
@@ -73,6 +64,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -81,7 +79,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/9/13  上午9:08
  */
-public class ActivityTopicActivity extends BaseActivity implements
+public class ActivityTopicActivity extends DailyActivity implements
         TopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
         DetailCommentHolder.deleteCommentListener, LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.TopicDetailWM {
@@ -196,26 +194,27 @@ public class ActivityTopicActivity extends BaseActivity implements
     private Analytics.AnalyticsBuilder builder;
     private Analytics mAnalytics;
 
-//    private Analytics.AnalyticsBuilder builder1;
-//    private Analytics mAnalytics1;
-
     /**
      * 初始化/拉取数据
      */
     private void loadData() {
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
         mTopBarHolder.setShareVisible(false);
-        new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean data) {
                 if (data == null) return;
                 mTopBarHolder.setShareVisible(true);
                 if (data.getArticle() != null) {
                     builder = pageStayTime(data);
-//                    builder1 = pageStayTime2(data);
                 }
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -284,16 +283,17 @@ public class ActivityTopicActivity extends BaseActivity implements
      */
     @Override
     public void onOptSubscribe() {
-        new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+        new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
             @Override
             public void onSuccess(Void baseInnerData) {
+                mAdapter.updateSubscribeInfo();
                 T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
             }
 
             @Override
-            public void onAfter() {
-                mAdapter.updateSubscribeInfo();
+            public void onCancel() {
+
             }
 
             @Override
@@ -331,7 +331,12 @@ public class ActivityTopicActivity extends BaseActivity implements
             T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
             return;
         }
-        new DraftPraiseTask(new APIExpandCallBack<Void>() {
+        new DraftPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
 
             @Override
             public void onError(String errMsg, int errCode) {
@@ -442,13 +447,18 @@ public class ActivityTopicActivity extends BaseActivity implements
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
                 SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         mTopBarHolder.getSubscribe().setSelected(false);
                         mTopBarHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mDetailData.getArticle().getColumn_id());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
 
                     @Override
@@ -460,13 +470,18 @@ public class ActivityTopicActivity extends BaseActivity implements
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
                     SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-                    new ColumnSubscribeTask(new APIExpandCallBack<Void>() {
+                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             mTopBarHolder.getSubscribe().setSelected(true);
                             mTopBarHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mDetailData.getArticle().getColumn_id());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
 
                         @Override
@@ -580,16 +595,6 @@ public class ActivityTopicActivity extends BaseActivity implements
                     mAnalytics.sendWithDuration();
                 }
             }
-
-            //5.6SB需求
-//            if (builder1 != null) {
-//                mAnalytics1 = builder1.build();
-//                if (mAnalytics1 != null) {
-//                    mAnalytics1.sendWithDuration();
-//                }
-//            }
-
-
         }
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();

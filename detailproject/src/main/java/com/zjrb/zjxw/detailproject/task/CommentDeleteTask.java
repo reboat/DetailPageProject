@@ -1,9 +1,11 @@
 package com.zjrb.zjxw.detailproject.task;
 
 
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**
  * 评论删除
@@ -20,12 +22,12 @@ public class CommentDeleteTask extends APIPostTask<Void> {
      * @param params comment_id:评论id(int)
      */
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
         put("comment_id", params[0]);
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.COMMENT_DELETE;
     }
 }

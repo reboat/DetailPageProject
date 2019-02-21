@@ -6,13 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.common.base.toolbar.TopBarFactory;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.ui.holder.EmptyPageHolder;
-import com.zjrb.core.ui.holder.HeaderRefresh;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.base.toolbar.TopBarFactory;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -22,6 +20,8 @@ import com.zjrb.zjxw.detailproject.task.OfficalListTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.C;
 
 /**
  * 所有官员新闻列表
@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  * create time:2017/8/21  上午10:24
  */
 
-public class PersionalListActivity extends BaseActivity implements HeaderRefresh.OnRefreshListener {
+public class PersionalListActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener {
 
     @BindView(R2.id.lv_notice)
     RecyclerView mRecycler;
@@ -67,11 +67,16 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
      * 下拉加载所有官员列表数据
      */
     private void loadData(boolean isFirst) {
-        new OfficalListTask(new APIExpandCallBack<OfficalListBean>() {
+        new OfficalListTask(new LoadingCallBack<OfficalListBean>() {
 
             @Override
             public void onSuccess(OfficalListBean data) {
                 bindData(data);
+            }
+
+            @Override
+            public void onCancel() {
+
             }
 
             @Override
@@ -130,18 +135,5 @@ public class PersionalListActivity extends BaseActivity implements HeaderRefresh
         });
 
     }
-//    @Override
-//    public void onItemClick(View itemView, int position) {
-//        if (mAdapter.getData(position) instanceof OfficalListBean.OfficerListBean) {
-//            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url())) {
-//                Nav.with(PersionalListActivity.this).to(((OfficalListBean.OfficerListBean) mAdapter.getData(position)).getDetail_url());
-//            }
-//            //链接稿
-//        } else if (mAdapter.getData(position) instanceof OfficalArticlesBean) {
-//            if (mAdapter.getData(position) != null && !TextUtils.isEmpty(((OfficalArticlesBean) mAdapter.getData(position)).getUrl())) {
-//                Nav.with(PersionalListActivity.this).to(((OfficalArticlesBean) mAdapter.getData(position)).getUrl());
-//            }
-//        }
-//    }
 
 }

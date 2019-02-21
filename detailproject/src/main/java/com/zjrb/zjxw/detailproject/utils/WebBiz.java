@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.text.TextUtils;
 
-import com.zjrb.core.db.ThemeMode;
 import com.zjrb.core.utils.UIUtils;
 
 import org.jsoup.Jsoup;
@@ -15,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+
+import cn.daily.news.biz.core.db.ThemeMode;
 
 /**
  * WebView相关业务处理

@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.interFace;
+package com.zjrb.zjxw.detailproject.callback;
 
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;

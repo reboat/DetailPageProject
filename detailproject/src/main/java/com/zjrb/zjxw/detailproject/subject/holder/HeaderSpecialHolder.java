@@ -13,13 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.base.page.PageItem;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.widget.divider.GridSpaceDivider;
+import com.zjrb.core.recycleView.PageItem;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -30,6 +27,9 @@ import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 专题详情页 - header

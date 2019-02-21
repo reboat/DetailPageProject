@@ -2,15 +2,16 @@ package com.zjrb.zjxw.detailproject.subject.adapter;
 
 import android.view.ViewGroup;
 
-import com.zjrb.core.api.callback.LoadingCallBack;
-import com.zjrb.core.common.base.page.LoadMore;
-import com.zjrb.core.common.listener.LoadMoreListener;
-import com.zjrb.core.common.manager.APICallManager;
-import com.zjrb.core.ui.holder.FooterLoadMore;
+import com.zjrb.core.load.LoadMoreListener;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.FooterLoadMore;
+import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.daily.news.bean.ArticleItemBean;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
+
+import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 专题列表 Adapter
@@ -39,9 +40,7 @@ public class SpecialListAdapter extends NewsBaseAdapter implements LoadMoreListe
     }
 
     private boolean noMore(SubjectListBean data) {
-        //TODO  WLJ 20条不再作为依据
         return data == null || data.getArticle_list() == null || data.getArticle_list().size() == 0;
-//                || data.getArticle_list().size() < C.PAGE_SIZE;
     }
 
     @Override

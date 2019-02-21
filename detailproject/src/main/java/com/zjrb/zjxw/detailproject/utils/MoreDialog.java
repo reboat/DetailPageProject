@@ -23,18 +23,8 @@ import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.common.base.adapter.OnItemClickListener;
-import com.zjrb.core.common.biz.SettingBiz;
-import com.zjrb.core.common.global.C;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.db.ThemeMode;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
-import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -42,6 +32,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
@@ -52,6 +43,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.db.ThemeMode;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.BaseDialogFragment;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
 
 /**
  * Created by wanglinjie on 2017/9/21.
@@ -438,7 +437,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
      * 稿件收藏
      */
     private void newsTopicCollect() {
-        new DraftCollectTask(new APIExpandCallBack<Void>() {
+        new DraftCollectTask(new LoadingCallBack<Void>() {
 
             @Override
             public void onSuccess(Void baseInnerData) {
@@ -453,6 +452,11 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 }
 
                 dismissFragmentDialog();
+
+            }
+
+            @Override
+            public void onCancel() {
 
             }
 

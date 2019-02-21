@@ -11,6 +11,7 @@ import daily.zjrb.com.daily_vr.AnalyCallBack;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
+ * VR埋点回调类
  * @author: lujialei
  * @date: 2018/5/15
  * @describe:

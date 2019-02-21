@@ -3,9 +3,8 @@ package com.zjrb.zjxw.detailproject.redBoat.adapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.utils.ListUtils;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.RedBoatDetailTitleHolder;
@@ -15,10 +14,8 @@ import java.util.List;
 
 /**
  * 类描述：红船号新闻详情页Adapter
- *
- * @author jinzifu
- * @Email jinzifu123@163.com
- * @date 2018/3/14 1339
+ * Created by wanglinjie.
+ * create time:2017/7/18  上午09:14
  */
 
 public class RedBoatAdapter extends BaseRecyclerAdapter {
@@ -48,9 +45,9 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         if (viewType == VIEW_TYPE_TOP) {
             return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-             webviewHolder = new NewsDetailWebViewHolder(parent,mHasVideoUrl);
-             webviewHolder.setRedBoatActivity(true);
-             return webviewHolder;
+            webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
+            webviewHolder.setRedBoatActivity(true);
+            return webviewHolder;
         }
         return new NewsPlaceHolder(parent);
     }
@@ -118,7 +115,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
         boolean isNeedSuperBind = true;
-        if (!ListUtils.isListEmpty(payloads)) {
+        if (payloads != null && payloads.size() > 0) {
             isNeedSuperBind = false;
             for (int i = 0; i < payloads.size(); i++) {
                 Object payload = payloads.get(i);

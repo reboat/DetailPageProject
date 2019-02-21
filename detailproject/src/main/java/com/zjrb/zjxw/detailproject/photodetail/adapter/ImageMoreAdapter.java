@@ -8,12 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
-import com.zjrb.core.common.glide.AppGlideOptions;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.common.global.PH;
-import com.zjrb.core.nav.Nav;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -27,6 +24,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.glide.AppGlideOptions;
+import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.nav.Nav;
 
 /**
  * 更多图集
@@ -79,7 +79,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         public void onClick(View view) {
             if (ClickTracker.isDoubleClick()) return;
             if (view.getId() == R.id.ry_container && mData != null && !TextUtils.isEmpty(mData.getUri_scheme())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011","AppContentClick",false)
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011", "AppContentClick", false)
                         .setEvenName("更多图集页面，点击单个图集稿件)")
                         .setObjectID(mData.getMlf_id() + "")
                         .setObjectName(mData.getTitle())
@@ -92,8 +92,8 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
                                 .put("subject", "")
                                 .toString())
                         .setSelfObjectID(mData.getId() + "")
-                        .newsID(mData.getMlf_id()+"")
-                        .selfNewsID(mData.getId()+"")
+                        .newsID(mData.getMlf_id() + "")
+                        .selfNewsID(mData.getId() + "")
                         .newsTitle(mData.getTitle())
                         .pageType("图集列表页")
                         .objectType("图集新闻列表")

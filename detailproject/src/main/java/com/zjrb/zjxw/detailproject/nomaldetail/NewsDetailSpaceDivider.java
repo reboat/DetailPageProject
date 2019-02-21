@@ -5,8 +5,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.ui.widget.divider.ListSpaceDivider;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
+import com.zjrb.core.ui.divider.ListSpaceDivider;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 
 /**
@@ -27,7 +27,7 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
         outRect.set(0, 0, 0, 0);
         int position = parent.getChildAdapterPosition(view);
         BaseRecyclerAdapter adapter = (BaseRecyclerAdapter) parent.getAdapter();
-        if (adapter == null)return;
+        if (adapter == null) return;
         if (!adapter.isInnerPosition(position)) {
             position = adapter.cleanPosition(position);
             int dataSize = adapter.getDataSize();
@@ -47,7 +47,7 @@ public class NewsDetailSpaceDivider extends ListSpaceDivider {
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
         BaseRecyclerAdapter adapter = (BaseRecyclerAdapter) parent.getAdapter();
-        if (adapter == null)return;
+        if (adapter == null) return;
         final int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = parent.getChildAt(i);

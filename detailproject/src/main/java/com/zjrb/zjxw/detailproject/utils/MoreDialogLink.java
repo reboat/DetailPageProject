@@ -23,26 +23,14 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.core.api.callback.APIExpandCallBack;
-import com.zjrb.core.api.task.ArticShareTask;
-import com.zjrb.core.common.base.LifecycleActivity;
-import com.zjrb.core.common.global.IKey;
-import com.zjrb.core.common.global.RouteManager;
-import com.zjrb.core.common.permission.IPermissionCallBack;
-import com.zjrb.core.common.permission.IPermissionOperate;
-import com.zjrb.core.common.permission.Permission;
-import com.zjrb.core.common.permission.PermissionManager;
+import com.zjrb.core.base.LifecycleActivity;
 import com.zjrb.core.db.SPHelper;
-import com.zjrb.core.db.ThemeMode;
-import com.zjrb.core.domain.base.BaseData;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.UmengUtils.BaseDialogFragment;
-import com.zjrb.core.ui.UmengUtils.ShareOnResultCallback;
-import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.widget.dialog.LoadingIndicatorDialog;
-import com.zjrb.core.ui.widget.web.ZBJsInterface;
-import com.zjrb.core.utils.CompatibleUtils.EMUIUtils;
+import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.load.LoadingIndicatorDialog;
+import com.zjrb.core.permission.IPermissionCallBack;
+import com.zjrb.core.permission.IPermissionOperate;
+import com.zjrb.core.permission.Permission;
+import com.zjrb.core.permission.PermissionManager;
 import com.zjrb.core.utils.ImageUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -50,6 +38,8 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
+import com.zjrb.zjxw.detailproject.task.ArticShareTask;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import java.util.List;
@@ -58,6 +48,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.db.ThemeMode;
+import cn.daily.news.biz.core.model.BaseData;
+import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
+import cn.daily.news.biz.core.share.BaseDialogFragment;
+import cn.daily.news.biz.core.share.ShareOnResultCallback;
+import cn.daily.news.biz.core.share.UmengShareBean;
 
 /**
  * Created by wanglinjie on 2017/9/21.
@@ -368,7 +366,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * 稿件收藏
      */
     private void newsTopicCollect() {
-        new DraftCollectTask(new APIExpandCallBack<Void>() {
+        new DraftCollectTask(new LoadingCallBack<Void>() {
 
             @Override
             public void onSuccess(Void baseInnerData) {
@@ -383,6 +381,11 @@ public class MoreDialogLink extends BaseDialogFragment {
                 }
 
                 dismissAllDialog();
+
+            }
+
+            @Override
+            public void onCancel() {
 
             }
 
@@ -562,7 +565,17 @@ public class MoreDialogLink extends BaseDialogFragment {
                 mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
             }
             //稿件分享成功后，登录用户获取积分
-            new ArticShareTask(new APICallBack<BaseData>() {
+            new ArticShareTask(new LoadingCallBack<BaseData>() {
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+
+                }
+
                 @Override
                 public void onSuccess(BaseData data) {
 

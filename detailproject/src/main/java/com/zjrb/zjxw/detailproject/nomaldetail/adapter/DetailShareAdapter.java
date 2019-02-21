@@ -8,8 +8,8 @@ import android.widget.TextView;
 import com.aliya.uimode.mode.Attr;
 import com.aliya.uimode.utils.UiModeUtils;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zjrb.core.common.base.BaseRecyclerAdapter;
-import com.zjrb.core.common.base.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
@@ -64,19 +64,19 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 tv_title.setText(mData.getContent());
             }
             if (mData.getPlatform() == SHARE_MEDIA.WEIXIN_CIRCLE) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_friend_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_friend_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_wechat_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_wechat_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_qq_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_qq_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_sina_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_sina_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_space_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_space_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.DINGTALK) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_dingding_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_dingding_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.MORE) { // 更多
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC,R.mipmap.module_detail_me_more_btn);
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_more_btn);
             }
 
         }

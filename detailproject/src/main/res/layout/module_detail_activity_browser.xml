@@ -10,11 +10,11 @@
     <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_marginBottom="50dp"
+        android:fitsSystemWindows="true"
         app:fitType="bottom">
 
-        <com.zjrb.core.ui.widget.ZBWebView
+        <com.commonwebview.webview.ZBWebView
             android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

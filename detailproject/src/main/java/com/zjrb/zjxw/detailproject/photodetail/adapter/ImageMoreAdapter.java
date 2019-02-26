@@ -55,8 +55,6 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         ImageView mIvImage;
         @BindView(R2.id.tv_title)
         TextView mTvTitle;
-        @BindView(R2.id.ry_container)
-        RelativeLayout mContainer;
 
         public ImageMoreHolder(ViewGroup parent) {
             super(UIUtils.inflate(R.layout.module_detail_image_more_item, parent, false));

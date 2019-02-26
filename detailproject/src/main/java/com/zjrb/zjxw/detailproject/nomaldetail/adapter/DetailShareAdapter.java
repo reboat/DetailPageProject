@@ -54,8 +54,8 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
 
         public DetailShareViewHolder(View itemView) {
             super(itemView);
-            tv_title = (TextView) itemView.findViewById(R.id.tv_share_name);
-            iv_img = (ImageView) itemView.findViewById(R.id.iv_share_image);
+            tv_title = itemView.findViewById(R.id.tv_share_name);
+            iv_img = itemView.findViewById(R.id.iv_share_image);
         }
 
         @Override

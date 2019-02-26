@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.topic.holder;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -99,7 +98,7 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
 
     public void setFraction(float fraction) {
         itemView.setBackgroundColor(ArgbUtils.evaluate(fraction, Color.TRANSPARENT,
-                ContextCompat.getColor(itemView.getContext(),R.color._ffffff_202124)));
+                ContextCompat.getColor(itemView.getContext(), R.color._ffffff_202124)));
         mTopLine.setAlpha(fraction);
         mIvTopBack.setFraction(fraction);
         mIvTopShare.setFraction(fraction);
@@ -109,9 +108,9 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
         tvSubscribe.setAlpha(fraction);
     }
 
-    private Resources.Theme getTheme() {
-        return itemView.getContext().getTheme();
-    }
+//    private Resources.Theme getTheme() {
+//        return itemView.getContext().getTheme();
+//    }
 
     public int getHeight() {
         return itemView.getHeight();

@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.photodetail;
 
 
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,16 +16,14 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.google.zxing.Result;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.utils.ThreadManager;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.utils.ImageScanerUtils;
+import com.zjrb.zjxw.detailproject.widget.ScanerBottomFragment;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoView;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoViewAttacher;
 
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.update.util.NetUtils;
@@ -36,7 +33,7 @@ import cn.daily.news.update.util.NetUtils;
  * Created by wanglinjie.
  * create time:2017/8/27  上午10:14
  */
-public class ImagePreviewFragment extends DailyFragment implements PhotoViewAttacher.OnViewTapListener, View.OnClickListener, View.OnLongClickListener {
+public class ImagePreviewFragment extends DailyFragment implements PhotoViewAttacher.OnViewTapListener, View.OnClickListener, View.OnLongClickListener, ImageScanerUtils.ScanerImgCallBack {
 
     private View mProgressBarContainer;
     private TextView mTipView;
@@ -172,60 +169,65 @@ public class ImagePreviewFragment extends DailyFragment implements PhotoViewAtta
      */
     @Override
     public boolean onLongClick(View v) {
-        scanerImg(mUrl);
+        ImageScanerUtils.get().setmCallBack(this);
+        ImageScanerUtils imgUtils = ImageScanerUtils.get();
+        if (imgUtils != null) {
+            ImageScanerUtils.get().getBitmap(imgUtils, mUrl);
+        }
+//        scanerImg(mUrl);
         return false;
     }
 
-    private ThreadManager.ThreadPoolProxy pool;
+//    private ThreadManager.ThreadPoolProxy pool;
 
-    /**
-     * 二维码图片解析,已经下载过了，不需要拿url去解析二维码
-     */
-    private void scanerImg(final String imgUrl) {
-        pool = ThreadManager.getSinglePool();
-        pool.execute(new Runnable() {
-            @Override
-            public void run() {
-                ImageScanerUtils imgUtils = ImageScanerUtils.get();
-                Bitmap b = UIUtils.drawable2Bitmap(mIvPreImage.getDrawable());
-                Result result = null;
-                if (b != null) {
-                    result = imgUtils.handleQRCodeFormBitmap(b);
-                }
-                //链接mage
-                if (result != null) {//是二维码
-                    scanerAnalytics(imgUrl, true);
-                    ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
-                            .getActivity()).isScanerImg(true).setActivity(getActivity()).setImgUrl(result.getText()).setMlfId(id);
-                } else {//不是二维码
-                    ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
-                            .getActivity()).isScanerImg(false).setActivity(getActivity()).setImgUrl(imgUrl).setMlfId(id);
-                }
+//    /**
+//     * 二维码图片解析,已经下载过了，不需要拿url去解析二维码
+//     */
+//    private void scanerImg(final String imgUrl) {
+//        pool = ThreadManager.getSinglePool();
+//        pool.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                ImageScanerUtils imgUtils = ImageScanerUtils.get();
+//                Bitmap b = UIUtils.drawable2Bitmap(mIvPreImage.getDrawable());
+//                Result result = null;
+//                if (b != null) {
+//                    result = imgUtils.handleQRCodeFormBitmap(b);
+//                }
+//                //链接mage
+//                if (result != null) {//是二维码
+//                    scanerAnalytics(imgUrl, true);
+//                    ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
+//                            .getActivity()).isScanerImg(true).setActivity(getActivity()).setImgUrl(result.getText()).setMlfId(id);
+//                } else {//不是二维码
+//                    ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
+//                            .getActivity()).isScanerImg(false).setActivity(getActivity()).setImgUrl(imgUrl).setMlfId(id);
+//                }
+//
+//            }
+//        });
+//    }
 
-            }
-        });
-    }
-
-    /**
-     * 二维码识别相关埋点
-     * 通过相册进入没有mlf_id
-     */
-    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
-        if (isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
-                    .setEvenName("识别二维码图片")
-                    .setObjectID(id)
-                    .setObjectType(ObjectType.PictureType)
-                    .setPageType("图片预览页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("mediaURL", imgUrl)
-                            .toString())
-                    .pageType("新闻详情页")
-                    .operationType("识别二维码")
-                    .build()
-                    .send();
-        }
-    }
+//    /**
+//     * 二维码识别相关埋点
+//     * 通过相册进入没有mlf_id
+//     */
+//    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
+//        if (isScanerImg) {
+//            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
+//                    .setEvenName("识别二维码图片")
+//                    .setObjectID(id)
+//                    .setObjectType(ObjectType.PictureType)
+//                    .setPageType("图片预览页")
+//                    .setOtherInfo(Analytics.newOtherInfo()
+//                            .put("mediaURL", imgUrl)
+//                            .toString())
+//                    .pageType("新闻详情页")
+//                    .operationType("识别二维码")
+//                    .build()
+//                    .send();
+//        }
+//    }
 
     /**
      * 清除线程池
@@ -233,9 +235,16 @@ public class ImagePreviewFragment extends DailyFragment implements PhotoViewAtta
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (pool != null) {
-            pool.stop();
-        }
+//        if (pool != null) {
+//            pool.stop();
+//        }
+    }
+
+    //二维码识别回调处理
+    @Override
+    public void onScanerImgCallBack(String imgUrl, boolean isScanerImg) {
+        ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
+                .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl);
     }
 
     /**

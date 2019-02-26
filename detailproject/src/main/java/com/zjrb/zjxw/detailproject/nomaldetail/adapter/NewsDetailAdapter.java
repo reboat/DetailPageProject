@@ -70,14 +70,14 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private int mWebViewHolderPosition = NO_POSITION;
     // true：已经显示全部
     private boolean isShowAll;
-    private boolean mHasVideoUrl = false;
+    private boolean mHasVideoUrl;
     private boolean isRedBoat = false;//是否是红船号的适配器
 
-    public void setRedBoat(boolean redBoat) {
-        isRedBoat = redBoat;
-    }
+//    public void setRedBoat(boolean redBoat) {
+//        isRedBoat = redBoat;
+//    }
 
-    private NewsRelateNewsHolder relateNewsHolder;
+//    private NewsRelateNewsHolder relateNewsHolder;
 
     public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
         super(datas);
@@ -98,7 +98,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
             return new NewsRelateSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
-            return relateNewsHolder = new NewsRelateNewsHolder(parent);
+//            return relateNewsHolder = new NewsRelateNewsHolder(parent);
+            return new NewsRelateNewsHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
             return new NewsRelateNewsTextHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
@@ -234,9 +235,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
         //关闭线程池
-        if (webviewHolder != null) {
-            webviewHolder.stopThreadPool();
-        }
+//        if (webviewHolder != null) {
+//            webviewHolder.stopThreadPool();
+//        }
     }
 
     private Bundle bundle;

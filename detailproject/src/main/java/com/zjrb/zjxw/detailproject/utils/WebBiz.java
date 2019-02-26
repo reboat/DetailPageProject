@@ -22,6 +22,7 @@ import cn.daily.news.biz.core.db.ThemeMode;
  * Created by wanglinjie.
  * create time:2017/7/28  上午11:18
  */
+//TODO  WLJ  可以干掉
 public class WebBiz {
 
     /**

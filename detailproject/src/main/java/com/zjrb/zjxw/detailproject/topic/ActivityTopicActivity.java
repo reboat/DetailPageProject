@@ -40,6 +40,7 @@ import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -198,7 +199,7 @@ public class ActivityTopicActivity extends DailyActivity implements
      * 初始化/拉取数据
      */
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
         mTopBarHolder.setShareVisible(false);
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -220,7 +221,7 @@ public class ActivityTopicActivity extends DailyActivity implements
             @Override
             public void onError(String errMsg, int errCode) {
                 //话题撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
                     T.showShortNow(ActivityTopicActivity.this, errMsg);
@@ -596,7 +597,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 }
             }
         }
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }

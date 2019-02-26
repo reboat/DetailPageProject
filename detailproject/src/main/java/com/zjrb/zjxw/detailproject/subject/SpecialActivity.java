@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.base.toolbar.TopBarWhiteStyle;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.T;
@@ -28,6 +27,7 @@ import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
@@ -45,7 +45,6 @@ import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
-import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -188,7 +187,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     }
 
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mOverlayLayout.setVisibility(View.INVISIBLE);
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -205,7 +204,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             @Override
             public void onError(String errMsg, int errCode) {
                 //专题撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showCancelDraft();
                 } else {//其余页面
                     mRecycler.setVisibility(View.GONE);
@@ -327,7 +326,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

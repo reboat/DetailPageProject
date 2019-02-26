@@ -13,8 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -25,13 +25,15 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.web.JsInterfaceImp;
+import com.zjrb.zjxw.detailproject.web.WebViewImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +46,6 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
-import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -54,18 +55,16 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends DailyActivity implements View.OnClickListener, LongClickCallBack, DetailWMHelperInterFace.LinkDetailWM {
+public class BrowserLinkActivity extends DailyActivity implements View.OnClickListener, DetailWMHelperInterFace.LinkDetailWM {
 
     @BindView(R2.id.web_view)
-    ZBWebView mWebView;
+    CommonWebView mWebView;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.menu_setting)
-    ImageView mMenuSetting;
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
     @BindView(R2.id.v_container)
@@ -84,6 +83,9 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
 
     private String mFromChannel;
 
+    private WebViewImpl webImpl;
+    private JsInterfaceImp jsInterfaceImp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +93,18 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
         setContentView(R.layout.module_detail_activity_browser_link);
         ButterKnife.bind(this);
         getIntentData(getIntent());
-        mWebView.setLongClickCallBack(this);
-        mWebView.setWebViewClient(new InterceptWebviewClient());
+//        mWebView.setLongClickCallBack(this);
+        initWebview();
+//        mWebView.setWebViewClient(new InterceptWebviewClient());
         loadData();
+    }
+
+    //初始化webview相关设置
+    private void initWebview() {
+        webImpl = new WebViewImpl();
+        jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setJsObject(jsInterfaceImp);
+        mWebView.setHelper(webImpl);
     }
 
 
@@ -141,9 +152,9 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new LoadingCallBack <DraftDetailBean>() {
+        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
@@ -167,7 +178,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
             @Override
             public void onError(String errMsg, int errCode) {
                 //撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
                     T.showShortNow(BrowserLinkActivity.this, errMsg);
@@ -196,7 +207,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
 
 
         //显示标题展示WebView内容等
-        mWebView.hasVideoUrl(false);
+//        mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
@@ -345,9 +356,9 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     public void onDestroy() {
         super.onDestroy();
         //清除线程池
-        if (mWebView != null) {
-            mWebView.stopThreadPool();
-        }
+//        if (mWebView != null) {
+//            mWebView.stopThreadPool();
+//        }
         mWebView.destroy();
         //统计时长
         if (builder != null) {
@@ -357,50 +368,50 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
             }
         }
 
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
     }
 
-    /**
-     * 长按识别二维码
-     *
-     * @param imgUrl
-     * @param isScanerImg
-     */
-    @Override
-    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
-        scanerAnalytics(imgUrl, isScanerImg);
-        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
-    }
+//    /**
+//     * 长按识别二维码
+//     *
+//     * @param imgUrl
+//     * @param isScanerImg
+//     */
+//    @Override
+//    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+//        scanerAnalytics(imgUrl, isScanerImg);
+//        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
+//    }
 
 
-    /**
-     * 二维码识别相关埋点
-     */
-    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
-        if (mNewsDetail != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
-                    .setEvenName("识别二维码图片")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("mediaURL", imgUrl)
-                            .toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                    .newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
-                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
-                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-                    .channelName(mNewsDetail.getArticle().getChannel_name())
-                    .pageType("新闻详情页")
-                    .operationType("识别二维码")
-                    .build()
-                    .send();
-        }
-    }
+//    /**
+//     * 二维码识别相关埋点
+//     */
+//    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
+//        if (mNewsDetail != null && isScanerImg) {
+//            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
+//                    .setEvenName("识别二维码图片")
+//                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+//                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
+//                    .setObjectType(ObjectType.NewsType)
+//                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
+//                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+//                    .setPageType("新闻详情页")
+//                    .setOtherInfo(Analytics.newOtherInfo()
+//                            .put("mediaURL", imgUrl)
+//                            .toString())
+//                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
+//                    .newsID(mNewsDetail.getArticle().getMlf_id() + "")
+//                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
+//                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
+//                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
+//                    .channelName(mNewsDetail.getArticle().getChannel_name())
+//                    .pageType("新闻详情页")
+//                    .operationType("识别二维码")
+//                    .build()
+//                    .send();
+//        }
+//    }
 
     @Override
     public void ClickBack() {
@@ -517,11 +528,11 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
                 .pubUrl(bean.getArticle().getUrl());
     }
 
-    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-                .setEvenName("新闻详情页停留时长")
-                .setPageType("新闻详情页")
-                .pageType("新闻详情页");
-    }
+//    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
+//        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
+//                .setEvenName("新闻详情页停留时长")
+//                .setPageType("新闻详情页")
+//                .pageType("新闻详情页");
+//    }
 
 }

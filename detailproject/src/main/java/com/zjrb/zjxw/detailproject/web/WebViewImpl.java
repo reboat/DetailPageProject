@@ -21,6 +21,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.ImageScanerUtils;
+import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 import com.zjrb.zjxw.detailproject.widget.ScanerBottomFragment;
 
 import java.io.InputStream;
@@ -31,6 +32,7 @@ import bean.MediaEntity;
 import cn.daily.news.biz.core.UserBiz;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.db.SettingManager;
+import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.nav.Nav;
 import port.SerializableHashMap;
 import port.WebviewCBHelper;
@@ -96,6 +98,14 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
         // 开启database storage API功能
         webview.getSettings().setDatabaseEnabled(false);
         webview.getSettings().setAppCacheEnabled(false);
+        webview.getSettings().setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
+        // 夜间模式
+        if (ThemeMode.isNightMode()) {
+            webview.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color._ffffff_202124));
+        } else {
+            webview.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
+                    ._ffffff_191919));
+        }
     }
 
     //链接点击路由跳转
@@ -107,6 +117,8 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
     //二维码扫描业务
     @Override
     public void OnScanerImg(String imgUrl, boolean isStream) {
+        //长按回调设置
+        ImageScanerUtils.get().setmCallBack(this);
         String mImgUrl;
         if (imgUrl.isEmpty()) return;
         if (imgUrl.contains("?w=") || imgUrl.contains("?width=")) {

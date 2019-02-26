@@ -38,7 +38,7 @@ public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
 
         public ViewHolder(ViewGroup parent) {
             super(parent, R.layout.module_detail_special_channel_item);
-            tv_channel_name = (TextView) itemView.findViewById(R.id.tv_channel_name);
+            tv_channel_name = itemView.findViewById(R.id.tv_channel_name);
         }
 
         @Override

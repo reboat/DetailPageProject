@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.R;
@@ -52,12 +51,6 @@ final public class ScanerBottomFragment extends BaseDialogFragment {
     private static final String TAG = "BottomDialogFragment";
     private static ScanerBottomFragment fragment = null;
 
-    @BindView(R2.id.tv_scaner_img)
-    TextView tvScanerImg;
-    @BindView(R2.id.tv_save_img)
-    TextView tvSaveImg;
-    @BindView(R2.id.tv_cancel)
-    TextView tvCancel;
     @BindView(R2.id.ly_scaner)
     LinearLayout lyScaner;
 
@@ -247,7 +240,7 @@ final public class ScanerBottomFragment extends BaseDialogFragment {
         }
     }
 
-    //TODO  取缓存，待优化，兼容性测试url为内部地址时会ANR，之前已下载，需要修改为保存到系统相册并在下载/保存时遍历是否已经存在该图片 保存在zjxw目录下5。4.0版本改
+    //TODO  WLJ 取缓存，待优化，兼容性测试url为内部地址时会ANR，之前已下载，需要修改为保存到系统相册并在下载/保存时遍历是否已经存在该图片 保存在zjxw目录下5。4.0版本改
 
     /**
      * @param url 下载图片
@@ -329,7 +322,7 @@ final public class ScanerBottomFragment extends BaseDialogFragment {
      * 长按保存fuckWM
      */
     private void longPressAnalytics() {
-        new Analytics.AnalyticsBuilder(getContext(), "A0025", "A0025","PictureRelatedOperation",false)
+        new Analytics.AnalyticsBuilder(getContext(), "A0025", "A0025", "PictureRelatedOperation", false)
                 .setEvenName("长按保存")
                 .setObjectID(mlfid + "")
                 .setObjectType(ObjectType.NewsType)

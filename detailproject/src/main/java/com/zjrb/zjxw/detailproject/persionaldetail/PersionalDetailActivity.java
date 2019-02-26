@@ -290,7 +290,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
                         viewpager, false);
                 tv2 = (TextView) v2.findViewById(R.id.tv_item_tab_score_title);
                 tv2.setText(pagerAdapter.getPageTitle(i));
-                tv2.setTextColor(getResources().getColor(R.color.tc_f44b50));
+                tv2.setTextColor(getResources().getColor(R.color._f44b50));
                 tab.setCustomView(v2);
                 ViewParent parent = v2.getParent();
                 ((ViewGroup) parent).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
@@ -311,13 +311,13 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
         if (position == 0) {
             ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_left);
             ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right_stroke);
-            tv1.setTextColor(getResources().getColor(R.color.tc_ffffff));
-            tv2.setTextColor(getResources().getColor(R.color.tc_f44b50));
+            tv1.setTextColor(getResources().getColor(R.color._ffffff));
+            tv2.setTextColor(getResources().getColor(R.color._f44b50));
         } else {
             ((ViewGroup) v1.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_left_stroke);
             ((ViewGroup) v2.getParent()).setBackgroundResource(R.drawable.module_detail_related_red_right);
-            tv1.setTextColor(getResources().getColor(R.color.tc_f44b50));
-            tv2.setTextColor(getResources().getColor(R.color.tc_ffffff));
+            tv1.setTextColor(getResources().getColor(R.color._f44b50));
+            tv2.setTextColor(getResources().getColor(R.color._ffffff));
         }
         if (bean != null && bean.getOfficer() != null) {
             new Analytics.AnalyticsBuilder(this, "210003", "210003", "OfficialDetailClick", false)

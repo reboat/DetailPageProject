@@ -35,7 +35,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
     @BindView(R2.id.tv_all)
     TextView mTvAll;
 
-    private boolean isShowMore = false;
+    private boolean isShowMore;
     private DraftDetailBean mBean;
 
     public NewsTextMoreHolder(ViewGroup parent, boolean isShowMore, DraftDetailBean bean) {

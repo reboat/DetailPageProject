@@ -58,7 +58,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter<DraftHotTopNewsBe
     @Override
     public int getAbsItemViewType(int position) {
         //纯文本
-        if (((DraftHotTopNewsBean.HotNewsBean) datas.get(position)).isList_pics_empty()) {
+        if ((datas.get(position)).isList_pics_empty()) {
             return TYPE_TEXT;
         } else {
             //图文/纯图

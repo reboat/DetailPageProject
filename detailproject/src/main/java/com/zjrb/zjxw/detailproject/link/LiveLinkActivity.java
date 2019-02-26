@@ -17,13 +17,11 @@ import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
+import com.commonwebview.webview.CommonWebView;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.base.toolbar.CommonTopBarHolder;
-import com.zjrb.core.base.toolbar.TopBarFactory;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -37,14 +35,16 @@ import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
-import com.zjrb.zjxw.detailproject.utils.InterceptWebviewClient;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
+import com.zjrb.zjxw.detailproject.web.JsInterfaceImp;
+import com.zjrb.zjxw.detailproject.web.WebViewImpl;
 import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
@@ -58,7 +58,8 @@ import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
-import okhttp3.internal.http2.ErrorCode;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -68,13 +69,11 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, LongClickCallBack, LocationCallBack,
+public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
 
     @BindView(R2.id.web_view)
-    ZBWebView mWebView;
-    @BindView(R2.id.tv_comment)
-    TextView mTvComment;
+    CommonWebView mWebView;
     @BindView(R2.id.fl_comment)
     FrameLayout mFyContainer;
     @BindView(R2.id.menu_comment)
@@ -83,8 +82,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
-    @BindView(R2.id.menu_setting)
-    ImageView mMenuSetting;
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
@@ -97,14 +94,15 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
      * 详情页数据
      */
     private DraftDetailBean mNewsDetail;
-
+    private String mFromChannel;
     /**
      * 网页地址
      */
     private String url;
     //订阅同步广播
     private SubscribeReceiver mReceiver;
-
+    private WebViewImpl webImpl;
+    private JsInterfaceImp jsInterfaceImp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,16 +117,21 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
             }
         });
 
-        mWebView.setLongClickCallBack(this);
-        mWebView.setWebViewClient(new InterceptWebviewClient());
+//        mWebView.setLongClickCallBack(this);
+//        mWebView.setWebViewClient(new InterceptWebviewClient());
+        initWebview();
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         loadData();
     }
 
-
-    private String mFromChannel;
-
+    //初始化webview相关设置
+    private void initWebview() {
+        webImpl = new WebViewImpl();
+        jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setJsObject(jsInterfaceImp);
+        mWebView.setHelper(webImpl);
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -169,7 +172,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topBarHolder = TopBarFactory.createCommonTopBar(view, this);
+        topBarHolder = BIZTopBarFactory.createCommonTopBar(view, this);
         topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
         return topBarHolder.getView();
     }
@@ -178,7 +181,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -202,7 +205,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
             @Override
             public void onError(String errMsg, int errCode) {
                 //撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
                     T.showShortNow(LiveLinkActivity.this, errMsg);
@@ -248,7 +251,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
         }
 
         //显示标题展示WebView内容等
-        mWebView.hasVideoUrl(false);
+//        mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
         //是否点赞
         if (data.getArticle().isLike_enabled()) {
@@ -492,7 +495,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         if (builder != null) {
@@ -703,17 +706,17 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 .send();
     }
 
-    /**
-     * 识别二维码
-     *
-     * @param imgUrl
-     * @param isScanerImg
-     */
-    @Override
-    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
-        scanerAnalytics(imgUrl, isScanerImg);
-        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
-    }
+//    /**
+//     * 识别二维码
+//     *
+//     * @param imgUrl
+//     * @param isScanerImg
+//     */
+//    @Override
+//    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
+//        scanerAnalytics(imgUrl, isScanerImg);
+//        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
+//    }
 
     /**
      * 二维码识别相关埋点
@@ -766,10 +769,10 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 .pubUrl(bean.getArticle().getUrl());
     }
 
-    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-                .setEvenName("新闻详情页停留时长")
-                .setPageType("新闻详情页")
-                .pageType("新闻详情页");
-    }
+//    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
+//        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
+//                .setEvenName("新闻详情页停留时长")
+//                .setPageType("新闻详情页")
+//                .pageType("新闻详情页");
+//    }
 }

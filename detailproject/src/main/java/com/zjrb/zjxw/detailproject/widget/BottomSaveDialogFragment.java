@@ -5,12 +5,10 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
-import android.widget.TextView;
 
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -20,10 +18,6 @@ import butterknife.OnClick;
  */
 public class BottomSaveDialogFragment extends BaseBottomDialogFragment {
 
-    @BindView(R2.id.tv_save)
-    TextView tvSave;
-    @BindView(R2.id.tv_cancel)
-    TextView tvCancel;
     private AlertDialog mDialog;
     private OnSaveDialogClickListener mListener;
 

@@ -38,6 +38,7 @@ import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
@@ -70,7 +71,6 @@ import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
 import cn.daily.news.update.util.DownloadUtil;
-import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -301,7 +301,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 @Override
                 public void onError(String errMsg, int errCode) {
                     //图集撤稿
-                    if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
                         T.showShortNow(AtlasDetailActivity.this, errMsg);
@@ -337,7 +337,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 @Override
                 public void onError(String errMsg, int errCode) {
                     //撤稿
-                    if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                    if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
                         T.showShortNow(AtlasDetailActivity.this, errMsg);
@@ -684,7 +684,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             if (position == (mAtlasList.size() - 1)) {
                 mTvTitleTop.setVisibility(View.VISIBLE);
-                mTvTitleTop.setTextColor(getResources().getColor(R.color.tc_ffffff));
+                mTvTitleTop.setTextColor(getResources().getColor(R.color._ffffff));
                 mTvTitleTop.setText(getString(R.string.module_detail_more_image));
                 setTopBarInOut(View.GONE);
                 if (mData != null && mData.getArticle() != null) {

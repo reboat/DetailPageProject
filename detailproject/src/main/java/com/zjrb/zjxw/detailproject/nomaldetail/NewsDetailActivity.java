@@ -36,7 +36,6 @@ import com.daily.news.location.LocationManager;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.utils.T;
@@ -54,6 +53,7 @@ import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.callback.VideoBCnterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
@@ -86,7 +86,6 @@ import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.update.util.NetUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
-import okhttp3.internal.http2.ErrorCode;
 
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_TITLE;
 import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
@@ -311,7 +310,7 @@ public class NewsDetailActivity extends DailyActivity implements
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         DraftDetailTask task = new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -338,7 +337,7 @@ public class NewsDetailActivity extends DailyActivity implements
             @Override
             public void onError(String errMsg, int errCode) {
                 //撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
@@ -732,7 +731,7 @@ public class NewsDetailActivity extends DailyActivity implements
         if (vrManager != null) {
             vrManager.releasePlayer();
         }
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         if (builder != null) {
             //阅读深度

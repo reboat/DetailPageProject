@@ -32,6 +32,7 @@ import cn.daily.news.update.util.DownloadUtil;
 public class ImageScanerUtils {
 
     private volatile static ImageScanerUtils instance;
+
     private ScanerImgCallBack mCallBack;
     private String imgUrl = "";
 
@@ -57,6 +58,9 @@ public class ImageScanerUtils {
         return instance;
     }
 
+    public void setmCallBack(ScanerImgCallBack mCallBack) {
+        this.mCallBack = mCallBack;
+    }
 
     /**
      * 根据地址获取网络图片

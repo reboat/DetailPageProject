@@ -25,7 +25,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     public static final int VIEW_TYPE_WEB_VIEW = 2;
 
     private NewsDetailWebViewHolder webviewHolder;
-    private boolean mHasVideoUrl = false;
+    private boolean mHasVideoUrl;
     public static final int NO_POSITION = -1;
     private int mWebViewHolderPosition = NO_POSITION;
     private boolean isShowAll;

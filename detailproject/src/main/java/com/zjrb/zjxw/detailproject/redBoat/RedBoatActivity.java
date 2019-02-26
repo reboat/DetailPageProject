@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.utils.T;
@@ -30,6 +29,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
@@ -51,7 +51,6 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
-import okhttp3.internal.http2.ErrorCode;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -144,7 +143,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
      * 请求详情页数据
      */
     private void loadData() {
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new RedBoatTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -167,7 +166,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
             @Override
             public void onError(String errMsg, int errCode) {
                 //撤稿
-                if (errCode == ErrorCode.DRAFFT_IS_NOT_EXISE) {
+                if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
@@ -341,7 +340,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {

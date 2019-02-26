@@ -24,22 +24,23 @@ public final class CommentDialogBean implements Serializable {
         this.id = id;
     }
 
-    /**
-     * JS专用
-     *
-     * @param id
-     * @param callback
-     */
-    private WebJsCallBack callback;
+    //TODO WLJ
+//    /**
+//     * JS专用
+//     *
+//     * @param id
+//     * @param callback
+//     */
+//    private WebJsCallBack callback;
 
-    public CommentDialogBean(String id, WebJsCallBack callback) {
-        this.id = id;
-        this.callback = callback;
-    }
+//    public CommentDialogBean(String id, WebJsCallBack callback) {
+//        this.id = id;
+//        this.callback = callback;
+//    }
 
-    public WebJsCallBack getCallback() {
-        return callback;
-    }
+//    public WebJsCallBack getCallback() {
+//        return callback;
+//    }
 
     public CommentDialogBean(String id, String parent_id, String replayer) {
         this.id = id;

@@ -7,11 +7,12 @@ package com.zjrb.zjxw.detailproject.global;
  */
 
 public final class C {
-    /**
-     * 官员详情每页请求条数
-     */
-    public static final int PAGE_SIZE_OFFICAL = 3;
+//    /**
+//     * 官员详情每页请求条数
+//     */
+//    public static final int PAGE_SIZE_OFFICAL = 3;
 
+    public static final int DRAFFT_IS_NOT_EXISE = 50013;
     /**
      * html标准 - 路径
      */

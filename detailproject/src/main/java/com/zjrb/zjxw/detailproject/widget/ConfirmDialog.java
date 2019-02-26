@@ -44,9 +44,9 @@ public class ConfirmDialog extends Dialog {
     private void initView() {
         view = LayoutInflater.from(mContext).inflate(
                 R.layout.module_detail_dialog_confirm_layout, null);
-        tv_title = (TextView) view.findViewById(R.id.tv_confirm_title);
-        button_cancel = (TextView) view.findViewById(R.id.Button_Cancel);
-        button_ok = (TextView) view.findViewById(R.id.Button_OK);
+        tv_title = view.findViewById(R.id.tv_confirm_title);
+        button_cancel = view.findViewById(R.id.Button_Cancel);
+        button_ok = view.findViewById(R.id.Button_OK);
         button_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

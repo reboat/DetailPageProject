@@ -53,6 +53,7 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
  * Created by wanglinjie.
  * create time:2017/09/27  下午12:28
  */
+//TODO WLJ 注释掉的那些需要改正
 public class CommentWindowDialog extends DialogFragment implements TextWatcher {
 
     @BindView(R2.id.iv_send_comment)
@@ -98,7 +99,7 @@ public class CommentWindowDialog extends DialogFragment implements TextWatcher {
 
     protected Dialog dialog;
 
-    private WebJsCallBack callBack;
+//    private WebJsCallBack callBack;
 
     private LocationCallBack locationCallBack;
 
@@ -119,7 +120,7 @@ public class CommentWindowDialog extends DialogFragment implements TextWatcher {
     public static CommentWindowDialog newInstance(CommentDialogBean bean) {
         //JS回调
         CommentWindowDialog fragment = new CommentWindowDialog();
-        fragment.setCallBack(bean.getCallback());
+//        fragment.setCallBack(bean.getCallback());
         Bundle args = new Bundle();
         args.putSerializable(CommentWindowDialog.ID, bean.getId());
         args.putSerializable(CommentWindowDialog.PARENT_ID, bean.getParent_id());
@@ -160,9 +161,9 @@ public class CommentWindowDialog extends DialogFragment implements TextWatcher {
         return dialog;
     }
 
-    public void setCallBack(WebJsCallBack callBack) {
-        this.callBack = callBack;
-    }
+//    public void setCallBack(WebJsCallBack callBack) {
+//        this.callBack = callBack;
+//    }
 
     public CommentWindowDialog setLocationCallBack(LocationCallBack locationCallBack) {
         this.locationCallBack = locationCallBack;
@@ -279,9 +280,9 @@ public class CommentWindowDialog extends DialogFragment implements TextWatcher {
                         listen.onUpdateComment();
                     }
                     //JS回调提交
-                    if (callBack != null) {
-                        callBack.callback_zjxw_js_inputComment("SUCCESS");
-                    }
+//                    if (callBack != null) {
+//                        callBack.callback_zjxw_js_inputComment("SUCCESS");
+//                    }
                     try {
                         dismissAllowingStateLoss(); // 有崩溃过
                     } catch (Exception e) {
@@ -307,9 +308,9 @@ public class CommentWindowDialog extends DialogFragment implements TextWatcher {
                         ZBToast.showShort(UIUtils.getContext(), errMsg, R.mipmap
                                 .module_core_comment_send_failed);
                     }
-                    if (callBack != null) {
-                        callBack.callback_zjxw_js_inputComment("FAIL");
-                    }
+//                    if (callBack != null) {
+//                        callBack.callback_zjxw_js_inputComment("FAIL");
+//                    }
                 }
 
             }).setTag(this).exe(articleId, content, parentId, locationCallBack == null ? "" + "," + "" + "," + "" : locationCallBack.onGetLocation());

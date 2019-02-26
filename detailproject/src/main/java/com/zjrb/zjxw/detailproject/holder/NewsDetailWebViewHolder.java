@@ -14,6 +14,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
@@ -29,6 +30,7 @@ import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 import com.zjrb.zjxw.detailproject.utils.WebBiz;
+import com.zjrb.zjxw.detailproject.widget.ScanerBottomFragment;
 
 import java.util.List;
 import java.util.Map;
@@ -50,10 +52,10 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailBean> implements
         NewsDetailAdapter.ILifecycle, View.OnAttachStateChangeListener, MoreDialog.IWebViewDN,
-        MoreDialog.IWebViewTextSize, View.OnLayoutChangeListener, LongClickCallBack {
+        MoreDialog.IWebViewTextSize, View.OnLayoutChangeListener {
 
     @BindView(R2.id.web_view)
-    ZBWebView mWebView;
+    CommonWebView mWebView;
     private WebJsInterface mWebJsInterface;
 
     /**
@@ -84,7 +86,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         initWebView();
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
-        mWebView.setLongClickCallBack(this);
     }
 
     /**

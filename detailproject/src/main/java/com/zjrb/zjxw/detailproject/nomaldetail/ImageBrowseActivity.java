@@ -11,16 +11,15 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.R;
-import com.zjrb.core.R2;
 import com.zjrb.core.permission.IPermissionCallBack;
 import com.zjrb.core.permission.Permission;
 import com.zjrb.core.permission.PermissionManager;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
-import com.zjrb.zjxw.detailproject.utils.PathUtil;
 import com.zjrb.zjxw.detailproject.widget.BottomSaveDialogFragment;
 import com.zjrb.zjxw.detailproject.widget.DepthPageTransformer;
 import com.zjrb.zjxw.detailproject.widget.photoview.HackyViewPager;

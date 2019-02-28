@@ -22,7 +22,6 @@ import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.ImageScanerUtils;
 import com.zjrb.zjxw.detailproject.utils.SettingBiz;
-import com.zjrb.zjxw.detailproject.widget.ScanerBottomFragment;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -70,6 +69,9 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
     public final static int DELIVERYNAME_RESULT_CODE = 24;
     public final static int DELIVERYADDRESS_RESULT_CODE = 25;
 
+    //JS绑定对象名
+    private String JSObject;
+
     @Override
     public String getUserAgent() {
         return C.http.userAgent();
@@ -79,7 +81,11 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
     //使用浙江新闻通用版本则使用ZBJTJsBridge.PREFIX_JS_METHOD_NAME
     @Override
     public String getWebViewJsObject() {
-        return "zjxw";
+        return JSObject;
+    }
+
+    public void setWebViewJsObject(String JSObject) {
+        this.JSObject = JSObject;
     }
 
     //是否开启非省流量模式

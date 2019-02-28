@@ -46,7 +46,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.utils.PathUtil;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.widget.AtlasLoad;
 import com.zjrb.zjxw.detailproject.widget.BottomSaveDialogFragment;

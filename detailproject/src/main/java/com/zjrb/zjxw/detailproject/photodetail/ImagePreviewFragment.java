@@ -20,7 +20,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.utils.ImageScanerUtils;
-import com.zjrb.zjxw.detailproject.widget.ScanerBottomFragment;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoView;
 import com.zjrb.zjxw.detailproject.widget.photoview.PhotoViewAttacher;
 

@@ -146,7 +146,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
             mBean = (DraftDetailBean) getArguments().getSerializable(IKey.FRAGMENT_ARGS);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.BottomDialog);
-        View view = View.inflate(getContext(), R.layout.module_core_dialog_more_layout, null);
+        View view = View.inflate(getContext(), R.layout.module_detail_dialog_more_layout, null);
         ButterKnife.bind(this, view);
 
         //红船号稿件

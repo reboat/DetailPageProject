@@ -125,7 +125,7 @@ public class MoreDialogLink extends BaseDialogFragment {
             mBean = (DraftDetailBean) getArguments().getSerializable(IKey.FRAGMENT_ARGS);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.BottomDialog);
-        View view = View.inflate(getContext(), R.layout.module_core_dialog_more_link_layout, null);
+        View view = View.inflate(getContext(), R.layout.module_detail_dialog_more_link_layout, null);
         ButterKnife.bind(this, view);
         if (mBean.getArticle().isFollowed()) {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));

@@ -569,6 +569,32 @@ public class ActivityTopicActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //新华智云
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mDetailData.getArticle().getId() + "")
+                    .setUrl(mDetailData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //新华智云
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mDetailData.getArticle().getId() + "")
+                    .setUrl(mDetailData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         //阅读深度
         if (mDetailData != null && mDetailData.getArticle() != null) {
@@ -706,6 +732,12 @@ public class ActivityTopicActivity extends BaseActivity implements
     @Override
     public void ClickPriseIcon() {
         if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.praise)
+                    .setTargetID(mDetailData.getArticle().getId() + "")
+                    .setUrl(mDetailData.getArticle().getUrl())
+                    .build()
+                    .send();
+
             new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                     .setEvenName("点击点赞")
                     .setObjectID(mDetailData.getArticle().getMlf_id() + "")

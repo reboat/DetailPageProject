@@ -855,6 +855,30 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mData != null && mData.getArticle() != null) {
+            //新华智云
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //新华智云
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                .setTargetID(mData.getArticle().getId() + "")
+                .setUrl(mData.getArticle().getUrl())
+                .build()
+                .send();
+    }
+
     /**
      * 点击评论时,获取用户所在位置
      */
@@ -953,6 +977,11 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.praise)
+                .setTargetID(bean.getArticle().getId() + "")
+                .setUrl(bean.getArticle().getUrl())
+                .build()
+                .send();
         new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
@@ -1077,6 +1106,12 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
 
     @Override
     public void ClickShareTab(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                .setTargetID(bean.getArticle().getId() + "")
+                .setUrl(bean.getArticle().getUrl())
+                .build()
+                .send();
+
         new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击\"分享\"")
                 .setPageType("图集详情页")

@@ -44,6 +44,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
+import static com.zjrb.core.utils.UIUtils.getContext;
+
 /**
  * 官员详情页
  * Created by wanglinjie.
@@ -202,6 +204,7 @@ public class PersionalDetailActivity extends BaseActivity implements ViewPager
             }
         } else {//点击分享
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
+
                 new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
                         .setEvenName("点击分享")
                         .setObjectID(bean.getOfficer().getId() + "")

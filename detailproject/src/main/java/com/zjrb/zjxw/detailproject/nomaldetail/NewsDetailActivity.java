@@ -392,7 +392,7 @@ public class NewsDetailActivity extends BaseActivity implements
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
-        mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false,false);
+        mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false, false);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -696,6 +696,13 @@ public class NewsDetailActivity extends BaseActivity implements
         if (vrManager != null) {
             vrManager.onResume();
         }
+        //新华智云
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                .setTargetID(mNewsDetail.getArticle().getId() + "")
+                .setUrl(mNewsDetail.getArticle().getUrl())
+                .build()
+                .send();
+
     }
 
     @Override
@@ -706,6 +713,14 @@ public class NewsDetailActivity extends BaseActivity implements
         }
         if (vrManager != null) {
             vrManager.onPause();
+        }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
         }
     }
 
@@ -920,6 +935,13 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
+        //新华智云点赞
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.praise)
+                .setTargetID(mNewsDetail.getArticle().getId() + "")
+                .setUrl(mNewsDetail.getArticle().getUrl())
+                .build()
+                .send();
+
         new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
@@ -984,6 +1006,12 @@ public class NewsDetailActivity extends BaseActivity implements
 
     @Override
     public void ClickShare(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                .setTargetID(mNewsDetail.getArticle().getId() + "")
+                .setUrl(mNewsDetail.getArticle().getUrl())
+                .build()
+                .send();
+
         new Analytics.AnalyticsBuilder(getContext(), "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击分享")
                 .setObjectID(bean.getArticle().getMlf_id() + "")

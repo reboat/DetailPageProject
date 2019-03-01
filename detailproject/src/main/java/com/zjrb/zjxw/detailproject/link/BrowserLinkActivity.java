@@ -328,12 +328,28 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     public void onPause() {
         super.onPause();
         mWebView.onPause();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mWebView.onResume();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     @Override
@@ -450,6 +466,12 @@ public class BrowserLinkActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void ClickPriseIcon() {
         if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.praise)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+
             new Analytics.AnalyticsBuilder(getActivity(), "A0021", "A0021", "Support", false)
                     .setEvenName("点击点赞")
                     .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")

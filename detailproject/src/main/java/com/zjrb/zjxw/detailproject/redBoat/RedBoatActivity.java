@@ -25,7 +25,6 @@ import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.nav.Nav;
 import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.UmengUtils.UmengShareBean;
-import com.zjrb.core.ui.UmengUtils.UmengShareUtils;
 import com.zjrb.core.ui.holder.EmptyPageHolder;
 import com.zjrb.core.ui.widget.web.ZBJsInterface;
 import com.zjrb.core.utils.T;
@@ -135,6 +134,14 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         if (mAdapter != null) {
             mAdapter.onWebViewResume();
         }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     @Override
@@ -142,6 +149,14 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         super.onPause();
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
+        }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
         }
     }
 
@@ -237,6 +252,7 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
+
 
     @Override
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})

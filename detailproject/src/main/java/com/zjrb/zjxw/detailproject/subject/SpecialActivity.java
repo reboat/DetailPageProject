@@ -321,6 +321,32 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //新华智云
+        if (mArticle != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mArticle.getId() + "")
+                    .setUrl(mArticle.getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //新华智云
+        if (mArticle != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mArticle.getId() + "")
+                    .setUrl(mArticle.getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);

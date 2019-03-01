@@ -48,6 +48,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 
+import static com.zjrb.core.utils.UIUtils.getContext;
+
 
 /**
  * 评论列表页面

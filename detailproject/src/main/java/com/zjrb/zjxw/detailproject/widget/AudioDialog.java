@@ -43,9 +43,12 @@ import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import bean.ZBJTStartRecordRspBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.daily.news.biz.core.share.BaseDialogFragment;
+import port.JsInterfaceCallBack;
 
 /**
  * 录音相关
@@ -66,8 +69,6 @@ public class AudioDialog extends BaseDialogFragment {
     ImageView mIvArrow;
     @BindView(R2.id.tv_submit)
     TextView mTvSubmit;
-    @BindView(R2.id.v_top_container)
-    RelativeLayout mVTopContainer;
     @BindView(R2.id.tv_des_text)
     TextView mTvDesText;
     @BindView(R2.id.iv_play_pause)
@@ -96,8 +97,9 @@ public class AudioDialog extends BaseDialogFragment {
     //计时器
     private Timer mTimer = new Timer();
 
-    //TODO WLJ 需要恢复逻辑
-//    private WebJsCallBack callBack;
+    private JsInterfaceCallBack callBack;
+    private String mCallBack;
+    private ZBJTStartRecordRspBean mBean;
 
     public static AudioDialog newInstance() {
         fragment = new AudioDialog();
@@ -131,10 +133,20 @@ public class AudioDialog extends BaseDialogFragment {
         return dialog;
     }
 
-//    public AudioDialog setCallBack(WebJsCallBack callBack) {
-//        this.callBack = callBack;
-//        return this;
-//    }
+    public AudioDialog setJSCallBack(String callback) {
+        mCallBack = callback;
+        return this;
+    }
+
+    public AudioDialog setCallBack(JsInterfaceCallBack callBack) {
+        this.callBack = callBack;
+        return this;
+    }
+
+    public AudioDialog setZBJTStartRecordRspBean(ZBJTStartRecordRspBean bean) {
+        mBean = bean;
+        return this;
+    }
 
     private Handler mHandler = new Handler() {
         @Override
@@ -268,6 +280,11 @@ public class AudioDialog extends BaseDialogFragment {
         mExecutorService.shutdownNow();
     }
 
+    //
+    private void setRecordCB() {
+
+    }
+
     @OnClick({R2.id.iv_arrow, R2.id.tv_submit, R2.id.iv_play_pause})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
@@ -278,12 +295,15 @@ public class AudioDialog extends BaseDialogFragment {
             dismissFragmentDialog();
             //提交
         } else if (v.getId() == R.id.tv_submit) {
-//            if (callBack != null) {
-//                callBack.callback_zjxw_js_startRecord(mFilePath + mFileName);
-//                releaseRecorder();
-//                releasePlayer();
-//                dismissFragmentDialog();
-//            }
+            if (callBack != null) {
+                if (mBean != null) {
+                    mBean.getData().setAudioPath(mFilePath + mFileName);
+                    callBack.startRecord(mBean, mCallBack);
+                }
+                releaseRecorder();
+                releasePlayer();
+                dismissFragmentDialog();
+            }
             //播放/暂停/录音
         } else if (v.getId() == R.id.iv_play_pause) {
             //开始播放

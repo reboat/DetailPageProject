@@ -33,6 +33,7 @@ import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.ui.widget.ScanerBottomFragment;
 import port.SerializableHashMap;
 import port.WebviewCBHelper;
 

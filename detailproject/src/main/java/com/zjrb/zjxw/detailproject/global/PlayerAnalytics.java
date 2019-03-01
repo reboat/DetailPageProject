@@ -36,37 +36,37 @@ PlayerAnalytics implements PlayerCallback {
 
     @Override
     public void onPause(PlayerView view) {
-        analytics(view, "点击视频播放框上暂停按钮", "A0042", "400004","VideoPlayer","暂停");
+        analytics(view, "点击视频播放框上暂停按钮", "A0042", "400004", "VideoPlayer", "暂停");
     }
 
     @Override
     public void onPlay(PlayerView view) {
-        analytics(view, "点击视频播放框上播放按钮", "A0041", "400010","VideoPlayer","播放");
+        analytics(view, "点击视频播放框上播放按钮", "A0041", "400010", "VideoPlayer", "播放");
     }
 
     @Override
     public void onFullscreenChange(boolean isFullscreen, PlayerView view) {
         if (isFullscreen) {
-            analytics(view, "点击全屏播放按钮", "A0043", "400005","VideoPlayer","全屏播放");
+            analytics(view, "点击全屏播放按钮", "A0043", "400005", "VideoPlayer", "全屏播放");
         } else {
-            analytics(view, "点击关闭全屏播放按钮", "A0044", "400006","VideoPlayer","关闭全屏播放");
+            analytics(view, "点击关闭全屏播放按钮", "A0044", "400006", "VideoPlayer", "关闭全屏播放");
         }
     }
 
     @Override
     public void onMuteChange(boolean isMute, PlayerView view) {
         if (isMute) {
-            analytics(view, "点击开启静音按钮", "A0045", "400007","VideoPlayer","开启静音");
+            analytics(view, "点击开启静音按钮", "A0045", "400007", "VideoPlayer", "开启静音");
         } else {
-            analytics(view, "点击关闭静音按钮", "A0046", "400008","VideoPlayer","关闭静音");
+            analytics(view, "点击关闭静音按钮", "A0046", "400008", "VideoPlayer", "关闭静音");
         }
     }
 
-    private void analytics(PlayerView view, String eventName, String eventCode, String umengID,String scEventName,String ClickType) {
+    private void analytics(PlayerView view, String eventName, String eventCode, String umengID, String scEventName, String ClickType) {
         String s = Extra.getExtraData(view);
-        DraftDetailBean.ArticleBean extra = (DraftDetailBean.ArticleBean) new Gson().fromJson(s,DraftDetailBean.ArticleBean.class);
+        DraftDetailBean.ArticleBean extra = (DraftDetailBean.ArticleBean) new Gson().fromJson(s, DraftDetailBean.ArticleBean.class);
         if (extra != null) {
-            Analytics.newBuilder(getContext(view), eventCode, umengID,scEventName,false)
+            Analytics.newBuilder(getContext(view), eventCode, umengID, scEventName, false)
                     .setObjectID(extra.getMlf_id())
                     .setObjectName(extra.getDoc_title())
                     .setObjectType(ObjectType.VideoType)

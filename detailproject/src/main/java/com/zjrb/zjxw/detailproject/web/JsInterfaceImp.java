@@ -2,22 +2,23 @@ package com.zjrb.zjxw.detailproject.web;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
 import com.commonwebview.webview.CommonWebView;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.ImageBrowseActivity;
+import com.zjrb.zjxw.detailproject.widget.AudioDialog;
 
 import java.util.Iterator;
 import java.util.Set;
 
-import bean.ZBJTGetAppInfoBean;
 import bean.ZBJTGetAppInfoRspBean;
 import bean.ZBJTGetLocalRspBean;
 import bean.ZBJTGetValueFromLocalBean;
 import bean.ZBJTGetValueFromLocalRspBean;
-import bean.ZBJTModifyUserInfoBean;
 import bean.ZBJTModifyUserInfoRspBean;
 import bean.ZBJTOpenAppMobileBean;
 import bean.ZBJTOpenAppMobileRspBean;
@@ -26,13 +27,13 @@ import bean.ZBJTOpenAppShareMenuRspBean;
 import bean.ZBJTReturnBean;
 import bean.ZBJTSelectImageBean;
 import bean.ZBJTSelectImageRspBean;
-import bean.ZBJTStartRecordBean;
 import bean.ZBJTStartRecordRspBean;
 import bean.ZBJTUploadFileBean;
 import bean.ZBJTUploadFileRspBean;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.nav.Nav;
 import port.JsInterface;
+import port.JsInterfaceCallBack;
 import port.SerializableHashMap;
 import port.ZBJTJSInterFace;
 
@@ -46,10 +47,12 @@ public class JsInterfaceImp extends JsInterface implements ZBJTJSInterFace {
 
     private CommonWebView webview;
     private Bundle bundle;
+    private JsInterfaceCallBack mCallback;
 
     public JsInterfaceImp(WebView webView, String jsObject, Context ctx) {
         super(webView, jsObject, ctx);
         this.webview = (CommonWebView) webView;
+        mCallback = new JsInterfaceCallBack(webview);
     }
 
     //点击超链接图片逻辑
@@ -121,12 +124,17 @@ public class JsInterfaceImp extends JsInterface implements ZBJTJSInterFace {
     }
 
     @Override
-    public void startRecord(WebView webview, ZBJTStartRecordBean bean, ZBJTStartRecordRspBean beanRsp, String callback) {
-
+    public void startRecord(WebView webview, ZBJTStartRecordRspBean beanRsp, String callback) {
+        AudioDialog.newInstance()
+                .setZBJTStartRecordRspBean(beanRsp)
+                .setJSCallBack(callback).
+                setCallBack(mCallback).
+                show(((FragmentActivity) UIUtils.getActivity()).
+                        getSupportFragmentManager(), "MoreDialog");
     }
 
     @Override
-    public void getAppInfo(WebView webview, ZBJTGetAppInfoBean bean, ZBJTGetAppInfoRspBean BeanRsp, String callback) {
+    public void getAppInfo(WebView webview, ZBJTGetAppInfoRspBean BeanRsp, String callback) {
 
     }
 
@@ -151,7 +159,7 @@ public class JsInterfaceImp extends JsInterface implements ZBJTJSInterFace {
     }
 
     @Override
-    public void getValueFromLocal(WebView webview, ZBJTGetValueFromLocalBean bean, ZBJTGetValueFromLocalRspBean beanRsp, String callback) {
+    public void getValueFromLocal(WebView webview, ZBJTGetValueFromLocalRspBean beanRsp, String callback) {
 
     }
 
@@ -171,7 +179,7 @@ public class JsInterfaceImp extends JsInterface implements ZBJTJSInterFace {
     }
 
     @Override
-    public void modifyUserInfo(WebView webview, ZBJTModifyUserInfoBean bean, ZBJTModifyUserInfoRspBean beanRsp, String callback) {
+    public void modifyUserInfo(WebView webview, ZBJTModifyUserInfoRspBean beanRsp, String callback) {
 
     }
 }

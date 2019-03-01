@@ -59,9 +59,8 @@ dependencies {
         exclude group: 'cn.daily.android'
     }
     implementation 'cn.daily.android:location:6.0.0.1'
-    implementation 'cn.daily.android:biz-core:6.0.0.16'
+    implementation 'cn.daily.android:biz-core:6.0.0.23'
     implementation 'org.jsoup:jsoup:1.10.2'
-    implementation 'cn.daily.android:common-webview:1.0.0.26'
 }
 
 

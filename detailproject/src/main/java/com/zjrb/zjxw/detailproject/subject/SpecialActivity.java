@@ -198,6 +198,14 @@ public class SpecialActivity extends BaseActivity implements OnItemClickListener
         new DraftDetailTask(new APIExpandCallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean data) {
+                //新华智云
+                if(data != null && data.getArticle() != null){
+                    new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                            .setTargetID(data.getArticle().getId() + "")
+                            .setUrl(data.getArticle().getUrl())
+                            .build()
+                            .send();
+                }
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
             }

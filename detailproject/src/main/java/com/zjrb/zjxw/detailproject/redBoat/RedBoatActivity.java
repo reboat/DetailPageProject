@@ -177,6 +177,14 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
                     mView.setVisibility(View.GONE);
                 }
                 mNewsDetail = draftDetailBean;
+                //新华智云
+                if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                    new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                            .setTargetID(mNewsDetail.getArticle().getId() + "")
+                            .setUrl(mNewsDetail.getArticle().getUrl())
+                            .build()
+                            .send();
+                }
                 fillData(mNewsDetail);
             }
 

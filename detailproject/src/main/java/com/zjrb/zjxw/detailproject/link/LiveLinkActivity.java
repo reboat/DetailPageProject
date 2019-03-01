@@ -189,6 +189,14 @@ public class LiveLinkActivity extends BaseActivity implements View.OnClickListen
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
+                //新华智云
+                if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                    new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                            .setTargetID(mNewsDetail.getArticle().getId() + "")
+                            .setUrl(mNewsDetail.getArticle().getUrl())
+                            .build()
+                            .send();
+                }
                 builder = pageStayTime(draftDetailBean);
 //                builder1 = pageStayTime2(draftDetailBean);
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {

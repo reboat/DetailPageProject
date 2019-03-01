@@ -301,6 +301,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         mIvDownLoad.setVisibility(View.GONE);
                     }
                     fillData(atlasDetailEntity);
+                    //新华智云
+                    if(atlasDetailEntity != null && atlasDetailEntity.getArticle() != null){
+                        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                                .setTargetID(atlasDetailEntity.getArticle().getId() + "")
+                                .setUrl(atlasDetailEntity.getArticle().getUrl())
+                                .build()
+                                .send();
+                    }
                     YiDunToken.synYiDunToken(mArticleId);
                 }
 
@@ -332,6 +340,14 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
                         mIvDownLoad.setVisibility(View.GONE);
                     }
                     fillData(atlasDetailEntity);
+                    //新华智云
+                    if(atlasDetailEntity != null && atlasDetailEntity.getArticle() != null){
+                        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                                .setTargetID(atlasDetailEntity.getArticle().getId() + "")
+                                .setUrl(atlasDetailEntity.getArticle().getUrl())
+                                .build()
+                                .send();
+                    }
                     YiDunToken.synYiDunToken(mArticleId);
                 }
 
@@ -872,11 +888,13 @@ public class AtlasDetailActivity extends BaseActivity implements ViewPager
     protected void onPause() {
         super.onPause();
         //新华智云
-        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-                .setTargetID(mData.getArticle().getId() + "")
-                .setUrl(mData.getArticle().getUrl())
-                .build()
-                .send();
+        if(mData != null && mData.getArticle() != null){
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     /**

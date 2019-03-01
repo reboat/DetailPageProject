@@ -6,8 +6,6 @@ import android.text.TextUtils;
 import com.zjrb.core.api.callback.APICallBack;
 import com.zjrb.zjxw.detailproject.task.AntiCheatingTask;
 
-import cn.daily.news.biz.core.global.Key;
-import cn.daily.news.biz.core.utils.YiDunUtils;
 
 public class YiDunToken {
     /**

@@ -49,10 +49,6 @@ import port.WebviewCBHelper;
  */
 public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.ScanerImgCallBack {
 
-//    /**
-//     * 选择照片 - result_code
-//     */
-//    private final static int FILE_CHOOSER_RESULT_CODE = 10;
     /**
      * 登录 - result_code
      */
@@ -64,10 +60,6 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
      * 实名认证 - result_code
      */
     public final static int VERIFICATION_RESULT_CODE = 22;
-    /**
-     * 修改绑定手机号 - result_code
-     */
-    public final static int MODIFICATION_RESULT_CODE = 23;
 
     /**
      * 修改用户信息

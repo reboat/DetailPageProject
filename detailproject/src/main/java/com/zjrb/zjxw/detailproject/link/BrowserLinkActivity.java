@@ -46,6 +46,7 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
+import port.ZBJTJsBridge;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -104,6 +105,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
         webImpl = new WebViewImpl();
         jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
         webImpl.setJsObject(jsInterfaceImp);
+        webImpl.setWebViewJsObject(ZBJTJsBridge.PREFIX_JS_METHOD_NAME);
         mWebView.setHelper(webImpl);
     }
 

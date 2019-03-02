@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;
+import port.ZBJTJsBridge;
 import webutils.CssJsUtils;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -76,6 +77,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         //初始化设置
         webImpl = new WebViewImpl();
         jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setWebViewJsObject(ZBJTJsBridge.PREFIX_JS_METHOD_NAME);
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
 

@@ -17,7 +17,7 @@ public class SettingBiz {
 
     public static SettingBiz get() {
         if (mInstance == null) {
-            synchronized (APICallManager.class) {
+            synchronized (SettingBiz.class) {
                 if (mInstance == null) {
                     mInstance = new SettingBiz();
                 }

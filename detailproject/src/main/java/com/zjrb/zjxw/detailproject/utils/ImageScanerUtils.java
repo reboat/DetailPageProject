@@ -21,6 +21,7 @@ import com.zjrb.core.utils.UIUtils;
 import java.util.Hashtable;
 import java.util.List;
 
+import cn.daily.news.biz.core.utils.PathUtil;
 import cn.daily.news.update.util.DownloadUtil;
 
 /**

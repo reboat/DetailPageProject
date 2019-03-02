@@ -80,4 +80,24 @@ public final class RouteManager {
      * 实名制验证
      */
     public static final String ZB_MOBILE_VERIFICATION = "/login/ZBMobileValidateActivity";
+
+    /**
+     * 修改手机号
+     */
+    public static final String ZB_CHANGE_MOBILE = "/user/center/modify/phone/num";
+
+    /**
+     * 用户收货名称
+     */
+    public static final String ZB_MODIFY_USERNAME = "/user/center/modify/user_name";
+
+    /**
+     * 用户收货地址
+     */
+    public static final String ZB_MODIFY_USERADDRESS = "/user/center/modify/deliver_address";
+
+    /**
+     * 图片选择路由
+     */
+    public static final String ZB_SELECT_IMG = "/core/MediaSelectActivity";
 }

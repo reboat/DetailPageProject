@@ -18,6 +18,7 @@ import com.commonwebview.webview.ChromeClientWrapper;
 import com.commonwebview.webview.CommonWebView;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.ImageScanerUtils;
@@ -28,6 +29,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import bean.MediaEntity;
+import bean.ZBJTModifyUserInfoRspBean;
+import bean.ZBJTOpenAppMobileRspBean;
+import bean.ZBJTReturnBean;
+import bean.ZBJTSelectImageRspBean;
 import cn.daily.news.biz.core.UserBiz;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.db.SettingManager;
@@ -44,10 +49,10 @@ import port.WebviewCBHelper;
  */
 public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.ScanerImgCallBack {
 
-    /**
-     * 选择照片 - result_code
-     */
-    private final static int FILE_CHOOSER_RESULT_CODE = 10;
+//    /**
+//     * 选择照片 - result_code
+//     */
+//    private final static int FILE_CHOOSER_RESULT_CODE = 10;
     /**
      * 登录 - result_code
      */
@@ -72,6 +77,7 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
 
     //JS绑定对象名
     private String JSObject;
+    private JsInterfaceImp jsInterfaceImp;
 
     @Override
     public String getUserAgent() {
@@ -99,6 +105,7 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
     @Override
     public void setWebviewConfig(CommonWebView webview) {
         super.setWebviewConfig(webview);
+        jsInterfaceImp = (JsInterfaceImp) getJsObject();
         webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
         // 开启DOM storage API 功能
         webview.getSettings().setDomStorageEnabled(false);
@@ -151,15 +158,26 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
                 .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl);
     }
 
+    //webview自带的图片选择器
     @Override
     public void NavToImageSelect(Fragment fragment, int requestCode) {
         Nav.with(fragment)
-                .toPath("/core/MediaSelectActivity", requestCode);
+                .toPath(RouteManager.ZB_SELECT_IMG, requestCode);
     }
 
+    //需要判断是否有jscallback
     @Override
     public void openFileResultCallBack(int requestCode, int resultCode, Intent data, ChromeClientWrapper wrapper, ValueCallback<Uri> mUploadMessage, ValueCallback<Uri[]> mUploadMessage21) {
         if (requestCode == ChromeClientWrapper.FILE_CHOOSER_RESULT_CODE) {
+            ZBJTSelectImageRspBean bean = null;
+            ArrayList<String> jsImgUrls = null;
+            String callback = "";
+            if (data != null && data.hasExtra("callback")) {
+                callback = data.getStringExtra("callback");
+                bean = new ZBJTSelectImageRspBean();
+                bean.setCode("1");
+                jsImgUrls = new ArrayList<>();
+            }
             if (null != mUploadMessage21) {
                 Uri[] uris = null;
                 if (data != null) {
@@ -168,6 +186,12 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
                         uris = new Uri[list.size()];
                         for (int i = 0; i < list.size(); i++) {
                             uris[i] = list.get(i).getUri();
+                            jsImgUrls.add(uris[i].toString());
+                        }
+
+                        if (bean != null && jsImgUrls != null) {
+                            bean.getData().setImageList(jsImgUrls);
+                            jsInterfaceImp.getmCallback().selectImage(bean, callback);
                         }
                     }
                 }
@@ -175,7 +199,7 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
                 if (wrapper != null) {
                     wrapper.setmUploadMessage(null);
                 }
-            } else if (null != mUploadMessage) {
+            } else if (null != mUploadMessage) {//单张图片
                 Uri result = null;
                 if (data != null && Activity.RESULT_OK == resultCode) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -186,55 +210,71 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
                     } else {
                         result = data.getData();
                     }
+                    if (result != null) {
+                        jsImgUrls.add(result.toString());
+                        bean.getData().setImageList(jsImgUrls);
+                        jsInterfaceImp.getmCallback().selectImage(bean, callback);
+                    }
                 }
                 mUploadMessage.onReceiveValue(result);
                 if (wrapper != null) {
                     wrapper.setmUploadMessage21(null);
+                }
+            } else {
+                if (bean != null) {
+                    bean.setCode("0");
+                    jsInterfaceImp.getmCallback().selectImage(bean, callback);
                 }
             }
         }
     }
 
     //业务返回逻辑处理
+    //TODO WLJ  这里都需要在具体的页面重新设返回字段
     @Override
     public void OnResultCallBack(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            //图片选择器
-            case FILE_CHOOSER_RESULT_CODE:
-                if (data != null) {
-                    ArrayList<MediaEntity> list = data.getParcelableArrayListExtra("key_data");
-                    if (list != null && !list.isEmpty()) {
-                        if (list.get(0) != null && list.get(0).getUri() != null && !TextUtils.isEmpty(list.get(0).getUri().toString())) {
-//                            callback_zjxw_js_selectImage(list.get(0).getUri().toString());
-                        } else {
-//                            callback_zjxw_js_selectImage("");
+            case LOGIN_RESULT_CODE:
+                ZBJTReturnBean bean = null;
+                String callback = "";
+                if (data != null && data.hasExtra("ZBJTReturnBean") && data.hasExtra("callback")) {
+                    bean = (ZBJTReturnBean) data.getSerializableExtra("ZBJTReturnBean");
+                    callback = data.getStringExtra("callback");
+                }
+                // 登录成功
+                if (resultCode == Activity.RESULT_OK) {
+                    if (UserBiz.get().isLoginUser()) {
+                        if (bean != null) {
+                            bean.setCode("1");
+                        }
+                    } else {
+                        if (bean != null) {
+                            bean.setCode("0");
                         }
                     }
+                } else {
+                    bean.setCode("0");
                 }
 
-                break;
-            case LOGIN_RESULT_CODE:
-                // 登录页面关闭
-                if (UserBiz.get().isLoginUser()) {
-//                    callback_zjxw_js_login("SUCCESS");
-                } else {
-//                    callback_zjxw_js_login("FAIL");
+                if (bean != null && !TextUtils.isEmpty(callback)) {
+                    jsInterfaceImp.getmCallback().login(bean, callback);
                 }
                 break;
             case VERIFICATION_RESULT_CODE:
-                // 实名认证
-                if (UserBiz.get().isCertification()) {
-//                    callback_zjxw_js_bindmobile("SUCCESS");
-                } else {
-//                    callback_zjxw_js_bindmobile("FAIL");
+                ZBJTOpenAppMobileRspBean beanRsp1 = null;
+                String callback1 = "";
+                if (data != null && data.hasExtra("ZBJTOpenAppMobileRspBean") && data.hasExtra("callback")) {
+                    beanRsp1 = (ZBJTOpenAppMobileRspBean) data.getSerializableExtra("ZBJTOpenAppMobileRspBean");
+                    callback1 = data.getStringExtra("callback");
                 }
-                break;
-            case MODIFICATION_RESULT_CODE:
-                //修改手机号
-                if (resultCode == Activity.RESULT_OK) {
-//                    callback_zjxw_js_modifyMobile("SUCCESS");
-                } else {
-//                    callback_zjxw_js_modifyMobile("FAIL");
+                // 实名认证
+                if (beanRsp1 != null && !TextUtils.isEmpty(callback1)) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        beanRsp1.setCode("1");
+                    } else {
+                        beanRsp1.setCode("0");
+                    }
+                    jsInterfaceImp.getmCallback().openAppMobile(beanRsp1, callback1);
                 }
                 break;
             //替换图片
@@ -244,28 +284,28 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
                             .getSerializableExtra("map")).getMap();
                     for (int i = 0; i < map.size(); i++) {
                         if (map.get(i)) {
-//                            setPreviewIndex(i);
+                            jsInterfaceImp.setPreviewIndex(i);
                         }
                     }
                 }
                 break;
             case DELIVERYNAME_RESULT_CODE:
-                if (data != null) {
-                    if (resultCode == Activity.RESULT_OK) {
-//                        callback_zjxw_js_modifyDeliveryName("SUCCESS", data.getStringExtra("deliver_name"));
-                    } else {
-//                        callback_zjxw_js_modifyDeliveryName("FAIL", data.getStringExtra("deliver_name"));
-                    }
-                }
-                break;
             case DELIVERYADDRESS_RESULT_CODE:
-                if (data != null) {
-                    if (resultCode == Activity.RESULT_OK) {
-//                        callback_zjxw_js_modifyDeliveryAddress("SUCCESS", data.getStringExtra("deliver_address"));
-                    } else {
-//                        callback_zjxw_js_modifyDeliveryName("FAIL", data.getStringExtra("deliver_address"));
-                    }
+                ZBJTModifyUserInfoRspBean beanRsp2 = null;
+                String callback2 = "";
+                if (data != null && data.hasExtra("ZBJTModifyUserInfoRspBean") && data.hasExtra("callback")) {
+                    beanRsp2 = (ZBJTModifyUserInfoRspBean) data.getSerializableExtra("ZBJTModifyUserInfoRspBean");
+                    callback2 = data.getStringExtra("callback");
                 }
+                if (beanRsp2 != null && !TextUtils.isEmpty(callback2)) {
+                    if (resultCode == Activity.RESULT_OK) {
+                        beanRsp2.setCode("1");
+                    } else {
+                        beanRsp2.setCode("0");
+                    }
+                    jsInterfaceImp.getmCallback().modifyUserInfo(beanRsp2, callback2);
+                }
+
                 break;
         }
     }
@@ -299,21 +339,17 @@ public class WebViewImpl extends WebviewCBHelper implements ImageScanerUtils.Sca
     //视频全屏操作
     @Override
     public void doFullVideo() {
-//        if (mHasUrl) {
         LocalBroadcastManager.getInstance(UIUtils.getContext())
                 .sendBroadcast(
                         new Intent(UIUtils.getString(R.string.intent_action_close_video)));
-//        }
 
     }
 
     //退出全屏操作
     @Override
     public void exitFullVideo() {
-//        if (mHasUrl) {
         LocalBroadcastManager.getInstance(UIUtils.getContext())
                 .sendBroadcast(
                         new Intent(UIUtils.getString(R.string.intent_action_open_video)));
-//        }
     }
 }

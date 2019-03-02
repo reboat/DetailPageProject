@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -280,11 +279,6 @@ public class AudioDialog extends BaseDialogFragment {
         mExecutorService.shutdownNow();
     }
 
-    //
-    private void setRecordCB() {
-
-    }
-
     @OnClick({R2.id.iv_arrow, R2.id.tv_submit, R2.id.iv_play_pause})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
@@ -297,7 +291,11 @@ public class AudioDialog extends BaseDialogFragment {
         } else if (v.getId() == R.id.tv_submit) {
             if (callBack != null) {
                 if (mBean != null) {
+                    mBean.setCode("1");
                     mBean.getData().setAudioPath(mFilePath + mFileName);
+                    callBack.startRecord(mBean, mCallBack);
+                } else {
+                    mBean.setCode("0");
                     callBack.startRecord(mBean, mCallBack);
                 }
                 releaseRecorder();

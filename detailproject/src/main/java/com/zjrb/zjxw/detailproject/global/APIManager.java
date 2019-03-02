@@ -102,6 +102,10 @@ public class APIManager {
          * 文章分享
          */
         public static final String ARTIC_SHARE = "/api/favorite/share_news";
+        /**
+         * 获取用户信息
+         */
+        public static final String ACCOUNT_DETAIL = "/api/account/account_detail";
     }
 
 }

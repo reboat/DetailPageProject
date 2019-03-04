@@ -59,7 +59,7 @@ dependencies {
         exclude group: 'cn.daily.android'
     }
     implementation 'cn.daily.android:location:6.0.0.1'
-    implementation 'cn.daily.android:biz-core:6.0.0.27'
+    implementation 'cn.daily.android:biz-core:6.0.0.28'
     implementation 'org.jsoup:jsoup:1.10.2'
 }
 

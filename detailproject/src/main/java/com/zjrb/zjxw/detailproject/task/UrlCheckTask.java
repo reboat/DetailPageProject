@@ -2,6 +2,8 @@ package com.zjrb.zjxw.detailproject.task;
 
 
 import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.zjxw.detailproject.bean.UrlCheckBean;
+import com.zjrb.zjxw.detailproject.global.APIManager;
 
 import cn.daily.news.biz.core.network.compatible.APIGetTask;
 
@@ -24,6 +26,6 @@ public class UrlCheckTask extends APIGetTask<UrlCheckBean> {
 
     @Override
     public String getApi() {
-        return "/api/white_list/url_check";
+        return APIManager.endpoint.URL_CHECK;
     }
 }

@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout="@layout/module_core_layout_global_load_failed"
+        android:layout="@layout/module_biz_layout_global_load_failed"
         />
 
     <ViewStub
@@ -23,7 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout="@layout/module_core_layout_global_network_error"
+        android:layout="@layout/module_biz_layout_global_network_error"
         />
 
     <LinearLayout

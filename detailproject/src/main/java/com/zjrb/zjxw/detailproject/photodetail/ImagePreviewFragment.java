@@ -25,6 +25,7 @@ import com.zjrb.zjxw.detailproject.widget.photoview.PhotoViewAttacher;
 
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.db.SettingManager;
+import cn.daily.news.biz.core.ui.widget.ScanerBottomFragment;
 import cn.daily.news.update.util.NetUtils;
 
 /**

@@ -106,6 +106,11 @@ public class APIManager {
          * 获取用户信息
          */
         public static final String ACCOUNT_DETAIL = "/api/account/account_detail";
+
+        /**
+         * 分享白名单校验接口
+         */
+        public static final String URL_CHECK = "/api/white_list/url_check";
     }
 
 }

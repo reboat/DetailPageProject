@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.utils.PathUtil;
 import cn.daily.news.update.util.DownloadUtil;
 import port.SerializableHashMap;
 

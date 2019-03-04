@@ -6,88 +6,6 @@
     <color name="colorPrimary_night">#520d0d</color>
     <color name="colorPrimaryDark">#d12324</color>
     <color name="colorPrimaryDark_night">#520d0d</color>
-
-    <!--<color name="dc_f5f5f5">#f5f5f5</color>-->
-    <!--<color name="dc_f5f5f5_night">#1d1e20</color>-->
-    <!--<color name="bc_7f000000">#7f000000</color>-->
-    <!--<color name="bc_f70000">#f70000</color>-->
-    <!--<color name="bc_f7000000">#7f000000</color>-->
-    <!--<color name="tc_bcc1c8">#bcc1c8</color>-->
-    <!--<color name="bc_fdc247">#fdc247</color>-->
-    <!--<color name="dc_000000">#000000</color>-->
-    <!--<color name="bc_ffffff">#ffffff</color>-->
-    <!--<color name="tc_ffffff">#ffffff</color>-->
-    <!--<color name="bc_202124_night">#202124</color>-->
-    <!--<color name="bc_cecece">#cecece</color>-->
-    <!--<color name="bc_f44b50">#f44b50</color>-->
-    <!--<color name="bc_e85757">#e85757</color>-->
-    <!--<color name="bc_f5f5f5">#f5f5f5</color>-->
-    <!--<color name="bc_e2e2e2">#e2e2e2</color>-->
-    <!--<color name="dc_dddddd">#dddddd</color>-->
-    <!--<color name="tc_484848">#484848</color>-->
-    <!--<color name="tc_000000">#000000</color>-->
-    <!--<color name="bc_66000000">#66000000</color>-->
-    <!--<color name="bc_191919">#191919</color>-->
-    <!--<color name="bc_dddddd">#dddddd</color>-->
-    <!--<color name="tc_999999">#999999</color>-->
-    <!--<color name="bc_999999">#999999</color>-->
-    <!--<color name="tc_f44b50">#f44b50</color>-->
-    <!--<color name="tc_f5f5f5">#f5f5f5</color>-->
-    <!--<color name="bc_7f080808">#7f080808</color>-->
-    <!--<color name="tc_4d95fa">#4d95fa</color>-->
-    <!--<color name="tc_315277">#315277</color>-->
-    <!--<color name="bc_8e3636">#8e3636</color>-->
-    <!--<color name="bc_66f4f5f6">#66f4f5f6</color>-->
-    <!--<color name="bc_7f222222">#7f222222</color>-->
-    <!--<color name="tc_808080">#808080</color>-->
-    <!--<color name="tc_5c5c5c">#5c5c5c</color>-->
-    <!--<color name="module_detail_tc_white_night">#cccbcb</color>-->
-
-
-    <!--<color name="bc_343434">#343434</color>-->
-    <!--<color name="tc_4682c5">#4682c5</color>-->
-    <!--<color name="bc_f0f0f0">#ffffff</color>-->
-    <!--<color name="bc_00000000">#00000000</color>-->
-    <!--<color name="bc_a4a3a3">#a4a3a3</color>-->
-    <!--<color name="tc_d2d2d2">#d2d2d2</color>-->
-    <!--<color name="bc_33ffffff">#33ffffff</color>-->
-    <!--<color name="bc_f4f5f6">#f4f5f6</color>-->
-    <!--<color name="bc_000000">#000000</color>-->
-    <!--<color name="bc_878686">#878686</color>-->
-    <!--&lt;!&ndash;夜间颜色&ndash;&gt;-->
-    <!--<color name="tc_484848_night">#7a7b7d</color>-->
-    <!--<color name="bc_ffffff_night">#202124</color>-->
-    <!--<color name="bc_191919_night">#ffffff</color>-->
-    <!--<color name="bc_dddddd_night">#7a7b7d</color>-->
-    <!--<color name="tc_999999_night">#5c5c5c</color>-->
-    <!--<color name="tc_f44b50_night">#8e3636</color>-->
-    <!--<color name="tc_ffffff_night">#aaaaaa</color>-->
-    <!--<color name="tc_000000_night">#7a7b7d</color>-->
-    <!--<color name="tc_f5f5f5_night">#191919</color>-->
-    <!--<color name="bc_f5f5f5_night">#343434</color>-->
-    <!--<color name="bc_e85757_night">#8e3636</color>-->
-    <!--<color name="bc_7f080808_night">#202124</color>-->
-    <!--<color name="bc_f0f0f0_night">#f0f0f0</color>-->
-    <!--<color name="tc_4d95fa_night">#5c5c5c</color>-->
-    <!--<color name="tc_4682c5_night">#315277</color>-->
-    <!--<color name="bc_e2e2e2_night">#343434</color>-->
-    <!--<color name="dc_dddddd_night">#343434</color>-->
-    <!--<color name="tc_d2d2d2_night">#5c5c5c</color>-->
-    <!--<color name="bc_f4f5f6_night">#191919</color>-->
-    <!--<color name="bc_a4a3a3_night">#a4a3a3</color>-->
-    <!--<color name="bc_33ffffff_night">#191919</color>-->
-    <!--<color name="color_7f000000_night">#7f000000</color>-->
-
-
-    <!--<color name="color_5c5c5c">#5c5c5c</color>-->
-    <!--&lt;!&ndash;评论框&ndash;&gt;-->
-    <!--<color name="bc_ebebed">#ebebed</color>-->
-    <!--<color name="module_detail_comment_night">#7a7b7d</color>-->
-    <!--<color name="module_detail_tc_9f9f9f">#9f9f9f</color>-->
-    <!--<color name="module_detail_tc_9f9f9f_night">#5c5c5c</color>-->
-    <!--<color name="module_detail_tc_d7d7d7">#d7d7d7</color>-->
-    <!--<color name="module_detail_tc_d7d7d7_night">#7a7b7d</color>-->
-
     <!--5.6版本新资源-->
     <color  name="_808080_494949">#808080</color>
     <color  name="_dddddd_5c5c5c">#dddddd</color>
@@ -116,5 +34,9 @@
     <color  name="_33ffffff_191919">#33ffffff</color>
     <color  name="_7f000000_7f191919">#7f000000</color>
 
+    <!--6.0版本资源-->
+    <color name="_bfbfbf">#bfbfbf</color>
+    <color name="_616161">#616161</color>
+    <color name="_666666">#666666</color>
 
 </resources>

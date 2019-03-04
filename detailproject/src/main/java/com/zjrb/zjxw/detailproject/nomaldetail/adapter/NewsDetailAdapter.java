@@ -98,7 +98,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
             return new NewsRelateSubjectHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS) {
-//            return relateNewsHolder = new NewsRelateNewsHolder(parent);
             return new NewsRelateNewsHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
             return new NewsRelateNewsTextHolder(parent);

@@ -59,13 +59,9 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, LocationCallBack {
-    @BindView(R2.id.ly_replay)
-    RelativeLayout mLayReplay;
-    @BindView(R2.id.ry_container)
-    RelativeLayout mLaycontainer;
     @BindView(R2.id.iv_avatar)
     ImageView mImg;
-    @BindView(R2.id.tv_thumb_up)
+    @BindView(R2.id.tv_prise)
     TextView mThumb;
     @BindView(R2.id.tv_name)
     TextView mName;
@@ -121,8 +117,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         ButterKnife.bind(this, itemView);
         this.articleId = articleId;
     }
-
-    //TODO  WLJ 可以减少id的参数，直接传bean
 
     /**
      * 评论列表专用构造器
@@ -279,7 +273,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_thumb_up, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply})
+    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞

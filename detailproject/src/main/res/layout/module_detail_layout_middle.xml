@@ -7,49 +7,49 @@
               android:background="@color/_ffffff_202124"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        >
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="38dp"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginLeft="17.5dp"
-            android:layout_weight="1"
-            android:background="@color/_dddddd_7a7b7d"
-            />
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:layout_marginLeft="17.5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/_dddddd_7a7b7d"-->
+            <!--/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="21.5dp"
-            android:paddingRight="21.5dp"
-            android:text="@string/module_detail_share_to"
-            android:textColor="@color/_999999_5c5c5c"
-            android:textSize="@dimen/ts_14sp"
-            tools:text="分享至" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingLeft="21.5dp"-->
+            <!--android:paddingRight="21.5dp"-->
+            <!--android:text="@string/module_detail_share_to"-->
+            <!--android:textColor="@color/_999999_5c5c5c"-->
+            <!--android:textSize="@dimen/ts_14sp"-->
+            <!--tools:text="分享至" />-->
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_marginRight="17.5dp"
-            android:layout_weight="1"
-            android:background="@color/_dddddd_7a7b7d" />
-    </LinearLayout>
+        <!--<View-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="0.5dp"-->
+            <!--android:layout_marginRight="17.5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@color/_dddddd_7a7b7d" />-->
+    <!--</LinearLayout>-->
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/gridlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginTop="20dp" />
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/gridlist"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginBottom="12dp"-->
+        <!--android:layout_marginLeft="18dp"-->
+        <!--android:layout_marginRight="18dp"-->
+        <!--android:layout_marginTop="20dp" />-->
 
     <!--频道-->
     <RelativeLayout

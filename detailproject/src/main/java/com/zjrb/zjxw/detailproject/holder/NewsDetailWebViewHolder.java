@@ -76,8 +76,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
         //初始化设置
         webImpl = new WebViewImpl();
+        //必须要先设置绑定对象
+        webImpl.setWebViewJsObject("zjxw");
         jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
-        webImpl.setWebViewJsObject(ZBJTJsBridge.PREFIX_JS_METHOD_NAME);
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
 
@@ -137,10 +138,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 //    private String css_js;
 //    private int audioCount = 0;
 
-    /**
-     * 设置CSS和JS
-     */
-    private void setCssJSWebView() {
+//    /**
+//     * 设置CSS和JS
+//     */
+//    private void setCssJSWebView() {
 //        String htmlBody = "";
 //        String htmlResult;
 //        String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
@@ -214,7 +215,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 //        }
 //        htmlResult = String.format(htmlCode, css_js, htmlBody);
 //        mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
-    }
+//    }
 
 //    private String htmlResult;
 

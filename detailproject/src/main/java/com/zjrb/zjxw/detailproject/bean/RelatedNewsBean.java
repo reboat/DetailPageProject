@@ -10,11 +10,14 @@ import java.io.Serializable;
  */
 
 public class RelatedNewsBean implements Serializable {
+    private static final long serialVersionUID = 5145682637366413595L;
     private int mlf_id;
     private int id;
     private String title;
     private String pic;
     private String url;
+    private String column_name;
+    private String like_count_general;
 
     public int getId() {
         return id;
@@ -54,5 +57,21 @@ public class RelatedNewsBean implements Serializable {
 
     public void setMlf_id(int mlf_id) {
         this.mlf_id = mlf_id;
+    }
+
+    public String getColumn_name() {
+        return column_name;
+    }
+
+    public void setColumn_name(String column_name) {
+        this.column_name = column_name;
+    }
+
+    public String getLike_count_general() {
+        return like_count_general;
+    }
+
+    public void setLike_count_general(String like_count_general) {
+        this.like_count_general = like_count_general;
     }
 }

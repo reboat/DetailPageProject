@@ -7,15 +7,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/_ffffff_202124">
 
-    <!--宽高比为3:2-->
+    <!--宽高比为3:2 app:ratio_w2h="3:2"-->
     <ImageView
         android:id="@+id/iv_top_bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="345dp"
+        android:layout_height="230dp"
         android:layout_marginBottom="6dp"
+        android:layout_marginTop="13dp"
         android:scaleType="fitXY"
         android:visibility="gone"
-        app:ratio_w2h="3:2"
+        tools:src="@mipmap/module_core_ic_load_zhe"
         />
 
     <com.aliya.view.fitsys.FitWindowsLinearLayout
@@ -23,8 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_bg"
-        android:layout_marginLeft="12.5dp"
-        android:layout_marginRight="12.5dp"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
         app:fitType="top">
@@ -56,8 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fit_top_layout"
-        android:layout_marginLeft="12.5dp"
-        android:layout_marginRight="5dp"
         android:gravity="center"
         android:maxLines="1"
         android:paddingBottom="5dp"

@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:ratio_w2h="16:9">
+
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
@@ -52,13 +53,14 @@
         </LinearLayout>
 
         <!--网络提醒-->
-        <include layout="@layout/vr_layout_start_area"
+        <include
+            android:id="@+id/ll_net_hint"
+            layout="@layout/vr_layout_start_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:id="@+id/ll_net_hint"
+            android:layout_marginLeft="10dp"
             android:visibility="gone"
             ></include>
 
@@ -69,6 +71,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/video_container"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         >
 
         <com.aliya.view.fitsys.FitWindowsFrameLayout
@@ -88,11 +92,14 @@
 
         </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
-        <include
-            android:id="@+id/ly_bottom_comment"
-            layout="@layout/module_detail_bottom_comment" />
-
     </FrameLayout>
+
+    <include
+        android:id="@+id/ly_bottom_comment"
+        layout="@layout/module_detail_bottom_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
 
     <FrameLayout
         android:id="@+id/v_container"

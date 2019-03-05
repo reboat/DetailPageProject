@@ -57,8 +57,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         ButterKnife.bind(this, itemView);
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
-
-        //TODO WLJ 这里有个问题
         //初始化设置
         webImpl = new WebViewImpl();
         //必须要先设置绑定对象

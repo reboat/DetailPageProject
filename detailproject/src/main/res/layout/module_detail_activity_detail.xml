@@ -73,6 +73,7 @@
         android:layout_below="@+id/video_container"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"
         >
 
         <com.aliya.view.fitsys.FitWindowsFrameLayout

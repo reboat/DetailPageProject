@@ -117,8 +117,6 @@ public class NewsDetailActivity extends DailyActivity implements
     ImageView mivVideoBG;
     @BindView(R2.id.fl_comment)
     FrameLayout mFyContainer;
-    @BindView(R2.id.menu_comment)
-    ImageView mMenuComment;
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.tv_duration)
@@ -129,6 +127,8 @@ public class NewsDetailActivity extends DailyActivity implements
     LinearLayout llStart;
     @BindView(R2.id.tv_net_hint)
     TextView tvNetHint;
+    @BindView(R2.id.ly_comment_num)
+    LinearLayout ly_comment_num;
 
 
     /**
@@ -426,11 +426,10 @@ public class NewsDetailActivity extends DailyActivity implements
         //禁止评论，隐藏评论框及评论按钮
         if (data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mMenuComment.setVisibility(View.GONE);
-            mTvCommentsNum.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
-            mMenuComment.setVisibility(View.VISIBLE);
+            ly_comment_num.setVisibility(View.VISIBLE);
         }
     }
 
@@ -508,13 +507,13 @@ public class NewsDetailActivity extends DailyActivity implements
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
-    @OnClick({R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting,
+    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
-        if (view.getId() == R.id.menu_comment) {
+        if (view.getId() == R.id.ly_comment_num) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //埋点，进入评论列表
                 ClickInCommentList(mNewsDetail);

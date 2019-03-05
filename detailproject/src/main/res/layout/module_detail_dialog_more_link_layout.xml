@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="42dp"
+            android:layout_marginLeft="99dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -42,38 +42,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_module_core_more_night"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/iv_module_core_more_theme"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@mipmap/module_core_ic_theme"
-                app:maskColor="@android:color/transparent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6.5dp"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="夜间模式"
-                android:textColor="@color/_484848_7a7b7d"
-                android:textSize="@dimen/ts_11sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_module_core_more_feed_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="42dp"
+            android:layout_marginRight="98dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 

@@ -191,7 +191,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         dismissAllDialog();
     }
 
-    @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_night, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close
+    @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close
             , R2.id.ll_module_core_me_friend, R2.id.ll_module_core_me_wechat, R2.id.ll_module_core_me_qq, R2.id.ll_module_core_me_space, R2.id.ll_module_core_me_sina, R2.id.ll_module_core_me_dingding})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
@@ -247,59 +247,6 @@ public class MoreDialogLink extends BaseDialogFragment {
             }
 
             newsTopicCollect();
-        } else if (i == R.id.ll_module_core_more_night) {
-            ThemeMode.setUiMode(!ThemeMode.isNightMode());
-            if (callback != null) {
-                callback.onChangeTheme();
-            }
-            //点击开启夜间模式
-            if (!ThemeMode.isNightMode()) {
-                if (mBean != null & mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("夜间模式设置")
-                            .setEventDetail("关")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
-                            .pageType("新闻详情页")
-                            .clickTabName("夜间模式设置")
-                            .elementStatus("关")
-                            .build()
-                            .send();
-                }
-            } else {//关闭夜间模式
-                if (mBean != null & mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("夜间模式设置")
-                            .setEventDetail("开")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
-                            .pageType("新闻详情页")
-                            .clickTabName("夜间模式设置")
-                            .elementStatus("开")
-                            .build()
-                            .send();
-                }
-            }
-            dismissAllDialog();
-
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800007", "800007", "AppTabClick", false)

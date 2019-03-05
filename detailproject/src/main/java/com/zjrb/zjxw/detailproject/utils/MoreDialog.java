@@ -45,7 +45,6 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -295,7 +294,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
         dismissFragmentDialog();
     }
 
-    @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_night, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close})
+    @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         int i = v.getId();
@@ -352,59 +351,6 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
 
             newsTopicCollect();
             //夜间模式
-        } else if (i == R.id.ll_module_core_more_night) {
-            ThemeMode.setUiMode(!ThemeMode.isNightMode());
-            if (callback != null) {
-                callback.onChangeTheme();
-            }
-            //点击开启夜间模式
-            if (!ThemeMode.isNightMode()) {
-                if (mBean != null & mBean.getArticle() != null) {
-                    DraftDetailBean.ArticleBean article = mBean.getArticle();
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("夜间模式设置")
-                            .setEventDetail("关")
-                            .setObjectID(getMlfID(article))
-                            .setObjectName(article.getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(article.getChannel_id())
-                            .setClassifyName(article.getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", article.getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(article.getId() + "").pageType("新闻详情页")
-                            .clickTabName("夜间模式设置")
-                            .elementStatus("关")
-                            .build()
-                            .send();
-                }
-            } else {//关闭夜间模式
-                if (mBean != null & mBean.getArticle() != null) {
-                    DraftDetailBean.ArticleBean article = mBean.getArticle();
-                    new Analytics.AnalyticsBuilder(getContext(), "700020", "700020", "WithStatusElementClick", false)
-                            .setEvenName("夜间模式设置")
-                            .setEventDetail("开")
-                            .setObjectID(getMlfID(article))
-                            .setObjectName(article.getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(article.getChannel_id())
-                            .setClassifyName(article.getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", article.getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(article.getId() + "").pageType("新闻详情页")
-                            .clickTabName("夜间模式设置")
-                            .elementStatus("开")
-                            .build()
-                            .send();
-                }
-            }
-            dismissFragmentDialog();
-            //返回键
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
                 DraftDetailBean.ArticleBean article = mBean.getArticle();

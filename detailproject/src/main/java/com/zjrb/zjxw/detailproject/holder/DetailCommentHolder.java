@@ -93,6 +93,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     ImageView mIvGuest;
     @BindView(R2.id.ly_comment)
     RelativeLayout mLyComment;
+    @BindView(R2.id.tv_reply)
+    TextView mReplay;
 
     /**
      * 稿件id
@@ -273,11 +275,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply})
+    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply,R2.id.tv_reply})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
-        if (view.getId() == R.id.tv_thumb_up) {
+        if (view.getId() == R.id.tv_prise) {
             if (!mData.isLiked()) {
                 praiseComment(mData.getId());
             } else {
@@ -312,7 +314,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
             dialog.show();
             //回复评论者
-        } else if (view.getId() == R.id.ly_replay) {
+        } else if (view.getId() == R.id.ly_replay || view.getId() == R.id.tv_reply) {
             if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("热门评论点击回复")

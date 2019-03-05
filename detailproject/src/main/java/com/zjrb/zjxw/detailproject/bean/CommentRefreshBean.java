@@ -15,6 +15,7 @@ import cn.daily.news.biz.core.model.BaseData;
 public class CommentRefreshBean extends BaseData {
 
 
+    private static final long serialVersionUID = -5137913716419958828L;
     /**
      * id : 59817b9991f2af09dc48db1d
      * channel_article_id : 27

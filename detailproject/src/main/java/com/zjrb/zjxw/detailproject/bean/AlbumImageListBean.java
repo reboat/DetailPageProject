@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class AlbumImageListBean implements Serializable {
+    private static final long serialVersionUID = -3208332003586917497L;
     private String image_url;
     private String description;
 

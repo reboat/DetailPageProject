@@ -16,7 +16,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailMiddleHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailTitleHolder;
@@ -33,6 +32,7 @@ import java.util.List;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 普通新闻详情页Adapter

@@ -37,7 +37,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.task.ArticShareTask;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
@@ -48,12 +47,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.BaseData;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.ShareOnResultCallback;
 import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * Created by wanglinjie on 2017/9/21.

@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.common.glide.GlideApp;
@@ -16,7 +14,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +23,7 @@ import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 官员列表头部详情holder1

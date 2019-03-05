@@ -12,7 +12,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 专题详情页 - Adapter

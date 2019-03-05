@@ -16,6 +16,7 @@ import cn.daily.news.biz.core.model.BaseData;
 
 public class DraftDetailBean extends BaseData {
 
+    private static final long serialVersionUID = -1884972278517660728L;
     private ArticleBean article;
 
     public ArticleBean getArticle() {
@@ -28,6 +29,7 @@ public class DraftDetailBean extends BaseData {
 
     public static class ArticleBean implements Serializable {
 
+        private static final long serialVersionUID = -5637772409457637056L;
         private int id;
         private int mlf_id;
         public long guid;

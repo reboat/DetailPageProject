@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 public class HotCommentsBean implements Serializable {
 
+    private static final long serialVersionUID = -2770565940995048039L;
     /**
      * id : 597ad67b2c1d4007315ce9b1
      * channel_article_id : 27

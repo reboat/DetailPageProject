@@ -14,6 +14,7 @@ import cn.daily.news.biz.core.model.BaseData;
 
 public class DraftHotTopNewsBean extends BaseData {
 
+    private static final long serialVersionUID = 5159985612737027517L;
     private List<HotNewsBean> article_list;
 
     public List<HotNewsBean> getArticle_list() {

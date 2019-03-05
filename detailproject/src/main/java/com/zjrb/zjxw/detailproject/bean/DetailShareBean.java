@@ -13,6 +13,7 @@ import java.io.Serializable;
  * create time:2017/7/21  下午4:20
  */
 public final class DetailShareBean implements Serializable {
+    private static final long serialVersionUID = -2639717195612937715L;
     //文字描述
     public String content;
     //分享平台

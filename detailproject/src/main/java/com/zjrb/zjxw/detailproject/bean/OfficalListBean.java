@@ -13,6 +13,7 @@ import cn.daily.news.biz.core.model.BaseData;
  */
 
 public class OfficalListBean extends BaseData {
+    private static final long serialVersionUID = -2245509129127203027L;
     /**
      * id : 1
      * name : 车俊

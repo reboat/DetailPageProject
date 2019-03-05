@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class SpecialGroupBean implements Serializable {
 
+    private static final long serialVersionUID = -4153405761655410103L;
     private String group_id;
     private String group_name;
     private boolean group_has_more;

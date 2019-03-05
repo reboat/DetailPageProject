@@ -55,7 +55,6 @@ import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.callback.VideoBCnterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.global.PlayerAnalytics;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
@@ -84,6 +83,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
+import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.update.util.NetUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
 

@@ -17,7 +17,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsNoCommentTextHolder;
@@ -32,6 +31,7 @@ import java.util.List;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 话题稿Adapter

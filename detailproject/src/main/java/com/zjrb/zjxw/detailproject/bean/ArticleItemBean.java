@@ -9,6 +9,7 @@ package com.zjrb.zjxw.detailproject.bean;
  */
 public class ArticleItemBean extends com.zjrb.daily.news.bean.ArticleItemBean {
 
+    private static final long serialVersionUID = -8000736659086978442L;
     private int size;
     private int position;
 

@@ -12,7 +12,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +19,7 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 点击更多文案holder

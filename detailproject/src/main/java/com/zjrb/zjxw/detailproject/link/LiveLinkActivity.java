@@ -36,15 +36,12 @@ import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
-import com.zjrb.zjxw.detailproject.web.JsInterfaceImp;
-import com.zjrb.zjxw.detailproject.web.WebViewImpl;
 import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
@@ -60,6 +57,9 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
+import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.JsInterfaceImp;
+import cn.daily.news.biz.core.web.WebViewImpl;
 import port.ZBJTJsBridge;
 
 import static com.zjrb.core.utils.UIUtils.getContext;

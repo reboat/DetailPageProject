@@ -14,6 +14,7 @@ import cn.daily.news.biz.core.model.BaseData;
 
 public class OfficalDetailBean extends BaseData {
 
+    private static final long serialVersionUID = 6547375043486125354L;
     private OfficerBean officer;
     /**
      * id : 123456

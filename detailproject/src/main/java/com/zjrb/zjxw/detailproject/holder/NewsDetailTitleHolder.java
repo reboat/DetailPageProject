@@ -16,7 +16,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +25,7 @@ import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 新闻详情页title - ViewHolder

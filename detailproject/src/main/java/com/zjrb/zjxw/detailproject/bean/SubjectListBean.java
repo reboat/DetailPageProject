@@ -14,6 +14,7 @@ import cn.daily.news.biz.core.model.BaseData;
  */
 public class SubjectListBean extends BaseData {
 
+    private static final long serialVersionUID = -4208158912844658664L;
     private List<ArticleItemBean> article_list;
 
     public List<ArticleItemBean> getArticle_list() {

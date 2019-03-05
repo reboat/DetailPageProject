@@ -6,7 +6,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.photodetail.ImageMoreFragment;
-import com.zjrb.zjxw.detailproject.photodetail.ImagePreviewFragment;
+
+import cn.daily.news.biz.core.web.ImagePreviewFragment;
 
 /**
  * 图片预览 ViewPager 适配器，图集需要展示更多图集

@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class OfficalArticlesBean implements Serializable {
+    private static final long serialVersionUID = 2458031769865186862L;
     private int id;
     private String url;
     private String list_title;

@@ -32,7 +32,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
@@ -50,6 +49,7 @@ import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * Created by wanglinjie on 2017/9/21.

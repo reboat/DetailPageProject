@@ -26,14 +26,11 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
-import com.zjrb.zjxw.detailproject.web.JsInterfaceImp;
-import com.zjrb.zjxw.detailproject.web.WebViewImpl;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +43,9 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
+import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.JsInterfaceImp;
+import cn.daily.news.biz.core.web.WebViewImpl;
 import port.ZBJTJsBridge;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -94,9 +94,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
         setContentView(R.layout.module_detail_activity_browser_link);
         ButterKnife.bind(this);
         getIntentData(getIntent());
-//        mWebView.setLongClickCallBack(this);
         initWebview();
-//        mWebView.setWebViewClient(new InterceptWebviewClient());
         loadData();
     }
 

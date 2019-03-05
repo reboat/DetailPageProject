@@ -39,7 +39,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.global.C;
-import com.zjrb.zjxw.detailproject.global.RouteManager;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
@@ -48,11 +47,8 @@ import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.widget.AtlasLoad;
-import com.zjrb.zjxw.detailproject.widget.BottomSaveDialogFragment;
 import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
-import com.zjrb.zjxw.detailproject.widget.DepthPageTransformer;
-import com.zjrb.zjxw.detailproject.widget.photoview.HackyViewPager;
 
 import java.util.List;
 
@@ -67,9 +63,13 @@ import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.BottomSaveDialogFragment;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
+import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
+import cn.daily.news.biz.core.ui.widget.photoview.HackyViewPager;
 import cn.daily.news.biz.core.utils.PathUtil;
+import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.update.util.DownloadUtil;
 
 import static com.zjrb.core.utils.UIUtils.getContext;

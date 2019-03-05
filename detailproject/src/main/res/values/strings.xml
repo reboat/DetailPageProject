@@ -11,12 +11,10 @@
     <string name="module_detail_topic_label">专题</string>
     <string name="module_detail_comment_window_hint">我来说两句（评论内容不少于5个字）</string>
     <string name="module_detail_label_persional">官员详情</string>
-    <string name="module_detail_save_pic">保存图片</string>
     <string name="module_detail_save_success">保存成功</string>
     <string name="module_detail_save_failed">保存失败</string>
     <string name="module_detail_subscribe_success">订阅成功</string>
     <string name="module_detail_subscribe">订阅</string>
-    <string name="module_detail_save_cancel">取消</string>
     <string name="module_detail_share_to">分享至</string>
     <string name="module_detail_realated_news_tip">相关新闻</string>
     <string name="module_detail_to_see">去看</string>

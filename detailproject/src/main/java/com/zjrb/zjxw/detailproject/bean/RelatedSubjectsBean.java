@@ -10,6 +10,7 @@ import java.io.Serializable;
  */
 
 public class RelatedSubjectsBean implements Serializable {
+    private static final long serialVersionUID = 3830180039630181225L;
     private int mlf_id;
     private int id;
     private String title;

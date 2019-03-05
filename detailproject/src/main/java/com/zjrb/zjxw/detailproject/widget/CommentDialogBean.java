@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 public final class CommentDialogBean implements Serializable {
 
+    private static final long serialVersionUID = 5747222825576947203L;
     public String id; // 稿件 id
     public String parent_id; // 被回复的评论id
     public String replayer; // 被回复评论的用户昵称

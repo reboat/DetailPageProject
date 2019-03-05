@@ -1,19 +1,10 @@
 package com.zhejiangdaily;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zjrb.core.common.base.BaseActivity;
-import com.zjrb.core.domain.CommentDialogBean;
-import com.zjrb.core.nav.Nav;
-import com.zjrb.core.ui.widget.dialog.CommentWindowDialog;
-import com.zjrb.core.utils.SettingManager;
-import com.zjrb.core.utils.UIUtils;
-import com.zjrb.core.utils.webjs.AudioDialog;
-
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends DailyActivity implements View.OnClickListener {
 
     private TextView tv;
 

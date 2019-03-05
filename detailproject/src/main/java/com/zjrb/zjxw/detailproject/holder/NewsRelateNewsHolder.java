@@ -55,11 +55,17 @@ public class NewsRelateNewsHolder extends BaseRecyclerViewHolder<RelatedNewsBean
             mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
         }
         if (!TextUtils.isEmpty(mData.getColumn_name())) {
+            mChannel.setVisibility(View.VISIBLE);
             mChannel.setText(mData.getColumn_name());
+        }else{
+            mChannel.setVisibility(View.GONE);
         }
 
         if (!TextUtils.isEmpty(mData.getLike_count_general())) {
+            mPriseNum.setVisibility(View.VISIBLE);
             mPriseNum.setText(mData.getLike_count_general());
+        }else{
+            mPriseNum.setVisibility(View.GONE);
         }
     }
 

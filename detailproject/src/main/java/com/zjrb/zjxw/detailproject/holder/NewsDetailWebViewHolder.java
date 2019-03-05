@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;
-import port.ZBJTJsBridge;
 import webutils.CssJsUtils;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -42,7 +41,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
-    //    private WebJsInterface mWebJsInterface;
     private WebViewImpl webImpl;
     private JsInterfaceImp jsInterfaceImp;
     /**
@@ -53,27 +51,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * 当前稿件阅读进度
      */
     private float mReadingScale;
-    //是否来自红船号详情页
-//    private boolean mHasVideoUrl = false;
-
-//    public boolean isRedBoatActivity() {
-//        return isRedBoatActivity;
-//    }
-
-    public void setRedBoatActivity(boolean redBoatActivity) {
-        isRedBoatActivity = redBoatActivity;
-    }
-
-    private boolean isRedBoatActivity = false;
 
     public NewsDetailWebViewHolder(ViewGroup parent, boolean hasVideoUrl) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
-//        mHasVideoUrl = hasVideoUrl;
-//        initWebView();
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
 
+        //TODO WLJ 这里有个问题
         //初始化设置
         webImpl = new WebViewImpl();
         //必须要先设置绑定对象
@@ -84,43 +69,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     }
 
-//    /**
-//     * 设置网脉数据
-//     *
-//     * @param bean
-//     */
-//    private OutSizeAnalyticsBean getWMData(DraftDetailBean.ArticleBean bean) {
-//        String mlf_id;
-//        if (isRedBoatActivity) {
-//            mlf_id = bean.getGuid() + "";
-//        } else {
-//            mlf_id = bean.getMlf_id() + "";
-//        }
-//        return OutSizeAnalyticsBean.getInstance()
-//                .setEventCode("A0010")
-//                .setUmCode("A0010")
-//                .setObjectID(mlf_id)
-//                .setObjectName(bean.getDoc_title())
-//                .setObjectType(ObjectType.PictureType)
-//                .setClassifyID(bean.getChannel_id())
-//                .setClassifyName(bean.getChannel_name())
-//                .setPageType("图片预览页")
-//                .setSelfobjectID(bean.getId() + "");
-//    }
-
     /**
      * 如需要动态加载css,可直接传入url
      * 新增接口拉取css和js
      */
     @Override
     public void bindView() {
-//        mWebJsInterface = mWebView.getWebJs();
-//        //设置网脉数据
-//        if (mWebJsInterface != null && mData != null && mData.getArticle() != null) {
-//            mWebJsInterface.setOutSizeAnalyticsBean(getWMData(mData.getArticle()));
-//        }
-//        if (mData.getArticle().getContent() == null) return;
-//        itemView.setOnClickListener(null);
         String htmlBody = "";
         String htmlResult;
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
@@ -134,207 +88,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         htmlResult = CssJsUtils.get(getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
-
-//    private String css_js;
-//    private int audioCount = 0;
-
-//    /**
-//     * 设置CSS和JS
-//     */
-//    private void setCssJSWebView() {
-//        String htmlBody = "";
-//        String htmlResult;
-//        String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
-//        String uiModeCssUri = ThemeMode.isNightMode()
-//                ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
-//        //可以用webview组件中的方法代替
-//        if (!TextUtils.isEmpty(mData.getArticle().getContent())) {
-//            htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getContent());
-//        }
-        //先解析后加载，链接稿无法这样操作
-//        String htmlBody = WebBiz.parseHandleHtml(TextUtils.isEmpty(mData.getArticle().getContent
-//                        ()) ? "" : mData.getArticle().getContent(),
-//                new WebBiz.ImgSrcsCallBack() {
-//                    @Override
-//                    public void callBack(String[] imgSrcs) {
-//                        if (mWebJsInterface != null && imgSrcs != null && imgSrcs.length > 0) {
-//                            for (int i = 0; i < imgSrcs.length; i++) {
-//                                if (!TextUtils.isEmpty(imgSrcs[i]) && (imgSrcs[i].contains("?w=")
-//                                        || imgSrcs[i].contains("?width="))) {
-//                                    imgSrcs[i] = imgSrcs[i].split("[?]")[0];
-//                                }
-//                            }
-//                            //设置imageSrc
-//                            mWebJsInterface.setImgSrcs(imgSrcs);
-//                        }
-//                    }
-//                }, new WebBiz.ImgASrcsCallBack() {//超链接
-//                    @Override
-//                    public void callBack(List<Map<String, String>> imgSrcs) {
-//                        if (mWebJsInterface != null && imgSrcs != null && imgSrcs.size() > 0) {
-//                            //设置imageSrc超链接
-//                            mWebJsInterface.setImgSrcs(imgSrcs);
-//                        }
-//                    }
-//                }, new WebBiz.TextCallBack() {
-//
-//                    @Override
-//                    public void callBack(String text) {
-//                        if (mWebJsInterface != null && !TextUtils.isEmpty(text)) {
-//                            mWebJsInterface.setHtmlText(text);
-//                        }
-//                    }
-//                }, new WebBiz.AudioCallBack() {
-//
-//                    @Override
-//                    public void callBack(int count) {
-//                        audioCount = count;
-//                    }
-//                });
-//        ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
-//        htmlResult = CssJsUtils.get(getContext()).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-        //拼接部分自行实现
-//        ResourceBiz sp = SPHelper.get().getObject(SPHelper.Key.INITIALIZATION_RESOURCES);
-//        css_js = "";
-//        String css = "<link id=\"ui_mode_link\" charset=\"UTF-8\" href=\"%1$s\" " +
-//                "rel=\"stylesheet\" type=\"text/css\"/>";
-//        String html = "<script type=\"text/javascript\" charset=\"UTF-8\" src=\"%1$s\"></script>";
-//        css_js += String.format(css, uiModeCssUri);
-//        css_js += String.format(html, "file:///android_asset/js/basic.js");
-//        //CSS
-//        if (sp != null && sp.css != null && !sp.css.isEmpty()) {
-//            for (int i = 0; i < sp.css.size(); i++) {
-//                css_js += String.format(css, sp.css.get(i));
-//            }
-//        }
-//        //JS
-//        if (sp != null && sp.js != null && !sp.js.isEmpty()) {
-//            for (int i = 0; i < sp.js.size(); i++) {
-//                css_js += String.format(html, sp.js.get(i));
-//            }
-//        }
-//        htmlResult = String.format(htmlCode, css_js, htmlBody);
-//        mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
-//    }
-
-//    private String htmlResult;
-
-//    private WebSettings settings;
-
-//    private void initWebView() {
-//        // 隐藏到滚动条
-////        mWebView.hasVideoUrl(mHasVideoUrl);
-//        mWebView.requestFocus(View.FOCUS_DOWN);
-//        mWebView.setVerticalScrollBarEnabled(false);
-//        mWebView.setHorizontalScrollBarEnabled(false);
-//        mWebView.setScrollContainer(false);
-//        // 夜间模式
-//        if (ThemeMode.isNightMode()) {
-//            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color._ffffff_202124));
-//        } else {
-//            mWebView.setBackgroundColor(UIUtils.getActivity().getResources().getColor(R.color
-//                    ._ffffff_191919));
-//        }
-//
-//        settings = mWebView.getSettings();
-//        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
-//        // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
-//        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
-//        // 开启DOM storage API 功能
-//        settings.setDomStorageEnabled(false);
-//        // 开启database storage API功能
-//        settings.setDatabaseEnabled(false);
-//        settings.setAppCacheEnabled(false);
-//        //TODO  WLJ合并为同一个
-//        mWebView.setWebViewClient(new WebViewClient() {
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                if (!TextUtils.isEmpty(url)) {
-//                    Uri uri = Uri.parse(url);
-//                    if (uri != null && !TextUtils.equals(uri.getScheme(), "http") && !TextUtils.equals(uri.getScheme(), "https")) {
-//                        return super.shouldOverrideUrlLoading(view, url);
-//                    }
-//
-//                    if (ClickTracker.isDoubleClick()) return true;
-//                    if (Nav.with(itemView.getContext()).to(url)) {
-//                        //点击话题链接
-//                        if (url.contains("topic.html?id=")) {
-//                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800016", "800016", null, false)
-//                                    .setEvenName("点击话题标签")
-//                                    .setPageType("新闻详情页")
-//                                    .build()
-//                                    .send();
-//
-//                            //官员名称
-//                        } else if (url.contains("gy.html?id=")) {
-//                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800017", "800017", null, false)
-//                                    .setEvenName("点击官员名称")
-//                                    .setPageType("新闻详情页")
-//                                    .setOtherInfo(Analytics.newOtherInfo()
-//                                            .put("customObjectType", "OfficerType")
-//                                            .toString())
-//                                    .build()
-//                                    .send();
-//                        } else {
-//                            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800015", "800015", "RelatedContentClick", false)
-//                                    .setEvenName("链接点击")
-//                                    .setPageType("新闻详情页")
-//                                    .setOtherInfo(Analytics.newOtherInfo()
-//                                            .put("mediaURL", url)
-//                                            .toString()).pageType("新闻详情页")
-//                                    .relatedContentClick("链接")
-//                                    .build()
-//                                    .send();
-//                        }
-//                        return true;
-//                    }
-//                }
-//                return true;
-//            }
-//
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                super.onPageFinished(view, url);
-//                onWebPageComplete();
-//            }
-//
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                super.onPageStarted(view, url, favicon);
-//            }
-//
-//        });
-//
-//        //选择webview加载时机
-//        mWebView.setWebChromeClient(new WebChromeClient() {
-//            @Override
-//            public void onProgressChanged(WebView view, int newProgress) {
-//                super.onProgressChanged(view, newProgress);
-//                if (newProgress > 30) {
-//                    onWebPageComplete();
-//                }
-//            }
-//        });
-//
-//    }
-
-//    /**
-//     * webview加载
-//     */
-//    private void onWebPageComplete() {
-//        Context context = itemView.getContext();
-//        while (context instanceof ContextThemeWrapper) {
-//            if (context instanceof NewsDetailAdapter.CommonOptCallBack) {
-//                ((NewsDetailAdapter.CommonOptCallBack) context).onOptPageFinished();
-//                return;
-//            } else if (context instanceof TopicAdapter.CommonOptCallBack) {
-//                ((TopicAdapter.CommonOptCallBack) context).onOptPageFinished();
-//                return;
-//            }
-//            context = ((ContextThemeWrapper) context).getBaseContext();
-//        }
-//    }
 
 
     /**
@@ -442,8 +195,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 }
             });
         }
-
-//        mWebView.callback_zjxw_js_isAppOpenNightTheme(ThemeMode.isNightMode());
     }
 
     /**
@@ -476,58 +227,5 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             oldTop, int oldRight, int oldBottom) {
         mWebViewHeight = bottom - top;
     }
-
-//    /**
-//     * 长按识别二维码弹框
-//     *
-//     * @param imgUrl
-//     */
-//    @Override
-//    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
-//        scanerAnalytics(imgUrl, isScanerImg);
-//        int mlfid = 0;
-//        if (mData != null && mData.getArticle() != null) {
-//            mlfid = mData.getArticle().getMlf_id();
-//        }
-//        ScanerBottomFragment.newInstance().showDialog((AppCompatActivity) UIUtils
-//                .getActivity()).isScanerImg(isScanerImg).setActivity(UIUtils.getActivity()).setImgUrl(imgUrl).setMlfId(mlfid);
-//    }
-
-//    /**
-//     * 关闭线程池
-//     */
-//    public void stopThreadPool() {
-//        if (mWebView != null) {
-//            mWebView.stopThreadPool();
-//        }
-//    }
-
-//    /**
-//     * 二维码识别相关埋点
-//     */
-//    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
-//        if (mData != null && isScanerImg) {
-//            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
-//                    .setEvenName("识别二维码图片")
-//                    .setObjectID(mData.getArticle().getMlf_id() + "")
-//                    .setObjectName(mData.getArticle().getDoc_title())
-//                    .setObjectType(ObjectType.NewsType)
-//                    .setClassifyID(mData.getArticle().getChannel_id())
-//                    .setClassifyName(mData.getArticle().getChannel_name())
-//                    .setPageType("新闻详情页")
-//                    .setOtherInfo(Analytics.newOtherInfo()
-//                            .put("mediaURL", imgUrl)
-//                            .toString())
-//                    .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
-//                    .selfNewsID(mData.getArticle().getId() + "")
-//                    .newsTitle(mData.getArticle().getDoc_title())
-//                    .selfChannelID(mData.getArticle().getChannel_id())
-//                    .channelName(mData.getArticle().getChannel_name())
-//                    .pageType("新闻详情页")
-//                    .operationType("识别二维码")
-//                    .build()
-//                    .send();
-//        }
-//    }
 
 }

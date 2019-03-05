@@ -21,10 +21,7 @@
             android:id="@+id/fl_comment"
             android:layout_width="188dp"
             android:layout_height="35dp"
-            android:layout_gravity="center"
             android:layout_marginRight="32dp"
-            android:background="@drawable/module_detail_comment_bottom_bg"
-            android:visibility="visible"
             >
 
             <TextView
@@ -33,9 +30,19 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|left"
                 android:hint="@string/module_detail_comment_hint"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="15dp"
+                android:textColorHint="@color/_bfbfbf"
                 android:textColor="@color/_999999_5c5c5c"
-                android:textSize="@dimen/ts_14sp" />
+                android:textSize="@dimen/ts_11sp"
+                tools:text="加深对"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="15dp"
+                android:background="@color/_bfbfbf" />
 
         </FrameLayout>
 

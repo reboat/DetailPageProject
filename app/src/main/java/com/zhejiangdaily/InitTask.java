@@ -1,7 +1,5 @@
 package com.zhejiangdaily;
 
-import com.zjrb.core.api.base.APIPostTask;
-import com.zjrb.core.api.callback.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
 /**
@@ -16,12 +14,12 @@ public class InitTask extends APIPostTask<SessionIdBean> {
     }
 
     @Override
-    protected void onSetupParams(Object... params) {
+    public void onSetupParams(Object... params) {
 
     }
 
     @Override
-    protected String getApi() {
+    public String getApi() {
         return APIManager.endpoint.GET_SESSIONID;
     }
 }

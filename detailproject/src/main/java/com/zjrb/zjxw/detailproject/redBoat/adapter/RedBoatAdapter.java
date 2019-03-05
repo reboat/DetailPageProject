@@ -46,7 +46,6 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
             return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
-            webviewHolder.setRedBoatActivity(true);
             return webviewHolder;
         }
         return new NewsPlaceHolder(parent);

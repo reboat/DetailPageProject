@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 public class SessionIdBean implements Serializable {
 
+    private static final long serialVersionUID = 8185315460752629490L;
     /**
      * id : 5994f537aab7bc32347410b7
      * anonymous : true

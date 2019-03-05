@@ -66,18 +66,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final String PAYLOADS_PAUSE = "on_pause";
 
     public static final int NO_POSITION = -1;
-    private int mMiddleHolderPosition = NO_POSITION;
     private int mWebViewHolderPosition = NO_POSITION;
     // true：已经显示全部
     private boolean isShowAll;
     private boolean mHasVideoUrl;
     private boolean isRedBoat = false;//是否是红船号的适配器
-
-//    public void setRedBoat(boolean redBoat) {
-//        isRedBoat = redBoat;
-//    }
-
-//    private NewsRelateNewsHolder relateNewsHolder;
 
     public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
         super(datas);
@@ -131,7 +124,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
         } else if (position == 2) {
-            mMiddleHolderPosition = position;
             return VIEW_TYPE_MIDDLE;
         } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论") && !getData(position).toString().equals("占位")) {
             return VIEW_TYPE_STRING;
@@ -233,10 +225,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (mWebViewHolderPosition != NO_POSITION) {
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
-        //关闭线程池
-//        if (webviewHolder != null) {
-//            webviewHolder.stopThreadPool();
-//        }
     }
 
     private Bundle bundle;

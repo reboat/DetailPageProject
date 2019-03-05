@@ -12,6 +12,10 @@
         android:id="@+id/video_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="12dp"
         android:visibility="gone"
         app:ratio_w2h="16:9">
 
@@ -71,9 +75,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/video_container"
+        android:layout_above="@+id/ly_bottom_comment"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="16dp"
         >
 
         <com.aliya.view.fitsys.FitWindowsFrameLayout
@@ -90,16 +94,14 @@
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 />
-
         </com.aliya.view.fitsys.FitWindowsFrameLayout>
-
     </FrameLayout>
 
     <include
         android:id="@+id/ly_bottom_comment"
         layout="@layout/module_detail_bottom_comment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true" />
 
     <FrameLayout

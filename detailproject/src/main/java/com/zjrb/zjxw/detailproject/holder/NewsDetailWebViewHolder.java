@@ -16,6 +16,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
+import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 
@@ -25,7 +26,6 @@ import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.web.JsInterfaceImp;
-import cn.daily.news.biz.core.web.WebViewImpl;
 import webutils.CssJsUtils;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -41,7 +41,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
-    private WebViewImpl webImpl;
+    private DetailWebViewImpl webImpl;
     private JsInterfaceImp jsInterfaceImp;
     /**
      * WebView的高度
@@ -58,7 +58,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
         //初始化设置
-        webImpl = new WebViewImpl();
+        webImpl = new DetailWebViewImpl();
         //必须要先设置绑定对象
         webImpl.setWebViewJsObject("zjxw");
         jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());

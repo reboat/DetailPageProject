@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?><!--新闻专题详情页列表页眉-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/_ffffff_191919"
-    android:orientation="vertical"
-    android:paddingBottom="5dp">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/_ffffff_191919"
+              android:orientation="vertical"
+              android:paddingBottom="5dp">
 
     <ImageView
         android:id="@+id/iv_subject"
@@ -41,6 +41,7 @@
         android:textSize="@dimen/ts_14sp"
         tools:text="加深对建设电视剧搭框架卡拉翰是否来看看交互的斯凯方式复健科说服力加深对菲利克斯冯老师发胜多负少 防守打法地方是否水电费少妇群无法请问请问，王企鹅啊无法无法挖坟我的v💰发" />
 
+    <!--向下箭头-->
     <LinearLayout
         android:id="@+id/layout_indicator"
         android:layout_width="wrap_content"
@@ -72,11 +73,32 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:background="@color/_bfbfbf" />
+    <!--聚合阅读-->
+    <TextView
+        android:id="@+id/tv_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="19dp"
+        android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="10dp"
+        android:textColor="@color/_222222"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="聚合阅读" />
+
+    <!--专题频道管理-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"

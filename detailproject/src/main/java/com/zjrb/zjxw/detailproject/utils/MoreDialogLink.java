@@ -491,10 +491,6 @@ public class MoreDialogLink extends BaseDialogFragment {
             dismissAllDialog();
             T.showShortNow(UIUtils.getApp(), "分享成功");
             setAnalytics(share_media, true);
-            //TODO WLJ
-//            if (mBeanShare.getCallback() != null) {
-//                mBeanShare.getCallback().callback_zjxw_js_reweet("SUCCESS");
-//            }
             //稿件分享成功后，登录用户获取积分
             new ArticShareTask(new LoadingCallBack<BaseData>() {
                 @Override
@@ -517,10 +513,6 @@ public class MoreDialogLink extends BaseDialogFragment {
 
         @Override
         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-            //TODO WLJ
-//            if (mBeanShare.getCallback() != null) {
-//                mBeanShare.getCallback().callback_zjxw_js_reweet("FAIL");
-//            }
             setAnalytics(share_media, false);
             T.showShortNow(UIUtils.getApp(), "分享失败");
             dismissAllDialog();

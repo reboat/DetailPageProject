@@ -32,7 +32,7 @@ import cn.daily.news.biz.core.glide.PH;
 import cn.daily.news.biz.core.nav.Nav;
 
 /**
- * 专题详情页 - header
+ * 专题详情页专用头部
  * Created by wanglinjie.
  * create time:2017/8/27 下午2:31.
  */
@@ -59,6 +59,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     LinearLayout mLayoutIndicator;
     @BindView(R2.id.iv_indicator)
     ImageView mIvIndicator;
+    @BindView(R2.id.tv_read)
+    TextView tvRead;
 
     private boolean isOpen;
     private RecyclerView mRecyclerTabCopy;
@@ -121,8 +123,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         mRecyclerTab.setAdapter(mChannelAdapter);
         mRecyclerTabCopy.setAdapter(mChannelAdapter);
 
+        //分组标签为1个时，不显示
         if (mChannelAdapter == null || mChannelAdapter.getDataSize() < 2) {
             mRecyclerTab.setVisibility(View.GONE);
+            tvRead.setVisibility(View.GONE);
             mRecyclerTabCopy.setVisibility(View.GONE);
         } else {
             mRecyclerTabCopy.setVisibility(View.INVISIBLE);

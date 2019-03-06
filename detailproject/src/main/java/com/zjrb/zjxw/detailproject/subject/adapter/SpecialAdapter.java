@@ -11,7 +11,9 @@ import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
+import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentTabHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
     // group组名
     public static final int TYPE_GROUP = 100;
+    //群众之声
+    private final int TYPE_COMMENT_TAB = 101;
+    //评论
+    private final int TYPE_COMMENT = 102;
 
     private DraftDetailBean mBean;
 
@@ -40,6 +46,8 @@ public class SpecialAdapter extends NewsBaseAdapter {
         setData(data);
     }
 
+    //TODO WLJ 评论部分需要设计新的数据结构
+    //设置专题数据
     public void setData(DraftDetailBean data) {
         if (data != null && data.getArticle() != null
                 && data.getArticle().getSubject_groups() != null) {
@@ -52,6 +60,9 @@ public class SpecialAdapter extends NewsBaseAdapter {
                     list.addAll(group.getGroup_articles());
                 }
             }
+            //添加群众之声和评论
+            list.add("群众之声");
+            list.addAll(mBean.getArticle().getHot_comments());
             setData(list);
         }
     }
@@ -61,6 +72,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
             viewType) {
         if (TYPE_GROUP == viewType) {
             return new GroupViewHolder(parent, mBean);
+        } else if (TYPE_COMMENT_TAB == viewType) {
+            return new SpecialCommentTabHolder(parent);
+        } else if (TYPE_COMMENT == viewType) {
+
         }
         return super.onAbsCreateViewHolder(parent, viewType);
     }
@@ -70,10 +85,16 @@ public class SpecialAdapter extends NewsBaseAdapter {
         return new GroupViewHolder(parent, mBean);
     }
 
+    //判定item类型
     @Override
     public int getAbsItemViewType(int position) {
-        if (getData(position) instanceof SpecialGroupBean)
+        if (getData(position) instanceof SpecialGroupBean) {
             return TYPE_GROUP;
+        } else if (getData(position).equals("群众之声")) {
+            return TYPE_COMMENT_TAB;
+        } else if (getData(position) instanceof HotCommentsBean) {
+            return TYPE_COMMENT;
+        }
         return super.getAbsItemViewType(position);
     }
 
@@ -83,7 +104,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
     }
 
     /**
-     * 分组 ViewHolder
+     * 分组标签名 ViewHolder
      *
      * @author a_liYa
      * @date 2017/10/21 下午4:13.
@@ -116,7 +137,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
         @Override
         public void bindView() {
-            tvGroupName.setText(mData.getGroup_name());
+            tvGroupName.setText("#" + mData.getGroup_name() + "#");
             // 显示是否有更多
             tvMore.setVisibility(mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
         }

@@ -101,9 +101,9 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     //初始化webview相关设置
     private void initWebview() {
         webImpl = new WebViewImpl();
+        webImpl.setWebViewJsObject("zjxw");
         jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
         webImpl.setJsObject(jsInterfaceImp);
-        webImpl.setWebViewJsObject(ZBJTJsBridge.PREFIX_JS_METHOD_NAME);
         mWebView.setHelper(webImpl);
     }
 

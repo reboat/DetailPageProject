@@ -14,6 +14,7 @@ public class SpecialGroupBean implements Serializable {
     private String group_id;
     private String group_name;
     private boolean group_has_more;
+    private int unread_count;
 
     private List<ArticleItemBean> group_articles;
 
@@ -47,6 +48,14 @@ public class SpecialGroupBean implements Serializable {
 
     public void setGroup_articles(List<ArticleItemBean> group_articles) {
         this.group_articles = group_articles;
+    }
+
+    public int getUnread_count() {
+        return unread_count;
+    }
+
+    public void setUnread_count(int unread_count) {
+        this.unread_count = unread_count;
     }
 
 }

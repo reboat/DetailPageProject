@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 群众之声holder
+ * 群众之声Tab holder
  * Created by wanglinjie.
  * create time:2017/10/26  上午8:58
  */

@@ -180,6 +180,10 @@ public class DraftDetailBean extends BaseData {
 
         private List<RelatedSubjectsBean> related_subjects;
 
+        /**
+         * 群众之声列表
+         */
+        private List<SubjectVoiceMassBean> subject_comment_list;
 
         /**
          * 话题互动列表
@@ -630,6 +634,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setRelated_news(List<RelatedNewsBean> related_news) {
             this.related_news = related_news;
+        }
+
+        public List<SubjectVoiceMassBean> getSubject_comment_list() {
+            return subject_comment_list;
+        }
+
+        public void setSubject_comment_list(List<SubjectVoiceMassBean> subject_comment_list) {
+            this.subject_comment_list = subject_comment_list;
         }
 
         public List<RelatedSubjectsBean> getRelated_subjects() {

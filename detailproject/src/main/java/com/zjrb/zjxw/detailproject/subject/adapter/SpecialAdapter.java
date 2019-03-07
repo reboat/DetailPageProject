@@ -13,6 +13,9 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
+import com.zjrb.zjxw.detailproject.bean.SubjectVoiceMassBean;
+import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentTabHolder;
 
 import java.util.ArrayList;
@@ -38,6 +41,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
     private final int TYPE_COMMENT_TAB = 101;
     //评论
     private final int TYPE_COMMENT = 102;
+    //文章标题
+    private final int TYPE_TITLE = 103;
+    //占位
+    private final int TYPE_PLACE = 104;
 
     private DraftDetailBean mBean;
 
@@ -46,7 +53,6 @@ public class SpecialAdapter extends NewsBaseAdapter {
         setData(data);
     }
 
-    //TODO WLJ 评论部分需要设计新的数据结构
     //设置专题数据
     public void setData(DraftDetailBean data) {
         if (data != null && data.getArticle() != null
@@ -57,12 +63,39 @@ public class SpecialAdapter extends NewsBaseAdapter {
             for (SpecialGroupBean group : groups) {
                 list.add(group);
                 if (group.getGroup_articles() != null) {
+                    //稿件
                     list.addAll(group.getGroup_articles());
                 }
             }
-            //添加群众之声和评论
-            list.add("群众之声");
-            list.addAll(mBean.getArticle().getHot_comments());
+            //添加评论
+            if (mBean.getArticle().getSubject_comment_list() != null && mBean.getArticle().getSubject_comment_list().size() > 0) {
+                //只有有评论数据才添加群众之声
+                list.add("群众之声");
+                //遍历群众之声评论列表
+                for (SubjectVoiceMassBean bean : mBean.getArticle().getSubject_comment_list()) {
+                    if (bean.getComment_list() != null && bean.getComment_list().size() > 0) {
+                        //只有1条评论的情况
+                        if (bean.getComment_list().size() == 1) {
+                            //HotCommentsBean类型
+                            list.add(bean.getComment_list().get(0));
+                            //标题类型
+                            list.add(bean);
+                            //空行
+                            list.add("占位");
+                            //多条评论
+                        } else if (bean.getComment_list().size() > 1) {
+                            //评论
+                            for (HotCommentsBean hotBean : bean.getComment_list()) {
+                                list.add(hotBean);
+                            }
+                            //标题
+                            list.add(bean);
+                            //空行
+                            list.add("占位");
+                        }
+                    }
+                }
+            }
             setData(list);
         }
     }
@@ -75,7 +108,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
         } else if (TYPE_COMMENT_TAB == viewType) {
             return new SpecialCommentTabHolder(parent);
         } else if (TYPE_COMMENT == viewType) {
-
+            return new DetailCommentHolder(parent, String.valueOf(mBean.getArticle()
+                    .getId()), mBean);
+        } else if (TYPE_TITLE == viewType) {
+            return new SpecialCommentHolder(parent);
         }
         return super.onAbsCreateViewHolder(parent, viewType);
     }
@@ -92,8 +128,14 @@ public class SpecialAdapter extends NewsBaseAdapter {
             return TYPE_GROUP;
         } else if (getData(position).equals("群众之声")) {
             return TYPE_COMMENT_TAB;
+            //评论
         } else if (getData(position) instanceof HotCommentsBean) {
             return TYPE_COMMENT;
+            //文章标题
+        } else if (getData(position) instanceof SubjectVoiceMassBean) {
+            return TYPE_TITLE;
+        } else if (getData(position).equals("占位")) {
+            return TYPE_PLACE;
         }
         return super.getAbsItemViewType(position);
     }

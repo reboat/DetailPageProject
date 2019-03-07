@@ -1,12 +1,9 @@
 package com.zjrb.zjxw.detailproject.holder;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.SpannableString;
 import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,7 +16,6 @@ import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
-import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.T;
@@ -37,19 +33,15 @@ import com.zjrb.zjxw.detailproject.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
+import com.zjrb.zjxw.detailproject.utils.CommentTagMathUtils;
 import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
 import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 import com.zjrb.zjxw.detailproject.widget.ConfirmDialog;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
-import cn.daily.news.biz.core.db.ThemeMode;
-import cn.daily.news.biz.core.model.ResourceBiz;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -93,8 +85,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     ImageView mIvGuest;
     @BindView(R2.id.ly_comment)
     RelativeLayout mLyComment;
-    @BindView(R2.id.tv_reply)
-    TextView mReplay;
 
     /**
      * 稿件id
@@ -107,18 +97,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
-
-    /**
-     * 话题稿专用构造器
-     *
-     * @param parent
-     * @param articleId
-     */
-    public DetailCommentHolder(ViewGroup parent, String articleId) {
-        super(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false));
-        ButterKnife.bind(this, itemView);
-        this.articleId = articleId;
-    }
 
     /**
      * 评论列表专用构造器
@@ -155,6 +133,15 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         mBean = bean;
     }
 
+    /**
+     * 继承专用构造器
+     */
+    protected DetailCommentHolder(View view) {
+        super(view);
+        ButterKnife.bind(this, itemView);
+    }
+
+
     @Override
     public void bindView() {
         //是否是自己发布的评论
@@ -180,7 +167,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mLyComment.setVisibility(View.VISIBLE);
             //回复者评论
             if (mData.getContent() != null) {
-                mContent.setText(doCommentTag(mData.getContent()) != null ? doCommentTag(mData.getContent()) : mData.getContent());
+                mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
             }
             //回复者昵称
             if (mData.getAccount_type() == 1) {//主持人
@@ -215,7 +202,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
                 //父评论内容
                 if (!TextUtils.isEmpty(mData.getParent_content())) {
-                    mTvCommentContent.setText(doCommentTag(mData.getParent_content()) != null ? doCommentTag(mData.getParent_content()) : mData.getParent_content());
+                    mTvCommentContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getParent_content()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getParent_content()) : mData.getParent_content());
                 }
 
                 //父评论昵称
@@ -275,7 +262,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply,R2.id.tv_reply})
+    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
@@ -548,38 +535,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else {
             return "" + "," + "" + "," + "";
-        }
-    }
-
-    /**
-     * 评论标签算法
-     *
-     * @param s
-     * @return
-     */
-    private SpannableString doCommentTag(String s) {
-        SpannableString spannableString = new SpannableString(s);
-        ResourceBiz sp = SPHelper.get().getObject("initialization_resources");
-        //如果正则为空，则清除标签
-        if (sp == null || TextUtils.isEmpty(sp.comment_pattern)) {
-            SPHelper.get().put("comment_tag", "").commit();
-            return spannableString;
-        }
-        Pattern datePattern = Pattern.compile(sp.comment_pattern);
-        if (datePattern == null || TextUtils.isEmpty(s)) return null;
-        Matcher dateMatcher = datePattern.matcher(s);
-        while (dateMatcher.find()) {
-            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor(getcolor())), dateMatcher.start(), dateMatcher.end(), 0);
-            break;
-        }
-        return spannableString;
-    }
-
-    private String getcolor() {
-        if (ThemeMode.isNightMode()) {
-            return "#4b7aae";
-        } else {
-            return "#036ce2";
         }
     }
 }

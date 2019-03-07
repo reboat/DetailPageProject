@@ -56,9 +56,7 @@ public class CommentSelectAdapter extends BaseRecyclerAdapter implements LoadMor
     }
 
     public boolean noMore(CommentRefreshBean data) {
-        //TODO 20条将不再作为无数据的依据
         return data == null || data.getComments() == null || data.getComments().size() == 0;
-//                || data.getComments().size() < C.PAGE_SIZE;
     }
 
     public void cancelLoadMore() {

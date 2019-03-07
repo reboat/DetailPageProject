@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -44,9 +45,8 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
 import cn.daily.news.biz.core.utils.RouteManager;
-import cn.daily.news.biz.core.web.JsInterfaceImp;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.WebViewImpl;
-import port.ZBJTJsBridge;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -85,7 +85,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     private String mFromChannel;
 
     private WebViewImpl webImpl;
-    private JsInterfaceImp jsInterfaceImp;
+    private JsMultiInterfaceImp jsInterfaceImp;
 
 
     @Override
@@ -101,8 +101,8 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     //初始化webview相关设置
     private void initWebview() {
         webImpl = new WebViewImpl();
-        webImpl.setWebViewJsObject("zjxw");
-        jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
+        jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
     }
@@ -152,7 +152,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
      * 请求详情页数据
      */
     private void loadData() {
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -368,7 +368,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
             }
         }
 
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
     }
 
 //    /**

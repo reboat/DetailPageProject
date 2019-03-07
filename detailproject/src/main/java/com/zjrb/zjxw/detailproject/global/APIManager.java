@@ -17,10 +17,6 @@ public class APIManager {
      * url 端点 路径
      */
     public static final class endpoint {
-        /**
-         * 获取sessionId
-         */
-        public static final String GET_SESSIONID = "/api/account/init";
 
         /**
          * 获取频道(撤稿)列表
@@ -94,23 +90,10 @@ public class APIManager {
         public static final String COMMENT_SUBMIT = "/api/comment/create";
 
         /**
-         * 文件上传
-         */
-        public static final String UPLOAD_PATH = "/api/file/upload";
-
-        /**
          * 文章分享
          */
         public static final String ARTIC_SHARE = "/api/favorite/share_news";
-        /**
-         * 获取用户信息
-         */
-        public static final String ACCOUNT_DETAIL = "/api/account/account_detail";
 
-        /**
-         * 分享白名单校验接口
-         */
-        public static final String URL_CHECK = "/api/white_list/url_check";
     }
 
 }

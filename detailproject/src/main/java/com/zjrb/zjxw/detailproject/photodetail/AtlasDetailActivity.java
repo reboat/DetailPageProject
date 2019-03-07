@@ -37,7 +37,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
@@ -47,8 +46,6 @@ import com.zjrb.zjxw.detailproject.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.widget.AtlasLoad;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import java.util.List;
 
@@ -58,12 +55,14 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.BottomSaveDialogFragment;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
 import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
@@ -81,7 +80,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class AtlasDetailActivity extends DailyActivity implements ViewPager
-        .OnPageChangeListener, View.OnTouchListener, LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM {
+        .OnPageChangeListener, View.OnTouchListener, CommentWindowDialog.LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM {
 
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;

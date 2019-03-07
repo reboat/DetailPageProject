@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.base.toolbar.TopBarWhiteStyle;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.T;
@@ -31,7 +32,6 @@ import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
-import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
@@ -42,9 +42,12 @@ import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
+import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -187,7 +190,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     }
 
     private void loadData() {
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         mOverlayLayout.setVisibility(View.INVISIBLE);
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -258,7 +261,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
      * 专题收藏
      */
     private void collectTask() {
-        new DraftCollectTask(new LoadingCallBack<Void>() {
+        new DraftCollectTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onSuccess(Void data) {
@@ -326,7 +329,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }

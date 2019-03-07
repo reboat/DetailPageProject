@@ -38,7 +38,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
@@ -56,8 +55,6 @@ import com.zjrb.zjxw.detailproject.topic.holder.TopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.widget.ColorImageView;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import java.util.List;
 
@@ -67,11 +64,13 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
-import okhttp3.internal.http2.ErrorCode;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -82,7 +81,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class ActivityTopicActivity extends DailyActivity implements
         TopicAdapter.CommonOptCallBack, LoadMoreListener<CommentRefreshBean>,
-        DetailCommentHolder.deleteCommentListener, LocationCallBack,
+        DetailCommentHolder.deleteCommentListener, CommentWindowDialog.LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.TopicDetailWM {
 
     @BindView(R2.id.recycler)
@@ -199,7 +198,7 @@ public class ActivityTopicActivity extends DailyActivity implements
      * 初始化/拉取数据
      */
     private void loadData() {
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN); // onCreate和onNewIntent时清空js下发的分享数据
         mTopBarHolder.setShareVisible(false);
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -534,14 +533,9 @@ public class ActivityTopicActivity extends DailyActivity implements
                 lastMinPublishTime = getLastCommentMinPublishTime(commentList);
             }
             mAdapter.addData(commentList, true);
-            //TODO 20条将不再作为无数据的依据
             if (commentList.size() == 0) {
                 loadMore.setState(LoadMore.TYPE_NO_MORE);
             }
-//            if (commentList.size() < C.PAGE_SIZE) {
-//                loadMore.setState(LoadMore.TYPE_NO_MORE);
-//            }
-
         } else {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
@@ -597,7 +591,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 }
             }
         }
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
     }

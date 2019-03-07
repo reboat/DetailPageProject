@@ -22,6 +22,7 @@ import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
@@ -33,7 +34,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
@@ -42,8 +42,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,16 +49,17 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
-import cn.daily.news.biz.core.web.JsInterfaceImp;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.WebViewImpl;
-import port.ZBJTJsBridge;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -70,7 +69,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, LocationCallBack,
+public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, CommentWindowDialog.LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
 
     @BindView(R2.id.web_view)
@@ -103,7 +102,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     //订阅同步广播
     private SubscribeReceiver mReceiver;
     private WebViewImpl webImpl;
-    private JsInterfaceImp jsInterfaceImp;
+    private JsMultiInterfaceImp jsInterfaceImp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +128,8 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     //初始化webview相关设置
     private void initWebview() {
         webImpl = new WebViewImpl();
-        webImpl.setWebViewJsObject("zjxw");
-        jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
+        jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
     }
@@ -183,7 +182,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
      * 请求详情页数据
      */
     private void loadData() {
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -497,7 +496,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     @Override
     public void onDestroy() {
         super.onDestroy();
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         if (builder != null) {

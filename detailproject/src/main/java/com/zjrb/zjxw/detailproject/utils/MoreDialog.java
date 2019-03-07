@@ -33,7 +33,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
-import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,8 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
+import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
@@ -383,7 +384,7 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
      * 稿件收藏
      */
     private void newsTopicCollect() {
-        new DraftCollectTask(new LoadingCallBack<Void>() {
+        new DraftCollectTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onSuccess(Void baseInnerData) {

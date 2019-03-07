@@ -37,8 +37,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.task.ArticShareTask;
-import com.zjrb.zjxw.detailproject.task.DraftCollectTask;
 
 import java.util.List;
 
@@ -49,10 +47,14 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.BaseData;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
+import cn.daily.news.biz.core.network.task.ArticShareTask;
+import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.ShareOnResultCallback;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 /**
  * Created by wanglinjie on 2017/9/21.
@@ -296,7 +298,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * 稿件收藏
      */
     private void newsTopicCollect() {
-        new DraftCollectTask(new LoadingCallBack<Void>() {
+        new DraftCollectTask(new APIExpandCallBack<Void>() {
 
             @Override
             public void onSuccess(Void baseInnerData) {
@@ -546,8 +548,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * @param bean 分享的信息
      */
     public void umengShare(final SHARE_MEDIA platform, @NonNull final UmengShareBean bean) {
-        //TODO WLJ
-        UmengShareBean mJsShareBean = SPHelper.get().getObject("zjxw_js_share_bean"/*ZBJsInterface.ZJXW_JS_SHARE_BEAN*/); // 获取js下发的分享信息
+        UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN); // 获取js下发的分享信息
         if (isUseJsShare(mJsShareBean)) {
             bean.setImgUri(mJsShareBean.getImgUri())
                     .setPicShare(mJsShareBean.isPicShare())

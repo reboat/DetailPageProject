@@ -28,12 +28,9 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +39,11 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
 
@@ -55,7 +54,7 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, LocationCallBack {
+public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, CommentWindowDialog.LocationCallBack {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;

@@ -36,6 +36,7 @@ import com.daily.news.location.LocationManager;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.utils.T;
@@ -50,7 +51,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.boardcast.VideoReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.callback.VideoBCnterFace;
 import com.zjrb.zjxw.detailproject.global.C;
@@ -62,8 +62,6 @@ import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,13 +75,16 @@ import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
+import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
@@ -100,7 +101,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  */
 public class NewsDetailActivity extends DailyActivity implements
         NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener,
-        LocationCallBack, DetailWMHelperInterFace.NewsDetailWM, SubscribeSyncInterFace, VideoBCnterFace {
+        CommentWindowDialog.LocationCallBack, DetailWMHelperInterFace.NewsDetailWM, SubscribeSyncInterFace, VideoBCnterFace {
     @BindView(R2.id.video_container)
     RatioFrameLayout mVideoContainer;
     @BindView(R2.id.rv_content)
@@ -310,7 +311,7 @@ public class NewsDetailActivity extends DailyActivity implements
      * 请求详情页数据
      */
     private void loadData() {
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
         DraftDetailTask task = new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
             @Override
@@ -730,7 +731,7 @@ public class NewsDetailActivity extends DailyActivity implements
         if (vrManager != null) {
             vrManager.releasePlayer();
         }
-//        SPHelper.get().remove(ZBJsInterface.ZJXW_JS_SHARE_BEAN);
+        SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
         if (builder != null) {
             //阅读深度

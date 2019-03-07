@@ -26,6 +26,7 @@ import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.web.JsInterfaceImp;
+import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import webutils.CssJsUtils;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -42,7 +43,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
     private DetailWebViewImpl webImpl;
-    private JsInterfaceImp jsInterfaceImp;
+    private JsMultiInterfaceImp jsInterfaceImp;
     /**
      * WebView的高度
      */
@@ -60,8 +61,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         //初始化设置
         webImpl = new DetailWebViewImpl();
         //必须要先设置绑定对象
-        webImpl.setWebViewJsObject("zjxw");
-        jsInterfaceImp = new JsInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
+        jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
 

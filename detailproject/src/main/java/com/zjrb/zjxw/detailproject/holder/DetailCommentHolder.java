@@ -25,7 +25,6 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.callback.LocationCallBack;
 import com.zjrb.zjxw.detailproject.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.comment.CommentSelectActivity;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailActivity;
@@ -34,14 +33,14 @@ import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.CommentTagMathUtils;
-import com.zjrb.zjxw.detailproject.widget.CommentDialogBean;
-import com.zjrb.zjxw.detailproject.widget.CommentWindowDialog;
 import com.zjrb.zjxw.detailproject.widget.ConfirmDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.biz.core.model.CommentDialogBean;
+import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -50,7 +49,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:14
  */
-public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, LocationCallBack {
+public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, CommentWindowDialog.LocationCallBack {
     @BindView(R2.id.iv_avatar)
     ImageView mImg;
     @BindView(R2.id.tv_prise)

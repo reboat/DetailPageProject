@@ -200,7 +200,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             //专题详情页焦点图点击
         } else if (v.getId() == R.id.layout_focus) {
             if (mArticle != null && !TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003","AppContentClick",false)
+                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003", "AppContentClick", false)
                         .setEvenName("专题详情页，焦点图点击")
                         .setObjectID(mArticle.getMlf_id() + "")
                         .setObjectName(mArticle.getDoc_title())

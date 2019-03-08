@@ -67,18 +67,19 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     public static final int NO_POSITION = -1;
     private int mWebViewHolderPosition = NO_POSITION;
+    private NewsDetailWebViewHolder webviewHolder;
     // true：已经显示全部
     private boolean isShowAll;
     private boolean mHasVideoUrl;
     private boolean isRedBoat = false;//是否是红船号的适配器
+    private DraftDetailBean detailBean;
+    private Bundle bundle;
 
     public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
         super(datas);
         mHasVideoUrl = hasVideoUrl;
         setOnItemClickListener(this);
     }
-
-    private NewsDetailWebViewHolder webviewHolder;
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,15 +106,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         }
 
         return new NewsPlaceHolder(parent);
-    }
-
-    /**
-     * 获取webviewholder
-     *
-     * @return
-     */
-    public NewsDetailWebViewHolder getWebViewHolder() {
-        return webviewHolder;
     }
 
     @Override
@@ -167,9 +159,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             super.onBindViewHolder(holder, position, payloads);
     }
 
+    public NewsDetailWebViewHolder getWebViewHolder() {
+        return webviewHolder;
+    }
 
-    private DraftDetailBean detailBean;
-
+    //TODO WLJ 详情页头部偶尔刷新不出来可能与这里有关系
     /**
      * 显示全部
      */
@@ -226,8 +220,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
     }
-
-    private Bundle bundle;
 
     /**
      * 详情页item点击

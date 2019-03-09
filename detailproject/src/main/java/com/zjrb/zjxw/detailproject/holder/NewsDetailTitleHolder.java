@@ -69,6 +69,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_title() != null) {
             mTvTitle.setText(mData.getArticle().getDoc_title());
         }
+        //红船号稿件
         if (isRedBoat) {
             if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource())) {
                 mTvReporter.setVisibility(View.VISIBLE);

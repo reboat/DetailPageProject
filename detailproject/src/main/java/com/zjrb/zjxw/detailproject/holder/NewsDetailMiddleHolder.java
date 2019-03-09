@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -50,6 +51,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
             mRyChannel.setVisibility(View.GONE);
+            itemView.setOnClickListener(null);
         }
 
     }
@@ -57,13 +59,13 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     /**
      * @param view 频道订阅/栏目  点击
      */
-    @OnClick({R2.id.ry_channel})
-    public void onViewClicked(View view) {
+    @OnClick({R2.id.tv_channel_subscribe})
+    public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         NewsDetailAdapter.CommonOptCallBack callback;
         if (itemView.getContext() instanceof NewsDetailAdapter.CommonOptCallBack) {
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
-            if (view.getId() == R.id.ry_channel) {
+            if (view.getId() == R.id.tv_channel_subscribe) {
                 if (mData != null && mData.getArticle() != null) {
                     new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
                             .setEvenName("点击正文底部频道名称")
@@ -100,5 +102,4 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
     @Override
     public void onViewDetachedFromWindow(View v) {
     }
-
 }

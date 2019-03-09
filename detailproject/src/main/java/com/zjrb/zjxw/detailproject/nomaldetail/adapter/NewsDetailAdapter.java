@@ -115,7 +115,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (position == 1) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
-        } else if (position == 2) {
+        } else if (position == 2 && getData(position) instanceof DraftDetailBean && !TextUtils.isEmpty(((DraftDetailBean) getData(position)).getArticle().getSource_channel_name())) {
             return VIEW_TYPE_MIDDLE;
         } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论") && !getData(position).toString().equals("占位")) {
             return VIEW_TYPE_STRING;
@@ -132,7 +132,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (getData(position) instanceof String && getData(position).toString().equals("占位")) {
             return VIEW_REPLEASE;
         }
-        return 0;
+        return super.getAbsItemViewType(position);
     }
 
     @Override
@@ -163,20 +163,19 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         return webviewHolder;
     }
 
-    //TODO WLJ 详情页头部偶尔刷新不出来可能与这里有关系
     /**
-     * 显示全部
+     * 当webview加载出后再显示相关转移等显示全部
      */
     public void showAll() {
         //只加载一次
         if (isShowAll) return;
         isShowAll = true;
         int oldSize = datas.size();
-        //添加标题头
         detailBean = (DraftDetailBean) datas.get(0);
-
-        //中间
-        datas.add(detailBean);
+        //添加中间项
+        if (!TextUtils.isEmpty(detailBean.getArticle().getSource_channel_name())) {
+            datas.add(detailBean);
+        }
         //添加相关专题
         List<RelatedSubjectsBean> subjectList = detailBean.getArticle().getRelated_subjects();
         if (subjectList != null && subjectList.size() > 0) {

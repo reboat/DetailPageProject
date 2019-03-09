@@ -388,9 +388,9 @@ public class NewsDetailActivity extends DailyActivity implements
         mNewsDetail = data;
         initViewState(mNewsDetail);
         List datas = new ArrayList<>();
-        //头
+        //添加头布局
         datas.add(data);
-        //web
+        //添加web布局
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));

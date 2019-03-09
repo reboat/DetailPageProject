@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
@@ -40,6 +41,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
@@ -67,9 +69,11 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ry_container)
-    FitWindowsFrameLayout mContainer;
+    FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
+    @BindView(R2.id.ly_bottom_comment)
+    FitWindowsRelativeLayout mFloorBar;
 
     private String mArticleId;
     /**
@@ -91,8 +95,9 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.module_detail_activity_browser_link);
+        setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
+        mFloorBar.setVisibility(View.GONE);
         getIntentData(getIntent());
         initWebview();
         loadData();
@@ -111,6 +116,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        mFloorBar.setVisibility(View.GONE);
         getIntentData(intent);
         loadData();
     }
@@ -146,7 +152,6 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     }
 
     Analytics.AnalyticsBuilder builder;
-//    Analytics.AnalyticsBuilder builder1;
 
     /**
      * 请求详情页数据
@@ -154,7 +159,7 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     private void loadData() {
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
@@ -184,8 +189,8 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
                     T.showShortNow(BrowserLinkActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
-    }
+        }).setTag(this)./*bindLoadViewHolder(replaceLoad(mContainer)).*/exe(mArticleId, mFromChannel);
+    }//TODO WLJ 后面再调试
 
     /**
      * 顶部导航条在数据加载结束后再显示
@@ -207,7 +212,6 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
 
 
         //显示标题展示WebView内容等
-//        mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
@@ -355,10 +359,6 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //清除线程池
-//        if (mWebView != null) {
-//            mWebView.stopThreadPool();
-//        }
         mWebView.destroy();
         //统计时长
         if (builder != null) {
@@ -370,48 +370,6 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
 
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
     }
-
-//    /**
-//     * 长按识别二维码
-//     *
-//     * @param imgUrl
-//     * @param isScanerImg
-//     */
-//    @Override
-//    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
-//        scanerAnalytics(imgUrl, isScanerImg);
-//        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
-//    }
-
-
-//    /**
-//     * 二维码识别相关埋点
-//     */
-//    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
-//        if (mNewsDetail != null && isScanerImg) {
-//            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
-//                    .setEvenName("识别二维码图片")
-//                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-//                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-//                    .setObjectType(ObjectType.NewsType)
-//                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-//                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-//                    .setPageType("新闻详情页")
-//                    .setOtherInfo(Analytics.newOtherInfo()
-//                            .put("mediaURL", imgUrl)
-//                            .toString())
-//                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-//                    .newsID(mNewsDetail.getArticle().getMlf_id() + "")
-//                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
-//                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
-//                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-//                    .channelName(mNewsDetail.getArticle().getChannel_name())
-//                    .pageType("新闻详情页")
-//                    .operationType("识别二维码")
-//                    .build()
-//                    .send();
-//        }
-//    }
 
     @Override
     public void ClickBack() {
@@ -527,12 +485,5 @@ public class BrowserLinkActivity extends DailyActivity implements View.OnClickLi
                 .pageType("新闻详情页")
                 .pubUrl(bean.getArticle().getUrl());
     }
-
-//    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
-//        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-//                .setEvenName("新闻详情页停留时长")
-//                .setPageType("新闻详情页")
-//                .pageType("新闻详情页");
-//    }
 
 }

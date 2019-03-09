@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.daily.news.location.DataLocation;
@@ -51,6 +50,7 @@ import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
@@ -85,7 +85,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
-    FitWindowsFrameLayout mContainer;
+    FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
 
@@ -116,9 +116,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 return true;
             }
         });
-
-//        mWebView.setLongClickCallBack(this);
-//        mWebView.setWebViewClient(new InterceptWebviewClient());
         initWebview();
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
@@ -159,7 +156,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 }
             }
 
-
         }
     }
 
@@ -169,7 +165,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
      */
     private CommonTopBarHolder topBarHolder;
     Analytics.AnalyticsBuilder builder;
-//    Analytics.AnalyticsBuilder builder1;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
@@ -184,13 +179,12 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
     private void loadData() {
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         if (mArticleId == null || mArticleId.isEmpty()) return;
-        new DraftDetailTask(new LoadingCallBack<DraftDetailBean>() {
+        new DraftDetailTask(new APICallBack<DraftDetailBean>() {
             @Override
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = pageStayTime(draftDetailBean);
-//                builder1 = pageStayTime2(draftDetailBean);
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
@@ -212,8 +206,8 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                     T.showShortNow(LiveLinkActivity.this, errMsg);
                 }
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
-    }
+        }).setTag(this)./*bindLoadViewHolder(replaceLoad(mContainer)).*/exe(mArticleId, mFromChannel);
+    }//TODO WLJ 后面再调试
 
     /**
      * @param data 填充详情页数据
@@ -250,9 +244,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
         } else {
             topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
         }
-
-        //显示标题展示WebView内容等
-//        mWebView.hasVideoUrl(false);
         mWebView.loadUrl(url);
         //是否点赞
         if (data.getArticle().isLike_enabled()) {
@@ -544,11 +535,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topBarHolder.getSubscribe().setSelected(subscribe);
                 topBarHolder.getSubscribe().setText(subscriptionText);
-//                if (subscribe) {
-//                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
-//                } else {
-//                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
-//                }
             }
         }
     }
@@ -707,46 +693,6 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 .send();
     }
 
-//    /**
-//     * 识别二维码
-//     *
-//     * @param imgUrl
-//     * @param isScanerImg
-//     */
-//    @Override
-//    public void onLongClickCallBack(String imgUrl, boolean isScanerImg) {
-//        scanerAnalytics(imgUrl, isScanerImg);
-//        ScanerBottomFragment.newInstance().showDialog(this).isScanerImg(isScanerImg).setActivity(this).setImgUrl(imgUrl);
-//    }
-
-    /**
-     * 二维码识别相关埋点
-     */
-    private void scanerAnalytics(String imgUrl, boolean isScanerImg) {
-        if (mNewsDetail != null && isScanerImg) {
-            new Analytics.AnalyticsBuilder(getContext(), "800024", "800024", "PictureRelatedOperation", false)
-                    .setEvenName("识别二维码图片")
-                    .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                    .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("mediaURL", imgUrl)
-                            .toString())
-                    .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                    .selfNewsID(mNewsDetail.getArticle().getId() + "")
-                    .newsTitle(mNewsDetail.getArticle().getDoc_title())
-                    .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-                    .channelName(mNewsDetail.getArticle().getChannel_name())
-                    .pageType("新闻详情页")
-                    .operationType("识别二维码")
-                    .build()
-                    .send();
-        }
-    }
-
     @Override
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
@@ -769,11 +715,4 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                 .pageType("新闻详情页")
                 .pubUrl(bean.getArticle().getUrl());
     }
-
-//    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
-//        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-//                .setEvenName("新闻详情页停留时长")
-//                .setPageType("新闻详情页")
-//                .pageType("新闻详情页");
-//    }
 }

@@ -1,34 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             android:id="@+id/ry_container"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:background="@color/_ffffff_202124"
+<com.aliya.view.fitsys.FitWindowsRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                android:id="@+id/ry_container"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/_ffffff_202124"
     >
 
-    <com.aliya.view.fitsys.FitWindowsFrameLayout
+
+    <com.commonwebview.webview.CommonWebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
-        android:fitsSystemWindows="true"
-        app:fitType="bottom">
-
-        <com.commonwebview.webview.ZBWebView
-            android:id="@+id/web_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </com.aliya.view.fitsys.FitWindowsFrameLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/_00000000_7f000000" />
+        android:layout_above="@+id/ly_bottom_comment"
+        />
 
     <include
         android:id="@+id/ly_bottom_comment"
-        layout="@layout/module_detail_bottom_comment" />
+        layout="@layout/module_detail_bottom_comment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
 
     <FrameLayout
         android:id="@+id/v_container"
@@ -37,4 +28,4 @@
         android:visibility="gone"
         />
 
-</com.aliya.view.fitsys.FitWindowsFrameLayout>
+</com.aliya.view.fitsys.FitWindowsRelativeLayout>

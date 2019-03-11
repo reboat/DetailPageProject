@@ -88,7 +88,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 
-
     /**
      * webview同步页面生命周期
      */
@@ -103,15 +102,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     public void onPause() {
         if (mWebView != null) {
             mWebView.onPause();
-            if (jsInterfaceImp != null && jsInterfaceImp.getAudioCount() > 0) {
-                final String execUrl = "javascript:musicPause();";
-                mWebView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mWebView.loadUrl(execUrl);
-                    }
-                });
-            }
         }
     }
 

@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.base.toolbar.TopBarWhiteStyle;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
@@ -47,6 +46,7 @@ import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toolsbar.holder.TopBarWhiteStyle;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;

@@ -280,7 +280,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
                 v1 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
                         viewpager, false);
 
-                tv1 = (TextView) v1.findViewById(R.id.tv_item_tab_score_title);
+                tv1 = v1.findViewById(R.id.tv_item_tab_score_title);
                 tv1.setText(pagerAdapter.getPageTitle(i));
                 tab.setCustomView(v1);
                 ViewParent parent = v1.getParent();
@@ -288,7 +288,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
             } else {
                 v2 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
                         viewpager, false);
-                tv2 = (TextView) v2.findViewById(R.id.tv_item_tab_score_title);
+                tv2 = v2.findViewById(R.id.tv_item_tab_score_title);
                 tv2.setText(pagerAdapter.getPageTitle(i));
                 tv2.setTextColor(getResources().getColor(R.color._f44b50));
                 tab.setCustomView(v2);

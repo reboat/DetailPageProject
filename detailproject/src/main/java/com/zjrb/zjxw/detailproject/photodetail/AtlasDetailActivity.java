@@ -1,10 +1,12 @@
 package com.zjrb.zjxw.detailproject.photodetail;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -23,6 +25,7 @@ import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.permission.IPermissionCallBack;
 import com.zjrb.core.permission.Permission;
@@ -36,10 +39,13 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
+import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImagePrePagerAdapter;
+import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
@@ -80,7 +86,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class AtlasDetailActivity extends DailyActivity implements ViewPager
-        .OnPageChangeListener, View.OnTouchListener, CommentWindowDialog.LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM {
+        .OnPageChangeListener, View.OnTouchListener, CommentWindowDialog.LocationCallBack, DetailWMHelperInterFace.AtlasDetailWM, SubscribeSyncInterFace {
 
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
@@ -128,6 +134,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     private int mIndex;
     private List<AlbumImageListBean> mAtlasList;
     private DraftDetailBean mData;
+    //订阅同步广播
+    private SubscribeReceiver mReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +144,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         setContentView(R.layout.module_detail_photo_detail);
         ButterKnife.bind(this);
         getIntentData(getIntent());
+        initSubscribeReceiver();
         mFloorBar.setOnTouchListener(this);
         loadData();
 
@@ -215,6 +224,14 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
     private String mFromChannel;
     private boolean isRedAlbum = false;
+
+    /**
+     * 订阅广播
+     */
+    private void initSubscribeReceiver() {
+        mReceiver = new SubscribeReceiver(this);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
+    }
 
     /**
      * @param intent 获取传递数据
@@ -455,6 +472,24 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
+        //中间栏目布局处理
+        if (!TextUtils.isEmpty(data.getArticle().getColumn_name())) {
+            //栏目名称
+            topHolder.setViewVisible(topHolder.getFrlTitle(), View.VISIBLE);
+            topHolder.getTitleView().setText(data.getArticle().getColumn_name());
+            //栏目头像
+            GlideApp.with(topHolder.getIvIcon()).load(data.getArticle().getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
+                    .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
+            //订阅状态 采用select
+            if (data.getArticle().isColumn_subscribed()) {
+                topHolder.getSubscribe().setSelected(true);
+            } else {
+                topHolder.getSubscribe().setSelected(false);
+            }
+        } else {
+            topHolder.setViewVisible(topHolder.getFrlTitle(), View.GONE);
+        }
+
         //评论数量 红船号图集不显示
         if (!TextUtils.isEmpty(data.getArticle().getComment_count_general()) && !isRedAlbum) {
             mTvCommentsNum.setVisibility(View.VISIBLE);
@@ -484,7 +519,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download})
+            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -599,6 +634,62 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 ClickDownLoad(mData);
             }
             loadImage(mIndex);
+            //点击订阅
+        } else if (id == R.id.tv_top_bar_subscribe_text) {
+            //已订阅状态->取消订阅
+            if (topHolder.getSubscribe().isSelected()) {
+                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+
+                    @Override
+                    public void onSuccess(Void baseInnerData) {
+                        topHolder.getSubscribe().setSelected(false);
+                        SyncSubscribeColumn(false, mData.getArticle().getColumn_id());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        T.showShortNow(AtlasDetailActivity.this, "取消订阅失败");
+                    }
+
+                }).setTag(this).exe(mData.getArticle().getColumn_id(), false);
+            } else {//未订阅状态->订阅
+                SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                if (!topHolder.getSubscribe().isSelected()) {
+                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+
+                        @Override
+                        public void onSuccess(Void baseInnerData) {
+                            topHolder.getSubscribe().setSelected(true);
+                            SyncSubscribeColumn(true, mData.getArticle().getColumn_id());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onError(String errMsg, int errCode) {
+                            T.showShortNow(AtlasDetailActivity.this, "订阅失败");
+                        }
+
+                    }).setTag(this).exe(mData.getArticle().getColumn_id(), true);
+                }
+
+            }
+            //进入栏目
+        } else if (id == R.id.tv_top_bar_title) {
+            SubscribeAnalytics("点击进入栏目详情页", "800031", "ToDetailColumn", "");
+            Bundle bundle = new Bundle();
+            bundle.putString(IKey.ID, String.valueOf(mData.getArticle().getColumn_id()));
+            Nav.with(UIUtils.getContext()).setExtras(bundle)
+                    .toPath("/subscription/detail");
         }
     }
 
@@ -840,8 +931,20 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 }
             }
         }
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
 
     }
+
+    /**
+     * 同步订阅栏目
+     */
+    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+        Intent intent = new Intent("subscribe_success");
+        intent.putExtra("subscribe", isSubscribe);
+        intent.putExtra("id", (long) columnid);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
 
     /**
      * 点击评论时,获取用户所在位置
@@ -1072,5 +1175,43 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 .clickTabName("分享")
                 .build()
                 .send();
+    }
+
+    public void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType) {
+        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode, scEventName, false)
+                .setEvenName(eventNme)
+                .setObjectID(mData.getArticle().getMlf_id() + "")
+                .setObjectName(mData.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setClassifyID(mData.getArticle().getChannel_id())
+                .setClassifyName(mData.getArticle().getChannel_name())
+                .setPageType("新闻详情页")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "RelatedColumnType")
+                        .toString())
+                .setSelfObjectID(mData.getArticle().getId() + "")
+                .columnID(mData.getArticle().getColumn_id() + "")
+                .columnName(mData.getArticle().getColumn_name())
+                .pageType("新闻详情页")
+                .operationType(operationType)
+                .build()
+                .send();
+    }
+
+    @Override
+    public void subscribeSync(Intent intent) {
+        if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
+            long id = intent.getLongExtra("id", 0);
+            boolean subscribe = intent.getBooleanExtra("subscribe", false);
+            //确定是该栏目需要同步
+            if (id == mData.getArticle().getColumn_id()) {
+                topHolder.getSubscribe().setSelected(subscribe);
+                if (subscribe) {
+                    SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                } else {
+                    SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                }
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@
                 android:id="@+id/iv_module_core_more_collect"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/module_core_collect"
+                android:src="@drawable/module_detail_collect"
                 app:maskColor="@android:color/transparent" />
 
             <TextView
@@ -54,7 +54,7 @@
                 android:id="@+id/iv_module_core_more_feed_back"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@mipmap/module_core_ic_feed_back"
+                android:src="@mipmap/module_detail_feed_back"
                 app:maskColor="@android:color/transparent" />
 
             <TextView

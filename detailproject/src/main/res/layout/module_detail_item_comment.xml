@@ -61,11 +61,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
-                android:drawableLeft="@drawable/module_detail_comment_prise"
+                android:drawableLeft="@drawable/module_detail_news_prise"
                 android:drawablePadding="7dp"
                 android:maxLines="1"
                 android:padding="3dp"
-                android:textColor="@color/_999999_5c5c5c"
+                android:textColor="@color/module_detail_comment_prise"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="100022赞" />
 

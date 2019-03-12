@@ -76,6 +76,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="14dp"
+        android:layout_marginTop="20dp"
         android:background="@color/_1f000000" />
     <!--聚合阅读-->
     <TextView

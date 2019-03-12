@@ -12,7 +12,7 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/_f0f0f0_191919"
+        android:background="@color/_ffffff"
         android:descendantFocusability="blocksDescendants" />
 
     <LinearLayout
@@ -42,9 +42,10 @@
     </LinearLayout>
 
     <!--顶部tools bar-->
-    <FrameLayout
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         android:minHeight="@dimen/toolbar_normal_height"
         >
 
@@ -85,13 +86,7 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_gravity="bottom"
-            android:background="@color/_dddddd_343434" />
-
-    </FrameLayout>
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
     <FrameLayout
         android:id="@+id/v_container"

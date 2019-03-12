@@ -55,7 +55,7 @@ dependencies {
         exclude group: 'cn.daily.android'
     }
     implementation 'cn.daily.android:scaner-library:5.6.1'
-    implementation('cn.daily.android:daily-vr:5.6.0.2') {
+    implementation('cn.daily.android:daily-vr:6.0.0.1') {
         exclude group: 'cn.daily.android'
     }
     implementation 'cn.daily.android:biz-core:6.0.0.46'

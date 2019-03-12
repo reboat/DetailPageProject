@@ -4,7 +4,7 @@
     android:id="@+id/ly_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/_bfbfbf"
+    android:background="@color/_1f000000"
     android:fitsSystemWindows="true"
     app:fitType="bottom">
 

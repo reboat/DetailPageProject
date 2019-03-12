@@ -160,7 +160,6 @@ public class NewsDetailActivity extends DailyActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucenceStatusBarBg();
         setContentView(R.layout.module_detail_activity_detail);
         ButterKnife.bind(this);
         init();
@@ -642,6 +641,7 @@ public class NewsDetailActivity extends DailyActivity implements
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
+                        T.showShortNow(getApplicationContext(),"取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -664,6 +664,7 @@ public class NewsDetailActivity extends DailyActivity implements
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
+                            T.showShortNow(getApplicationContext(),"订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 

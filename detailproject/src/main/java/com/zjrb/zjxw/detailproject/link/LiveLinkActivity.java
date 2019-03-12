@@ -372,6 +372,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topBarHolder.getSubscribe().setSelected(false);
+                        T.showShortNow(getApplicationContext(),"取消订阅成功");
 //                        topBarHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
@@ -395,6 +396,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topBarHolder.getSubscribe().setSelected(true);
+                            T.showShortNow(getApplicationContext(),"订阅成功");
 //                            topBarHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }

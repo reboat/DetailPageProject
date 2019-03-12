@@ -76,7 +76,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="14dp"
-        android:background="@color/_bfbfbf" />
+        android:background="@color/_1f000000" />
     <!--聚合阅读-->
     <TextView
         android:id="@+id/tv_read"
@@ -88,10 +88,11 @@
         android:drawablePadding="12dp"
         android:gravity="center_vertical|left"
         android:paddingLeft="10dp"
+        android:text="聚合阅读"
         android:textColor="@color/_222222"
         android:textSize="14sp"
         android:textStyle="bold"
-        tools:text="聚合阅读" />
+        />
 
     <!--专题频道管理-->
     <android.support.v7.widget.RecyclerView

@@ -103,7 +103,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.floor_bar)
-    RelativeLayout mFloorBar;
+    LinearLayout mFloorBar;
     @BindView(R2.id.container_bottom)
     LinearLayout mContainerBottom;
     @BindView(R2.id.menu_prised)
@@ -644,6 +644,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
+                        T.showShortNow(getApplicationContext(),"取消订阅成功");
                         SyncSubscribeColumn(false, mData.getArticle().getColumn_id());
                     }
 
@@ -666,6 +667,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
+                            T.showShortNow(getApplicationContext(),"订阅成功");
                             SyncSubscribeColumn(true, mData.getArticle().getColumn_id());
                         }
 

@@ -42,4 +42,14 @@
         android:textColor="@color/_f44b50_8e3636"
         android:textSize="@dimen/ts_11sp"
         tools:text="去看" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_channel_subscribe"
+        android:layout_marginLeft="15.5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/_eeeeee"
+        />
 </RelativeLayout>

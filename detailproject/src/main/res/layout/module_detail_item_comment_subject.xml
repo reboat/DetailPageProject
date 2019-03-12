@@ -4,7 +4,9 @@
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/module_detail_comment_gradu"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="14dp"
+                android:background="#ffffff"
     >
 
     <RelativeLayout

@@ -87,7 +87,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTranslucenceStatusBarBg();
         setContentView(R.layout.module_detail_redboat_activity);
         ButterKnife.bind(this);
         mReceiver = new SubscribeReceiver(this);
@@ -288,6 +287,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
+                        T.showShortNow(getApplicationContext(),"取消订阅成功");
 //                        topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
@@ -311,6 +311,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
+                            T.showShortNow(getApplicationContext(),"订阅成功");
 //                            topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }

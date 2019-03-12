@@ -58,7 +58,7 @@ dependencies {
     implementation('cn.daily.android:daily-vr:5.6.0.2') {
         exclude group: 'cn.daily.android'
     }
-    implementation 'cn.daily.android:biz-core:6.0.0.44'
+    implementation 'cn.daily.android:biz-core:6.0.0.46'
     implementation 'org.jsoup:jsoup:1.10.2'
 }
 

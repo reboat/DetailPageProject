@@ -634,11 +634,11 @@ public class ActivityTopicActivity extends DailyActivity implements
         if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
             long id = intent.getLongExtra("id", 0);
             boolean subscribe = intent.getBooleanExtra("subscribe", false);
-            String subscriptionText = subscribe ? "已订阅" : "+订阅";
+//            String subscriptionText = subscribe ? "已订阅" : "+订阅";
             //确定是该栏目需要同步
             if (id == mDetailData.getArticle().getColumn_id()) {
                 mTopBarHolder.getSubscribe().setSelected(subscribe);
-                mTopBarHolder.getSubscribe().setText(subscriptionText);
+//                mTopBarHolder.getSubscribe().setText(subscriptionText);
 //                if (subscribe) {
 //                    SubscribeAnalytics("点击\"订阅\"栏目", "A0114", "SubColumn", "订阅");
 //                } else {

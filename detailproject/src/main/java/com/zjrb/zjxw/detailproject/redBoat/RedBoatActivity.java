@@ -204,10 +204,10 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
             if (article.isColumn_subscribed()) {
-                topHolder.getSubscribe().setText("已订阅");
+//                topHolder.getSubscribe().setText("已订阅");
                 topHolder.getSubscribe().setSelected(true);
             } else {
-                topHolder.getSubscribe().setText("+订阅");
+//                topHolder.getSubscribe().setText("+订阅");
                 topHolder.getSubscribe().setSelected(false);
             }
         } else {
@@ -288,7 +288,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        topHolder.getSubscribe().setText("+订阅");
+//                        topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -311,7 +311,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            topHolder.getSubscribe().setText("已订阅");
+//                            topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -383,11 +383,11 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
         if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
             long id = intent.getLongExtra("id", 0);
             boolean subscribe = intent.getBooleanExtra("subscribe", false);
-            String subscriptionText = subscribe ? "已订阅" : "+订阅";
+//            String subscriptionText = subscribe ? "已订阅" : "+订阅";
             //确定是该栏目需要同步
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
-                topHolder.getSubscribe().setText(subscriptionText);
+//                topHolder.getSubscribe().setText(subscriptionText);
             }
         }
     }

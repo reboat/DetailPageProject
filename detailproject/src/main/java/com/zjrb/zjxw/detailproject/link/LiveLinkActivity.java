@@ -235,10 +235,10 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topBarHolder.getIvIcon());
             //订阅状态 采用select
             if (mNewsDetail.getArticle().isColumn_subscribed()) {
-                topBarHolder.getSubscribe().setText("已订阅");
+//                topBarHolder.getSubscribe().setText("已订阅");
                 topBarHolder.getSubscribe().setSelected(true);
             } else {
-                topBarHolder.getSubscribe().setText("+订阅");
+//                topBarHolder.getSubscribe().setText("+订阅");
                 topBarHolder.getSubscribe().setSelected(false);
             }
         } else {
@@ -372,7 +372,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topBarHolder.getSubscribe().setSelected(false);
-                        topBarHolder.getSubscribe().setText("+订阅");
+//                        topBarHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -395,7 +395,7 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topBarHolder.getSubscribe().setSelected(true);
-                            topBarHolder.getSubscribe().setText("已订阅");
+//                            topBarHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -530,11 +530,11 @@ public class LiveLinkActivity extends DailyActivity implements View.OnClickListe
         if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
             long id = intent.getLongExtra("id", 0);
             boolean subscribe = intent.getBooleanExtra("subscribe", false);
-            String subscriptionText = subscribe ? "已订阅" : "+订阅";
+//            String subscriptionText = subscribe ? "已订阅" : "+订阅";
             //确定是该栏目需要同步
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topBarHolder.getSubscribe().setSelected(subscribe);
-                topBarHolder.getSubscribe().setText(subscriptionText);
+//                topBarHolder.getSubscribe().setText(subscriptionText);
             }
         }
     }

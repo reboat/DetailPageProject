@@ -84,10 +84,10 @@ public class TopBarHolder implements ColorImageView.OnUiModeChangeListener {
                         .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(mIvIcon);
                 //订阅状态 采用select
                 if (mArticle.isColumn_subscribed()) {
-                    tvSubscribe.setText("已订阅");
+//                    tvSubscribe.setText("已订阅");
                     tvSubscribe.setSelected(true);
                 } else {
-                    tvSubscribe.setText("+订阅");
+//                    tvSubscribe.setText("+订阅");
                     tvSubscribe.setSelected(false);
                 }
             } else {

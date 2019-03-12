@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.OverlayViewHolder;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -16,6 +17,7 @@ import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.bean.SubjectVoiceMassBean;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentHolder;
+import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentPlaceHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentTabHolder;
 
 import java.util.ArrayList;
@@ -108,10 +110,11 @@ public class SpecialAdapter extends NewsBaseAdapter {
         } else if (TYPE_COMMENT_TAB == viewType) {
             return new SpecialCommentTabHolder(parent);
         } else if (TYPE_COMMENT == viewType) {
-            return new DetailCommentHolder(parent, String.valueOf(mBean.getArticle()
-                    .getId()), mBean);
+            return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment_subject, parent, false), String.valueOf(mBean.getArticle().getId()), "", mBean);
         } else if (TYPE_TITLE == viewType) {
             return new SpecialCommentHolder(parent);
+        } else if (TYPE_PLACE == viewType) {
+            return new SpecialCommentPlaceHolder(parent);
         }
         return super.onAbsCreateViewHolder(parent, viewType);
     }

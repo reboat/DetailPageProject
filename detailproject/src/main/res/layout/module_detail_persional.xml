@@ -5,7 +5,7 @@
               android:id="@+id/ly_container"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/_ffffff_191919"
+              android:background="@color/_bfbfbf"
               android:fitsSystemWindows="true"
               android:orientation="vertical"
               app:fitType="bottom">
@@ -87,7 +87,6 @@
             android:textColor="@color/_484848_7a7b7d"
             android:textSize="@dimen/ts_11sp"
             tools:text="更多" />
-
     </RelativeLayout>
 
     <android.support.design.widget.TabLayout
@@ -96,7 +95,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginRight="75dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="14dp"
         android:layoutMode="clipBounds"
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed" />

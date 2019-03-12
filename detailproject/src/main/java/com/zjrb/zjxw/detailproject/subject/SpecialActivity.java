@@ -8,8 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.trs.tasdk.entity.ObjectType;
@@ -46,7 +46,6 @@ import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
-import cn.daily.news.biz.core.ui.toolsbar.holder.TopBarWhiteStyle;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -69,6 +68,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     FrameLayout mView;
     @BindView(R2.id.overlay_layout)
     LinearLayout mOverlayLayout;
+    @BindView(R2.id.right_layout)
+    LinearLayout mLyRight;
+    @BindView(R2.id.iv_top_collect)
+    ImageView mCollect;
 
     private SpecialAdapter mAdapter;
 
@@ -81,7 +84,6 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
     private DraftDetailBean.ArticleBean mArticle;
 
-    private TopBarWhiteStyle mTopBar;
     private OverlayHelper mOverlayHelper;
 
     @Override
@@ -98,18 +100,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         initArgs(intent);
-        if (mTopBar != null) {
-            mTopBar.setRightVisible(false);
-        }
         loadData();
-    }
-
-    @Override
-    protected View onCreateTopBar(ViewGroup view) {
-        mTopBar = new TopBarWhiteStyle(this);
-        mTopBar.getCollectView().setOnClickListener(this);
-        mTopBar.getShareView().setOnClickListener(this);
-        return mTopBar.getView();
     }
 
     private void initArgs(Intent intent) {
@@ -206,6 +197,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
             @Override
             public void onError(String errMsg, int errCode) {
+                mLyRight.setVisibility(View.GONE);
                 //专题撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showCancelDraft();
@@ -220,6 +212,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
+        mLyRight.setVisibility(View.VISIBLE);
         mOverlayLayout.setVisibility(View.VISIBLE);
         mView.setVisibility(View.GONE);
         if (data != null && data.getArticle() != null) {
@@ -235,7 +228,6 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             mAnalytics = pageStayTime(data);
         }
         bindCollect();
-        mTopBar.setRightVisible(true);
 
         if (mAdapter == null) {
             mAdapter = new SpecialAdapter(data);
@@ -267,9 +259,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             public void onSuccess(Void data) {
                 if (mArticle != null) {
                     mArticle.setFollowed(!mArticle.isFollowed());
-
-                    T.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
                     bindCollect();
+                    T.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
                 }
             }
 
@@ -299,8 +290,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
      * 收藏状态
      */
     private void bindCollect() {
-        if (mArticle != null && mTopBar != null) {
-            mTopBar.getCollectView().setSelected(mArticle.isFollowed());
+        if (mArticle != null) {
+            mCollect.setSelected(mArticle.isFollowed());
         }
     }
 

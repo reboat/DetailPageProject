@@ -105,14 +105,19 @@ public class SpecialAdapter extends NewsBaseAdapter {
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
             viewType) {
+        //专题分组标签
         if (TYPE_GROUP == viewType) {
             return new GroupViewHolder(parent, mBean);
+            //群众之声TAB
         } else if (TYPE_COMMENT_TAB == viewType) {
             return new SpecialCommentTabHolder(parent);
+            //评论item
         } else if (TYPE_COMMENT == viewType) {
             return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment_subject, parent, false), String.valueOf(mBean.getArticle().getId()), "", mBean);
+            //评论列表文章
         } else if (TYPE_TITLE == viewType) {
             return new SpecialCommentHolder(parent);
+            //占位
         } else if (TYPE_PLACE == viewType) {
             return new SpecialCommentPlaceHolder(parent);
         }

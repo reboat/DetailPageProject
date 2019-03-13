@@ -236,6 +236,7 @@
                 android:paddingRight="5dp"
                 android:paddingTop="8dp"
                 android:textColor="@color/_666666"
+                android:text="@string/module_detail_comment_delete"
                 android:textSize="@dimen/ts_11sp"
                 android:visibility="gone"
                 tools:text="删除" />
@@ -252,7 +253,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="8dp"
-                android:text="@string/module_detail_comment_delete"
+                android:text="@string/module_detail_replay_to"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="回复" />

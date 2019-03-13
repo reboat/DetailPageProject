@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
@@ -56,7 +58,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/8/27 上午8:51.
  */
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
-        HeaderSpecialHolder.OnClickChannelListener, View.OnClickListener, DetailWMHelperInterFace.SpercialDetailWM {
+        HeaderSpecialHolder.OnClickChannelListener, DetailWMHelperInterFace.SpercialDetailWM {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -67,7 +69,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.overlay_layout)
-    LinearLayout mOverlayLayout;
+    FitWindowsLinearLayout mOverlayLayout;
     @BindView(R2.id.right_layout)
     LinearLayout mLyRight;
     @BindView(R2.id.iv_top_collect)
@@ -101,6 +103,11 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         super.onNewIntent(intent);
         initArgs(intent);
         loadData();
+    }
+
+    @Override
+    public boolean isShowTopBar() {
+        return false;
     }
 
     private void initArgs(Intent intent) {
@@ -137,7 +144,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         }
     }
 
-    @Override
+    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect, R2.id.iv_top_bar_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 

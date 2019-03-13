@@ -62,7 +62,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/8/27  上午10:14
  */
 
-public class RedBoatActivity extends DailyActivity implements View.OnClickListener, RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
+public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
 
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
@@ -237,7 +237,6 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
-    @Override
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
@@ -287,7 +286,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        T.showShortNow(getApplicationContext(),"取消订阅成功");
+                        T.showShortNow(getApplicationContext(), "取消订阅成功");
 //                        topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
@@ -311,7 +310,7 @@ public class RedBoatActivity extends DailyActivity implements View.OnClickListen
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            T.showShortNow(getApplicationContext(),"订阅成功");
+                            T.showShortNow(getApplicationContext(), "订阅成功");
 //                            topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }

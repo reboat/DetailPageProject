@@ -4,40 +4,38 @@
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="14dp"
-                android:background="@color/_ffffff"
+                android:background="@color/_fff0f0f0"
     >
-
-    <View
-        android:id="@+id/v_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="14dp"
-        android:background="@color/_eeeeee" />
 
     <RelativeLayout
         android:id="@+id/ry_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/v_line"
-        android:layout_marginLeft="37dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/_ffffff"
+        android:paddingLeft="37dp"
         >
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/_eeeeee" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginRight="23dp"
             android:layout_marginTop="12dp"
             android:layout_toLeftOf="@+id/iv_arrow"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:textColor="@color/_8a8a8a"
             android:textSize="@dimen/ts_14sp"
-            tools:text="如此简单的甘露糖竟能抑制肿瘤生长如此简单的甘露糖竟能抑制肿瘤生长如此简单的甘露糖竟能抑制肿瘤生长" />
+            tools:text="如此简单的甘露糖竟能抑制" />
 
         <ImageView
             android:id="@+id/iv_arrow"

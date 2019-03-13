@@ -9,6 +9,7 @@ import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.OverlayViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
+import com.zjrb.zjxw.detailproject.DateTest;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -69,6 +70,8 @@ public class SpecialAdapter extends NewsBaseAdapter {
                     list.addAll(group.getGroup_articles());
                 }
             }
+            //TODO WLJ 测试代码
+            mBean.getArticle().setSubject_comment_list(DateTest.newInstance().subjectDataTest());
             //添加评论
             if (mBean.getArticle().getSubject_comment_list() != null && mBean.getArticle().getSubject_comment_list().size() > 0) {
                 //只有有评论数据才添加群众之声
@@ -84,7 +87,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                             list.add(bean);
                             //空行
                             list.add("占位");
-                            //多条评论
+                            //多条评论的情况
                         } else if (bean.getComment_list().size() > 1) {
                             //评论
                             for (HotCommentsBean hotBean : bean.getComment_list()) {

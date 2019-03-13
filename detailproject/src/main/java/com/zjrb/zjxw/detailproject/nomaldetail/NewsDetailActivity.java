@@ -100,7 +100,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/7/17  上午10:14
  */
 public class NewsDetailActivity extends DailyActivity implements
-        NewsDetailAdapter.CommonOptCallBack, View.OnClickListener, DetailCommentHolder.deleteCommentListener,
+        NewsDetailAdapter.CommonOptCallBack, DetailCommentHolder.deleteCommentListener,
         CommentWindowDialog.LocationCallBack, DetailWMHelperInterFace.NewsDetailWM, SubscribeSyncInterFace, VideoBCnterFace {
     @BindView(R2.id.video_container)
     RatioFrameLayout mVideoContainer;

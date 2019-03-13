@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
@@ -58,7 +57,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends DailyActivity implements View.OnClickListener, DetailWMHelperInterFace.LinkDetailWM {
+public class BrowserLinkActivity extends DailyActivity implements DetailWMHelperInterFace.LinkDetailWM {
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;

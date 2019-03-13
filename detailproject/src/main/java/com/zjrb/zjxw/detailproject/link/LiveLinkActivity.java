@@ -69,7 +69,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class LiveLinkActivity extends DailyActivity implements View.OnClickListener, CommentWindowDialog.LocationCallBack,
+public class LiveLinkActivity extends DailyActivity implements CommentWindowDialog.LocationCallBack,
         SubscribeSyncInterFace, DetailWMHelperInterFace.LiveDetailWM {
 
     @BindView(R2.id.web_view)

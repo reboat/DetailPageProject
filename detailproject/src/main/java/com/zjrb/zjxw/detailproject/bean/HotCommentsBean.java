@@ -62,6 +62,8 @@ public class HotCommentsBean implements Serializable {
     private int parent_status;
     private String location;
     private String parent_location;
+    private String list_title;
+    private String url;
 
     /**
      * 是否是自己的评论
@@ -280,6 +282,22 @@ public class HotCommentsBean implements Serializable {
 
     public void setParent_location(String parent_location) {
         this.parent_location = parent_location;
+    }
+
+    public String getList_title() {
+        return list_title;
+    }
+
+    public void setList_title(String list_title) {
+        this.list_title = list_title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getCommentTime(long time) {

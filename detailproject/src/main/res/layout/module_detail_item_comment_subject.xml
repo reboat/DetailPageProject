@@ -4,16 +4,17 @@
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="14dp"
-                android:background="@color/_ffffff"
+                android:background="@color/_fff0f0f0"
     >
 
     <RelativeLayout
         android:id="@+id/ly_replay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="14dp"
+        android:paddingTop="14dp"
+        android:background="@color/_ffffff">
 
         <com.zjrb.core.ui.widget.CircleImageView
             android:id="@+id/iv_avatar"
@@ -239,6 +240,7 @@
                 android:paddingTop="8dp"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_11sp"
+                android:text="@string/module_detail_comment_delete"
                 android:visibility="gone"
                 tools:text="删除" />
 
@@ -254,21 +256,12 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="8dp"
-                android:text="@string/module_detail_comment_delete"
+                android:text="@string/module_detail_replay_to"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_11sp"
                 tools:text="回复" />
 
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignLeft="@+id/ry_time"
-            android:layout_below="@+id/ry_time"
-            android:background="@color/_dddddd_7a7b7d"
-            />
-
 
     </RelativeLayout>
 

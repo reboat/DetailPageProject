@@ -54,7 +54,10 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
  * create time:2017/7/17  上午10:14
  */
 
-public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener, DetailCommentHolder.deleteCommentListener, CommentWindowDialog.updateCommentListener, CommentWindowDialog.LocationCallBack {
+public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRefreshListener,
+        DetailCommentHolder.deleteCommentListener,
+        CommentWindowDialog.updateCommentListener,
+        CommentWindowDialog.LocationCallBack {
 
     @BindView(R2.id.rv_content)
     RecyclerView mRvContent;

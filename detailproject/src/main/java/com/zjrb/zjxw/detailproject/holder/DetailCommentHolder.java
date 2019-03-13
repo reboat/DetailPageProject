@@ -169,15 +169,17 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
             }
             //回复者昵称
-            if (mData.getAccount_type() == 1) {//主持人
-                mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
-            } else if (mData.getAccount_type() == 2) {//嘉宾
-                mIvHost.setVisibility(View.VISIBLE);
-                UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
-            } else if (mData.getAccount_type() == 3) {
-                if (mData.getNick_name() != null) {
-                    mIvHost.setVisibility(View.GONE);
+            if (!TextUtils.isEmpty(mData.getNick_name())) {
+                if (mData.getAccount_type() == 1) {//主持人
+                    mIvHost.setVisibility(View.VISIBLE);
+                    UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
+                } else if (mData.getAccount_type() == 2) {//嘉宾
+                    mIvHost.setVisibility(View.VISIBLE);
+                    UiModeUtils.applySave(mIvHost, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
+                } else if (mData.getAccount_type() == 3) {
+                    if (mData.getNick_name() != null) {
+                        mIvHost.setVisibility(View.GONE);
+                    }
                 }
             }
             mName.setText(mData.getNick_name());
@@ -205,15 +207,17 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 }
 
                 //父评论昵称
-                if (mData.getParent_account_type() == 1) {//主持人
-                    mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
-                } else if (mData.getParent_account_type() == 2) {//嘉宾
-                    mIvGuest.setVisibility(View.VISIBLE);
-                    UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
-                } else if (mData.getAccount_type() == 3) {
-                    if (mData.getParent_nick_name() != null) {
-                        mIvGuest.setVisibility(View.GONE);
+                if (!TextUtils.isEmpty(mData.getParent_nick_name())) {
+                    if (mData.getParent_account_type() == 1) {//主持人
+                        mIvGuest.setVisibility(View.VISIBLE);
+                        UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_host);
+                    } else if (mData.getParent_account_type() == 2) {//嘉宾
+                        mIvGuest.setVisibility(View.VISIBLE);
+                        UiModeUtils.applySave(mIvGuest, Attr.NAME_SRC, R.mipmap.module_detail_activity_guest);
+                    } else if (mData.getAccount_type() == 3) {
+                        if (mData.getParent_nick_name() != null) {
+                            mIvGuest.setVisibility(View.GONE);
+                        }
                     }
                 }
                 mTvCommentSrc.setText(mData.getParent_nick_name());
@@ -300,7 +304,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
             dialog.show();
             //回复评论者
-        } else if (view.getId() == R.id.ly_replay || view.getId() == R.id.tv_reply) {
+        } else if (view.getId() == R.id.tv_reply || view.getId() == R.id.ly_replay) {
             if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("热门评论点击回复")

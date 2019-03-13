@@ -40,11 +40,11 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
     //交互绑定
     @Override
     public void bindView() {
-        if (!TextUtils.isEmpty(mData.getList_title())) {
+        if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
             if (ryContainer.getVisibility() == View.GONE) {
                 ryContainer.setVisibility(View.VISIBLE);
             }
-            tvTitle.setText(mData.getList_title());
+            tvTitle.setText(mData.getComment_list().get(0).getList_title());
         } else {
             if (ryContainer.getVisibility() == View.VISIBLE) {
                 ryContainer.setVisibility(View.GONE);
@@ -59,11 +59,13 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
         if (ClickTracker.isDoubleClick()) return;
         //进入详情页
         if (view.getId() == R2.id.ry_title) {
-            if (bundle == null) {
-                bundle = new Bundle();
+            if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putString(IKey.ID, String.valueOf(mData.getComment_list().get(0).getChannel_article_id()));
+                Nav.with(UIUtils.getActivity()).setExtras(bundle).to(mData.getComment_list().get(0).getUrl());
             }
-            bundle.putString(IKey.ID, String.valueOf(mData.getChannel_article_id()));
-            Nav.with(UIUtils.getActivity()).setExtras(bundle).to(mData.getUrl());
         }
     }
 

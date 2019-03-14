@@ -1,6 +1,9 @@
 package com.zhejiangdaily;
 
+import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
+
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**
  * Created by wanglinjie.
@@ -20,6 +23,6 @@ public class InitTask extends APIPostTask<SessionIdBean> {
 
     @Override
     public String getApi() {
-        return APIManager.endpoint.GET_SESSIONID;
+        return APIManager.endpoint.API_INIT;
     }
 }

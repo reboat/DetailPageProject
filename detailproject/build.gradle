@@ -34,32 +34,39 @@ android {
 
 configurations.all {
     //设置module缓存时间
+    exclude group: "cn.daily.android", module: "core-library"
+    exclude group: "com.umeng.sdk", module: "common"
     resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS)
     resolutionStrategy {
         force 'com.android.support:appcompat-v7:28.0.0'
+        force 'com.umeng.sdk:common:1.5.4'
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:percent:28.0.0'
-    implementation 'cn.daily.android:analytics:5.8.0.4'
-    implementation 'cn.daily.android:daily-db:5.1.0'
-    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api 'com.android.support:percent:28.0.0'
+    api 'cn.daily.android:analytics:5.8.0.4'
+    api 'cn.daily.android:daily-db:5.1.0'
+    api 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
-    implementation('cn.daily.android:android-player:0.3.1.1') {
+    api('cn.daily.android:android-player:0.3.1.1') {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
     }
-    implementation('cn.daily.android:daily-news:6.0.0.2') {
+    api('cn.daily.android:daily-news:6.0.0.36') {
+        exclude group: 'cn.daily.android'
+        exclude group: 'com.android.support'
+    }
+    api 'cn.daily.android:daily-coordinator-layout:0.0.1'
+    api 'cn.daily.android:scaner-library:5.6.1'
+    api('cn.daily.android:daily-vr:6.0.0.1') {
         exclude group: 'cn.daily.android'
     }
-    implementation 'cn.daily.android:scaner-library:5.6.1'
-    implementation('cn.daily.android:daily-vr:6.0.0.1') {
-        exclude group: 'cn.daily.android'
+    api 'cn.daily.android:biz-core:6.0.0.47'
+    api ('cn.daily.android:common-core:0.0.6.9'){
     }
-    implementation 'cn.daily.android:biz-core:6.0.0.47'
-    implementation 'org.jsoup:jsoup:1.10.2'
+    api 'org.jsoup:jsoup:1.10.2'
 }
 
 

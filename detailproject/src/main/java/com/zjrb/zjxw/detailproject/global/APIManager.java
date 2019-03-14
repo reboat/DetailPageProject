@@ -94,6 +94,11 @@ public class APIManager {
          */
         public static final String ARTIC_SHARE = "/api/favorite/share_news";
 
+        /**
+         * 初始化接口
+         */
+        public static final String API_INIT = "/api/account/init";
+
     }
 
 }

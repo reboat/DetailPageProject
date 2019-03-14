@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.commonsdk.debug.I;
+
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.nav.Nav;
+
 public class MainActivity extends DailyActivity implements View.OnClickListener {
 
     private TextView tv;
@@ -30,7 +35,12 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //        CommentWindowDialog.newInstance(new CommentDialogBean("740555", null)).show((
 //                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
 //                "CommentWindowDialog");
-        Nav.with(this).to("https://zjbeta.8531.cn/red_boat_album.html?id=100019775");
+//        Nav.with(this).to("https://zjbeta.8531.cn/red_boat_album.html?id=100019775");
+
+        //专题
+//        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1114462");
+            Nav.with(this).toPath("/news/SpecialMoreActivity");
+
 //        Nav.with(this).to("https://zjbeta.8531.cn/topic.html?id=741648"); // 741334
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620"); // 741791
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=785088"); // 741791

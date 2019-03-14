@@ -346,6 +346,23 @@
 
         <!--图集预览-->
 
+        <!--专题更多xd-->
+        <activity
+            android:name=".subject.SpecialMoreActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host"
+                    android:path="/news/SpecialMoreActivity"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

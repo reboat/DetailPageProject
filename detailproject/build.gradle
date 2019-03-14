@@ -54,7 +54,7 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
     }
-    api('cn.daily.android:daily-news:6.0.0.34') {
+    api('cn.daily.android:daily-news:6.0.0.36') {
         exclude group: 'cn.daily.android'
         exclude group: 'com.android.support'
     }

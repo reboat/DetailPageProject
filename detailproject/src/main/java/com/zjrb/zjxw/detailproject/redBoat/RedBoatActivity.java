@@ -220,8 +220,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_343434));
-        mAdapter = new RedBoatAdapter(datas,
-                !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
+        mAdapter = new RedBoatAdapter(datas);
         mAdapter.setEmptyView(new EmptyPageHolder(mRvContent,
                 EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")).itemView);
         mRvContent.setAdapter(mAdapter);

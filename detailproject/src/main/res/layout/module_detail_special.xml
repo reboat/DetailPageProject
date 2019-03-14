@@ -20,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:layout_marginTop="48dp"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
@@ -42,8 +43,9 @@
 
     </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
-    <!--顶部tools bar-->
+    <!--顶部tools bar 颜色渐变-->
     <com.aliya.view.fitsys.FitWindowsFrameLayout
+        android:id="@+id/fy_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
@@ -74,7 +76,7 @@
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:scaleType="center"
-                android:src="@drawable/module_biz_ic_top_bar_collect"
+                android:src="@drawable/module_biz_ic_special_collect"
                 />
 
             <ImageView

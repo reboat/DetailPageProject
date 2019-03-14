@@ -70,14 +70,12 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private NewsDetailWebViewHolder webviewHolder;
     // true：已经显示全部
     private boolean isShowAll;
-    private boolean mHasVideoUrl;
     private boolean isRedBoat = false;//是否是红船号的适配器
     private DraftDetailBean detailBean;
     private Bundle bundle;
 
-    public NewsDetailAdapter(List datas, boolean hasVideoUrl) {
+    public NewsDetailAdapter(List datas) {
         super(datas);
-        mHasVideoUrl = hasVideoUrl;
         setOnItemClickListener(this);
     }
 
@@ -86,7 +84,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (viewType == VIEW_TYPE_TOP) {
             return new NewsDetailTitleHolder(parent, isRedBoat);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
+            return webviewHolder = new NewsDetailWebViewHolder(parent);
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
@@ -170,6 +168,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         //只加载一次
         if (isShowAll) return;
         isShowAll = true;
+
         int oldSize = datas.size();
         detailBean = (DraftDetailBean) datas.get(0);
         //添加中间项

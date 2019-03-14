@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
-import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
  * 专题详情页 - Adapter
@@ -223,9 +222,8 @@ public class SpecialAdapter extends NewsBaseAdapter {
                 }
                 //进入专题更多列表
                 Bundle bundle = new Bundle();
-                bundle.putString(IKey.GROUP_ID, mData.getGroup_id());
-                bundle.putString(IKey.TITLE, mData.getGroup_name());
-                Nav.with(v.getContext()).setExtras(bundle).toPath(RouteManager.TOPIC_LIST);
+                bundle.putSerializable(IKey.NEWS_DETAIL, mBean);
+                Nav.with(v.getContext()).setExtras(bundle).toPath("/news/SpecialMoreActivity");
             }
         }
     }

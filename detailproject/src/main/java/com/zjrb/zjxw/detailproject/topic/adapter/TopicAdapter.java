@@ -82,7 +82,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_WEB_VIEW:
-                return webviewHolder = new NewsDetailWebViewHolder(parent, false);
+                return webviewHolder = new NewsDetailWebViewHolder(parent);
             case VIEW_TYPE_STRING:
                 return new NewsStringTextHolder(parent);
             case VIEW_TYPE_RELATE_SUBJECT:

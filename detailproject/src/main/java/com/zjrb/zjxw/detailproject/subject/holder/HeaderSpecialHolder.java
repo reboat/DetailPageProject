@@ -1,7 +1,10 @@
 package com.zjrb.zjxw.detailproject.subject.holder;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
@@ -23,6 +27,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
+import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +43,14 @@ import cn.daily.news.biz.core.nav.Nav;
  */
 public class HeaderSpecialHolder extends PageItem implements OnItemClickListener, View
         .OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
+
+    //背景由全透明变成白色
+    private static final int BC_START = Color.parseColor("#00ffffff");
+    private static final int ATTR_BC_END = R.color._ffffff;
+
+    //ToolsBar颜色全透明变成白色
+    private static final int ATTR_TTC_START = R.color._00ffffff;
+    private static final int ATTR_TTC_END = R.color._ffffff;
 
     @BindView(R2.id.iv_subject)
     ImageView ivSubject;
@@ -63,7 +76,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     TextView tvRead;
 
     private boolean isOpen;
+    //将标签列表进行复制显示
     private RecyclerView mRecyclerTabCopy;
+    //标题
+    private FitWindowsFrameLayout fyContainer;
 
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
@@ -72,17 +88,34 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
 
     public static final int MAX_DEFAULT_LINES = 3;
 
-    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, OnClickChannelListener
+    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, FitWindowsFrameLayout view, OnClickChannelListener
             listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
         mRecyclerTabCopy = copy;
+        fyContainer = view;
         mOnClickChannelListener = listener;
         initView();
         parent.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            float fraction = -1;
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (mRecyclerTab.getTop() + itemView.getTop() + dy > 0
+                int maxRange = itemView.getHeight()
+                        - ivSubject.getHeight() - fyContainer.getHeight();
+                float scale;
+                if (maxRange > 0) {
+                    scale = (-1f * itemView.getTop()) / maxRange;
+                } else {
+                    scale = 1;
+                }
+                scale = Math.min(1, Math.max(0, scale));
+                if (fraction != scale) {
+                    fraction = scale;
+                    setFraction(fraction);
+                }
+
+                //toolsbar之前开始吸顶
+                if (mRecyclerTab.getTop() + itemView.getTop() + dy - fyContainer.getBottom() > 0
                         && itemView.getRootView() != itemView) {
                     if (mRecyclerTabCopy.getVisibility() != View.GONE) {
                         mRecyclerTabCopy.setVisibility(View.INVISIBLE);
@@ -105,6 +138,30 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         tvSummary.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mLayoutIndicator.setOnClickListener(this);
         mLayoutFocus.setOnClickListener(this);
+    }
+
+    //设置背景和toolsbar颜色渐变
+    public void setFraction(float fraction) {
+        GradientDrawable bg;
+        if (itemView.getBackground() instanceof GradientDrawable) {
+            bg = (GradientDrawable) itemView.getBackground();
+            bg.mutate();
+        } else {
+            bg = new GradientDrawable();
+            bg.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+        }
+        bg.setColors(new int[]{
+                ArgbUtils.evaluate(fraction,
+                        Color.TRANSPARENT, ContextCompat.getColor(itemView.getContext(), ATTR_BC_END)),
+                ArgbUtils.evaluate(fraction,
+                        BC_START, ContextCompat.getColor(itemView.getContext(), ATTR_BC_END))});
+        // 背景
+        itemView.setBackground(bg);
+
+        // ToolBar渐变
+        fyContainer.setBackgroundColor(ArgbUtils.evaluate(fraction,
+                ContextCompat.getColor(fyContainer.getContext(), ATTR_TTC_START),
+                ContextCompat.getColor(fyContainer.getContext(), ATTR_TTC_END)));
     }
 
     @NonNull

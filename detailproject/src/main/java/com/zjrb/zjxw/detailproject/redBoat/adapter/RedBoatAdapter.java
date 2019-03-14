@@ -25,7 +25,6 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     public static final int VIEW_TYPE_WEB_VIEW = 2;
 
     private NewsDetailWebViewHolder webviewHolder;
-    private boolean mHasVideoUrl;
     public static final int NO_POSITION = -1;
     private int mWebViewHolderPosition = NO_POSITION;
     private boolean isShowAll;
@@ -35,9 +34,8 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     //暂停
     public static final String PAYLOADS_PAUSE = "on_pause";
 
-    public RedBoatAdapter(List data, boolean hasVideoUrl) {
+    public RedBoatAdapter(List data) {
         super(data);
-        mHasVideoUrl = hasVideoUrl;
     }
 
     @Override
@@ -45,7 +43,7 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         if (viewType == VIEW_TYPE_TOP) {
             return new RedBoatDetailTitleHolder(parent);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            webviewHolder = new NewsDetailWebViewHolder(parent, mHasVideoUrl);
+            webviewHolder = new NewsDetailWebViewHolder(parent);
             return webviewHolder;
         }
         return new NewsPlaceHolder(parent);

@@ -385,13 +385,14 @@ public class NewsDetailActivity extends DailyActivity implements
         mNewsDetail = data;
         initViewState(mNewsDetail);
         List datas = new ArrayList<>();
+        //先加载头部布局和webview布局，等webview高度渲染之后再添加剩余布局
         //添加头布局
         datas.add(data);
         //添加web布局
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
-        mAdapter = new NewsDetailAdapter(datas, !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url()) ? true : false);
+        mAdapter = new NewsDetailAdapter(datas);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")

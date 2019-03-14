@@ -53,7 +53,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
-    public NewsDetailWebViewHolder(ViewGroup parent, boolean hasVideoUrl) {
+    public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
         itemView.addOnAttachStateChangeListener(this);

@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
@@ -74,6 +75,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     LinearLayout mLyRight;
     @BindView(R2.id.iv_top_collect)
     ImageView mCollect;
+    @BindView(R2.id.fy_container)
+    FitWindowsFrameLayout fyContainer;
 
     private SpecialAdapter mAdapter;
 
@@ -239,8 +242,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         if (mAdapter == null) {
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
-            //添加专题详情页的头部holder
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, this);
+            //添加专题详情页的头部holder,这里需要传递一个toolsbar的view
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer,this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);

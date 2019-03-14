@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.nav.Nav;
+
 public class MainActivity extends DailyActivity implements View.OnClickListener {
 
     private TextView tv;

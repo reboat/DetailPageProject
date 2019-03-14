@@ -51,7 +51,7 @@ dependencies {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
     }
-    implementation('cn.daily.android:daily-news:6.0.0.2') {
+    implementation('cn.daily.android:daily-news:6.0.0.34') {
         exclude group: 'cn.daily.android'
     }
     implementation 'cn.daily.android:scaner-library:5.6.1'

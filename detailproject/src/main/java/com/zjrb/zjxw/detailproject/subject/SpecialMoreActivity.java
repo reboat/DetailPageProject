@@ -51,13 +51,6 @@ public class SpecialMoreActivity extends DailyActivity {
     private void bindData(List<SpecialGroupBean> groupBeanList) {
         if (groupBeanList==null){
             groupBeanList = new ArrayList<>();
-            // TODO: 2019/3/12 模拟数据
-//            for (int i = 0; i < 10; i++) {
-//                SpecialGroupBean specialGroupBean = new SpecialGroupBean();
-//                specialGroupBean.setGroup_name("更多");
-//                specialGroupBean.setGroup_id(""+i);
-//                groupBeanList.add(specialGroupBean);
-//            }
         }
         viewPager.setAdapter(new SpecialPagerAdapter(getSupportFragmentManager(),groupBeanList));
         tabLayout.setViewPager(viewPager);

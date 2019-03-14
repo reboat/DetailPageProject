@@ -10,39 +10,50 @@
     android:fitsSystemWindows="true"
     android:scrollbars="vertical"
     android:orientation="vertical"
-    tools:context=".ui.special.SpecialMoreActivity"
     app:fitType="bottom">
+    <!--顶部tools bar-->
     <com.aliya.view.ratio.RatioRelativeLayout
         app:ratio_w2h="360:123"
+        android:background="@color/_d12324"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
-            android:background="@color/_d12324"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <RelativeLayout
-            android:layout_marginRight="14dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:id="@+id/iv_top_bar_back"
+            android:layout_width="42dp"
+            android:layout_height="@dimen/toolbar_normal_height"
+            android:background="?attr/actionBarItemBackground"
+            android:paddingRight="7dp"
+            android:scaleType="center"
+            android:src="@mipmap/module_biz_write_back"
+            />
+
+        <LinearLayout
+            android:id="@+id/right_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/toolbar_normal_height"
+           android:layout_alignParentRight="true"
+            android:orientation="horizontal"
+            android:paddingRight="2dp">
+
             <ImageView
-                android:src="@mipmap/ic_top_bar_back_white"
-                android:layout_width="19dp"
-                android:layout_height="19dp" />
+                android:id="@+id/iv_top_collect"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/module_biz_ic_top_bar_collect"
+                />
+
             <ImageView
-                android:layout_marginRight="30dp"
-                android:layout_toLeftOf="@id/iv_share"
-                android:src="@drawable/module_core_ic_top_bar_collect"
-                android:layout_width="19dp"
-                android:layout_height="19dp" />
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/module_core_topbar_share"
-                android:layout_width="19dp"
-                android:layout_height="19dp" />
-        </RelativeLayout>
+                android:id="@+id/iv_top_share"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@mipmap/module_biz_atlas_share"
+                />
+
+        </LinearLayout>
+
     </com.aliya.view.ratio.RatioRelativeLayout>
     <TextView
         android:fontFamily="@font/fzbiaoysk_zbjt"

@@ -346,7 +346,7 @@
 
         <!--图集预览-->
 
-        <!--专题更多-->
+        <!--专题更多xd-->
         <activity
             android:name=".subject.SpecialMoreActivity">
             <intent-filter>

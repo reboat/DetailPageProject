@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
@@ -13,6 +14,7 @@ import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -32,6 +34,7 @@ import java.util.List;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
 

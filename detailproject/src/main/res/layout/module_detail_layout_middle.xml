@@ -6,9 +6,8 @@
     android:id="@+id/ry_channel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="13dp"
     android:background="@color/_ffffff_191919"
-    android:visibility="gone"
+    android:layout_marginTop="15dp"
     >
 
     <TextView
@@ -17,14 +16,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="15.5dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
         android:maxWidth="150dp"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_14sp"
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_16sp"
         tools:text="杭州频道" />
 
     <TextView
@@ -32,24 +30,22 @@
         android:layout_width="55dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/module_detail_subscribe_red"
         android:foreground="?android:attr/actionBarItemBackground"
         android:gravity="center"
         android:paddingBottom="7.5dp"
         android:paddingTop="7.5dp"
         android:text="@string/module_detail_to_see"
-        android:textColor="@color/_f44b50_8e3636"
-        android:textSize="@dimen/ts_11sp"
-        tools:text="去看" />
+        android:textColor="@color/_cd3f3f"
+        android:textSize="@dimen/ts_12sp"
+        />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/tv_channel_subscribe"
-        android:layout_marginLeft="15.5dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@color/_eeeeee"
         />
 </RelativeLayout>

@@ -10,6 +10,7 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
@@ -82,9 +83,12 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TOP) {
+            L.e("WLJ,onAbsCreateViewHolder,VIEW_TYPE_TOP");
             return new NewsDetailTitleHolder(parent, isRedBoat);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            return webviewHolder = new NewsDetailWebViewHolder(parent);
+            L.e("WLJ,onAbsCreateViewHolder,VIEW_TYPE_WEB_VIEW");
+            webviewHolder = new NewsDetailWebViewHolder(parent);
+            return webviewHolder;
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);
         } else if (viewType == VIEW_TYPE_RELATE_SUBJECT) {
@@ -109,8 +113,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     @Override
     public int getAbsItemViewType(int position) {
         if (position == 0) {
+            L.e("WLJ,getAbsItemViewType,VIEW_TYPE_TOP");
             return VIEW_TYPE_TOP;
         } else if (position == 1) {
+            L.e("WLJ,getAbsItemViewType,VIEW_TYPE_WEB_VIEW");
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
         } else if (position == 2 && getData(position) instanceof DraftDetailBean && !TextUtils.isEmpty(((DraftDetailBean) getData(position)).getArticle().getSource_channel_name())) {
@@ -135,17 +141,22 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+        L.e("WLJ,onBindViewHolder,isNeedSuperBind = true,position=" + position);
         boolean isNeedSuperBind = true;
         if (payloads != null && !payloads.isEmpty()) {
             isNeedSuperBind = false;
+            L.e("WLJ,onBindViewHolder,isNeedSuperBind = false,position=" + position);
             for (int i = 0; i < payloads.size(); i++) {
+                L.e("WLJ,onBindViewHolder,payloads,size="+payloads.size());
                 Object payload = payloads.get(i);
                 if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
+                        L.e("WLJ,onBindViewHolder,PAYLOADS_RESUME");
                         ((ILifecycle) holder).onResume();
                     }
                 } else if (PAYLOADS_PAUSE.equals(payload)) {
                     if (holder instanceof ILifecycle) {
+                        L.e("WLJ,onBindViewHolder,PAYLOADS_PAUSE");
                         ((ILifecycle) holder).onPause();
                     }
                 } else {
@@ -206,6 +217,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
      */
     public void onWebViewResume() {
         if (mWebViewHolderPosition != NO_POSITION) {
+            L.e("WLJ,onWebViewResume");
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_RESUME);
         }
     }
@@ -215,6 +227,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
      */
     public void onWebViewPause() {
         if (mWebViewHolderPosition != NO_POSITION) {
+            L.e("WLJ,onWebViewPause");
             notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
         }
     }

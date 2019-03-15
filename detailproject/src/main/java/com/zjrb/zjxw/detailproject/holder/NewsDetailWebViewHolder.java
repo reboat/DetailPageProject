@@ -25,11 +25,8 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;
-import cn.daily.news.biz.core.web.JsInterfaceImp;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import webutils.CssJsUtils;
-
-import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 新闻详情页 WebView - ViewHolder
@@ -62,10 +59,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         webImpl = new DetailWebViewImpl();
         //必须要先设置绑定对象
         webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
-        jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());
+        jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), itemView.getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
-
     }
 
     /**
@@ -84,7 +80,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getContent());
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
-        htmlResult = CssJsUtils.get(getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
+        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 

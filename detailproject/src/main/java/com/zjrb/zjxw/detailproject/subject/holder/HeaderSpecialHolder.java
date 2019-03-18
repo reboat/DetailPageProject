@@ -1,8 +1,5 @@
 package com.zjrb.zjxw.detailproject.subject.holder;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -13,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,7 +28,6 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
-import com.zjrb.zjxw.detailproject.utils.SpecialTimeintpolator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,10 +126,17 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                         && itemView.getRootView() != itemView) {
                     if (mRecyclerTabCopy.getVisibility() != View.GONE) {
                         mRecyclerTabCopy.setVisibility(View.INVISIBLE);
+                        ivback.setImageResource(R.mipmap.module_biz_write_back);
+                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
+                        ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
                     }
                 } else {
-                    if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1)
+                    if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                        ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                        ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                    }
                 }
             }
         });
@@ -174,14 +176,6 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         fyContainer.setBackgroundColor(ArgbUtils.evaluate(fraction,
                 ContextCompat.getColor(fyContainer.getContext(), ATTR_TTC_START),
                 ContextCompat.getColor(fyContainer.getContext(), ATTR_TTC_END)));
-        //返回键收藏和分享页要渐变,需要一起执行
-        ObjectAnimator animatorBack = ObjectAnimator.ofInt(ivback, "backgroundResource", R.mipmap.module_biz_write_back, R.mipmap.module_biz_top_bar_back);
-        ObjectAnimator animatorCollect = ObjectAnimator.ofInt(ivCollect, "backgroundResource", R.drawable.module_biz_ic_special_collect, R.drawable.module_biz_ic_special_collect_anim);
-        ObjectAnimator animatorShare = ObjectAnimator.ofInt(ivShare, "backgroundResource", R.mipmap.module_biz_atlas_share, R.mipmap.module_biz_topbar_share);
-        AnimatorSet set = new AnimatorSet();
-        set.setInterpolator(new SpecialTimeintpolator(fraction));
-        set.playTogether(animatorBack, animatorCollect, animatorShare);
-        set.start();
     }
 
     @NonNull

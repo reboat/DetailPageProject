@@ -77,6 +77,11 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     ImageView mCollect;
     @BindView(R2.id.fy_container)
     FitWindowsFrameLayout fyContainer;
+    @BindView(R2.id.iv_top_bar_back)
+    ImageView ivBack;
+    @BindView(R2.id.iv_top_share)
+    ImageView ivShare;
+
 
     private SpecialAdapter mAdapter;
 
@@ -243,7 +248,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
             //添加专题详情页的头部holder,这里需要传递一个toolsbar的view
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer,this);
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);
@@ -316,7 +321,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     }
 
     /**
-     * 分组标签点击
+     * 分组标签点击,背景处理
+     *
      * @param bean
      */
     @Override
@@ -328,6 +334,11 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerTabCopy.getHeight());
             ClickChannel(bean);
+            headHolder.getItemView().setBackgroundResource(R.color._ffffff);
+            fyContainer.setBackgroundResource(R.color._ffffff);
+            ivBack.setImageResource(R.drawable.module_detail_top_bar_back);
+            mCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+            ivShare.setImageResource(R.drawable.module_detail_topbar_share);
         }
     }
 

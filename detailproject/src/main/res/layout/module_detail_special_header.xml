@@ -103,7 +103,6 @@
         android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp"
         android:paddingTop="5dp" />
 
     <!--专题焦点图-->

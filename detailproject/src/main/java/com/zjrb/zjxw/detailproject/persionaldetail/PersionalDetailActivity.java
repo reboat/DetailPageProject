@@ -3,10 +3,8 @@ package com.zjrb.zjxw.detailproject.persionaldetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +16,7 @@ import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
@@ -57,7 +56,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     @BindView(R2.id.tv_content)
     TextView tvContent;
     @BindView(R2.id.tabLayout)
-    TabLayout tabLayout;
+    SlidingTabLayout tabLayout;
     @BindView(R2.id.viewpager)
     ViewPager viewpager;
     @BindView(R2.id.ly_container)
@@ -269,30 +268,31 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
         pagerAdapter.addTabInfo(PersionalDetailInfoFragment.class, "任职履历", bundlePersionalDetailInfo);
 
         viewpager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewpager);
+        tabLayout.setViewPager(viewpager);
+//        tabLayout.setupWithViewPager(viewpager);
 
-        for (int i = 0; i < pagerAdapter.getCount(); i++) {
-
-            TabLayout.Tab tab = tabLayout.getTabAt(i);
-
-            if (i == 0) {
-                v1 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
-                        viewpager, false);
-
-                tv1 = v1.findViewById(R.id.tv_item_tab_score_title);
-                tv1.setText(pagerAdapter.getPageTitle(i));
-                tab.setCustomView(v1);
-                tv1.setTextColor(getResources().getColor(R.color._222222));
-            } else {
-                v2 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
-                        viewpager, false);
-                tv2 = v2.findViewById(R.id.tv_item_tab_score_title);
-                tv2.setText(pagerAdapter.getPageTitle(i));
-                tv2.setTextColor(getResources().getColor(R.color._666666));
-                tab.setCustomView(v2);
-            }
-
-        }
+//        for (int i = 0; i < pagerAdapter.getCount(); i++) {
+//
+//            TabLayout.Tab tab = tabLayout.getTabAt(i);
+//
+//            if (i == 0) {
+//                v1 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
+//                        viewpager, false);
+//
+//                tv1 = v1.findViewById(R.id.tv_item_tab_score_title);
+//                tv1.setText(pagerAdapter.getPageTitle(i));
+//                tab.setCustomView(v1);
+//                tv1.setTextColor(getResources().getColor(R.color._222222));
+//            } else {
+//                v2 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
+//                        viewpager, false);
+//                tv2 = v2.findViewById(R.id.tv_item_tab_score_title);
+//                tv2.setText(pagerAdapter.getPageTitle(i));
+//                tv2.setTextColor(getResources().getColor(R.color._666666));
+//                tab.setCustomView(v2);
+//            }
+//
+//        }
 
     }
 
@@ -303,13 +303,13 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 
     @Override
     public void onPageSelected(int position) {
-        if (position == 0) {
-            tv1.setTextColor(getResources().getColor(R.color._222222));
-            tv2.setTextColor(getResources().getColor(R.color._666666));
-        } else {
-            tv1.setTextColor(getResources().getColor(R.color._666666));
-            tv2.setTextColor(getResources().getColor(R.color._222222));
-        }
+//        if (position == 0) {
+//            tv1.setTextColor(getResources().getColor(R.color._222222));
+//            tv2.setTextColor(getResources().getColor(R.color._666666));
+//        } else {
+//            tv1.setTextColor(getResources().getColor(R.color._666666));
+//            tv2.setTextColor(getResources().getColor(R.color._222222));
+//        }
         if (bean != null && bean.getOfficer() != null) {
             new Analytics.AnalyticsBuilder(this, "210003", "210003", "OfficialDetailClick", false)
                     .setEvenName("点击官员任职履历标签")

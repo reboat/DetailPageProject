@@ -248,7 +248,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
             //添加专题详情页的头部holder,这里需要传递一个toolsbar的view
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, this);
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, mGroupCopy,this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);
@@ -334,6 +334,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerTabCopy.getHeight());
             ClickChannel(bean);
+            //点击tab标签背景渐变
             headHolder.getItemView().setBackgroundResource(R.color._ffffff);
             fyContainer.setBackgroundResource(R.color._ffffff);
             ivBack.setImageResource(R.drawable.module_detail_top_bar_back);

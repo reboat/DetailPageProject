@@ -82,7 +82,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private FitWindowsFrameLayout fyContainer;
     //返回键、收藏、分享
     private ImageView ivback, ivCollect, ivShare;
-
+    private FrameLayout mGroupCopy;
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
 
@@ -91,10 +91,11 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     public static final int MAX_DEFAULT_LINES = 3;
 
     //头部动效
-    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, FitWindowsFrameLayout view, OnClickChannelListener
+    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, FitWindowsFrameLayout view, FrameLayout groupCopy, OnClickChannelListener
             listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
+        mGroupCopy = groupCopy;
         mRecyclerTabCopy = copy;
         fyContainer = view;
         ivback = fyContainer.findViewById(R.id.iv_top_bar_back);
@@ -133,9 +134,15 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 } else {
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                    }
+                    if (mGroupCopy.getVisibility() == View.VISIBLE) {
                         ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
                         ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
                         ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                    }else{
+                        ivback.setImageResource(R.mipmap.module_biz_write_back);
+                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
+                        ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
                     }
                 }
             }

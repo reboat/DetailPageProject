@@ -93,17 +93,18 @@
         android:layout_height="18dp"
         android:background="@color/_fff0f0f0" />
 
-    <android.support.design.widget.TabLayout
+    <com.zjrb.daily.news.ui.widget.SlidingTabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:layout_gravity="center|left"
         android:background="@color/_ffffff"
-        app:tabIndicatorColor="@color/_cd3f3f"
-        app:tabIndicatorHeight="2dp"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/_222222"
-        app:tabTextColor="@color/_666666" />
+        app:tl_indicator_color="@color/_ffcd3f3f"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_width="18dp"
+        app:tl_textSelectColor="@color/_222222"
+        app:tl_textUnselectColor="@color/_666666"
+        app:tl_textsize="@dimen/ts_14sp" />
 
     <View
         android:layout_width="match_parent"

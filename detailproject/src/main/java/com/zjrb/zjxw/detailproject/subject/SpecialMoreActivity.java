@@ -2,11 +2,13 @@ package com.zjrb.zjxw.detailproject.subject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.view.ratio.RatioRelativeLayout;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
@@ -54,6 +56,10 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     ImageView ivTopCollect;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
+    @BindView(R2.id.app_bar)
+    AppBarLayout appBar;
+    @BindView(R2.id.tl_top)
+    View tlTop;
 
     /**
      * 专题id
@@ -74,6 +80,15 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         ivShare.setOnClickListener(this);
         ivTopBarBack.setOnClickListener(this);
         ivTopCollect.setOnClickListener(this);
+        appBar.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+//                Log.e("lujialei","offset==="+Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
+                float percent = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
+                tlTop.setAlpha(percent);
+                tvTitle.setAlpha(1-percent);
+            }
+        });
     }
 
     private void bindData(List<SpecialGroupBean> groupBeanList) {
@@ -97,7 +112,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         if (intent != null && intent.getExtras() != null && intent.getExtras().getSerializable(IKey.NEWS_DETAIL) != null) {
             mDraftDetailBean = (DraftDetailBean) intent.getExtras().getSerializable(IKey.NEWS_DETAIL);
         }
-        // TODO: 2019/3/14 模拟 
+        // TODO: 2019/3/14 模拟
         String mock = "{\n" +
                 "\t\t\"article\": {\n" +
                 "\t\t\t\"id\": 1114462,\n" +
@@ -279,12 +294,12 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        if (view.getId()==ivTopBarBack.getId()){
+        if (view.getId() == ivTopBarBack.getId()) {
             super.onBackPressed();
-        }else if (view.getId()==ivTopCollect.getId()){
+        } else if (view.getId() == ivTopCollect.getId()) {
             //未被收藏
             collectTask(); // 收藏
-        }else if (view.getId()==ivShare.getId()){
+        } else if (view.getId() == ivShare.getId()) {
             if (!TextUtils.isEmpty(mDraftDetailBean.getArticle().getUrl())) {
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
@@ -321,7 +336,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
 
             @Override
             public void onSuccess(Void data) {
-                if (mDraftDetailBean != null && mDraftDetailBean.getArticle()!=null) {
+                if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
                     mDraftDetailBean.getArticle().setFollowed(!mDraftDetailBean.getArticle().isFollowed());
                     bindCollect();
                     T.showShort(getActivity(), mDraftDetailBean.getArticle().isFollowed() ? "收藏成功" : "取消收藏成功");
@@ -337,7 +352,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
             public void onError(String errMsg, int errCode) {
                 //已收藏成功
                 if (errCode == 50013) {
-                    if (mDraftDetailBean != null && mDraftDetailBean.getArticle()!=null) {
+                    if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
                         mDraftDetailBean.getArticle().setFollowed(true);
                         bindCollect();
                         T.showShort(getActivity(), "已收藏成功");
@@ -354,7 +369,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
      * 收藏状态
      */
     private void bindCollect() {
-        if (mDraftDetailBean != null && mDraftDetailBean.getArticle()!=null) {
+        if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
             ivTopCollect.setSelected(mDraftDetailBean.getArticle().isFollowed());
         }
     }

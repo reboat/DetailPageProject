@@ -11,5 +11,5 @@
           android:ellipsize="end"
           android:gravity="center"
           android:maxLines="1"
-          android:textColor="@color/_484848_7a7b7d"
+          android:textColor="@color/module_detail_special_tab"
           tools:text="治国理政" />

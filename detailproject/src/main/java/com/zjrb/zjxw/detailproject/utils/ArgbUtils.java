@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.ArgbEvaluator;
+import android.graphics.drawable.Drawable;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 
@@ -19,6 +20,5 @@ public class ArgbUtils {
     public static int evaluate(float fraction, int startValue, int endValue) {
         return (int) sArgb.evaluate(sInterpolator.getInterpolation(fraction), startValue, endValue);
     }
-
 }
 

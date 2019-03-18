@@ -315,6 +315,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 EmptyStateFragment.newInstance()).commit();
     }
 
+    /**
+     * 分组标签点击
+     * @param bean
+     */
     @Override
     public void onClickChannel(SpecialGroupBean bean) {
         List data = mAdapter.getData();

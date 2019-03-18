@@ -25,8 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.dailyplayer.PlayerManager;
-import com.aliya.dailyplayer.VFullscreenActivity;
 import com.aliya.dailyplayer.utils.Recorder;
+import com.aliya.dailyplayer.vertical.VFullscreenActivity;
 import com.aliya.dailyplayer.vertical.VerticalManager;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
@@ -88,9 +88,9 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 import daily.zjrb.com.daily_vr.player.VRManager;
 
-import static com.aliya.dailyplayer.VFullscreenActivity.KEY_TITLE;
-import static com.aliya.dailyplayer.VFullscreenActivity.KEY_URL;
-import static com.aliya.dailyplayer.VFullscreenActivity.REQUEST_CODE;
+import static com.aliya.dailyplayer.FullscreenActivity.KEY_URL;
+import static com.aliya.dailyplayer.vertical.VFullscreenActivity.KEY_TITLE;
+import static com.aliya.dailyplayer.vertical.VFullscreenActivity.REQUEST_CODE;
 import static com.zjrb.core.utils.UIUtils.getContext;
 
 

@@ -188,8 +188,8 @@ public class BrowserLinkActivity extends DailyActivity implements DetailWMHelper
                     T.showShortNow(BrowserLinkActivity.this, errMsg);
                 }
             }
-        }).setTag(this)./*bindLoadViewHolder(replaceLoad(mContainer)).*/exe(mArticleId, mFromChannel);
-    }//TODO WLJ 后面再调试
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+    }
 
     /**
      * 顶部导航条在数据加载结束后再显示

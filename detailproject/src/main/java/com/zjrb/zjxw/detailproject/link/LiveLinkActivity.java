@@ -206,8 +206,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                     T.showShortNow(LiveLinkActivity.this, errMsg);
                 }
             }
-        }).setTag(this)./*bindLoadViewHolder(replaceLoad(mContainer)).*/exe(mArticleId, mFromChannel);
-    }//TODO WLJ 后面再调试
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+    }
 
     /**
      * @param data 填充详情页数据

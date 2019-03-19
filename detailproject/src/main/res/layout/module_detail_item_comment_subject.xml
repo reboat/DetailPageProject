@@ -91,17 +91,31 @@
             android:textSize="@dimen/ts_16sp"
             tools:text="卡死搭建的空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
 
+        <TextView
+            android:id="@+id/tv_show_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="12.5dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="展开全部"
+            android:textColor="@color/_2378d1"
+            android:textSize="@dimen/ts_16sp"
+            android:visibility="gone" />
+
         <!--回复-->
         <RelativeLayout
             android:id="@+id/ly_comment_reply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/ly_name"
-            android:layout_below="@id/tv_content"
+            android:layout_below="@id/tv_show_all"
             android:layout_marginRight="11.5dp"
             android:layout_marginTop="11dp"
             android:background="@drawable/module_detail_comment_replay_stroke"
-            android:visibility="gone"
+            android:visibility="visible"
             >
 
             <TextView
@@ -182,6 +196,18 @@
                 android:textSize="@dimen/ts_14sp"
                 tools:text="手动加卡是的空间啊觉得啊会计师空数据东方时空京东方空数据东方红看似简单福克斯就返回数据看大富科技是地方接口是父控件是父控件是的福克斯的父控件是的发" />
 
+            <!--评论回复展开全部-->
+            <TextView
+                android:id="@+id/tv_parent_show_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_comment_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="7dp"
+                android:text="展开全部"
+                android:textColor="@color/_2378d1"
+                android:textSize="@dimen/ts_14sp"
+                android:visibility="gone" />
         </RelativeLayout>
         <!--评论时间-->
         <RelativeLayout

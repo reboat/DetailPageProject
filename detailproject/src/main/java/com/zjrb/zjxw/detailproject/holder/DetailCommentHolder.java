@@ -84,6 +84,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     ImageView mIvGuest;
     @BindView(R2.id.ly_comment)
     RelativeLayout mLyComment;
+    @BindView(R2.id.tv_show_all)
+    TextView tvShowAll;
+    @BindView(R2.id.tv_parent_show_all)
+    TextView tvParentShowAll;
 
     /**
      * 稿件id
@@ -96,6 +100,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
+    public static final int MAX_DEFAULT_LINES = 5;
 
     /**
      * 评论列表专用构造器
@@ -164,9 +169,16 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mTvDeleteTip.setVisibility(View.GONE);
             mTvCommentContent.setVisibility(View.VISIBLE);
             mLyComment.setVisibility(View.VISIBLE);
+
             //回复者评论
             if (mData.getContent() != null) {
                 mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
+            }
+            //超过5行
+            if (mContent.getLineCount() > 5) {
+                mContent.setMaxLines(MAX_DEFAULT_LINES);
+                tvShowAll.setVisibility(View.VISIBLE);
+                tvShowAll.setText("展开全部");
             }
             //回复者昵称
             if (!TextUtils.isEmpty(mData.getNick_name())) {
@@ -204,6 +216,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 //父评论内容
                 if (!TextUtils.isEmpty(mData.getParent_content())) {
                     mTvCommentContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getParent_content()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getParent_content()) : mData.getParent_content());
+                }
+
+                //父评论超过5行
+                if (mTvCommentContent.getLineCount() > 5) {
+                    mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
+                    tvParentShowAll.setVisibility(View.VISIBLE);
+                    tvParentShowAll.setText("展开全部");
                 }
 
                 //父评论昵称
@@ -265,7 +284,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply})
+    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
@@ -372,8 +391,25 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 }
             }
 
-            //回复回复者
-        } else {
+            //评论展开全部
+        } else if (view.getId() == R2.id.tv_show_all) {
+            if (tvShowAll.getText().equals("展开全部")) {
+                mContent.setMaxLines(Integer.MAX_VALUE);
+                tvShowAll.setText("收起");
+            } else {
+                mContent.setMaxLines(MAX_DEFAULT_LINES);
+                tvShowAll.setText("展开全部");
+            }
+            //评论回复展开全部
+        } else if (view.getId() == R2.id.tv_parent_show_all) {
+            if (tvParentShowAll.getText().equals("展开全部")) {
+                mTvCommentContent.setMaxLines(Integer.MAX_VALUE);
+                tvParentShowAll.setText("收起");
+            } else {
+                mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
+                tvParentShowAll.setText("展开全部");
+            }
+        } else {//回复回复者
             if (mBean != null && mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
                         .setEvenName("热门评论点击回复")

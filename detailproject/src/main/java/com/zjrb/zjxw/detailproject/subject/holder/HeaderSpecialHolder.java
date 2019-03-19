@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
@@ -32,7 +31,6 @@ import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
 import cn.daily.news.biz.core.nav.Nav;

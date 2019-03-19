@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.ArgbEvaluator;
-import android.graphics.drawable.Drawable;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 

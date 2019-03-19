@@ -4,7 +4,6 @@ package com.zjrb.zjxw.detailproject.task;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.zjxw.detailproject.global.APIManager;
 
-import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
 import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**

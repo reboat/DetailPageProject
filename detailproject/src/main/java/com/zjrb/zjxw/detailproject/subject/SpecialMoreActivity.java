@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aliya.view.ratio.RatioRelativeLayout;
 import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;

@@ -23,7 +23,6 @@ import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;

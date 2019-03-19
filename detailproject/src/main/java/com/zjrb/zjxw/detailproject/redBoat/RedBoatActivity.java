@@ -29,7 +29,6 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
-import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;

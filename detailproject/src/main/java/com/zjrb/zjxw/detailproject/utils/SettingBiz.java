@@ -3,7 +3,6 @@ package com.zjrb.zjxw.detailproject.utils;
 import com.zjrb.core.db.SPHelper;
 
 import cn.daily.news.biz.core.constant.C;
-import cn.daily.news.biz.core.network.compatible.APICallManager;
 
 /**
  * 设置相关的业务处理

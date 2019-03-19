@@ -12,7 +12,7 @@ import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import cn.daily.news.analytics.Analytics;
 
 /**
- * 详情页埋点接口封装
+ * 详情页埋点契约接口封装
  * Created by wanglinjie.
  * create time:2018/5/31  下午2:23
  */
@@ -33,7 +33,6 @@ public interface DetailWMHelperInterFace {
          * @param operationType
          */
         void SubscribeAnalytics(DraftDetailBean bean, String eventNme, String eventCode, String scEventName, String operationType);
-
 
         /**
          * 统计页面停留时长

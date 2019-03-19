@@ -28,6 +28,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.ChannelAdapter;
 import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -278,29 +279,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             //专题详情页焦点图点击
         } else if (v.getId() == R.id.layout_focus) {
             if (mArticle != null && !TextUtils.isEmpty(mArticle.getSubject_focus_url())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "900003", "900003", "AppContentClick", false)
-                        .setEvenName("专题详情页，焦点图点击")
-                        .setObjectID(mArticle.getMlf_id() + "")
-                        .setObjectName(mArticle.getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mArticle.getChannel_id())
-                        .setClassifyName(mArticle.getChannel_name())
-                        .setPageType("专题详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "SubjectType")
-                                .put("subject", mArticle.getId() + "")
-                                .toString())
-                        .setSelfObjectID(mArticle.getId() + "")
-                        .newsID(mArticle.getMlf_id() + "")
-                        .selfNewsID(mArticle.getId() + "")
-                        .newsTitle(mArticle.getDoc_title())
-                        .selfChannelID(mArticle.getChannel_id())
-                        .channelName(mArticle.getChannel_name())
-                        .pageType("专题详情页")
-                        .objectType("焦点图")
-                        .pubUrl(mArticle.getSubject_focus_url())
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().SpecialFocusImgClick(mArticle);
                 Nav.with(v.getContext()).to(mArticle.getSubject_focus_url());
             }
         }

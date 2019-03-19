@@ -21,10 +21,10 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.SubjectListBean;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialListAdapter;
 import com.zjrb.zjxw.detailproject.task.DraftTopicListTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
@@ -150,27 +150,7 @@ public class SpecialListActivity extends DailyActivity implements HeaderRefresh.
         if (mAdapter != null) {
             if (mBean != null && mBean.getArticle_list() != null && mBean.getArticle_list().size() >= position) {
                 ArticleItemBean bean = mBean.getArticle_list().get(position);
-                new Analytics.AnalyticsBuilder(this, "200007", "200007", "AppContentClick", false)
-                        .setEvenName("点击更多进入专题列表页面后，新闻列表点击")
-                        .setObjectID(bean.getMlf_id() + "")
-                        .setObjectName(bean.getDoc_title())
-                        .setClassifyID(bean.getChannel_id())
-                        .setClassifyName(bean.getChannel_name())
-                        .setPageType("专题详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("customObjectType", "SubjectType")
-                                .toString())
-                        .setSelfObjectID(bean.getId() + "")
-                        .pageType("专题详情页")
-                        .objectType("专题新闻列表")
-                        .pubUrl(bean.getUrl())
-                        .newsID(bean.getMlf_id() + "")
-                        .selfNewsID(bean.getId() + "")
-                        .newsTitle(bean.getDoc_title())
-                        .selfChannelID(bean.getChannel_id())
-                        .channelName(bean.getChannel_name())
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().SpecialMoreClickSpecialItem(bean);
             }
 
             NewsUtils.itemClick(this, mAdapter.getData(position));

@@ -28,14 +28,15 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.boardcast.SubscribeReceiver;
+import com.zjrb.zjxw.detailproject.callback.DetailInterface;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
-import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.task.RedBoatTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * create time:2017/8/27  上午10:14
  */
 
-public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.CommonOptCallBack, DetailWMHelperInterFace.RedBoatWM, SubscribeSyncInterFace {
+public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.CommonOptCallBack, DetailInterface.SubscribeSyncInterFace {
 
     @BindView(R2.id.rv_content)
     FitWindowsRecyclerView mRvContent;
@@ -151,7 +152,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             public void onSuccess(DraftDetailBean draftDetailBean) {
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
-                builder = pageStayTime(draftDetailBean);
+                builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -203,10 +204,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
             if (article.isColumn_subscribed()) {
-//                topHolder.getSubscribe().setText("已订阅");
                 topHolder.getSubscribe().setSelected(true);
             } else {
-//                topHolder.getSubscribe().setText("+订阅");
                 topHolder.getSubscribe().setSelected(false);
             }
         } else {
@@ -241,7 +240,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.iv_top_bar_back) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                ClickBack(mNewsDetail);
+                DataAnalyticsUtils.get().ClickBack(mNewsDetail);
             }
             finish();
             //红船号点击分享
@@ -279,14 +278,13 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             //已订阅状态->取消订阅
             //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
-                SubscribeAnalytics("点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         T.showShortNow(getApplicationContext(), "取消订阅成功");
-//                        topHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -302,7 +300,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                SubscribeAnalytics("点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
@@ -310,7 +308,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
                             T.showShortNow(getApplicationContext(), "订阅成功");
-//                            topHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -330,7 +327,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             }
             //进入栏目
         } else if (v.getId() == R.id.tv_top_bar_title) {
-            SubscribeAnalytics("点击进入栏目详情页", "800031", "ToDetailColumn", "");
+            DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击进入栏目详情页", "800031", "ToDetailColumn", "");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
@@ -382,90 +379,10 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         if (intent != null && !TextUtils.isEmpty(intent.getAction()) && "subscribe_success".equals(intent.getAction())) {
             long id = intent.getLongExtra("id", 0);
             boolean subscribe = intent.getBooleanExtra("subscribe", false);
-//            String subscriptionText = subscribe ? "已订阅" : "+订阅";
             //确定是该栏目需要同步
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
-//                topHolder.getSubscribe().setText(subscriptionText);
             }
         }
     }
-
-    /**
-     * 埋点相关
-     *
-     * @param bean
-     * @return
-     */
-    @Override
-    public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
-                .setEvenName("页面停留时长/阅读深度")
-                .setObjectID(bean.getArticle().getGuid() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getGuid() + "")
-                .selfNewsID(bean.getArticle().getId() + "")
-                .newsTitle(bean.getArticle().getDoc_title())
-                .selfChannelID(bean.getArticle().getChannel_id())
-                .channelName(bean.getArticle().getChannel_name())
-                .pageType("新闻详情页")
-                .pubUrl(bean.getArticle().getUrl())
-                ;
-    }
-
-    public Analytics.AnalyticsBuilder pageStayTime2(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-                .setEvenName("新闻详情页停留时长")
-                .setPageType("新闻详情页")
-                .pageType("新闻详情页");
-    }
-
-    @Override
-    public void ClickBack(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
-                .setEvenName("点击返回")
-                .setObjectID(bean.getArticle().getGuid() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
-                .build()
-                .send();
-
-    }
-
-    @Override
-    public void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType) {
-        new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode, scEventName, false)
-                .setEvenName(eventNme)
-                .setObjectID(mNewsDetail.getArticle().getGuid() + "")
-                .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "RelatedColumnType")
-                        .toString())
-                .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                .columnID(mNewsDetail.getArticle().getColumn_id() + "")
-                .columnName(mNewsDetail.getArticle().getColumn_name())
-                .pageType("新闻详情页")
-                .operationType(operationType)
-                .build()
-                .send();
-    }
-
 }

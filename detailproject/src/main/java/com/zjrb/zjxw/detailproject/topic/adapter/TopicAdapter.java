@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.FooterLoadMore;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
@@ -24,11 +23,11 @@ import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsTextMoreHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
@@ -218,27 +217,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
                 if (detailBean != null && detailBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010", "RelatedContentClick", false)
-                            .setEvenName("点击相关专题列表")
-                            .setObjectID(detailBean.getArticle().getMlf_id() + "")
-                            .setObjectName(detailBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(detailBean.getArticle().getChannel_id())
-                            .setClassifyName(detailBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("customObjectType", "SubjectType")
-                                    .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
-                                    .toString())
-                            .setSelfObjectID(detailBean.getArticle().getId() + "").newsID(detailBean.getArticle().getMlf_id() + "")
-                            .selfNewsID(detailBean.getArticle().getId() + "")
-                            .newsTitle(detailBean.getArticle().getDoc_title())
-                            .selfChannelID(detailBean.getArticle().getChannel_id())
-                            .channelName(detailBean.getArticle().getChannel_name())
-                            .pageType("新闻详情页")
-                            .relatedContentClick("相关专题")
-                            .build()
-                            .send();
+                    DataAnalyticsUtils.get().ClickRelatedSpecial(detailBean, (RelatedSubjectsBean) datas.get(position));
                 }
                 Nav.with(UIUtils.getActivity()).to(url);
             }
@@ -254,28 +233,7 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
                     .COMMENT_SELECT_ACTIVITY);
         } else if (datas.get(position) instanceof DraftDetailBean) {
             if (detailBean != null && detailBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
-                        .setEvenName("点击正文底部频道名称")
-                        .setObjectID(detailBean.getArticle().getChannel_id())
-                        .setObjectName(detailBean.getArticle().getChannel_name())
-                        .setObjectType(ObjectType.ColumnType)
-                        .setClassifyID(detailBean.getArticle().getSource_channel_id())
-                        .setClassifyName(detailBean.getArticle().getSource_channel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", detailBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(detailBean.getArticle().getId() + "")
-                        .newsID(detailBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(detailBean.getArticle().getId() + "")
-                        .newsTitle(detailBean.getArticle().getDoc_title())
-                        .selfChannelID(detailBean.getArticle().getChannel_id())
-                        .channelName(detailBean.getArticle().getChannel_name())
-                        .pageType("新闻详情页")
-                        .relatedContentClick("所属频道")
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().ClickRelatedContent(detailBean);
             }
             Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
                     .appendQueryParameter("id", String.valueOf(((DraftDetailBean) datas.get(position)).getArticle().getColumn_id())).build().toString());

@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.persionaldetail.holder;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,11 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.OfficalListBean;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
@@ -70,30 +69,12 @@ public class PersionalListDetailHolder extends BaseRecyclerViewHolder<OfficalLis
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.lly_reporter) {
-            clickMore(itemView.getContext());
+            DataAnalyticsUtils.get().ClickMore(itemView.getContext());
             if (bundle == null) {
                 bundle = new Bundle();
             }
             bundle.putString(IKey.ID, String.valueOf(mData.getId()));
             Nav.with(itemView.getContext()).setExtras(bundle).toPath(RouteManager.PERSIONAL_DETAIL);
         }
-    }
-
-    /**
-     * 点击更多埋点
-     *
-     * @param context
-     */
-    private void clickMore(Context context) {
-        new Analytics.AnalyticsBuilder(context, "800014", "800014", "AppTabClick", false)
-                .setEvenName("点击更多查看官员详细信息")
-                .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "OfficerType")
-                        .toString())
-                .pageType("官员页面")
-                .clickTabName("更多")
-                .build()
-                .send();
     }
 }

@@ -56,7 +56,7 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
     /**
      * TabInfo Tab相关参数
      *
-     * @author a_liYa
+     * @author wanglinjie
      * @date 2016/10/9 14:34.
      */
     private static class TabInfo {

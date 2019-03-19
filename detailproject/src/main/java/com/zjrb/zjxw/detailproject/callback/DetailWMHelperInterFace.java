@@ -1,7 +1,12 @@
 package com.zjrb.zjxw.detailproject.callback;
 
+import android.content.Context;
+
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
 
 import cn.daily.news.analytics.Analytics;
@@ -15,37 +20,7 @@ import cn.daily.news.analytics.Analytics;
 public interface DetailWMHelperInterFace {
 
     /**
-     * 红船号埋点
-     */
-    interface RedBoatWM {
-        /**
-         * 统计页面停留时长
-         *
-         * @param bean
-         * @return
-         */
-        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
-
-        /**
-         * 点击返回
-         *
-         * @param bean
-         */
-        void ClickBack(DraftDetailBean bean);
-
-        /**
-         * 订阅相关埋点
-         *
-         * @param eventNme
-         * @param eventCode
-         * @param scEventName
-         * @param operationType
-         */
-        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
-    }
-
-    /**
-     * 新闻详情页埋点
+     * 详情页埋点
      */
     interface NewsDetailWM {
 
@@ -57,7 +32,7 @@ public interface DetailWMHelperInterFace {
          * @param scEventName
          * @param operationType
          */
-        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
+        void SubscribeAnalytics(DraftDetailBean bean, String eventNme, String eventCode, String scEventName, String operationType);
 
 
         /**
@@ -109,20 +84,56 @@ public interface DetailWMHelperInterFace {
          * @param bean
          */
         void ClickBack(DraftDetailBean bean);
+
+        /**
+         * 点击正文底部频道名称
+         *
+         * @param bean
+         */
+        void ClickRelatedContent(DraftDetailBean bean);
+
+        /**
+         * 点击稿件标题下频道名称
+         *
+         * @param bean
+         */
+        void ClickMiddleChannel(DraftDetailBean bean);
+
+        /**
+         * 点击精选的全部按钮
+         *
+         * @param bean
+         */
+        void ClickCommentAll(DraftDetailBean bean);
+
+        /**
+         * 相关新闻点击
+         *
+         * @param bean
+         * @param beanRelate
+         */
+        void ClickRelatedNews(DraftDetailBean bean, RelatedNewsBean beanRelate);
+
+        /**
+         * 相关专题点击
+         *
+         * @param bean
+         * @param beanRelate
+         */
+        void ClickRelatedSpecial(DraftDetailBean bean, RelatedSubjectsBean beanRelate);
+    }
+
+    /**
+     * 创建评论埋点
+     */
+    interface DetailCommentBuild {
+        Analytics CreateCommentAnalytics(DraftDetailBean bean);
     }
 
     /**
      * 图集详情页埋点
      */
     interface AtlasDetailWM {
-        /**
-         * 统计页面停留时长
-         *
-         * @param bean
-         * @return
-         */
-        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
-
         /**
          * 点击返回
          *
@@ -178,26 +189,34 @@ public interface DetailWMHelperInterFace {
          * @param bean
          */
         void ClickShareTab(DraftDetailBean bean);
+
+        /**
+         * 更多图集页面，点击单个图集稿件
+         *
+         * @param bean
+         */
+        void ClickMoreImgItem(RelatedNewsBean bean);
     }
 
     /**
      * 专题稿埋点
      */
     interface SpercialDetailWM {
+
         /**
-         * 统计页面停留时长
+         * 时长统计
          *
-         * @param bean
+         * @param mArticle
          * @return
          */
-        Analytics pageStayTime(DraftDetailBean bean);
+        Analytics pageStayTimeSpecial(DraftDetailBean.ArticleBean mArticle);
 
         /**
          * 分类品频道点击
          *
          * @param bean
          */
-        void ClickChannel(SpecialGroupBean bean);
+        void ClickChannel(DraftDetailBean.ArticleBean mArticle, SpecialGroupBean bean);
 
         /**
          * 点击专题列表
@@ -208,138 +227,105 @@ public interface DetailWMHelperInterFace {
 
         /**
          * 点击收藏（收藏/取消收藏）
-         *
-         * @param isCollect
          */
-        void ClickCollect(boolean isCollect);
+        void ClickCollect(DraftDetailBean.ArticleBean mArticle);
 
         /**
-         * 点击返回
-         */
-        void ClickBack();
-
-    }
-
-    /**
-     * 话题稿埋点
-     */
-    interface TopicDetailWM {
-        /**
-         * 订阅相关埋点
-         *
-         * @param eventNme
-         * @param eventCode
-         * @param scEventName
-         * @param operationType
-         */
-        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
-
-        /**
-         * 统计页面停留时长
+         * 专题详情页，更多按钮点击
          *
          * @param bean
-         * @return
          */
-        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
+        void SpecialClickMore(DraftDetailBean bean);
 
         /**
-         * 点击点赞
-         */
-        void ClickPriseIcon();
-
-        /**
-         * 点击更多
-         */
-        void ClickMoreIcon();
-
-        /**
-         * 点击进入评论框
-         */
-        void ClickCommentBox();
-
-        /**
-         * 点击返回
-         */
-        void ClickBack();
-
-    }
-
-    /**
-     * 链接稿埋点
-     */
-    interface LinkDetailWM {
-        /**
-         * 点击返回
-         */
-        void ClickBack();
-
-        /**
-         * 进入评论列表
-         */
-        void ClickInCommentList();
-
-        /**
-         * 点击点赞
-         */
-        void ClickPriseIcon();
-
-        /**
-         * 点击更多
-         */
-        void ClickMoreIcon();
-
-    }
-
-    /**
-     * 直播链接稿埋点
-     */
-    interface LiveDetailWM {
-        /**
-         * 统计页面停留时长
+         * 专题详情页，焦点图点击
          *
          * @param bean
-         * @return
          */
-        Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean);
+        void SpecialFocusImgClick(DraftDetailBean.ArticleBean bean);
 
         /**
-         * 点击返回
+         * 点击更多进入专题列表页面后，新闻列表点击
+         *
+         * @param bean
          */
-        void ClickBack();
+        void SpecialMoreClickSpecialItem(com.zjrb.daily.news.bean.ArticleItemBean bean);
+    }
+
+    /**
+     * 评论页埋点
+     */
+    interface CommentWM {
+        /**
+         * 评论框点击
+         *
+         * @param bean
+         */
+        void AppTabCommentClick(DraftDetailBean bean);
 
         /**
          * 点击分享
-         */
-        void ClickShare();
-
-        /**
-         * 进入评论列表
-         */
-        void ClickInCommentList();
-
-        /**
-         * 点击点赞
-         */
-        void ClickPriseIcon();
-
-        /**
-         * 点击更多
-         */
-        void ClickMoreIcon();
-
-        /**
-         * 点击进入评论框
-         */
-        void ClickCommentBox();
-
-        /**
-         * 订阅相关埋点
          *
-         * @param eventNme
-         * @param eventCode
-         * @param scEventName
-         * @param operationType
+         * @param bean
          */
-        void SubscribeAnalytics(String eventNme, String eventCode, String scEventName, String operationType);
+        void AppTabClick(DraftDetailBean bean);
+
+        /**
+         * 发表评论
+         *
+         * @param bean
+         */
+        void UpdateComment(DraftDetailBean bean);
+
+        /**
+         * 删除评论
+         *
+         * @param bean
+         */
+        void DeletedComment(DraftDetailBean bean, String pageType, String scPageType, String id);
+
+        /**
+         * 热门评论点击
+         *
+         * @param bean
+         */
+        void HotCommentClick(DraftDetailBean bean, String pageType, String scPageType, String id);
+
+        /**
+         * 创建发送评论对象
+         *
+         * @param bean
+         * @return
+         */
+        Analytics CreateCommentSend(DraftDetailBean bean, String pageType, String scPageType, String id);
+    }
+
+    /**
+     * 官员页埋点
+     */
+    interface PersionalWM {
+        /**
+         * 官员详情页点击更多
+         *
+         * @param context
+         */
+        void ClickMore(Context context);
+
+        /**
+         * 点击官员任职履历标签
+         */
+        void OfficialDetailClick(OfficalDetailBean bean);
+
+        /**
+         * 官员页面点击分享
+         */
+        void OfficalClickShare(OfficalDetailBean bean);
+
+        /**
+         * 打开单个官员详情页
+         *
+         * @return
+         */
+        Analytics.AnalyticsBuilder CreateOfficalAnalytic(OfficalDetailBean data);
     }
 }

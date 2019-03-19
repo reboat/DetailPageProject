@@ -28,12 +28,12 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
-import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 import com.zjrb.zjxw.detailproject.global.C;
 import com.zjrb.zjxw.detailproject.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 
 import java.util.List;
@@ -51,15 +51,13 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
-import static com.zjrb.core.utils.UIUtils.getContext;
-
 /**
  * 专题详情页
  * Created by wanglinjie.
  * create time:2017/8/27 上午8:51.
  */
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
-        HeaderSpecialHolder.OnClickChannelListener, DetailWMHelperInterFace.SpercialDetailWM {
+        HeaderSpecialHolder.OnClickChannelListener {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -93,6 +91,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     private String mFromChannel;
 
     private DraftDetailBean.ArticleBean mArticle;
+    private DraftDetailBean bean;
 
     private OverlayHelper mOverlayHelper;
 
@@ -147,7 +146,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
         Object data = mAdapter.getData(position);
         if (data instanceof ArticleItemBean) {
-            ClickSpecialItem((ArticleItemBean) data);
+            DataAnalyticsUtils.get().ClickSpecialItem((ArticleItemBean) data);
             NewsUtils.itemClick(this, data);
         }
     }
@@ -186,10 +185,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
             } else if (view.getId() == R.id.iv_top_collect) {
                 //未被收藏
-                ClickCollect(!mArticle.isFollowed());
+                DataAnalyticsUtils.get().ClickCollect(mArticle);
                 collectTask(); // 收藏
             } else if (view.getId() == R.id.iv_top_bar_back) {//返回
-                ClickBack();
+                DataAnalyticsUtils.get().ClickBack(bean);
                 finish();
             }
         }
@@ -227,6 +226,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     private HeaderSpecialHolder headHolder;
 
     private void fillData(DraftDetailBean data) {
+        bean = data;
         mLyRight.setVisibility(View.VISIBLE);
         mOverlayLayout.setVisibility(View.VISIBLE);
         mView.setVisibility(View.GONE);
@@ -240,7 +240,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                             .title(mArticle.getList_title())
                             .url(mArticle.getUrl())
             );
-            mAnalytics = pageStayTime(data);
+            mAnalytics = DataAnalyticsUtils.get().pageStayTimeSpecial(mArticle);
         }
         bindCollect();
 
@@ -248,7 +248,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
             //添加专题详情页的头部holder,这里需要传递一个toolsbar的view
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, mGroupCopy,this);
+            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, mGroupCopy, this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);
@@ -333,7 +333,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
             lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                     mRecyclerTabCopy.getHeight());
-            ClickChannel(bean);
+            DataAnalyticsUtils.get().ClickChannel(mArticle, bean);
             //点击tab标签背景渐变
             headHolder.getItemView().setBackgroundResource(R.color._ffffff);
             fyContainer.setBackgroundResource(R.color._ffffff);
@@ -350,158 +350,5 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
-    }
-
-    @Override
-    public Analytics pageStayTime(DraftDetailBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
-                .setEvenName("页面停留时长")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
-                .setPageType("专题详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", bean.getArticle().getId() + "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
-                .selfNewsID(bean.getArticle().getId() + "")
-                .newsTitle(bean.getArticle().getDoc_title())
-                .selfChannelID(bean.getArticle().getChannel_id())
-                .channelName(bean.getArticle().getChannel_name())
-                .pageType("专题详情页")
-                .pubUrl(bean.getArticle().getUrl())
-                .build();
-    }
-
-    public Analytics pageStayTime2(DraftDetailBean.ArticleBean bean) {
-        return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "PageStay", true)
-                .setEvenName("专题详情页，页面停留时长")
-                .setPageType("专题详情页")
-                .pageType("专题详情页")
-                .build();
-    }
-
-    @Override
-    public void ClickChannel(SpecialGroupBean bean) {
-        if (mArticle != null) {
-            new Analytics.AnalyticsBuilder(this, "900001", "900001", "SubjectDetailClick", false)
-                    .setEvenName("专题详情页，分类标签点击")
-                    .setObjectType(ObjectType.NewsType)
-                    .setObjectID(mArticle.getMlf_id() + "")
-                    .setObjectName(mArticle.getDoc_title())
-                    .setPageType("专题详情页")
-                    .setSearch(bean.getGroup_name())
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mArticle.getColumn_id() + "")
-                            .put("subject", mArticle.getId() + "")
-                            .toString())
-                    .setSelfObjectID(mArticle.getId() + "")
-                    .newsID(mArticle.getMlf_id() + "")
-                    .selfNewsID(mArticle.getId() + "")
-                    .newsTitle(mArticle.getDoc_title())
-                    .selfChannelID(mArticle.getChannel_id())
-                    .channelName(mArticle.getChannel_name())
-                    .pageType("专题详情页")
-                    .classTagClick(bean.getGroup_name())
-                    .build()
-                    .send();
-        }
-    }
-
-    @Override
-    public void ClickSpecialItem(ArticleItemBean bean) {
-        new Analytics.AnalyticsBuilder(this, "200007", "200007", "AppContentClick", false)
-                .setEvenName("专题详情页，新闻列表点击")
-                .setObjectID(bean.getMlf_id() + "")
-                .setObjectName(bean.getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setPageType("专题详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", "SubjectType")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getId() + "")
-                .newsID(bean.getMlf_id() + "")
-                .selfNewsID(bean.getId() + "")
-                .newsTitle(bean.getDoc_title())
-                .selfChannelID(bean.getChannel_id())
-                .channelName(bean.getChannel_name())
-                .pageType("专题列表页")
-                .objectType("专题新闻列表")
-                .pubUrl(bean.getUrl())
-                .build()
-                .send();
-    }
-
-    @Override
-    public void ClickCollect(boolean isCollect) {
-        if (!isCollect) {
-            new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124", "Collect", false)
-                    .setEvenName("取消收藏")
-                    .setObjectID(mArticle.getMlf_id() + "")
-                    .setObjectName(mArticle.getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mArticle.getChannel_id())
-                    .setClassifyName(mArticle.getChannel_name())
-                    .setPageType("专题详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", "SubjectType")
-                            .put("subject", mArticle.getId() + "")
-                            .toString())
-                    .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
-                    .selfNewsID(mArticle.getId() + "")
-                    .newsTitle(mArticle.getDoc_title())
-                    .selfChannelID(mArticle.getChannel_id())
-                    .channelName(mArticle.getChannel_name())
-                    .pageType("专题详情页")
-                    .operationType("取消收藏")
-                    .build()
-                    .send();
-        } else {
-            new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
-                    .setEvenName("点击收藏")
-                    .setObjectID(mArticle.getMlf_id() + "")
-                    .setObjectName(mArticle.getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
-                    .setClassifyID(mArticle.getChannel_id())
-                    .setClassifyName(mArticle.getChannel_name())
-                    .setPageType("专题详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", "SubjectType")
-                            .put("subject", mArticle.getId() + "")
-                            .toString())
-                    .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
-                    .selfNewsID(mArticle.getId() + "")
-                    .newsTitle(mArticle.getDoc_title())
-                    .selfChannelID(mArticle.getChannel_id())
-                    .channelName(mArticle.getChannel_name())
-                    .pageType("专题详情页")
-                    .operationType("收藏")
-                    .build()
-                    .send();
-        }
-
-    }
-
-    @Override
-    public void ClickBack() {
-        new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
-                .setEvenName("点击返回")
-                .setObjectID(mArticle.getMlf_id() + "")
-                .setObjectName(mArticle.getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(mArticle.getChannel_id())
-                .setClassifyName(mArticle.getChannel_name())
-                .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", mArticle.getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(mArticle.getId() + "").pageType("新闻详情页").clickTabName("返回")
-                .build()
-                .send();
     }
 }

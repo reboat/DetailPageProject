@@ -15,6 +15,7 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.photodetail.adapter.ImageMoreAdapter;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -98,21 +99,7 @@ public class ImageMoreFragment extends DailyFragment {
     public void onBack() {
         if (getActivity() != null) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800001", "800001", "AppTabClick", false)
-                        .setEvenName("点击返回")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("返回")
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().ClickBack(mBean);
             }
             getActivity().finish();
         }

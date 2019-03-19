@@ -5,18 +5,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
@@ -64,29 +63,7 @@ public class NewsTextMoreHolder extends BaseRecyclerViewHolder<String> {
         //点击精选更多
         if (view.getId() == R.id.tv_all) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800013", "800013", "AppTabClick", false)
-                        .setEvenName("点击精选的全部按钮")
-                        .setObjectID(mBean.getArticle().getChannel_id())
-                        .setObjectName(mBean.getArticle().getChannel_name())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getSource_channel_id())
-                        .setClassifyName(mBean.getArticle().getSource_channel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType("话题详情页")
-                        .clickTabName("全部")
-                        .build()
-                        .send();
-
+                DataAnalyticsUtils.get().ClickCommentAll(mBean);
                 if (bundle == null) {
                     bundle = new Bundle();
                 }

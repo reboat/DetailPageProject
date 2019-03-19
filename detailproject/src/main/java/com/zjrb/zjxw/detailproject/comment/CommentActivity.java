@@ -31,6 +31,7 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -262,20 +263,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800002", "800002", "AppTabClick", false)
-                        .setEvenName("点击评论输入框")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("评论页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "").pageType("评论列表页")
-                        .clickTabName("评论输入框")
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().AppTabCommentClick(mNewsDetail);
             }
             try {
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
@@ -284,27 +272,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
             }
         } else if (v.getId() == R.id.iv_top_share) {
             if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
-                new Analytics.AnalyticsBuilder(getActivity(), "800018", "800018", "AppTabClick", false)
-                        .setEvenName("点击分享")
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("评论页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .toString())
-                        .setSelfObjectID(mNewsDetail.getArticle().getId() + "")
-                        .newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .selfNewsID(mNewsDetail.getArticle().getId() + "")
-                        .newsTitle(mNewsDetail.getArticle().getDoc_title())
-                        .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-                        .channelName(mNewsDetail.getArticle().getChannel_name())
-                        .pageType("评论列表页")
-                        .clickTabName("分享")
-                        .build()
-                        .send();
-
+                DataAnalyticsUtils.get().AppTabClick(mNewsDetail);
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
@@ -385,25 +353,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023", "Comment", false)
-                            .setEvenName("发表评论")
-                            .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                            .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                            .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                            .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                            .setPageType("评论页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                    .toString())
-                            .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                            .selfNewsID(mNewsDetail.getArticle().getId() + "")
-                            .newsTitle(mNewsDetail.getArticle().getDoc_title())
-                            .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-                            .channelName(mNewsDetail.getArticle().getChannel_name())
-                            .pageType("评论列表页")
-                            .commentType("文章")
-                            .build()
-                            .send();
+                    DataAnalyticsUtils.get().UpdateComment(mNewsDetail);
                 }
 
                 refresh.setRefreshing(false);

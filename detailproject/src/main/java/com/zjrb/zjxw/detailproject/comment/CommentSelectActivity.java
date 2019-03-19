@@ -19,10 +19,10 @@ import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.comment.adapter.CommentSelectAdapter;
 import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.task.CommentListTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
@@ -196,25 +196,7 @@ public class CommentSelectActivity extends DailyActivity implements HeaderRefres
             @Override
             public void run() {
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(getActivity(), "A0023", "A0023","Comment",false)
-                            .setEvenName("发表评论")
-                            .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                            .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                            .setClassifyID(mNewsDetail.getArticle().getChannel_id())
-                            .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                            .setPageType("评论页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                    .toString())
-                            .setSelfObjectID(mNewsDetail.getArticle().getId() + "").newsID(mNewsDetail.getArticle().getMlf_id() + "")
-                            .selfNewsID(mNewsDetail.getArticle().getId()+"")
-                            .newsTitle(mNewsDetail.getArticle().getDoc_title())
-                            .selfChannelID(mNewsDetail.getArticle().getChannel_id())
-                            .channelName(mNewsDetail.getArticle().getChannel_name())
-                            .pageType("评论列表页")
-                            .commentType("文章")
-                            .build()
-                            .send();
+                    DataAnalyticsUtils.get().UpdateComment(mNewsDetail);
                 }
 
                 refresh.setRefreshing(false);

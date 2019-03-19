@@ -5,16 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
@@ -29,12 +26,11 @@ import com.zjrb.zjxw.detailproject.holder.NewsRelateSubjectHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringClickMoreHolder;
 import com.zjrb.zjxw.detailproject.holder.NewsStringTextHolder;
 import com.zjrb.zjxw.detailproject.topic.holder.NewsPlaceHolder;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import java.util.List;
 
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
 
@@ -150,7 +146,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             isNeedSuperBind = false;
             L.e("WLJ,onBindViewHolder,isNeedSuperBind = false,position=" + position);
             for (int i = 0; i < payloads.size(); i++) {
-                L.e("WLJ,onBindViewHolder,payloads,size="+payloads.size());
+                L.e("WLJ,onBindViewHolder,payloads,size=" + payloads.size());
                 Object payload = payloads.get(i);
                 if (PAYLOADS_RESUME.equals(payload)) {
                     if (holder instanceof ILifecycle) {
@@ -247,55 +243,13 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (datas.get(position) instanceof RelatedNewsBean) {
             String url = ((RelatedNewsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800009", "800009", "RelatedContentClick", false)
-                        .setEvenName("点击相关新闻列表")
-                        .setObjectID(((RelatedNewsBean) datas.get(position)).getMlf_id())
-                        .setObjectName(((RelatedNewsBean) datas.get(position)).getTitle())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID("")
-                        .setClassifyName("")
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(((RelatedNewsBean) datas.get(position)).getId() + "")
-                        .newsID(detailBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(detailBean.getArticle().getId() + "")
-                        .newsTitle(detailBean.getArticle().getDoc_title())
-                        .selfChannelID(detailBean.getArticle().getChannel_id())
-                        .channelName(detailBean.getArticle().getChannel_name())
-                        .pageType("新闻详情页")
-                        .relatedContentClick("相关新闻")
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().ClickRelatedNews(detailBean, (RelatedNewsBean) datas.get(position));
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof RelatedSubjectsBean) {
             String url = ((RelatedSubjectsBean) datas.get(position)).getUri_scheme();
             if (!TextUtils.isEmpty(url)) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800010", "800010", "RelatedContentClick", false)
-                        .setEvenName("点击相关专题列表")
-                        .setObjectID(((RelatedSubjectsBean) datas.get(position)).getMlf_id())
-                        .setObjectName(((RelatedSubjectsBean) datas.get(position)).getTitle())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID("")
-                        .setClassifyName("")
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("customObjectType", "SubjectType")
-                                .put("subject", ((RelatedSubjectsBean) datas.get(position)).getId() + "")
-                                .toString())
-                        .setSelfObjectID(((RelatedSubjectsBean) datas.get(position)).getId() + "")
-                        .newsID(detailBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(detailBean.getArticle().getId() + "")
-                        .newsTitle(detailBean.getArticle().getDoc_title())
-                        .selfChannelID(detailBean.getArticle().getChannel_id())
-                        .channelName(detailBean.getArticle().getChannel_name())
-                        .pageType("新闻详情页")
-                        .relatedContentClick("相关专题")
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().ClickRelatedSpecial(detailBean, (RelatedSubjectsBean) datas.get(position));
                 Nav.with(UIUtils.getActivity()).to(url);
             }
         } else if (datas.get(position) instanceof String && datas.get(position).toString().equals("点击查看更多评论")) {

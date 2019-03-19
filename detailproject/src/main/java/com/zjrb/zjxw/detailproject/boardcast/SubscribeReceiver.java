@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
+import com.zjrb.zjxw.detailproject.callback.DetailInterface;
 
 /**
  * 订阅同步广播
@@ -13,9 +13,9 @@ import com.zjrb.zjxw.detailproject.callback.SubscribeSyncInterFace;
  */
 public class SubscribeReceiver extends BroadcastReceiver {
 
-    private SubscribeSyncInterFace interFace;
+    private DetailInterface.SubscribeSyncInterFace interFace;
 
-    public SubscribeReceiver(SubscribeSyncInterFace interFace) {
+    public SubscribeReceiver(DetailInterface.SubscribeSyncInterFace interFace) {
         this.interFace = interFace;
     }
 

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.TimeUtils;
@@ -16,11 +15,11 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
@@ -90,7 +89,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //稿件发布时间/栏目名称(发稿允许不填写)
-        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
@@ -98,7 +97,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             mTvChannelName.setVisibility(View.GONE);
         }
 
-        if (!isRedBoat&&mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
+        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
             mTvReadNum.setVisibility(View.VISIBLE);
             mTvReadNum.setText(mData.getArticle().getRead_count_general());
         } else {
@@ -112,27 +111,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (mData != null && mData.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012","RelatedContentClick",false)
-                    .setEvenName("点击稿件标题下频道名称")
-                    .setObjectID(mData.getArticle().getChannel_id())
-                    .setObjectName(mData.getArticle().getChannel_name())
-                    .setObjectType(ObjectType.ColumnType)
-                    .setClassifyID(mData.getArticle().getSource_channel_id())
-                    .setClassifyName(mData.getArticle().getSource_channel_name())
-                    .setPageType("新闻详情页")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                            .put("subject", "")
-                            .toString())
-                    .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
-                    .selfNewsID(mData.getArticle().getId() + "")
-                    .newsTitle(mData.getArticle().getDoc_title())
-                    .selfChannelID(mData.getArticle().getChannel_id())
-                    .channelName(mData.getArticle().getChannel_name())
-                    .pageType("新闻详情页")
-                    .relatedContentClick("所属频道")
-                    .build()
-                    .send();
+            DataAnalyticsUtils.get().ClickMiddleChannel(mData);
         }
         if (view.getId() == R.id.tv_channel_name) {
             if (bundle == null) {

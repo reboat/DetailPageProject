@@ -6,20 +6,18 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 
 /**
  * 新闻详情页中间内容
@@ -67,27 +65,7 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
             callback = (NewsDetailAdapter.CommonOptCallBack) itemView.getContext();
             if (view.getId() == R.id.tv_channel_subscribe) {
                 if (mData != null && mData.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "800012", "800012", "RelatedContentClick", false)
-                            .setEvenName("点击正文底部频道名称")
-                            .setObjectID(mData.getArticle().getChannel_id())
-                            .setObjectName(mData.getArticle().getChannel_name())
-                            .setObjectType(ObjectType.ColumnType)
-                            .setClassifyID(mData.getArticle().getSource_channel_id())
-                            .setClassifyName(mData.getArticle().getSource_channel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mData.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mData.getArticle().getId() + "").newsID(mData.getArticle().getMlf_id() + "")
-                            .selfNewsID(mData.getArticle().getId() + "")
-                            .newsTitle(mData.getArticle().getDoc_title())
-                            .selfChannelID(mData.getArticle().getChannel_id())
-                            .channelName(mData.getArticle().getChannel_name())
-                            .pageType("新闻详情页")
-                            .relatedContentClick("所属频道")
-                            .build()
-                            .send();
+                    DataAnalyticsUtils.get().ClickRelatedContent(mData);
                 }
                 callback.onOptClickChannel();
             }

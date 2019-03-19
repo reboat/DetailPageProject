@@ -20,13 +20,13 @@ import com.zjrb.zjxw.detailproject.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentPlaceHolder;
 import com.zjrb.zjxw.detailproject.subject.holder.SpecialCommentTabHolder;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
 
@@ -206,19 +206,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
         public void onClick(View v) {
             if (itemView == v && mData != null) {
                 if (mBean != null && mBean.getArticle() != null) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "900002", "900002", "AppTabClick", false)
-                            .setEvenName("专题详情页，更多按钮点击")
-                            .setPageType("专题详情页")
-                            .setClassifyID(mBean.getArticle().getMlf_id() + "")
-                            .setClassifyName(mBean.getArticle().getDoc_title())
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", "SubjectType")
-                                    .put("subject", mBean.getArticle().getId() + "")
-                                    .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "").pageType("专题详情页")
-                            .clickTabName("更多")
-                            .build()
-                            .send();
+                    DataAnalyticsUtils.get().SpecialClickMore(mBean);
                 }
                 //进入专题更多列表
                 Bundle bundle = new Bundle();

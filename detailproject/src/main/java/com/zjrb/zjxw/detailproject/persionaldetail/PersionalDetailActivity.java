@@ -24,6 +24,7 @@ import com.zjrb.zjxw.detailproject.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalDetailInfoFragment;
 import com.zjrb.zjxw.detailproject.persionaldetail.fragment.PersionalRelateFragment;
 import com.zjrb.zjxw.detailproject.task.OfficalDetailTask;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -108,14 +109,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
             @Override
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
-                builder = new Analytics.AnalyticsBuilder(PersionalDetailActivity.this, "A0010", "800033", "OfficialDetailPageStay", true)
-                        .setEvenName("打开单个官员详情页")
-                        .setObjectID(data.getOfficer().getId() + "")
-                        .setPageType("官员页面")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "OfficerType")
-                                .toString())
-                        .pageType("官员页面");
+                builder = DataAnalyticsUtils.get().CreateOfficalAnalytic(data);
                 initView(data);
             }
 
@@ -199,18 +193,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
             }
         } else {//点击分享
             if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
-                new Analytics.AnalyticsBuilder(this, "800018", "800018", "AppTabClick", false)
-                        .setEvenName("点击分享")
-                        .setObjectID(bean.getOfficer().getId() + "")
-                        .setPageType("官员页面")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "OfficerType")
-                                .toString())
-                        .pageType("官员页面")
-                        .clickTabName("分享")
-                        .build()
-                        .send();
-
+                DataAnalyticsUtils.get().OfficalClickShare(bean);
                 //分享
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
@@ -311,19 +294,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 //            tv2.setTextColor(getResources().getColor(R.color._222222));
 //        }
         if (bean != null && bean.getOfficer() != null) {
-            new Analytics.AnalyticsBuilder(this, "210003", "210003", "OfficialDetailClick", false)
-                    .setEvenName("点击官员任职履历标签")
-                    .setObjectID(bean.getOfficer().getId() + "")
-                    .setPageType("官员页面")
-                    .setOtherInfo(Analytics.newOtherInfo()
-                            .put("customObjectType", "OfficerType")
-                            .toString())
-                    .setSearch("任职履历")
-                    .officialName(bean.getOfficer().getName())
-                    .officialID(bean.getOfficer().getId() + "")
-                    .pageType("官员页面")
-                    .build()
-                    .send();
+            DataAnalyticsUtils.get().OfficialDetailClick(bean);
         }
 
     }

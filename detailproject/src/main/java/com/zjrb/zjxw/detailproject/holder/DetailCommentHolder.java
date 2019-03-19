@@ -14,7 +14,6 @@ import com.aliya.uimode.mode.Attr;
 import com.aliya.uimode.utils.UiModeUtils;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
@@ -33,6 +32,7 @@ import com.zjrb.zjxw.detailproject.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.CommentTagMathUtils;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.widget.ConfirmDialog;
 
 import butterknife.BindView;
@@ -41,8 +41,6 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
-
-import static com.zjrb.core.utils.UIUtils.getContext;
 
 /**
  * 详情页/评论列表item holder
@@ -297,79 +295,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         } else if (view.getId() == R.id.tv_delete) {
             //弹框
             if (mBean != null && mBean.getArticle() != null && mData != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "A0123", "A0123", "CommentDeleted", false)
-                        .setEvenName("删除评论")
-                        .setObjectID(mBean.getArticle().getMlf_id())
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType(pageType)
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId())
-                        .newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType(scPageType)
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().DeletedComment(mBean, pageType, scPageType, mData.getId());
             }
             dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.tv_reply || view.getId() == R.id.ly_replay) {
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
-                        .setEvenName("热门评论点击回复")
-                        .setObjectID(mBean.getArticle().getMlf_id())
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType(pageType)
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId())
-                        .newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType(scPageType)
-                        .commentType("评论")
-                        .build()
-                        .send();
-
-
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003", "Comment", false)
-                        .setEvenName("回复评论，且发送成功")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType(pageType)
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType(scPageType)
-                        .commentType("文章")
-                        .build();
+                DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
                             .setListen(new RefreshComment())
@@ -410,50 +343,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else {//回复回复者
             if (mBean != null && mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800003", "800003", "Comment", false)
-                        .setEvenName("热门评论点击回复")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType(pageType)
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType(scPageType)
-                        .commentType("评论")
-                        .build()
-                        .send();
-
-                Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003", "Comment", false)
-                        .setEvenName("回复评论，且发送成功")
-                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-                        .setObjectName(mBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID(mBean.getArticle().getChannel_id())
-                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType(pageType)
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mBean.getArticle().getId() + "")
-                        .setAttachObjectId(mData.getId()).newsID(mBean.getArticle().getMlf_id() + "")
-                        .selfNewsID(mBean.getArticle().getId() + "")
-                        .newsTitle(mBean.getArticle().getDoc_title())
-                        .selfChannelID(mBean.getArticle().getChannel_id())
-                        .channelName(mBean.getArticle().getChannel_name())
-                        .pageType(scPageType)
-                        .commentType("文章")
-                        .build();
+                DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");

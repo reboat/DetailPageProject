@@ -4,10 +4,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
@@ -17,13 +15,13 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
 import cn.daily.news.biz.core.nav.Nav;
@@ -77,27 +75,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         public void onClick(View view) {
             if (ClickTracker.isDoubleClick()) return;
             if (view.getId() == R.id.ry_container && mData != null && !TextUtils.isEmpty(mData.getUri_scheme())) {
-                new Analytics.AnalyticsBuilder(itemView.getContext(), "800011", "800011", "AppContentClick", false)
-                        .setEvenName("更多图集页面，点击单个图集稿件)")
-                        .setObjectID(mData.getMlf_id() + "")
-                        .setObjectName(mData.getTitle())
-                        .setObjectType(ObjectType.NewsType)
-                        .setClassifyID("")
-                        .setClassifyName("")
-                        .setPageType("更多图集页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfObjectID(mData.getId() + "")
-                        .newsID(mData.getMlf_id() + "")
-                        .selfNewsID(mData.getId() + "")
-                        .newsTitle(mData.getTitle())
-                        .pageType("图集列表页")
-                        .objectType("图集新闻列表")
-                        .pubUrl(mData.getUri_scheme())
-                        .build()
-                        .send();
+                DataAnalyticsUtils.get().ClickMoreImgItem(mData);
             }
             if (mTvTitle != null) {
                 mTvTitle.setSelected(true);

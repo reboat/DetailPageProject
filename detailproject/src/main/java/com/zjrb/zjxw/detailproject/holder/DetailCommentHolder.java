@@ -198,7 +198,6 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         }
 
-
         //父评论
         if (!TextUtils.isEmpty(mData.getParent_content())) {
             if (mData.getParent_status() == 3) {

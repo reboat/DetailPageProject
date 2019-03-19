@@ -114,7 +114,7 @@
             android:layout_marginRight="11.5dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/module_detail_comment_replay_stroke"
-            android:visibility="visible"
+            android:visibility="gone"
             >
 
             <TextView
@@ -202,6 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_comment_content"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="7dp"
                 android:text="展开全部"
                 android:textColor="@color/_2378d1"

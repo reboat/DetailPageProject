@@ -96,14 +96,10 @@ public class SpecialListFragment extends DailyFragment {
 
     private void bindData(SubjectListBean bean) {
         List<ArticleItemBean> articleItemBean = bean.getArticle_list();
-        if (mAdapter==null){
-            mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-            mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
-            mAdapter = new SpecialListAdapter(articleItemBean);
-            mRecycler.setAdapter(mAdapter);
-        }else {
-            mAdapter.setData(articleItemBean);
-        }
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
+        mAdapter = new SpecialListAdapter(articleItemBean);
+        mRecycler.setAdapter(mAdapter);
     }
 
     @Override

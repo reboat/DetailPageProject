@@ -28,8 +28,7 @@
                 app:contentScrim="@android:color/transparent"
                 app:expandedTitleMarginEnd="64dp"
                 app:expandedTitleMarginStart="48dp"
-                app:expandedTitleGravity="top"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:expandedTitleGravity="top">
                 <!--占位 高度和toolbar一致-->
                 <android.support.v7.widget.Toolbar
                     android:fitsSystemWindows="true"
@@ -124,7 +123,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_normal_height">
         <View
-            android:background="@color/_ffffff"
             android:id="@+id/tl_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></View>

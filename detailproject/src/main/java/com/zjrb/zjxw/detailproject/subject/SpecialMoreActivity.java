@@ -111,7 +111,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         if (intent != null && intent.getExtras() != null && intent.getExtras().getSerializable(IKey.NEWS_DETAIL) != null) {
             mDraftDetailBean = (DraftDetailBean) intent.getExtras().getSerializable(IKey.NEWS_DETAIL);
         }
-        // TODO: 2019/3/14 模拟
+        // TODO: 2019/3/14 模拟 正式上线前去掉
         String mock = "{\n" +
                 "\t\t\"article\": {\n" +
                 "\t\t\t\"id\": 1114462,\n" +
@@ -288,7 +288,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                 "\t\t},\n" +
                 "\t\t\"adv_places\": {}\n" +
                 "\t}";
-        mDraftDetailBean = new Gson().fromJson(mock, DraftDetailBean.class);
+//        mDraftDetailBean = new Gson().fromJson(mock, DraftDetailBean.class);
     }
 
     @Override

@@ -6,8 +6,9 @@
     android:id="@+id/ry_channel"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/_ffffff_191919"
+    android:layout_marginBottom="8dp"
     android:layout_marginTop="15dp"
+    android:background="@color/_ffffff_191919"
     >
 
     <TextView
@@ -39,13 +40,5 @@
         android:text="@string/module_detail_to_see"
         android:textColor="@color/_cd3f3f"
         android:textSize="@dimen/ts_12sp"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/tv_channel_subscribe"
-        android:layout_marginTop="15dp"
-        android:background="@color/_eeeeee"
         />
 </RelativeLayout>

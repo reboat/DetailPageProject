@@ -46,10 +46,9 @@ configurations.all {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api 'com.android.support:percent:28.0.0'
-    api 'cn.daily.android:analytics:5.8.0.4'
-    api 'cn.daily.android:daily-db:5.1.0'
-    api 'com.jakewharton:butterknife:9.0.0-rc1'
+    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
+    api 'cn.daily.android:daily-db:5.1.0'
     api('cn.daily.android:android-player:0.3.1.4') {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
@@ -63,9 +62,7 @@ dependencies {
     api('cn.daily.android:daily-vr:6.0.0.1') {
         exclude group: 'cn.daily.android'
     }
-    api 'cn.daily.android:biz-core:6.0.0.47'
-    api ('cn.daily.android:common-core:0.0.6.9'){
-    }
+    api 'cn.daily.android:biz-core:6.0.0.58'
     api 'org.jsoup:jsoup:1.10.2'
 }
 

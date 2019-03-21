@@ -232,11 +232,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         //如果是大屏版本
         if (!AppUtils.isUseSystemConfig()) {
             DensityHelper.DpiEntity dpiEntity = DensityHelper.matchTheoryEntity(UIUtils.getScreenW(), UIUtils.getScreenH());
-            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
-                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * dpiEntity.getDensity() * 100));
-            } else {
-                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
-            }
+            settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * dpiEntity.getDensity() * 55));
+//            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+//                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * dpiEntity.getDensity() * 100));
+//            } else {
+//                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
+//            }
         } else {
             settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
         }

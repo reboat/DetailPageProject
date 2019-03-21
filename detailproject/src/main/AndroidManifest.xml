@@ -50,7 +50,7 @@
             android:required="false" />
         <!-- 普通详情页 保持在栈顶 -->
         <activity
-            android:name=".nomaldetail.NewsDetailActivity"
+            android:name=".ui.nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -82,7 +82,7 @@
 
         <!-- 链接稿 -->
         <activity
-            android:name=".link.BrowserLinkActivity"
+            android:name=".ui.link.BrowserLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -111,7 +111,7 @@
 
         <!-- 链接稿 -->
         <activity
-            android:name=".link.LiveLinkActivity"
+            android:name=".ui.link.LiveLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -139,7 +139,7 @@
 
         <!-- 图集详情页 -->
         <activity
-            android:name=".photodetail.AtlasDetailActivity"
+            android:name=".ui.photodetail.AtlasDetailActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -167,7 +167,7 @@
 
         <!-- 专题详情页 -->
         <activity
-            android:name=".subject.SpecialActivity"
+            android:name=".ui.subject.SpecialActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -194,7 +194,7 @@
 
         <!-- 话题详情页 -->
         <activity
-            android:name=".topic.ActivityTopicActivity"
+            android:name=".ui.topic.ActivityTopicActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -221,7 +221,7 @@
 
         <!-- 红船号详情页 -->
         <activity
-            android:name=".redBoat.RedBoatActivity"
+            android:name=".ui.redBoat.RedBoatActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -247,7 +247,7 @@
         </activity>
 
         <!-- 专题列表 -->
-        <activity android:name=".subject.SpecialListActivity"
+        <activity android:name=".ui.subject.SpecialListActivity"
                   android:configChanges="uiMode" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -263,7 +263,7 @@
         </activity>
 
         <!-- 官员详情页 -->
-        <activity android:name=".persionaldetail.PersionalDetailActivity"
+        <activity android:name=".ui.persionaldetail.PersionalDetailActivity"
                   android:configChanges="uiMode" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -287,7 +287,7 @@
         </activity>
 
         <!-- 官员新闻列表 -->
-        <activity android:name=".persionaldetail.PersionalListActivity"
+        <activity android:name=".ui.persionaldetail.PersionalListActivity"
                   android:configChanges="uiMode" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -310,7 +310,7 @@
 
         <!-- 评论列表 -->
         <activity
-            android:name=".comment.CommentActivity"
+            android:name=".ui.comment.CommentActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -328,7 +328,7 @@
 
         <!-- 精选评论列表 -->
         <activity
-            android:name=".comment.CommentSelectActivity"
+            android:name=".ui.comment.CommentSelectActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -348,7 +348,7 @@
 
         <!--专题更多xd-->
         <activity
-            android:name=".subject.SpecialMoreActivity">
+            android:name=".ui.subject.SpecialMoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.DAILY" />
                 <action android:name="android.intent.action.VIEW" />

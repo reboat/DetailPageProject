@@ -2,12 +2,13 @@ package com.zjrb.zjxw.detailproject.callback;
 
 import android.content.Context;
 
-import com.zjrb.zjxw.detailproject.bean.ArticleItemBean;
-import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.bean.OfficalDetailBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedNewsBean;
-import com.zjrb.zjxw.detailproject.bean.RelatedSubjectsBean;
-import com.zjrb.zjxw.detailproject.bean.SpecialGroupBean;
+
+import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.RelatedSubjectsBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 
 import cn.daily.news.analytics.Analytics;
 

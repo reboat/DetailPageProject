@@ -1,7 +1,7 @@
 package com.zhejiangdaily;
 
 import com.zjrb.core.load.LoadingCallBack;
-import com.zjrb.zjxw.detailproject.global.APIManager;
+import com.zjrb.zjxw.detailproject.utils.global.APIManager;
 
 import cn.daily.news.biz.core.network.compatible.APIPostTask;
 

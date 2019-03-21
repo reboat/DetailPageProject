@@ -29,9 +29,9 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
-import com.zjrb.zjxw.detailproject.bean.DetailShareBean;
-import com.zjrb.zjxw.detailproject.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.DetailShareAdapter;
+import com.zjrb.zjxw.detailproject.apibean.bean.DetailShareBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.DetailShareAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

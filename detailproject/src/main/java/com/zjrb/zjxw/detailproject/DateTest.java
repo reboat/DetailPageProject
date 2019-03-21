@@ -1,7 +1,8 @@
 package com.zjrb.zjxw.detailproject;
 
-import com.zjrb.zjxw.detailproject.bean.HotCommentsBean;
-import com.zjrb.zjxw.detailproject.bean.SubjectVoiceMassBean;
+
+import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.SubjectVoiceMassBean;
 
 import java.util.ArrayList;
 import java.util.List;

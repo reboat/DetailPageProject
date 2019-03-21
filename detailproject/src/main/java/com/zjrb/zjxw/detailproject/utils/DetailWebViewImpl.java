@@ -2,8 +2,9 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.content.Context;
 
-import com.zjrb.zjxw.detailproject.nomaldetail.adapter.NewsDetailAdapter;
-import com.zjrb.zjxw.detailproject.topic.adapter.TopicAdapter;
+
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 
 import cn.daily.news.biz.core.web.WebViewImpl;
 

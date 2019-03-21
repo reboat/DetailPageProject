@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.holder;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.trs.tasdk.entity.ObjectType;
+import com.zjrb.core.common.base.BaseActivity;
 import com.zjrb.core.common.base.BaseRecyclerViewHolder;
 import com.zjrb.core.common.biz.ResourceBiz;
 import com.zjrb.core.common.biz.SettingBiz;
@@ -25,6 +27,7 @@ import com.zjrb.core.ui.UmengUtils.OutSizeAnalyticsBean;
 import com.zjrb.core.ui.fragment.ScanerBottomFragment;
 import com.zjrb.core.ui.widget.ZBWebView;
 import com.zjrb.core.utils.AppUtils;
+import com.zjrb.core.utils.DensityHelper;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.core.utils.webjs.LongClickCallBack;
@@ -226,7 +229,17 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
 
         settings = mWebView.getSettings();
-        settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
+        //如果是大屏版本
+        if (!AppUtils.isUseSystemConfig()) {
+            DensityHelper.DpiEntity dpiEntity = DensityHelper.matchTheoryEntity(UIUtils.getScreenW(), UIUtils.getScreenH());
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1) {
+                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * dpiEntity.getDensity() * 100));
+            } else {
+                settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
+            }
+        } else {
+            settings.setTextZoom(Math.round(SettingBiz.get().getHtmlFontScale() * 100));
+        }
         // 建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT,无网络时，使用LOAD_CACHE_ELSE_NETWORK
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         // 开启DOM storage API 功能
@@ -234,7 +247,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         // 开启database storage API功能
         settings.setDatabaseEnabled(false);
         settings.setAppCacheEnabled(false);
-        //TODO  WLJ合并为同一个
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

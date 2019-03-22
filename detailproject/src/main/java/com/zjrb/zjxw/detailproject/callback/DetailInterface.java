@@ -17,4 +17,9 @@ public interface DetailInterface {
     interface VideoBCnterFace {
         void videoBC(Intent intent);
     }
+
+    //网络监听
+    interface NetWorkInterFace {
+        void networkBC(Intent intent);
+    }
 }

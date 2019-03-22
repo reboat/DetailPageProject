@@ -12,11 +12,7 @@
         android:id="@+id/video_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:ratio_w2h="16:9">
 
         <ImageView
@@ -65,39 +61,31 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:visibility="gone"
-            ></include>
+            android:visibility="gone">
+        </include>
 
     </com.aliya.view.ratio.RatioFrameLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_content"
+    <com.zjrb.daily.news.ui.widget.SlidingTabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_below="@+id/video_container"
+        android:layout_gravity="center|left"
+        android:background="@color/_ffffff"
+        app:tl_indicator_color="@color/_ffcd3f3f"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_width="18dp"
+        app:tl_textSelectColor="@color/_222222"
+        app:tl_textUnselectColor="@color/_666666"
+        app:tl_textsize="@dimen/ts_14sp" />
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/video_container"
-        android:layout_above="@+id/ly_bottom_comment"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        >
-
-        <com.aliya.view.fitsys.FitWindowsFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:focusableInTouchMode="true"
-            android:focusable="true"
-            app:fitType="bottom">
-
-            <com.aliya.view.fitsys.FitWindowsRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
-                />
-        </com.aliya.view.fitsys.FitWindowsFrameLayout>
-    </FrameLayout>
+        android:layout_below="@+id/tabLayout" />
 
     <include
         android:id="@+id/ly_bottom_comment"
@@ -106,7 +94,6 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true" />
 
-    <!--稿件下架-->
     <FrameLayout
         android:id="@+id/v_container"
         android:layout_width="match_parent"

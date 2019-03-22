@@ -72,9 +72,11 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     private boolean isRedBoat = false;//是否是红船号的适配器
     private DraftDetailBean detailBean;
     private Bundle bundle;
+    private boolean isVideoDetail;
 
-    public NewsDetailAdapter(List datas) {
+    public NewsDetailAdapter(List datas, boolean isVideoDetail) {
         super(datas);
+        this.isVideoDetail = isVideoDetail;
         setOnItemClickListener(this);
     }
 
@@ -191,7 +193,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
         //添加热门评论
         List<HotCommentsBean> hotCommentsBeen = detailBean.getArticle().getHot_comments();
-        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0) {
+        if (hotCommentsBeen != null && hotCommentsBeen.size() > 0 && !isVideoDetail) {
             datas.add("热门评论");
             datas.addAll(hotCommentsBeen);
             datas.add("点击查看更多评论");

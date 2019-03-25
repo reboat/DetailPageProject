@@ -64,6 +64,7 @@ public class HotCommentsBean implements Serializable {
     private String parent_location;
     private String list_title;
     private String url;
+    private boolean isHotComment = false;
 
     /**
      * 是否是自己的评论
@@ -282,6 +283,14 @@ public class HotCommentsBean implements Serializable {
 
     public void setParent_location(String parent_location) {
         this.parent_location = parent_location;
+    }
+
+    public boolean isHotComment() {
+        return isHotComment;
+    }
+
+    public void setHotComment(boolean hotComment) {
+        isHotComment = hotComment;
     }
 
     public String getList_title() {

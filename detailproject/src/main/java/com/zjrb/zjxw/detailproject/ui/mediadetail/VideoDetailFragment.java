@@ -29,7 +29,7 @@ import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
- * 视频详情页
+ * 视频详情页详情相关
  * Created by wanglinjie.
  * create time:2019/3/22  下午3:21
  */

@@ -8,8 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.daily.news.location.DataLocation;
-import com.daily.news.location.LocationManager;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
@@ -36,8 +34,7 @@ import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
  */
 public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         .OnRefreshListener, DetailCommentHolder.deleteCommentListener,
-        CommentWindowDialog.updateCommentListener,
-        CommentWindowDialog.LocationCallBack {
+        CommentWindowDialog.updateCommentListener {
     public static final String FRAGMENT_DETAIL_COMMENT = "fragment_detail_comment";
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
@@ -62,6 +59,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         ButterKnife.bind(this, view);
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
+        refreshData();
     }
 
     @Override
@@ -93,14 +91,12 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             lvNotice.setAdapter(mCommentAdapter);
         } else {
             mCommentAdapter.setCommentCount(commentRefreshBean.getComment_count());
-            mCommentAdapter.setData(commentRefreshBean);
+            mCommentAdapter.setData(commentRefreshBean, newsDetail);
             mCommentAdapter.notifyDataSetChanged();
         }
     }
 
-    /**
-     * 下拉刷新
-     */
+    //下拉刷新
     private void refreshData() {
         new CommentListTask(new LoadingCallBack<CommentRefreshBean>() {
             @Override
@@ -120,20 +116,6 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
                 T.showShort(getContext(), errMsg);
             }
         }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mContainer)).exe(mNewsDetail.getArticle().getId());
-    }
-
-    @Override
-    public String onGetLocation() {
-        if (LocationManager.getInstance().getLocation() != null) {
-            DataLocation.Address address = LocationManager.getInstance().getLocation().getAddress();
-            if (address != null) {
-                return address.getCountry() + "," + address.getProvince() + "," + address.getCity();
-            } else {
-                return "" + "," + "" + "," + "";
-            }
-        } else {
-            return "" + "," + "" + "," + "";
-        }
     }
 
     @Override

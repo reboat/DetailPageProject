@@ -27,7 +27,7 @@ import cn.daily.news.biz.core.network.compatible.APICallManager;
 import static com.zjrb.core.utils.UIUtils.getString;
 
 /**
- * 评论页Adapter(与视频详情评论共用)
+ * 评论页Adapter(与视频/直播详情评论共用)
  * Created by wanglinjie.
  * create time:2017/7/19  上午10:14
  */
@@ -39,12 +39,15 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private int COMMENT_NEW = 2;
     //评论
     private int COMMENT_CONTENT = 3;
-
+    //稿件ID
     private String articleId;
+    //是否是精选评论
     private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
     private View mView;
     private TextView mTextView;
+    //最新评论数
+    private int commentCount = 0;
 
     /**
      * 网脉专用
@@ -109,7 +112,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
 
-    //设置数据
+    //设置评论详情数据
     public void setData(CommentRefreshBean data) {
         cancelLoadMore();
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
@@ -200,12 +203,10 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         if (!isVideoDetail) {
             updateHead();
         } else {
-            updateVideoComment(position);
+            deleteVideoComment(position);
         }
         notifyItemRemoved(position);
     }
-
-    private int commentCount = 0;
 
     //最新评论数
     public void setCommentCount(int commentCount) {
@@ -213,18 +214,19 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     //删除评论后更新评论相关
-    private void updateVideoComment(int position) {
+    private void deleteVideoComment(int position) {
         if (getData(position) instanceof HotCommentsBean) {
             HotCommentsBean bean = (HotCommentsBean) getData(position);
             //热门评论
             if (bean.isHotComment()) {
-                if (commentCount > 99999) {
+                if (hotCommentNUm > 99999) {
                     hotHolder.setText("99999+");
                 } else {
-                    if (--commentCount == 0) {
+                    if (--hotCommentNUm == 0) {
                         hotHolder.itemView.setVisibility(View.GONE);
                     } else {
-                        hotHolder.setText(--hotCommentNUm + "");
+                        hotHolder.itemView.setVisibility(View.VISIBLE);
+                        hotHolder.setText(hotCommentNUm + "");
                     }
                 }
             } else {//最新评论
@@ -234,7 +236,8 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
                     if (--commentCount == 0) {
                         NewsHolder.itemView.setVisibility(View.GONE);
                     } else {
-                        NewsHolder.setText(--commentCount + "");
+                        NewsHolder.itemView.setVisibility(View.VISIBLE);
+                        NewsHolder.setText(commentCount + "");
                     }
                 }
             }
@@ -243,7 +246,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     //添加
     private void addVideoComment() {
-        hotHolder.setText(hotCommentNUm + "");
         NewsHolder.setText(commentCount + "");
     }
 

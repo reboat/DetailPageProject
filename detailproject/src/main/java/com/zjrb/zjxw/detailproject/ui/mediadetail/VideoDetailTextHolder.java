@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * //TODO WLJ 换个布局吧
  * 详情页文案holder
  * Created by wanglinjie.
  * create time:2017/10/26  上午8:58
@@ -46,5 +47,4 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     public void setText(String text) {
         mTvHot.setText(text);
     }
-
 }

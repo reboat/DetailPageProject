@@ -54,7 +54,6 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.TabPagerAdapterImpl;
-import com.zjrb.zjxw.detailproject.ui.persionaldetail.fragment.PersionalDetailInfoFragment;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.PlayerAnalytics;
@@ -86,6 +85,7 @@ import static com.aliya.dailyplayer.FullscreenActivity.KEY_URL;
 import static com.aliya.dailyplayer.vertical.VFullscreenActivity.KEY_TITLE;
 import static com.aliya.dailyplayer.vertical.VFullscreenActivity.REQUEST_CODE;
 import static com.zjrb.core.utils.UIUtils.getContext;
+import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoCommentFragment.FRAGMENT_DETAIL_COMMENT;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
 /**
@@ -252,14 +252,12 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
         //传递官员详情页相关新闻
         Bundle bundlePersionalRelate = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, VideoDetailFragment.FRAGMENT_DETAIL_VIDEO);
-        bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, View.GONE);
+        bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
 
-        //TODO WLJ 评论
-        //传递官员详情页履历
         Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
-                .FRAGMENT_ARGS, VideoCommentFragment.FRAGMENT_DETAIL_COMMENT);
-        bundlePersionalDetailInfo.putSerializable(IKey.FRAGMENT_PERSIONAL_INFO, bean);
+                .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
+        bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_COMMENT, bean);
         pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论(" + bean.getComment_count() + ")", bundlePersionalDetailInfo);
 
         viewPager.setAdapter(pagerAdapter);

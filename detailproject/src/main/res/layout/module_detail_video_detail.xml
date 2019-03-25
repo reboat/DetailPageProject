@@ -12,7 +12,7 @@
         android:id="@+id/video_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:ratio_w2h="16:9">
 
         <ImageView
@@ -68,10 +68,10 @@
 
     <com.zjrb.daily.news.ui.widget.SlidingTabLayout
         android:id="@+id/tabLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="39dp"
         android:layout_below="@+id/video_container"
-        android:layout_gravity="center|left"
+        android:layout_gravity="center_vertical"
         android:background="@color/_ffffff"
         app:tl_indicator_color="@color/_ffcd3f3f"
         app:tl_indicator_height="4dp"

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    >
+
+    <TextView
+        android:id="@+id/tv_hot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
+        android:drawablePadding="9.5dp"
+        android:letterSpacing="0.25"
+        android:paddingBottom="9dp"
+        android:paddingTop="9dp"
+        android:textColor="@color/_484848_7a7b7d"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:text="热门评论" />
+
+    <TextView
+        android:id="@+id/tv_comment_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="14sp"
+        tools:text="9999+" />
+</LinearLayout>
+

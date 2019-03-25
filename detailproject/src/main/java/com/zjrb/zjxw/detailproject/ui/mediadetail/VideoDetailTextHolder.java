@@ -12,7 +12,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * //TODO WLJ 换个布局吧
  * 详情页文案holder
  * Created by wanglinjie.
  * create time:2017/10/26  上午8:58
@@ -22,29 +21,29 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
 
     @BindView(R2.id.tv_hot)
     TextView mTvHot;
-    //评论数
+    @BindView(R2.id.tv_comment_num)
+    TextView mTvNum;
     private int mCommentNum;
-    private boolean isHot;
 
-    public VideoDetailTextHolder(ViewGroup parent, int commentNum, boolean isHot) {
-        super(UIUtils.inflate(R.layout.module_detail_comment_head, parent, false));
+    public VideoDetailTextHolder(ViewGroup parent, int commentNum) {
+        super(UIUtils.inflate(R.layout.module_detail_video_comment, parent, false));
         ButterKnife.bind(this, itemView);
         mCommentNum = commentNum;
-        this.isHot = isHot;
     }
 
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        if (isHot) {
-            mTvHot.setText(mData.toString());
+        mTvHot.setText(mData.toString());
+        if (mCommentNum > 99999) {
+            mTvNum.setText("99999+");
         } else {
-            mTvHot.setText(mData.toString());
+            mTvNum.setText(mCommentNum + "");
         }
     }
 
-    //设置评论标签文案显示
+    //评论数
     public void setText(String text) {
-        mTvHot.setText(text);
+        mTvNum.setText(text);
     }
 }

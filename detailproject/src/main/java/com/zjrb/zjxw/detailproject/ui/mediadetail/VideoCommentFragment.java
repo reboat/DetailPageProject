@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.ui.comment.adapter.CommentAdapter;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
@@ -26,6 +28,8 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+
+import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
 /**
  * 视频详情页评论相关
@@ -49,7 +53,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mNewsDetail = (DraftDetailBean) getArguments().getSerializable(FRAGMENT_DETAIL_COMMENT);
+            mNewsDetail = (DraftDetailBean) getArguments().getSerializable(FRAGMENT_DETAIL_BEAN);
         }
     }
 
@@ -57,6 +61,8 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        lvNotice.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvNotice.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
         refreshData();
@@ -65,7 +71,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.module_detail_fragment_relate_news, container, false);
+        return inflater.inflate(R.layout.module_detail_fragment_video, container, false);
     }
 
     @Override
@@ -115,7 +121,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
-        }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(mContainer)).exe(mNewsDetail.getArticle().getId());
+        }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getId());
     }
 
     @Override

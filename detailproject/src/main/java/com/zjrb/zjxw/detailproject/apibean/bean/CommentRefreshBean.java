@@ -68,6 +68,7 @@ public class CommentRefreshBean extends BaseData {
 
     public static class ShareArtcleInfo implements Serializable {
 
+        private static final long serialVersionUID = -4219055315538661046L;
         /**
          * list_title : 深论丨关注集体土地小步入市的后续问题
          * summary :

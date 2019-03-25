@@ -33,7 +33,7 @@ import cn.daily.news.biz.core.utils.RouteManager;
  * Created by wanglinjie.
  * create time:2019/3/22  下午3:21
  */
-public class VideoDetailFragment extends DailyFragment implements NewsDetailAdapter.CommonOptCallBack {
+public class VideoDetailFragment extends DailyFragment{
     public static final String FRAGMENT_DETAIL_VIDEO = "fragment_detail_video";
     public static final String FRAGMENT_DETAIL_BEAN = "fragment_detail_bean";
     @BindView(R2.id.lv_notice)
@@ -49,7 +49,7 @@ public class VideoDetailFragment extends DailyFragment implements NewsDetailAdap
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mNewsDetail = (DraftDetailBean) getArguments().getSerializable(FRAGMENT_DETAIL_VIDEO);
+            mNewsDetail = (DraftDetailBean) getArguments().getSerializable(FRAGMENT_DETAIL_BEAN);
         }
     }
 
@@ -63,11 +63,13 @@ public class VideoDetailFragment extends DailyFragment implements NewsDetailAdap
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.module_detail_fragment_relate_news, container, false);
+        return inflater.inflate(R.layout.module_detail_fragment_video, container, false);
     }
 
     private void init() {
-        builder = DataAnalyticsUtils.get().pageStayTime(mNewsDetail);
+        if(mNewsDetail != null){
+            builder = DataAnalyticsUtils.get().pageStayTime(mNewsDetail);
+        }
         List datas = new ArrayList<>();
         //添加头布局
         datas.add(mNewsDetail);
@@ -82,6 +84,11 @@ public class VideoDetailFragment extends DailyFragment implements NewsDetailAdap
                 ).itemView);
         lvNotice.setAdapter(mAdapter);
     }
+
+    public NewsDetailAdapter getmAdapter() {
+        return mAdapter;
+    }
+
 
     @Override
     public void onResume() {
@@ -99,13 +106,6 @@ public class VideoDetailFragment extends DailyFragment implements NewsDetailAdap
         }
     }
 
-    @Override
-    public void onOptPageFinished() {
-        mAdapter.showAll();
-    }
-
-    //点击频道
-    @Override
     public void onOptClickChannel() {
         if (bundle == null) {
             bundle = new Bundle();
@@ -115,7 +115,6 @@ public class VideoDetailFragment extends DailyFragment implements NewsDetailAdap
         Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
     }
 
-    @Override
     public void onReadingScaleChange(float scale) {
         mScale = scale;
     }

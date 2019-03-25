@@ -368,7 +368,7 @@
         <!--视频/直播页面-->
         <activity
             android:name=".ui.mediadetail.VideoDetailActivity"
-            android:configChanges="uiMode">
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -378,7 +378,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/video.html" />
-                <data android:path="//native_live.html" />
+                <data android:path="/native_live.html" />
                 <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />

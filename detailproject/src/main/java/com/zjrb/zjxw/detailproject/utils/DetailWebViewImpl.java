@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.utils;
 
 import android.content.Context;
 
-
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 

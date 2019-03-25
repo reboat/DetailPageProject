@@ -35,6 +35,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -53,6 +54,7 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.NetWorkChangeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
@@ -93,7 +95,7 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  * Created by wanglinjie.
  * create time:2019/3/22  上午9:05
  */
-final public class VideoDetailActivity extends DailyActivity implements CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace, DetailInterface.VideoBCnterFace, DetailInterface.NetWorkInterFace {
+final public class VideoDetailActivity extends DailyActivity implements NewsDetailAdapter.CommonOptCallBack, CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace, DetailInterface.VideoBCnterFace, DetailInterface.NetWorkInterFace {
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -109,8 +111,6 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
     FrameLayout flComment;
     @BindView(R2.id.tv_comments_num)
     TextView tvCommentsNum;
-    @BindView(R2.id.ly_comment_num)
-    LinearLayout lyCommentNum;
     @BindView(R2.id.menu_prised)
     ImageView menuPrised;
     @BindView(R2.id.v_container)
@@ -125,6 +125,8 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
+    @BindView(R2.id.ly_comment_num)
+    LinearLayout lyComment;
 
 
     private int ui;
@@ -137,6 +139,7 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
     private NetWorkChangeReceiver networkChangeReceiver;
     private Bundle bundle;
     private TabPagerAdapterImpl pagerAdapter;
+    private VideoDetailFragment videoDetailFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +151,7 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
 
     private void init() {
         ui = getWindow().getDecorView().getSystemUiVisibility();
+        lyComment.setVisibility(View.GONE);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         receive = new VideoReceiver(this);
         IntentFilter intentFilter = new IntentFilter(UIUtils.getString(R.string.intent_action_close_video));
@@ -246,7 +250,7 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
     }
 
     //初始化视频/评论fragment
-    private void initViewPage(DraftDetailBean.ArticleBean bean) {
+    private void initViewPage(DraftDetailBean bean) {
         pagerAdapter = new TabPagerAdapterImpl(getSupportFragmentManager(), this);
 
         //传递官员详情页相关新闻
@@ -254,12 +258,17 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
                 .FRAGMENT_ARGS, VideoDetailFragment.FRAGMENT_DETAIL_VIDEO);
         bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
+        videoDetailFragment = (VideoDetailFragment)pagerAdapter.getItem(0);
 
         Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
-        bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_COMMENT, bean);
-        pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论(" + bean.getComment_count() + ")", bundlePersionalDetailInfo);
-
+        bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
+        if (bean.getArticle().getComment_count() > 0) {
+            //TODO WLJ 这里需要同步更新评论数
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundlePersionalDetailInfo);
+        } else {
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundlePersionalDetailInfo);
+        }
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
     }
@@ -278,7 +287,7 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
                 mNewsDetail = draftDetailBean;
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                     initVideo(mNewsDetail.getArticle());
-                    initViewPage(mNewsDetail.getArticle());
+                    initViewPage(mNewsDetail);
                 }
                 fillData(mNewsDetail);
                 YiDunToken.synYiDunToken(mArticleId);
@@ -346,23 +355,6 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
             menuPrised.setSelected(data.getArticle().isLiked());
         } else {
             menuPrised.setVisibility(View.GONE);
-        }
-
-        //大致评论数量
-        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-            tvCommentsNum.setVisibility(View.VISIBLE);
-            tvCommentsNum.setText(data.getArticle().getComment_count_general());
-        } else {
-            tvCommentsNum.setVisibility(View.GONE);
-        }
-
-        //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
-            flComment.setVisibility(View.GONE);
-            lyCommentNum.setVisibility(View.GONE);
-        } else {
-            flComment.setVisibility(View.VISIBLE);
-            lyCommentNum.setVisibility(View.VISIBLE);
         }
     }
 
@@ -683,5 +675,20 @@ final public class VideoDetailActivity extends DailyActivity implements CommentW
         } else {
             return "" + "," + "" + "," + "";
         }
+    }
+
+    @Override
+    public void onOptPageFinished() {
+        videoDetailFragment.getmAdapter().showAll();
+    }
+
+    @Override
+    public void onOptClickChannel() {
+       videoDetailFragment.onOptClickChannel();
+    }
+
+    @Override
+    public void onReadingScaleChange(float scale) {
+        videoDetailFragment.onReadingScaleChange(scale);
     }
 }

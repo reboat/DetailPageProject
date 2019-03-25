@@ -69,9 +69,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         setData(datas);
         mBean = bean;
         mDatas = datas;
-        if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getHot_comments() != null) {
-            hotCommentNUm = mBean.getArticle().getHot_comments().size();
-        }
     }
 
     //视频详情页设置数据
@@ -81,6 +78,10 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         setFooterLoadMore(mLoadMore.itemView);
         setData(datas, bean);
         mBean = bean;
+        mDatas = datas;
+        if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getHot_comments() != null) {
+            hotCommentNUm = mBean.getArticle().getHot_comments().size();
+        }
         this.isVideoDetail = isVideoDetail;
     }
 
@@ -144,9 +145,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == COMMENT_HOT) {
-            return hotHolder = new VideoDetailTextHolder(parent, hotCommentNUm, true);
+            return hotHolder = new VideoDetailTextHolder(parent, hotCommentNUm);
         } else if (viewType == COMMENT_NEW) {
-            return NewsHolder = new VideoDetailTextHolder(parent, mDatas.getComment_count(), false);
+            return NewsHolder = new VideoDetailTextHolder(parent, mDatas.getComment_count());
         } else {
             return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
         }
@@ -164,7 +165,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         return super.getAbsItemViewType(position);
     }
 
-    //加载更多成
+    //加载更多成功
     @Override
     public void onLoadMoreSuccess(CommentRefreshBean data, LoadMore loadMore) {
         if (noMore(data)) {

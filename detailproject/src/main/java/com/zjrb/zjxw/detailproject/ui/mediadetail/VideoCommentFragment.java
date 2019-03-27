@@ -1,7 +1,9 @@
 package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -102,12 +104,29 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         }
     }
 
+    //同步评论数
+    private void SyncCommentNum(int commentNum) {
+        Intent intent = new Intent("sync_comment_num");
+        if (commentNum == 0) {
+            intent.putExtra("video_comment_title", "评论");
+        } else {
+            intent.putExtra("video_comment_title", "评论 (" + commentNum + ")");
+        }
+        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+    }
+
     //下拉刷新
     private void refreshData() {
         new CommentListTask(new LoadingCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
-                initAdapter(commentRefreshBean, mNewsDetail);
+                //最新评论加热门评论数
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    if(mNewsDetail.getArticle().getHot_comments() != null){
+                        SyncCommentNum(commentRefreshBean.getComment_count() + mNewsDetail.getArticle().getHot_comments().size());
+                    }
+                    initAdapter(commentRefreshBean, mNewsDetail);
+                }
                 lvNotice.scrollToPosition(0);
                 refresh.setRefreshing(false);
             }

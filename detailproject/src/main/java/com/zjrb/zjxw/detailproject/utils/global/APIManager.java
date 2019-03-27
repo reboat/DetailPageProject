@@ -44,7 +44,6 @@ public class APIManager {
         public static final String SELECT_LIST = "/api/comment/topic_select_list";
 
 
-
         /**
          * 评论点赞
          */
@@ -98,6 +97,11 @@ public class APIManager {
          * 初始化接口
          */
         public static final String API_INIT = "/api/account/init";
+
+        /**
+         * 直播列表
+         */
+        public static final String REALTIME_LIST = "/api/native_live/realtime_list";
 
     }
 

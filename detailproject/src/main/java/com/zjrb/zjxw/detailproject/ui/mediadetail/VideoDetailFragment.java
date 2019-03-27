@@ -33,7 +33,7 @@ import cn.daily.news.biz.core.utils.RouteManager;
  * Created by wanglinjie.
  * create time:2019/3/22  下午3:21
  */
-public class VideoDetailFragment extends DailyFragment{
+public class VideoDetailFragment extends DailyFragment {
     public static final String FRAGMENT_DETAIL_VIDEO = "fragment_detail_video";
     public static final String FRAGMENT_DETAIL_BEAN = "fragment_detail_bean";
     @BindView(R2.id.lv_notice)
@@ -67,7 +67,7 @@ public class VideoDetailFragment extends DailyFragment{
     }
 
     private void init() {
-        if(mNewsDetail != null){
+        if (mNewsDetail != null) {
             builder = DataAnalyticsUtils.get().pageStayTime(mNewsDetail);
         }
         List datas = new ArrayList<>();
@@ -106,19 +106,6 @@ public class VideoDetailFragment extends DailyFragment{
         }
     }
 
-    public void onOptClickChannel() {
-        if (bundle == null) {
-            bundle = new Bundle();
-        }
-        bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getSource_channel_name());
-        bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getSource_channel_id());
-        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
-    }
-
-    public void onReadingScaleChange(float scale) {
-        mScale = scale;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -134,4 +121,18 @@ public class VideoDetailFragment extends DailyFragment{
             }
         }
     }
+
+    public void onOptClickChannel() {
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        bundle.putString(IKey.CHANNEL_NAME, mNewsDetail.getArticle().getSource_channel_name());
+        bundle.putString(IKey.CHANNEL_ID, mNewsDetail.getArticle().getSource_channel_id());
+        Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.SUBSCRIBE_PATH);
+    }
+
+    public void onReadingScaleChange(float scale) {
+        mScale = scale;
+    }
+
 }

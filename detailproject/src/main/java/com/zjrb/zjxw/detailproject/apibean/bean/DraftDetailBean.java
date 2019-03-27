@@ -93,6 +93,7 @@ public class DraftDetailBean extends BaseData {
         private String from_channel;
         private String timeline;
         private int video_type;
+        private boolean topped;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -103,6 +104,22 @@ public class DraftDetailBean extends BaseData {
         private List<String> topic_guests;
 
         private List<SpecialGroupBean> subject_groups;
+        /**
+         * live_id : 100060
+         * title : 花灯水灯 七彩汤圆 浙里元宵浙样过
+         * reporter : 浙视频
+         * intro : 2月19日，农历元月十五元宵节，浙视频记者带你感受浙江杭州、宁波、嘉兴、绍兴四地不同的元宵习俗，手把手教你七彩汤圆，看非遗表演，游乌镇水上灯会，来浙里和我们一起闹元宵。
+         * 直播时间：2019年2月19日14:00-18:00
+         * （记者 周莎莎 钱璐斌 徐文迪 周旭辉 柳蓬 孙坤 马佳妮 贺元凯 应磊 郑培庚 赵晶晶 王志杰 编辑 彭鹏 张敏娴 导播 吴耀斌）
+         * cover : https://mzvideo.8531.cn/1550504273529客户端.jpg?5c6ad151eaf5b&imageMogr2/crop/!1917x1078a0a1
+         * stream_url : https://pili-live-hls.8531.cn/mlflive/live100060-0-1550504360.m3u8
+         * stream_status : 2
+         * playback_url : https://v-spyx.8531.cn/live/4143/1550572143
+         * live_duration : 234
+         */
+
+        //直播原生信息
+        private NativeLiveInfoBean native_live_info;
 
         public String getFrom_channel() {
             return from_channel;
@@ -733,6 +750,106 @@ public class DraftDetailBean extends BaseData {
             this.video_type = video_type;
         }
 
+        public NativeLiveInfoBean getNative_live_info() {
+            return native_live_info;
+        }
+
+        public void setNative_live_info(NativeLiveInfoBean native_live_info) {
+            this.native_live_info = native_live_info;
+        }
+
+        public boolean isTopped() {
+            return topped;
+        }
+
+        public void setTopped(boolean topped) {
+            this.topped = topped;
+        }
+
+        //原生直播
+        public static class NativeLiveInfoBean {
+            private int live_id;
+            private String title;
+            private String reporter;
+            private String intro;
+            private String cover;
+            private String stream_url;
+            private int stream_status;//0 未开始 1 进行中 2 已结束
+            private String playback_url;
+            private int live_duration;
+
+            public int getLive_id() {
+                return live_id;
+            }
+
+            public void setLive_id(int live_id) {
+                this.live_id = live_id;
+            }
+
+            public String getTitle() {
+                return title;
+            }
+
+            public void setTitle(String title) {
+                this.title = title;
+            }
+
+            public String getReporter() {
+                return reporter;
+            }
+
+            public void setReporter(String reporter) {
+                this.reporter = reporter;
+            }
+
+            public String getIntro() {
+                return intro;
+            }
+
+            public void setIntro(String intro) {
+                this.intro = intro;
+            }
+
+            public String getCover() {
+                return cover;
+            }
+
+            public void setCover(String cover) {
+                this.cover = cover;
+            }
+
+            public String getStream_url() {
+                return stream_url;
+            }
+
+            public void setStream_url(String stream_url) {
+                this.stream_url = stream_url;
+            }
+
+            public int getStream_status() {
+                return stream_status;
+            }
+
+            public void setStream_status(int stream_status) {
+                this.stream_status = stream_status;
+            }
+
+            public String getPlayback_url() {
+                return playback_url;
+            }
+
+            public void setPlayback_url(String playback_url) {
+                this.playback_url = playback_url;
+            }
+
+            public int getLive_duration() {
+                return live_duration;
+            }
+
+            public void setLive_duration(int live_duration) {
+                this.live_duration = live_duration;
+            }
+        }
     }
 
 }

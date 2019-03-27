@@ -22,4 +22,9 @@ public interface DetailInterface {
     interface NetWorkInterFace {
         void networkBC(Intent intent);
     }
+
+    //视频详情页评论同步
+    interface CommentInterFace {
+        void syncCommentNum(Intent intent);
+    }
 }

@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/fy_container"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/_ffffff_191919"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/ry_read_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/tv_read_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/_bfbfbf"
+            android:textSize="@dimen/ts_12sp"
+            tools:text="10.5万人观看" />
+
+        <TextView
+            android:id="@+id/tv_read_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="倒序浏览"
+            android:textColor="@color/_222222"
+            android:textSize="@dimen/ts_12sp"
+            tools:text="正序浏览" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lv_notice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        />
+</LinearLayout>
+
+

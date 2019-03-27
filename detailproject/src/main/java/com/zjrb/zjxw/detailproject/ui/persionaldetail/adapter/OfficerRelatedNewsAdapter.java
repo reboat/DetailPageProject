@@ -38,11 +38,11 @@ public class OfficerRelatedNewsAdapter extends NewsBaseAdapter implements
         setData((data != null && data.getOfficer() != null && data.getOfficer().getArticle_list() != null) ? data.getOfficer().getArticle_list() : null);
     }
 
-    public boolean noMore(OfficalDetailBean data) {
+    private boolean noMore(OfficalDetailBean data) {
         return data == null || data.getOfficer() == null || data.getOfficer().getArticle_list() == null || data.getOfficer().getArticle_list().size() == 0;
     }
 
-    public void cancelLoadMore() {
+    private void cancelLoadMore() {
         APICallManager.get().cancel(this);
     }
 

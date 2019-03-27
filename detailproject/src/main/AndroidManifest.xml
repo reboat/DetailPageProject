@@ -345,8 +345,6 @@
             </intent-filter>
         </activity>
 
-        <!--图集预览-->
-
         <!--专题更多xd-->
         <activity
             android:name=".ui.subject.SpecialMoreActivity"
@@ -368,7 +366,8 @@
         <!--视频/直播页面-->
         <activity
             android:name=".ui.mediadetail.VideoDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize|uiMode">
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

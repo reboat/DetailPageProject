@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/module_detail_video_live_holder"
+        android:drawablePadding="6dp"
+        android:textColor="@color/_666666"
+        android:textSize="@dimen/ts_12sp"
+        tools:text="2018.10.25 10:16" />
+
+    <ImageView
+        android:id="@+id/iv_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        tools:src="@mipmap/module_detail_video_live_top" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="13dp"
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_16sp"
+        tools:text="到达本次旅程的第一站：嘉兴站"
+        />
+
+    <!--123张图片和外部列表保持一致-->
+    <LinearLayout
+        android:id="@+id/ly_imgs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <com.aliya.view.ratio.RatioRelativeLayout
+            android:id="@+id/rv_img1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:ratio_w2h="4:3">
+
+            <ImageView
+                android:id="@+id/iv_img1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                />
+        </com.aliya.view.ratio.RatioRelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/iv_img2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            app:ratio_w2h="4:3" />
+
+        <com.aliya.view.ratio.RatioFrameLayout
+            android:id="@+id/rv_img2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:ratio_w2h="4:3">
+
+            <ImageView
+                android:id="@+id/iv_img3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                />
+        </com.aliya.view.ratio.RatioFrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

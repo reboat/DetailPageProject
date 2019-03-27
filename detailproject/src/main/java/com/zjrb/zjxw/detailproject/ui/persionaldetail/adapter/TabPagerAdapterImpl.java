@@ -52,6 +52,10 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
         return mTabList.get(position).title;
     }
 
+    //设置标题
+    public void setPageTitle(int position, String title) {
+        mTabList.get(position).title = title;
+    }
 
     /**
      * TabInfo Tab相关参数

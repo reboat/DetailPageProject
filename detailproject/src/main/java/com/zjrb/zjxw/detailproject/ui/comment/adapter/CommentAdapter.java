@@ -48,14 +48,11 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private TextView mTextView;
     //最新评论数
     private int commentCount = 0;
-
-    /**
-     * 网脉专用
-     */
+    //热门评论数
+    private int hotCommentNUm = 0;
     private DraftDetailBean mBean;
     private CommentRefreshBean mDatas;
     private boolean isVideoDetail = false;
-    private int hotCommentNUm = 0;
 
     public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, TextView textView, String articleId, boolean is_select_list, DraftDetailBean bean, int commentCount) {
         super(null);
@@ -82,6 +79,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getHot_comments() != null) {
             hotCommentNUm = mBean.getArticle().getHot_comments().size();
         }
+        this.commentCount = mDatas.getComment_count();
         this.isVideoDetail = isVideoDetail;
     }
 
@@ -155,9 +153,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     @Override
     public int getAbsItemViewType(int position) {
-        if (getData(position) instanceof String && !getData(position).toString().equals("热门评论")) {
+        if (getData(position) instanceof String && getData(position).toString().equals("热门评论")) {
             return COMMENT_HOT;
-        } else if (getData(position) instanceof String && !getData(position).toString().equals("最新评论")) {
+        } else if (getData(position) instanceof String && getData(position).toString().equals("最新评论")) {
             return COMMENT_NEW;
         } else if (getData(position) instanceof HotCommentsBean) {
             return COMMENT_CONTENT;

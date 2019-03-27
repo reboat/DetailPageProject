@@ -35,7 +35,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -50,6 +49,7 @@ import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.ui.boardcast.CommentNumReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.NetWorkChangeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
@@ -95,7 +95,9 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  * Created by wanglinjie.
  * create time:2019/3/22  上午9:05
  */
-final public class VideoDetailActivity extends DailyActivity implements NewsDetailAdapter.CommonOptCallBack, CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace, DetailInterface.VideoBCnterFace, DetailInterface.NetWorkInterFace {
+final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
+        CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
+        DetailInterface.VideoBCnterFace, DetailInterface.NetWorkInterFace {
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -137,6 +139,7 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
     private LocalBroadcastManager localBroadcastManager;
     private SubscribeReceiver mReceiver;
     private NetWorkChangeReceiver networkChangeReceiver;
+    private CommentNumReceiver commentNumReceiver;
     private Bundle bundle;
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
@@ -160,6 +163,8 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         setBreoadcast();
+        commentNumReceiver = new CommentNumReceiver(this);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(commentNumReceiver, new IntentFilter("sync_comment_num"));
 
         getIntentData(getIntent());
         loadData();
@@ -205,6 +210,7 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
         registerReceiver(networkChangeReceiver, filter);
     }
 
+    //初始化视频
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
         if (!TextUtils.isEmpty(url)) {
@@ -258,13 +264,12 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
                 .FRAGMENT_ARGS, VideoDetailFragment.FRAGMENT_DETAIL_VIDEO);
         bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
-        videoDetailFragment = (VideoDetailFragment)pagerAdapter.getItem(0);
+        videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
 
         Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
         bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         if (bean.getArticle().getComment_count() > 0) {
-            //TODO WLJ 这里需要同步更新评论数
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundlePersionalDetailInfo);
         } else {
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundlePersionalDetailInfo);
@@ -579,6 +584,7 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
         }
         localBroadcastManager.unregisterReceiver(receive);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commentNumReceiver);
     }
 
     private void showEmptyNewsDetail() {
@@ -684,11 +690,20 @@ final public class VideoDetailActivity extends DailyActivity implements NewsDeta
 
     @Override
     public void onOptClickChannel() {
-       videoDetailFragment.onOptClickChannel();
+        videoDetailFragment.onOptClickChannel();
     }
 
     @Override
     public void onReadingScaleChange(float scale) {
         videoDetailFragment.onReadingScaleChange(scale);
+    }
+
+    //同步评论数
+    @Override
+    public void syncCommentNum(Intent intent) {
+        if (intent != null && intent.hasExtra("video_comment_title")) {
+            //TODO WLJ 这里更新title没有生效
+            pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
+        }
     }
 }

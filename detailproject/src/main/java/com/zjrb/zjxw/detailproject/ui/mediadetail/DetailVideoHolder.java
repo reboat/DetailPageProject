@@ -9,8 +9,8 @@ import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.google.gson.Gson;
 import com.zjrb.core.utils.click.ClickTracker;
-import com.zjrb.daily.news.R;
 import com.zjrb.daily.news.global.biz.Format;
+import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.utils.PlayerAnalytics;
 

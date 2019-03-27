@@ -12,8 +12,9 @@ import android.widget.TextView;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.StringUtils;
-import com.zjrb.daily.news.R;
-import com.zjrb.daily.news.R2;
+import com.zjrb.core.utils.UIUtils;
+import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
 
 import butterknife.BindView;
@@ -49,7 +50,7 @@ public abstract class SuperDetailVideoHolder extends BaseRecyclerViewHolder<Nati
     boolean isLive;
 
     public SuperDetailVideoHolder(ViewGroup parent) {
-        super(parent, R.layout.module_detail_live_video);
+        super(UIUtils.inflate(R.layout.module_detail_live_video, parent, false));
         ButterKnife.bind(this, itemView);
         setListener();
     }

@@ -77,7 +77,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;
         //可以用webview组件中的方法代替
         if (!TextUtils.isEmpty(mData.getArticle().getContent())) {
-            htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getContent());
+            if(mData.getArticle().isNative_live()){
+                //简介
+                htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getNative_live_info().getIntro());
+            }else{
+                htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getContent());
+            }
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
         if(sp != null){

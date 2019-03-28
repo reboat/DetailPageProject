@@ -109,10 +109,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     RatioFrameLayout videoContainer;
     @BindView(R2.id.tabLayout)
     SlidingTabLayout tabLayout;
-    @BindView(R2.id.fl_comment)
-    FrameLayout flComment;
-    @BindView(R2.id.tv_comments_num)
-    TextView tvCommentsNum;
     @BindView(R2.id.menu_prised)
     ImageView menuPrised;
     @BindView(R2.id.v_container)
@@ -129,6 +125,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     ViewPager viewPager;
     @BindView(R2.id.ly_comment_num)
     LinearLayout lyComment;
+    @BindView(R2.id.iv_play)
+    ImageView ivPlay;
+    @BindView(R2.id.tv_status)
+    TextView tvStatus;
 
 
     private int ui;
@@ -210,7 +210,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         registerReceiver(networkChangeReceiver, filter);
     }
 
-    //初始化视频
+    //初始化视频UI TODO 需要区分视频和直播
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
         if (!TextUtils.isEmpty(url)) {
@@ -246,6 +246,30 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 PlayerManager.get().play(videoContainer, bean.getVideo_url(), new Gson().toJson(bean));
                 PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
             }
+        } else if (bean.isNative_live()) {//直播 TODO 直播和回放
+            videoContainer.setVisibility(View.VISIBLE);
+            tvDuration.setVisibility(View.GONE);
+            if (bean.getNative_live_info().getStream_status() == 0) {//未开始
+//                ivPlay.setBackgroundResource();
+                tvStatus.setVisibility(View.VISIBLE);
+                tvStatus.setText("");
+
+            } else if (bean.getNative_live_info().getStream_status() == 1) {//进行中
+//                ivPlay.setBackgroundResource();
+                tvStatus.setVisibility(View.VISIBLE);
+                tvStatus.setText("");
+            } else {//已结束
+//                ivPlay.setBackgroundResource();
+                tvStatus.setVisibility(View.VISIBLE);
+                tvStatus.setText("");
+            }
+            //直播背景图
+            GlideApp.with(ivImage).load(bean.getNative_live_info().getCover()).placeholder(PH.zheBig()).centerCrop()
+                    .apply(AppGlideOptions.bigOptions()).into(ivImage);
+            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
+                PlayerManager.get().play(videoContainer, bean.getVideo_url(), new Gson().toJson(bean));
+                PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
+            }
         } else {
             videoContainer.setVisibility(View.GONE);
         }
@@ -258,14 +282,25 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     //初始化视频/评论fragment
     private void initViewPage(DraftDetailBean bean) {
         pagerAdapter = new TabPagerAdapterImpl(getSupportFragmentManager(), this);
-
-        //传递官员详情页相关新闻
+        //视频/简介
         Bundle bundlePersionalRelate = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, VideoDetailFragment.FRAGMENT_DETAIL_VIDEO);
         bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
-        pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
+        if (bean.getArticle().isNative_live()) {
+            pagerAdapter.addTabInfo(VideoDetailFragment.class, "简介", bundlePersionalRelate);
+        } else {
+            pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
+        }
         videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
 
+        //直播间
+        if (bean.getArticle().isNative_live()) {
+            Bundle bundleLive = BundleHelper.creatBundle(IKey
+                    .FRAGMENT_ARGS, VideoLiveFragment.FRAGMENT_VIDEO_LIVE);
+            bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
+            pagerAdapter.addTabInfo(VideoLiveFragment.class, "直播间", bundleLive);
+        }
+        //评论
         Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
         bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
@@ -274,6 +309,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         } else {
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundlePersionalDetailInfo);
         }
+
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
     }
@@ -703,7 +739,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     public void syncCommentNum(Intent intent) {
         if (intent != null && intent.hasExtra("video_comment_title")) {
             //TODO WLJ 这里更新title没有生效
-            pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
+            if (pagerAdapter.getCount() == 2) {
+                pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
+            } else {
+                pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
+            }
         }
     }
 }

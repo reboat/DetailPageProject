@@ -94,6 +94,7 @@ public class DraftDetailBean extends BaseData {
         private String timeline;
         private int video_type;
         private boolean topped;
+        private boolean native_live;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -211,6 +212,14 @@ public class DraftDetailBean extends BaseData {
          * 话题互动精选
          */
         private List<HotCommentsBean> topic_comment_select;
+
+        public boolean isNative_live() {
+            return native_live;
+        }
+
+        public void setNative_live(boolean native_live) {
+            this.native_live = native_live;
+        }
 
         public int getId() {
             return id;

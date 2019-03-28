@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zjrb.core.load.LoadingCallBack;
@@ -31,7 +30,7 @@ import cn.daily.news.biz.core.constant.C;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
 /**
- * 视频直播Fragment
+ * 视频直播间Fragment
  * Created by wanglinjie.
  * create time:2019/3/26  上午11:16
  */
@@ -42,8 +41,6 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     TextView tvReadNum;
     @BindView(R2.id.tv_read_sort)
     TextView tvReadSort;
-    @BindView(R2.id.ry_read_container)
-    RelativeLayout ryReadContainer;
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
     @BindView(R2.id.fy_container)
@@ -53,7 +50,6 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     private NativeLiveBean mNativeLiveBean;
     private HeaderRefresh refresh;
     //上一次返回的结果的最后一条数据的id
-    //TODO WLJ 加载更多的地方也要处理一下
     private long startId = -1L;
     //是否反转
     private boolean isReverse = false;
@@ -102,8 +98,10 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
         if (v.getId() == R.id.tv_read_sort) {
             if (!isReverse) {
                 isReverse = true;
+                tvReadSort.setText("正序浏览");
             } else {
                 isReverse = false;
+                tvReadSort.setText("倒序浏览");
             }
             refreshData(startId, 10, isReverse);
         }
@@ -117,6 +115,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             @Override
             public void onSuccess(NativeLiveBean nativeLiveBean) {
                 mNativeLiveBean = nativeLiveBean;
+                tvReadNum.setText(mNewsDetail.getArticle().getRead_count_general() + "观看");
                 if (mNativeLiveBean != null && mNativeLiveBean.getList() != null && mNativeLiveBean.getList().size() > 0) {
                     startId = mNativeLiveBean.getList().get(mNativeLiveBean.getList().size()).getId();
                 }
@@ -144,7 +143,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             adapter.setHeaderRefresh(refresh.getItemView());
             adapter.setEmptyView(
                     new EmptyPageHolder(fyContainer,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无更新").resId(R.mipmap.ic_comment_empty)
                     ).itemView);
             lvNotice.setAdapter(adapter);
         } else {

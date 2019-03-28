@@ -24,15 +24,22 @@
             android:textSize="@dimen/ts_12sp"
             tools:text="10.5万人观看" />
 
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_toLeftOf="@+id/tv_read_sort"
+            android:background="@drawable/module_detail_sort_drawable" />
+
         <TextView
             android:id="@+id/tv_read_sort"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="16dp"
             android:layout_alignParentRight="true"
+            android:layout_marginLeft="6dp"
             android:text="倒序浏览"
             android:textColor="@color/_222222"
             android:textSize="@dimen/ts_12sp"
-            tools:text="正序浏览" />
+            />
 
     </RelativeLayout>
 

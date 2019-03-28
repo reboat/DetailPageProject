@@ -112,7 +112,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public int getAbsItemViewType(int position) {
         if (position == 0) {
             return VIEW_TYPE_TOP;
-        } else if (position == 1) {
+            //直播没有webview
+        } else if (position == 1 && getData(position) instanceof DraftDetailBean && !((DraftDetailBean) getData(position)).getArticle().isNative_live()) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
         } else if (position == 2 && getData(position) instanceof DraftDetailBean && !TextUtils.isEmpty(((DraftDetailBean) getData(position)).getArticle().getSource_channel_name())) {
@@ -165,6 +166,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     /**
      * 当webview加载出后再显示相关转移等显示全部
+     * TODO 直播稿不会调用
      */
     public void showAll() {
         //只加载一次

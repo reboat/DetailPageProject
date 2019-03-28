@@ -13,6 +13,8 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
@@ -73,8 +75,22 @@ public class VideoDetailFragment extends DailyFragment {
         List datas = new ArrayList<>();
         //添加头布局
         datas.add(mNewsDetail);
-        //添加web布局
-        datas.add(mNewsDetail);
+        //非直播
+        if (!mNewsDetail.getArticle().isNative_live()) {
+            datas.add(mNewsDetail);
+        } else {
+            List<RelatedSubjectsBean> subjectList = mNewsDetail.getArticle().getRelated_subjects();
+            if (subjectList != null && subjectList.size() > 0) {
+                datas.add("相关专题");
+                datas.addAll(subjectList);
+            }
+            List<RelatedNewsBean> articles = mNewsDetail.getArticle().getRelated_news();
+            if (articles != null && articles.size() > 0) {
+                datas.add("相关新闻");
+                datas.addAll(articles);
+            }
+            datas.add("占位");
+        }
         lvNotice.setLayoutManager(new LinearLayoutManager(getActivity()));
         lvNotice.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
         mAdapter = new NewsDetailAdapter(datas, true);
@@ -93,7 +109,7 @@ public class VideoDetailFragment extends DailyFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mAdapter != null) {
+        if (mAdapter != null && !mNewsDetail.getArticle().isNative_live()) {
             mAdapter.onWebViewResume();
         }
     }
@@ -101,7 +117,7 @@ public class VideoDetailFragment extends DailyFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mAdapter != null) {
+        if (mAdapter != null && !mNewsDetail.getArticle().isNative_live()) {
             mAdapter.onWebViewPause();
         }
     }
@@ -122,6 +138,7 @@ public class VideoDetailFragment extends DailyFragment {
         }
     }
 
+    //频道点击
     public void onOptClickChannel() {
         if (bundle == null) {
             bundle = new Bundle();

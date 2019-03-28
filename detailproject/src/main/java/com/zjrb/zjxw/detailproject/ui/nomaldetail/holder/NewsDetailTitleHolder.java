@@ -44,6 +44,9 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     TextView mTvTime;
     @BindView(R2.id.tv_read_num)
     TextView mTvReadNum;
+    @BindView(R2.id.tv_summary)
+    TextView tvSummary;
+
     boolean isRedBoat;//是否是红船号
 
     public NewsDetailTitleHolder(ViewGroup parent, boolean isRedBoat) {
@@ -88,8 +91,15 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             }
         }
 
-        //稿件发布时间/栏目名称(发稿允许不填写)
-        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+        //频道显示
+        if (mData != null && mData.getArticle() != null && mData.getArticle().isNative_live()) {
+            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
+            mTvChannelName.setText("直播");
+            //频道
+        } else if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_type() == 9) {//视频稿
+            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
+            mTvChannelName.setVisibility(View.GONE);
+        } else if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
@@ -97,11 +107,18 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             mTvChannelName.setVisibility(View.GONE);
         }
 
+        //阅读数
         if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
             mTvReadNum.setVisibility(View.VISIBLE);
             mTvReadNum.setText(mData.getArticle().getRead_count_general());
         } else {
             mTvReadNum.setVisibility(View.INVISIBLE);
+        }
+
+        //简介
+        if (mData != null && mData.getArticle() != null && mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getIntro())) {
+            tvSummary.setVisibility(View.VISIBLE);
+            tvSummary.setText(mData.getArticle().getNative_live_info().getIntro());
         }
     }
 

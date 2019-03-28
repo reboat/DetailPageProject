@@ -58,7 +58,8 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
                             PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
                             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
                         } else {
-                            llStart.setVisibility(View.GONE);
+                            //TODO WLJ 隐藏播放按钮
+//                            llStart.setVisibility(View.GONE);
                             llNetHint.setVisibility(View.VISIBLE);
                             tvNetHint.setText("用流量播放");
                             tvNetHint.setVisibility(View.VISIBLE);
@@ -75,6 +76,7 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
                 }
             }
         } else {
+            //流量播放
             PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
             if (NetUtils.isMobile(itemView.getContext())) {

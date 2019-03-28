@@ -95,7 +95,9 @@
         app:tl_indicator_width="18dp"
         app:tl_textSelectColor="@color/_222222"
         app:tl_textUnselectColor="@color/_666666"
-        app:tl_textsize="@dimen/ts_14sp" />
+        app:tl_textsize="@dimen/ts_14sp"
+        app:tl_tab_space_equal="true"
+        />
 
 
     <android.support.v4.view.ViewPager

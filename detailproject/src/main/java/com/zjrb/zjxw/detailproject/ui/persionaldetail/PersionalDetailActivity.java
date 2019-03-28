@@ -224,12 +224,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
                         .toString());
     }
 
-
-    private TextView tv1;
-    private TextView tv2;
-    private View v1;
-    private View v2;
-
     /**
      * 官员详情页添加官员新闻和官员履历
      * 将数据传递到fragment
@@ -252,30 +246,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 
         viewpager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewpager);
-//        tabLayout.setupWithViewPager(viewpager);
-
-//        for (int i = 0; i < pagerAdapter.getCount(); i++) {
-//
-//            TabLayout.Tab tab = tabLayout.getTabAt(i);
-//
-//            if (i == 0) {
-//                v1 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
-//                        viewpager, false);
-//
-//                tv1 = v1.findViewById(R.id.tv_item_tab_score_title);
-//                tv1.setText(pagerAdapter.getPageTitle(i));
-//                tab.setCustomView(v1);
-//                tv1.setTextColor(getResources().getColor(R.color._222222));
-//            } else {
-//                v2 = LayoutInflater.from(this).inflate(R.layout.module_detail_tab_layout,
-//                        viewpager, false);
-//                tv2 = v2.findViewById(R.id.tv_item_tab_score_title);
-//                tv2.setText(pagerAdapter.getPageTitle(i));
-//                tv2.setTextColor(getResources().getColor(R.color._666666));
-//                tab.setCustomView(v2);
-//            }
-//
-//        }
 
     }
 
@@ -286,13 +256,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 
     @Override
     public void onPageSelected(int position) {
-//        if (position == 0) {
-//            tv1.setTextColor(getResources().getColor(R.color._222222));
-//            tv2.setTextColor(getResources().getColor(R.color._666666));
-//        } else {
-//            tv1.setTextColor(getResources().getColor(R.color._666666));
-//            tv2.setTextColor(getResources().getColor(R.color._222222));
-//        }
         if (bean != null && bean.getOfficer() != null) {
             DataAnalyticsUtils.get().OfficialDetailClick(bean);
         }

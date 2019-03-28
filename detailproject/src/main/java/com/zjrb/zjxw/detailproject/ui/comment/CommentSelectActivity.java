@@ -127,7 +127,7 @@ public class CommentSelectActivity extends DailyActivity implements HeaderRefres
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(mRvContent,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.module_detail_comment_empty)
                     ).itemView);
             mRvContent.setAdapter(mCommentAdapter);
         } else {

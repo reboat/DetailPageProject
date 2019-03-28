@@ -94,7 +94,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
                     new EmptyPageHolder(lvNotice,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("目前没有任何评论").resId(R.mipmap.module_detail_comment_empty)
                     ).itemView);
             lvNotice.setAdapter(mCommentAdapter);
         } else {
@@ -122,7 +122,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
                 //最新评论加热门评论数
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                    if(mNewsDetail.getArticle().getHot_comments() != null){
+                    if (mNewsDetail.getArticle().getHot_comments() != null) {
                         SyncCommentNum(commentRefreshBean.getComment_count() + mNewsDetail.getArticle().getHot_comments().size());
                     }
                     initAdapter(commentRefreshBean, mNewsDetail);

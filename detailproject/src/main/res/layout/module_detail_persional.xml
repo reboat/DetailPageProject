@@ -97,11 +97,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:layout_gravity="center|left"
         android:background="@color/_ffffff"
         app:tl_indicator_color="@color/_ffcd3f3f"
         app:tl_indicator_height="4dp"
         app:tl_indicator_width="18dp"
+        app:tl_tab_space_equal="true"
         app:tl_textSelectColor="@color/_222222"
         app:tl_textUnselectColor="@color/_666666"
         app:tl_textsize="@dimen/ts_14sp" />

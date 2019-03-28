@@ -143,7 +143,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             adapter.setHeaderRefresh(refresh.getItemView());
             adapter.setEmptyView(
                     new EmptyPageHolder(fyContainer,
-                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无更新").resId(R.mipmap.ic_comment_empty)
+                            EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无内容").resId(R.mipmap.module_detail_live_empty)
                     ).itemView);
             lvNotice.setAdapter(adapter);
         } else {

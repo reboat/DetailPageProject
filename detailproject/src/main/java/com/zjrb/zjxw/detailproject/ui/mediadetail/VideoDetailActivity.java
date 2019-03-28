@@ -140,7 +140,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private SubscribeReceiver mReceiver;
     private NetWorkChangeReceiver networkChangeReceiver;
     private CommentNumReceiver commentNumReceiver;
-    private Bundle bundle;
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
 
@@ -399,25 +398,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting,
+    @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        //评论列表
-        if (view.getId() == R.id.ly_comment_num) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                //埋点，进入评论列表
-                DataAnalyticsUtils.get().ClickInCommentList(mNewsDetail);
-                //进入评论列表页面
-                if (bundle == null) {
-                    bundle = new Bundle();
-                }
-                bundle.putSerializable(IKey.NEWS_DETAIL, mNewsDetail);
-                Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
-            }
-            //点赞
-        } else if (view.getId() == R.id.menu_prised) {
+       if (view.getId() == R.id.menu_prised) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }

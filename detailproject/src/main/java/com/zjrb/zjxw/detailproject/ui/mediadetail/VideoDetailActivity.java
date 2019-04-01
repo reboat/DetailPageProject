@@ -124,7 +124,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
     @BindView(R2.id.ly_comment_num)
-    LinearLayout lyComment;
+    RelativeLayout lyComment;
     @BindView(R2.id.iv_play)
     ImageView ivPlay;
     @BindView(R2.id.tv_status)

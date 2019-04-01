@@ -126,7 +126,7 @@ final public class NewsDetailActivity extends DailyActivity implements
     @BindView(R2.id.tv_net_hint)
     TextView tvNetHint;
     @BindView(R2.id.ly_comment_num)
-    LinearLayout ly_comment_num;
+    RelativeLayout ly_comment_num;
 
 
     /**

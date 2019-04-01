@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
 import android.support.annotation.CallSuper;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -78,8 +79,13 @@ public abstract class SuperDetailVideoHolder extends BaseRecyclerViewHolder<Nati
         if (mData == null) return;
 
         //视频背景图
-        GlideApp.with(mIvPicture).load(mData.getVideo_cover()).apply(AppGlideOptions.bigOptions())
-                .into(mIvPicture);
+        if (!TextUtils.isEmpty(mData.getVideo_cover())) {
+            GlideApp.with(mIvPicture).load(mData.getVideo_cover()).apply(AppGlideOptions.bigOptions())
+                    .into(mIvPicture);
+        } else {
+            mIvPicture.setVisibility(View.GONE);
+        }
+
         //发布时间
         mTvTimeline.setText(StringUtils.long2String(mData.getCreated_at(), "yyyy.MM.dd ") + mData.getCreated_at_general());
         //置顶

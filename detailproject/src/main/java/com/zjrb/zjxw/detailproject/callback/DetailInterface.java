@@ -27,4 +27,9 @@ public interface DetailInterface {
     interface CommentInterFace {
         void syncCommentNum(Intent intent);
     }
+
+    //头部刷新
+    interface RefreshHeadInterFace {
+        void refresh(Intent intent);
+    }
 }

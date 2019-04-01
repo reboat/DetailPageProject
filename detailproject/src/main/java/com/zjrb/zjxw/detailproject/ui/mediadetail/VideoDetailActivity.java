@@ -187,54 +187,55 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         return topHolder.getView();
     }
 
+    /**
+     * 判断是否竖视频
+     * @param bean
+     */
+    private boolean isVertical(DraftDetailBean.ArticleBean bean){
+        if (TextUtils.isEmpty(bean.getVideo_url())){
+            return false;
+        }
+        Uri uri = Uri.parse(bean.getVideo_url());
+        String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
+        boolean isVertical = Integer.valueOf(type) == 1;
+        return  isVertical;
+    }
+
 
     //初始化视频UI TODO 需要区分视频和直播
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
         if (!TextUtils.isEmpty(url)) {
-            Uri uri = Uri.parse(url);
-            String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
-            if (!TextUtils.isEmpty(type)) {
-                boolean isVertical = Integer.valueOf(type) == 1;
-                if (isVertical) {
-                    videoContainer.setVisibility(View.VISIBLE);
-                    VerticalManager.getInstance().init(this, videoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
-                    if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
-                        Intent intent = new Intent(this, VFullscreenActivity.class);
-                        intent.putExtra(KEY_URL, url);
-                        intent.putExtra(KEY_TITLE, bean.getDoc_title());
-                        ActivityCompat.startActivityForResult(this, intent, REQUEST_CODE, null);
-                    }
-                    return;
-                }
-            }
-        }
-
-        if (!TextUtils.isEmpty(bean.getVideo_url())) {
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), mNewsDetail.getArticle().getVideo_url());
-        } else if (bean.isNative_live()) {//直播 TODO 直播和回放
-            videoContainer.setVisibility(View.VISIBLE);
-            if (bean.getNative_live_info().getStream_status() == 0) {//未开始
-//                ivPlay.setBackgroundResource();
-                tvStatus.setVisibility(View.VISIBLE);
-                tvStatus.setText("");
 
-            } else if (bean.getNative_live_info().getStream_status() == 1) {//进行中
+            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
+                    .setPlayUrl(mNewsDetail.getArticle().getVideo_url())
+                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+                    .setLive(bean.isNative_live())
+                    .setVertical(isVertical(bean))
+                    .setPlayContainer(videoContainer);
+            DailyPlayerManager.get().init(builder);
+
+            //           直播情况
+            if (bean.isNative_live()) {//直播 TODO 直播和回放
+                videoContainer.setVisibility(View.VISIBLE);
+                if (bean.getNative_live_info().getStream_status() == 0) {//未开始
 //                ivPlay.setBackgroundResource();
-                tvStatus.setVisibility(View.VISIBLE);
-                tvStatus.setText("");
-            } else {//已结束
+                    tvStatus.setVisibility(View.VISIBLE);
+                    tvStatus.setText("");
+
+                } else if (bean.getNative_live_info().getStream_status() == 1) {//进行中
 //                ivPlay.setBackgroundResource();
-                tvStatus.setVisibility(View.VISIBLE);
-                tvStatus.setText("");
+                    tvStatus.setVisibility(View.VISIBLE);
+                    tvStatus.setText("");
+                } else {//已结束
+//                ivPlay.setBackgroundResource();
+                    tvStatus.setVisibility(View.VISIBLE);
+                    tvStatus.setText("");
+                }
             }
-            //直播背景图
-            GlideApp.with(ivImage).load(bean.getNative_live_info().getCover()).placeholder(PH.zheBig()).centerCrop()
-                    .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), mNewsDetail.getArticle().getVideo_url());
         } else {
             videoContainer.setVisibility(View.GONE);
         }
@@ -662,7 +663,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
-            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), data.getStringExtra(KEY_URL));
+            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
+                    .setPlayContainer(videoContainer)
+                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+                    .setPlayUrl(data.getStringExtra(KEY_URL))
+                    .setVertical(isVertical(mNewsDetail.getArticle()))
+                    .setLive(mNewsDetail.getArticle().isNative_live());
+            DailyPlayerManager.get().init(builder);
         }
     }
 }

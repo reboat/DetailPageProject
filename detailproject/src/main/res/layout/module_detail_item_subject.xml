@@ -5,7 +5,7 @@
                 android:id="@+id/item_content_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="14dp"
+                android:paddingBottom="16dp"
                 android:paddingTop="16dp">
 
     <TextView
@@ -33,6 +33,7 @@
         android:maxLines="1"
         android:textColor="@color/_bfbfbf"
         android:textSize="@dimen/ts_12sp"
+        android:visibility="gone"
         tools:text="涌金楼" />
 
     <!--点赞数-->

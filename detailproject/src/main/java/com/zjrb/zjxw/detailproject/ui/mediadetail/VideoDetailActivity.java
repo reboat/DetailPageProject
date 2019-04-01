@@ -2,10 +2,7 @@ package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.res.Configuration;
-import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +40,6 @@ import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
-import com.zjrb.daily.video.VideoUrls;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -53,7 +48,6 @@ import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
 import com.zjrb.zjxw.detailproject.ui.boardcast.CommentNumReceiver;
-import com.zjrb.zjxw.detailproject.ui.boardcast.NetWorkChangeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
@@ -82,7 +76,6 @@ import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
-import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 
@@ -220,7 +213,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0),mNewsDetail.getArticle().getVideo_url());
+            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), mNewsDetail.getArticle().getVideo_url());
         } else if (bean.isNative_live()) {//直播 TODO 直播和回放
             videoContainer.setVisibility(View.VISIBLE);
             if (bean.getNative_live_info().getStream_status() == 0) {//未开始
@@ -240,7 +233,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //直播背景图
             GlideApp.with(ivImage).load(bean.getNative_live_info().getCover()).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0),mNewsDetail.getArticle().getVideo_url());
+            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), mNewsDetail.getArticle().getVideo_url());
         } else {
             videoContainer.setVisibility(View.GONE);
         }
@@ -375,7 +368,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-       if (view.getId() == R.id.menu_prised) {
+        if (view.getId() == R.id.menu_prised) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }
@@ -650,8 +643,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK&&data!=null&& !TextUtils.isEmpty(data.getStringExtra(KEY_URL))){
-            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0), data.getStringExtra(KEY_URL));
+        if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
+            DailyPlayerManager.get().init(this, videoContainer, mNewsDetail.getArticle().getList_pics().get(0), data.getStringExtra(KEY_URL));
         }
     }
 }

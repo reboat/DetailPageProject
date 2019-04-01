@@ -220,7 +220,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setVertical(isVertical(bean))
                     .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setPlayContainer(videoContainer);
-            DailyPlayerManager.get().init(builder);
+            if (PlayerCache.get().getPlayer(url)!=null&&PlayerCache.get().getPlayer(url).getPlayWhenReady()){//播放器正在播放
+                DailyPlayerManager.get().play(builder);
+            }else {
+                DailyPlayerManager.get().init(builder);
+            }
+
+
 
 
             //           直播情况
@@ -664,6 +670,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
             }
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DailyPlayerManager.get().onPause();
     }
 
     @Override

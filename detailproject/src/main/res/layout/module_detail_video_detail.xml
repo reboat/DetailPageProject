@@ -38,7 +38,7 @@
                 android:id="@+id/iv_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/vr_module_ic_play_start"
+                android:src="@mipmap/zjnews_video_listpage_play_icon"
                 app:iv_maskColor="@color/_cccbcb" />
 
             <!--直播状态-->

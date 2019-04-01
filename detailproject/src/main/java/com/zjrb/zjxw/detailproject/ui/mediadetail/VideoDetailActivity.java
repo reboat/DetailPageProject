@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.dailyplayer.PlayerManager;
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.aliya.dailyplayer.vertical.VFullscreenActivity;
 import com.aliya.dailyplayer.vertical.VerticalManager;
@@ -42,6 +44,7 @@ import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
+import com.zjrb.daily.video.VideoUrls;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -97,14 +100,10 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace, DetailInterface.NetWorkInterFace {
+        DetailInterface.VideoBCnterFace {
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
-    @BindView(R2.id.tv_duration)
-    TextView tvDuration;
-    @BindView(R2.id.iv_type_video)
-    LinearLayout llStart;
     @BindView(R2.id.video_container)
     RatioFrameLayout videoContainer;
     @BindView(R2.id.tabLayout)
@@ -115,10 +114,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     FrameLayout vContainer;
     @BindView(R2.id.ry_container)
     RelativeLayout ryContainer;
-    @BindView(R2.id.ll_net_hint)
-    LinearLayout llNetHint;
-    @BindView(R2.id.tv_net_hint)
-    TextView tvNetHint;
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.viewpager)
@@ -138,7 +133,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoReceiver receive;
     private LocalBroadcastManager localBroadcastManager;
     private SubscribeReceiver mReceiver;
-    private NetWorkChangeReceiver networkChangeReceiver;
     private CommentNumReceiver commentNumReceiver;
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
@@ -161,7 +155,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         localBroadcastManager.registerReceiver(receive, intentFilter);
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
-        setBreoadcast();
         commentNumReceiver = new CommentNumReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(commentNumReceiver, new IntentFilter("sync_comment_num"));
 
@@ -200,14 +193,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         return topHolder.getView();
     }
 
-    private void setBreoadcast() {
-        networkChangeReceiver = new NetWorkChangeReceiver(this);
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, filter);
-    }
 
     //初始化视频UI TODO 需要区分视频和直播
     private void initVideo(DraftDetailBean.ArticleBean bean) {
@@ -233,21 +218,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
         if (!TextUtils.isEmpty(bean.getVideo_url())) {
             videoContainer.setVisibility(View.VISIBLE);
-            if (bean.getVideo_duration() > 0) {
-                tvDuration.setText(Format.duration(bean.getVideo_duration() * 1000));
-                tvDuration.setVisibility(View.VISIBLE);
-            } else {
-                tvDuration.setVisibility(View.GONE);
-            }
             GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
-                PlayerManager.get().play(videoContainer, bean.getVideo_url(), new Gson().toJson(bean));
-                PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
-            }
+            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0),mNewsDetail.getArticle().getVideo_url());
         } else if (bean.isNative_live()) {//直播 TODO 直播和回放
             videoContainer.setVisibility(View.VISIBLE);
-            tvDuration.setVisibility(View.GONE);
             if (bean.getNative_live_info().getStream_status() == 0) {//未开始
 //                ivPlay.setBackgroundResource();
                 tvStatus.setVisibility(View.VISIBLE);
@@ -265,10 +240,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //直播背景图
             GlideApp.with(ivImage).load(bean.getNative_live_info().getCover()).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
-            if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
-                PlayerManager.get().play(videoContainer, bean.getVideo_url(), new Gson().toJson(bean));
-                PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
-            }
+            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0),mNewsDetail.getArticle().getVideo_url());
         } else {
             videoContainer.setVisibility(View.GONE);
         }
@@ -460,33 +432,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DataAnalyticsUtils.get().ClickShare(mNewsDetail);
             }
 
-            //重新加载
-        } else if (view.getId() == R.id.iv_type_video) {
-            if (mNewsDetail != null && mNewsDetail.getArticle() != null && !TextUtils.isEmpty(mNewsDetail.getArticle().getVideo_url())) {
-
-                if (NetUtils.isAvailable(getApplication())) {
-                    if (NetUtils.isMobile(getApplication())) {
-                        if (Recorder.get().isAllowMobileTraffic(mNewsDetail.getArticle().getVideo_url())) {
-                            PlayerManager.get().play(videoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
-                            PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
-                        } else {
-                            llStart.setVisibility(View.GONE);
-                            llNetHint.setVisibility(View.VISIBLE);
-                            tvNetHint.setText("用流量播放");
-                            tvNetHint.setVisibility(View.VISIBLE);
-                        }
-                        return;
-                    }
-                    if (NetUtils.isWifi(getApplication())) {
-                        PlayerManager.get().play(videoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
-                        PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
-                        return;
-                    }
-                    PlayerManager.get().play(videoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
-                    PlayerManager.setPlayerCallback(videoContainer, PlayerAnalytics.get());
-                }
-
-            }
         } else if (view.getId() == R.id.iv_top_bar_back) {
             //点击返回操作
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
@@ -600,10 +545,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     protected void onDestroy() {
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         super.onDestroy();
-        if (networkChangeReceiver != null) {
-            unregisterReceiver(networkChangeReceiver);
-            networkChangeReceiver = null;
-        }
         localBroadcastManager.unregisterReceiver(receive);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commentNumReceiver);
@@ -625,22 +566,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         intent.putExtra("subscribe", isSubscribe);
         intent.putExtra("id", (long) columnid);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //横屏去掉topbar
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideTopBar();
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        } else {
-            showTopBar();
-            getWindow().getDecorView().setSystemUiVisibility(ui);
-        }
     }
 
     @Override
@@ -676,17 +601,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-    @Override
-    public void networkBC(Intent intent) {
-        if (NetUtils.isMobile(getApplication()) && tvNetHint.getVisibility() == View.VISIBLE) {
-            tvNetHint.setText("用流量播放");
-            return;
-        }
-        if (NetUtils.isWifi(getApplication()) && tvNetHint.getVisibility() == View.VISIBLE) {
-            tvNetHint.setText("已切换至wifi");
-            return;
-        }
-    }
 
     /**
      * 点击评论时,获取用户所在位置
@@ -730,6 +644,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else {
                 pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==RESULT_OK&&data!=null&& !TextUtils.isEmpty(data.getStringExtra(KEY_URL))){
+            DailyPlayerManager.get().init(this,videoContainer,mNewsDetail.getArticle().getList_pics().get(0), data.getStringExtra(KEY_URL));
         }
     }
 }

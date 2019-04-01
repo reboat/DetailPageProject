@@ -10,21 +10,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/_eeeeee" />
+        android:background="@color/_dcdcdc" />
 
     <TextView
         android:id="@+id/tv_related"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
         android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
-        android:drawablePadding="12dp"
+        android:drawablePadding="6dp"
         android:gravity="center_vertical|left"
-        android:paddingBottom="9dp"
-        android:paddingTop="20dp"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="16sp"
+        android:paddingTop="15dp"
+        android:textColor="@color/_222222"
+        android:textSize="14sp"
         android:textStyle="bold"
         tools:text="相关专题" />
 

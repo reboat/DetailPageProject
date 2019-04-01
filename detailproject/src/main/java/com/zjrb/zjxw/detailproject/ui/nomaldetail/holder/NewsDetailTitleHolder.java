@@ -92,14 +92,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //频道显示
-        if (mData != null && mData.getArticle() != null && mData.getArticle().isNative_live()) {
-            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
-            mTvChannelName.setText("直播");
-            //频道
-        } else if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_type() == 9) {//视频稿
-            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
-            mTvChannelName.setVisibility(View.GONE);
-        } else if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
+        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {

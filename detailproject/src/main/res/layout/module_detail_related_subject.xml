@@ -6,6 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:scaleType="fitXY"
-    android:layout_marginBottom="12dp"
-    app:ratio_w2h="359:123"
+    android:layout_marginBottom="16dp"
+    app:ratio_w2h="345:115"
     />

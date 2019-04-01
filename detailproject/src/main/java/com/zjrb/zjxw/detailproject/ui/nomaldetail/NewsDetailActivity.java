@@ -114,7 +114,7 @@ final public class NewsDetailActivity extends DailyActivity implements
     @BindView(R2.id.iv_image)
     ImageView mivVideoBG;
     @BindView(R2.id.fl_comment)
-    FrameLayout mFyContainer;
+    RelativeLayout mFyContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.tv_duration)

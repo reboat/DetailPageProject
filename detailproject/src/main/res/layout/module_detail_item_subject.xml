@@ -5,8 +5,8 @@
                 android:id="@+id/item_content_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingTop="15dp">
+                android:paddingBottom="14dp"
+                android:paddingTop="16dp">
 
     <TextView
         android:id="@+id/tv_title"
@@ -52,12 +52,11 @@
 
     <ImageView
         android:id="@+id/iv_pic"
-        android:layout_width="117dp"
-        android:layout_height="78dp"
+        android:layout_width="111dp"
+        android:layout_height="74dp"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
         android:scaleType="fitXY"
-        app:ratio_w2h="117:78"
+        app:ratio_w2h="111:74"
         tools:src="@mipmap/module_core_font_small"
         />
 

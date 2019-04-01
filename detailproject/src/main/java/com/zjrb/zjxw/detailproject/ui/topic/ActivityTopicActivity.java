@@ -94,7 +94,7 @@ public class ActivityTopicActivity extends DailyActivity implements
     @BindView(R2.id.ly_bottom_comment)
     RelativeLayout mFloorBar;
     @BindView(R2.id.fl_comment)
-    FrameLayout mFyContainer;
+    RelativeLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)

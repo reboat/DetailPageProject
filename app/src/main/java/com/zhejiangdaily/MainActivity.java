@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.umeng.commonsdk.debug.I;
 
 import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.nav.Nav;
 
 public class MainActivity extends DailyActivity implements View.OnClickListener {
@@ -20,6 +21,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
         tv = (TextView) findViewById(R.id.tv_text);
         tv.setOnClickListener(this);
         findViewById(R.id.tv_ui_mode).setOnClickListener(this);
+        SettingManager.getInstance().setAutoPlayVideoWithWifi(true);
     }
 
 

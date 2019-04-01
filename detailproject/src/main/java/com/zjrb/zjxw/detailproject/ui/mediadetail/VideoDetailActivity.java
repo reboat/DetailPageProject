@@ -213,15 +213,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
-            if (SettingManager.getInstance().isAutoPlayVideoWithWifi()){
-                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-                        .setPlayUrl(mNewsDetail.getArticle().getVideo_url())
-                        .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-                        .setLive(bean.isNative_live())
-                        .setVertical(isVertical(bean))
-                        .setPlayContainer(videoContainer);
-                DailyPlayerManager.get().init(builder);
-            }
+            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
+                    .setPlayUrl(mNewsDetail.getArticle().getVideo_url())
+                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+                    .setLive(bean.isNative_live())
+                    .setVertical(isVertical(bean))
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+                    .setPlayContainer(videoContainer);
+            DailyPlayerManager.get().init(builder);
 
 
             //           直播情况
@@ -675,9 +674,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setPlayContainer(videoContainer)
                     .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
                     .setPlayUrl(data.getStringExtra(KEY_URL))
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setVertical(isVertical(mNewsDetail.getArticle()))
                     .setLive(mNewsDetail.getArticle().isNative_live());
-            DailyPlayerManager.get().init(builder);
+            DailyPlayerManager.get().play(builder);
         }
     }
 

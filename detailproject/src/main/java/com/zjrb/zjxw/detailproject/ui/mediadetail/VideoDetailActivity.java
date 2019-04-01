@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
+import com.aliya.dailyplayer.sub.PlayerCache;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.aliya.dailyplayer.vertical.VFullscreenActivity;
 import com.aliya.dailyplayer.vertical.VerticalManager;
@@ -59,6 +60,8 @@ import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.PlayerAnalytics;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
+
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -215,8 +218,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
                     .setLive(bean.isNative_live())
                     .setVertical(isVertical(bean))
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setPlayContainer(videoContainer);
             DailyPlayerManager.get().init(builder);
+
 
             //           直播情况
             if (bean.isNative_live()) {//直播 TODO 直播和回放
@@ -432,7 +437,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickBack(mNewsDetail);
             }
-            finish();
+            onBackPressed();
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
@@ -566,6 +571,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        DailyPlayerManager.get().onDestroy();
+        PlayerCache.get().clear();
     }
 
 
@@ -667,9 +674,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setPlayContainer(videoContainer)
                     .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
                     .setPlayUrl(data.getStringExtra(KEY_URL))
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setVertical(isVertical(mNewsDetail.getArticle()))
                     .setLive(mNewsDetail.getArticle().isNative_live());
-            DailyPlayerManager.get().init(builder);
+            DailyPlayerManager.get().play(builder);
         }
     }
+
 }

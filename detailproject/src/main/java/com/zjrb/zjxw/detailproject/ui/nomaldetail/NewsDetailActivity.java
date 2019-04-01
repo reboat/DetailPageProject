@@ -255,7 +255,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 boolean isVertical = Integer.valueOf(type) == 1;
                 if (isVertical) {
                     mVideoContainer.setVisibility(View.VISIBLE);
-                    VerticalManager.getInstance().init(this, mVideoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
+//                    VerticalManager.getInstance().init(this, mVideoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
                     if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
                         Intent intent = new Intent(this, VFullscreenActivity.class);
                         intent.putExtra(KEY_URL, url);
@@ -411,10 +411,10 @@ final public class NewsDetailActivity extends DailyActivity implements
 
         //禁止评论，隐藏评论框及评论按钮
         if (data.getArticle().getComment_level() == 0) {
-            mFyContainer.setVisibility(View.GONE);
+//            mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
         } else {
-            mFyContainer.setVisibility(View.VISIBLE);
+//            mFyContainer.setVisibility(View.VISIBLE);
             ly_comment_num.setVisibility(View.VISIBLE);
         }
     }

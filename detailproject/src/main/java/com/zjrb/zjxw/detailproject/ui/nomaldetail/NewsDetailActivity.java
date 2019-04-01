@@ -113,8 +113,8 @@ final public class NewsDetailActivity extends DailyActivity implements
     RelativeLayout mContainer;
     @BindView(R2.id.iv_image)
     ImageView mivVideoBG;
-//    @BindView(R2.id.fl_comment)
-//    FrameLayout mFyContainer;
+    @BindView(R2.id.fl_comment)
+    RelativeLayout mFyContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.tv_duration)
@@ -378,6 +378,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         //添加web布局
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
+        //TODO WLJ 分割线不要
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
         mAdapter = new NewsDetailAdapter(datas,false);
         mAdapter.setEmptyView(

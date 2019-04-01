@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,7 +76,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
     @BindView(R2.id.fl_comment)
-    FrameLayout mFyContainer;
+    RelativeLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)

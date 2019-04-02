@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">DetailPageProject</string>
 
-    <string name="env_default">apiprev.8531.cn</string>
+    <string name="env_default">zjbeta.8531.cn</string>
     <!--<string name="env_default">api-new.8531.cn</string>-->
 
 
     <!--router-->
-    <string name="default_host">www.8531.cn</string>
-    <string name="default_scheme">http</string>
-    <string name="data_scheme">http</string>
-    <string name="data_host">www.8531.cn</string>
+    <string name="default_host">zjbeta.8531.cn</string>
+    <string name="default_scheme">https</string>
+    <string name="data_scheme">https</string>
+    <string name="data_host">zjbeta.8531.cn</string>
 </resources>

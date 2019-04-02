@@ -777,7 +777,8 @@ public class DraftDetailBean extends BaseData {
 
         //原生直播
         public static class NativeLiveInfoBean implements Serializable {
-            private int live_id;
+            private static final long serialVersionUID = -6337097775485082698L;
+            private long live_id;
             private String title;
             private String reporter;
             private String intro;
@@ -787,11 +788,11 @@ public class DraftDetailBean extends BaseData {
             private String playback_url;
             private int live_duration;
 
-            public int getLive_id() {
+            public long getLive_id() {
                 return live_id;
             }
 
-            public void setLive_id(int live_id) {
+            public void setLive_id(long live_id) {
                 this.live_id = live_id;
             }
 

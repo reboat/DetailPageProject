@@ -47,43 +47,43 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
         }
     }
 
-    @OnClick({R2.id.iv_type_video, R2.id.ll_net_hint})
-    public void onClick(View view) {
-        if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.iv_type_video) {
-            if (!TextUtils.isEmpty(mData.getVideo_url())) {
-                if (NetUtils.isAvailable(itemView.getContext())) {
-                    if (NetUtils.isMobile(itemView.getContext())) {
-                        if (Recorder.get().isAllowMobileTraffic(mData.getVideo_url())) {
-                            PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
-                            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                        } else {
-                            //TODO WLJ 隐藏播放按钮
-//                            llStart.setVisibility(View.GONE);
-                            llNetHint.setVisibility(View.VISIBLE);
-                            tvNetHint.setText("用流量播放");
-                            tvNetHint.setVisibility(View.VISIBLE);
-                        }
-                        return;
-                    }
-                    if (NetUtils.isWifi(itemView.getContext())) {
-                        PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
-                        PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                        return;
-                    }
-                    PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
-                    PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-                }
-            }
-        } else {
-            //流量播放
-            PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
-            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
-            if (NetUtils.isMobile(itemView.getContext())) {
-                Recorder.get().allowMobileTraffic(mData.getVideo_url());
-            }
-        }
-
-    }
+//    @OnClick({R2.id.iv_type_video, R2.id.ll_net_hint})
+//    public void onClick(View view) {
+//        if (ClickTracker.isDoubleClick()) return;
+//        if (view.getId() == R.id.iv_type_video) {
+//            if (!TextUtils.isEmpty(mData.getVideo_url())) {
+//                if (NetUtils.isAvailable(itemView.getContext())) {
+//                    if (NetUtils.isMobile(itemView.getContext())) {
+//                        if (Recorder.get().isAllowMobileTraffic(mData.getVideo_url())) {
+//                            PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
+//                            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+//                        } else {
+//                            //TODO WLJ 隐藏播放按钮
+////                            llStart.setVisibility(View.GONE);
+//                            llNetHint.setVisibility(View.VISIBLE);
+//                            tvNetHint.setText("用流量播放");
+//                            tvNetHint.setVisibility(View.VISIBLE);
+//                        }
+//                        return;
+//                    }
+//                    if (NetUtils.isWifi(itemView.getContext())) {
+//                        PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
+//                        PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+//                        return;
+//                    }
+//                    PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
+//                    PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+//                }
+//            }
+//        } else {
+//            //流量播放
+//            PlayerManager.get().play(mVideoContainer, mData.getVideo_url(), new Gson().toJson(mData));
+//            PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());
+//            if (NetUtils.isMobile(itemView.getContext())) {
+//                Recorder.get().allowMobileTraffic(mData.getVideo_url());
+//            }
+//        }
+//
+//    }
 
 }

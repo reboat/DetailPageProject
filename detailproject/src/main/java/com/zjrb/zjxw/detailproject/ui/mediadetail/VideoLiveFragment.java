@@ -111,7 +111,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             public void onSuccess(NativeLiveBean nativeLiveBean) {
                 mNativeLiveBean = nativeLiveBean;
                 if (mNativeLiveBean != null && mNativeLiveBean.getList() != null && mNativeLiveBean.getList().size() > 0) {
-                    startId = mNativeLiveBean.getList().get(mNativeLiveBean.getList().size()).getId();
+                    startId = mNativeLiveBean.getList().get(mNativeLiveBean.getList().size() - 1).getId();
                 }
                 initAdapter(nativeLiveBean);
                 lvNotice.scrollToPosition(0);
@@ -127,7 +127,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             public void onError(String errMsg, int errCode) {
                 T.showShort(getContext(), errMsg);
             }
-        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(fyContainer)).exe(mNewsDetail.getArticle().getNative_live_info().getLive_id(), start, size, isResort);
+        }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getNative_live_info().getLive_id(), start, size, isResort);
     }
 
     //初始化适配器

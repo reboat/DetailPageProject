@@ -6,7 +6,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
@@ -16,21 +15,15 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.sub.OnPlayerManagerCallBack;
 import com.aliya.dailyplayer.sub.PlayerCache;
-import com.aliya.dailyplayer.utils.Recorder;
-import com.aliya.dailyplayer.vertical.VFullscreenActivity;
-import com.aliya.dailyplayer.vertical.VerticalManager;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
@@ -41,7 +34,6 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
-import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -58,11 +50,8 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.utils.PlayerAnalytics;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
-
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +59,6 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -85,8 +73,6 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 
 import static com.aliya.dailyplayer.FullscreenActivity.KEY_URL;
-import static com.aliya.dailyplayer.vertical.VFullscreenActivity.KEY_TITLE;
-import static com.aliya.dailyplayer.vertical.VFullscreenActivity.REQUEST_CODE;
 import static com.zjrb.core.utils.UIUtils.getContext;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoCommentFragment.FRAGMENT_DETAIL_COMMENT;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
@@ -189,16 +175,17 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     /**
      * 判断是否竖视频
+     *
      * @param bean
      */
-    private boolean isVertical(DraftDetailBean.ArticleBean bean){
-        if (TextUtils.isEmpty(bean.getVideo_url())){
+    private boolean isVertical(DraftDetailBean.ArticleBean bean) {
+        if (TextUtils.isEmpty(bean.getVideo_url())) {
             return false;
         }
         Uri uri = Uri.parse(bean.getVideo_url());
         String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
         boolean isVertical = Integer.valueOf(type) == 1;
-        return  isVertical;
+        return isVertical;
     }
 
 
@@ -207,21 +194,21 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         String url = bean.getVideo_url();
         String title = bean.getDoc_title();
         String imagePath = mNewsDetail.getArticle().getList_pics().get(0);
-        if (bean.isNative_live()||!TextUtils.isEmpty(url)){
+        if (bean.isNative_live() || !TextUtils.isEmpty(url)) {
             //UI
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
-            if (bean.isNative_live()){
+            if (bean.isNative_live()) {
                 url = bean.getLive_url();
                 title = bean.getNative_live_info().getTitle();
                 imagePath = bean.getNative_live_info().getCover();
                 //直播回放并且回放地址不为空  取直播回放地址
-                if (bean.getNative_live_info().getStream_status()==2){
-                    if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())){
+                if (bean.getNative_live_info().getStream_status() == 2) {
+                    if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())) {
                         url = bean.getNative_live_info().getPlayback_url();
-                    }else {
+                    } else {
                         url = "";
                     }
                 }
@@ -237,9 +224,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setOnPlayerManagerCallBack(this)
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
-            if (PlayerCache.get().getPlayer(url)!=null&&PlayerCache.get().getPlayer(url).getPlayWhenReady()){//播放器正在播放
+            if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
                 DailyPlayerManager.get().play(builder);
-            }else {
+            } else {
                 DailyPlayerManager.get().init(builder);
             }
         } else {
@@ -255,13 +242,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private void initViewPage(DraftDetailBean bean) {
         pagerAdapter = new TabPagerAdapterImpl(getSupportFragmentManager(), this);
         //视频/简介
-        Bundle bundlePersionalRelate = BundleHelper.creatBundle(IKey
+        Bundle bundleVideo = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, VideoDetailFragment.FRAGMENT_DETAIL_VIDEO);
-        bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
+        bundleVideo.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         if (bean.getArticle().isNative_live()) {
-            pagerAdapter.addTabInfo(VideoDetailFragment.class, "简介", bundlePersionalRelate);
+            pagerAdapter.addTabInfo(VideoDetailFragment.class, "简介", bundleVideo);
         } else {
-            pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundlePersionalRelate);
+            pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundleVideo);
         }
         videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
 
@@ -269,17 +256,17 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         if (bean.getArticle().isNative_live()) {
             Bundle bundleLive = BundleHelper.creatBundle(IKey
                     .FRAGMENT_ARGS, VideoLiveFragment.FRAGMENT_VIDEO_LIVE);
-            bundlePersionalRelate.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
+            bundleLive.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
             pagerAdapter.addTabInfo(VideoLiveFragment.class, "直播间", bundleLive);
         }
         //评论
-        Bundle bundlePersionalDetailInfo = BundleHelper.creatBundle(IKey
+        Bundle bundleComment = BundleHelper.creatBundle(IKey
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
-        bundlePersionalDetailInfo.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
+        bundleComment.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         if (bean.getArticle().getComment_count() > 0) {
-            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundlePersionalDetailInfo);
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundleComment);
         } else {
-            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundlePersionalDetailInfo);
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundleComment);
         }
 
         viewPager.setAdapter(pagerAdapter);

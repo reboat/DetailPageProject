@@ -22,7 +22,7 @@ public class NativeLiveTask extends APIGetTask<NativeLiveBean> {
     public void onSetupParams(Object... params) {
         put("live_id", params[0]);
         if (params.length > 0) {
-            if (params[1] != null && (int)params[1] != -1) {
+            if (params[1] != null && (long)params[1] != -1) {
                 put("start", params[1]);
             }
             if (params.length > 2 && params[3] != null) {

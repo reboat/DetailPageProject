@@ -207,15 +207,19 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     //初始化视频UI
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
+        if (bean.isNative_live()){
+            url = bean.getLive_url();
+        }
         if (!TextUtils.isEmpty(url)) {
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
             DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-                    .setPlayUrl(mNewsDetail.getArticle().getVideo_url())
                     .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+                    .setPlayUrl(url)
                     .setLive(bean.isNative_live())
+                    .setStreamStatus(bean.getLive_status())
                     .setVertical(isVertical(bean))
                     .setOnPlayerManagerCallBack(this)
                     .setTitle(mNewsDetail.getArticle().getDoc_title())
@@ -659,6 +663,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setPlayUrl(data.getStringExtra(KEY_URL))
                     .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setVertical(isVertical(mNewsDetail.getArticle()))
+                    .setOnPlayerManagerCallBack(this)
                     .setLive(mNewsDetail.getArticle().isNative_live());
             DailyPlayerManager.get().play(builder);
         }

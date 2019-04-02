@@ -112,6 +112,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (mData != null && mData.getArticle() != null && mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getIntro())) {
             tvSummary.setVisibility(View.VISIBLE);
             tvSummary.setText(mData.getArticle().getNative_live_info().getIntro());
+        }else{
+            tvSummary.setVisibility(View.GONE);
         }
     }
 

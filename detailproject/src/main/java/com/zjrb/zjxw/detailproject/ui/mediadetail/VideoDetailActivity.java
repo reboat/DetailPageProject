@@ -1,5 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -17,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.sub.OnPlayerManagerCallBack;
+import com.aliya.dailyplayer.sub.PlayerAction;
 import com.aliya.dailyplayer.sub.PlayerCache;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
@@ -73,6 +77,7 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 
 import static com.aliya.dailyplayer.FullscreenActivity.KEY_URL;
+import static com.aliya.dailyplayer.vertical.VFullscreenActivity.KEY_END;
 import static com.zjrb.core.utils.UIUtils.getContext;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoCommentFragment.FRAGMENT_DETAIL_COMMENT;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
@@ -116,6 +121,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private LocalBroadcastManager localBroadcastManager;
     private SubscribeReceiver mReceiver;
     private CommentNumReceiver commentNumReceiver;
+    private VideoEventReceiver mVideoEventReceiver;
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
 
@@ -138,6 +144,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         commentNumReceiver = new CommentNumReceiver(this);
+        mVideoEventReceiver = new VideoEventReceiver();
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mVideoEventReceiver, new IntentFilter(Constant.VIDEO_EVENT));
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(commentNumReceiver, new IntentFilter("sync_comment_num"));
 
         getIntentData(getIntent());
@@ -528,6 +536,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onDestroy();
         localBroadcastManager.unregisterReceiver(receive);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mVideoEventReceiver);
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(commentNumReceiver);
     }
 
@@ -656,17 +665,25 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
-            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-                    .setPlayContainer(videoContainer)
-                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-                    .setPlayUrl(data.getStringExtra(KEY_URL))
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-                    .setVertical(isVertical(mNewsDetail.getArticle()))
-                    .setOnPlayerManagerCallBack(this)
-                    .setLive(mNewsDetail.getArticle().isNative_live());
-            DailyPlayerManager.get().play(builder);
-        }
+//        if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
+//            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
+//                    .setPlayContainer(videoContainer)
+//                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+//                    .setPlayUrl(data.getStringExtra(KEY_URL))
+//                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+//                    .setVertical(isVertical(mNewsDetail.getArticle()))
+//                    .setOnPlayerManagerCallBack(this)
+//                    .setLive(mNewsDetail.getArticle().isNative_live());
+//            DailyPlayerManager.get().play(builder);
+//        }else if (resultCode==RESULT_OK&&data!=null&& data.getBooleanExtra(KEY_END, false)){//显示播放结束
+////                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(getActivity())
+////                        .setPlayContainer(videoContainer)
+////                        .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+////                        .setOnPlayerManagerCallBack(this)
+////                        .setPlayUrl(mAdapter.getCurrentPlayingBean().getVideo_url());
+////                DailyPlayerManager.get().init(builder);
+////                DailyPlayerManager.get().showStateEnd(mAdapter.getCurrentPlayingView());
+//        }
     }
 
     //视频播放结束的分享按钮
@@ -680,5 +697,26 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 .setTitle(mNewsDetail.getArticle().getDoc_title())
                 .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
                 .setShareType("文章"));
+    }
+
+
+    public class VideoEventReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            DailyPlayerManager.Builder builder = (DailyPlayerManager.Builder) bundle.getSerializable(Constant.DATA);
+            PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);
+            if (playerAction.isRotateScreen()) {
+                builder.setContext(getActivity());
+                builder.setPlayContainer(videoContainer);
+                DailyPlayerManager.get().play(builder);
+            } else if (playerAction.isPlayEnd()) {
+                builder.setContext(getActivity());
+                builder.setPlayContainer(videoContainer);
+                DailyPlayerManager.get().init(builder);
+                DailyPlayerManager.get().showStateEnd(videoContainer);
+            }
+        }
     }
 }

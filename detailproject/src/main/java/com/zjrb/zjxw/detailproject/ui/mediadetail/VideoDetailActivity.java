@@ -176,8 +176,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
                 }
             }
-
-
         }
     }
 
@@ -207,22 +205,37 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     //初始化视频UI
     private void initVideo(DraftDetailBean.ArticleBean bean) {
         String url = bean.getVideo_url();
-        if (bean.isNative_live()){
-            url = bean.getLive_url();
-        }
-        if (!TextUtils.isEmpty(url)) {
+        String title = bean.getDoc_title();
+        String imagePath = mNewsDetail.getArticle().getList_pics().get(0);
+        if (bean.isNative_live()||!TextUtils.isEmpty(url)){
+            //UI
             videoContainer.setVisibility(View.VISIBLE);
-            GlideApp.with(ivImage).load(mNewsDetail.getArticle().getList_pics().get(0)).placeholder(PH.zheBig()).centerCrop()
+            GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
+            if (bean.isNative_live()){
+                url = bean.getLive_url();
+                title = bean.getNative_live_info().getTitle();
+                imagePath = bean.getNative_live_info().getCover();
+                //直播回放并且回放地址不为空  取直播回放地址
+                if (bean.getNative_live_info().getStream_status()==2){
+                    if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())){
+                        url = bean.getNative_live_info().getPlayback_url();
+                    }else {
+                        url = "";
+                    }
+                }
+            }
+
+
             DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
+                    .setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setLive(bean.isNative_live())
                     .setStreamStatus(bean.getLive_status())
                     .setVertical(isVertical(bean))
                     .setOnPlayerManagerCallBack(this)
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+                    .setTitle(title)
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url)!=null&&PlayerCache.get().getPlayer(url).getPlayWhenReady()){//播放器正在播放
                 DailyPlayerManager.get().play(builder);

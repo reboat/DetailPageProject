@@ -95,7 +95,12 @@ public abstract class SuperDetailVideoHolder extends BaseRecyclerViewHolder<Nati
             ivTop.setVisibility(View.GONE);
         }
         //内容
-        mTvTitle.setText(mData.getContent());
+        if(!TextUtils.isEmpty(mData.getContent())){
+            mTvTitle.setVisibility(View.VISIBLE);
+            mTvTitle.setText(mData.getContent());
+        }else{
+            mTvTitle.setVisibility(View.GONE);
+        }
     }
 
 

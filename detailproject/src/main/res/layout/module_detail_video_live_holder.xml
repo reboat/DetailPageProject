@@ -33,6 +33,7 @@
         android:layout_marginTop="13dp"
         android:textColor="@color/_222222"
         android:textSize="@dimen/ts_16sp"
+        android:visibility="gone"
         tools:text="到达本次旅程的第一站：嘉兴站"
         />
 
@@ -43,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
         >
     </android.support.v7.widget.RecyclerView>
 

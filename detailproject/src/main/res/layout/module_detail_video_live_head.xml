@@ -6,8 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginBottom="20dp"
-    android:layout_marginLeft="14dp"
-    android:layout_marginRight="14dp"
     android:layout_marginTop="16dp">
 
     <TextView
@@ -15,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/_bfbfbf"
+        android:drawableLeft="@drawable/module_detail_video_live_holder"
+        android:drawablePadding="6dp"
         android:textSize="@dimen/ts_12sp"
         tools:text="10.5万人观看" />
 

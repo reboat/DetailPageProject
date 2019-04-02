@@ -6,15 +6,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.aliya.dailyplayer.PlayerManager;
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
+import com.aliya.dailyplayer.sub.OnPlayerManagerCallBack;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.google.gson.Gson;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.global.biz.Format;
+import com.zjrb.daily.news.ui.holder.NewsVideoHolder;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.utils.PlayerAnalytics;
 
 import butterknife.OnClick;
+import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.update.util.NetUtils;
 
 /**
@@ -32,6 +37,16 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
         super(parent);
         layoutPlay = mViewStubVideo.inflate();
         mTvDuration = layoutPlay.findViewById(R.id.tv_duration);
+        layoutPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(itemView.getContext())
+                        .setImageUrl(mData.getPics().get(0))
+                        .setPlayUrl(mData.getVideo_url())
+                        .setPlayContainer(mVideoContainer);
+                DailyPlayerManager.get().listPlay(builder);
+            }
+        });
     }
 
     @Override
@@ -46,6 +61,7 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
             mTvDuration.setVisibility(View.GONE);
         }
     }
+
 
 //    @OnClick({R2.id.iv_type_video, R2.id.ll_net_hint})
 //    public void onClick(View view) {

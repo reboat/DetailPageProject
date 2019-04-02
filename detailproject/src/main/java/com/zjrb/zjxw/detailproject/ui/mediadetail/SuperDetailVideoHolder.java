@@ -43,10 +43,6 @@ public abstract class SuperDetailVideoHolder extends BaseRecyclerViewHolder<Nati
     ViewStub mViewStubLive;
     @BindView(R2.id.video_container)
     public FrameLayout mVideoContainer;
-    @BindView(R2.id.ll_net_hint)
-    public LinearLayout llNetHint;
-    @BindView(R2.id.tv_net_hint)
-    public TextView tvNetHint;
 
     boolean isLive;
 

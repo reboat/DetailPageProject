@@ -74,17 +74,7 @@
             android:layout_gravity="center"
             android:layout_margin="11.5dp"
             android:layout="@layout/module_news_layout_live_tag" />
-        <!--网络提醒-->
-        <include
-            android:id="@+id/ll_net_hint"
-            layout="@layout/vr_layout_start_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="gone">
-        </include>
+
 
     </com.aliya.view.ratio.RatioFrameLayout>
 </LinearLayout>

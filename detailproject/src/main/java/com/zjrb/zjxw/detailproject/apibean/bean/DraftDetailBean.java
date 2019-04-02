@@ -776,7 +776,7 @@ public class DraftDetailBean extends BaseData {
         }
 
         //原生直播
-        public static class NativeLiveInfoBean {
+        public static class NativeLiveInfoBean implements Serializable {
             private int live_id;
             private String title;
             private String reporter;

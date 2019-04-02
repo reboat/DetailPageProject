@@ -103,6 +103,9 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
      * @param isResort 是否反转 默认为false倒序  true为正序
      */
     private void refreshData(long start, int size, boolean isResort) {
+        if (mNewsDetail==null||mNewsDetail.getArticle()==null||mNewsDetail.getArticle().getNative_live_info()==null){
+            return;
+        }
         new NativeLiveTask(new LoadingCallBack<NativeLiveBean>() {
             @Override
             public void onSuccess(NativeLiveBean nativeLiveBean) {

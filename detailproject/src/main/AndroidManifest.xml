@@ -121,7 +121,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <!-- 直播稿 path -->
-                <data android:path="/live.html" />
+                <!--<data android:path="/live.html" />-->
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -376,7 +376,7 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-                <!--<data android:path="/live.html" />-->
+                <data android:path="/live.html" />
                 <data android:path="/video.html" />
                 <data android:path="/native_live.html" />
                 <!-- 以下测试 host -->

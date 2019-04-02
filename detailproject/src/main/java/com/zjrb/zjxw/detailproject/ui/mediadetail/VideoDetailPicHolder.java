@@ -42,7 +42,6 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
         ButterKnife.bind(this, itemView);
     }
 
-
     @Override
     public void bindView() {
         //时间

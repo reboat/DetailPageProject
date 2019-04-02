@@ -57,7 +57,10 @@ public class VideoDetailPicAdapter extends BaseRecyclerAdapter implements OnItem
         if (bundle == null) {
             bundle = new Bundle();
         }
-        bundle.putStringArray(ImageBrowseActivity.EXTRA_IMAGE_URLS, (String[]) datas.toArray());
+        //这里需要转换
+        if(datas != null && datas.size() > 0){
+            bundle.putStringArray(ImageBrowseActivity.EXTRA_IMAGE_URLS, (String[])datas.toArray(new String[datas.size()]));
+        }
         bundle.putInt(ImageBrowseActivity.EXTRA_IMAGE_INDEX, position);
         if (map != null && map.getMap() != null && map.getMap().size() > position && !map.getMap().get(position)) {
             map.getMap().put(position, true);

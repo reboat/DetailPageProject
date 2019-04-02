@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/_484848_7a7b7d"
         android:scaleType="fitXY"
-        app:ratio_w2h="4:3"
+        app:ratio_w2h="111:82"
+        tools:src="@mipmap/authority"
         />
 </RelativeLayout>

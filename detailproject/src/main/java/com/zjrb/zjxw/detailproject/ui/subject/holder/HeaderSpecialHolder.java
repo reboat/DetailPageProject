@@ -149,8 +149,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     }
 
     private void initView() {
-        mRecyclerTab.addItemDecoration(new GridSpaceDivider(10));
-        mRecyclerTabCopy.addItemDecoration(new GridSpaceDivider(10));
+        mRecyclerTab.addItemDecoration(new GridSpaceDivider(8));
+        mRecyclerTabCopy.addItemDecoration(new GridSpaceDivider(8));
 
         mRecyclerTab.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));
         mRecyclerTabCopy.setLayoutManager(new GridLayoutManager(itemView.getContext(), 4));

@@ -29,7 +29,6 @@
         android:layout_marginTop="6dp"
         android:orientation="vertical"
         app:fitType="top">
-
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"

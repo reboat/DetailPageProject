@@ -2,8 +2,8 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           android:id="@+id/tv_channel_name"
-          android:layout_width="78dp"
-          android:layout_height="35dp"
+          android:layout_width="72dp"
+          android:layout_height="28dp"
           android:autoSizeMaxTextSize="12sp"
           android:autoSizeMinTextSize="10sp"
           android:autoSizeTextType="uniform"
@@ -12,4 +12,4 @@
           android:gravity="center"
           android:maxLines="1"
           android:textColor="@color/module_detail_special_tab"
-          tools:text="治国理政" />
+          tools:text="治国理政治国理政" />

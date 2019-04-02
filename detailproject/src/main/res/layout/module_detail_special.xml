@@ -8,6 +8,7 @@
                                              android:fitsSystemWindows="true"
                                              app:fitType="bottom">
 
+    <!--整个专题稿列表-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:background="@color/_ffffff"
         android:descendantFocusability="blocksDescendants" />
 
+    <!--吸顶tab栏-->
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/overlay_layout"
         android:layout_width="match_parent"
@@ -29,14 +31,16 @@
             android:layout_height="wrap_content"
             android:background="@color/_ffffff_191919"
             android:paddingBottom="5dp"
-            android:paddingLeft="12dp"
             android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="30dp"
             android:visibility="visible" />
 
         <FrameLayout
             android:id="@+id/group_copy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingRight="15dp"
             android:background="@color/_ffffff_191919"
             android:visibility="gone" />
 

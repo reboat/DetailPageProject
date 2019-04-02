@@ -22,7 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="1.1"
-        android:padding="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="27dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="14dp"
         android:textColor="@color/_000000_7a7b7d"
         android:textSize="19sp"
         android:textStyle="bold"
@@ -32,9 +35,9 @@
         android:id="@+id/tv_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
         android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:textColor="@color/_999999_5c5c5c"
@@ -86,10 +89,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="19dp"
         android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
-        android:drawablePadding="12dp"
+        android:drawablePadding="6dp"
         android:gravity="center_vertical|left"
-        android:paddingLeft="10dp"
         android:text="聚合阅读"
+        android:layout_marginLeft="9dp"
         android:textColor="@color/_222222"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -101,8 +104,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="15dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="12dp"
         android:paddingTop="5dp" />
 
     <!--专题焦点图-->
@@ -111,13 +115,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        app:ratio_w2h="360:178">
+        app:ratio_w2h="345:173">
 
         <ImageView
             android:id="@+id/iv_focus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            tools:src="@mipmap/authority"/>
 
         <TextView
             android:id="@+id/tv_focus"
@@ -129,8 +134,8 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
             android:paddingBottom="7dp"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="30dp"
             android:paddingTop="7dp"
             android:textColor="@color/_ffffff_7a7b7d"
             tools:text="夏宝龙：奋力打好小城镇环境综合整治的具体啦了工作在开化东阳调研时强调化东" />

@@ -48,6 +48,8 @@ public class SpecialSpaceDivider extends ListSpaceDivider {
 
     @Override
     protected void drawHorizontal(Canvas c, RecyclerView parent) {
+        int leftMargin = dp2px(15);
+        int rightMargin = dp2px(15);
         if (parent.getAdapter() == null) return;
         final int left = parent.getPaddingLeft();
         final int right = parent.getWidth() - parent.getPaddingRight();
@@ -83,7 +85,9 @@ public class SpecialSpaceDivider extends ListSpaceDivider {
                             .getLayoutParams();
                     int top = child.getBottom() + params.bottomMargin;
                     int bottom = top + mDividerHeight;
-                    c.drawRect(left + mLeftMargin, top, right - mRightMargin, bottom, mPaint);
+                    //TODO WLJ 没有统一处理
+//                    c.drawRect(left + mLeftMargin, top, right - mRightMargin, bottom, mPaint);
+                    c.drawRect(left + leftMargin, top, right - rightMargin, bottom, mPaint);
                 }
             }
         }

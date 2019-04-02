@@ -1,8 +1,11 @@
 package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
@@ -86,6 +89,24 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
             return new VideoDetailPicHolder(parent);
         } else {
             return new DetailVideoHolder(parent);
+        }
+    }
+
+
+    @Override
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        //如果有正在播放的view 找到并且删除
+        if (holder.itemView instanceof ViewGroup){
+            ViewGroup vg = (ViewGroup) holder.itemView;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                View child = vg.getChildAt(i);
+                if (DailyPlayerManager.get().getBuilder()!=null&&child == DailyPlayerManager.get().getBuilder().getPlayContainer()){
+                    DailyPlayerManager.get().onDestroy();
+                    DailyPlayerManager.get().deleteControllers(DailyPlayerManager.get().getBuilder().getPlayContainer());
+                    return;
+                }
+            }
         }
     }
 

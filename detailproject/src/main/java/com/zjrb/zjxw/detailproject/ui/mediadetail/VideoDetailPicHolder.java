@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
+import com.zjrb.zjxw.detailproject.widget.VideoGridSpaceDivider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,14 +59,18 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
         } else {
             tvTitle.setVisibility(View.GONE);
         }
+
         if (mData.getPics() != null && mData.getPics().size() > 0) {
-            rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
-            rvImgs.addItemDecoration(new GridSpaceDivider(6));
-            mAdapter = new VideoDetailPicAdapter(mData.getPics());
-            rvImgs.setAdapter(mAdapter);
+            if(mAdapter == null){
+                rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
+                rvImgs.addItemDecoration(new VideoGridSpaceDivider(6));
+                mAdapter = new VideoDetailPicAdapter(mData.getPics());
+                rvImgs.setAdapter(mAdapter);
+            }
         } else {
             rvImgs.setVisibility(View.GONE);
         }
+
     }
 
 }

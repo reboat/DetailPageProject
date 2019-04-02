@@ -87,6 +87,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
         lvNotice.post(new Runnable() {
             @Override
             public void run() {
+                startId = -1L;
                 refresh.setRefreshing(false);
                 refreshData(startId, 10, isReverse);
             }

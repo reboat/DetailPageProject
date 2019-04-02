@@ -61,9 +61,10 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
         }
         if (mData.getPics() != null && mData.getPics().size() > 0) {
             rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
+            rvImgs.addItemDecoration(new GridSpaceDivider(6));
             mAdapter = new VideoDetailPicAdapter(mData.getPics());
             rvImgs.setAdapter(mAdapter);
-        }else{
+        } else {
             rvImgs.setVisibility(View.GONE);
         }
     }

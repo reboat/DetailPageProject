@@ -222,7 +222,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
-
             DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
                     .setImageUrl(imagePath)
                     .setPlayUrl(url)
@@ -368,7 +367,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title,R2.id.iv_play})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_prised) {
@@ -491,6 +490,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
+        }else if (view.getId()==R.id.iv_play){//播放按钮
+            initVideo(mNewsDetail.getArticle());
         }
     }
 
@@ -563,6 +564,15 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onBackPressed();
         DailyPlayerManager.get().onDestroy();
         PlayerCache.get().clear();
+        //详情页播放返回
+        Intent intent = new Intent(Constant.VIDEO_EVENT);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.DATA,DailyPlayerManager.get().getBuilder());
+        PlayerAction action = new PlayerAction();
+        action.setFrom(PlayerAction.ACTIVITY_DETAIL);
+        bundle.putSerializable(Constant.EVENT,action);
+        intent.putExtras(bundle);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
 
@@ -665,25 +675,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
-//            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-//                    .setPlayContainer(videoContainer)
-//                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-//                    .setPlayUrl(data.getStringExtra(KEY_URL))
-//                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-//                    .setVertical(isVertical(mNewsDetail.getArticle()))
-//                    .setOnPlayerManagerCallBack(this)
-//                    .setLive(mNewsDetail.getArticle().isNative_live());
-//            DailyPlayerManager.get().play(builder);
-//        }else if (resultCode==RESULT_OK&&data!=null&& data.getBooleanExtra(KEY_END, false)){//显示播放结束
-////                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(getActivity())
-////                        .setPlayContainer(videoContainer)
-////                        .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-////                        .setOnPlayerManagerCallBack(this)
-////                        .setPlayUrl(mAdapter.getCurrentPlayingBean().getVideo_url());
-////                DailyPlayerManager.get().init(builder);
-////                DailyPlayerManager.get().showStateEnd(mAdapter.getCurrentPlayingView());
-//        }
     }
 
     //视频播放结束的分享按钮
@@ -707,15 +698,23 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             Bundle bundle = intent.getExtras();
             DailyPlayerManager.Builder builder = (DailyPlayerManager.Builder) bundle.getSerializable(Constant.DATA);
             PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);
-            if (playerAction.isRotateScreen()) {
+            if (playerAction.isRotateScreen()) {//旋转屏幕
                 builder.setContext(getActivity());
+                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
                 builder.setPlayContainer(videoContainer);
                 DailyPlayerManager.get().play(builder);
-            } else if (playerAction.isPlayEnd()) {
+            } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
                 builder.setPlayContainer(videoContainer);
+                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
                 DailyPlayerManager.get().init(builder);
                 DailyPlayerManager.get().showStateEnd(videoContainer);
+            }else if(PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
+//                builder.setContext(getActivity());
+//                builder.setPlayContainer(videoContainer);
+//                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
+//                DailyPlayerManager.get().init(builder);
+                DailyPlayerManager.get().deleteControllers(videoContainer);
             }
         }
     }

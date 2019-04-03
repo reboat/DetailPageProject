@@ -87,7 +87,7 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace, OnPlayerManagerCallBack {
+        DetailInterface.VideoBCnterFace{
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -219,13 +219,21 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
+            UmengShareBean shareBean = UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setArticleId(mNewsDetail.getArticle().getId() + "")
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
+                    .setShareType("文章");
             DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
                     .setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setLive(bean.isNative_live())
                     .setStreamStatus(bean.getLive_status())
                     .setVertical(isVertical(bean))
-                    .setOnPlayerManagerCallBack(this)
+                    .setUmengShareBean(shareBean)
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
@@ -699,19 +707,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //视频播放结束的分享按钮
-    @Override
-    public void onShareClicked(View view) {
-        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                .setSingle(false)
-                .setArticleId(mNewsDetail.getArticle().getId() + "")
-                .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                .setTextContent(mNewsDetail.getArticle().getSummary())
-                .setTitle(mNewsDetail.getArticle().getDoc_title())
-                .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
-                .setShareType("文章"));
-    }
-
     public class VideoEventReceiver extends BroadcastReceiver {
 
         @Override
@@ -728,13 +723,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);
             if (playerAction.isRotateScreen()) {//旋转屏幕
                 builder.setContext(getActivity());
-                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
                 builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().play(builder);
             } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);
-                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
                 DailyPlayerManager.get().init(builder);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             }else if(PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
@@ -22,7 +23,6 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
 import com.zjrb.zjxw.detailproject.apibean.task.NativeLiveTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
-import com.zjrb.zjxw.detailproject.callback.OnListPlayListener;
 import com.zjrb.zjxw.detailproject.ui.boardcast.RefreshHeadReceiver;
 
 import butterknife.BindView;
@@ -31,7 +31,6 @@ import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
 
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
-import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_LIST_LISTENER;
 
 /**
  * 视频直播间Fragment
@@ -55,7 +54,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     private VideoDetailHeaderHolder headHolder;
     private VideoLiveAdapter adapter;
     private RefreshHeadReceiver refreshHeadReceiver;
-    private VideoDetailActivity.MyListPlayCallBack mOnListPlayListener;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,8 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        lvNotice.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        lvNotice.setLayoutManager(mLinearLayoutManager);
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
         refreshData(startId, 10, false);
@@ -137,7 +137,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     //初始化适配器
     private void initAdapter(NativeLiveBean bean) {
         if (adapter == null) {
-            adapter = new VideoLiveAdapter(lvNotice, bean,mOnListPlayListener);
+            adapter = new VideoLiveAdapter(lvNotice, bean);
             adapter.setHeaderRefresh(refresh.getItemView());
             headHolder = new VideoDetailHeaderHolder(lvNotice, isReverse);
             adapter.addHeaderView(headHolder.getItemView());
@@ -163,15 +163,34 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
         }
     }
 
-    public void setOnListPlayListener(VideoDetailActivity.MyListPlayCallBack listener){
-        this.mOnListPlayListener = listener;
-    }
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-
+        if (!isVisibleToUser){
+            if (mLinearLayoutManager==null){
+                return;
+            }
+            ViewGroup playContainer = findListPlayingView();
+            if (playContainer!=null&&playContainer== DailyPlayerManager.get().getBuilder().getPlayContainer()){
+                DailyPlayerManager.get().onDestroy();
+            }
         }
+    }
+
+    public ViewGroup findListPlayingView(){
+        if (mLinearLayoutManager==null){
+            return null;
+        }
+        for (int i = 0; i < mLinearLayoutManager.getChildCount(); i++) {
+            View view = mLinearLayoutManager.getChildAt(i);
+            if (view instanceof ViewGroup){
+                ViewGroup viewGroup = (ViewGroup) view;
+                ViewGroup playContainer = viewGroup.findViewWithTag("video_container");
+                if (playContainer!=null){
+                    return playContainer;
+                }
+            }
+        }
+        return null;
     }
 }

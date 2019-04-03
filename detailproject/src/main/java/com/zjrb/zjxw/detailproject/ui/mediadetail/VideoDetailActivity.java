@@ -46,7 +46,6 @@ import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
-import com.zjrb.zjxw.detailproject.callback.OnListPlayListener;
 import com.zjrb.zjxw.detailproject.ui.boardcast.CommentNumReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
@@ -111,7 +110,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @BindView(R2.id.iv_play)
     ImageView ivPlay;
 
-    private MyListPlayCallBack myListPlayCallBack = new MyListPlayCallBack();
     private int ui;
     public String mArticleId;
     private String mFromChannel;
@@ -124,7 +122,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
     private VideoLiveFragment mVideoLiveFragment;
-    private ViewGroup mCurrentPlayingContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,7 +228,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setOnPlayerManagerCallBack(this)
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
-            mCurrentPlayingContainer = videoContainer;
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
                 DailyPlayerManager.get().play(builder);
             } else {
@@ -268,7 +264,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             bundleLive.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
             pagerAdapter.addTabInfo(VideoLiveFragment.class, "直播间", bundleLive);
             mVideoLiveFragment = (VideoLiveFragment) pagerAdapter.getItem(1);
-            mVideoLiveFragment.setOnListPlayListener(myListPlayCallBack);
         }
         //评论
         Bundle bundleComment = BundleHelper.creatBundle(IKey
@@ -513,9 +508,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
         }else if (view.getId()==R.id.iv_play){//播放按钮
-            if (mCurrentPlayingContainer!=null&&mCurrentPlayingContainer!=videoContainer){//当前列表在播放
+            if (mVideoLiveFragment.findListPlayingView()!=null){//当前列表在播放
                 DailyPlayerManager.get().onDestroy();
-                DailyPlayerManager.get().deleteControllers(mCurrentPlayingContainer);
+                DailyPlayerManager.get().deleteControllers(mVideoLiveFragment.findListPlayingView());
             }
             initVideo(mNewsDetail.getArticle());
 
@@ -717,51 +712,37 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 .setShareType("文章"));
     }
 
-    public class MyListPlayCallBack implements OnListPlayListener,OnPlayerManagerCallBack{
-
-        @Override
-        public void onListPlay(ViewGroup view) {
-             mCurrentPlayingContainer = view;
-        }
-
-        @Override
-        public void onShareClicked(View view) {
-            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setArticleId(mNewsDetail.getArticle().getId() + "")
-                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                    .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-                    .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
-                    .setShareType("文章"));
-        }
-    }
-
-
     public class VideoEventReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            ViewGroup currentPlayingView;
+            if(mVideoLiveFragment.findListPlayingView()!=null){
+                currentPlayingView = mVideoLiveFragment.findListPlayingView();
+            }else {
+                currentPlayingView = videoContainer;
+            }
+
             Bundle bundle = intent.getExtras();
             DailyPlayerManager.Builder builder = (DailyPlayerManager.Builder) bundle.getSerializable(Constant.DATA);
             PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);
             if (playerAction.isRotateScreen()) {//旋转屏幕
                 builder.setContext(getActivity());
                 builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
-                builder.setPlayContainer(mCurrentPlayingContainer);
+                builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().play(builder);
             } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
-                builder.setPlayContainer(mCurrentPlayingContainer);
+                builder.setPlayContainer(currentPlayingView);
                 builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
                 DailyPlayerManager.get().init(builder);
-                DailyPlayerManager.get().showStateEnd(mCurrentPlayingContainer);
+                DailyPlayerManager.get().showStateEnd(currentPlayingView);
             }else if(PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
 //                builder.setContext(getActivity());
 //                builder.setPlayContainer(videoContainer);
 //                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
 //                DailyPlayerManager.get().init(builder);
-                DailyPlayerManager.get().deleteControllers(mCurrentPlayingContainer);
+                DailyPlayerManager.get().deleteControllers(currentPlayingView);
             }
         }
     }

@@ -516,7 +516,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
         }else if (view.getId()==R.id.iv_play){//播放按钮
-            if (mVideoLiveFragment.findListPlayingView()!=null){//当前列表在播放
+            if (mVideoLiveFragment!=null&&mVideoLiveFragment.findListPlayingView()!=null){//当前列表在播放
                 DailyPlayerManager.get().onDestroy();
                 DailyPlayerManager.get().deleteControllers(mVideoLiveFragment.findListPlayingView());
             }

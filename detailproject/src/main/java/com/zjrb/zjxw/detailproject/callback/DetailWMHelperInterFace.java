@@ -2,7 +2,6 @@ package com.zjrb.zjxw.detailproject.callback;
 
 import android.content.Context;
 
-
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;

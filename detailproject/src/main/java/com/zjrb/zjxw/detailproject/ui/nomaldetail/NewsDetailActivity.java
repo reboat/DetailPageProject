@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.aliya.dailyplayer.PlayerManager;
 import com.aliya.dailyplayer.utils.Recorder;
 import com.aliya.dailyplayer.vertical.VFullscreenActivity;
-import com.aliya.dailyplayer.vertical.VerticalManager;
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;

@@ -80,7 +80,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
     private DraftDetailBean mNewsDetail;
     private RedBoatAdapter mAdapter;
     private Analytics mAnalytics;
-    private Analytics mAnalytics1;
     private float mScale;
     private SubscribeReceiver mReceiver;
 
@@ -277,7 +276,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             //已订阅状态->取消订阅
             //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
@@ -299,7 +298,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
@@ -326,7 +325,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             }
             //进入栏目
         } else if (v.getId() == R.id.tv_top_bar_title) {
-            DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail,"点击进入栏目详情页", "800031", "ToDetailColumn", "");
+            DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             Bundle bundle = new Bundle();
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)

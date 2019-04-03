@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
-import com.aliya.dailyplayer.sub.OnPlayerManagerCallBack;
 import com.aliya.dailyplayer.sub.PlayerAction;
 import com.aliya.dailyplayer.sub.PlayerCache;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;

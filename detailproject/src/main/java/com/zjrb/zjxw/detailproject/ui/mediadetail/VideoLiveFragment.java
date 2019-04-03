@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
@@ -53,6 +54,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     private VideoDetailHeaderHolder headHolder;
     private VideoLiveAdapter adapter;
     private RefreshHeadReceiver refreshHeadReceiver;
+    private LinearLayoutManager mLinearLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,8 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        lvNotice.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        lvNotice.setLayoutManager(mLinearLayoutManager);
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
         refreshData(startId, 10, false);
@@ -158,5 +161,36 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             isReverse = intent.getBooleanExtra("isReverse", false);
             refreshData(startId, 10, intent.getBooleanExtra("isReverse", false));
         }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (!isVisibleToUser){
+            if (mLinearLayoutManager==null){
+                return;
+            }
+            ViewGroup playContainer = findListPlayingView();
+            if (playContainer!=null&&playContainer== DailyPlayerManager.get().getBuilder().getPlayContainer()){
+                DailyPlayerManager.get().onDestroy();
+            }
+        }
+    }
+
+    public ViewGroup findListPlayingView(){
+        if (mLinearLayoutManager==null){
+            return null;
+        }
+        for (int i = 0; i < mLinearLayoutManager.getChildCount(); i++) {
+            View view = mLinearLayoutManager.getChildAt(i);
+            if (view instanceof ViewGroup){
+                ViewGroup viewGroup = (ViewGroup) view;
+                ViewGroup playContainer = viewGroup.findViewWithTag("video_container");
+                if (playContainer!=null){
+                    return playContainer;
+                }
+            }
+        }
+        return null;
     }
 }

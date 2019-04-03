@@ -127,4 +127,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         return null;
     }
 
+
+
+
 }

@@ -76,8 +76,6 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 
-import static com.aliya.dailyplayer.FullscreenActivity.KEY_URL;
-import static com.aliya.dailyplayer.vertical.VFullscreenActivity.KEY_END;
 import static com.zjrb.core.utils.UIUtils.getContext;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoCommentFragment.FRAGMENT_DETAIL_COMMENT;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
@@ -89,7 +87,7 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace, OnPlayerManagerCallBack {
+        DetailInterface.VideoBCnterFace{
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -112,7 +110,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @BindView(R2.id.iv_play)
     ImageView ivPlay;
 
-
     private int ui;
     public String mArticleId;
     private String mFromChannel;
@@ -124,7 +121,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoEventReceiver mVideoEventReceiver;
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
-
+    private VideoLiveFragment mVideoLiveFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -222,14 +219,21 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
-
+            UmengShareBean shareBean = UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setArticleId(mNewsDetail.getArticle().getId() + "")
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
+                    .setShareType("文章");
             DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
                     .setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setLive(bean.isNative_live())
                     .setStreamStatus(bean.getLive_status())
                     .setVertical(isVertical(bean))
-                    .setOnPlayerManagerCallBack(this)
+                    .setUmengShareBean(shareBean)
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
@@ -245,6 +249,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             T.showShort(getContext(), getString(R.string.module_detail_no_network));
         }
     }
+
 
     //初始化视频/评论fragment
     private void initViewPage(DraftDetailBean bean) {
@@ -266,6 +271,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .FRAGMENT_ARGS, VideoLiveFragment.FRAGMENT_VIDEO_LIVE);
             bundleLive.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
             pagerAdapter.addTabInfo(VideoLiveFragment.class, "直播间", bundleLive);
+            mVideoLiveFragment = (VideoLiveFragment) pagerAdapter.getItem(1);
         }
         //评论
         Bundle bundleComment = BundleHelper.creatBundle(IKey
@@ -279,6 +285,24 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < pagerAdapter.getCount(); i++) {
+                    pagerAdapter.getItem(i).setUserVisibleHint(position==i);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     private void loadData() {
@@ -368,7 +392,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title,R2.id.iv_play})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_prised) {
@@ -491,6 +515,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
             Nav.with(UIUtils.getContext()).setExtras(bundle)
                     .toPath("/subscription/detail");
+        }else if (view.getId()==R.id.iv_play){//播放按钮
+            if (mVideoLiveFragment!=null&&mVideoLiveFragment.findListPlayingView()!=null){//当前列表在播放
+                DailyPlayerManager.get().onDestroy();
+                DailyPlayerManager.get().deleteControllers(mVideoLiveFragment.findListPlayingView());
+            }
+            initVideo(mNewsDetail.getArticle());
+
         }
     }
 
@@ -563,6 +594,15 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onBackPressed();
         DailyPlayerManager.get().onDestroy();
         PlayerCache.get().clear();
+        //详情页播放返回
+        Intent intent = new Intent(Constant.VIDEO_EVENT);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.DATA,DailyPlayerManager.get().getBuilder());
+        PlayerAction action = new PlayerAction();
+        action.setFrom(PlayerAction.ACTIVITY_DETAIL);
+        bundle.putSerializable(Constant.EVENT,action);
+        intent.putExtras(bundle);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
 
@@ -667,36 +707,36 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //视频播放结束的分享按钮
-    @Override
-    public void onShareClicked(View view) {
-        UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                .setSingle(false)
-                .setArticleId(mNewsDetail.getArticle().getId() + "")
-                .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                .setTextContent(mNewsDetail.getArticle().getSummary())
-                .setTitle(mNewsDetail.getArticle().getDoc_title())
-                .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
-                .setShareType("文章"));
-    }
-
-
     public class VideoEventReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            ViewGroup currentPlayingView;
+
+            if(mVideoLiveFragment!=null&&mVideoLiveFragment.findListPlayingView()!=null){
+                currentPlayingView = mVideoLiveFragment.findListPlayingView();
+            }else {
+                currentPlayingView = videoContainer;
+            }
+
             Bundle bundle = intent.getExtras();
             DailyPlayerManager.Builder builder = (DailyPlayerManager.Builder) bundle.getSerializable(Constant.DATA);
             PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);
-            if (playerAction.isRotateScreen()) {
+            if (playerAction.isRotateScreen()) {//旋转屏幕
                 builder.setContext(getActivity());
-                builder.setPlayContainer(videoContainer);
+                builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().play(builder);
-            } else if (playerAction.isPlayEnd()) {
+            } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
-                builder.setPlayContainer(videoContainer);
+                builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().init(builder);
-                DailyPlayerManager.get().showStateEnd(videoContainer);
+                DailyPlayerManager.get().showStateEnd(currentPlayingView);
+            }else if(PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
+//                builder.setContext(getActivity());
+//                builder.setPlayContainer(videoContainer);
+//                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
+//                DailyPlayerManager.get().init(builder);
+                DailyPlayerManager.get().deleteControllers(currentPlayingView);
             }
         }
     }

@@ -22,6 +22,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
 import com.zjrb.zjxw.detailproject.apibean.task.NativeLiveTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.callback.OnListPlayListener;
 import com.zjrb.zjxw.detailproject.ui.boardcast.RefreshHeadReceiver;
 
 import butterknife.BindView;
@@ -30,6 +31,7 @@ import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
 
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
+import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_LIST_LISTENER;
 
 /**
  * 视频直播间Fragment
@@ -53,6 +55,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     private VideoDetailHeaderHolder headHolder;
     private VideoLiveAdapter adapter;
     private RefreshHeadReceiver refreshHeadReceiver;
+    private VideoDetailActivity.MyListPlayCallBack mOnListPlayListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,7 +137,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     //初始化适配器
     private void initAdapter(NativeLiveBean bean) {
         if (adapter == null) {
-            adapter = new VideoLiveAdapter(lvNotice, bean);
+            adapter = new VideoLiveAdapter(lvNotice, bean,mOnListPlayListener);
             adapter.setHeaderRefresh(refresh.getItemView());
             headHolder = new VideoDetailHeaderHolder(lvNotice, isReverse);
             adapter.addHeaderView(headHolder.getItemView());
@@ -157,6 +160,18 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
         if (intent != null && intent.hasExtra("isReverse")) {
             isReverse = intent.getBooleanExtra("isReverse", false);
             refreshData(startId, 10, intent.getBooleanExtra("isReverse", false));
+        }
+    }
+
+    public void setOnListPlayListener(VideoDetailActivity.MyListPlayCallBack listener){
+        this.mOnListPlayListener = listener;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+
         }
     }
 }

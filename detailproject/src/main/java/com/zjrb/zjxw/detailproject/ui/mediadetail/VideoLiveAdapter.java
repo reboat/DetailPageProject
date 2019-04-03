@@ -27,13 +27,15 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     private int live_id = 0;
     private boolean isResort = false;
     private final FooterLoadMore<NativeLiveBean> mLoadMore;
+    private VideoDetailActivity.MyListPlayCallBack mOnListPlayListener;
     //图片
     private int VIDEO_LIVE_MUL_PIC = 1;
     //视频
     private int VIDEO_LIVE_VIDEO = 2;
 
-    public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data) {
+    public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data, VideoDetailActivity.MyListPlayCallBack mOnListPlayListener) {
         super(null);
+        this.mOnListPlayListener = mOnListPlayListener;
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         setData(data);
@@ -88,7 +90,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         if (viewType == VIDEO_LIVE_MUL_PIC) {
             return new VideoDetailPicHolder(parent);
         } else {
-            return new DetailVideoHolder(parent);
+            return new DetailVideoHolder(parent,mOnListPlayListener);
         }
     }
 
@@ -126,5 +128,8 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         }
         return null;
     }
+
+
+
 
 }

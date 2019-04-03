@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.daily.news.global.biz.Format;
 import com.zjrb.zjxw.detailproject.R;
+import com.zjrb.zjxw.detailproject.callback.OnListPlayListener;
 
 /**
  * 视频直播holder
@@ -18,9 +19,11 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
     TextView mTvDuration;
 
     protected View layoutPlay;
+    private OnListPlayListener mOnListPlayListener;
 
-    public DetailVideoHolder(ViewGroup parent) {
+    public DetailVideoHolder(ViewGroup parent, final VideoDetailActivity.MyListPlayCallBack listPlayListener) {
         super(parent);
+        mOnListPlayListener = listPlayListener;
         layoutPlay = mViewStubVideo.inflate();
         mTvDuration = layoutPlay.findViewById(R.id.tv_duration);
         layoutPlay.setOnClickListener(new View.OnClickListener() {
@@ -29,8 +32,12 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
                 DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(itemView.getContext())
                         .setImageUrl(mData.getVideo_cover())
                         .setPlayUrl(mData.getVideo_url())
+                        .setOnPlayerManagerCallBack(listPlayListener)
                         .setPlayContainer(mVideoContainer);
                 DailyPlayerManager.get().listPlay(builder);
+                if (mOnListPlayListener!=null){
+                    mOnListPlayListener.onListPlay(mVideoContainer);
+                }
             }
         });
     }

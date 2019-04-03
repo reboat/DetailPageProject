@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -76,6 +77,10 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter<DraftHotTopNewsBe
         TextView mTitle;
         @BindView(R2.id.iv_pic)
         ImageView mImg;
+        @BindView(R2.id.tv_channel)
+        TextView mTvChannel;
+        @BindView(R2.id.tv_prise_num)
+        TextView mTvPriseNum;
 
         public EmptyStateHolder(View itemView) {
             super(itemView);
@@ -90,6 +95,20 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter<DraftHotTopNewsBe
             if (mData.getList_title() != null) {
                 mTitle.setText(mData.getList_title());
                 mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
+            }
+
+            if (!TextUtils.isEmpty(mData.getColumn_name())) {
+                mTvChannel.setVisibility(View.VISIBLE);
+                mTvChannel.setText(mData.getColumn_name());
+            } else {
+                mTvChannel.setVisibility(View.GONE);
+            }
+
+            if (!TextUtils.isEmpty(mData.getLike_count_general())) {
+                mTvPriseNum.setVisibility(View.VISIBLE);
+                mTvPriseNum.setText(mData.getLike_count_general());
+            } else {
+                mTvPriseNum.setVisibility(View.GONE);
             }
         }
 
@@ -122,6 +141,7 @@ public class EmptyStateListAdapter extends BaseRecyclerAdapter<DraftHotTopNewsBe
                 mTitle.setText(mData.getList_title());
                 mTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
             }
+
         }
 
         @Override

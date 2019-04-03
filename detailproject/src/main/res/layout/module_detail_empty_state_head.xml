@@ -4,20 +4,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
     >
-    <!--此处如果不包裹一层ViewGroup，可能会出现横向背景不能铺满的现象-->
     <TextView
         android:id="@+id/tv_empty_states"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/_a4a3a3_484848"
+        android:background="@color/_80000000"
         android:drawablePadding="10dp"
         android:gravity="center|left"
-        android:paddingBottom="15dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="15dp"
+        android:paddingBottom="11dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="12dp"
         android:textColor="@color/_ffffff_999999"
-        android:textSize="@dimen/ts_11sp"
-        tools:text="很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容" />
-
+        android:lineSpacingExtra = "3dp"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="很抱歉,来晚一步,这篇已经不在了,别着急,你可以看看其他热门内容" />
 </RelativeLayout>

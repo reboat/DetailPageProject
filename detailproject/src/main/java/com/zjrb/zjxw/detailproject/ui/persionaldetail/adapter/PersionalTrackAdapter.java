@@ -89,7 +89,7 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
             if (!mData.isSameYear()) {
                 mTvYear.setText(mData.getYear() + "年");
             } else {
-                mTvYear.setVisibility(View.GONE);
+                mTvYear.setVisibility(View.INVISIBLE);
             }
 
             //任职月份

@@ -665,25 +665,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK && data != null && !TextUtils.isEmpty(data.getStringExtra(KEY_URL))) {
-//            DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this)
-//                    .setPlayContainer(videoContainer)
-//                    .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-//                    .setPlayUrl(data.getStringExtra(KEY_URL))
-//                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-//                    .setVertical(isVertical(mNewsDetail.getArticle()))
-//                    .setOnPlayerManagerCallBack(this)
-//                    .setLive(mNewsDetail.getArticle().isNative_live());
-//            DailyPlayerManager.get().play(builder);
-//        }else if (resultCode==RESULT_OK&&data!=null&& data.getBooleanExtra(KEY_END, false)){//显示播放结束
-////                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(getActivity())
-////                        .setPlayContainer(videoContainer)
-////                        .setImageUrl(mNewsDetail.getArticle().getList_pics().get(0))
-////                        .setOnPlayerManagerCallBack(this)
-////                        .setPlayUrl(mAdapter.getCurrentPlayingBean().getVideo_url());
-////                DailyPlayerManager.get().init(builder);
-////                DailyPlayerManager.get().showStateEnd(mAdapter.getCurrentPlayingView());
-//        }
     }
 
     //视频播放结束的分享按钮

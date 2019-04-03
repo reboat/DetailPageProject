@@ -104,7 +104,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         }
     }
 
-    //同步评论数
+    //同步act评论数
     private void SyncCommentNum(int commentNum) {
         Intent intent = new Intent("sync_comment_num");
         if (commentNum == 0) {

@@ -95,6 +95,7 @@ public class DraftDetailBean extends BaseData {
         private int video_type;
         private boolean topped;
         private boolean native_live;
+        private String card_url;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明
@@ -773,6 +774,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setTopped(boolean topped) {
             this.topped = topped;
+        }
+
+        public String getCard_url() {
+            return card_url;
+        }
+
+        public void setCard_url(String card_url) {
+            this.card_url = card_url;
         }
 
         //原生直播

@@ -166,7 +166,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     /**
      * 当webview加载出后再显示相关转移等显示全部
-     * TODO 直播稿不会调用
      */
     public void showAll() {
         //只加载一次

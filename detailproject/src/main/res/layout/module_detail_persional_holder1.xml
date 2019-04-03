@@ -7,24 +7,26 @@
     android:id="@+id/lly_reporter"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/_ffffff_191919">
+    android:background="@color/_ffffff_191919"
+    android:paddingBottom="14dp"
+    android:paddingTop="16dp">
 
     <ImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="84dp"
-        android:layout_height="110dp"
+        android:layout_width="114dp"
+        android:layout_height="140dp"
         android:layout_alignParentLeft="true"
-        android:layout_margin="9dp"
         android:scaleType="fitXY"
-        app:ratio_w2h="84:110"
-         />
+        app:ratio_w2h="114:140"
+        tools:src="@mipmap/authority"
+        />
 
     <LinearLayout
         android:id="@+id/ly_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_avatar"
-        android:layout_marginLeft="2dp"
+        android:layout_marginLeft="12dp"
         android:layout_toRightOf="@+id/iv_avatar"
         android:orientation="vertical">
 
@@ -32,22 +34,19 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_gravity="left"
+            android:fontFamily="@font/fzzcysk_zbjt"
             android:padding="2dp"
-            android:textColor="@color/_000000_7a7b7d"
-            android:textSize="@dimen/ts_16sp"
-            android:textStyle="bold"
+            android:textColor="@color/_222222"
+            android:textSize="@dimen/ts_18sp"
             tools:text="车俊" />
 
         <TextView
             android:id="@+id/tv_job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginTop="6dp"
-            android:padding="2dp"
-            android:textColor="@color/_000000_7a7b7d"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/_222222"
             android:textSize="@dimen/ts_16sp"
             tools:text="浙江省委书记" />
 
@@ -60,12 +59,12 @@
         android:layout_alignBottom="@+id/iv_avatar"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tv_content"
-        android:layout_marginRight="22dp"
+        android:drawablePadding="4dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
         android:gravity="center"
         android:text="@string/module_detail_offical_more"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_11sp"
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_12sp"
         tools:text="更多" />
 
 </RelativeLayout>

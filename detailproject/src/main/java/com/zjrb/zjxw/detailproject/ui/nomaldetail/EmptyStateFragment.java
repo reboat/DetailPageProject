@@ -91,7 +91,7 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
             viewGroup.setVisibility(View.VISIBLE);
         }
         head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
-        emptyText = (TextView) head.findViewById(R.id.tv_empty_states);
+        emptyText = head.findViewById(R.id.tv_empty_states);
         emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
         lvNotice.addItemDecoration(new ListSpaceDivider(0.5f, R.color._dddddd_343434, true, true));

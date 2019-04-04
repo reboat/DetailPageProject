@@ -64,10 +64,6 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     RecyclerView mRvContent;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
-    //    @BindView(R2.id.ly_container)
-//    LinearLayout mLyContainer;
-//    @BindView(R2.id.tv_comment_num)
-//    TextView tvCommentNum;
     @BindView(R2.id.activity_comment)
     RelativeLayout ry_containerl;
 
@@ -185,7 +181,6 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
             head.setVisibility(View.GONE);
         } else {
             head.setVisibility(View.VISIBLE);
-            ((TextView) head).setText(getString(R.string.module_detail_new_comment));
         }
 
         if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getList_title())) {

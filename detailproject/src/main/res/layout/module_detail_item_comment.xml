@@ -11,7 +11,7 @@
         android:id="@+id/ly_replay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="11dp">
+        android:layout_marginTop="14dp">
 
         <com.zjrb.core.ui.widget.CircleImageView
             android:id="@+id/iv_avatar"
@@ -281,8 +281,6 @@
             android:layout_below="@+id/ry_time"
             android:background="@color/_dddddd_7a7b7d"
             />
-
-
     </RelativeLayout>
 
 </RelativeLayout>

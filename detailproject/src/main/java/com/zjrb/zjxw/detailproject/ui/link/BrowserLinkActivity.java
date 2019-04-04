@@ -25,6 +25,7 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.task.CommonDraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
@@ -91,6 +92,7 @@ public class BrowserLinkActivity extends DailyActivity {
     private JsMultiInterfaceImp jsInterfaceImp;
     //是否是链接稿
     private boolean isBrowserLink = false;
+    private String browserUri = "";
 
 
     @Override
@@ -138,6 +140,7 @@ public class BrowserLinkActivity extends DailyActivity {
                 //判断是否为链接稿
                 if (data.getPath().equals("/link.html")) {
                     isBrowserLink = true;
+                    browserUri = data.toString();
                 }
             }
 
@@ -162,7 +165,7 @@ public class BrowserLinkActivity extends DailyActivity {
      */
     private void loadData() {
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
-        if(isBrowserLink){
+        if (isBrowserLink) {
             if (mArticleId == null || mArticleId.isEmpty()) return;
             new DraftDetailTask(new APICallBack<DraftDetailBean>() {
                 @Override
@@ -195,8 +198,39 @@ public class BrowserLinkActivity extends DailyActivity {
                     }
                 }
             }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
-        }else{//非原生内部稿件
-            //TODO WLJ
+        } else {
+            //非原生内部稿件
+            new CommonDraftDetailTask(new APICallBack<DraftDetailBean>() {
+                @Override
+                public void onSuccess(DraftDetailBean draftDetailBean) {
+                    if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
+                    mNewsDetail = draftDetailBean;
+                    builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                    //可能被重定向了
+                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
+                        url = mNewsDetail.getArticle().getWeb_link();
+                    } else {
+                        url = mNewsDetail.getArticle().getUrl();
+                    }
+                    fillData(mNewsDetail);
+                    YiDunToken.synYiDunToken(mArticleId);
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    //撤稿
+                    if (errCode == C.DRAFFT_IS_NOT_EXISE) {
+                        showEmptyNewsDetail();
+                    } else {
+                        T.showShortNow(BrowserLinkActivity.this, errMsg);
+                    }
+                }
+            }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(browserUri);
         }
 
     }

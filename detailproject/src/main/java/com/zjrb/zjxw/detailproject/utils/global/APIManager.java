@@ -103,6 +103,12 @@ public class APIManager {
          */
         public static final String REALTIME_LIST = "/api/native_live/realtime_list";
 
+        /**
+         * 通用非原生内部稿
+         */
+        public static final String COMMON_DETAIL = "/api/article/common_detail";
+
+
     }
 
 }

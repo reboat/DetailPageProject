@@ -13,8 +13,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_16sp"
-        android:textStyle="bold"
+        android:textSize="@dimen/ts_12sp"
         tools:text="理论视野" />
 
     <TextView
@@ -24,8 +23,9 @@
         android:layout_gravity="center_vertical|right"
         android:layout_marginRight="12dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
+        android:drawablePadding="6dp"
         android:text="更多"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_11sp" />
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_12sp" />
 
 </FrameLayout>

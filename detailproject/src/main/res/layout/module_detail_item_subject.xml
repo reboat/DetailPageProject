@@ -58,7 +58,7 @@
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
         app:ratio_w2h="111:74"
-        tools:src="@mipmap/module_core_font_small"
+        tools:src="@mipmap/hearde_logo"
         />
 
 </RelativeLayout>

@@ -23,7 +23,7 @@
         android:paddingTop="15dp"
         android:textColor="@color/_222222"
         android:textSize="14sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/fzzcysk_zbjt"
         tools:text="相关专题" />
 
 </LinearLayout>

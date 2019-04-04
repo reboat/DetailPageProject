@@ -70,6 +70,7 @@
                         android:layout_alignBottom="@+id/tv_title"
                         android:layout_toLeftOf="@+id/tv_tottle_num"
                         android:textColor="@color/_d12324"
+                        android:fontFamily="@font/din_medium"
                         android:textSize="@dimen/ts_16sp"
                         tools:text="1" />
 
@@ -81,6 +82,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="11dp"
                         android:textColor="@color/_ffffff_191919"
+                        android:fontFamily="@font/din_medium"
                         android:textSize="@dimen/ts_12sp"
                         tools:text="/6" />
                 </RelativeLayout>

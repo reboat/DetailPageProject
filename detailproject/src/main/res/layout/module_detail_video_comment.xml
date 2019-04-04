@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
         android:drawablePadding="9.5dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
         android:letterSpacing="0.25"
         android:paddingBottom="9dp"
         android:paddingTop="9dp"
-        android:textColor="@color/_484848_7a7b7d"
+        android:textColor="@color/_222222"
         android:textSize="14sp"
-        android:textStyle="bold"
         tools:text="热门评论" />
 
     <TextView

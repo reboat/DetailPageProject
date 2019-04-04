@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/module_detail_video_live_holder"
             android:drawablePadding="6dp"
-            android:fontFamily="@font/fzbiaoysk_zbjt"
+            android:fontFamily="@font/din_medium"
             android:textColor="@color/_666666"
             android:textSize="@dimen/ts_12sp"
             tools:text="2018.10.25 10:16" />

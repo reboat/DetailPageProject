@@ -3,6 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
+              android:background="@drawable/module_detail_coner"
               android:orientation="vertical">
 
     <TextView
@@ -23,7 +24,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:textColor="@color/_484848_7a7b7d"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:text="是否确认删除该评论" />
 
 

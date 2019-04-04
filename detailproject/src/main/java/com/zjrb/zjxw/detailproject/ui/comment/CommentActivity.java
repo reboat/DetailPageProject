@@ -64,8 +64,10 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     RecyclerView mRvContent;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R2.id.tv_comment_num)
-    TextView tvCommentNum;
+    //    @BindView(R2.id.ly_container)
+//    LinearLayout mLyContainer;
+//    @BindView(R2.id.tv_comment_num)
+//    TextView tvCommentNum;
     @BindView(R2.id.activity_comment)
     RelativeLayout ry_containerl;
 
@@ -196,7 +198,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
 
         //初始化适配器
         if (mCommentAdapter == null) {
-            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, tvCommentNum, articleId, is_select_list, mNewsDetail, bean.getComment_count());
+            mCommentAdapter = new CommentAdapter(bean, mRvContent, head, articleId, is_select_list, mNewsDetail, bean.getComment_count());
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.addHeaderView(head);
             mCommentAdapter.setEmptyView(

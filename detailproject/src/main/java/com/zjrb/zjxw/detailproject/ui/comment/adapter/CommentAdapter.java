@@ -24,8 +24,6 @@ import java.util.List;
 
 import cn.daily.news.biz.core.network.compatible.APICallManager;
 
-import static com.zjrb.core.utils.UIUtils.getString;
-
 /**
  * 评论页Adapter(与视频/直播详情评论共用)
  * Created by wanglinjie.
@@ -45,21 +43,21 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private boolean is_select_list;
     private final FooterLoadMore<CommentRefreshBean> mLoadMore;
     private View mView;
-    private TextView mTextView;
+    TextView mCommentNum;
     //最新评论数
-    private int commentCount = 0;
+    private int commentCount;
     //热门评论数
     private int hotCommentNUm = 0;
     private DraftDetailBean mBean;
     private CommentRefreshBean mDatas;
     private boolean isVideoDetail = false;
 
-    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, TextView textView, String articleId, boolean is_select_list, DraftDetailBean bean, int commentCount) {
+    public CommentAdapter(CommentRefreshBean datas, ViewGroup parent, View view, String articleId, boolean is_select_list, DraftDetailBean bean, int commentCount) {
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         mView = view;
-        mTextView = textView;
+        mCommentNum = mView.findViewById(R.id.tv_comment_num);
         this.commentCount = commentCount;
         this.articleId = articleId;
         this.is_select_list = is_select_list;
@@ -254,17 +252,13 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     private void updateHead() {
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);
-            mTextView.setVisibility(View.GONE);
         } else {
             mView.setVisibility(View.VISIBLE);
-            mTextView.setVisibility(View.VISIBLE);
             if (commentCount > 99999) {
-                mTextView.setText("99999+条评论");
+                mCommentNum.setText("99999+条评论");
             } else {
-                mTextView.setText(commentCount + "条评论");
+                mCommentNum.setText(commentCount + "条评论");
             }
-
-            ((TextView) mView).setText(getString(R.string.module_detail_new_comment));
         }
     }
 }

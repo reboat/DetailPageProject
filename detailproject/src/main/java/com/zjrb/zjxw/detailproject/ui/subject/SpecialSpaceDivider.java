@@ -85,7 +85,6 @@ public class SpecialSpaceDivider extends ListSpaceDivider {
                             .getLayoutParams();
                     int top = child.getBottom() + params.bottomMargin;
                     int bottom = top + mDividerHeight;
-                    //TODO WLJ 没有统一处理
 //                    c.drawRect(left + mLeftMargin, top, right - mRightMargin, bottom, mPaint);
                     c.drawRect(left + leftMargin, top, right - rightMargin, bottom, mPaint);
                 }

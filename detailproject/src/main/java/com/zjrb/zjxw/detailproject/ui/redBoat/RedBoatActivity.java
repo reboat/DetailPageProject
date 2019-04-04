@@ -274,7 +274,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             //点击订阅/取消订阅
         } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
-            //TODO 针对红船号详情页，需要做红船号订阅栏目的同步
             if (topHolder.getSubscribe().isSelected()) {
                 DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {

@@ -46,7 +46,7 @@ public class VideoDetailHeaderHolder extends PageItem {
         } else {
             tvReadSort.setText("倒序浏览");
         }
-        tvReadNum.setText(data.getArticle().getRead_count_general() + "观看");
+        tvReadNum.setText(data.getArticle().getRead_count_general());
     }
 
     @OnClick({R2.id.tv_read_sort})

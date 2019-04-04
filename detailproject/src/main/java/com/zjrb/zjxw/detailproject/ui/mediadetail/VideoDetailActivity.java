@@ -199,12 +199,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         String url = bean.getVideo_url();
         String title = bean.getDoc_title();
         String imagePath = mNewsDetail.getArticle().getList_pics().get(0);
+        //直播/视频
         if (bean.isNative_live() || !TextUtils.isEmpty(url)) {
             //UI
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
+            //优先判定直播稿
             if (bean.isNative_live()) {
                 url = bean.getNative_live_info().getStream_url();
                 title = bean.getNative_live_info().getTitle();

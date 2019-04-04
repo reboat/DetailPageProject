@@ -146,7 +146,6 @@ public class BrowserLinkActivity extends DailyActivity {
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topBarHolder = BIZTopBarFactory.createDefault4(view, this);
-//        topBarHolder.setViewVisible(topBarHolder.getTitleView(), View.GONE);
         return topBarHolder.getView();
     }
 

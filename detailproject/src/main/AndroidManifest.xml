@@ -78,7 +78,7 @@
             </intent-filter>
         </activity>
 
-        <!-- 链接稿 -->
+        <!-- 链接稿 所有内部非原生稿都走这里 -->
         <activity
             android:name=".ui.link.BrowserLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
@@ -93,7 +93,7 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <!-- 链接稿 path -->
-                <data android:path="/link.html" />
+                <!--<data android:path="/link.html" />-->
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->

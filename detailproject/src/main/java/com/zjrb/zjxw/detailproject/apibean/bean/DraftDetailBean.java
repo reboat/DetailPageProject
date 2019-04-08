@@ -53,6 +53,7 @@ public class DraftDetailBean extends BaseData {
         private String column_name;
         private long sort_number;
         private String url;
+        private String card_url; // 新闻卡片图片分享链接
         private String web_link;
         private String author;
         private String article_pic;
@@ -156,6 +157,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setGuid(long guid) {
             this.guid = guid;
+        }
+
+        public String getCard_url() {
+            return card_url;
+        }
+
+        public void setCard_url(String card_url) {
+            this.card_url = card_url;
         }
 
         /**

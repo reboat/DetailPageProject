@@ -547,7 +547,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mData.getArticle().getMlf_id() + "")
                         .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.NewsType).setUrl(mData.getArticle().getUrl())
                         .setClassifyID(mData.getArticle().getChannel_id() + "")
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("图集详情页")
@@ -618,7 +618,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         } else if (id == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
@@ -640,7 +640,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                 }).setTag(this).exe(mData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
@@ -761,8 +761,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 if (mData != null && mData.getArticle() != null) {
                     DataAnalyticsUtils.get().ClickMoreImage(mData);
                 }
-
-
             } else {
                 mTvTitleTop.setVisibility(View.GONE);
                 setTopBarInOut(View.VISIBLE);
@@ -953,9 +951,9 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             if (id == mData.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 }
             }
         }

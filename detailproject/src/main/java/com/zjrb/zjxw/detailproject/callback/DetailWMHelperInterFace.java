@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedSubjectsBean;
@@ -120,6 +121,13 @@ public interface DetailWMHelperInterFace {
          * @param beanRelate
          */
         void ClickRelatedSpecial(DraftDetailBean bean, RelatedSubjectsBean beanRelate);
+
+        /**
+         * 点击查看更多评论
+         *
+         * @param bean
+         */
+        void ClickMoreComment(DraftDetailBean bean);
     }
 
     /**
@@ -249,6 +257,13 @@ public interface DetailWMHelperInterFace {
          * @param bean
          */
         void SpecialMoreClickSpecialItem(com.zjrb.daily.news.bean.ArticleItemBean bean);
+
+        /**
+         * 评论关联新闻点击
+         *
+         * @param bean
+         */
+        void SpecialCommentNewsClick(HotCommentsBean bean);
     }
 
     /**
@@ -291,6 +306,21 @@ public interface DetailWMHelperInterFace {
         void HotCommentClick(DraftDetailBean bean, String pageType, String scPageType, String id);
 
         /**
+         * 最新评论点击回复
+         */
+        void NewCommentClick(DraftDetailBean bean, String pageType, String scPageType, String id);
+
+        /**
+         * 评论点赞
+         *
+         * @param bean
+         * @param pageType
+         * @param scPageType
+         * @param id
+         */
+        void CommentPrise(DraftDetailBean bean, String pageType, String scPageType, String id);
+
+        /**
          * 创建发送评论对象
          *
          * @param bean
@@ -316,9 +346,21 @@ public interface DetailWMHelperInterFace {
         void OfficialDetailClick(OfficalDetailBean bean);
 
         /**
+         * 点击官员相关新闻
+         *
+         * @param bean
+         */
+        void OfficialNewsClick(OfficalDetailBean bean);
+
+        /**
          * 官员页面点击分享
          */
         void OfficalClickShare(OfficalDetailBean bean);
+
+        /**
+         * 官员相关新闻列表点击
+         */
+        void RelateNewsClick(OfficalDetailBean bean);
 
         /**
          * 打开单个官员详情页
@@ -326,5 +368,52 @@ public interface DetailWMHelperInterFace {
          * @return
          */
         Analytics.AnalyticsBuilder CreateOfficalAnalytic(OfficalDetailBean data);
+    }
+
+    interface LiveWM {
+
+        /**
+         * 视频TAB点击
+         *
+         * @param bean
+         */
+        void VideoTabClick(DraftDetailBean bean);
+
+        /**
+         * 直播TAB点击
+         *
+         * @param bean
+         */
+        void LiveTabClick(DraftDetailBean bean);
+
+        /**
+         * 简介TAB点击
+         *
+         * @param bean
+         */
+        void SummaryTabClick(DraftDetailBean bean);
+
+        /**
+         * 视频评论TAB点击
+         *
+         * @param bean
+         */
+        void VideoCommentTabCLick(DraftDetailBean bean);
+
+        /**
+         * 直播评论点击
+         *
+         * @param bean
+         */
+        void LiveCommentTabClick(DraftDetailBean bean);
+
+        /**
+         * 排序方式点击
+         *
+         * @param bean
+         */
+        void SortClick(DraftDetailBean bean);
+
+
     }
 }

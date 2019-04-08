@@ -544,7 +544,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.NewsType).setUrl(mNewsDetail.getArticle().getUrl())
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
@@ -603,7 +603,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
@@ -625,7 +625,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
@@ -786,9 +786,9 @@ final public class NewsDetailActivity extends DailyActivity implements
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 }
             }
         }

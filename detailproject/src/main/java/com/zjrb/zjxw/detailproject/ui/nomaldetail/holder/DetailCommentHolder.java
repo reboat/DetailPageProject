@@ -99,6 +99,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     private String pageType = "新闻详情页";
     private String scPageType = "新闻详情页";
     public static final int MAX_DEFAULT_LINES = 5;
+    //最新评论还是热门评论
+    private String commentType = "";
 
     /**
      * 评论列表专用构造器
@@ -119,6 +121,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         }
         mBean = bean;
+    }
+
+    public void setCommentType(String commentType) {
+        this.commentType = commentType;
     }
 
     /**
@@ -284,9 +290,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        //点赞
+        //评论点赞
         if (view.getId() == R.id.tv_prise) {
             if (!mData.isLiked()) {
+                DataAnalyticsUtils.get().CommentPrise(mBean, pageType, scPageType, mData.getId());
                 praiseComment(mData.getId());
             } else {
                 //已点赞
@@ -301,7 +308,15 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             //回复评论者
         } else if (view.getId() == R.id.tv_reply || view.getId() == R.id.ly_replay) {
             if (mBean != null && mBean.getArticle() != null) {
-                DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                if (!TextUtils.isEmpty(commentType)) {
+                    if (commentType.equals("热门评论")) {
+                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                    } else {
+                        DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                    }
+                } else {
+                    DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                }
                 Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
@@ -343,7 +358,15 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         } else {//回复回复者
             if (mBean != null && mBean.getArticle() != null) {
-                DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                if (!TextUtils.isEmpty(commentType)) {
+                    if (commentType.equals("热门评论")) {
+                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                    } else {
+                        DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                    }
+                } else {
+                    DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                }
                 Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             } else {

@@ -96,7 +96,10 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (viewType == VIEW_TYPE_RELATE_NEWS_TEXT) {
             return new NewsRelateNewsTextHolder(parent);
         } else if (viewType == VIEW_TYPE_COMMENT) {
-            return new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()), detailBean);
+            //热门评论
+            DetailCommentHolder holder =  new DetailCommentHolder(parent, String.valueOf(detailBean.getArticle().getId()), detailBean);
+            holder.setCommentType("热门评论");
+            return holder;
         } else if (viewType == VIEW_TYPE_STRING) {
             return new NewsStringTextHolder(parent);
         } else if (viewType == VIEW_TYPE_STRING_CLICK_MORE) {
@@ -245,6 +248,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             }
         } else if (datas.get(position) instanceof String && datas.get(position).toString().equals("点击查看更多评论")) {
             //进入评论列表页面
+            DataAnalyticsUtils.get().ClickMoreComment(detailBean);
             if (bundle == null) {
                 bundle = new Bundle();
             }

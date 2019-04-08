@@ -287,6 +287,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setUrl(mNewsDetail.getArticle().getUrl())
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
@@ -344,7 +345,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topBarHolder.getSubscribe().isSelected()) {
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
@@ -366,7 +367,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topBarHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 

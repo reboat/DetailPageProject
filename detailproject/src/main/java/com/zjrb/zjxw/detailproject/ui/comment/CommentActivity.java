@@ -277,6 +277,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setUrl(mNewsDetail.getArticle().getUrl())
                         .setPageType("评论页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")

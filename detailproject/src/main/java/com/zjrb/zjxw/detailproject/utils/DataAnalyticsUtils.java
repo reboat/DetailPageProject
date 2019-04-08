@@ -6,6 +6,7 @@ import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedSubjectsBean;
@@ -24,7 +25,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
 final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDetailWM,
         DetailWMHelperInterFace.DetailCommentBuild, DetailWMHelperInterFace.CommentWM,
         DetailWMHelperInterFace.PersionalWM, DetailWMHelperInterFace.AtlasDetailWM,
-        DetailWMHelperInterFace.SpercialDetailWM {
+        DetailWMHelperInterFace.SpercialDetailWM, DetailWMHelperInterFace.LiveWM {
     private volatile static DataAnalyticsUtils mInstance;
 
     public static DataAnalyticsUtils get() {
@@ -43,16 +44,16 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void SubscribeAnalytics(DraftDetailBean bean, String eventNme, String eventCode, String scEventName, String operationType) {
         new Analytics.AnalyticsBuilder(getContext(), eventCode, eventCode, scEventName, false)
                 .setEvenName(eventNme)
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.ColumnType)
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "RelatedColumnType")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("customObjectType", "RelatedColumnType")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
                 .columnID(bean.getArticle().getColumn_id() + "")
                 .columnName(bean.getArticle().getColumn_name())
                 .pageType("新闻详情页")
@@ -67,6 +68,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setEvenName("页面停留时长/阅读深度")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
+                .setUrl(bean.getArticle().getUrl())
                 .setObjectType(ObjectType.NewsType)
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
@@ -87,18 +89,19 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     @Override
     public void ClickInCommentList(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800004", "800004", "AppTabClick", false)
-                .setEvenName("点击评论，进入评论列表")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
+                .setEvenName("点击进入评论列表")
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("新闻详情页")
                 .clickTabName("评论按钮")
                 .build()
                 .send();
@@ -111,6 +114,8 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getArticle().getUrl())
+                .setEventDetail("文章")
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
@@ -133,17 +138,18 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void ClickMoreIcon(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800005", "800005", "AppTabClick", false)
                 .setEvenName("点击更多")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("新闻详情页")
                 .clickTabName("更多")
                 .build()
                 .send();
@@ -153,17 +159,19 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void ClickCommentBox(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("新闻详情页").clickTabName("评论输入框")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("新闻详情页")
+                .clickTabName("评论输入框")
                 .build()
                 .send();
     }
@@ -172,17 +180,17 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void ClickShare(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击分享")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("新闻详情页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
                 .clickTabName("分享")
                 .build()
                 .send();
@@ -210,17 +218,19 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     @Override
     public Analytics CreateCommentAnalytics(DraftDetailBean bean) {
         Analytics analytics = new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0023", "A0023", "Comment", false)
-                .setEvenName("发表评论，且发送成功")
+                .setEvenName("文章评论成功")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
+                .setUrl(bean.getArticle().getUrl())
                 .setPageType("新闻详情页")
                 .setOtherInfo(Analytics.newOtherInfo()
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
                         .toString())
+                .setEventDetail("文章")
                 .setSelfObjectID(bean.getArticle().getId() + "").newsID(bean.getArticle().getMlf_id() + "")
                 .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
@@ -238,7 +248,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setEvenName("点击正文底部频道名称")
                 .setObjectID(bean.getArticle().getChannel_id())
                 .setObjectName(bean.getArticle().getChannel_name())
-                .setObjectType(ObjectType.ColumnType)
+//                .setObjectType(ObjectType.ColumnType)
                 .setClassifyID(bean.getArticle().getSource_channel_id())
                 .setClassifyName(bean.getArticle().getSource_channel_name())
                 .setPageType("新闻详情页")
@@ -263,7 +273,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setEvenName("点击稿件标题下频道名称")
                 .setObjectID(bean.getArticle().getChannel_id())
                 .setObjectName(bean.getArticle().getChannel_name())
-                .setObjectType(ObjectType.ColumnType)
+//                .setObjectType(ObjectType.ColumnType)
                 .setClassifyID(bean.getArticle().getSource_channel_id())
                 .setClassifyName(bean.getArticle().getSource_channel_name())
                 .setPageType("新闻详情页")
@@ -316,6 +326,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(beanRelate.getMlf_id())
                 .setObjectName(beanRelate.getTitle())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(beanRelate.getUri_scheme())
                 .setClassifyID("")
                 .setClassifyName("")
                 .setPageType("新闻详情页")
@@ -342,6 +353,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(beanRelate.getMlf_id())
                 .setObjectName(beanRelate.getTitle())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(beanRelate.getUri_scheme())
                 .setClassifyID("")
                 .setClassifyName("")
                 .setPageType("新闻详情页")
@@ -357,6 +369,22 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
                 .relatedContentClick("相关专题")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void ClickMoreComment(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800004", "800004", "AppTabClick", false)
+                .setEvenName("点击查看更多评论")
+                .setPageType("新闻详情页")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType("新闻详情页")
+                .clickTabName("全部")
                 .build()
                 .send();
     }
@@ -415,15 +443,16 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void AppTabCommentClick(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800002", "800002", "AppTabClick", false)
                 .setEvenName("点击评论输入框")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
-                .setPageType("评论页")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("评论列表页")
+//                .setObjectID(bean.getArticle().getMlf_id() + "")
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType("评论列表页")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("评论列表页")
                 .clickTabName("评论输入框")
                 .build()
                 .send();
@@ -436,6 +465,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(bean.getArticle().getMlf_id())
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getArticle().getUrl())
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType(pageType)
@@ -459,18 +489,18 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void HotCommentClick(DraftDetailBean bean, String pageType, String scPageType, String id) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800003", "800003", "Comment", false)
                 .setEvenName("热门评论点击回复")
-                .setObjectID(bean.getArticle().getMlf_id())
-                .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
-                .setClassifyID(bean.getArticle().getChannel_id())
-                .setClassifyName(bean.getArticle().getChannel_name())
+//                .setObjectID(bean.getArticle().getMlf_id())
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType(pageType)
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
-                        .put("subject", "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "")
-                .setAttachObjectId(id)
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+//                .setAttachObjectId(id)
                 .newsID(bean.getArticle().getMlf_id() + "")
                 .selfNewsID(bean.getArticle().getId() + "")
                 .newsTitle(bean.getArticle().getDoc_title())
@@ -483,15 +513,72 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     }
 
     @Override
-    public Analytics CreateCommentSend(DraftDetailBean bean, String pageType, String scPageType, String id) {
-        Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "800003", "800003", "Comment", false)
-                .setEvenName("回复评论，且发送成功")
-                .setObjectID(bean.getArticle().getMlf_id() + "")
+    public void NewCommentClick(DraftDetailBean bean, String pageType, String scPageType, String id) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800003", "800003", "Comment", false)
+                .setEvenName("最新评论点击回复")
+//                .setObjectID(bean.getArticle().getMlf_id())
+//                .setObjectName(bean.getArticle().getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setClassifyID(bean.getArticle().getChannel_id())
+//                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType(pageType)
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+//                        .put("subject", "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+//                .setAttachObjectId(id)
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType(scPageType)
+                .commentType("评论")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void CommentPrise(DraftDetailBean bean, String pageType, String scPageType, String id) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0021", "A0021", "CommentPrised", false)
+                .setEvenName("评论点赞")
+                .setObjectID(bean.getArticle().getMlf_id())
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType(pageType)
+                .setUrl(bean.getArticle().getUrl())
+                .setEventDetail("评论")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("relatedColumn", bean.getArticle().getColumn_id() + "")
+                        .put("subject", "")
+                        .toString())
+                .setSelfObjectID(bean.getArticle().getId() + "")
+                .setAttachObjectId(id)
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .pageType(scPageType)
+                .build()
+                .send();
+    }
+
+    @Override
+    public Analytics CreateCommentSend(DraftDetailBean bean, String pageType, String scPageType, String id) {
+        Analytics analytics = new Analytics.AnalyticsBuilder(getContext(), "A0023", "A0023", "Comment", false)
+                .setEvenName("回复评论成功")
+                .setObjectID(bean.getArticle().getMlf_id() + "")
+                .setObjectName(bean.getArticle().getDoc_title())
+                .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getArticle().getUrl())
+                .setClassifyID(bean.getArticle().getChannel_id())
+                .setClassifyName(bean.getArticle().getChannel_name())
+                .setPageType(pageType)
+                .setEventDetail("评论")
                 .setOtherInfo(Analytics.newOtherInfo()
                         .put("relatedColumn", bean.getArticle().getColumn_id() + "")
                         .put("subject", "")
@@ -515,9 +602,9 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
         new Analytics.AnalyticsBuilder(context, "800014", "800014", "AppTabClick", false)
                 .setEvenName("点击更多查看官员详细信息")
                 .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "OfficerType")
-                        .toString())
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("customObjectType", "OfficerType")
+//                        .toString())
                 .pageType("官员页面")
                 .clickTabName("更多")
                 .build()
@@ -528,12 +615,29 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void OfficialDetailClick(OfficalDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "210003", "210003", "OfficialDetailClick", false)
                 .setEvenName("点击官员任职履历标签")
-                .setObjectID(bean.getOfficer().getId() + "")
+//                .setObjectID(bean.getOfficer().getId() + "")
                 .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "OfficerType")
-                        .toString())
-                .setSearch("任职履历")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("customObjectType", "OfficerType")
+//                        .toString())
+//                .setSearch("任职履历")
+                .officialName(bean.getOfficer().getName())
+                .officialID(bean.getOfficer().getId() + "")
+                .pageType("官员页面")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void OfficialNewsClick(OfficalDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "210004", "210004", "OfficialDetailClick", false)
+                .setEvenName("点击官员相关新闻标签")
+//                .setObjectID(bean.getOfficer().getId() + "")
+                .setPageType("官员页面")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("customObjectType", "OfficerType")
+//                        .toString())
+//                .setSearch("任职履历")
                 .officialName(bean.getOfficer().getName())
                 .officialID(bean.getOfficer().getId() + "")
                 .pageType("官员页面")
@@ -545,11 +649,11 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void OfficalClickShare(OfficalDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800018", "800018", "AppTabClick", false)
                 .setEvenName("点击分享")
-                .setObjectID(bean.getOfficer().getId() + "")
-                .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", "OfficerType")
-                        .toString())
+//                .setObjectID(bean.getOfficer().getId() + "")
+//                .setPageType("官员页面")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", "OfficerType")
+//                        .toString())
                 .pageType("官员页面")
                 .clickTabName("分享")
                 .build()
@@ -560,15 +664,35 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public Analytics.AnalyticsBuilder CreateOfficalAnalytic(OfficalDetailBean data) {
         Analytics.AnalyticsBuilder builder;
         builder = new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0010", "800033", "OfficialDetailPageStay", true)
-                .setEvenName("打开单个官员详情页")
+                .setEvenName("官员详情页停留")
                 .setObjectID(data.getOfficer().getId() + "")
+                .setObjectName(data.getOfficer().getName())
                 .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", "OfficerType")
-                        .toString())
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", "OfficerType")
+//                        .toString())
                 .pageType("官员页面");
         return builder;
 
+    }
+
+    @Override
+    public void RelateNewsClick(OfficalDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "210005", "210005", "OfficialDetailClick", false)
+                .setEvenName("点击官员相关新闻标签")
+                .setObjectID(bean.getOfficer().getId() + "")
+                .setObjectID(bean.getOfficer().getId())
+                .setObjectName(bean.getOfficer().getCurrent_title())
+                .setUrl(bean.getOfficer().getUrl())
+                .setPageType("官员页面")
+                .setOtherInfo(Analytics.newOtherInfo()
+                        .put("customObjectType", "OfficerType")
+                        .toString())
+                .officialName(bean.getOfficer().getName())
+                .officialID(bean.getOfficer().getId() + "")
+                .pageType("官员页面")
+                .build()
+                .send();
     }
 
     /**********图集页***********************************************************************************************************************************/
@@ -578,7 +702,8 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setEvenName("点击下载按钮")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
-                .setObjectType(ObjectType.NewsType)
+                .setObjectType(ObjectType.PictureType)
+                .setUrl(bean.getArticle().getUrl())
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("图集详情页")
@@ -605,6 +730,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getArticle().getUrl())
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("图集详情页")
@@ -626,11 +752,12 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
 
     @Override
     public void ClickMoreImage(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800011", "800011", "AppContentClick", false)
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0010", "A0010", "AppContentClick", false)
                 .setEvenName("打开更多图集页面)")
                 .setObjectID(bean.getArticle().getMlf_id() + "")
                 .setObjectName(bean.getArticle().getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getArticle().getUrl())
                 .setClassifyID(bean.getArticle().getChannel_id())
                 .setClassifyName(bean.getArticle().getChannel_name())
                 .setPageType("更多图集页")
@@ -654,7 +781,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     @Override
     public void ClickShareTab(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800018", "800018", "AppTabClick", false)
-                .setEvenName("点击\"分享\"")
+                .setEvenName("点击分享")
                 .setPageType("图集详情页")
                 .pageType("图集详情页")
                 .clickTabName("分享")
@@ -669,6 +796,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectID(bean.getMlf_id() + "")
                 .setObjectName(bean.getTitle())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getUri_scheme())
                 .setClassifyID("")
                 .setClassifyName("")
                 .setPageType("更多图集页")
@@ -693,16 +821,17 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void ClickChannel(DraftDetailBean.ArticleBean mArticle, SpecialGroupBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "900001", "900001", "SubjectDetailClick", false)
                 .setEvenName("专题详情页，分类标签点击")
-                .setObjectType(ObjectType.NewsType)
-                .setObjectID(mArticle.getMlf_id() + "")
-                .setObjectName(mArticle.getDoc_title())
+//                .setObjectType(ObjectType.NewsType)
+//                .setObjectID(mArticle.getMlf_id() + "")
+//                .setObjectName(mArticle.getDoc_title())
                 .setPageType("专题详情页")
-                .setSearch(bean.getGroup_name())
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", mArticle.getColumn_id() + "")
-                        .put("subject", mArticle.getId() + "")
-                        .toString())
-                .setSelfObjectID(mArticle.getId() + "")
+                .setEventDetail("分类标签")
+//                .setSearch(bean.getGroup_name())
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", mArticle.getColumn_id() + "")
+//                        .put("subject", mArticle.getId() + "")
+//                        .toString())
+//                .setSelfObjectID(mArticle.getId() + "")
                 .newsID(mArticle.getMlf_id() + "")
                 .selfNewsID(mArticle.getId() + "")
                 .newsTitle(mArticle.getDoc_title())
@@ -717,10 +846,11 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     @Override
     public void ClickSpecialItem(ArticleItemBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "200007", "200007", "AppContentClick", false)
-                .setEvenName("专题详情页，新闻列表点击")
+                .setEvenName("专题新闻新闻列表点击")
                 .setObjectID(bean.getMlf_id() + "")
                 .setObjectName(bean.getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getUrl())
                 .setPageType("专题详情页")
                 .setOtherInfo(Analytics.newOtherInfo()
                         .put("relatedColumn", "SubjectType")
@@ -747,6 +877,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                     .setObjectID(mArticle.getMlf_id() + "")
                     .setObjectName(mArticle.getDoc_title())
                     .setObjectType(ObjectType.NewsType)
+                    .setUrl(mArticle.getUrl())
                     .setClassifyID(mArticle.getChannel_id())
                     .setClassifyName(mArticle.getChannel_name())
                     .setPageType("专题详情页")
@@ -769,6 +900,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                     .setObjectID(mArticle.getMlf_id() + "")
                     .setObjectName(mArticle.getDoc_title())
                     .setObjectType(ObjectType.NewsType)
+                    .setUrl(mArticle.getUrl())
                     .setClassifyID(mArticle.getChannel_id())
                     .setClassifyName(mArticle.getChannel_name())
                     .setPageType("专题详情页")
@@ -793,13 +925,14 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "900002", "900002", "AppTabClick", false)
                 .setEvenName("专题详情页，更多按钮点击")
                 .setPageType("专题详情页")
-                .setClassifyID(bean.getArticle().getMlf_id() + "")
-                .setClassifyName(bean.getArticle().getDoc_title())
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("relatedColumn", "SubjectType")
-                        .put("subject", bean.getArticle().getId() + "")
-                        .toString())
-                .setSelfObjectID(bean.getArticle().getId() + "").pageType("专题详情页")
+//                .setClassifyID(bean.getArticle().getMlf_id() + "")
+//                .setClassifyName(bean.getArticle().getDoc_title())
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("relatedColumn", "SubjectType")
+//                        .put("subject", bean.getArticle().getId() + "")
+//                        .toString())
+//                .setSelfObjectID(bean.getArticle().getId() + "")
+                .pageType("专题详情页")
                 .clickTabName("更多")
                 .build()
                 .send();
@@ -813,6 +946,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .setObjectName(bean.getDoc_title())
                 .setObjectType(ObjectType.NewsType)
                 .setClassifyID(bean.getChannel_id())
+                .setUrl(bean.getUrl())
                 .setClassifyName(bean.getChannel_name())
                 .setPageType("专题详情页")
                 .setOtherInfo(Analytics.newOtherInfo()
@@ -835,10 +969,11 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     @Override
     public Analytics pageStayTimeSpecial(DraftDetailBean.ArticleBean mArticle) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "800021", "ViewAppNewsDetail", true)
-                .setEvenName("页面停留时长")
+                .setEvenName("专题详情页停留时长")
                 .setObjectID(mArticle.getMlf_id() + "")
                 .setObjectName(mArticle.getDoc_title())
                 .setObjectType(ObjectType.NewsType)
+                .setUrl(mArticle.getUrl())
                 .setClassifyID(mArticle.getChannel_id())
                 .setClassifyName(mArticle.getChannel_name())
                 .setPageType("专题详情页")
@@ -846,7 +981,8 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                         .put("relatedColumn", mArticle.getColumn_id() + "")
                         .put("subject", mArticle.getId() + "")
                         .toString())
-                .setSelfObjectID(mArticle.getId() + "").newsID(mArticle.getMlf_id() + "")
+                .setSelfObjectID(mArticle.getId() + "")
+                .newsID(mArticle.getMlf_id() + "")
                 .selfNewsID(mArticle.getId() + "")
                 .newsTitle(mArticle.getDoc_title())
                 .selfChannelID(mArticle.getChannel_id())
@@ -877,6 +1013,108 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .newsTitle(bean.getDoc_title())
                 .selfChannelID(bean.getChannel_id())
                 .channelName(bean.getChannel_name())
+                .build()
+                .send();
+    }
+
+    @Override
+    public void SpecialCommentNewsClick(HotCommentsBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "200007", "200007", "AppContentClick", false)
+                .setEvenName("评论关联新闻点击")
+                .setObjectID(bean.getId() + "")
+                .setObjectName(bean.getList_title())
+                .setObjectType(ObjectType.NewsType)
+                .setUrl(bean.getUrl())
+//                .setClassifyID(bean.getChannel_id())
+//                .setClassifyName(bean.getChannel_name())
+                .setPageType("专题详情页")
+//                .setOtherInfo(Analytics.newOtherInfo()
+//                        .put("customObjectType", "SubjectType")
+//                        .toString())
+//                .setSelfObjectID(bean.getId() + "")
+                .pageType("专题详情页")
+                .objectType("专题新闻列表")
+                .pubUrl(bean.getUrl())
+//                .newsID(bean.getMlf_id() + "")
+//                .selfNewsID(bean.getId() + "")
+//                .newsTitle(bean.getDoc_title())
+//                .selfChannelID(bean.getChannel_id())
+//                .channelName(bean.getChannel_name())
+                .build()
+                .send();
+    }
+
+    /**********直播页***********************************************************************************************************************************/
+    @Override
+    public void VideoTabClick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800041", "800041", "AppContentClick", false)
+                .setEvenName("点击视频tab")
+                .setObjectType(ObjectType.NewsType)
+                .setPageType("视频详情页")
+                .pageType("视频详情页")
+                .objectType("视频详情页")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void LiveTabClick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800044", "800044", "AppContentClick", false)
+                .setEvenName("点击直播间tab")
+                .setObjectType(ObjectType.NewsType)
+                .setPageType("直播详情页")
+                .pageType("直播详情页")
+                .objectType("直播详情页")
+                .build()
+                .send();
+
+    }
+
+    @Override
+    public void SummaryTabClick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800043", "800043", "AppContentClick", false)
+                .setEvenName("点击简介tab")
+                .setObjectType(ObjectType.NewsType)
+                .setPageType("直播详情页")
+                .pageType("直播详情页")
+                .objectType("直播详情页")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void VideoCommentTabCLick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800042", "800042", "AppContentClick", false)
+                .setEvenName("点击评论tab")
+                .setObjectType(ObjectType.NewsType)
+                .setPageType("视频详情页")
+                .pageType("视频详情页")
+                .objectType("视频详情页")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void LiveCommentTabClick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800045", "800045", "AppContentClick", false)
+                .setEvenName("点击评论tab")
+                .setObjectType(ObjectType.NewsType)
+                .setPageType("直播详情页")
+                .pageType("直播详情页")
+                .objectType("直播详情页")
+                .build()
+                .send();
+    }
+
+    @Override
+    public void SortClick(DraftDetailBean bean) {
+        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800046", "800046", "AppContentClick", false)
+                .setEvenName("排序方式切换")
+                .setObjectType(ObjectType.NewsType)
+                .setEventDetail("排序方式")
+                .setPageType("直播详情页")
+                .pageType("直播详情页")
+                .objectType("直播详情页")
                 .build()
                 .send();
     }

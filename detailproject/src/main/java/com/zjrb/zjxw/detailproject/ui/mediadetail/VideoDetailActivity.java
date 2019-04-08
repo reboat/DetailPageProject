@@ -86,7 +86,8 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace {
+        DetailInterface.VideoBCnterFace,ViewPager
+                .OnPageChangeListener{
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -432,7 +433,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.NewsType).setUrl(mNewsDetail.getArticle().getUrl())
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
@@ -464,7 +465,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         } else if (view.getId() == R.id.tv_top_bar_subscribe_text) {
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
                     @Override
@@ -486,7 +487,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
-                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
                     new ColumnSubscribeTask(new LoadingCallBack<Void>() {
 
@@ -617,9 +618,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
                 if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"订阅\"栏目", "A0014", "SubColumn", "订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击\"取消订阅\"栏目", "A0114", "SubColumn", "取消订阅");
+                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
                 }
             }
         }
@@ -707,6 +708,44 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+            if(mNewsDetail.getArticle().isNative_live()){//直播
+                if(i == 0){
+                    //简介
+                    DataAnalyticsUtils.get().SummaryTabClick(mNewsDetail);
+                }else if(i == 1){
+                    //直播间
+                    DataAnalyticsUtils.get().LiveTabClick(mNewsDetail);
+                }else{
+                    //评论
+                    DataAnalyticsUtils.get().LiveCommentTabClick(mNewsDetail);
+                }
+
+            }else{//视频
+                if(i == 0){
+                    //视频
+                    DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
+                }else{
+                    //评论
+                    DataAnalyticsUtils.get().VideoCommentTabCLick(mNewsDetail);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
     }
 
     public class VideoEventReceiver extends BroadcastReceiver {

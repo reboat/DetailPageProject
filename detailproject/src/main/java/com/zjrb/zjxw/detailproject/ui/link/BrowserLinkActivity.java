@@ -315,6 +315,7 @@ public class BrowserLinkActivity extends DailyActivity {
                         .setObjectType(ObjectType.NewsType)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setUrl(mNewsDetail.getArticle().getUrl())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")

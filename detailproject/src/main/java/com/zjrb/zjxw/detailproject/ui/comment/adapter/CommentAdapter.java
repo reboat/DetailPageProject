@@ -145,7 +145,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         } else if (viewType == COMMENT_NEW) {
             return NewsHolder = new VideoDetailTextHolder(parent, mDatas.getComment_count());
         } else {
-            return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
+            DetailCommentHolder holder =  new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
+            holder.setCommentType("最新评论");
+            return holder;
         }
     }
 

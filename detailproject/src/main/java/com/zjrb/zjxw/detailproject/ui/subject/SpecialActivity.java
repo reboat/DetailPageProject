@@ -162,7 +162,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                     OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                             .setObjectID(mArticle.getMlf_id() + "")
                             .setObjectName(mArticle.getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
+                            .setObjectType(ObjectType.NewsType).setUrl(mArticle.getUrl())
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("新闻详情页")

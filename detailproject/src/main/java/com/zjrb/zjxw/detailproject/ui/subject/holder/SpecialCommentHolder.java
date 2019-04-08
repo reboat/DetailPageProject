@@ -13,6 +13,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.SubjectVoiceMassBean;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
 
 /**
- * 群众之声标题holder
+ * 群众之声评论列表holder
  * Created by wanglinjie.
  * create time:2019/3/7  上午9:07
  */
@@ -57,9 +58,10 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
     @OnClick({R2.id.ry_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        //进入详情页
+        //进入评论文章详情页
         if (view.getId() == R2.id.ry_title) {
             if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
+                DataAnalyticsUtils.get().SpecialCommentNewsClick(mData.getComment_list().get(0));
                 if (bundle == null) {
                     bundle = new Bundle();
                 }

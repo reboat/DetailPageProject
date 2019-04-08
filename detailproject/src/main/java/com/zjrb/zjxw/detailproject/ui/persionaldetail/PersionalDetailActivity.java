@@ -257,7 +257,11 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     @Override
     public void onPageSelected(int position) {
         if (bean != null && bean.getOfficer() != null) {
-            DataAnalyticsUtils.get().OfficialDetailClick(bean);
+            if(position == 0){
+                DataAnalyticsUtils.get().OfficialDetailClick(bean);
+            }else{
+                DataAnalyticsUtils.get().OfficialNewsClick(bean);
+            }
         }
 
     }

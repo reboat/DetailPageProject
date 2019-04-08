@@ -21,6 +21,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.task.OfficalDetailTask;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.OfficerRelatedNewsAdapter;
+import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -163,6 +164,9 @@ public class PersionalRelateFragment extends DailyFragment implements HeaderRefr
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick() || mAdapter == null) {
             return;
+        }
+        if (bean != null && bean.getOfficer() != null) {
+            DataAnalyticsUtils.get().RelateNewsClick(bean);
         }
         NewsUtils.itemClick(this, mAdapter.getData(position));
     }

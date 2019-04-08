@@ -112,7 +112,7 @@ public class ImageMoreFragment extends DailyFragment {
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mBean.getArticle().getMlf_id() + "")
                     .setObjectName(mBean.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType)
+                    .setObjectType(ObjectType.NewsType).setUrl(mBean.getArticle().getUrl())
                     .setClassifyID(mBean.getArticle().getChannel_id() + "")
                     .setClassifyName(mBean.getArticle().getChannel_name())
                     .setPageType("新闻详情页")

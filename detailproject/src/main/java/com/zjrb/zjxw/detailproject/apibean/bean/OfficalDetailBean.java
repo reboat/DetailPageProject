@@ -64,6 +64,7 @@ public class OfficalDetailBean extends BaseData {
      * 官员详情个人履历
      */
     public static class OfficerBean implements Serializable {
+        private static final long serialVersionUID = 8064689528555545024L;
         private int id;
         private String name;
         private String gender;

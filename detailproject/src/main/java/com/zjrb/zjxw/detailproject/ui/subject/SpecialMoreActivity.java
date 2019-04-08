@@ -919,7 +919,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mDraftDetailBean.getArticle().getMlf_id() + "")
                         .setObjectName(mDraftDetailBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.NewsType).setUrl(mDraftDetailBean.getArticle().getUrl())
                         .setClassifyID(mDraftDetailBean.getArticle().getChannel_id() + "")
                         .setClassifyName(mDraftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")

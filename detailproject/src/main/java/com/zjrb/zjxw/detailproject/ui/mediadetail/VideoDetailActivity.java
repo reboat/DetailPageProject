@@ -514,10 +514,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
-            Bundle bundle = new Bundle();
-            bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
-            Nav.with(UIUtils.getContext()).setExtras(bundle)
-                    .toPath("/subscription/detail");
+            if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
+                Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());
+            }
         } else if (view.getId() == R.id.iv_play) {//播放按钮
             if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {//当前列表在播放
                 DailyPlayerManager.get().onDestroy();

@@ -123,6 +123,9 @@ public class DraftDetailBean extends BaseData {
         //直播原生信息
         private NativeLiveInfoBean native_live_info;
 
+        //栏目详情页url
+        private String column_url;
+
         public String getFrom_channel() {
             return from_channel;
         }
@@ -782,6 +785,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setCard_url(String card_url) {
             this.card_url = card_url;
+        }
+
+        public String getColumn_url() {
+            return column_url;
+        }
+
+        public void setColumn_url(String column_url) {
+            this.column_url = column_url;
         }
 
         //原生直播

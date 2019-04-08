@@ -668,10 +668,9 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //进入栏目
         } else if (id == R.id.tv_top_bar_title) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
-            Bundle bundle = new Bundle();
-            bundle.putString(IKey.ID, String.valueOf(mData.getArticle().getColumn_id()));
-            Nav.with(UIUtils.getContext()).setExtras(bundle)
-                    .toPath("/subscription/detail");
+            if (!TextUtils.isEmpty(mData.getArticle().getColumn_url())) {
+                Nav.with(UIUtils.getContext()).toPath(mData.getArticle().getColumn_url());
+            }
         }
     }
 

@@ -378,7 +378,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         datas.add(data);
         mRvContent.setLayoutManager(new LinearLayoutManager(this));
         mRvContent.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
-        mAdapter = new NewsDetailAdapter(datas,false);
+        mAdapter = new NewsDetailAdapter(datas, false);
         mAdapter.setEmptyView(
                 new EmptyPageHolder(mRvContent,
                         EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")
@@ -653,10 +653,9 @@ final public class NewsDetailActivity extends DailyActivity implements
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
-            Bundle bundle = new Bundle();
-            bundle.putString(IKey.ID, String.valueOf(mNewsDetail.getArticle().getColumn_id()));
-            Nav.with(UIUtils.getContext()).setExtras(bundle)
-                    .toPath("/subscription/detail");
+            if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
+                Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());
+            }
         } else if (view.getId() == R.id.ll_net_hint) {//网络提醒下点击播放
             PlayerManager.get().play(mVideoContainer, mNewsDetail.getArticle().getVideo_url(), new Gson().toJson(mNewsDetail.getArticle()));
             PlayerManager.setPlayerCallback(mVideoContainer, PlayerAnalytics.get());

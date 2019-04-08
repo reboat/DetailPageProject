@@ -235,8 +235,9 @@ public class TopicAdapter extends BaseRecyclerAdapter implements OnItemClickList
             if (detailBean != null && detailBean.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickRelatedContent(detailBean);
             }
-            Nav.with(UIUtils.getActivity()).to(Uri.parse("http://www.8531.cn/subscription/detail").buildUpon()
-                    .appendQueryParameter("id", String.valueOf(((DraftDetailBean) datas.get(position)).getArticle().getColumn_id())).build().toString());
+            if (!TextUtils.isEmpty(detailBean.getArticle().getColumn_url())) {
+                Nav.with(UIUtils.getContext()).toPath(detailBean.getArticle().getColumn_url());
+            }
         }
     }
 

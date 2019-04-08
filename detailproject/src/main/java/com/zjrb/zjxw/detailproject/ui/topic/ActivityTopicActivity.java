@@ -476,10 +476,9 @@ public class ActivityTopicActivity extends DailyActivity implements
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
-            Bundle bundle = new Bundle();
-            bundle.putString(IKey.ID, String.valueOf(mDetailData.getArticle().getColumn_id()));
-            Nav.with(UIUtils.getContext()).setExtras(bundle)
-                    .toPath("/subscription/detail");
+            if (!TextUtils.isEmpty(mDetailData.getArticle().getColumn_url())) {
+                Nav.with(UIUtils.getContext()).toPath(mDetailData.getArticle().getColumn_url());
+            }
         }
     }
 

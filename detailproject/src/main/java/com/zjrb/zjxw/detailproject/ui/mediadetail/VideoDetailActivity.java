@@ -27,6 +27,7 @@ import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
+import com.google.android.exoplayer2.Player;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
@@ -241,6 +242,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
                 DailyPlayerManager.get().play(builder);
+                if (PlayerCache.get().getPlayer(url).getPlaybackState()== Player.STATE_ENDED){//已经结束
+                    DailyPlayerManager.get().showStateEnd(videoContainer);
+                }
             } else {
                 DailyPlayerManager.get().init(builder);
             }

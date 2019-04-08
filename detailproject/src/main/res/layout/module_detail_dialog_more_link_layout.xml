@@ -80,7 +80,7 @@
 
     <include
         android:id="@+id/ly_share"
-        layout="@layout/module_detail_dialog_bottom_layout"
+        layout="@layout/module_biz_dialog_bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

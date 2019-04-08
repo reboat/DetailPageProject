@@ -77,11 +77,14 @@ public class MoreDialogLink extends BaseDialogFragment {
     LinearLayout llModuleCoreMeSina;
     @BindView(R2.id.ll_module_core_me_dingding)
     LinearLayout llModuleCoreMeDingDing;
+    @BindView(R2.id.ll_module_core_me_card)
+    LinearLayout llModuleCoreMeCard; // 卡片分享
 
     private DraftDetailBean mBean;
     private UmengShareBean mBeanShare;
 
     private MoreDialog.IWebViewDN callback;
+    private Bundle bundle;
 
     /**
      * @return
@@ -134,6 +137,12 @@ public class MoreDialogLink extends BaseDialogFragment {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
         }
         initShareView();
+        if (!TextUtils.isEmpty(mBean.getArticle().getCard_url())) { // 新闻卡片分享
+            llModuleCoreMeCard.setVisibility(View.VISIBLE);
+            setShareItemWidth(llModuleCoreMeCard);
+        } else {
+            llModuleCoreMeCard.setVisibility(View.GONE);
+        }
         builder.setView(view);
         dialog = builder.create();
         dialog.setCanceledOnTouchOutside(true);
@@ -193,7 +202,7 @@ public class MoreDialogLink extends BaseDialogFragment {
     }
 
     @OnClick({R2.id.ll_module_core_more_collect, R2.id.ll_module_core_more_feed_back, R2.id.btn_dialog_close
-            , R2.id.ll_module_core_me_friend, R2.id.ll_module_core_me_wechat, R2.id.ll_module_core_me_qq, R2.id.ll_module_core_me_space, R2.id.ll_module_core_me_sina, R2.id.ll_module_core_me_dingding})
+            , R2.id.ll_module_core_me_friend, R2.id.ll_module_core_me_wechat, R2.id.ll_module_core_me_qq, R2.id.ll_module_core_me_space, R2.id.ll_module_core_me_sina, R2.id.ll_module_core_me_dingding, R2.id.ll_module_core_me_card})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         int i = v.getId();
@@ -291,6 +300,24 @@ public class MoreDialogLink extends BaseDialogFragment {
 
         } else if (i == R.id.ll_module_core_me_dingding) {
             checkShare(SHARE_MEDIA.DINGTALK);
+
+        } else if (i == R.id.ll_module_core_me_card) {
+            startCardShare();
+        }
+    }
+
+    /**
+     * 新闻卡片分享
+     */
+    public void startCardShare() {
+        if (mBeanShare != null) {
+            if (!ClickTracker.isDoubleClick()) {
+                if (bundle == null) {
+                    bundle = new Bundle();
+                }
+                bundle.putSerializable("UmengShareBean", mBeanShare);
+                Nav.with(this).setExtras(bundle).toPath(RouteManager.ZB_CARD_SHARE);
+            }
         }
     }
 

@@ -211,6 +211,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                 //进入专题更多列表
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(IKey.NEWS_DETAIL, mBean);
+                bundle.putSerializable(IKey.DATA,mData);
                 Nav.with(v.getContext()).setExtras(bundle).toPath("/news/SpecialMoreActivity");
             }
         }

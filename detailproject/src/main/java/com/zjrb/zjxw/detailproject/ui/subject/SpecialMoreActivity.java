@@ -83,9 +83,9 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 //                Log.e("lujialei","offset==="+Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
-                float percent = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
-                tlTop.setAlpha(percent);
-                tvTitle.setAlpha(1-percent);
+//                float percent = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
+//                tlTop.setAlpha(percent);
+//                tvTitle.setAlpha(1-percent);
             }
         });
     }

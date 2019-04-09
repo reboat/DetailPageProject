@@ -774,7 +774,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);
-                DailyPlayerManager.get().init(builder);
+                DailyPlayerManager.get().init(builder,false);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             } else if (PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
 //                builder.setContext(getActivity());

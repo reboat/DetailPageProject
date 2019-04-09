@@ -197,14 +197,16 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
      * topbar
      */
     private DefaultTopBarHolder3 topHolder;
-    private TextView mTvTitleTop;
+    //订阅频道名
+    private TextView mTvMore;
     private ImageView mIvDownLoad;
     private ImageView mIvShare;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = BIZTopBarFactory.createDefault3(view, this);
-        mTvTitleTop = topHolder.getTitleView();
+//        mTvTitleTop = topHolder.getTitleView();
+        mTvMore = topHolder.getTvMore();
         mIvDownLoad = topHolder.getDownView();
         mIvShare = topHolder.getShareView();
         topHolder.getView().setBackgroundColor(Color.TRANSPARENT);
@@ -212,14 +214,14 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     }
 
 
-    /**
-     * 显示顶部栏显示/隐藏
-     *
-     * @param flag
-     */
-    private void setTopBarInOut(int flag) {
-        topHolder.getView().setVisibility(flag);
-    }
+//    /**
+//     * 显示顶部栏显示/隐藏
+//     *
+//     * @param flag
+//     */
+//    private void setTopBarInOut(int flag) {
+//        topHolder.getView().setVisibility(flag);
+//    }
 
 
     private String mFromChannel;
@@ -263,8 +265,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         mIndex = 0;
         topHolder.getView().setVisibility(View.GONE);
         mContainerBottom.setVisibility(View.VISIBLE);
-        mTvTitleTop.setVisibility(View.GONE);
-        setTopBarInOut(View.VISIBLE);
+//        setTopBarInOut(View.VISIBLE);
         mScrollView.setVisibility(View.VISIBLE);
         mLyContainer.setVisibility(View.VISIBLE);
         mTvContent.setVisibility(View.VISIBLE);
@@ -519,7 +520,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -666,7 +667,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
             }
             //进入栏目
-        } else if (id == R.id.tv_top_bar_title) {
+        } else if (id == R.id.tv_top_bar_title_sub) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mData.getArticle().getColumn_url())) {
                 Nav.with(UIUtils.getContext()).toPath(mData.getArticle().getColumn_url());
@@ -753,17 +754,18 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
      */
     private void setTopTitle(int position) {
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
+            //更多页面
             if (position == (mAtlasList.size() - 1)) {
-                mTvTitleTop.setVisibility(View.VISIBLE);
-                mTvTitleTop.setTextColor(getResources().getColor(R.color._ffffff));
-                mTvTitleTop.setText(getString(R.string.module_detail_more_image));
-                setTopBarInOut(View.GONE);
+                mTvMore.setVisibility(View.VISIBLE);
+                topHolder.getFrlTitle().setVisibility(View.GONE);
+//                setTopBarInOut(View.GONE);
                 if (mData != null && mData.getArticle() != null) {
                     DataAnalyticsUtils.get().ClickMoreImage(mData);
                 }
             } else {
-                mTvTitleTop.setVisibility(View.GONE);
-                setTopBarInOut(View.VISIBLE);
+                mTvMore.setVisibility(View.GONE);
+                topHolder.getFrlTitle().setVisibility(View.VISIBLE);
+//                setTopBarInOut(View.VISIBLE);
             }
         }
     }

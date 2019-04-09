@@ -331,7 +331,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 }
             }
         });
-        task.setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
+        task.setTag(this)/*.bindLoadViewHolder(replaceLoad(mContainer))*/.exe(mArticleId, mFromChannel);
     }
 
     /**

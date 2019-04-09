@@ -7,15 +7,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
-import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.ui.photodetail.adapter.ImageMoreAdapter;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
+import com.zjrb.zjxw.detailproject.widget.VideoGridSpaceDivider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +35,6 @@ public class ImageMoreFragment extends DailyFragment {
 
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
-    @BindView(R2.id.tv_top_bar_title)
-    TextView mTitleView;
 
     private ImageMoreAdapter mAdapter;
     private DraftDetailBean mBean;
@@ -78,9 +75,7 @@ public class ImageMoreFragment extends DailyFragment {
      */
     private void initView(View v) {
         lvNotice.setLayoutManager(new GridLayoutManager(v.getContext(), 2));
-        lvNotice.addItemDecoration(new GridSpaceDivider(6));
-        mTitleView.setText("更多图集");
-        mTitleView.setVisibility(View.VISIBLE);
+        lvNotice.addItemDecoration(new VideoGridSpaceDivider(6));
         initAdapter();
     }
 

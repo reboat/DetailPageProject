@@ -337,7 +337,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             //点击tab标签背景渐变
             headHolder.getItemView().setBackgroundResource(R.color._ffffff);
             fyContainer.setBackgroundResource(R.color._ffffff);
-            ivBack.setImageResource(R.drawable.module_detail_top_bar_back);
+            ivBack.setImageResource(R.drawable.module_detail_topbar_back);
             mCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
             ivShare.setImageResource(R.drawable.module_detail_topbar_share);
         }

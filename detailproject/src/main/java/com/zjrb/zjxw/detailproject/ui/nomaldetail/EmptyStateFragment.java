@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
+import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.ListSpaceDivider;
@@ -43,6 +43,9 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
     RecyclerView lvNotice;
     @BindView(R2.id.layout_title_bar)
     FitWindowsFrameLayout viewGroup;
+    @BindView(R2.id.ly_container)
+    FitWindowsLinearLayout mContainer;
+
 
 
     private EmptyStateListAdapter adapter;
@@ -73,14 +76,6 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
         return v;
     }
 
-    /**
-     * 显示撤稿文案
-     */
-    private TextView emptyText;
-    /**
-     * 头部布局
-     */
-    private View head;
 
     /**
      * 初始化控件
@@ -90,18 +85,8 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
         if (UIUtils.getActivity() instanceof AtlasDetailActivity || UIUtils.getActivity() instanceof ActivityTopicActivity) {
             viewGroup.setVisibility(View.VISIBLE);
         }
-        head = UIUtils.inflate(R.layout.module_detail_empty_state_head);
-        emptyText = head.findViewById(R.id.tv_empty_states);
-        emptyText.setText(getString(R.string.module_detail_revoke));
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
         lvNotice.addItemDecoration(new ListSpaceDivider(0.5f, R.color._dddddd_343434, true, true));
-    }
-
-    /**
-     * 初始化适配器
-     */
-    private void initAdapter() {
-        adapter.addHeaderView(head);
     }
 
     private List<DraftHotTopNewsBean.HotNewsBean> article_list;
@@ -130,7 +115,6 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
                     if (adapter == null) {
                         adapter = new EmptyStateListAdapter(article_list);
                         adapter.setOnItemClickListener(EmptyStateFragment.this);
-                        initAdapter();
                         lvNotice.setAdapter(adapter);
                     } else {
                         adapter.setData(article_list);

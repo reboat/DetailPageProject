@@ -197,8 +197,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
      * topbar
      */
     private DefaultTopBarHolder3 topHolder;
-    //订阅频道名
-    private TextView mTvMore;
+//    private TextView mTvMore;
     private ImageView mIvDownLoad;
     private ImageView mIvShare;
 
@@ -206,7 +205,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = BIZTopBarFactory.createDefault3(view, this);
 //        mTvTitleTop = topHolder.getTitleView();
-        mTvMore = topHolder.getTvMore();
+//        mTvMore = topHolder.getTvMore();
         mIvDownLoad = topHolder.getDownView();
         mIvShare = topHolder.getShareView();
         topHolder.getView().setBackgroundColor(Color.TRANSPARENT);
@@ -214,14 +213,14 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     }
 
 
-//    /**
-//     * 显示顶部栏显示/隐藏
-//     *
-//     * @param flag
-//     */
-//    private void setTopBarInOut(int flag) {
-//        topHolder.getView().setVisibility(flag);
-//    }
+    /**
+     * 显示顶部栏显示/隐藏
+     *
+     * @param flag
+     */
+    private void setTopBarInOut(int flag) {
+        topHolder.getView().setVisibility(flag);
+    }
 
 
     private String mFromChannel;
@@ -265,7 +264,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         mIndex = 0;
         topHolder.getView().setVisibility(View.GONE);
         mContainerBottom.setVisibility(View.VISIBLE);
-//        setTopBarInOut(View.VISIBLE);
+        setTopBarInOut(View.VISIBLE);
         mScrollView.setVisibility(View.VISIBLE);
         mLyContainer.setVisibility(View.VISIBLE);
         mTvContent.setVisibility(View.VISIBLE);
@@ -756,16 +755,16 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         if (mAtlasList != null && !mAtlasList.isEmpty()) {
             //更多页面
             if (position == (mAtlasList.size() - 1)) {
-                mTvMore.setVisibility(View.VISIBLE);
-                topHolder.getFrlTitle().setVisibility(View.GONE);
-//                setTopBarInOut(View.GONE);
+//                mTvMore.setVisibility(View.VISIBLE);
+//                topHolder.getFrlTitle().setVisibility(View.GONE);
+                setTopBarInOut(View.GONE);
                 if (mData != null && mData.getArticle() != null) {
                     DataAnalyticsUtils.get().ClickMoreImage(mData);
                 }
             } else {
-                mTvMore.setVisibility(View.GONE);
-                topHolder.getFrlTitle().setVisibility(View.VISIBLE);
-//                setTopBarInOut(View.VISIBLE);
+//                mTvMore.setVisibility(View.GONE);
+//                topHolder.getFrlTitle().setVisibility(View.VISIBLE);
+                setTopBarInOut(View.VISIBLE);
             }
         }
     }

@@ -13,11 +13,15 @@
     <TextView
         android:id="@+id/tv_top_bar_title"
         style="@style/ToolbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:textColor="@color/_ffffff_7a7b7d"
-        android:visibility="gone"
-        tools:text="自定义ToolBar" />
+        android:fontFamily="@font/fzzcysk_zbjt"
+        android:text="更多图集"
+        android:textColor="@color/_ffffff"
+        android:textSize="@dimen/ts_16sp"
+        />
+
 
     <ImageView
         android:id="@+id/iv_back"

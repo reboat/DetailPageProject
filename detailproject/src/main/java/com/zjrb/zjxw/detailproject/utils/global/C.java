@@ -10,7 +10,7 @@ public final class C {
 
     public static final String JS_OBJ_NAME = "zjxw";
 
-    public static final int DRAFFT_IS_NOT_EXISE = 50013;
+    public static final int DRAFFT_IS_NOT_EXISE = 10010;
     /**
      * html标准 - 路径
      */

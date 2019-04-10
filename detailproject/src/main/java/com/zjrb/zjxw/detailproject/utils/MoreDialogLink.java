@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.ShareAction;
@@ -79,6 +80,8 @@ public class MoreDialogLink extends BaseDialogFragment {
     LinearLayout llModuleCoreMeDingDing;
     @BindView(R2.id.ll_module_core_me_card)
     LinearLayout llModuleCoreMeCard; // 卡片分享
+    @BindView(R2.id.tv_card)
+    TextView tvCard;
 
     private DraftDetailBean mBean;
     private UmengShareBean mBeanShare;
@@ -135,6 +138,11 @@ public class MoreDialogLink extends BaseDialogFragment {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
         } else {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
+        }
+        if (mBeanShare !=null && !mBeanShare.isNewsCard()) {
+            tvCard.setText("卡片");
+        } else {
+            tvCard.setText("新闻卡片");
         }
         initShareView();
         if (!TextUtils.isEmpty(mBean.getArticle().getCard_url())) { // 新闻卡片分享

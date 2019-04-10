@@ -132,7 +132,7 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
             public void onError(String errMsg, int errCode) {
                 T.showShort(UIUtils.getContext(), errMsg);
             }
-        }).setTag(this).bindLoadViewHolder(replaceLoad(lvNotice)).exe();
+        }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe();
     }
 
     @Override

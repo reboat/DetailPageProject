@@ -20,6 +20,9 @@ import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.constant.Constants;
@@ -84,12 +87,19 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
                 htmlBody = jsInterfaceImp.setAttrHtmlSrc(mData.getArticle().getContent());
             }
         }
-        ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
-        if(sp != null){
-            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-        }else{
-            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
-        }
+//        ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
+//        if(sp != null){
+//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
+//        }else{
+//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
+//        }
+
+        List<String> css = new ArrayList<>();
+        css.add("https://zj.zjol.com.cn/static/css/zjxw.v5.css");
+        List<String> js = new ArrayList<>();
+        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
+        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", css, js);
+
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 

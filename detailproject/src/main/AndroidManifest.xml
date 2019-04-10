@@ -94,7 +94,7 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <!-- 链接稿 path -->
-                <!--<data android:path="/link.html" />-->
+                <data android:path="/link.html" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->

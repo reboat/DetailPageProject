@@ -1,8 +1,8 @@
-function imageBrowse(index) {
+function imageBrowse(jsObject,index) {
     zjxw.imageBrowse(index);
 }
 
-function imageABrowse(index) {
+function imageABrowse(jsObject,index) {
     zjxw.imageABrowse(index);
 }
 

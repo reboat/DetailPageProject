@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/iv_image"
         android:layout_width="169dp"
-        android:layout_height="wrap_content"
+        android:layout_height="91dp"
         android:scaleType="fitXY"
         app:ratio_w2h="169:91"
         tools:src="@mipmap/authority"

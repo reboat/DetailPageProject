@@ -6,8 +6,8 @@ import android.view.View;
 import com.aliya.dailyplayer.Extra;
 import com.aliya.dailyplayer.PlayerCallback;
 import com.aliya.dailyplayer.ui.PlayerView;
+import com.google.gson.Gson;
 import com.trs.tasdk.entity.ObjectType;
-import com.utovr.gson.Gson;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 

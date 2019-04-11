@@ -235,7 +235,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setLive(bean.isNative_live())
-                    .setStreamStatus(bean.getLive_status())
+                    .setStreamStatus(bean.getNative_live_info()==null?0:bean.getNative_live_info().getStream_status())
                     .setVertical(isVertical(bean))
                     .setUmengShareBean(shareBean)
                     .setTitle(title)

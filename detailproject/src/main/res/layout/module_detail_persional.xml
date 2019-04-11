@@ -24,7 +24,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="15dp"
             android:scaleType="fitXY"
-            app:ratio_w2h="114:160"
             tools:src="@mipmap/authority"
             />
 

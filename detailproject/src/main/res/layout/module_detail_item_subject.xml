@@ -57,7 +57,6 @@
         android:layout_height="74dp"
         android:layout_alignParentRight="true"
         android:scaleType="fitXY"
-        app:ratio_w2h="111:74"
         tools:src="@mipmap/hearde_logo"
         />
 

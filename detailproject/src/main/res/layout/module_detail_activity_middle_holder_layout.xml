@@ -19,7 +19,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:scaleType="fitXY"
-        app:ratio_w2h="1:1"
         tools:src="@mipmap/module_detail_activity_host" />
 
     <TextView

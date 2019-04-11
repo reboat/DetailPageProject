@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.uimode.widget.MaskImageView;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.TimeUtils;
@@ -33,7 +33,7 @@ import cn.daily.news.biz.core.utils.RouteManager;
  */
 public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBean> {
     @BindView(R2.id.iv_top_bg)
-    ImageView mIvTopBg;
+    MaskImageView mIvTopBg;
     @BindView(R2.id.tv_title)
     TextView mTvTitle;
     @BindView(R2.id.tv_reporter)
@@ -112,7 +112,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         if (mData != null && mData.getArticle() != null && mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getIntro())) {
             tvSummary.setVisibility(View.VISIBLE);
             tvSummary.setText(mData.getArticle().getNative_live_info().getIntro());
-        }else{
+        } else {
             tvSummary.setVisibility(View.GONE);
         }
     }

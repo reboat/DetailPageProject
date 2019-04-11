@@ -57,7 +57,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         mWebView.addOnLayoutChangeListener(this);
         //初始化设置
         webImpl = new DetailWebViewImpl();
-        //必须要先设置绑定对象
+//        //必须要先设置绑定对象
         webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
         jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), itemView.getContext());
         webImpl.setJsObject(jsInterfaceImp);
@@ -91,6 +91,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
         }
 
+        //TODO WLJ test data
 //        List<String> css = new ArrayList<>();
 //        css.add("https://zj.zjol.com.cn/static/css/zjxw.v5.css");
 //        List<String> js = new ArrayList<>();

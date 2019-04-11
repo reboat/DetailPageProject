@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aliya.uimode.widget.MaskImageView;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
@@ -52,7 +53,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private static final int ATTR_TTC_END = R.color._ffffff;
 
     @BindView(R2.id.iv_subject)
-    ImageView ivSubject;
+    MaskImageView ivSubject;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_summary)

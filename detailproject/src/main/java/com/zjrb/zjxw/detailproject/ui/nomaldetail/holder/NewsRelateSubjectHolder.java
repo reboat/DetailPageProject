@@ -1,8 +1,8 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
+import com.aliya.uimode.widget.MaskImageView;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
@@ -24,7 +24,7 @@ import cn.daily.news.biz.core.glide.PH;
 public class NewsRelateSubjectHolder extends BaseRecyclerViewHolder<RelatedSubjectsBean> {
 
     @BindView(R2.id.iv_subject)
-    ImageView mImg;
+    MaskImageView mImg;
 
     public NewsRelateSubjectHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_related_subject, parent, false));

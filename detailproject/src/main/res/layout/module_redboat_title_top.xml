@@ -2,20 +2,22 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/_ffffff_202124">
 
     <!--宽高比为3:2-->
-    <ImageView
+    <com.aliya.uimode.widget.MaskImageView
         android:id="@+id/iv_top_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         app:ratio_w2h="3:2"
         android:scaleType="fitXY"
-        android:visibility="gone"/>
+        android:visibility="visible"
+        tools:src="@mipmap/ic_launcher"/>
 
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fit_top_layout"

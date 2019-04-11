@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.aliya.uimode.widget.MaskImageView;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.TimeUtils;
@@ -28,7 +28,7 @@ import cn.daily.news.biz.core.glide.AppGlideOptions;
 
 public class RedBoatDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBean> {
     @BindView(R2.id.iv_top_bg)
-    ImageView ivTopBg;
+    MaskImageView ivTopBg;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
     @BindView(R2.id.tv_reporter)

@@ -45,10 +45,10 @@ public class NewsDetailMiddleHolder extends BaseRecyclerViewHolder<DraftDetailBe
         itemView.addOnAttachStateChangeListener(this);
         //频道名称
         if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
-            itemView.setVisibility(View.VISIBLE);
+            mRyChannel.setVisibility(View.VISIBLE);
             mTvChannelName.setText(mData.getArticle().getSource_channel_name());
         } else {
-            itemView.setVisibility(View.GONE);
+            mRyChannel.setVisibility(View.GONE);
             itemView.setOnClickListener(null);
         }
 

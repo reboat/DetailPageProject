@@ -212,7 +212,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (bean.isNative_live()) {
                 url = bean.getNative_live_info().getStream_url();
                 title = bean.getNative_live_info().getTitle();
-                imagePath = bean.getNative_live_info().getCover();
+                if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())){
+                    imagePath = bean.getNative_live_info().getCover();
+                }
                 //直播回放并且回放地址不为空  取直播回放地址
                 if (bean.getNative_live_info().getStream_status() == 2) {
                     if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())) {

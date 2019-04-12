@@ -37,6 +37,7 @@ public class CommentRefreshBean extends BaseData {
      * parent_portrait_url : https://www.baidu.com/s?rsv_idx=1&wd=%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1&ie=utf-8&rsv_cq=mybatis+%E6%89%B9%E5%A4%84%E7%90%86&rsv_dl=0_right_recommends_merge_21180&euri=ac7ba1cfb121481483f05744f83a726e
      */
     private int comment_count;
+    private boolean has_more;
     private List<HotCommentsBean> comment_list;
 
     private ShareArtcleInfo share_article_info;
@@ -65,6 +66,13 @@ public class CommentRefreshBean extends BaseData {
         this.comment_count = comment_count;
     }
 
+    public boolean isHas_more() {
+        return has_more;
+    }
+
+    public void setHas_more(boolean has_more) {
+        this.has_more = has_more;
+    }
 
     public static class ShareArtcleInfo implements Serializable {
 

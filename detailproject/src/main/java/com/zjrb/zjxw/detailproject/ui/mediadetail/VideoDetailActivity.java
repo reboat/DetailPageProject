@@ -51,6 +51,7 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
@@ -87,8 +88,8 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace,ViewPager
-                .OnPageChangeListener{
+        DetailInterface.VideoBCnterFace, ViewPager
+                .OnPageChangeListener, DetailCommentHolder.deleteCommentListener {
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -123,6 +124,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private TabPagerAdapterImpl pagerAdapter;
     private VideoDetailFragment videoDetailFragment;
     private VideoLiveFragment mVideoLiveFragment;
+    private VideoCommentFragment mCommentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,7 +214,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (bean.isNative_live()) {
                 url = bean.getNative_live_info().getStream_url();
                 title = bean.getNative_live_info().getTitle();
-                if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())){
+                if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())) {
                     imagePath = bean.getNative_live_info().getCover();
                 }
                 //直播回放并且回放地址不为空  取直播回放地址
@@ -237,14 +239,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setLive(bean.isNative_live())
-                    .setStreamStatus(bean.getNative_live_info()==null?0:bean.getNative_live_info().getStream_status())
+                    .setStreamStatus(bean.getNative_live_info() == null ? 0 : bean.getNative_live_info().getStream_status())
                     .setVertical(isVertical(bean))
                     .setUmengShareBean(shareBean)
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
                 DailyPlayerManager.get().play(builder);
-                if (PlayerCache.get().getPlayer(url).getPlaybackState()== Player.STATE_ENDED){//已经结束
+                if (PlayerCache.get().getPlayer(url).getPlaybackState() == Player.STATE_ENDED) {//已经结束
                     DailyPlayerManager.get().showStateEnd(videoContainer);
                 }
             } else {
@@ -291,6 +293,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundleComment);
         } else {
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundleComment);
+        }
+        if (bean.getArticle().isNative_live()) {
+            mCommentFragment = (VideoCommentFragment) pagerAdapter.getItem(2);
+        } else {
+            mCommentFragment = (VideoCommentFragment) pagerAdapter.getItem(1);
         }
 
         viewPager.setAdapter(pagerAdapter);
@@ -416,13 +423,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             }
-
             //评论框
         } else if (view.getId() == R.id.tv_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
-
                 //评论发表成功
                 Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail);
                 try {
@@ -430,7 +435,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
             //分享
         } else if (view.getId() == R.id.iv_top_share) {
@@ -516,7 +520,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
                 }
-
             }
             //进入栏目
         } else if (view.getId() == R.id.tv_top_bar_title) {
@@ -530,7 +533,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DailyPlayerManager.get().deleteControllers(mVideoLiveFragment.findListPlayingView());
             }
             initVideo(mNewsDetail.getArticle());
-
         }
     }
 
@@ -723,24 +725,24 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void onPageSelected(int i) {
-        if(mNewsDetail != null && mNewsDetail.getArticle() != null){
-            if(mNewsDetail.getArticle().isNative_live()){//直播
-                if(i == 0){
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            if (mNewsDetail.getArticle().isNative_live()) {//直播
+                if (i == 0) {
                     //简介
                     DataAnalyticsUtils.get().SummaryTabClick(mNewsDetail);
-                }else if(i == 1){
+                } else if (i == 1) {
                     //直播间
                     DataAnalyticsUtils.get().LiveTabClick(mNewsDetail);
-                }else{
+                } else {
                     //评论
                     DataAnalyticsUtils.get().LiveCommentTabClick(mNewsDetail);
                 }
 
-            }else{//视频
-                if(i == 0){
+            } else {//视频
+                if (i == 0) {
                     //视频
                     DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
-                }else{
+                } else {
                     //评论
                     DataAnalyticsUtils.get().VideoCommentTabCLick(mNewsDetail);
                 }
@@ -752,6 +754,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    //删除评论
+    @Override
+    public void onDeleteComment(int position) {
+        mCommentFragment.onDeleteComment(position);
     }
 
     public class VideoEventReceiver extends BroadcastReceiver {
@@ -776,7 +784,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);
-                DailyPlayerManager.get().init(builder,false);
+                DailyPlayerManager.get().init(builder, false);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             } else if (PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
 //                builder.setContext(getActivity());

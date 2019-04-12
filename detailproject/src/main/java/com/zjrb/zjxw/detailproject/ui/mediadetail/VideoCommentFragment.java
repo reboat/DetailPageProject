@@ -39,8 +39,7 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  * create time:2019/3/22  下午4:24
  */
 public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
-        .OnRefreshListener, DetailCommentHolder.deleteCommentListener,
-        CommentWindowDialog.updateCommentListener {
+        .OnRefreshListener, CommentWindowDialog.updateCommentListener {
     public static final String FRAGMENT_DETAIL_COMMENT = "fragment_detail_comment";
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
@@ -143,6 +142,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getId());
     }
 
+    //提交评论时刷新列表
     @Override
     public void onUpdateComment() {
         lvNotice.post(new Runnable() {
@@ -158,7 +158,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         });
     }
 
-    @Override
+    //删除评论操作
     public void onDeleteComment(int position) {
         mCommentAdapter.remove(position);
     }

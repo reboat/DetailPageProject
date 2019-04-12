@@ -156,6 +156,16 @@ public class SpecialAdapter extends NewsBaseAdapter {
     }
 
     /**
+     * 删除评论
+     *
+     * @param position
+     */
+    public void remove(int position) {
+        getData().remove(cleanPosition(position));
+        notifyItemRemoved(position);
+    }
+
+    /**
      * 分组标签名 ViewHolder
      *
      * @author a_liYa
@@ -168,11 +178,6 @@ public class SpecialAdapter extends NewsBaseAdapter {
         TextView tvGroupName;
         @BindView(R2.id.tv_more)
         TextView tvMore;
-
-        public GroupViewHolder(ViewGroup parent) {
-            super(parent, R.layout.module_detail_special_group_name);
-            ButterKnife.bind(this, itemView);
-        }
 
         private DraftDetailBean mBean;
 
@@ -211,7 +216,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                 //进入专题更多列表
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(IKey.NEWS_DETAIL, mBean);
-                bundle.putSerializable(IKey.DATA,mData);
+                bundle.putSerializable(IKey.DATA, mData);
                 Nav.with(v.getContext()).setExtras(bundle).toPath("/news/SpecialMoreActivity");
             }
         }

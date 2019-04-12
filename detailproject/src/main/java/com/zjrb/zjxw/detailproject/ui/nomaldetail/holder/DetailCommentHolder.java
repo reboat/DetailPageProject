@@ -28,7 +28,9 @@ import com.zjrb.zjxw.detailproject.apibean.task.CommentDeleteTask;
 import com.zjrb.zjxw.detailproject.apibean.task.CommentPraiseTask;
 import com.zjrb.zjxw.detailproject.ui.comment.CommentActivity;
 import com.zjrb.zjxw.detailproject.ui.comment.CommentSelectActivity;
+import com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailActivity;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailActivity;
+import com.zjrb.zjxw.detailproject.ui.subject.SpecialActivity;
 import com.zjrb.zjxw.detailproject.ui.topic.ActivityTopicActivity;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.CommentTagMathUtils;
@@ -424,14 +426,18 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         new CommentDeleteTask(new LoadingCallBack<Void>() {
             @Override
             public void onSuccess(Void stateBean) {
-                if (itemView.getContext() instanceof CommentActivity) {
+                if (itemView.getContext() instanceof CommentActivity) {//评论列表
                     ((CommentActivity) itemView.getContext()).onDeleteComment(position);
-                } else if (itemView.getContext() instanceof NewsDetailActivity) {
+                } else if (itemView.getContext() instanceof NewsDetailActivity) {//详情评论
                     ((NewsDetailActivity) itemView.getContext()).onDeleteComment(position);
-                } else if (itemView.getContext() instanceof ActivityTopicActivity) {
+                } else if (itemView.getContext() instanceof ActivityTopicActivity) {//话题评论
                     ((ActivityTopicActivity) itemView.getContext()).onDeleteComment(position);
-                } else if (itemView.getContext() instanceof CommentSelectActivity) {
+                } else if (itemView.getContext() instanceof CommentSelectActivity) {//精选评论
                     ((CommentSelectActivity) itemView.getContext()).onDeleteComment(position);
+                } else if (itemView.getContext() instanceof VideoDetailActivity) {//视频/直播稿件删除
+                    ((VideoDetailActivity) itemView.getContext()).onDeleteComment(position);
+                } else if (itemView.getContext() instanceof SpecialActivity) {//专题稿评论删除
+                    ((SpecialActivity) itemView.getContext()).onDeleteComment(position);
                 }
             }
 

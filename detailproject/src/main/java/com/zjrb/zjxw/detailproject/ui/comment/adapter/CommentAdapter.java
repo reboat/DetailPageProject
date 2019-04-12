@@ -129,7 +129,8 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     private boolean noMore(CommentRefreshBean data) {
-        return data == null || data.getComments() == null || data.getComments().size() == 0;
+        return data.isHas_more();
+//        return data == null || data.getComments() == null || data.getComments().size() == 0;
     }
 
     private void cancelLoadMore() {
@@ -145,7 +146,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         } else if (viewType == COMMENT_NEW) {
             return NewsHolder = new VideoDetailTextHolder(parent, mDatas.getComment_count());
         } else {
-            DetailCommentHolder holder =  new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
+            DetailCommentHolder holder = new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
             holder.setCommentType("最新评论");
             return holder;
         }

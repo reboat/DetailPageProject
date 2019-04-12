@@ -56,7 +56,8 @@ public class CommentSelectAdapter extends BaseRecyclerAdapter implements LoadMor
     }
 
     public boolean noMore(CommentRefreshBean data) {
-        return data == null || data.getComments() == null || data.getComments().size() == 0;
+        return data.isHas_more();
+//        return data == null || data.getComments() == null || data.getComments().size() == 0;
     }
 
     public void cancelLoadMore() {

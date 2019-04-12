@@ -30,6 +30,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.ui.subject.holder.HeaderSpecialHolder;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
@@ -57,7 +58,7 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
  * create time:2017/8/27 上午8:51.
  */
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
-        HeaderSpecialHolder.OnClickChannelListener {
+        HeaderSpecialHolder.OnClickChannelListener, DetailCommentHolder.deleteCommentListener {
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -350,5 +351,11 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         if (mAnalytics != null) {
             mAnalytics.sendWithDuration();
         }
+    }
+
+    //删除评论
+    @Override
+    public void onDeleteComment(int position) {
+        mAdapter.remove(position);
     }
 }

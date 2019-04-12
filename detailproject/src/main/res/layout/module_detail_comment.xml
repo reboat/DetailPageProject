@@ -44,6 +44,7 @@
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:orientation="vertical"
+        android:elevation="10dp"
         app:fitType="bottom">
 
         <TextView

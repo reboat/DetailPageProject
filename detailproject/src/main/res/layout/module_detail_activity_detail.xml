@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+        android:paddingTop="15dp"
         android:visibility="gone"
         app:ratio_w2h="16:9">
 
@@ -25,7 +25,7 @@
             android:scaleType="fitXY"
             />
 
-        <!--WLJ 夜间模式适配-->
+        <!--播放-->
         <LinearLayout
             android:id="@+id/iv_type_video"
             android:layout_width="58dp"
@@ -69,35 +69,48 @@
 
     </com.aliya.view.ratio.RatioFrameLayout>
 
-    <FrameLayout
-        android:id="@+id/fl_content"
+    <!--<FrameLayout-->
+    <!--android:id="@+id/fl_content"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@+id/ly_bottom_comment"-->
+    <!--android:layout_below="@+id/video_container"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:paddingTop="12dp"-->
+    <!--&gt;-->
+
+    <!--<com.aliya.view.fitsys.FitWindowsFrameLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:focusable="true"-->
+    <!--android:focusableInTouchMode="true"-->
+    <!--app:fitType="bottom">-->
+
+    <!--<com.aliya.view.fitsys.FitWindowsRecyclerView-->
+    <!--android:id="@+id/rv_content"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:clipChildren="false"-->
+    <!--android:clipToPadding="false"-->
+    <!--android:scrollbars="vertical"-->
+    <!--/>-->
+    <!--</com.aliya.view.fitsys.FitWindowsFrameLayout>-->
+    <!--</FrameLayout>-->
+
+    <com.aliya.view.fitsys.FitWindowsRecyclerView
+        android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ly_bottom_comment"
         android:layout_below="@+id/video_container"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        >
-
-        <com.aliya.view.fitsys.FitWindowsFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            app:fitType="bottom">
-
-            <com.aliya.view.fitsys.FitWindowsRecyclerView
-                android:id="@+id/rv_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:scrollbars="vertical"
-                />
-        </com.aliya.view.fitsys.FitWindowsFrameLayout>
-    </FrameLayout>
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:fitType="bottom"
+        />
 
     <include
         android:id="@+id/ly_bottom_comment"

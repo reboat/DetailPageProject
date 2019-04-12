@@ -46,7 +46,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
-import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
+import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 
 
 /**
@@ -109,7 +109,6 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
         setContentView(R.layout.module_detail_comment);
         ButterKnife.bind(this);
         initData();
-
         LocalBroadcastManager.getInstance(this).registerReceiver(mRefreshReceiver, new IntentFilter("refresh_comment"));
     }
 
@@ -122,11 +121,11 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     /**
      * 顶部topbar
      */
-    private DefaultTopBarHolder1 topHolder;
+    private CommonTopBarHolder topHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = BIZTopBarFactory.createDefault1(view, this);
+        topHolder = BIZTopBarFactory.createCommonTopBar(view, this);
         topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
         return topHolder.getView();
     }

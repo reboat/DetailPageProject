@@ -129,7 +129,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     private boolean noMore(CommentRefreshBean data) {
-        return data.isHas_more();
+        return !data.isHas_more();
 //        return data == null || data.getComments() == null || data.getComments().size() == 0;
     }
 

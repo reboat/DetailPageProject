@@ -44,8 +44,6 @@
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         app:fitType="bottom">
 
         <TextView
@@ -53,6 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="写评论..."
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:textColorHint="@color/_bfbfbf"
             android:textSize="@dimen/ts_11sp"
             />
@@ -60,6 +60,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@color/_bfbfbf" />
 
     </com.aliya.view.fitsys.FitWindowsLinearLayout>

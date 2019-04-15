@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:scrollbars="vertical"
+        android:descendantFocusability="blocksDescendants"
         app:fitType="bottom" />
 
     <LinearLayout

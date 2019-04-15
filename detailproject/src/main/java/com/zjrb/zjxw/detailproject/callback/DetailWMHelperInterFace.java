@@ -128,6 +128,7 @@ public interface DetailWMHelperInterFace {
          * @param bean
          */
         void ClickMoreComment(DraftDetailBean bean);
+
     }
 
     /**

@@ -985,11 +985,13 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     protected void onPause() {
         super.onPause();
         //新华智云
-        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-                .setTargetID(mData.getArticle().getId() + "")
-                .setUrl(mData.getArticle().getUrl())
-                .build()
-                .send();
+        if (mData != null && mData.getArticle() != null){
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
 

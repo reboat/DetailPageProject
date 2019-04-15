@@ -455,6 +455,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 //分享操作
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setAnalyticsBean(bean)

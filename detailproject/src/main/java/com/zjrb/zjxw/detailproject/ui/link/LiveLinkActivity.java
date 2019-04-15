@@ -300,6 +300,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setTextContent(mNewsDetail.getArticle().getSummary())

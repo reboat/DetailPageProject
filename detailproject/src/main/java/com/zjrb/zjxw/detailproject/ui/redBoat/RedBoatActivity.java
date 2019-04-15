@@ -262,6 +262,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setTextContent(mNewsDetail.getArticle().getSummary())

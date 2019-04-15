@@ -412,6 +412,8 @@ public class ActivityTopicActivity extends DailyActivity implements
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mDetailData.getArticle().getCard_url())
                         .setArticleId(mDetailData.getArticle().getId() + "")
                         .setImgUri(mDetailData.getArticle().getFirstPic())
                         .setTextContent(mDetailData.getArticle().getSummary())

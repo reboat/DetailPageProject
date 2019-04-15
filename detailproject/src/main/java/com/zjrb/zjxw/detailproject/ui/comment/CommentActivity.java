@@ -286,6 +286,8 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(getID(mBean))
                         .setImgUri(mBean.getShare_article_info().getArticle_pic())
                         .setTextContent(mBean.getShare_article_info().getSummary())

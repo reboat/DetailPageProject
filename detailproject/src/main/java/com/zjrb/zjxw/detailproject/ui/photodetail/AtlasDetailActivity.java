@@ -197,7 +197,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
      * topbar
      */
     private DefaultTopBarHolder3 topHolder;
-//    private TextView mTvMore;
+    //    private TextView mTvMore;
     private ImageView mIvDownLoad;
     private ImageView mIvShare;
 
@@ -559,6 +559,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mData.getArticle().getCard_url())
                         .setArticleId(mData.getArticle().getId() + "")
                         .setImgUri(mData.getArticle().getAlbum_image_list().get(0).getImage_url())
                         .setTextContent(mData.getArticle().getAlbum_image_list().get(0)

@@ -155,6 +155,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
 
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mDraftDetailBean.getArticle().getCard_url())
                         .setArticleId(mDraftDetailBean.getArticle().getId() + "")
                         .setImgUri(mDraftDetailBean.getArticle().getArticle_pic())
                         .setTextContent(mDraftDetailBean.getArticle().getSummary())

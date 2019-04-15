@@ -119,6 +119,8 @@ public class ImageMoreFragment extends DailyFragment {
 
             UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                     .setSingle(false)
+                    .setNewsCard(true)
+                    .setCardUrl(mBean.getArticle().getCard_url())
                     .setArticleId(mBean.getArticle().getId() + "")
                     .setImgUri(mBean.getArticle().getAlbum_image_list().get(0).getImage_url())
                     .setTextContent(mBean.getArticle().getAlbum_image_list().get(0)

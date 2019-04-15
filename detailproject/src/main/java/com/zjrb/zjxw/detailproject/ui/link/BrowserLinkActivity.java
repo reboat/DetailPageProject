@@ -324,7 +324,8 @@ public class BrowserLinkActivity extends DailyActivity {
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
                 UmengShareBean shareBean = UmengShareBean.getInstance()
-                        .setSingle(false)
+                        .setSingle(false).setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setTextContent(getString(R.string.module_detail_share_content_from))

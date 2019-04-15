@@ -175,6 +175,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
                     UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                             .setSingle(false)
+                            .setNewsCard(true)
+                            .setCardUrl(mArticle.getCard_url())
                             .setArticleId(mArticle.getId() + "")
                             .setImgUri(mArticle.getArticle_pic())
                             .setTextContent(mArticle.getSummary())

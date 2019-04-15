@@ -42,14 +42,9 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
     @Override
     public void bindView() {
         if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
-            if (ryContainer.getVisibility() == View.GONE) {
-                ryContainer.setVisibility(View.VISIBLE);
-            }
             tvTitle.setText(mData.getComment_list().get(0).getList_title());
         } else {
-            if (ryContainer.getVisibility() == View.VISIBLE) {
-                ryContainer.setVisibility(View.GONE);
-            }
+            itemView.setVisibility(View.GONE);
         }
     }
 

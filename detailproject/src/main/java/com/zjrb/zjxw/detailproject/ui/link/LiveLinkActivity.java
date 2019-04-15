@@ -311,6 +311,12 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                         .setShareType("文章")
                 );
                 DataAnalyticsUtils.get().ClickShare(mNewsDetail);
+                new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                        .setTargetID(mNewsDetail.getArticle().getId() + "")
+                        .setUrl(mNewsDetail.getArticle().getUrl())
+                        .build()
+                        .send();
+
             }
         } else if (view.getId() == R.id.menu_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
@@ -456,12 +462,30 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     public void onPause() {
         super.onPause();
         mWebView.onPause();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mWebView.onResume();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
     @Override

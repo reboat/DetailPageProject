@@ -109,6 +109,12 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
 
     @Override
     public void ClickPriseIcon(DraftDetailBean bean) {
+        //新华智云点赞
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.praise)
+                .setTargetID(bean.getArticle().getId() + "")
+                .setUrl(bean.getArticle().getUrl())
+                .build()
+                .send();
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0021", "A0021", "Support", false)
                 .setEvenName("点击点赞")
                 .setObjectID(bean.getArticle().getMlf_id() + "")

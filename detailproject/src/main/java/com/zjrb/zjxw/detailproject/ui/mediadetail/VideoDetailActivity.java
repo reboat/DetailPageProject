@@ -466,6 +466,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         .setShareType("文章"));
                 //点击分享操作
                 DataAnalyticsUtils.get().ClickShare(mNewsDetail);
+                new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                        .setTargetID(mNewsDetail.getArticle().getId() + "")
+                        .setUrl(mNewsDetail.getArticle().getUrl())
+                        .build()
+                        .send();
             }
 
         } else if (view.getId() == R.id.iv_top_bar_back) {
@@ -713,6 +718,28 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     protected void onPause() {
         super.onPause();
         DailyPlayerManager.get().onPause();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
     @Override
@@ -797,4 +824,5 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             }
         }
     }
+
 }

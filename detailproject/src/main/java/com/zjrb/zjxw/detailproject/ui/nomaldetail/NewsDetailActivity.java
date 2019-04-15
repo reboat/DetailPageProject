@@ -567,6 +567,12 @@ final public class NewsDetailActivity extends DailyActivity implements
                         .setShareType("文章"));
                 //点击分享操作
                 DataAnalyticsUtils.get().ClickShare(mNewsDetail);
+                new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                        .setTargetID(mNewsDetail.getArticle().getId() + "")
+                        .setUrl(mNewsDetail.getArticle().getUrl())
+                        .build()
+                        .send();
+
             }
 
             //重新加载
@@ -675,6 +681,13 @@ final public class NewsDetailActivity extends DailyActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewResume();
         }
+        //新华智云
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                .setTargetID(mNewsDetail.getArticle().getId() + "")
+                .setUrl(mNewsDetail.getArticle().getUrl())
+                .build()
+                .send();
+
     }
 
     @Override
@@ -683,6 +696,15 @@ final public class NewsDetailActivity extends DailyActivity implements
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
         }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
 

@@ -541,6 +541,12 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //分享
         } else if (id == R.id.iv_share) {
             if (mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getUrl())) {
+                new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.forward)
+                        .setTargetID(mData.getArticle().getId() + "")
+                        .setUrl(mData.getArticle().getUrl())
+                        .build()
+                        .send();
+
                 //点击分享按钮埋点
                 DataAnalyticsUtils.get().ClickShareTab(mData);
                 //分享专用bean
@@ -961,4 +967,30 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             }
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mData != null && mData.getArticle() != null) {
+            //新华智云
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //新华智云
+        new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                .setTargetID(mData.getArticle().getId() + "")
+                .setUrl(mData.getArticle().getUrl())
+                .build()
+                .send();
+    }
+
+
 }

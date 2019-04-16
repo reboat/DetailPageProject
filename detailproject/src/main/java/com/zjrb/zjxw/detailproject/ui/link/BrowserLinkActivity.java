@@ -34,6 +34,8 @@ import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
+import java.util.Stack;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -81,10 +83,10 @@ public class BrowserLinkActivity extends DailyActivity {
      */
     private DraftDetailBean mNewsDetail;
 
-    /**
-     * 网页地址
-     */
-    private String url;
+//    /**
+//     * 网页地址
+//     */
+//    private String url;
 
     private String mFromChannel;
 
@@ -92,11 +94,16 @@ public class BrowserLinkActivity extends DailyActivity {
     private JsMultiInterfaceImp jsInterfaceImp;
     //是否是链接稿
     private boolean isBrowserLink = false;
+    //不识别scheme地址
     private String browserUri = "";
+    //链接稿url堆栈管理
+    private Stack<WebStack> mWebStacks = new Stack<>();
+    private WebStack mWebStack;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        initArgs(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
@@ -104,6 +111,7 @@ public class BrowserLinkActivity extends DailyActivity {
         getIntentData(getIntent());
         initWebview();
         loadData();
+        addWebStack(mWebStack);
     }
 
     //初始化webview相关设置
@@ -120,8 +128,42 @@ public class BrowserLinkActivity extends DailyActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mFloorBar.setVisibility(View.GONE);
+
+        //复用压栈
+        WebStack webStack = new WebStack();
+        webStack.urlLink = intent.getStringExtra(IKey.DATA);
+        Uri data = intent.getData();
+        if (data != null) {
+            webStack.urlLink = data.toString();
+        }
+        if (!TextUtils.isEmpty(webStack.urlLink)) {
+            mWebStack = webStack;
+            addWebStack(mWebStack);
+        }
+
         getIntentData(intent);
         loadData();
+    }
+
+    //初始化堆栈
+    private void initArgs(Bundle savedInstanceState) {
+        mWebStack = new WebStack();
+        if (savedInstanceState != null) {
+            mWebStack.urlLink = savedInstanceState.getString(IKey.DATA);
+        }
+        if (TextUtils.isEmpty(mWebStack.urlLink)) {
+            Intent intent = getIntent();
+            if (intent != null) {
+                mWebStack.urlLink = intent.getStringExtra(IKey.DATA);
+                //路由取值
+                if (TextUtils.isEmpty(mWebStack.urlLink)) {
+                    Uri data = getIntent().getData();
+                    if (data != null) {
+                        mWebStack.urlLink = data.toString();
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -174,18 +216,17 @@ public class BrowserLinkActivity extends DailyActivity {
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
                     //可能被重定向了
-                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
-                        url = mNewsDetail.getArticle().getWeb_link();
-                    } else {
-                        url = mNewsDetail.getArticle().getUrl();
-                    }
+//                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
+//                        url = mNewsDetail.getArticle().getWeb_link();
+//                    } else {
+//                        url = mNewsDetail.getArticle().getUrl();
+//                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
 
                 @Override
                 public void onCancel() {
-
                 }
 
                 @Override
@@ -207,11 +248,11 @@ public class BrowserLinkActivity extends DailyActivity {
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
                     //可能被重定向了
-                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
-                        url = mNewsDetail.getArticle().getWeb_link();
-                    } else {
-                        url = mNewsDetail.getArticle().getUrl();
-                    }
+//                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
+//                        url = mNewsDetail.getArticle().getWeb_link();
+//                    } else {
+//                        url = mNewsDetail.getArticle().getUrl();
+//                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
@@ -253,9 +294,8 @@ public class BrowserLinkActivity extends DailyActivity {
                             .url(article.getUrl()));
         }
 
-
         //显示标题展示WebView内容等
-        mWebView.loadUrl(url);
+        mWebView.loadUrl(mWebStack.urlLink);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
@@ -282,15 +322,21 @@ public class BrowserLinkActivity extends DailyActivity {
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting})
+    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.iv_close})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-
         int id = view.getId();
         if (R.id.iv_back == id) {
+            //堆栈为空则直接返回
+            if (mWebStacks.isEmpty()) {
+                onBackPressed();
+            } else {
+                //返回删除以后栈顶对象
+                bindWebStack(mWebStacks.pop());
+            }
+        } else if (R.id.iv_close == id) {//点击X
             onBackPressed();
-            //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
-        } else if (view.getId() == R.id.menu_comment) {
+        } else if (view.getId() == R.id.menu_comment) { //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickInCommentList(mNewsDetail);
                 //进入评论列表页面
@@ -330,7 +376,7 @@ public class BrowserLinkActivity extends DailyActivity {
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setTextContent(getString(R.string.module_detail_share_content_from))
                         .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(url)
+                        .setTargetUrl(mWebStack.urlLink)
                         .setAnalyticsBean(bean).setEventName("NewsShare")
                         .setShareType("文章");
 
@@ -422,7 +468,6 @@ public class BrowserLinkActivity extends DailyActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mWebView.destroy();
         //统计时长
         if (builder != null) {
             Analytics mAnalytics = builder.build();
@@ -430,7 +475,43 @@ public class BrowserLinkActivity extends DailyActivity {
                 mAnalytics.sendWithDuration();
             }
         }
-
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
+        //清空webview依赖
+        if (mWebView.getParent() != null && mWebView.getParent() instanceof ViewGroup) {
+            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
+        }
+        mWebView.removeAllViews();
+        mWebView.destroy();
+    }
+
+    //异常销毁保存数据
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (!TextUtils.isEmpty(mWebStack.urlLink)) {
+            outState.putString(IKey.DATA, mWebStack.urlLink);
+        }
+    }
+
+    //添加堆栈
+    public void addWebStack(WebStack webStack) {
+        if (webStack != null) {
+            if (mWebStack != null) { // 上一个加入栈
+                mWebStacks.push(mWebStack);
+            }
+            bindWebStack(webStack);
+        }
+    }
+
+
+    //渲染链接
+    private void bindWebStack(WebStack webStack) {
+        mWebStack = webStack;
+        mWebView.clearHistory();
+        mWebView.loadUrl(webStack.urlLink);
+    }
+
+    private static class WebStack {
+        private String urlLink;
     }
 }

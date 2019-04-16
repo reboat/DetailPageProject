@@ -38,7 +38,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
 //                "CommentWindowDialog");
 //        Nav.with(this).to("https://zjbeta.8531.cn/red_boat_album.html?id=100019775");
-        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=256620");
+        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 
         //专题
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1114462");

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorAccent">#fdc247</color>
-    <color name="colorAccent_night">#7ffdc247</color>
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimary_night">#520d0d</color>
     <color name="colorPrimaryDark">#d12324</color>
     <color name="colorPrimaryDark_night">#520d0d</color>
     <!--5.6版本新资源-->
     <color name="_808080_494949">#808080</color>
-    <color name="_dddddd_5c5c5c">#dddddd</color>
-    <color name="_66f4f5f6_7f222222">#66f4f5f6</color>
-    <color name="_dddddd_f4f5f6">#dddddd</color>
-    <color name="_f4f5f6_191919">#f4f5f6</color>
     <color name="_dddddd_7a7b7d">#dddddd</color>
     <color name="_e85757_8e3636">#e85757</color>
-    <color name="_e2e2e2_0b0b0b">#e2e2e2</color>
-    <color name="_777777">#777777</color>
     <color name="_cccbcb">#cccbcb</color>
     <color name="_f44b50_7a7b7d">#f44b50</color>
     <color name="_f5f5f5_343434">#f5f5f5</color>
@@ -23,15 +16,10 @@
     <color name="_d2d2d2_5c5c5c">#d2d2d2</color>
     <color name="_999999_5c5c5c">#999999</color>
     <color name="_ffffff_191919">#ffffff</color>
-    <color name="_a4a3a3_484848">#a4a3a3</color>
     <color name="_ffffff_999999">#ffffff</color>
     <color name="_4d95fa_315277">#4d95fa</color>
     <color name="_ffffff_202124">#ffffff</color>
-    <color name="_808080_5c5c5c">#808080</color>
     <color name="_7F000000">#7F000000</color>
-    <color name="_d7d7d7_7a7b7d">#d7d7d7</color>
-    <color name="_9f9f9f_5c5c5c">#9f9f9f</color>
-    <color name="_33ffffff_191919">#33ffffff</color>
     <color name="_7f000000_7f191919">#7f000000</color>
 
     <!--6.0版本资源-->
@@ -41,7 +29,6 @@
     <color name="_dcdcdc">#dcdcdc</color>
     <color name="_d12324">#d12324</color>
     <color name="_222222">#222222</color>
-    <color name="_ffd12324">#ffd12324</color>
     <color name="_eeeeee">#eeeeee</color>
     <color name="_8a8a8a">#8a8a8a</color>
     <color name="_1f000000">#1f000000</color>
@@ -50,6 +37,8 @@
     <color name="_00ffffff">#00ffffff</color>
     <color name="_ffcd3f3f">#ffcd3f3f</color>
     <color name="_2378d1">#2378d1</color>
+    <color name="_777777">#777777</color>
+
     <color name="_535353">#535353</color>
     <color name="_80000000">#80000000</color>
     <color name="_ff000000">#ff000000</color>

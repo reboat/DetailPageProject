@@ -12,7 +12,6 @@
         android:id="@+id/iv_top_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
         android:layout_marginTop="13dp"
         android:scaleType="fitXY"
         android:visibility="visible"
@@ -26,18 +25,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_bg"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:fitType="top">
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:fontFamily="@font/fzzcysk_zbjt"
             android:lineSpacingMultiplier="1.1"
             android:textColor="@color/_000000_7a7b7d"
             android:textSize="@dimen/ts_22sp"
-            android:fontFamily="@font/fzzcysk_zbjt"
             tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度" />
         <!--新闻来源全部显示-->
         <TextView

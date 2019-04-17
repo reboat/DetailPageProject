@@ -72,6 +72,7 @@
                 android:id="@+id/tv_comments_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/din_medium"
                 android:layout_toRightOf="@+id/menu_comment"
                 android:maxLines="1"
                 android:textColor="@color/_d12324"

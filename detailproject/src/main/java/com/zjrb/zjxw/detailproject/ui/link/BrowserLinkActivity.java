@@ -76,6 +76,8 @@ public class BrowserLinkActivity extends DailyActivity {
     FrameLayout mView;
     @BindView(R2.id.ly_bottom_comment)
     FitWindowsRelativeLayout mFloorBar;
+    @BindView(R2.id.iv_close)
+    ImageView mClose;
 
     private String mArticleId;
     /**
@@ -122,7 +124,6 @@ public class BrowserLinkActivity extends DailyActivity {
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
     }
-
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -503,10 +504,16 @@ public class BrowserLinkActivity extends DailyActivity {
         }
     }
 
-
     //渲染链接
     private void bindWebStack(WebStack webStack) {
         mWebStack = webStack;
+        //堆栈中链接信息大于1个时才显示
+        if (mWebStacks.size() > 1) {
+            mClose.setVisibility(View.VISIBLE);
+        } else {
+            mClose.setVisibility(View.INVISIBLE);
+        }
+
         mWebView.clearHistory();
         mWebView.loadUrl(webStack.urlLink);
     }

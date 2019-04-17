@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/module_detail_news_prise"
-                android:drawablePadding="7dp"
+                android:drawablePadding="6dp"
                 android:maxLines="1"
                 android:padding="3dp"
                 android:textColor="@color/module_detail_comment_prise"
@@ -83,7 +83,7 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="5"
             android:textColor="@color/_222222"
-            android:textSize="@dimen/ts_16sp"
+            android:textSize="@dimen/ts_14sp"
             tools:text="卡死搭建的间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
 
         <TextView
@@ -91,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_content"
+            android:layout_marginLeft="6dp"
             android:layout_marginRight="12.5dp"
             android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/iv_avatar"
@@ -136,7 +137,7 @@
                     android:id="@+id/tv_comment_src"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/_616161"
@@ -168,7 +169,7 @@
                 android:gravity="left|center"
                 android:maxLines="1"
                 android:textColor="@color/_bfbfbf"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="@dimen/ts_12sp"
                 android:visibility="gone"
                 tools:text="新疆威武儿子自取字了新疆" />
 
@@ -178,9 +179,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_comment_location"
-                android:layout_marginBottom="7dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="12dp"
                 android:ellipsize="end"
                 android:gravity="left|center"
                 android:lineSpacingMultiplier="1.2"
@@ -195,7 +196,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_comment_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="12dp"
                 android:text="展开全部"
                 android:textColor="@color/_2378d1"
@@ -208,9 +209,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ly_comment_reply"
-            android:layout_marginLeft="6dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/iv_avatar"
             >
 
@@ -235,7 +236,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/_bfbfbf"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="@dimen/ts_12sp"
                 android:visibility="gone"
                 tools:text="上海"
                 />
@@ -253,7 +254,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/module_detail_comment_delete"
                 android:textColor="@color/_666666"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="@dimen/ts_12sp"
                 android:visibility="gone"
                 tools:text="删除" />
 
@@ -264,12 +265,9 @@
                 android:layout_alignBottom="@+id/tv_time"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="11.5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:text="@string/module_detail_replay_to"
                 android:textColor="@color/_666666"
-                android:textSize="@dimen/ts_11sp"
+                android:textSize="@dimen/ts_12sp"
                 tools:text="回复" />
 
         </RelativeLayout>

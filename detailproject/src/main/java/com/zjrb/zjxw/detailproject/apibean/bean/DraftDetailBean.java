@@ -67,6 +67,8 @@ public class DraftDetailBean extends BaseData {
         private boolean activity_announced;
         private int live_type;
         private int live_status;
+        private long live_start;
+        private long live_end;
         private String live_url;
         private String video_url;
         private int video_duration;
@@ -796,6 +798,21 @@ public class DraftDetailBean extends BaseData {
             this.column_url = column_url;
         }
 
+        public long getLive_start() {
+            return live_start;
+        }
+
+        public void setLive_start(long live_start) {
+            this.live_start = live_start;
+        }
+
+        public long getLive_end() {
+            return live_end;
+        }
+
+        public void setLive_end(long live_end) {
+            this.live_end = live_end;
+        }
         //原生直播
         public static class NativeLiveInfoBean implements Serializable {
             private static final long serialVersionUID = -6337097775485082698L;

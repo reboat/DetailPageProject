@@ -26,6 +26,8 @@ import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.utils.RouteManager;
 
+import static com.zjrb.zjxw.detailproject.utils.global.C.DATE_FORMAT_2;
+
 /**
  * 新闻详情页title - ViewHolder
  * Created by wanglinjie.
@@ -47,12 +49,15 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     @BindView(R2.id.tv_summary)
     TextView tvSummary;
 
-    boolean isRedBoat;//是否是红船号
+    private boolean isRedBoat;//是否是红船号
+    private boolean isVideoDetail;//是否是视频稿
 
-    public NewsDetailTitleHolder(ViewGroup parent, boolean isRedBoat) {
+
+    public NewsDetailTitleHolder(ViewGroup parent, boolean isRedBoat, boolean isVideoDetail) {
         super(UIUtils.inflate(R.layout.module_detail_layout_top, parent, false));
         ButterKnife.bind(this, itemView);
         this.isRedBoat = isRedBoat;
+        this.isVideoDetail = isVideoDetail;
     }
 
     @Override
@@ -79,22 +84,44 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             } else mTvReporter.setVisibility(View.GONE);
         } else {
             //来源及记者(发稿允许不填写)
-            if (mData != null && mData.getArticle() != null && TextUtils.isEmpty(mData.getArticle().getSource()) && TextUtils.isEmpty(mData.getArticle().getAuthor())) {
-                mTvReporter.setVisibility(View.GONE);
-            } else {
-                String source = mData.getArticle().getSource();
-                if (!TextUtils.isEmpty(source)) {
-                    source += " ";
-                }
+            if (mData != null && mData.getArticle() != null) {
                 mTvReporter.setVisibility(View.VISIBLE);
-                mTvReporter.setText((source == null ? "" : source) + mData.getArticle().getAuthor());
+                if (isVideoDetail) {
+                    if (mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getReporter())) {
+                        mTvReporter.setText(mData.getArticle().getNative_live_info().getReporter());
+                    } else {
+                        mTvReporter.setVisibility(View.GONE);
+                    }
+                } else {
+                    String source = mData.getArticle().getSource();
+                    String author = mData.getArticle().getAuthor();
+                    if (TextUtils.isEmpty(source) && TextUtils.isEmpty(author)) {
+                        mTvReporter.setVisibility(View.GONE);
+                    } else {
+                        if (!TextUtils.isEmpty(source)) {
+                            source += " ";
+                        }
+                        mTvReporter.setText((source == null ? "" : source) + mData.getArticle().getAuthor());
+                    }
+                }
+            } else {
+                mTvReporter.setVisibility(View.GONE);
             }
         }
 
         //频道显示
-        if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getSource_channel_name()) && !TextUtils.isEmpty(mData.getArticle().getSource_channel_id())) {
-            mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
-            mTvChannelName.setText(mData.getArticle().getSource_channel_name());
+        if (!isRedBoat && mData != null && mData.getArticle() != null) {
+            if (isVideoDetail) {
+                mTvTime.setText(TimeUtils.getTime(mData.getArticle().getLive_start(), DATE_FORMAT_2) + " - " + TimeUtils.getTime(mData.getArticle().getLive_end(), DATE_FORMAT_2));
+            } else {
+                mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
+            }
+            if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name())) {
+                mTvChannelName.setVisibility(View.VISIBLE);
+                mTvChannelName.setText(mData.getArticle().getSource_channel_name());
+            } else {
+                mTvChannelName.setVisibility(View.GONE);
+            }
         } else {
             mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
             mTvChannelName.setVisibility(View.GONE);
@@ -102,8 +129,12 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
         //阅读数
         if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
-            mTvReadNum.setVisibility(View.VISIBLE);
-            mTvReadNum.setText(mData.getArticle().getRead_count_general());
+            if(isVideoDetail){
+                mTvReadNum.setVisibility(View.INVISIBLE);
+            }else{
+                mTvReadNum.setVisibility(View.VISIBLE);
+                mTvReadNum.setText(mData.getArticle().getRead_count_general());
+            }
         } else {
             mTvReadNum.setVisibility(View.INVISIBLE);
         }

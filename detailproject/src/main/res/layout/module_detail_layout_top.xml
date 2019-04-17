@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_time"
         android:layout_marginTop="21dp"
-        android:lineSpacingExtra="30dp"
+        android:lineSpacingExtra="8dp"
         android:textColor="@color/_535353"
         android:textSize="@dimen/ts_18sp"
         android:visibility="gone"

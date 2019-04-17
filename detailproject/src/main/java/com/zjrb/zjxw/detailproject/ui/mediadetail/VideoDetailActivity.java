@@ -718,6 +718,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        DailyPlayerManager.get().onResume();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -785,6 +791,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().play(builder);
+                if (playerAction.isShouldPause()){
+                    DailyPlayerManager.get().userPause();
+                }
             } else if (playerAction.isPlayEnd()) {//播放结束
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);

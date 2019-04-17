@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.daily.news.R2;
 import com.zjrb.daily.news.bean.ArticleItemBean;
+import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
@@ -96,11 +98,17 @@ public class SpecialListFragment extends DailyFragment {
     }
 
     private void bindData(SubjectListBean bean) {
-        List<ArticleItemBean> articleItemBean = bean.getArticle_list();
+        final List<ArticleItemBean> articleItemBean = bean.getArticle_list();
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
         mAdapter = new SpecialListAdapter(articleItemBean);
         mRecycler.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                NewsUtils.itemClick(getFragment(),articleItemBean.get(position));
+            }
+        });
     }
 
     @Override

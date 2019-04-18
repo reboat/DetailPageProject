@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/module_detail_video_live_holder"
         android:drawablePadding="6dp"
-        android:textColor="@color/_666666"
         android:fontFamily="@font/din_medium"
+        android:textColor="@color/_666666"
         android:textSize="@dimen/ts_12sp"
         tools:text="2018.10.25 10:16" />
 
@@ -23,8 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:visibility="gone"
-        tools:src="@mipmap/module_detail_video_live_top" />
+        android:src="@mipmap/module_detail_video_live_top"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -44,8 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
-        android:layout_marginTop="12dp"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="12dp"
         >
     </android.support.v7.widget.RecyclerView>
 

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:visibility="visible"
-            tools:src="@mipmap/module_detail_video_live_top" />
+            android:src="@mipmap/module_detail_video_live_top" />
     </RelativeLayout>
     <!--标题-->
     <TextView

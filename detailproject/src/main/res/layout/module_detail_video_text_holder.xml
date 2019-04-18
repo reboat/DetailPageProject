@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:visibility="gone"
-        tools:src="@mipmap/module_detail_video_live_top" />
+        android:src="@mipmap/module_detail_video_live_top" />
 
     <TextView
         android:id="@+id/tv_title"

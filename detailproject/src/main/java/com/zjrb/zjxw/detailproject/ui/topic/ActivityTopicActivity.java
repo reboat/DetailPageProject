@@ -396,7 +396,7 @@ public class ActivityTopicActivity extends DailyActivity implements
     }
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back,
+            R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -413,7 +413,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                         "MoreDialog");
             }
             //评论框
-        } else if (view.getId() == R.id.tv_comment) {
+        } else if (view.getId() == R.id.fl_comment) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickCommentBox(mDetailData);
 

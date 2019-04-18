@@ -302,7 +302,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private Bundle bundle;
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment,
-            R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment,
+            R2.id.menu_prised, R2.id.menu_setting, R2.id.fl_comment,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -368,7 +368,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
-        } else if (view.getId() == R.id.tv_comment) {
+        } else if (view.getId() == R.id.fl_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);

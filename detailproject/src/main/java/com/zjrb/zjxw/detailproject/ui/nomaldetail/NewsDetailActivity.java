@@ -507,7 +507,7 @@ final public class NewsDetailActivity extends DailyActivity implements
     }
 
     @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting, R2.id.menu_setting_relpace,
-            R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
+            R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -537,7 +537,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             }
 
             //评论框
-        } else if (view.getId() == R.id.tv_comment) {
+        } else if (view.getId() == R.id.fl_comment) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);

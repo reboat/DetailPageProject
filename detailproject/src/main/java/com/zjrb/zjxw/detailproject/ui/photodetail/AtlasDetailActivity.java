@@ -581,7 +581,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 );
             }
             //评论框
-        } else if (id == R.id.tv_comment) {
+        } else if (id == R.id.fl_comment) {
             if (mData != null && mData.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickCommentBox(mData);
 

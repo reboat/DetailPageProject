@@ -426,7 +426,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                     mTvCommentsNum.setVisibility(View.VISIBLE);
                     mTvCommentsNum.setText(data.getArticle().getComment_count_general());
                 } else {
-                    mTvCommentsNum.setVisibility(View.GONE);
+                    mTvCommentsNum.setVisibility(View.INVISIBLE);
                 }
             }
         }

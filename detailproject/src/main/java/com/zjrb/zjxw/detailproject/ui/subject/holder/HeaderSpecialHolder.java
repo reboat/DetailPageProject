@@ -78,6 +78,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private boolean isOpen;
     //将标签列表进行复制显示
     private RecyclerView mRecyclerTabCopy;
+    //聚合阅读
+    private TextView mTvReadCopy;
     //标题
     private FitWindowsFrameLayout fyContainer;
     //返回键、收藏、分享
@@ -91,10 +93,11 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     public static final int MAX_DEFAULT_LINES = 3;
 
     //头部动效
-    public HeaderSpecialHolder(RecyclerView parent, RecyclerView copy, FitWindowsFrameLayout view, FrameLayout groupCopy, OnClickChannelListener
+    public HeaderSpecialHolder(RecyclerView parent, TextView tvReadCopy, RecyclerView copy, FitWindowsFrameLayout view, FrameLayout groupCopy, OnClickChannelListener
             listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
+        mTvReadCopy = tvReadCopy;
         mGroupCopy = groupCopy;
         mRecyclerTabCopy = copy;
         fyContainer = view;
@@ -103,6 +106,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         ivShare = fyContainer.findViewById(R.id.iv_top_share);
         mOnClickChannelListener = listener;
         initView();
+        //在群众之声之前隐藏
         parent.addOnScrollListener(new RecyclerView.OnScrollListener() {
             float fraction = -1;
 
@@ -125,6 +129,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 //toolsbar之前开始吸顶
                 if (mRecyclerTab.getTop() + itemView.getTop() + dy - fyContainer.getBottom() > 0
                         && itemView.getRootView() != itemView) {
+
+                    if (mTvReadCopy.getVisibility() != View.GONE) {
+                        mTvReadCopy.setVisibility(View.INVISIBLE);
+                    }
                     if (mRecyclerTabCopy.getVisibility() != View.GONE) {
                         mRecyclerTabCopy.setVisibility(View.INVISIBLE);
                         ivback.setImageResource(R.mipmap.module_biz_write_back);
@@ -134,12 +142,13 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 } else {
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                        mTvReadCopy.setVisibility(View.VISIBLE);
                     }
                     if (mGroupCopy.getVisibility() == View.VISIBLE) {
                         ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
                         ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
                         ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
-                    }else{
+                    } else {
                         ivback.setImageResource(R.mipmap.module_biz_write_back);
                         ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
                         ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
@@ -206,8 +215,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             mRecyclerTab.setVisibility(View.GONE);
             tvRead.setVisibility(View.GONE);
             mRecyclerTabCopy.setVisibility(View.GONE);
+            mTvReadCopy.setVisibility(View.GONE);
         } else {
             mRecyclerTabCopy.setVisibility(View.INVISIBLE);
+            mTvReadCopy.setVisibility(View.INVISIBLE);
         }
 
         //题图可以为空

@@ -4,6 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.zjrb.core.recycleView.OverlayViewHolder;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
@@ -21,11 +22,13 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
     private RecyclerView mRecyclerTabCopy;
     private FrameLayout mGroupCopy;
+    private TextView mTvReadCopy;
     private OverlayViewHolder mOverlayHolder;
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
-    public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
+    public OverlayHelper(RecyclerView recycler, TextView tvReadCopy,RecyclerView recyclerCopy, FrameLayout groupCopy) {
+        mTvReadCopy = tvReadCopy;
         mRecyclerTabCopy = recyclerCopy;
         mGroupCopy = groupCopy;
         SpecialAdapter adapter = (SpecialAdapter) recycler.getAdapter();
@@ -54,6 +57,8 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     }
                 }
             }
+
+            //专题tab显示时机
             if (startPosition != RecyclerView.NO_POSITION) {
                 List data = adapter.getData();
                 if (data != null) {

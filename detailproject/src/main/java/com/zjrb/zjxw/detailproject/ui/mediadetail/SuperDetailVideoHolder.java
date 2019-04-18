@@ -82,7 +82,7 @@ public abstract class SuperDetailVideoHolder extends BaseRecyclerViewHolder<Nati
         }
 
         //发布时间
-        mTvTimeline.setText(StringUtils.long2String(mData.getCreated_at(), "yyyy.MM.dd ") + mData.getCreated_at_general());
+        mTvTimeline.setText(mData.getCreated_at_general());
         //置顶
         if (mData.isStick_top()) {
             ivTop.setVisibility(View.VISIBLE);

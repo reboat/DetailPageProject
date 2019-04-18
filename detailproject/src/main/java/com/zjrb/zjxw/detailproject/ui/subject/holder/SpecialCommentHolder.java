@@ -41,8 +41,8 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
     //交互绑定
     @Override
     public void bindView() {
-        if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
-            tvTitle.setText(mData.getComment_list().get(0).getList_title());
+        if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getTitle())) {
+            tvTitle.setText(mData.getComment_list().get(0).getTitle());
         } else {
             itemView.setVisibility(View.GONE);
         }
@@ -54,8 +54,8 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //进入评论文章详情页
-        if (view.getId() == R2.id.ry_title) {
-            if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getList_title())) {
+        if (view.getId() == R.id.ry_title) {
+            if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getTitle())) {
                 DataAnalyticsUtils.get().SpecialCommentNewsClick(mData.getComment_list().get(0));
                 if (bundle == null) {
                     bundle = new Bundle();

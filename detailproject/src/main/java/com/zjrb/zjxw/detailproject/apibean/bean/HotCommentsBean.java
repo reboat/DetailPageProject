@@ -65,6 +65,7 @@ public class HotCommentsBean implements Serializable {
     private String list_title;
     private String url;
     private boolean isHotComment = false;
+    private String title;
 
     /**
      * 是否是自己的评论
@@ -307,6 +308,14 @@ public class HotCommentsBean implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCommentTime(long time) {

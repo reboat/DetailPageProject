@@ -82,7 +82,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                             //HotCommentsBean类型
                             list.add(bean.getComment_list().get(0));
                             //标题类型
-                            if (!TextUtils.isEmpty(bean.getComment_list().get(0).getList_title()) &&
+                            if (!TextUtils.isEmpty(bean.getComment_list().get(0).getTitle()) &&
                                     !TextUtils.isEmpty(bean.getComment_list().get(0).getUrl())) {
                                 list.add(bean);
                             }
@@ -95,7 +95,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                                 list.add(hotBean);
                             }
                             //标题
-                            if (!TextUtils.isEmpty(bean.getComment_list().get(0).getList_title()) &&
+                            if (!TextUtils.isEmpty(bean.getComment_list().get(0).getTitle()) &&
                                     !TextUtils.isEmpty(bean.getComment_list().get(0).getUrl())) {
                                 list.add(bean);
                             }

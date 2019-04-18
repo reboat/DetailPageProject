@@ -45,7 +45,7 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
     @Override
     public void bindView() {
         //时间
-        tvTime.setText(StringUtils.long2String(mData.getCreated_at(), "yyyy.MM.dd"));
+        tvTime.setText(mData.getCreated_at_general());
         //置顶
         if (mData.isStick_top()) {
             ivTop.setVisibility(View.VISIBLE);

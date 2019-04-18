@@ -148,7 +148,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         mVideoEventReceiver = new VideoEventReceiver();
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mVideoEventReceiver, new IntentFilter(Constant.VIDEO_EVENT));
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(commentNumReceiver, new IntentFilter("sync_comment_num"));
-
         getIntentData(getIntent());
         loadData();
     }

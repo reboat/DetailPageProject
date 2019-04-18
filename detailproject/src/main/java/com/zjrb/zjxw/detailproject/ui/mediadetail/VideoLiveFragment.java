@@ -97,6 +97,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
         });
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -107,7 +108,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
      * @param isResort 是否反转 默认为false倒序  true为正序
      */
     private void refreshData(long start, int size, boolean isResort) {
-        if (mNewsDetail==null||mNewsDetail.getArticle()==null||mNewsDetail.getArticle().getNative_live_info()==null){
+        if (mNewsDetail == null || mNewsDetail.getArticle() == null || mNewsDetail.getArticle().getNative_live_info() == null) {
             return;
         }
         new NativeLiveTask(new LoadingCallBack<NativeLiveBean>() {
@@ -166,27 +167,27 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser){
-            if (mLinearLayoutManager==null){
+        if (!isVisibleToUser) {
+            if (mLinearLayoutManager == null) {
                 return;
             }
             ViewGroup playContainer = findListPlayingView();
-            if (playContainer!=null&&playContainer== DailyPlayerManager.get().getBuilder().getPlayContainer()){
+            if (playContainer != null && playContainer == DailyPlayerManager.get().getBuilder().getPlayContainer()) {
                 DailyPlayerManager.get().onDestroy();
             }
         }
     }
 
-    public ViewGroup findListPlayingView(){
-        if (mLinearLayoutManager==null){
+    public ViewGroup findListPlayingView() {
+        if (mLinearLayoutManager == null) {
             return null;
         }
         for (int i = 0; i < mLinearLayoutManager.getChildCount(); i++) {
             View view = mLinearLayoutManager.getChildAt(i);
-            if (view instanceof ViewGroup){
+            if (view instanceof ViewGroup) {
                 ViewGroup viewGroup = (ViewGroup) view;
                 ViewGroup playContainer = viewGroup.findViewWithTag("video_container");
-                if (playContainer!=null){
+                if (playContainer != null) {
                     return playContainer;
                 }
             }

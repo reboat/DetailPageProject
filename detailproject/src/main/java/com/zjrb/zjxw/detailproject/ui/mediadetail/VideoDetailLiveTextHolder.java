@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
-import com.zjrb.zjxw.detailproject.widget.VideoGridSpaceDivider;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by wanglinjie.
  * create time:2019/3/26  下午3:54
  */
-public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.ListBean> {
+public class VideoDetailLiveTextHolder extends BaseRecyclerViewHolder<NativeLiveBean.ListBean> {
 
     @BindView(R2.id.tv_time)
     TextView tvTime;
@@ -32,13 +29,9 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
     ImageView ivTop;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R2.id.rv_imgs)
-    RecyclerView rvImgs;
 
-    private VideoDetailPicAdapter mAdapter;
-
-    public VideoDetailPicHolder(ViewGroup parent) {
-        super(UIUtils.inflate(R.layout.module_detail_video_live_holder, parent, false));
+    public VideoDetailLiveTextHolder(ViewGroup parent) {
+        super(UIUtils.inflate(R.layout.module_detail_video_text_holder, parent, false));
         ButterKnife.bind(this, itemView);
     }
 
@@ -59,21 +52,6 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
         } else {
             tvTitle.setVisibility(View.GONE);
         }
-
-        if (mData.getPics() != null && mData.getPics().size() > 0) {
-            if(mAdapter == null){
-                rvImgs.setVisibility(View.VISIBLE);
-                rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
-                rvImgs.addItemDecoration(new VideoGridSpaceDivider(6));
-                mAdapter = new VideoDetailPicAdapter(mData.getPics());
-                rvImgs.setAdapter(mAdapter);
-            }else{
-                rvImgs.setVisibility(View.GONE);
-            }
-        } else {
-            rvImgs.setVisibility(View.GONE);
-        }
-
     }
 
 }

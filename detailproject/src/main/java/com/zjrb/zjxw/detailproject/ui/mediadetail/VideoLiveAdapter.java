@@ -31,6 +31,8 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     private int VIDEO_LIVE_MUL_PIC = 1;
     //视频
     private int VIDEO_LIVE_VIDEO = 2;
+    //纯文字
+    private int VIDEO_LIVE_TEXT = 3;
 
     public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data) {
         super(null);
@@ -79,6 +81,9 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
                 ((NativeLiveBean.ListBean) getData(position)).getPics() != null &&
                 ((NativeLiveBean.ListBean) getData(position)).getPics().size() > 0) {
             return VIDEO_LIVE_MUL_PIC;
+        } else if ((getData(position) instanceof NativeLiveBean.ListBean && TextUtils.isEmpty(((NativeLiveBean.ListBean) getData(position)).getVideo_url())
+                && (((NativeLiveBean.ListBean) getData(position)).getPics() == null || ((NativeLiveBean.ListBean) getData(position)).getPics().size() == 0))) {
+            return VIDEO_LIVE_TEXT;
         }
         return super.getAbsItemViewType(position);
     }
@@ -87,8 +92,10 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIDEO_LIVE_MUL_PIC) {
             return new VideoDetailPicHolder(parent);
-        } else {
+        } else if (viewType == VIDEO_LIVE_VIDEO) {
             return new DetailVideoHolder(parent);
+        } else {
+            return new VideoDetailLiveTextHolder(parent);
         }
     }
 
@@ -97,11 +104,11 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         //如果有正在播放的view 找到并且删除
-        if (holder.itemView instanceof ViewGroup){
+        if (holder.itemView instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) holder.itemView;
             for (int i = 0; i < vg.getChildCount(); i++) {
                 View child = vg.getChildAt(i);
-                if (DailyPlayerManager.get().getBuilder()!=null&&child == DailyPlayerManager.get().getBuilder().getPlayContainer()){
+                if (DailyPlayerManager.get().getBuilder() != null && child == DailyPlayerManager.get().getBuilder().getPlayContainer()) {
                     DailyPlayerManager.get().onDestroy();
                     DailyPlayerManager.get().deleteControllers(DailyPlayerManager.get().getBuilder().getPlayContainer());
                     return;
@@ -126,8 +133,6 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         }
         return null;
     }
-
-
 
 
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
@@ -157,6 +158,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             }
         });
     }
+
 
     //删除评论操作
     public void onDeleteComment(int position) {

@@ -160,6 +160,11 @@ public class SpecialAdapter extends NewsBaseAdapter {
         return getAbsItemViewType(position) == TYPE_GROUP;
     }
 
+    @Override
+    public boolean isVoiceOfMassType(int position){
+        return getAbsItemViewType(position) == TYPE_COMMENT_TAB;
+    }
+
     /**
      * 删除评论
      *

@@ -22,13 +22,11 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
     private RecyclerView mRecyclerTabCopy;
     private FrameLayout mGroupCopy;
-    private TextView mTvReadCopy;
     private OverlayViewHolder mOverlayHolder;
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
-    public OverlayHelper(RecyclerView recycler, TextView tvReadCopy,RecyclerView recyclerCopy, FrameLayout groupCopy) {
-        mTvReadCopy = tvReadCopy;
+    public OverlayHelper(RecyclerView recycler,RecyclerView recyclerCopy, FrameLayout groupCopy) {
         mRecyclerTabCopy = recyclerCopy;
         mGroupCopy = groupCopy;
         SpecialAdapter adapter = (SpecialAdapter) recycler.getAdapter();
@@ -43,6 +41,8 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
             // 悬浮组名
             int overlayPosition = RecyclerView.NO_POSITION;
+            //去除悬浮
+            int overlayEndPosition = RecyclerView.NO_POSITION;
             int startPosition;
             LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
@@ -67,11 +67,15 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                         if (adapter.isOverlayViewType(index)) {
                             overlayPosition = index;
                             break;
+                        } else if (adapter.isVoiceOfMassType(index)) {
+                            overlayEndPosition = index;
+                            break;
                         }
                     }
                 }
             }
 
+            //专题tab显示的位置
             if (overlayPosition != RecyclerView.NO_POSITION) {
                 mGroupCopy.setVisibility(View.VISIBLE);
                 if (mOverlayPosition != overlayPosition) {
@@ -79,6 +83,9 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     Object data = adapter.getData(mOverlayPosition);
                     updateChannelTab(data);
                 }
+                //滑动到群众之声时隐藏
+            } else if (overlayEndPosition != RecyclerView.NO_POSITION) {
+                mGroupCopy.setVisibility(View.GONE);
             } else {
                 mGroupCopy.setVisibility(View.GONE);
                 if (mOverlayPosition != RecyclerView.NO_POSITION) {

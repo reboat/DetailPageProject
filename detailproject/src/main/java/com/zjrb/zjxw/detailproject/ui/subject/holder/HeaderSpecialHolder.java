@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,8 +28,11 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.ChannelAdapter;
+import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
 import com.zjrb.zjxw.detailproject.utils.ArgbUtils;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +91,6 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private FrameLayout mGroupCopy;
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
-
     private DraftDetailBean.ArticleBean mArticle;
 
     public static final int MAX_DEFAULT_LINES = 3;
@@ -112,6 +115,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int overlayEndPosition = showOrHideOverlay(recyclerView);
                 int maxRange = itemView.getHeight()
                         - ivSubject.getHeight() - fyContainer.getHeight();
                 float scale;
@@ -126,7 +130,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     setFraction(fraction);
                 }
 
-                //toolsbar之前开始吸顶
+                //吸顶显示时机
                 if (mRecyclerTab.getTop() + itemView.getTop() + dy - fyContainer.getBottom() > 0
                         && itemView.getRootView() != itemView) {
 
@@ -140,9 +144,15 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                         ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
                     }
                 } else {
+                    //需要在群众之声消失
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
-                        mRecyclerTabCopy.setVisibility(View.VISIBLE);
-                        mTvReadCopy.setVisibility(View.VISIBLE);
+                        if (overlayEndPosition != RecyclerView.NO_POSITION) {
+                            mRecyclerTabCopy.setVisibility(View.GONE);
+                            mTvReadCopy.setVisibility(View.GONE);
+                        } else {
+                            mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                            mTvReadCopy.setVisibility(View.VISIBLE);
+                        }
                     }
                     if (mGroupCopy.getVisibility() == View.VISIBLE) {
                         ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
@@ -156,6 +166,46 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 }
             }
         });
+    }
+
+    //显示隐藏时机
+    private int showOrHideOverlay(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter() instanceof SpecialAdapter) {
+            SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
+            //去除悬浮
+            int overlayEndPosition = RecyclerView.NO_POSITION;
+            int startPosition;
+            LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
+            int lastVisibleItemPosition = lm.findLastVisibleItemPosition();
+            for (int i = firstVisibleItemPosition; i <= lastVisibleItemPosition; i++) {
+                if (recyclerView.findViewHolderForAdapterPosition(i) != null) {
+                    int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
+                    boolean visible = mRecyclerTabCopy.getVisibility() == View.VISIBLE;
+                    if (top > (visible ? mRecyclerTabCopy.getHeight() : 0)) {
+                        startPosition = i;
+                        break;
+                    }
+                }
+            }
+
+            //专题tab显示时机
+            if (startPosition != RecyclerView.NO_POSITION) {
+                List data = adapter.getData();
+                if (data != null) {
+                    int index = adapter.cleanPosition(startPosition);
+                    while (--index >= 0) {
+                        if (adapter.isVoiceOfMassType(index)) {
+                            overlayEndPosition = index;
+                            break;
+                        }
+                    }
+                }
+            }
+            return overlayEndPosition;
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
     }
 
     private void initView() {

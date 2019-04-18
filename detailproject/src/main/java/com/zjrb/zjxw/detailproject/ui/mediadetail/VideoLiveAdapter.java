@@ -48,8 +48,9 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         setData((data != null && data.getList() != null) ? data.getList() : null);
     }
 
+    //是否没有更多
     private boolean noMore(NativeLiveBean data) {
-        return data.isHas_more();
+        return !data.isHas_more();
     }
 
     private void cancelLoadMore() {

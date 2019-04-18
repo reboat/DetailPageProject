@@ -12,6 +12,7 @@ import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.FooterLoadMore;
 import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.NativeLiveBean;
 import com.zjrb.zjxw.detailproject.apibean.task.NativeLiveTask;
 
@@ -27,6 +28,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     private int live_id = 0;
     private boolean isResort = false;
     private final FooterLoadMore<NativeLiveBean> mLoadMore;
+    private  DraftDetailBean mDraftDetailBean;
     //图片
     private int VIDEO_LIVE_MUL_PIC = 1;
     //视频
@@ -34,8 +36,9 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     //纯文字
     private int VIDEO_LIVE_TEXT = 3;
 
-    public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data) {
+    public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data, DraftDetailBean newsDetail) {
         super(null);
+        mDraftDetailBean = newsDetail;
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
         setData(data);
@@ -93,7 +96,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         if (viewType == VIDEO_LIVE_MUL_PIC) {
             return new VideoDetailPicHolder(parent);
         } else if (viewType == VIDEO_LIVE_VIDEO) {
-            return new DetailVideoHolder(parent);
+            return new DetailVideoHolder(parent,mDraftDetailBean);
         } else {
             return new VideoDetailLiveTextHolder(parent);
         }

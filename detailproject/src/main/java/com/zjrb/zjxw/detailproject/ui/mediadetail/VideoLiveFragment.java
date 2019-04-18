@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.share.UmengShareBean;
 
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
@@ -138,7 +139,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     //初始化适配器
     private void initAdapter(NativeLiveBean bean) {
         if (adapter == null) {
-            adapter = new VideoLiveAdapter(lvNotice, bean);
+            adapter = new VideoLiveAdapter(lvNotice, bean,mNewsDetail);
             adapter.setHeaderRefresh(refresh.getItemView());
             headHolder = new VideoDetailHeaderHolder(lvNotice, isReverse);
             adapter.addHeaderView(headHolder.getItemView());

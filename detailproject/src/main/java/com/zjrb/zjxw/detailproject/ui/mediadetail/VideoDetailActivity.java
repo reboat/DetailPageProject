@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aliya.dailyplayer.sub.Constant;
@@ -97,8 +98,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     RatioFrameLayout videoContainer;
     @BindView(R2.id.tabLayout)
     SlidingTabLayout tabLayout;
-    @BindView(R2.id.menu_prised)
-    ImageView menuPrised;
     @BindView(R2.id.v_container)
     FrameLayout vContainer;
     @BindView(R2.id.ry_container)
@@ -107,10 +106,20 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
+
+    @BindView(R2.id.menu_prised)
+    ImageView mMenuPrised;
+    @BindView(R2.id.fl_comment)
+    RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
-    RelativeLayout lyComment;
-    @BindView(R2.id.iv_play)
-    ImageView ivPlay;
+    RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
+    @BindView(R2.id.tv_comments_num)
+    TextView mTvCommentsNum;
+
 
     private int ui;
     public String mArticleId;
@@ -136,7 +145,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     private void init() {
         ui = getWindow().getDecorView().getSystemUiVisibility();
-        lyComment.setVisibility(View.GONE);
+        ly_comment_num.setVisibility(View.GONE);
         localBroadcastManager = LocalBroadcastManager.getInstance(this);
         receive = new VideoReceiver(this);
         IntentFilter intentFilter = new IntentFilter(UIUtils.getString(R.string.intent_action_close_video));
@@ -397,18 +406,47 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
     private void initViewState(DraftDetailBean data) {
-        //是否已点赞
-        if (data.getArticle().isLike_enabled()) {
-            menuPrised.setVisibility(View.VISIBLE);
-            menuPrised.setSelected(data.getArticle().isLiked());
+        //不允许点赞及评论
+        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
+            mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-            menuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.VISIBLE);
+            ivSettingReplace.setVisibility(View.GONE);
+
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                mMenuPrised.setSelected(data.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
+
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                //大致评论数量
+                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                    mTvCommentsNum.setVisibility(View.VISIBLE);
+                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+                } else {
+                    mTvCommentsNum.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
+
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         if (view.getId() == R.id.menu_prised) {
@@ -417,7 +455,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             }
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
@@ -555,7 +593,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    menuPrised.setSelected(true);
+                    mMenuPrised.setSelected(true);
                     T.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     T.showShort(getBaseContext(), errMsg);
@@ -567,7 +605,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
                 T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                menuPrised.setSelected(true);
+                mMenuPrised.setSelected(true);
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
@@ -682,7 +720,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void onOptPageFinished() {
-        if (videoDetailFragment.getmAdapter()!=null){
+        if (videoDetailFragment.getmAdapter() != null) {
             videoDetailFragment.getmAdapter().showAll();
         }
     }
@@ -790,7 +828,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 builder.setContext(getActivity());
                 builder.setPlayContainer(currentPlayingView);
                 DailyPlayerManager.get().play(builder);
-                if (playerAction.isShouldPause()){
+                if (playerAction.isShouldPause()) {
                     DailyPlayerManager.get().userPause();
                 }
             } else if (playerAction.isPlayEnd()) {//播放结束

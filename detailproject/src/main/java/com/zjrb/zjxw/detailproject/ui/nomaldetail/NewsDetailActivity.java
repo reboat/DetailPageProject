@@ -110,6 +110,10 @@ final public class NewsDetailActivity extends DailyActivity implements
     FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
     @BindView(R2.id.iv_image)
     ImageView mivVideoBG;
     @BindView(R2.id.fl_comment)
@@ -254,7 +258,6 @@ final public class NewsDetailActivity extends DailyActivity implements
                 boolean isVertical = Integer.valueOf(type) == 1;
                 if (isVertical) {
                     mVideoContainer.setVisibility(View.VISIBLE);
-//                    VerticalManager.getInstance().init(this, mVideoContainer, url, String.valueOf(Format.duration(bean.getVideo_duration() * 1000)), bean.getFirstPic(), bean.getDoc_title());
                     if (SettingManager.getInstance().isAutoPlayVideoWithWifi() && NetUtils.isWifi(getApplication())) {
                         Intent intent = new Intent(this, VFullscreenActivity.class);
                         intent.putExtra(KEY_URL, url);
@@ -392,29 +395,40 @@ final public class NewsDetailActivity extends DailyActivity implements
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
-        //是否已点赞
-        if (data.getArticle().isLike_enabled()) {
-            mMenuPrised.setVisibility(View.VISIBLE);
-            mMenuPrised.setSelected(data.getArticle().isLiked());
-        } else {
-            mMenuPrised.setVisibility(View.GONE);
-        }
-
-        //大致评论数量
-        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
-        } else {
-            mTvCommentsNum.setVisibility(View.GONE);
-        }
-
-        //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
-//            mFyContainer.setVisibility(View.GONE);
+        //不允许点赞及评论
+        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
+            mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-//            mFyContainer.setVisibility(View.VISIBLE);
-            ly_comment_num.setVisibility(View.VISIBLE);
+            ivSetting.setVisibility(View.VISIBLE);
+            ivSettingReplace.setVisibility(View.GONE);
+
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                mMenuPrised.setSelected(data.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
+
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                //大致评论数量
+                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                    mTvCommentsNum.setVisibility(View.VISIBLE);
+                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+                } else {
+                    mTvCommentsNum.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -492,7 +506,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
-    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting,
+    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting, R2.id.menu_setting_relpace,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
@@ -516,7 +530,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             }
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");

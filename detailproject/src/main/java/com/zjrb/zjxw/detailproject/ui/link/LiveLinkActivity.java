@@ -90,6 +90,13 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @BindView(R2.id.v_container)
     FrameLayout mView;
 
+    @BindView(R2.id.ly_comment_num)
+    RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
+
     private String mArticleId;
     /**
      * 详情页数据
@@ -244,25 +251,49 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
         }
         mWebView.loadUrl(url);
-        //是否点赞
-        if (data.getArticle().isLike_enabled()) {
-            mMenuPrised.setVisibility(View.VISIBLE);
-            mMenuPrised.setSelected(data.getArticle().isLiked());
-        } else {
-            mMenuPrised.setVisibility(View.GONE);
-        }
+        initViewState(data);
+    }
 
-        //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
+
+    /**
+     * 刷新底部栏状态
+     *
+     * @param data
+     */
+    private void initViewState(DraftDetailBean data) {
+        //不允许点赞及评论
+        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mMenuComment.setVisibility(View.GONE);
-            mTvCommentsNum.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
+            mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-            mFyContainer.setVisibility(View.VISIBLE);
-            mMenuComment.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-                mTvCommentsNum.setVisibility(View.VISIBLE);
-                mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+            ivSetting.setVisibility(View.VISIBLE);
+            ivSettingReplace.setVisibility(View.GONE);
+
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                mMenuPrised.setSelected(data.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
+
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                //大致评论数量
+                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                    mTvCommentsNum.setVisibility(View.VISIBLE);
+                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+                } else {
+                    mTvCommentsNum.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -272,7 +303,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment,
             R2.id.menu_prised, R2.id.menu_setting, R2.id.tv_comment,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -333,7 +364,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框

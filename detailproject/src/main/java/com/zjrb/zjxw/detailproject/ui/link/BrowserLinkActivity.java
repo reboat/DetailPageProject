@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,8 +69,7 @@ public class BrowserLinkActivity extends DailyActivity {
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
-    @BindView(R2.id.menu_prised)
-    ImageView mMenuPrised;
+
     @BindView(R2.id.ry_container)
     FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
@@ -79,16 +79,22 @@ public class BrowserLinkActivity extends DailyActivity {
     @BindView(R2.id.iv_close)
     ImageView mClose;
 
+    @BindView(R2.id.menu_prised)
+    ImageView mMenuPrised;
+    @BindView(R2.id.fl_comment)
+    RelativeLayout mFyContainer;
+    @BindView(R2.id.ly_comment_num)
+    RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
+
     private String mArticleId;
     /**
      * 详情页数据
      */
     private DraftDetailBean mNewsDetail;
-
-//    /**
-//     * 网页地址
-//     */
-//    private String url;
 
     private String mFromChannel;
 
@@ -216,12 +222,6 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
-                    //可能被重定向了
-//                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
-//                        url = mNewsDetail.getArticle().getWeb_link();
-//                    } else {
-//                        url = mNewsDetail.getArticle().getUrl();
-//                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
@@ -248,12 +248,6 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
-                    //可能被重定向了
-//                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
-//                        url = mNewsDetail.getArticle().getWeb_link();
-//                    } else {
-//                        url = mNewsDetail.getArticle().getUrl();
-//                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
@@ -300,30 +294,57 @@ public class BrowserLinkActivity extends DailyActivity {
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
-        //是否点赞
-        if (data.getArticle().isLike_enabled()) {
-            mMenuPrised.setVisibility(View.VISIBLE);
-            mMenuPrised.setSelected(data.getArticle().isLiked());
-        } else {
-            mMenuPrised.setVisibility(View.GONE);
-        }
+        initViewState(data);
+    }
 
-        //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
-            mMenuComment.setVisibility(View.GONE);
-            mTvCommentsNum.setVisibility(View.GONE);
+
+    /**
+     * 刷新底部栏状态
+     *
+     * @param data
+     */
+    private void initViewState(DraftDetailBean data) {
+        //不允许点赞及评论
+        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
+            mFyContainer.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
+            mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-            mMenuComment.setVisibility(View.VISIBLE);
-            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-                mTvCommentsNum.setVisibility(View.VISIBLE);
-                mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+            ivSetting.setVisibility(View.VISIBLE);
+            ivSettingReplace.setVisibility(View.GONE);
+
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                mMenuPrised.setSelected(data.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
+
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                //大致评论数量
+                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                    mTvCommentsNum.setVisibility(View.VISIBLE);
+                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+                } else {
+                    mTvCommentsNum.setVisibility(View.GONE);
+                }
             }
         }
     }
 
+
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.iv_close})
+    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.iv_close, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         int id = view.getId();
@@ -352,7 +373,7 @@ public class BrowserLinkActivity extends DailyActivity {
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 //分享专用bean
@@ -382,7 +403,6 @@ public class BrowserLinkActivity extends DailyActivity {
                         .setShareType("文章");
 
                 MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).show(getSupportFragmentManager(), "MoreDialog");
-
             }
         }
     }

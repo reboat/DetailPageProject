@@ -12,89 +12,111 @@
                                                 app:fitType="bottom">
 
     <RelativeLayout
-        android:id="@+id/fl_comment"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:visibility="visible"
+        android:layout_gravity="center"
         >
 
-        <TextView
-            android:id="@+id/tv_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/module_detail_comment_hint"
-            android:textColor="@color/_999999_5c5c5c"
-            android:textColorHint="@color/_bfbfbf"
-            android:textSize="@dimen/ts_13sp"
+        <!--更多代替显示-->
+        <ImageView
+            android:id="@+id/menu_setting_relpace"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/module_detail_ic_more"
+            android:visibility="gone"
             />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@+id/tv_comment"
-            android:layout_marginTop="2dp"
-            android:background="@color/_bfbfbf" />
-
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/ly_comment_num"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/fl_comment"
-        android:orientation="horizontal"
-        android:visibility="visible"
-        >
-
-        <ImageView
-            android:id="@+id/menu_comment"
-            android:layout_width="wrap_content"
+        <!--评论框-->
+        <RelativeLayout
+            android:id="@+id/fl_comment"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/module_detail_ic_comment"
-            android:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_comments_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_toRightOf="@+id/menu_comment"
-            android:fontFamily="@font/din_medium"
-            android:maxLines="1"
-            android:textColor="@color/_d12324"
-            android:textSize="12sp"
+            android:layout_marginLeft="15dp"
+            android:layout_toLeftOf="@+id/ly_comment_num"
             android:visibility="visible"
-            tools:text="999+" />
+            >
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/module_detail_comment_hint"
+                android:textColor="@color/_999999_5c5c5c"
+                android:textColorHint="@color/_bfbfbf"
+                android:textSize="@dimen/ts_13sp"
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@+id/tv_comment"
+                android:layout_marginTop="2dp"
+                android:background="@color/_bfbfbf" />
+
+        </RelativeLayout>
+
+
+        <!--评论列表-->
+        <RelativeLayout
+            android:id="@+id/ly_comment_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/menu_prised"
+            android:visibility="visible"
+            >
+
+            <ImageView
+                android:id="@+id/menu_comment"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/module_detail_ic_comment"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_comments_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/menu_comment"
+                android:fontFamily="@font/din_medium"
+                android:maxLines="1"
+                android:textColor="@color/_d12324"
+                android:textSize="12sp"
+                android:visibility="visible"
+                tools:text="999+" />
+        </RelativeLayout>
+
+
+        <!--点赞-->
+        <ImageView
+            android:id="@+id/menu_prised"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="32dp"
+            android:layout_toLeftOf="@+id/menu_setting"
+            android:src="@drawable/module_detail_news_prise"
+            android:visibility="visible"
+            />
+
+        <!--设置-->
+        <ImageView
+            android:id="@+id/menu_setting"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/module_detail_ic_more"
+            />
     </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/menu_prised"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="17dp"
-        android:layout_toRightOf="@+id/ly_comment_num"
-        android:src="@drawable/module_detail_news_prise"
-        android:visibility="visible"
-        />
-
-    <ImageView
-        android:id="@+id/menu_setting"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_toRightOf="@+id/menu_prised"
-        android:src="@mipmap/module_detail_ic_more"
-        />
 </com.aliya.view.fitsys.FitWindowsRelativeLayout>

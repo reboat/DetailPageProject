@@ -103,7 +103,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.floor_bar)
-    LinearLayout mFloorBar;
+    RelativeLayout mFloorBar;
     @BindView(R2.id.container_bottom)
     LinearLayout mContainerBottom;
     @BindView(R2.id.menu_prised)
@@ -111,7 +111,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     @BindView(R2.id.ly_tip_contain)
     RelativeLayout mLyContainer;
     @BindView(R2.id.fl_comment)
-    FrameLayout mFyContainer;
+    RelativeLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_source)
@@ -124,6 +124,11 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     ScrollView mScrollView;
     @BindView(R2.id.atlas_container)
     LinearLayout mBottomContainer;
+
+    @BindView(R2.id.ly_comment_num)
+    RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
 
 
     /**
@@ -490,16 +495,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             topHolder.setViewVisible(topHolder.getFrlTitle(), View.GONE);
         }
 
-        //评论数量 红船号图集不显示
-        if (!TextUtils.isEmpty(data.getArticle().getComment_count_general()) && !isRedAlbum) {
-            mTvCommentsNum.setVisibility(View.VISIBLE);
-            mTvCommentsNum.setText(data.getArticle().getComment_count_general());
-        } else {
-            mTvCommentsNum.setVisibility(View.GONE);
-        }
-
-        //是否已点赞
-        if (data.getArticle().isLike_enabled() && !isRedAlbum) {
+        //是否允许点赞
+        if (data.getArticle().isLike_enabled()) {
             mMenuPrised.setVisibility(View.VISIBLE);
             mMenuPrised.setSelected(data.getArticle().isLiked());
         } else {
@@ -507,13 +504,19 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         }
 
         //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0 || isRedAlbum) {
+        if (data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mMenuComment.setVisibility(View.GONE);
-            mTvCommentsNum.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
         } else {
             mFyContainer.setVisibility(View.VISIBLE);
-            mMenuComment.setVisibility(View.VISIBLE);
+            ly_comment_num.setVisibility(View.VISIBLE);
+            //大致评论数量
+            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general()) && !isRedAlbum) {
+                mTvCommentsNum.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+            } else {
+                mTvCommentsNum.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -985,7 +988,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     protected void onPause() {
         super.onPause();
         //新华智云
-        if (mData != null && mData.getArticle() != null){
+        if (mData != null && mData.getArticle() != null) {
             new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
                     .setTargetID(mData.getArticle().getId() + "")
                     .setUrl(mData.getArticle().getUrl())

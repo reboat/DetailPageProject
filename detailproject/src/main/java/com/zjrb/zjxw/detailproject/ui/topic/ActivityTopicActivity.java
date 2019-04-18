@@ -87,14 +87,10 @@ public class ActivityTopicActivity extends DailyActivity implements
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
 
-    @BindView(R2.id.menu_prised)
-    ImageView mMenuPrised;
     @BindView(R2.id.ry_container)
     FitWindowsFrameLayout mContainer;
     @BindView(R2.id.ly_bottom_comment)
     RelativeLayout mFloorBar;
-    @BindView(R2.id.fl_comment)
-    RelativeLayout mFyContainer;
     @BindView(R2.id.menu_comment)
     ImageView mMenuComment;
     @BindView(R2.id.tv_comments_num)
@@ -105,6 +101,18 @@ public class ActivityTopicActivity extends DailyActivity implements
     ColorImageView mIvShare;
     @BindView(R2.id.v_container)
     FrameLayout mView;
+
+    @BindView(R2.id.menu_prised)
+    ImageView mMenuPrised;
+    @BindView(R2.id.fl_comment)
+    RelativeLayout mFyContainer;
+    @BindView(R2.id.ly_comment_num)
+    RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
+
 
     private TopicAdapter mAdapter;
 
@@ -261,20 +269,49 @@ public class ActivityTopicActivity extends DailyActivity implements
         }
 
         mTopicTop.setData(data);
-        //是否可以点赞
-        if (data.getArticle().isLike_enabled()) {
-            mMenuPrised.setVisibility(View.VISIBLE);
-            mMenuPrised.setSelected(data.getArticle().isLiked());
-        } else {
-            mMenuPrised.setVisibility(View.GONE);
-        }
+        initViewState(data);
+    }
 
-        //禁止评论，隐藏评论框及评论按钮
-        if (data.getArticle().getComment_level() == 0) {
+    /**
+     * 刷新底部栏状态
+     *
+     * @param data
+     */
+    private void initViewState(DraftDetailBean data) {
+        //不允许点赞及评论
+        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mTvCommentsNum.setVisibility(View.GONE);
+            ly_comment_num.setVisibility(View.GONE);
+            mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-            mFyContainer.setVisibility(View.VISIBLE);
+            ivSetting.setVisibility(View.VISIBLE);
+            ivSettingReplace.setVisibility(View.GONE);
+
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                mMenuPrised.setSelected(data.getArticle().isLiked());
+            } else {
+                mMenuPrised.setVisibility(View.GONE);
+            }
+
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                //大致评论数量
+                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                    mTvCommentsNum.setVisibility(View.VISIBLE);
+                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
+                } else {
+                    mTvCommentsNum.setVisibility(View.GONE);
+                }
+            }
         }
     }
 
@@ -360,7 +397,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
     @OnClick({R2.id.menu_prised, R2.id.menu_setting,
             R2.id.tv_comment, R2.id.iv_top_share, R2.id.iv_top_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
@@ -368,7 +405,7 @@ public class ActivityTopicActivity extends DailyActivity implements
             DataAnalyticsUtils.get().ClickPriseIcon(mDetailData);
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mDetailData != null && mDetailData.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mDetailData);
                 MoreDialog.newInstance(mDetailData).setWebViewCallBack(mAdapter.getWebViewHolder

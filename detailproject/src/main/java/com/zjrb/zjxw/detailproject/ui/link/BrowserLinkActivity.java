@@ -335,7 +335,7 @@ public class BrowserLinkActivity extends DailyActivity {
                     mTvCommentsNum.setVisibility(View.VISIBLE);
                     mTvCommentsNum.setText(data.getArticle().getComment_count_general());
                 } else {
-                    mTvCommentsNum.setVisibility(View.GONE);
+                    mTvCommentsNum.setVisibility(View.INVISIBLE);
                 }
             }
         }

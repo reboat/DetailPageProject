@@ -170,7 +170,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="32dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/menu_prised"
                 android:visibility="visible"
                 >
@@ -185,7 +185,7 @@
 
                 <TextView
                     android:id="@+id/tv_comments_num"
-                    android:layout_width="wrap_content"
+                    android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/menu_comment"
@@ -193,8 +193,8 @@
                     android:maxLines="1"
                     android:textColor="@color/_d12324"
                     android:textSize="12sp"
-                    android:visibility="visible"
-                    tools:text="999+" />
+                    android:visibility="invisible"
+                    tools:text="9999+" />
             </RelativeLayout>
 
 

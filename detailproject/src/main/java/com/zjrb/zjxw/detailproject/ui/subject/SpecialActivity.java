@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
@@ -64,6 +65,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     RecyclerView mRecycler;
     @BindView(R2.id.recycler_copy)
     RecyclerView mRecyclerTabCopy;
+    @BindView(R2.id.tv_read_copy)
+    TextView tvReadCopy;
     @BindView(R2.id.group_copy)
     FrameLayout mGroupCopy;
     @BindView(R2.id.v_container)
@@ -251,7 +254,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             mAdapter = new SpecialAdapter(data);
             mAdapter.setOnItemClickListener(this);
             //添加专题详情页的头部holder,这里需要传递一个toolsbar的view
-            headHolder = new HeaderSpecialHolder(mRecycler, mRecyclerTabCopy, fyContainer, mGroupCopy, this);
+            headHolder = new HeaderSpecialHolder(mRecycler, tvReadCopy, mRecyclerTabCopy, fyContainer, mGroupCopy, this);
             headHolder.setData(data);
             mAdapter.addHeaderView(headHolder.getItemView());
             mRecycler.setAdapter(mAdapter);
@@ -263,7 +266,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         }
 
         if (mOverlayHelper == null) {
-            mOverlayHelper = new OverlayHelper(mRecycler, mRecyclerTabCopy, mGroupCopy);
+            mOverlayHelper = new OverlayHelper(mRecycler, tvReadCopy, mRecyclerTabCopy, mGroupCopy);
         }
     }
 

@@ -306,47 +306,26 @@ public class BrowserLinkActivity extends DailyActivity {
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
-        //不允许点赞及评论
-        if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
-            mFyContainer.setVisibility(View.GONE);
-            ly_comment_num.setVisibility(View.GONE);
-            mMenuPrised.setVisibility(View.GONE);
-            ivSetting.setVisibility(View.GONE);
-            ivSettingReplace.setVisibility(View.VISIBLE);
+        //是否允许点赞
+        if (data.getArticle().isLike_enabled()) {
+            topBarHolder.getIvPrised().setVisibility(View.VISIBLE);
+            topBarHolder.getIvPrised().setSelected(data.getArticle().isLiked());
         } else {
-            ivSetting.setVisibility(View.VISIBLE);
-            ivSettingReplace.setVisibility(View.GONE);
+            topBarHolder.getIvPrised().setVisibility(View.GONE);
+        }
 
-            //是否允许点赞
-            if (data.getArticle().isLike_enabled()) {
-                mMenuPrised.setVisibility(View.VISIBLE);
-                mMenuPrised.setSelected(data.getArticle().isLiked());
+        //禁止评论
+        if (data.getArticle().getComment_level() == 0) {
+            topBarHolder.getIvComment().setVisibility(View.GONE);
+            topBarHolder.getTvCommentsNum().setVisibility(View.GONE);
+        } else {
+            topBarHolder.getIvComment().setVisibility(View.VISIBLE);
+            //大致评论数量
+            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+                topBarHolder.getTvCommentsNum().setVisibility(View.VISIBLE);
+                topBarHolder.getTvCommentsNum().setText(data.getArticle().getComment_count_general());
             } else {
-                mMenuPrised.setVisibility(View.GONE);
-            }
-
-            //禁止评论，隐藏评论框及评论按钮
-            if (data.getArticle().getComment_level() == 0) {
-                mFyContainer.setVisibility(View.GONE);
-                ly_comment_num.setVisibility(View.GONE);
-                mMenuPrised.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.GONE);
-                ivPrisedRelpace.setVisibility(View.VISIBLE);
-                ivSettingReplace.setVisibility(View.VISIBLE);
-            } else {
-                mMenuPrised.setVisibility(View.VISIBLE);
-                ivSetting.setVisibility(View.VISIBLE);
-                ivPrisedRelpace.setVisibility(View.GONE);
-                ivSettingReplace.setVisibility(View.GONE);
-                mFyContainer.setVisibility(View.VISIBLE);
-                ly_comment_num.setVisibility(View.VISIBLE);
-                //大致评论数量
-                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-                    mTvCommentsNum.setVisibility(View.VISIBLE);
-                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
-                } else {
-                    mTvCommentsNum.setVisibility(View.INVISIBLE);
-                }
+                topBarHolder.getTvCommentsNum().setVisibility(View.INVISIBLE);
             }
         }
     }

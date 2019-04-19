@@ -4,7 +4,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.zjrb.core.recycleView.OverlayViewHolder;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
@@ -26,7 +25,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
-    public OverlayHelper(RecyclerView recycler,RecyclerView recyclerCopy, FrameLayout groupCopy) {
+    public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
         mRecyclerTabCopy = recyclerCopy;
         mGroupCopy = groupCopy;
         SpecialAdapter adapter = (SpecialAdapter) recycler.getAdapter();
@@ -77,17 +76,23 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
             //专题tab显示的位置
             if (overlayPosition != RecyclerView.NO_POSITION) {
-                mGroupCopy.setVisibility(View.VISIBLE);
+                if (mGroupCopy.getVisibility() == View.GONE) {
+                    mGroupCopy.setVisibility(View.VISIBLE);
+                }
                 if (mOverlayPosition != overlayPosition) {
                     mOverlayPosition = overlayPosition;
                     Object data = adapter.getData(mOverlayPosition);
                     updateChannelTab(data);
                 }
-                //滑动到群众之声时隐藏
+                //专题tab滑动到群众之声时隐藏
             } else if (overlayEndPosition != RecyclerView.NO_POSITION) {
-                mGroupCopy.setVisibility(View.GONE);
+                if (mGroupCopy.getVisibility() == View.VISIBLE) {
+                    mGroupCopy.setVisibility(View.GONE);
+                }
             } else {
-                mGroupCopy.setVisibility(View.GONE);
+                if (mGroupCopy.getVisibility() == View.VISIBLE) {
+                    mGroupCopy.setVisibility(View.GONE);
+                }
                 if (mOverlayPosition != RecyclerView.NO_POSITION) {
                     mOverlayPosition = RecyclerView.NO_POSITION;
                     updateChannelTab(null);

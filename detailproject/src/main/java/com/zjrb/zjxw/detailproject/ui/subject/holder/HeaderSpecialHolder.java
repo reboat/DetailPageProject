@@ -22,6 +22,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.GridSpaceDivider;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -135,10 +136,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                         && itemView.getRootView() != itemView) {
 
                     if (mTvReadCopy.getVisibility() != View.GONE) {
-                        mTvReadCopy.setVisibility(View.INVISIBLE);
+                        mTvReadCopy.setVisibility(View.GONE);
                     }
                     if (mRecyclerTabCopy.getVisibility() != View.GONE) {
-                        mRecyclerTabCopy.setVisibility(View.INVISIBLE);
+                        mRecyclerTabCopy.setVisibility(View.GONE);
                         ivback.setImageResource(R.mipmap.module_biz_write_back);
                         ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
                         ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
@@ -147,11 +148,19 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     //需要在群众之声消失
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         if (overlayEndPosition != RecyclerView.NO_POSITION) {
-                            mRecyclerTabCopy.setVisibility(View.GONE);
-                            mTvReadCopy.setVisibility(View.GONE);
+                            if(mRecyclerTabCopy.getVisibility() == View.VISIBLE){
+                                mRecyclerTabCopy.setVisibility(View.GONE);
+                            }
+                            if(mTvReadCopy.getVisibility() == View.VISIBLE){
+                                mTvReadCopy.setVisibility(View.GONE);
+                            }
                         } else {
-                            mRecyclerTabCopy.setVisibility(View.VISIBLE);
-                            mTvReadCopy.setVisibility(View.VISIBLE);
+                            if(mRecyclerTabCopy.getVisibility() == View.GONE){
+                                mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                            }
+                            if(mTvReadCopy.getVisibility() == View.GONE){
+                                mTvReadCopy.setVisibility(View.VISIBLE);
+                            }
                         }
                     }
                     if (mGroupCopy.getVisibility() == View.VISIBLE) {
@@ -202,6 +211,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     }
                 }
             }
+            //群众之声位置
             return overlayEndPosition;
         } else {
             return RecyclerView.NO_POSITION;

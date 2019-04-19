@@ -89,6 +89,8 @@ public class BrowserLinkActivity extends DailyActivity {
     ImageView ivSettingReplace;
     @BindView(R2.id.menu_setting)
     ImageView ivSetting;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
 
     private String mArticleId;
     /**
@@ -327,7 +329,15 @@ public class BrowserLinkActivity extends DailyActivity {
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
+                mMenuPrised.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.GONE);
+                ivPrisedRelpace.setVisibility(View.VISIBLE);
+                ivSettingReplace.setVisibility(View.VISIBLE);
             } else {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                ivSetting.setVisibility(View.VISIBLE);
+                ivPrisedRelpace.setVisibility(View.GONE);
+                ivSettingReplace.setVisibility(View.GONE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -344,7 +354,7 @@ public class BrowserLinkActivity extends DailyActivity {
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.iv_close, R2.id.menu_setting_relpace})
+    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.iv_close, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         int id = view.getId();
@@ -369,7 +379,7 @@ public class BrowserLinkActivity extends DailyActivity {
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
-        } else if (view.getId() == R.id.menu_prised) {
+        } else if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多

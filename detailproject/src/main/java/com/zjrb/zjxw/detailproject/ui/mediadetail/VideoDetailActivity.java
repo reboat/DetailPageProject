@@ -119,6 +119,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     ImageView ivSetting;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
 
 
     private int ui;
@@ -429,7 +431,15 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
+                mMenuPrised.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.GONE);
+                ivPrisedRelpace.setVisibility(View.VISIBLE);
+                ivSettingReplace.setVisibility(View.VISIBLE);
             } else {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                ivSetting.setVisibility(View.VISIBLE);
+                ivPrisedRelpace.setVisibility(View.GONE);
+                ivSettingReplace.setVisibility(View.GONE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -444,12 +454,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
 
-    @OnClick({R2.id.menu_prised, R2.id.menu_setting,
+    @OnClick({R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.menu_prised) {
+        if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }

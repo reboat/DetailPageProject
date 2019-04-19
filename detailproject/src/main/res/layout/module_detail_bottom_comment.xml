@@ -17,14 +17,27 @@
         android:layout_gravity="center"
         >
 
-        <!--更多代替显示-->
+        <!--点赞-->
         <ImageView
-            android:id="@+id/menu_setting_relpace"
-            android:layout_width="20dp"
+            android:id="@+id/menu_prised_relpace"
+            android:layout_width="25dp"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
+            android:layout_marginRight="17dp"
+            android:src="@drawable/module_detail_news_prise"
+            android:visibility="gone"
+            />
+
+        <!--更多代替显示-->
+        <ImageView
+            android:id="@+id/menu_setting_relpace"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/menu_prised_relpace"
             android:src="@mipmap/module_detail_ic_more"
             android:visibility="gone"
             />

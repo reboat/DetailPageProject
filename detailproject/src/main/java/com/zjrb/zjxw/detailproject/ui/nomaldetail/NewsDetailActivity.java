@@ -130,6 +130,8 @@ final public class NewsDetailActivity extends DailyActivity implements
     TextView tvNetHint;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
 
 
     /**
@@ -402,7 +404,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             mMenuPrised.setVisibility(View.GONE);
             ivSetting.setVisibility(View.GONE);
             ivSettingReplace.setVisibility(View.VISIBLE);
-        } else {
+        } else {//允许点赞或评论
             ivSetting.setVisibility(View.VISIBLE);
             ivSettingReplace.setVisibility(View.GONE);
 
@@ -418,7 +420,15 @@ final public class NewsDetailActivity extends DailyActivity implements
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
+                mMenuPrised.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.GONE);
+                ivPrisedRelpace.setVisibility(View.VISIBLE);
+                ivSettingReplace.setVisibility(View.VISIBLE);
             } else {
+                mMenuPrised.setVisibility(View.VISIBLE);
+                ivSetting.setVisibility(View.VISIBLE);
+                ivPrisedRelpace.setVisibility(View.GONE);
+                ivSettingReplace.setVisibility(View.GONE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -506,7 +516,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
-    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_setting, R2.id.menu_setting_relpace,
+    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_prised_relpace,R2.id.menu_setting, R2.id.menu_setting_relpace,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
@@ -524,7 +534,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
-        } else if (view.getId() == R.id.menu_prised) {
+        } else if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }

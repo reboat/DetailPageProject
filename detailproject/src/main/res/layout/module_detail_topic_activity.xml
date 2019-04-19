@@ -46,7 +46,7 @@
                 android:layout_marginRight="69.5dp"
                 android:visibility="gone">
 
-                <com.zjrb.core.ui.widget.CircleImageView
+                <ImageView
                     android:id="@+id/iv_top_subscribe_icon"
                     android:layout_width="19.4dp"
                     android:layout_height="19.4dp"

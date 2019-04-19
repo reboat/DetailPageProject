@@ -103,6 +103,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     public static final int MAX_DEFAULT_LINES = 5;
     //最新评论还是热门评论
     private String commentType = "";
+    private boolean isVoiceOfMass = false;
 
     /**
      * 评论列表专用构造器
@@ -123,6 +124,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             }
         }
         mBean = bean;
+    }
+
+    //是否是群众之声
+    public void setVoiceOfMass(boolean voiceOfMass) {
+        isVoiceOfMass = voiceOfMass;
     }
 
     public void setCommentType(String commentType) {
@@ -321,7 +327,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 }
                 Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
                 try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                    //群众之声评论传递稿件id
+                    String id;
+                    if (isVoiceOfMass) {
+                        id = mData.getChannel_article_id() + "";
+                    } else {
+                        id = articleId;
+                    }
+                    CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
                             .setListen(new RefreshComment())
                             .setLocationCallBack(this)
                             .setWMData(analytics)
@@ -330,8 +343,14 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     e.printStackTrace();
                 }
             } else {
+                String id;
+                if (isVoiceOfMass) {
+                    id = mData.getChannel_article_id() + "";
+                } else {
+                    id = articleId;
+                }
                 try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getId(), mData.getNick_name()))
+                    CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
                             .setListen(new RefreshComment())
                             .setLocationCallBack(this)
                             .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");

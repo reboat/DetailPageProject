@@ -516,9 +516,9 @@ final public class NewsDetailActivity extends DailyActivity implements
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
 
-    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_prised_relpace,R2.id.menu_setting, R2.id.menu_setting_relpace,
+    @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.menu_setting_relpace,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_type_video, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
+            R2.id.tv_top_bar_subscribe_text, R2.id.iv_top_subscribe_icon, R2.id.tv_top_bar_title, R2.id.ll_net_hint})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表
@@ -683,7 +683,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
             }
             //进入栏目
-        } else if (view.getId() == R.id.tv_top_bar_title) {
+        } else if (view.getId() == R.id.tv_top_bar_title || view.getId() == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
                 Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());

@@ -69,7 +69,6 @@ public class SpecialAdapter extends NewsBaseAdapter {
                     list.addAll(group.getGroup_articles());
                 }
             }
-//            mBean.getArticle().setSubject_comment_list(DateTest.newInstance().subjectDataTest());
             //添加评论
             if (mBean.getArticle().getSubject_comment_list() != null && mBean.getArticle().getSubject_comment_list().size() > 0) {
                 //只有有评论数据才添加群众之声
@@ -120,7 +119,10 @@ public class SpecialAdapter extends NewsBaseAdapter {
             return new SpecialCommentTabHolder(parent);
             //评论item
         } else if (TYPE_COMMENT == viewType) {
-            return new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment_subject, parent, false), String.valueOf(mBean.getArticle().getId()), "", mBean);
+            //专题稿件id
+            DetailCommentHolder holder = new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment_subject, parent, false), String.valueOf(mBean.getArticle().getId()), "", mBean);
+            holder.setVoiceOfMass(true);
+            return holder;
             //评论列表文章
         } else if (TYPE_TITLE == viewType) {
             return new SpecialCommentHolder(parent);
@@ -161,7 +163,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
     }
 
     @Override
-    public boolean isVoiceOfMassType(int position){
+    public boolean isVoiceOfMassType(int position) {
         return getAbsItemViewType(position) == TYPE_COMMENT_TAB;
     }
 

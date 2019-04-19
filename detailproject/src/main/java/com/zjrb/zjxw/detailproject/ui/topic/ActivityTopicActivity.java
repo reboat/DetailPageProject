@@ -407,7 +407,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
     @OnClick({R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.menu_setting_relpace, R2.id.iv_top_subscribe_icon})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //点赞
@@ -524,7 +524,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
             }
             //进入栏目
-        } else if (view.getId() == R.id.tv_top_bar_title) {
+        } else if (view.getId() == R.id.tv_top_bar_title || view.getId() == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mDetailData.getArticle().getColumn_url())) {
                 Nav.with(UIUtils.getContext()).toPath(mDetailData.getArticle().getColumn_url());

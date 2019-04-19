@@ -519,7 +519,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
 
     @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub})
+            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub,R2.id.iv_top_subscribe_icon})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -674,7 +674,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
             }
             //进入栏目
-        } else if (id == R.id.tv_top_bar_title_sub) {
+        } else if (id == R.id.tv_top_bar_title_sub || id == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mData, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mData.getArticle().getColumn_url())) {
                 Nav.with(UIUtils.getContext()).toPath(mData.getArticle().getColumn_url());

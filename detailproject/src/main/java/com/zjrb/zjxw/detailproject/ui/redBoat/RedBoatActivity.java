@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
@@ -35,7 +34,7 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
-import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
+import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
 import java.util.ArrayList;
@@ -48,8 +47,6 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
-import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
-import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
@@ -185,7 +182,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
-                    topHolder.getShareView().setVisibility(View.GONE);
+//                    topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
                     T.showShortNow(RedBoatActivity.this, errMsg);
@@ -208,7 +205,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+//        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
 
         //中间栏目布局处理
         if (!TextUtils.isEmpty(article.getColumn_name())) {
@@ -251,7 +248,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }
 
-    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title})
+    @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_more, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.iv_top_bar_back) {
@@ -260,37 +257,9 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             }
             finish();
             //红船号点击分享
-        } else if (v.getId() == R.id.iv_top_share) {
+        } else if (v.getId() == R.id.iv_top_more) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectID(mNewsDetail.getArticle().getGuid() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
-                        .setUrl(mNewsDetail.getArticle().getUrl())
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
-
-                UmengShareBean shareBean = UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setNewsCard(true)
-                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
-                        .setArticleId(mNewsDetail.getArticle().getId() + "")
-                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setTextContent(mNewsDetail.getArticle().getSummary())
-                        .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(mNewsDetail.getArticle().getUrl())
-                        .setAnalyticsBean(bean).setEventName("NewsShare")
-                        .setShareType("文章");
-
-                MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).setWebViewCallBack(mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
             }
             //点击订阅/取消订阅
         } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {
@@ -344,7 +313,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
             }
             //进入栏目
-        } else if (v.getId() == R.id.tv_top_bar_title) {
+        } else if (v.getId() == R.id.tv_top_bar_title || v.getId() == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
                 Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());

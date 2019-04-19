@@ -6,6 +6,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.daily.news.location.LocationManager;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -88,6 +90,8 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
     TextView tvShowAll;
     @BindView(R2.id.tv_parent_show_all)
     TextView tvParentShowAll;
+    @BindView(R2.id.tv_reply)
+    TextView tvReply;
 
     /**
      * 稿件id
@@ -157,15 +161,16 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         ButterKnife.bind(this, itemView);
     }
 
-
     @Override
     public void bindView() {
         //是否是自己发布的评论
         dialog = new ConfirmDialog(itemView.getContext());
         dialog.setOnConfirmListener(this);
         if (mData.isOwn()) {
+            tvReply.setVisibility(View.GONE);
             mDelete.setVisibility(View.VISIBLE);
         } else {
+            tvReply.setVisibility(View.VISIBLE);
             mDelete.setVisibility(View.GONE);
         }
 
@@ -187,11 +192,20 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
             }
             //超过5行
-            if (mContent.getLineCount() > 5) {
-                mContent.setMaxLines(MAX_DEFAULT_LINES);
-                tvShowAll.setVisibility(View.VISIBLE);
-                tvShowAll.setText("展开全部");
-            }
+            mContent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    mContent.getViewTreeObserver().removeOnPreDrawListener(this);
+                    if (mContent.getLineCount() >= 5) {
+                        mContent.setMaxLines(MAX_DEFAULT_LINES);
+                        tvShowAll.setVisibility(View.VISIBLE);
+                        tvShowAll.setText("展开全部");
+                    }else{
+                        tvShowAll.setVisibility(View.GONE);
+                    }
+                    return false;
+                }
+            });
             //回复者昵称
             if (!TextUtils.isEmpty(mData.getNick_name())) {
                 if (mData.getAccount_type() == 1) {//主持人
@@ -230,12 +244,20 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 }
 
                 //父评论超过5行
-                if (mTvCommentContent.getLineCount() > 5) {
-                    mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
-                    tvParentShowAll.setVisibility(View.VISIBLE);
-                    tvParentShowAll.setText("展开全部");
-                }
-
+                mTvCommentContent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        mTvCommentContent.getViewTreeObserver().removeOnPreDrawListener(this);
+                        if (mTvCommentContent.getLineCount() >= 5) {
+                            mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
+                            tvParentShowAll.setVisibility(View.VISIBLE);
+                            tvParentShowAll.setText("展开全部");
+                        }else{
+                            tvParentShowAll.setVisibility(View.GONE);
+                        }
+                        return false;
+                    }
+                });
                 //父评论昵称
                 if (!TextUtils.isEmpty(mData.getParent_nick_name())) {
                     if (mData.getParent_account_type() == 1) {//主持人
@@ -270,7 +292,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         //点赞次数
         if (mData.getLike_count() != 0) {
-            mThumb.setText(mData.getLike_count() + "");
+            mThumb.setText(mData.getLike_count() + "赞");
         } else {
             mThumb.setText("");
         }
@@ -315,52 +337,53 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             dialog.show();
             //回复评论者
         } else if (view.getId() == R.id.tv_reply || view.getId() == R.id.ly_replay) {
-            if (mBean != null && mBean.getArticle() != null) {
-                if (!TextUtils.isEmpty(commentType)) {
-                    if (commentType.equals("热门评论")) {
-                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+            if (!mData.isOwn()) {
+                if (mBean != null && mBean.getArticle() != null) {
+                    if (!TextUtils.isEmpty(commentType)) {
+                        if (commentType.equals("热门评论")) {
+                            DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                        } else {
+                            DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                        }
                     } else {
-                        DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                    }
+                    Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
+                    try {
+                        //群众之声评论传递稿件id
+                        String id;
+                        if (isVoiceOfMass) {
+                            id = mData.getChannel_article_id() + "";
+                        } else {
+                            id = articleId;
+                        }
+                        CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
+                                .setListen(new RefreshComment())
+                                .setLocationCallBack(this)
+                                .setWMData(analytics)
+                                .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else {
-                    DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
-                }
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
-                try {
-                    //群众之声评论传递稿件id
                     String id;
                     if (isVoiceOfMass) {
                         id = mData.getChannel_article_id() + "";
                     } else {
                         id = articleId;
                     }
-                    CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
-                            .setListen(new RefreshComment())
-                            .setLocationCallBack(this)
-                            .setWMData(analytics)
-                            .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                String id;
-                if (isVoiceOfMass) {
-                    id = mData.getChannel_article_id() + "";
-                } else {
-                    id = articleId;
-                }
-                try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
-                            .setListen(new RefreshComment())
-                            .setLocationCallBack(this)
-                            .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        CommentWindowDialog.newInstance(new CommentDialogBean(id, mData.getId(), mData.getNick_name()))
+                                .setListen(new RefreshComment())
+                                .setLocationCallBack(this)
+                                .show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-
             //评论展开全部
-        } else if (view.getId() == R2.id.tv_show_all) {
+        } else if (view.getId() == R.id.tv_show_all) {
             if (tvShowAll.getText().equals("展开全部")) {
                 mContent.setMaxLines(Integer.MAX_VALUE);
                 tvShowAll.setText("收起");
@@ -369,7 +392,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 tvShowAll.setText("展开全部");
             }
             //评论回复展开全部
-        } else if (view.getId() == R2.id.tv_parent_show_all) {
+        } else if (view.getId() == R.id.tv_parent_show_all) {
             if (tvParentShowAll.getText().equals("展开全部")) {
                 mTvCommentContent.setMaxLines(Integer.MAX_VALUE);
                 tvParentShowAll.setText("收起");
@@ -377,21 +400,23 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
                 tvParentShowAll.setText("展开全部");
             }
-        } else {//回复回复者
-            if (mBean != null && mBean.getArticle() != null) {
-                if (!TextUtils.isEmpty(commentType)) {
-                    if (commentType.equals("热门评论")) {
-                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+        } else {//回复回复者 不可以对自己回复
+            if (!mData.isParent_own()) {
+                if (mBean != null && mBean.getArticle() != null) {
+                    if (!TextUtils.isEmpty(commentType)) {
+                        if (commentType.equals("热门评论")) {
+                            DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                        } else {
+                            DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                        }
                     } else {
-                        DataAnalyticsUtils.get().NewCommentClick(mBean, pageType, scPageType, mData.getId());
+                        DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
                     }
+                    Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
+                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
                 } else {
-                    DataAnalyticsUtils.get().HotCommentClick(mBean, pageType, scPageType, mData.getId());
+                    CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
                 }
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentSend(mBean, pageType, scPageType, mData.getId());
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).setWMData(analytics).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
-            } else {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId, mData.getParent_id(), mData.getParent_nick_name())).setListen(new RefreshComment()).setLocationCallBack(this).show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "CommentWindowDialog");
             }
         }
     }
@@ -408,7 +433,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mThumb.setSelected(true);
                 mData.setLike_count((mData.getLike_count() + 1));
                 mData.setLiked(true);
-                mThumb.setText(mData.getLike_count() + "");
+                mThumb.setText(mData.getLike_count() + "赞");
                 T.showShort(itemView.getContext(), "点赞成功");
             }
 

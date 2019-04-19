@@ -83,7 +83,7 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="5"
             android:textColor="@color/_222222"
-            android:textSize="@dimen/ts_14sp"
+            android:textSize="@dimen/ts_16sp"
             tools:text="卡死搭建的间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数间啊觉得啊会计师空数据东方时空京东方空数空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
 
         <TextView
@@ -97,7 +97,7 @@
             android:layout_toRightOf="@id/iv_avatar"
             android:text="展开全部"
             android:textColor="@color/_2378d1"
-            android:textSize="@dimen/ts_16sp"
+            android:textSize="@dimen/ts_14sp"
             android:visibility="gone" />
 
         <!--回复-->

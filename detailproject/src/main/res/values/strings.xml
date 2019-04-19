@@ -15,7 +15,7 @@
     <string name="module_detail_text_up">收起</string>
     <string name="module_detail_text_down">更多</string>
     <string name="module_detail_comment_delete_tip">该评论已删除</string>
-    <string name="module_detail_you_have_liked">您已点赞</string>
+    <string name="module_detail_you_have_liked">您已经赞过了</string>
     <string name="module_detail_revoke">很抱歉，来晚一步，这篇已经不在了，别着急，你可以看看其他热门内容</string>
     <string name="module_detail_share_content_from">来自浙江新闻客户端</string>
     <string name="module_detail_no_network">网络不可用</string>

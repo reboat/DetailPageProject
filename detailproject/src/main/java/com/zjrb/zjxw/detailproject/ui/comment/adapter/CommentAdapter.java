@@ -130,7 +130,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
     private boolean noMore(CommentRefreshBean data) {
         return !data.isHas_more();
-//        return data == null || data.getComments() == null || data.getComments().size() == 0;
     }
 
     private void cancelLoadMore() {
@@ -258,9 +257,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         } else {
             mView.setVisibility(View.VISIBLE);
             if (commentCount > 99999) {
-                mCommentNum.setText("99999+条评论");
+                mCommentNum.setText("99999+");
             } else {
-                mCommentNum.setText(commentCount + "条评论");
+                mCommentNum.setText(commentCount+"");
             }
         }
     }

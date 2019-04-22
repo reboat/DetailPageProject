@@ -212,6 +212,8 @@
             android:layout_marginBottom="16dp"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="8dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
             android:layout_toRightOf="@id/iv_avatar"
             >
 
@@ -221,7 +223,9 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:textColor="@color/_bfbfbf"
-                android:textSize="@dimen/ts_11sp"
+                android:fontFamily="@font/din_medium"
+                android:layout_centerVertical="true"
+                android:textSize="@dimen/ts_12sp"
                 tools:text="09-01 21:20"
                 />
 
@@ -229,15 +233,13 @@
                 android:id="@+id/tv_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_time"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tv_time"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/_bfbfbf"
                 android:textSize="@dimen/ts_12sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 tools:text="上海"
                 />
 
@@ -246,25 +248,19 @@
                 android:id="@+id/tv_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_time"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="11.5dp"
-                android:layout_toLeftOf="@+id/tv_reply"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:layout_alignParentRight="true"
                 android:text="@string/module_detail_comment_delete"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_12sp"
                 android:visibility="gone"
                 tools:text="删除" />
 
+            <!--自己的评论不可以回复-->
             <TextView
                 android:id="@+id/tv_reply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_time"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:text="@string/module_detail_replay_to"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_12sp"

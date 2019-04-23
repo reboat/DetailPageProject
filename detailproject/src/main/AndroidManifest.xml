@@ -95,6 +95,7 @@
 
                 <!-- 链接稿 path -->
                 <data android:path="/link.html" />
+                <data android:path="/link/BrowserLinkActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -123,6 +124,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <!-- 直播稿 path -->
                 <data android:path="/live.html" />
+                <data android:path="/link/LiveLinkActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -151,6 +153,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/album.html" />
                 <data android:path="/red_boat_album.html" />
+                <data android:path="/photodetail/AtlasDetailActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -178,6 +181,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/subject.html" />
+                <data android:path="/subject/SpecialActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -205,6 +209,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/topic.html" />
+                <data android:path="/topic/ActivityTopicActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -232,6 +237,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/red_boat.html" />
+                <data android:path="/redBoat/RedBoatActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -255,10 +261,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/SpecialListActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/native/news/subject/list" />
+                <data android:path="/detail/SpecialListActivity" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
             </intent-filter>
         </activity>
 
@@ -321,10 +335,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/CommentActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/detail/CommentActivity" />
+                <data android:path="/native/comment/list" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+
             </intent-filter>
         </activity>
 
@@ -339,10 +361,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/CommentSelectActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/detail/CommentSelectActivity" />
+                <data android:path="/native/comment/select/list" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+
             </intent-filter>
         </activity>
 
@@ -379,6 +409,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/video.html" />
                 <data android:path="/native_live.html" />
+                <data android:path="/mediadetail/VideoDetailActivity" />
                 <!-- 以下测试 host -->
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />

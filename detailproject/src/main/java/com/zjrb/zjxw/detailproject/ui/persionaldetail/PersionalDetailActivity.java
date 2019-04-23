@@ -39,7 +39,7 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
-import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
+import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 
 /**
  * 官员详情页
@@ -151,11 +151,11 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
         }
     }
 
-    private DefaultTopBarHolder1 topbarHolder;
+    private CommonTopBarHolder topbarHolder;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topbarHolder = BIZTopBarFactory.createDefault1(view, this);
+        topbarHolder = BIZTopBarFactory.createCommonTopBar(view, this);
         topbarHolder.setViewVisible(topbarHolder.getShareView(), View.VISIBLE);
         return topbarHolder.getView();
     }
@@ -257,9 +257,9 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     @Override
     public void onPageSelected(int position) {
         if (bean != null && bean.getOfficer() != null) {
-            if(position == 0){
+            if (position == 0) {
                 DataAnalyticsUtils.get().OfficialDetailClick(bean);
-            }else{
+            } else {
                 DataAnalyticsUtils.get().OfficialNewsClick(bean);
             }
         }

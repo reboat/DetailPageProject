@@ -20,9 +20,10 @@
             android:layout_height="wrap_content"
             android:gravity="top"
             android:maxEms="3"
+            android:text="2017年"
             android:textColor="@color/_222222"
             android:textSize="@dimen/ts_12sp"
-            android:visibility="visible"
+            android:visibility="invisible"
             tools:text="2017年" />
 
         <TextView

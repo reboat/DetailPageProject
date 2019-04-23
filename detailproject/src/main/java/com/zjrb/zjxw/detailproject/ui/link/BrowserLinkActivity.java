@@ -291,7 +291,7 @@ public class BrowserLinkActivity extends DailyActivity {
         }
 
         //显示标题展示WebView内容等
-        if(webImpl != null && !webImpl.getUrl().equals(mWebStack.urlLink)){
+        if(webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)){
             finish();
         }
         mWebView.loadUrl(mWebStack.urlLink);

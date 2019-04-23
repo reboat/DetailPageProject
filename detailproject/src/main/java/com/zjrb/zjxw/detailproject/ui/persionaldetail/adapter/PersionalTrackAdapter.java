@@ -1,21 +1,14 @@
 package com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter;
 
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
-import com.zjrb.core.utils.UIUtils;
-import com.zjrb.zjxw.detailproject.R;
-import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.OfficalDetailBean;
+import com.zjrb.zjxw.detailproject.ui.persionaldetail.holder.OfficalTrackHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 个人官员履历适配器
@@ -60,56 +53,6 @@ public class PersionalTrackAdapter extends BaseRecyclerAdapter {
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
             viewType) {
         return new OfficalTrackHolder(parent);
-    }
-
-
-    /**
-     * 官员履历Holder
-     */
-    static class OfficalTrackHolder extends BaseRecyclerViewHolder<OfficalDetailBean.OfficerBean.ResumesBean> {
-
-        /**
-         * 如果年份一样 则只显示一次
-         */
-        @BindView(R2.id.tv_year)
-        TextView mTvYear;
-        @BindView(R2.id.tv_month)
-        TextView mTvMonth;
-        @BindView(R2.id.tv_persional_info)
-        TextView mTvPersionalInfo;
-
-        public OfficalTrackHolder(ViewGroup parent) {
-            super(UIUtils.inflate(R.layout.module_detail_persional_info_item, parent, false));
-            ButterKnife.bind(this, itemView);
-        }
-
-        @Override
-        public void bindView() {
-            //任职年份
-            if (!mData.isSameYear()) {
-                mTvYear.setText(mData.getYear() + "年");
-            } else {
-                mTvYear.setVisibility(View.INVISIBLE);
-            }
-
-            //任职月份
-            if (mData.getMonth() < 10) {
-                mTvMonth.setText("0" + mData.getMonth() + "月");
-            } else {
-                mTvMonth.setText(mData.getMonth() + "月");
-            }
-
-            //官员地点
-            if (mData.getLocation() != null) {
-                mTvPersionalInfo.setText("[" + mData.getLocation() + "] ");
-            }
-
-            //官员职务
-            if (mData.getTitle() != null) {
-                mTvPersionalInfo.append(mData.getTitle());
-            }
-
-        }
     }
 
 }

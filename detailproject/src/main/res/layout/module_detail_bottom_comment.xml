@@ -33,8 +33,8 @@
         <!--更多代替显示-->
         <ImageView
             android:id="@+id/menu_setting_relpace"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/menu_prised_relpace"
@@ -124,8 +124,8 @@
         <!--设置-->
         <ImageView
             android:id="@+id/menu_setting"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
+            android:layout_width="24dp"
+            android:layout_height="23dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"

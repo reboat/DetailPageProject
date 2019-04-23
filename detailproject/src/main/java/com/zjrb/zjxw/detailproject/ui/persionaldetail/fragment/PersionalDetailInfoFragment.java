@@ -53,14 +53,14 @@ public class PersionalDetailInfoFragment extends DailyFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.module_detail_fragment_persional_info, container, false);
         ButterKnife.bind(this, v);
-        initView(v);
+        initView();
         return v;
     }
 
     /**
      * 初始化适配器
      */
-    private void initView(View v) {
+    private void initView() {
         lvNotice.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new PersionalTrackAdapter();
         mAdapter.setupData(bean.getOfficer().getResumes());

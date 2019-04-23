@@ -411,7 +411,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         //不允许点赞及评论
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            ly_comment_num.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
             ivSetting.setVisibility(View.GONE);
             ivSettingReplace.setVisibility(View.VISIBLE);
@@ -430,7 +429,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //禁止评论，隐藏评论框及评论按钮
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
-                ly_comment_num.setVisibility(View.GONE);
                 mMenuPrised.setVisibility(View.GONE);
                 ivSetting.setVisibility(View.GONE);
                 ivPrisedRelpace.setVisibility(View.VISIBLE);
@@ -441,7 +439,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 ivPrisedRelpace.setVisibility(View.GONE);
                 ivSettingReplace.setVisibility(View.GONE);
                 mFyContainer.setVisibility(View.VISIBLE);
-                ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
                 if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
                     mTvCommentsNum.setVisibility(View.VISIBLE);

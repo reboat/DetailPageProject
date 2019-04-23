@@ -315,6 +315,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/gy_list.html" />
                 <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -340,6 +341,7 @@
                 <data android:path="/detail/CommentActivity" />
                 <data android:path="/native/comment/list" />
                 <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -366,6 +368,7 @@
                 <data android:path="/detail/CommentSelectActivity" />
                 <data android:path="/native/comment/select/list" />
                 <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -411,6 +414,7 @@
                 <data android:path="/native_live.html" />
                 <data android:path="/mediadetail/VideoDetailActivity" />
                 <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />

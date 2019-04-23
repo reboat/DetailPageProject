@@ -289,12 +289,11 @@ public class BrowserLinkActivity extends DailyActivity {
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-
+        mWebView.loadUrl(mWebStack.urlLink);
         //显示标题展示WebView内容等
         if(webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)){
             finish();
         }
-        mWebView.loadUrl(mWebStack.urlLink);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
@@ -526,7 +525,11 @@ public class BrowserLinkActivity extends DailyActivity {
         }
 
         mWebView.clearHistory();
+        //显示标题展示WebView内容等
         mWebView.loadUrl(webStack.urlLink);
+        if(webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)){
+            finish();
+        }
     }
 
     @Override

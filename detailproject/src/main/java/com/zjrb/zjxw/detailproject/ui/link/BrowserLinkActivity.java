@@ -113,15 +113,15 @@ public class BrowserLinkActivity extends DailyActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        initArgs(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
         mFloorBar.setVisibility(View.GONE);
         getIntentData(getIntent());
         initWebview();
-        loadData();
+        initArgs(savedInstanceState);
         addWebStack(mWebStack);
+        loadData();
     }
 
     //初始化webview相关设置
@@ -149,7 +149,6 @@ public class BrowserLinkActivity extends DailyActivity {
             mWebStack = webStack;
             addWebStack(mWebStack);
         }
-
         getIntentData(intent);
         loadData();
     }
@@ -292,6 +291,9 @@ public class BrowserLinkActivity extends DailyActivity {
         }
 
         //显示标题展示WebView内容等
+        if(webImpl != null && !webImpl.getUrl().equals(mWebStack.urlLink)){
+            finish();
+        }
         mWebView.loadUrl(mWebStack.urlLink);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
@@ -340,13 +342,13 @@ public class BrowserLinkActivity extends DailyActivity {
         if (R.id.iv_back == id) {
             //堆栈为空则直接返回
             if (mWebStacks.isEmpty()) {
-                onBackPressed();
+                finish();
             } else {
                 //返回删除以后栈顶对象
                 bindWebStack(mWebStacks.pop());
             }
         } else if (R.id.iv_close == id) {//点击X
-            onBackPressed();
+            finish();
         } else if (view.getId() == R.id.menu_comment) { //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickInCommentList(mNewsDetail);
@@ -525,6 +527,16 @@ public class BrowserLinkActivity extends DailyActivity {
 
         mWebView.clearHistory();
         mWebView.loadUrl(webStack.urlLink);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mWebStacks.isEmpty()) {
+            finish();
+        } else {
+            //返回删除以后栈顶对象
+            bindWebStack(mWebStacks.pop());
+        }
     }
 
     private static class WebStack {

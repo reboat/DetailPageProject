@@ -31,6 +31,7 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
             public void onClick(View view) {
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setNewsCard(true)
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
                         .setTextContent(mNewsDetail.getArticle().getSummary())

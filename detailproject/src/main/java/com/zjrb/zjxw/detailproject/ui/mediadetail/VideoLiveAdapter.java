@@ -25,10 +25,9 @@ import cn.daily.news.biz.core.network.compatible.APICallManager;
  * create time:2019/3/26  下午2:36
  */
 public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreListener<NativeLiveBean> {
-    private int live_id = 0;
     private boolean isResort = false;
     private final FooterLoadMore<NativeLiveBean> mLoadMore;
-    private  DraftDetailBean mDraftDetailBean;
+    private DraftDetailBean mDraftDetailBean;
     //图片
     private int VIDEO_LIVE_MUL_PIC = 1;
     //视频
@@ -53,7 +52,11 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
 
     //是否没有更多
     private boolean noMore(NativeLiveBean data) {
-        return !data.isHas_more();
+        if(data == null){
+            return true;
+        }else{
+            return !data.isHas_more();
+        }
     }
 
     private void cancelLoadMore() {
@@ -62,7 +65,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
 
     @Override
     public void onLoadMoreSuccess(NativeLiveBean data, LoadMore loadMore) {
-        if (noMore(data)) {
+        if (noMore(data) || data == null ) {
             loadMore.setState(LoadMore.TYPE_NO_MORE);
         }
         if (data != null && data.getList() != null && data.getList().size() > 0) {
@@ -72,7 +75,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
 
     @Override
     public void onLoadMore(LoadingCallBack<NativeLiveBean> callback) {
-        new NativeLiveTask(callback).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).exe(live_id, getLastOneTag(), 10, isResort);
+        new NativeLiveTask(callback).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).exe(mDraftDetailBean.getArticle().getNative_live_info().getLive_id(), getLastOneTag(), 10, isResort);
     }
 
 
@@ -97,7 +100,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         if (viewType == VIDEO_LIVE_MUL_PIC) {
             return new VideoDetailPicHolder(parent);
         } else if (viewType == VIDEO_LIVE_VIDEO) {
-            return new DetailVideoHolder(parent,mDraftDetailBean);
+            return new DetailVideoHolder(parent, mDraftDetailBean);
         } else {
             return new VideoDetailLiveTextHolder(parent);
         }

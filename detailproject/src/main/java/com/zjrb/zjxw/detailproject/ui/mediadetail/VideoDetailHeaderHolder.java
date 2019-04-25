@@ -63,6 +63,7 @@ public class VideoDetailHeaderHolder extends PageItem {
             //刷新数据
             Intent intent = new Intent("refresh_head");
             intent.putExtra("isReverse", isReverse);
+            intent.putExtra("isClick",true);
             LocalBroadcastManager.getInstance(getItemView().getContext()).sendBroadcast(intent);
         }
     }

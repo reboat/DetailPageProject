@@ -29,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
-import cn.daily.news.biz.core.share.UmengShareBean;
 
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
@@ -52,6 +51,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     private HeaderRefresh refresh;
     private long startId = -1L;
     private boolean isReverse = false;
+    private boolean isClick = false;
     private VideoDetailHeaderHolder headHolder;
     private VideoLiveAdapter adapter;
     private RefreshHeadReceiver refreshHeadReceiver;
@@ -109,6 +109,11 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
      * @param isResort 是否反转 默认为false倒序  true为正序
      */
     private void refreshData(long start, int size, boolean isResort) {
+        //点击切换的时候,都不能传start
+        if (isClick) {
+            start = -1;
+            isClick = false;
+        }
         if (mNewsDetail == null || mNewsDetail.getArticle() == null || mNewsDetail.getArticle().getNative_live_info() == null) {
             return;
         }
@@ -139,7 +144,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     //初始化适配器
     private void initAdapter(NativeLiveBean bean) {
         if (adapter == null) {
-            adapter = new VideoLiveAdapter(lvNotice, bean,mNewsDetail);
+            adapter = new VideoLiveAdapter(lvNotice, bean, mNewsDetail);
             adapter.setHeaderRefresh(refresh.getItemView());
             headHolder = new VideoDetailHeaderHolder(lvNotice, isReverse);
             adapter.addHeaderView(headHolder.getItemView());
@@ -159,8 +164,13 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     //点击倒序浏览
     @Override
     public void refresh(Intent intent) {
-        if (intent != null && intent.hasExtra("isReverse")) {
-            isReverse = intent.getBooleanExtra("isReverse", false);
+        if (intent != null) {
+            if (intent.hasExtra("isReverse")) {
+                isReverse = intent.getBooleanExtra("isReverse", false);
+            }
+            if (intent.hasExtra("isClick")) {
+                isClick = intent.getBooleanExtra("isClick", false);
+            }
             refreshData(startId, 10, intent.getBooleanExtra("isReverse", false));
         }
     }

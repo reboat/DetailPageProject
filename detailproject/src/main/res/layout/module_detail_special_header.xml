@@ -8,14 +8,15 @@
               android:orientation="vertical"
               android:paddingBottom="5dp">
 
+    <!--需要添加渐变阴影-->
     <com.aliya.uimode.widget.MaskImageView
         android:id="@+id/iv_subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="题图"
         android:scaleType="fitXY"
-        android:visibility="gone"
-        app:ratio_w2h="375:125" />
+        android:visibility="visible"
+        app:ratio_w2h="375:125"
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_title"
@@ -103,11 +104,10 @@
         android:id="@+id/recycler_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:paddingBottom="5dp"
         android:paddingTop="5dp" />
 
     <!--专题焦点图-->
@@ -115,6 +115,9 @@
         android:id="@+id/layout_focus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
         app:ratio_w2h="345:173">
 
         <ImageView

@@ -20,25 +20,25 @@
         <!--点赞-->
         <ImageView
             android:id="@+id/menu_prised_relpace"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="17dp"
-            android:src="@drawable/module_detail_news_prise"
+            android:src="@mipmap/module_biz_news_prise"
             android:visibility="gone"
             />
 
         <!--更多代替显示-->
         <ImageView
             android:id="@+id/menu_setting_relpace"
-            android:layout_width="24dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:layout_toRightOf="@+id/menu_prised_relpace"
-            android:src="@mipmap/module_detail_ic_more"
+            android:src="@mipmap/module_biz_tools_bar_more"
             android:visibility="gone"
             />
 
@@ -88,10 +88,10 @@
 
             <ImageView
                 android:id="@+id/menu_comment"
-                android:layout_width="25dp"
-                android:layout_height="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/module_detail_ic_comment"
+                android:src="@mipmap/module_biz_ic_comment"
                 android:visibility="visible" />
 
             <TextView
@@ -112,24 +112,24 @@
         <!--点赞-->
         <ImageView
             android:id="@+id/menu_prised"
-            android:layout_width="25dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="32dp"
             android:layout_toLeftOf="@+id/menu_setting"
-            android:src="@drawable/module_detail_news_prise"
+            android:src="@mipmap/module_biz_news_prise"
             android:visibility="visible"
             />
 
         <!--设置-->
         <ImageView
             android:id="@+id/menu_setting"
-            android:layout_width="24dp"
-            android:layout_height="23dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/module_detail_ic_more"
+            android:src="@mipmap/module_biz_tools_bar_more"
             />
     </RelativeLayout>
 </com.aliya.view.fitsys.FitWindowsRelativeLayout>

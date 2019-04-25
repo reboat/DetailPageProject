@@ -18,7 +18,6 @@ import com.daily.news.location.LocationManager;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -54,8 +53,10 @@ import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean> implements ConfirmDialog.OnConfirmListener, CommentWindowDialog.LocationCallBack {
     @BindView(R2.id.iv_avatar)
     ImageView mImg;
-    @BindView(R2.id.tv_prise)
-    TextView mThumb;
+    @BindView(R2.id.iv_prised)
+    ImageView mThumb;
+    @BindView(R2.id.tv_prise_num)
+    TextView mPriseNum;
     @BindView(R2.id.tv_name)
     TextView mName;
     @BindView(R2.id.tv_content)
@@ -200,7 +201,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                         mContent.setMaxLines(MAX_DEFAULT_LINES);
                         tvShowAll.setVisibility(View.VISIBLE);
                         tvShowAll.setText("展开全部");
-                    }else{
+                    } else {
                         tvShowAll.setVisibility(View.GONE);
                     }
                     return false;
@@ -252,7 +253,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                             mTvCommentContent.setMaxLines(MAX_DEFAULT_LINES);
                             tvParentShowAll.setVisibility(View.VISIBLE);
                             tvParentShowAll.setText("展开全部");
-                        }else{
+                        } else {
                             tvParentShowAll.setVisibility(View.GONE);
                         }
                         return false;
@@ -292,9 +293,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
         //点赞次数
         if (mData.getLike_count() != 0) {
-            mThumb.setText(mData.getLike_count() + "赞");
+            mPriseNum.setVisibility(View.VISIBLE);
+            mPriseNum.setText(mData.getLike_count() + "赞");
         } else {
-            mThumb.setText("");
+            mPriseNum.setVisibility(View.GONE);
+            mPriseNum.setText("");
         }
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
@@ -303,7 +306,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mLocation.setText(mData.getLocation());
             // 计算最大location最大展示宽度
             // 左侧宽度 11+36+11   右侧留白 12  中间: 时间宽度+10+位置宽度+5+点赞宽度+删除按钮宽度
-            int maxWidth = UIUtils.getScreenW() - UIUtils.dip2px(85) - measureTextWidth(mThumb) - measureTextWidth(mThumb) - measureTextWidth(mDelete);
+            int maxWidth = UIUtils.getScreenW() - UIUtils.dip2px(85) - measureTextWidth(mPriseNum) - measureTextWidth(mPriseNum) - measureTextWidth(mDelete);
             mLocation.setMaxWidth(maxWidth);
             mLocation.setVisibility(View.VISIBLE);
         } else {
@@ -317,11 +320,11 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.tv_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
+    @OnClick({R2.id.iv_prised,R2.id.ly_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论点赞
-        if (view.getId() == R.id.tv_prise) {
+        if (view.getId() == R.id.iv_prised || view.getId() == R.id.ly_prise) {
             if (!mData.isLiked()) {
                 DataAnalyticsUtils.get().CommentPrise(mBean, pageType, scPageType, mData.getId());
                 praiseComment(mData.getId());
@@ -433,7 +436,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mThumb.setSelected(true);
                 mData.setLike_count((mData.getLike_count() + 1));
                 mData.setLiked(true);
-                mThumb.setText(mData.getLike_count() + "赞");
+                mPriseNum.setText(mData.getLike_count() + "赞");
                 T.showShort(itemView.getContext(), "点赞成功");
             }
 

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
         android:scaleType="fitXY"
-        android:visibility="visible"
+        android:visibility="gone"
         app:ratio_w2h="3:2"
         tools:src="@mipmap/module_core_ic_load_zhe"
         />
@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_bg"
-        android:layout_marginRight="32dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:fitType="top">

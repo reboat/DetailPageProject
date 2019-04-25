@@ -78,7 +78,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     @BindView(R2.id.iv_top_collect)
     ImageView mCollect;
     @BindView(R2.id.fy_container)
-    FitWindowsFrameLayout fyContainer;
+    FrameLayout fyContainer;
     @BindView(R2.id.iv_top_bar_back)
     ImageView ivBack;
     @BindView(R2.id.iv_top_share)

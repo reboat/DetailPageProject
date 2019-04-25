@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="47dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/fzzcysk_zbjt"
         android:gravity="left"
@@ -60,7 +60,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:background="@color/_bfbfbf" />

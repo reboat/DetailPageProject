@@ -1,12 +1,15 @@
 package com.zjrb.zjxw.detailproject.ui.link;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,6 +21,7 @@ import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
@@ -289,11 +293,16 @@ public class BrowserLinkActivity extends DailyActivity {
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-        mWebView.loadUrl(mWebStack.urlLink);
         //显示标题展示WebView内容等
-        if(webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)){
+        if (webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)) {
+            L.e("WLJ,fillData,finish");
             finish();
+            closeActivity();
+        } else {
+            L.e("WLJ,fillData,mWebView.loadUrl");
+            mWebView.loadUrl(mWebStack.urlLink);
         }
+        L.e("WLJ,data.getArticle().getUrl()=" + data.getArticle().getUrl() + ",webImpl.getUrl=" + webImpl.getUrl());
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
@@ -342,12 +351,14 @@ public class BrowserLinkActivity extends DailyActivity {
             //堆栈为空则直接返回
             if (mWebStacks.isEmpty()) {
                 finish();
+                closeActivity();
             } else {
                 //返回删除以后栈顶对象
                 bindWebStack(mWebStacks.pop());
             }
         } else if (R.id.iv_close == id) {//点击X
             finish();
+            closeActivity();
         } else if (view.getId() == R.id.menu_comment) { //分享(无法获取链接稿第一张图，设置为浙江新闻LOGO)
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickInCommentList(mNewsDetail);
@@ -479,7 +490,11 @@ public class BrowserLinkActivity extends DailyActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //统计时长
+        closeActivity();
+    }
+
+    //关闭页面
+    private void closeActivity() {
         if (builder != null) {
             Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
@@ -516,6 +531,11 @@ public class BrowserLinkActivity extends DailyActivity {
 
     //渲染链接
     private void bindWebStack(WebStack webStack) {
+        if (TextUtils.isEmpty(webStack.urlLink)) {
+            finish();
+            closeActivity();
+            return;
+        }
         mWebStack = webStack;
         //堆栈中链接信息大于1个时才显示
         if (mWebStacks.size() > 1) {
@@ -523,20 +543,27 @@ public class BrowserLinkActivity extends DailyActivity {
         } else {
             mClose.setVisibility(View.INVISIBLE);
         }
-
         mWebView.clearHistory();
         //显示标题展示WebView内容等
-        mWebView.loadUrl(webStack.urlLink);
-        if(webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)){
+        if (webImpl != null && !TextUtils.isEmpty(webImpl.getUrl()) && !webImpl.getUrl().equals(mWebStack.urlLink)) {
+            L.e("WLJ,bindWebStack,finish");
             finish();
+            closeActivity();
+        } else {
+            //TODO WLJ 这里会先加载一次，然后再fill中再次加载
+            L.e("WLJ,bindWebStack,mWebView.loadUrl,webStack.urlLink=" + webStack.urlLink);
+            mWebView.loadUrl(webStack.urlLink);
         }
     }
 
     @Override
     public void onBackPressed() {
         if (mWebStacks.isEmpty()) {
+            L.e("WLJ,onBackPressed,finish");
             finish();
+            closeActivity();
         } else {
+            L.e("WLJ,bindWebStack");
             //返回删除以后栈顶对象
             bindWebStack(mWebStacks.pop());
         }

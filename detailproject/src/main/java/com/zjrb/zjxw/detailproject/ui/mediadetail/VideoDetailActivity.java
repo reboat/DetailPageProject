@@ -237,6 +237,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
+            if (TextUtils.isEmpty(url)){
+                return;
+            }
             UmengShareBean shareBean = UmengShareBean.getInstance()
                     .setSingle(false)
                     .setArticleId(mNewsDetail.getArticle().getId() + "")

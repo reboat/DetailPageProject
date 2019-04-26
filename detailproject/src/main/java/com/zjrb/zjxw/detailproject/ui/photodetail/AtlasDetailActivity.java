@@ -518,8 +518,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     }
 
 
-    @OnClick({R2.id.iv_share, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
-            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub,R2.id.iv_top_subscribe_icon})
+    @OnClick({R2.id.iv_share, R2.id.fl_comment, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
+            .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub, R2.id.iv_top_subscribe_icon})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         click(view.getId());
@@ -578,7 +578,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 );
             }
             //评论框
-        } else if (id == R.id.fl_comment) {
+        } else if (id == R.id.fl_comment || id == R.id.tv_comment) {
             if (mData != null && mData.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickCommentBox(mData);
 

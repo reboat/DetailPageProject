@@ -4,12 +4,10 @@
           android:id="@+id/tv_channel_name"
           android:layout_width="72dp"
           android:layout_height="28dp"
-          android:autoSizeMaxTextSize="12sp"
-          android:autoSizeMinTextSize="10sp"
-          android:autoSizeTextType="uniform"
           android:background="@drawable/module_detail_special_channel"
           android:ellipsize="end"
           android:gravity="center"
           android:maxLines="1"
           android:textColor="@color/module_detail_special_tab"
+          android:textSize="@dimen/ts_12sp"
           tools:text="治国理政治国理政" />

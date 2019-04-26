@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.ui.mediadetail;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -34,6 +35,7 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     private int VIDEO_LIVE_VIDEO = 2;
     //纯文字
     private int VIDEO_LIVE_TEXT = 3;
+    private boolean canDestory;
 
     public VideoLiveAdapter(ViewGroup parent, NativeLiveBean data, DraftDetailBean newsDetail) {
         super(null);
@@ -111,6 +113,9 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         //如果有正在播放的view 找到并且删除
+        if (!canDestory){
+            return;
+        }
         if (holder.itemView instanceof ViewGroup) {
             ViewGroup vg = (ViewGroup) holder.itemView;
             for (int i = 0; i < vg.getChildCount(); i++) {
@@ -142,4 +147,12 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
     }
 
 
+    public void setCanDestory(boolean canDestory) {
+        this.canDestory = canDestory;
+        Log.e("lujialei","canDestory==="+canDestory);
+    }
+
+    public boolean isCanDestory() {
+        return canDestory;
+    }
 }

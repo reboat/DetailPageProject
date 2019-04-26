@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.ui.mediadetail;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -158,6 +159,21 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             headHolder.setData(mNewsDetail);
             adapter.setData(bean);
             adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //解决8.1系统bug 当横屏返回竖屏activity时 竖屏activity会先拉成横屏再变成竖屏
+        if (adapter!=null){
+            adapter.setCanDestory(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.setCanDestory(true);
+                }
+            },500);
         }
     }
 

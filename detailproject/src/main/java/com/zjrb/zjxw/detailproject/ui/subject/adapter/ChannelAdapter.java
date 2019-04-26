@@ -45,6 +45,11 @@ public class ChannelAdapter extends BaseRecyclerAdapter<SpecialGroupBean> {
         public void bindView() {
             //最多显示6个字
             String name = mData.getGroup_name();
+            if (name != null && name.length() >= 5) {
+                tv_channel_name.setTextSize(10);
+            } else {
+                tv_channel_name.setTextSize(12);
+            }
             if (name != null && name.length() > 6) {
                 name = name.substring(0, 6);
                 name += "…";

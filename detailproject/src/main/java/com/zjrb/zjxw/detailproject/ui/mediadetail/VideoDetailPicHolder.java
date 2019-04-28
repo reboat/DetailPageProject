@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -40,6 +39,8 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
     public VideoDetailPicHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_video_live_holder, parent, false));
         ButterKnife.bind(this, itemView);
+        rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
+        rvImgs.addItemDecoration(new VideoGridSpaceDivider(6));
     }
 
     @Override
@@ -60,14 +61,16 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
             tvTitle.setVisibility(View.GONE);
         }
 
+        //TODO WLJ 这里刷新有问题
         if (mData.getPics() != null && mData.getPics().size() > 0) {
-            if(mAdapter == null){
-                mAdapter = new VideoDetailPicAdapter(mData.getPics());
-            }
             rvImgs.setVisibility(View.VISIBLE);
-            rvImgs.setLayoutManager(new GridLayoutManager(itemView.getContext(), 3));
-            rvImgs.addItemDecoration(new VideoGridSpaceDivider(6));
-            rvImgs.setAdapter(mAdapter);
+            if (mAdapter == null) {
+                mAdapter = new VideoDetailPicAdapter(mData);
+                rvImgs.setAdapter(mAdapter);
+            } else {
+                mAdapter.setData(mData);
+                mAdapter.notifyDataSetChanged();
+            }
         } else {
             rvImgs.setVisibility(View.GONE);
         }

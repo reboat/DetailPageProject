@@ -52,7 +52,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
@@ -65,8 +64,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), itemView.getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
-        //TODO WLJ 调试网页代码
-        mWebView.setWebContentsDebuggingEnabled(true);
+//        mWebView.setWebContentsDebuggingEnabled(true);
     }
 
     /**

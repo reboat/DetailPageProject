@@ -17,7 +17,6 @@ import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
-import com.zjrb.core.utils.T;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;

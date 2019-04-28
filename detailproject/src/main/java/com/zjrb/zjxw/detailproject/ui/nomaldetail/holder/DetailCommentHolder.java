@@ -1,6 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -18,7 +19,6 @@ import com.daily.news.location.LocationManager;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -191,6 +191,13 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             //回复者评论
             if (mData.getContent() != null) {
+                if (mContent.equals("当前评论正在审核中")) {
+                    mContent.setTextColor(Color.parseColor("#bfbfbf"));
+                    mContent.setTextSize(18);
+                } else {
+                    mContent.setTextColor(Color.parseColor("#222222"));
+                    mContent.setTextSize(16);
+                }
                 mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
             }
             //超过5行
@@ -321,7 +328,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
     }
 
-    @OnClick({R2.id.iv_prised,R2.id.ly_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
+    @OnClick({R2.id.iv_prised, R2.id.ly_prise, R2.id.tv_delete, R2.id.ly_replay, R2.id.ly_comment_reply, R2.id.tv_reply, R2.id.tv_show_all, R2.id.tv_parent_show_all})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论点赞
@@ -437,6 +444,9 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mThumb.setSelected(true);
                 mData.setLike_count((mData.getLike_count() + 1));
                 mData.setLiked(true);
+                if (mPriseNum.getVisibility() == View.GONE) {
+                    mPriseNum.setVisibility(View.VISIBLE);
+                }
                 mPriseNum.setText(mData.getLike_count() + "赞");
                 ZBToast.showShort(itemView.getContext(), "点赞成功");
             }

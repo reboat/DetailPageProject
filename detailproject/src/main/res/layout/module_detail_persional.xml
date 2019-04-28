@@ -86,6 +86,7 @@
             android:drawableRight="@mipmap/module_detail_offical_more"
             android:gravity="center"
             android:text="@string/module_detail_offical_more"
+            android:visibility="gone"
             android:textColor="@color/_484848_7a7b7d"
             android:textSize="@dimen/ts_12sp"
             tools:text="更多" />

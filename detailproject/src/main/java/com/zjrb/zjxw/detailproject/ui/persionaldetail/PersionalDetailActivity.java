@@ -14,7 +14,6 @@ import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
@@ -34,7 +33,6 @@ import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
-import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
@@ -184,32 +182,32 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
         super.onStart();
     }
 
-    @OnClick({R2.id.lly_reporter, R2.id.iv_top_share})
+    @OnClick({R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.lly_reporter) {
-            //跳转到官员详情页H5
-            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getDetail_url())) {
-                Nav.with(this).to(bean.getOfficer().getDetail_url());
-            }
-        } else {//点击分享
-            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
-                DataAnalyticsUtils.get().OfficalClickShare(bean);
-                //分享
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setAnalyticsBean(getWMData())
-                        .setImgUri(bean.getOfficer().getList_pic())
-                        .setTextContent(getString(R.string.module_detail_share_content_from))
-                        .setTitle(bean.getOfficer().getName())
-                        .setTargetUrl(bean.getOfficer().getShare_url())
-                        .setShareContentID(bean.getOfficer().getId() + "")
-                        .setShareType("官员")
-                        .setEventName("PageShare")
-                );
-            }
-
+//        if (view.getId() == R.id.lly_reporter) {
+//            //跳转到官员详情页H5
+//            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getDetail_url())) {
+//                Nav.with(this).to(bean.getOfficer().getDetail_url());
+//            }
+//        } else {//点击分享
+        if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
+            DataAnalyticsUtils.get().OfficalClickShare(bean);
+            //分享
+            UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setAnalyticsBean(getWMData())
+                    .setImgUri(bean.getOfficer().getList_pic())
+                    .setTextContent(getString(R.string.module_detail_share_content_from))
+                    .setTitle(bean.getOfficer().getName())
+                    .setTargetUrl(bean.getOfficer().getShare_url())
+                    .setShareContentID(bean.getOfficer().getId() + "")
+                    .setShareType("官员")
+                    .setEventName("PageShare")
+            );
         }
+
+//        }
     }
 
 

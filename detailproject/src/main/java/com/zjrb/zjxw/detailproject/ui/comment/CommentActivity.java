@@ -45,6 +45,7 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 
@@ -229,7 +230,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                ZBToast.showShort(getBaseContext(), errMsg);
             }
         }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }

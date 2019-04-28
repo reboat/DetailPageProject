@@ -31,6 +31,7 @@ import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 /**
  * @author: lujialei
@@ -179,7 +180,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                 if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
                     mDraftDetailBean.getArticle().setFollowed(!mDraftDetailBean.getArticle().isFollowed());
                     bindCollect();
-                    T.showShort(getActivity(), mDraftDetailBean.getArticle().isFollowed() ? "收藏成功" : "取消收藏成功");
+                    ZBToast.showShort(getActivity(), mDraftDetailBean.getArticle().isFollowed() ? "收藏成功" : "取消收藏成功");
                 }
             }
 
@@ -195,10 +196,10 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                     if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
                         mDraftDetailBean.getArticle().setFollowed(true);
                         bindCollect();
-                        T.showShort(getActivity(), "已收藏成功");
+                        ZBToast.showShort(getActivity(), "已收藏成功");
                     }
                 } else {
-                    T.showShort(getActivity(), errMsg);
+                    ZBToast.showShort(getActivity(), errMsg);
                 }
             }
 

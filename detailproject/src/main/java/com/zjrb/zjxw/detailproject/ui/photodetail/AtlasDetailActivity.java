@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
@@ -30,7 +29,6 @@ import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.permission.IPermissionCallBack;
 import com.zjrb.core.permission.Permission;
 import com.zjrb.core.permission.PermissionManager;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -69,6 +67,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.BottomSaveDialogFragment;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
 import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
@@ -322,7 +321,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
-                        T.showShortNow(AtlasDetailActivity.this, errMsg);
+                        ZBToast.showShort(AtlasDetailActivity.this, errMsg);
                     }
                 }
             }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId, mFromChannel);
@@ -358,7 +357,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
-                        T.showShortNow(AtlasDetailActivity.this, errMsg);
+                        ZBToast.showShort(AtlasDetailActivity.this, errMsg);
                     }
                 }
             }).setTag(this).bindLoadViewHolder(holder).exe(mArticleId);
@@ -632,7 +631,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        T.showShortNow(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mData.getArticle().getColumn_id());
                     }
 
@@ -643,7 +642,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        T.showShortNow(AtlasDetailActivity.this, "取消订阅失败");
+                        ZBToast.showShort(AtlasDetailActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mData.getArticle().getColumn_id(), false);
@@ -655,7 +654,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            T.showShortNow(getApplicationContext(), "订阅成功");
+                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mData.getArticle().getColumn_id());
                         }
 
@@ -666,7 +665,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            T.showShortNow(AtlasDetailActivity.this, "订阅失败");
+                            ZBToast.showShort(AtlasDetailActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mData.getArticle().getColumn_id(), true);
@@ -796,7 +795,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     private void fabulous() {
         if (mData == null || mData.getArticle() == null) return;
         if (mData.getArticle().isLiked()) {
-            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
+            ZBToast.showShort(this, getString(R.string.module_detail_you_have_liked));
             return;
         }
         new DraftPraiseTask(new APICallBack<Void>() {
@@ -805,15 +804,15 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 if (errCode == 50013) {
                     mData.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
-                    T.showShort(UIUtils.getContext(), "已点赞成功");
+                    ZBToast.showShort(UIUtils.getContext(), "已点赞成功");
                 } else {
-                    T.showShort(UIUtils.getContext(), errMsg);
+                    ZBToast.showShort(UIUtils.getContext(), errMsg);
                 }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_success));
+                ZBToast.showShort(UIUtils.getContext(), getString(R.string.module_detail_prise_success));
                 mData.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -880,13 +879,13 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                     @Override
                     public void onSuccess(String path) {
-                        T.showShort(AtlasDetailActivity.this, getString(R.string
+                        ZBToast.showShort(AtlasDetailActivity.this, getString(R.string
                                 .module_detail_save_success));
                     }
 
                     @Override
                     public void onFail(String err) {
-                        T.showShort(AtlasDetailActivity.this, getString(R.string
+                        ZBToast.showShort(AtlasDetailActivity.this, getString(R.string
                                 .module_detail_save_failed));
                     }
                 })

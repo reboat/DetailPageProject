@@ -54,6 +54,7 @@ import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.ShareOnResultCallback;
 import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
@@ -344,11 +345,11 @@ public class MoreDialogLink extends BaseDialogFragment {
                 if (!mBean.getArticle().isFollowed()) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                    ZBToast.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
                     mBean.getArticle().setFollowed(false);
-                    T.showShort(UIUtils.getApp(), "已取消收藏");
+                    ZBToast.showShort(UIUtils.getApp(), "已取消收藏");
                 }
 
                 dismissAllDialog();
@@ -366,9 +367,9 @@ public class MoreDialogLink extends BaseDialogFragment {
                 if (errCode == 50013) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                    ZBToast.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
-                    T.showShort(UIUtils.getApp(), errMsg);
+                    ZBToast.showShort(UIUtils.getApp(), errMsg);
                 }
                 dismissAllDialog();
             }
@@ -433,7 +434,7 @@ public class MoreDialogLink extends BaseDialogFragment {
 
                     @Override
                     public void onDenied(List<String> neverAskPerms) {
-                        T.showShortNow(UIUtils.getApp(), "权限被拒绝");
+                        ZBToast.showShort(UIUtils.getApp(), "权限被拒绝");
                     }
 
                     @Override
@@ -530,7 +531,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         @Override
         public void onResult(SHARE_MEDIA share_media) {
             dismissAllDialog();
-            T.showShortNow(UIUtils.getApp(), "分享成功");
+            ZBToast.showShort(UIUtils.getApp(), "分享成功");
             setAnalytics(share_media, true);
             //稿件分享成功后，登录用户获取积分
             new ArticShareTask(new LoadingCallBack<BaseData>() {
@@ -555,7 +556,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         @Override
         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
             setAnalytics(share_media, false);
-            T.showShortNow(UIUtils.getApp(), "分享失败");
+            ZBToast.showShort(UIUtils.getApp(), "分享失败");
             dismissAllDialog();
         }
 
@@ -699,17 +700,17 @@ public class MoreDialogLink extends BaseDialogFragment {
         }
         if (platform == SHARE_MEDIA.WEIXIN || platform == SHARE_MEDIA.WEIXIN_CIRCLE) {
             if (mShareAPI != null && !mShareAPI.isInstall(UIUtils.getActivity(), SHARE_MEDIA.WEIXIN)) {
-                T.showShortNow(UIUtils.getApp(), "未安装微信客户端");
+                ZBToast.showShort(UIUtils.getApp(), "未安装微信客户端");
                 return false;
             }
         } else if (platform == SHARE_MEDIA.QQ || platform == SHARE_MEDIA.QZONE) {
             if (mShareAPI != null && !mShareAPI.isInstall(UIUtils.getActivity(), SHARE_MEDIA.QQ)) {
-                T.showShortNow(UIUtils.getApp(), "未安装QQ客户端");
+                ZBToast.showShort(UIUtils.getApp(), "未安装QQ客户端");
                 return false;
             }
         } else if (platform == SHARE_MEDIA.DINGTALK) {
             if (mShareAPI != null && !mShareAPI.isInstall(UIUtils.getActivity(), SHARE_MEDIA.DINGTALK)) {
-                T.showShortNow(UIUtils.getApp(), "未安装钉钉客户端");
+                ZBToast.showShort(UIUtils.getApp(), "未安装钉钉客户端");
                 return false;
             }
         }

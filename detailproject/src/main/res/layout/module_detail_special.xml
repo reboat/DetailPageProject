@@ -60,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/_ffffff_191919"
-            android:paddingRight="15dp"
             android:visibility="visible" />
 
     </com.aliya.view.fitsys.FitWindowsLinearLayout>

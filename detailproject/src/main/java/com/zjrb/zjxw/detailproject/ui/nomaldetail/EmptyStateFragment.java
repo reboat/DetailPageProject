@@ -13,7 +13,6 @@ import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.ListSpaceDivider;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -31,6 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 /**
  * 撤稿空态页面
@@ -45,7 +45,6 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
     FitWindowsFrameLayout viewGroup;
     @BindView(R2.id.ly_container)
     FitWindowsLinearLayout mContainer;
-
 
 
     private EmptyStateListAdapter adapter;
@@ -130,7 +129,7 @@ public class EmptyStateFragment extends DailyFragment implements OnItemClickList
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(UIUtils.getContext(), errMsg);
+                ZBToast.showShort(UIUtils.getContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe();
     }

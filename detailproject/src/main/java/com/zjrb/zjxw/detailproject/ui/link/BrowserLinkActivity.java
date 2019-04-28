@@ -11,14 +11,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -47,6 +45,7 @@ import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
 import cn.daily.news.biz.core.utils.RouteManager;
@@ -238,7 +237,7 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
-                        T.showShortNow(BrowserLinkActivity.this, errMsg);
+                        ZBToast.showShort(BrowserLinkActivity.this, errMsg);
                     }
                 }
             }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
@@ -265,7 +264,7 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                         showEmptyNewsDetail();
                     } else {
-                        T.showShortNow(BrowserLinkActivity.this, errMsg);
+                        ZBToast.showShort(BrowserLinkActivity.this, errMsg);
                     }
                 }
             }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(browserUri);
@@ -403,7 +402,7 @@ public class BrowserLinkActivity extends DailyActivity {
         if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
-            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
+            ZBToast.showShort(this, getString(R.string.module_detail_you_have_liked));
             return;
         }
         new DraftPraiseTask(new LoadingCallBack<Void>() {
@@ -418,15 +417,15 @@ public class BrowserLinkActivity extends DailyActivity {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
-                    T.showShort(getBaseContext(), "已点赞成功");
+                    ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
-                    T.showShort(getBaseContext(), errMsg);
+                    ZBToast.showShort(getBaseContext(), errMsg);
                 }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
+                ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }

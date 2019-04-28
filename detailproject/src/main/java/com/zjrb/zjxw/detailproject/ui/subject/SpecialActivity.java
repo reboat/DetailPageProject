@@ -51,6 +51,7 @@ import cn.daily.news.biz.core.network.task.DraftCollectTask;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 /**
@@ -281,7 +282,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 if (mArticle != null) {
                     mArticle.setFollowed(!mArticle.isFollowed());
                     bindCollect();
-                    T.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
+                    ZBToast.showShort(getActivity(), mArticle.isFollowed() ? "收藏成功" : "取消收藏成功");
                 }
             }
 
@@ -297,10 +298,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                     if (mArticle != null) {
                         mArticle.setFollowed(true);
                         bindCollect();
-                        T.showShort(getActivity(), "已收藏成功");
+                        ZBToast.showShort(getActivity(), "已收藏成功");
                     }
                 } else {
-                    T.showShort(getActivity(), errMsg);
+                    ZBToast.showShort(getActivity(), errMsg);
                 }
             }
 

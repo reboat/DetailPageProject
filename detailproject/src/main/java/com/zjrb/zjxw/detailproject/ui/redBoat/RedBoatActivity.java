@@ -47,6 +47,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
@@ -185,7 +186,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 //                    topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
-                    T.showShortNow(RedBoatActivity.this, errMsg);
+                    ZBToast.showShort(RedBoatActivity.this, errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
@@ -271,7 +272,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        T.showShortNow(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -282,7 +283,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        T.showShortNow(RedBoatActivity.this, "取消订阅失败");
+                        ZBToast.showShort(RedBoatActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -294,7 +295,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            T.showShortNow(getApplicationContext(), "订阅成功");
+                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -305,7 +306,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            T.showShortNow(RedBoatActivity.this, "订阅失败");
+                            ZBToast.showShort(RedBoatActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

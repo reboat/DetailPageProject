@@ -27,6 +27,7 @@ import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder1;
 
@@ -155,7 +156,7 @@ public class CommentSelectActivity extends DailyActivity implements HeaderRefres
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                ZBToast.showShort(getBaseContext(), errMsg);
             }
 
         }, true).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);

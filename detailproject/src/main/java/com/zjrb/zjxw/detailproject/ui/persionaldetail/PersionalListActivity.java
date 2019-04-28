@@ -22,6 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 /**
  * 所有官员新闻列表
@@ -81,7 +82,7 @@ public class PersionalListActivity extends DailyActivity implements HeaderRefres
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                ZBToast.showShort(getBaseContext(), errMsg);
             }
 
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(mRecycler) : null).exe();

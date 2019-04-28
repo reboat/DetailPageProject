@@ -13,7 +13,6 @@ import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.ListSpaceDivider;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -28,6 +27,7 @@ import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 /**
  * 官员相关新闻fragment
@@ -129,7 +129,7 @@ public class PersionalRelateFragment extends DailyFragment implements HeaderRefr
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getContext(), errMsg);
+                ZBToast.showShort(getContext(), errMsg);
             }
 
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).exe(official_id);

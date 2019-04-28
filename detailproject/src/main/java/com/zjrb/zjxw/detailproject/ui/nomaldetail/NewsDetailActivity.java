@@ -36,7 +36,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -78,6 +77,7 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
@@ -291,7 +291,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         }
 
         if (!NetUtils.isAvailable(getApplication())) {
-            T.showShort(getContext(), getString(R.string.module_detail_no_network));
+            ZBToast.showShort(getContext(), getString(R.string.module_detail_no_network));
         }
     }
 
@@ -332,7 +332,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                     topHolder.getShareView().setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
-                    T.showShortNow(NewsDetailActivity.this, errMsg);
+                    ZBToast.showShort(NewsDetailActivity.this, errMsg);
                 }
             }
         });
@@ -485,7 +485,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
-            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
+            ZBToast.showShort(this, getString(R.string.module_detail_you_have_liked));
             return;
         }
         new DraftPraiseTask(new LoadingCallBack<Void>() {
@@ -500,16 +500,16 @@ final public class NewsDetailActivity extends DailyActivity implements
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
-                    T.showShort(getBaseContext(), "已点赞成功");
+                    ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
-                    T.showShort(getBaseContext(), errMsg);
+                    ZBToast.showShort(getBaseContext(), errMsg);
                 }
 
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
+                ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -641,7 +641,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        T.showShortNow(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -652,7 +652,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        T.showShortNow(NewsDetailActivity.this, "取消订阅失败");
+                        ZBToast.showShort(NewsDetailActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -664,7 +664,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            T.showShortNow(getApplicationContext(), "订阅成功");
+                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -675,7 +675,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            T.showShortNow(NewsDetailActivity.this, "订阅失败");
+                            ZBToast.showShort(NewsDetailActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

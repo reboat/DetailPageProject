@@ -44,6 +44,7 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 /**
  * 详情页/评论列表item holder
@@ -330,7 +331,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 praiseComment(mData.getId());
             } else {
                 //已点赞
-                T.showShortNow(itemView.getContext(), itemView.getContext().getString(R.string.module_detail_you_have_liked));
+                ZBToast.showShort(itemView.getContext(), itemView.getContext().getString(R.string.module_detail_you_have_liked));
             }
         } else if (view.getId() == R.id.tv_delete) {
             //弹框
@@ -437,7 +438,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                 mData.setLike_count((mData.getLike_count() + 1));
                 mData.setLiked(true);
                 mPriseNum.setText(mData.getLike_count() + "赞");
-                T.showShort(itemView.getContext(), "点赞成功");
+                ZBToast.showShort(itemView.getContext(), "点赞成功");
             }
 
             @Override
@@ -447,7 +448,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(itemView.getContext(), errMsg);
+                ZBToast.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);
     }
@@ -495,7 +496,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(itemView.getContext(), errMsg);
+                ZBToast.showShort(itemView.getContext(), errMsg);
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);
     }

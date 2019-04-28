@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
@@ -26,7 +25,6 @@ import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.FooterLoadMore;
 import com.zjrb.core.recycleView.LoadMore;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -70,6 +68,7 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -233,7 +232,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
                     showEmptyNewsDetail();
                 } else {
-                    T.showShortNow(ActivityTopicActivity.this, errMsg);
+                    ZBToast.showShort(ActivityTopicActivity.this, errMsg);
                 }
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mContainer)).exe(mArticleId, mFromChannel);
@@ -335,7 +334,7 @@ public class ActivityTopicActivity extends DailyActivity implements
             @Override
             public void onSuccess(Void baseInnerData) {
                 mAdapter.updateSubscribeInfo();
-                T.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
+                ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
             }
 
             @Override
@@ -345,7 +344,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShortNow(ActivityTopicActivity.this, errMsg);
+                ZBToast.showShort(ActivityTopicActivity.this, errMsg);
             }
 
         }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), true);
@@ -375,7 +374,7 @@ public class ActivityTopicActivity extends DailyActivity implements
         if (mDetailData == null) return;
         // 点赞
         if (mDetailData.getArticle().isLiked()) {
-            T.showNow(this, getString(R.string.module_detail_you_have_liked), Toast.LENGTH_SHORT);
+            ZBToast.showShort(this, getString(R.string.module_detail_you_have_liked));
             return;
         }
         new DraftPraiseTask(new LoadingCallBack<Void>() {
@@ -390,15 +389,15 @@ public class ActivityTopicActivity extends DailyActivity implements
                 if (errCode == 50013) {
                     mDetailData.getArticle().setLiked(true);
                     mMenuPrised.setSelected(true);
-                    T.showShort(getBaseContext(), "已点赞成功");
+                    ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
-                    T.showShort(getBaseContext(), errMsg);
+                    ZBToast.showShort(getBaseContext(), errMsg);
                 }
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
-                T.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
+                ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mDetailData.getArticle().setLiked(true);
                 mMenuPrised.setSelected(true);
             }
@@ -493,7 +492,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        T.showShortNow(ActivityTopicActivity.this, "取消订阅失败");
+                        ZBToast.showShort(ActivityTopicActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
@@ -516,7 +515,7 @@ public class ActivityTopicActivity extends DailyActivity implements
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            T.showShortNow(ActivityTopicActivity.this, "订阅失败");
+                            ZBToast.showShort(ActivityTopicActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), true);

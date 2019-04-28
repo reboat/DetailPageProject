@@ -38,6 +38,7 @@ import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 
@@ -120,7 +121,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getBaseContext(), errMsg);
+                ZBToast.showShort(getBaseContext(), errMsg);
             }
         }).setTag(this).bindLoadViewHolder(replaceLoad(mLyContailer)).exe(official_id);
     }

@@ -30,6 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.C;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
 
@@ -137,7 +138,7 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
 
             @Override
             public void onError(String errMsg, int errCode) {
-                T.showShort(getContext(), errMsg);
+                ZBToast.showShort(getContext(), errMsg);
             }
         }).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getNative_live_info().getLive_id(), start, size, isResort);
     }
@@ -166,14 +167,14 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     public void onResume() {
         super.onResume();
         //解决8.1系统bug 当横屏返回竖屏activity时 竖屏activity会先拉成横屏再变成竖屏
-        if (adapter!=null){
+        if (adapter != null) {
             adapter.setCanDestory(false);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     adapter.setCanDestory(true);
                 }
-            },500);
+            }, 500);
         }
     }
 

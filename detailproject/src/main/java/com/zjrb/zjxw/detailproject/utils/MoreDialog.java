@@ -49,6 +49,7 @@ import cn.daily.news.biz.core.share.BaseDialogFragment;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.RouteManager;
 
 /**
@@ -383,11 +384,11 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 if (!mBean.getArticle().isFollowed()) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                    ZBToast.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
                     mBean.getArticle().setFollowed(false);
-                    T.showShort(UIUtils.getApp(), "已取消收藏");
+                    ZBToast.showShort(UIUtils.getApp(), "已取消收藏");
                 }
 
                 dismissFragmentDialog();
@@ -405,9 +406,9 @@ public class MoreDialog extends BaseDialogFragment implements RadioGroup.OnCheck
                 if (errCode == 50013) {
                     ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_on));
                     mBean.getArticle().setFollowed(true);
-                    T.showShort(UIUtils.getApp(), "已收藏成功");
+                    ZBToast.showShort(UIUtils.getApp(), "已收藏成功");
                 } else {
-                    T.showShort(UIUtils.getApp(), errMsg);
+                    ZBToast.showShort(UIUtils.getApp(), errMsg);
                 }
                 dismissFragmentDialog();
             }

@@ -73,8 +73,24 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //标题(必填)
-        if (mData != null && mData.getArticle() != null && mData.getArticle().getDoc_title() != null) {
-            mTvTitle.setText(mData.getArticle().getDoc_title());
+        if (mData != null && mData.getArticle() != null) {
+            if (mData.getArticle().isNative_live()) {
+                if (mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getTitle())) {
+                    mTvTitle.setVisibility(View.VISIBLE);
+                    mTvTitle.setText(mData.getArticle().getNative_live_info().getTitle());
+                } else {
+                    mTvTitle.setVisibility(View.GONE);
+                }
+            } else {
+                if (!TextUtils.isEmpty(mData.getArticle().getDoc_title())) {
+                    mTvTitle.setVisibility(View.VISIBLE);
+                    mTvTitle.setText(mData.getArticle().getDoc_title());
+                } else {
+                    mTvTitle.setVisibility(View.GONE);
+                }
+            }
+        } else {
+            mTvTitle.setVisibility(View.GONE);
         }
         //红船号稿件
         if (isRedBoat) {
@@ -129,9 +145,9 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
         //阅读数
         if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
-            if(isVideoDetail){
+            if (isVideoDetail) {
                 mTvReadNum.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
                 mTvReadNum.setVisibility(View.VISIBLE);
                 mTvReadNum.setText(mData.getArticle().getRead_count_general());
             }

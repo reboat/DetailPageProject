@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -52,7 +50,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    //    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
@@ -65,19 +63,20 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), itemView.getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
-        mWebView.setWebContentsDebuggingEnabled(true);
+        //TODO WLJ 调试网页代码
+//        mWebView.setWebContentsDebuggingEnabled(true);
     }
 
     /**
      * 如需要动态加载css,可直接传入url
      * 新增接口拉取css和js
      */
-//    private String htmlResult = "";
-//    private String htmlBody = "";
+    private String htmlResult = "";
+    private String htmlBody = "";
     @Override
     public void bindView() {
-        String htmlBody = "";
-        String htmlResult;
+//        String htmlBody = "";
+//        String htmlResult;
 
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
@@ -93,36 +92,12 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
 
+        //JS
         if (sp != null) {
-            if (sp.article_detail_js != null && !sp.article_detail_js.isEmpty()) {
-                if (sp.js != null && !sp.js.isEmpty()) {
-                    sp.js.addAll(sp.article_detail_js);
-                    htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-                } else {
-                    htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.article_detail_js);
-                }
-            } else {
-                htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-            }
+            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
         } else {
             htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
         }
-
-
-//        List<String> newJs = new ArrayList<>();
-//        //JS
-//        if (sp != null) {
-//            if (sp.js != null && !sp.js.isEmpty()) {
-//                newJs.addAll(sp.js);
-//            }
-//
-//            if (sp.article_detail_js != null && !sp.article_detail_js.isEmpty()) {
-//                newJs.addAll(sp.article_detail_js);
-//            }
-//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, newJs);
-//        } else {
-//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
-//        }
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 

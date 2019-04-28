@@ -65,20 +65,21 @@
     </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
     <!--顶部tools bar 颜色渐变-->
-    <FrameLayout
+    <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:id="@+id/fy_container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
+        android:minHeight="48dp"
+        app:fitType="top"
         >
 
         <ImageView
             android:id="@+id/iv_top_bar_back"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="40dp"
+            android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:background="?attr/actionBarItemBackground"
-            android:layout_marginLeft="15dp"
             android:scaleType="center"
             android:src="@mipmap/module_biz_write_back"
             />
@@ -93,7 +94,7 @@
 
             <ImageView
                 android:id="@+id/iv_top_collect"
-                android:layout_width="22dp"
+                android:layout_width="24dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="30dp"
                 android:scaleType="center"
@@ -102,7 +103,7 @@
 
             <ImageView
                 android:id="@+id/iv_top_share"
-                android:layout_width="22dp"
+                android:layout_width="24dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"
                 android:scaleType="center"
@@ -111,7 +112,7 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
     <FrameLayout
         android:id="@+id/v_container"

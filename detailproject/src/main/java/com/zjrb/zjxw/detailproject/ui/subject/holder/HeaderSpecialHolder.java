@@ -86,7 +86,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     //聚合阅读
     private TextView mTvReadCopy;
     //标题
-    private FrameLayout fyContainer;
+    private FitWindowsFrameLayout fyContainer;
     //返回键、收藏、分享
     private ImageView ivback, ivCollect, ivShare;
     private FrameLayout mGroupCopy;
@@ -97,7 +97,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     public static final int MAX_DEFAULT_LINES = 3;
 
     //头部动效
-    public HeaderSpecialHolder(RecyclerView parent, TextView tvReadCopy, RecyclerView copy, FrameLayout view, FrameLayout groupCopy, OnClickChannelListener
+    public HeaderSpecialHolder(RecyclerView parent, TextView tvReadCopy, RecyclerView copy, FitWindowsFrameLayout view, FrameLayout groupCopy, OnClickChannelListener
             listener) {
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);

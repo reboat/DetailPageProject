@@ -37,7 +37,6 @@ import cn.daily.news.biz.core.DailyFragment;
 public class SpecialListFragment extends DailyFragment {
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
-    Unbinder unbinder;
     private String groupId;
     private SpecialListAdapter mAdapter;
 
@@ -53,7 +52,7 @@ public class SpecialListFragment extends DailyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.module_news_special_list_fragment, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
         initArgs();
         return view;
     }
@@ -111,9 +110,4 @@ public class SpecialListFragment extends DailyFragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

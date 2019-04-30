@@ -328,9 +328,32 @@ public class MoreDialogLink extends BaseDialogFragment {
                 if (bundle == null) {
                     bundle = new Bundle();
                 }
+                setCardAnalytics();
                 bundle.putSerializable("UmengShareBean", mBeanShare);
                 Nav.with(this).setExtras(bundle).toPath(RouteManager.ZB_CARD_SHARE);
             }
+        }
+    }
+
+    /**
+     * 点击新闻卡片埋点
+     */
+    private void setCardAnalytics() {
+        if (mBeanShare == null) return;
+        if (mBeanShare.isNewsCard()) { // 新闻卡片
+            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800019", "AppTabClick", false)
+                    .name("点击新闻卡片")
+                    .pageType(mBeanShare.getAnalyticsBean().getPageType())
+                    .clickTabName("新闻卡片")
+                    .build()
+                    .send();
+        } else {
+            new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800019", "AppTabClick", false)
+                    .name("点击栏目卡片")
+                    .pageType(mBeanShare.getAnalyticsBean().getPageType())
+                    .clickTabName("卡片")
+                    .build()
+                    .send();
         }
     }
 
@@ -493,26 +516,27 @@ public class MoreDialogLink extends BaseDialogFragment {
             if (!TextUtils.isEmpty(mBeanShare.getAnalyticsBean().getPageType()) && mBeanShare.getAnalyticsBean().getPageType().equals("官员页面")) {
                 shareClass = "官员";
             }
-            new Analytics.AnalyticsBuilder(getContext(), WMCode, UMCode, "NewsShare", false)
-                    .setEvenName(eventName)
-                    .setObjectID(mBeanShare.getAnalyticsBean().getObjectID())
-                    .setObjectName(mBeanShare.getAnalyticsBean().getObjectName())
-                    .setObjectType(mBeanShare.getAnalyticsBean().getObjectType())
-                    .setClassifyID(mBeanShare.getAnalyticsBean().getClassifyID())
-                    .setClassifyName(mBeanShare.getAnalyticsBean().getClassifyName())
-                    .setPageType(mBeanShare.getAnalyticsBean().getPageType())
-                    .setOtherInfo(mBeanShare.getAnalyticsBean().getOtherInfo())
-                    .setSelfObjectID(mBeanShare.getAnalyticsBean().getSelfobjectID())
-                    .setIscuccesee(isTrue)
-                    .setEventDetail(eventDetail)
-                    .newsID(mBeanShare.getAnalyticsBean().getObjectID())
-                    .selfNewsID(mBeanShare.getArticleId())
-                    .newsTitle(mBeanShare.getTitle())
-                    .selfChannelID(mBeanShare.getAnalyticsBean().getClassifyID())
-                    .channelName(mBeanShare.getAnalyticsBean().getClassifyName())
+            new Analytics.AnalyticsBuilder(UIUtils.getContext(), WMCode, "NewsShare", false)
+                    .name(eventName)
+                    .selfObjectID(mBeanShare.getAnalyticsBean().getSelfobjectID())
+                    .columnID(mBeanShare.getAnalyticsBean().getColumn_id())
+                    .classShortName(mBeanShare.getAnalyticsBean().getClassifyName())
+                    .objectShortName(mBeanShare.getTitle())
+                    .objectType("C01")
+                    .classID(mBeanShare.getAnalyticsBean().getClassifyID())
                     .pageType(mBeanShare.getAnalyticsBean().getPageType())
-                    .shareType(eventDetail)
+                    .ilurl(mBeanShare.getAnalyticsBean().getUrl())
+                    .action(eventDetail)
+                    .objectID(mBeanShare.getAnalyticsBean().getObjectID())
+                    .columnName(mBeanShare.getAnalyticsBean().getColumn_name())
+                    .selfNewsID(mBeanShare.getArticleId())
                     .shareClass(shareClass)
+                    .shareType(eventDetail)
+                    .pubUrl(mBeanShare.getAnalyticsBean().getUrl())
+                    .selfChannelID(mBeanShare.getAnalyticsBean().getClassifyID())
+                    .newsID(mBeanShare.getAnalyticsBean().getObjectID())
+                    .newsTitle(mBeanShare.getTitle())
+                    .channelName(mBeanShare.getAnalyticsBean().getClassifyName())
                     .build()
                     .send();
         }

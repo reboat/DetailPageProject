@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -20,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyFragment;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -107,7 +107,7 @@ public class ImageMoreFragment extends DailyFragment {
             OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                     .setObjectID(mBean.getArticle().getMlf_id() + "")
                     .setObjectName(mBean.getArticle().getDoc_title())
-                    .setObjectType(ObjectType.NewsType).setUrl(mBean.getArticle().getUrl())
+                    .setObjectType(ObjectType.C01).setUrl(mBean.getArticle().getUrl())
                     .setClassifyID(mBean.getArticle().getChannel_id() + "")
                     .setClassifyName(mBean.getArticle().getChannel_name())
                     .setPageType("新闻详情页")

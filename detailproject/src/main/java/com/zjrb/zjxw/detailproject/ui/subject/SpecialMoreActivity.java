@@ -8,10 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.ui.widget.CompatViewPager;
-import com.zjrb.core.utils.T;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -24,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
@@ -144,7 +143,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mDraftDetailBean.getArticle().getMlf_id() + "")
                         .setObjectName(mDraftDetailBean.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType).setUrl(mDraftDetailBean.getArticle().getUrl())
+                        .setObjectType(ObjectType.C01).setUrl(mDraftDetailBean.getArticle().getUrl())
                         .setClassifyID(mDraftDetailBean.getArticle().getChannel_id() + "")
                         .setClassifyName(mDraftDetailBean.getArticle().getChannel_name())
                         .setPageType("新闻详情页")

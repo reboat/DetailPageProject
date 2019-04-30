@@ -17,11 +17,9 @@ import android.widget.TextView;
 
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -37,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
@@ -274,7 +273,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setUrl(mNewsDetail.getArticle().getUrl())

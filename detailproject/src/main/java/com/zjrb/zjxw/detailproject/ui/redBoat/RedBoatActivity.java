@@ -329,7 +329,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                builder.setPercentage(mScale + "");
+                builder.pagePercent(mScale + "");
             }
             builder.readPercent(mScale + "");
             mAnalytics = builder.build();

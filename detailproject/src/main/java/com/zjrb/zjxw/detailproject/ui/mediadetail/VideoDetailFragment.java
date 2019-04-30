@@ -48,9 +48,10 @@ public class VideoDetailFragment extends DailyFragment {
     private float mScale;
     private Analytics.AnalyticsBuilder builder;
 
-    public NewsDetailAdapter getAdapter(){
+    public NewsDetailAdapter getAdapter() {
         return mAdapter;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +133,7 @@ public class VideoDetailFragment extends DailyFragment {
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                builder.setPercentage(mScale + "");
+                builder.pagePercent(mScale + "");
             }
             builder.readPercent(mScale + "");
             Analytics mAnalytics = builder.build();

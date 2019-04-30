@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.permission.IPermissionCallBack;
@@ -57,6 +56,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -552,7 +552,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mData.getArticle().getMlf_id() + "")
                         .setObjectName(mData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType).setUrl(mData.getArticle().getUrl())
+                        .setObjectType(ObjectType.C01)
+                        .setUrl(mData.getArticle().getUrl())
                         .setClassifyID(mData.getArticle().getChannel_id() + "")
                         .setClassifyName(mData.getArticle().getChannel_name())
                         .setPageType("图集详情页")
@@ -910,7 +911,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         super.onDestroy();
         if (mData != null && mData.getArticle() != null) {
             if (builder != null) {
-                builder.setPercentage(mReadingScale + "");
+                builder.pagePercent(mReadingScale + "");
                 builder.readPercent(mReadingScale + "");
                 mAnalytics = builder.build();
                 if (mAnalytics != null) {

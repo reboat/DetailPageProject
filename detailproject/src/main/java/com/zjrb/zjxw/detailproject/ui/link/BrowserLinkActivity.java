@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.UIUtils;
@@ -39,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
@@ -368,7 +368,7 @@ public class BrowserLinkActivity extends DailyActivity {
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setUrl(mNewsDetail.getArticle().getUrl())

@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -32,7 +31,6 @@ import com.zjrb.core.permission.IPermissionOperate;
 import com.zjrb.core.permission.Permission;
 import com.zjrb.core.permission.PermissionManager;
 import com.zjrb.core.utils.ImageUtils;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -45,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.BaseData;
 import cn.daily.news.biz.core.nav.Nav;
@@ -140,7 +139,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         } else {
             ivCollect.getDrawable().setLevel(UIUtils.getApp().getResources().getInteger(R.integer.level_collect_off));
         }
-        if (mBeanShare !=null && !mBeanShare.isNewsCard()) {
+        if (mBeanShare != null && !mBeanShare.isNewsCard()) {
             tvCard.setText("卡片");
         } else {
             tvCard.setText("新闻卡片");
@@ -218,19 +217,19 @@ public class MoreDialogLink extends BaseDialogFragment {
         if (i == R.id.ll_module_core_more_collect) {
             if (mBean != null && mBean.getArticle() != null) {
                 if (!mBean.getArticle().isFollowed()) {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "A0024", "Collect", false)
-                            .setEvenName("点击收藏")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "")
+                    new Analytics.AnalyticsBuilder(getContext(), "A0024", "Collect", false)
+                            .name("点击收藏")
+                            .objectID(mBean.getArticle().getMlf_id() + "")
+                            .objectShortName(mBean.getArticle().getDoc_title())
+                            .seObjectType(ObjectType.C01)
+                            .classID(mBean.getArticle().getChannel_id())
+                            .classShortName(mBean.getArticle().getChannel_name())
+//                            .setPageType("新闻详情页")
+//                            .setOtherInfo(Analytics.newOtherInfo()
+//                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+//                                    .put("subject", "")
+//                                    .toString())
+                            .selfObjectID(mBean.getArticle().getId() + "")
                             .newsID(mBean.getArticle().getMlf_id() + "")
                             .selfNewsID(mBean.getArticle().getId() + "")
                             .newsTitle(mBean.getArticle().getDoc_title())
@@ -243,19 +242,20 @@ public class MoreDialogLink extends BaseDialogFragment {
                             .build()
                             .send();
                 } else {
-                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "A0124", "Collect", false)
-                            .setEvenName("取消收藏")
-                            .setObjectID(mBean.getArticle().getMlf_id() + "")
-                            .setObjectName(mBean.getArticle().getDoc_title())
-                            .setObjectType(ObjectType.NewsType)
-                            .setClassifyID(mBean.getArticle().getChannel_id())
-                            .setClassifyName(mBean.getArticle().getChannel_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfObjectID(mBean.getArticle().getId() + "").newsID(mBean.getArticle().getMlf_id() + "")
+                    new Analytics.AnalyticsBuilder(getContext(), "A0124", "Collect", false)
+                            .name("取消收藏")
+                            .objectID(mBean.getArticle().getMlf_id() + "")
+                            .objectShortName(mBean.getArticle().getDoc_title())
+                            .seObjectType(ObjectType.C01)
+                            .classID(mBean.getArticle().getChannel_id())
+                            .classShortName(mBean.getArticle().getChannel_name())
+//                            .setPageType("新闻详情页")
+//                            .setOtherInfo(Analytics.newOtherInfo()
+//                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
+//                                    .put("subject", "")
+//                                    .toString())
+                            .selfObjectID(mBean.getArticle().getId() + "")
+                            .newsID(mBean.getArticle().getMlf_id() + "")
                             .selfNewsID(mBean.getArticle().getId() + "")
                             .newsTitle(mBean.getArticle().getDoc_title())
                             .selfChannelID(mBean.getArticle().getChannel_id())
@@ -272,14 +272,14 @@ public class MoreDialogLink extends BaseDialogFragment {
             newsTopicCollect();
         } else if (i == R.id.ll_module_core_more_feed_back) {
             if (mBean != null & mBean.getArticle() != null) {
-                new Analytics.AnalyticsBuilder(getContext(), "800007", "800007", "AppTabClick", false)
-                        .setEvenName("点击反馈问题")
+                new Analytics.AnalyticsBuilder(getContext(), "800007", "AppTabClick", false)
+                        .name("点击反馈问题")
 //                        .setObjectID(mBean.getArticle().getMlf_id() + "")
 //                        .setObjectName(mBean.getArticle().getDoc_title())
 //                        .setObjectType(ObjectType.NewsType)
 //                        .setClassifyID(mBean.getArticle().getChannel_id())
 //                        .setClassifyName(mBean.getArticle().getChannel_name())
-                        .setPageType("新闻详情页")
+//                        .setPageType("新闻详情页")
 //                        .setOtherInfo(Analytics.newOtherInfo()
 //                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
 //                                .put("subject", "")

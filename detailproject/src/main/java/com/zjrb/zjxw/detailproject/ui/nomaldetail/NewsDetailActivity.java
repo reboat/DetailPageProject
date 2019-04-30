@@ -21,7 +21,6 @@ import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
@@ -52,6 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -467,7 +467,8 @@ final public class NewsDetailActivity extends DailyActivity implements
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType).setUrl(mNewsDetail.getArticle().getUrl())
+                        .setObjectType(ObjectType.C01)
+                        .setUrl(mNewsDetail.getArticle().getUrl())
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
@@ -606,7 +607,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         if (builder != null) {
             //阅读深度
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                builder.setPercentage(mScale + "");
+                builder.pagePercent(mScale + "");
             }
             builder.readPercent(mScale + "");
             Analytics mAnalytics = builder.build();

@@ -19,7 +19,6 @@ import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.commonwebview.webview.CommonWebView;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
@@ -45,6 +44,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -327,7 +327,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                         .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
                         .setObjectName(mNewsDetail.getArticle().getDoc_title())
                         .setUrl(mNewsDetail.getArticle().getUrl())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")

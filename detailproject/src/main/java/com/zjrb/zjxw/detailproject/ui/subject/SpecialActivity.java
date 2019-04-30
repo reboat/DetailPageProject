@@ -15,11 +15,9 @@ import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
@@ -44,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.network.compatible.APIExpandCallBack;
@@ -167,7 +166,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                     OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                             .setObjectID(mArticle.getMlf_id() + "")
                             .setObjectName(mArticle.getDoc_title())
-                            .setObjectType(ObjectType.NewsType).setUrl(mArticle.getUrl())
+                            .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())
                             .setPageType("新闻详情页")

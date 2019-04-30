@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
@@ -19,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
 import cn.daily.news.biz.core.glide.PH;
 
@@ -74,15 +74,14 @@ public class NewsActivityMiddleHolder extends BaseRecyclerViewHolder<DraftDetail
             //栏目订阅
             if (view.getId() == R.id.tv_column_subscribe) {
                 if (mData != null && mData.getArticle() != null && !mData.getArticle().isColumn_subscribed()) {
-                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0114", "A0114", "SubColumn", false)
-                            .setEvenName("订阅号取消订阅")
-                            .setObjectID(mData.getArticle().getColumn_id() + "")
-                            .setObjectType(ObjectType.ColumnType)
-                            .setObjectName(mData.getArticle().getColumn_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("customObjectType", "RelatedColumnType")
-                                    .toString())
+                    new Analytics.AnalyticsBuilder(itemView.getContext(), "A0114", "SubColumn", false)
+                            .name("订阅号取消订阅")
+                            .selfObjectID(mData.getArticle().getColumn_id() + "")
+                            .seObjectType(ObjectType.C90)
+                            .pageType("新闻详情页")
+//                            .setOtherInfo(Analytics.newOtherInfo()
+//                                    .put("customObjectType", "RelatedColumnType")
+//                                    .toString())
                             .columnID(mData.getArticle().getColumn_id() + "")
                             .columnName(mData.getArticle().getColumn_name())
                             .pageType("订阅首页")

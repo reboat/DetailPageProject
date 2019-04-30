@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
-import com.trs.tasdk.entity.ObjectType;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadMoreListener;
 import com.zjrb.core.load.LoadingCallBack;
@@ -60,6 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -444,7 +444,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                         .setObjectID(mDetailData.getArticle().getMlf_id() + "")
                         .setObjectName(mDetailData.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.NewsType)
+                        .setObjectType(ObjectType.C01)
                         .setClassifyID(mDetailData.getArticle().getChannel_id() + "")
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
                         .setUrl(mDetailData.getArticle().getUrl())
@@ -610,7 +610,7 @@ public class ActivityTopicActivity extends DailyActivity implements
         //阅读深度
         if (mDetailData != null && mDetailData.getArticle() != null) {
             if (builder != null) {
-                builder.setPercentage(mScale + "");
+                builder.pagePercent(mScale + "");
                 builder.readPercent(mScale + "");
                 mAnalytics = builder.build();
                 if (mAnalytics != null) {

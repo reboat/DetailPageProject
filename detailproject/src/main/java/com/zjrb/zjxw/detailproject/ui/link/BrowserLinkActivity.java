@@ -449,13 +449,13 @@ public class BrowserLinkActivity extends DailyActivity {
         super.onPause();
         mWebView.onPause();
         //新华智云
-        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-                    .setUrl(mNewsDetail.getArticle().getUrl())
-                    .build()
-                    .send();
-        }
+//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+//                    .setUrl(mNewsDetail.getArticle().getUrl())
+//                    .build()
+//                    .send();
+//        }
 
     }
 
@@ -464,13 +464,13 @@ public class BrowserLinkActivity extends DailyActivity {
         super.onResume();
         mWebView.onResume();
         //新华智云
-        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-                    .setUrl(mNewsDetail.getArticle().getUrl())
-                    .build()
-                    .send();
-        }
+//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+//                    .setUrl(mNewsDetail.getArticle().getUrl())
+//                    .build()
+//                    .send();
+//        }
 
     }
 

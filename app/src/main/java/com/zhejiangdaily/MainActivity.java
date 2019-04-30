@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.umeng.commonsdk.debug.I;
-
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.nav.Nav;

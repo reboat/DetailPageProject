@@ -60,8 +60,7 @@ public class VideoDetailPicHolder extends BaseRecyclerViewHolder<NativeLiveBean.
         } else {
             tvTitle.setVisibility(View.GONE);
         }
-
-        //TODO WLJ 这里刷新有问题
+        //九宫图片
         if (mData.getPics() != null && mData.getPics().size() > 0) {
             rvImgs.setVisibility(View.VISIBLE);
             if (mAdapter == null) {

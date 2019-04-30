@@ -1,6 +1,5 @@
 package com.zjrb.zjxw.detailproject.ui.topic.adapter;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;

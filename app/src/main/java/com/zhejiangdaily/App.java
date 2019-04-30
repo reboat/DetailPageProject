@@ -1,18 +1,13 @@
 package com.zhejiangdaily;
 
 import android.support.multidex.MultiDexApplication;
-import android.text.TextUtils;
 
-import com.aliya.uimode.UiModeManager;
 import com.netease.mobsec.rjsb.watchman;
 import com.zjrb.core.utils.AppUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.daily.db.DatabaseLoader;
 
-import cn.daily.news.biz.core.db.SettingManager;
-import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.network.DailyNetworkManager;
-import cn.daily.news.biz.core.utils.BaseInit;
 import cn.daily.news.update.UpdateManager;
 
 public class App extends MultiDexApplication {

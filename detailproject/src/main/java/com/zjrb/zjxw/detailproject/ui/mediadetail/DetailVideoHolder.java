@@ -29,22 +29,24 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
         layoutPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UmengShareBean shareBean = UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setNewsCard(true)
-                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
-                        .setArticleId(mNewsDetail.getArticle().getId() + "")
-                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                        .setTextContent(mNewsDetail.getArticle().getSummary())
-                        .setTitle(mNewsDetail.getArticle().getDoc_title())
-                        .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
-                        .setShareType("文章");
-                DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(itemView.getContext())
-                        .setImageUrl(mData.getVideo_cover())
-                        .setPlayUrl(mData.getVideo_url())
-                        .setUmengShareBean(shareBean)
-                        .setPlayContainer(mVideoContainer);
-                DailyPlayerManager.get().listPlay(builder);
+                if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                    UmengShareBean shareBean = UmengShareBean.getInstance()
+                            .setSingle(false)
+                            .setNewsCard(true)
+                            .setCardUrl(mNewsDetail.getArticle().getCard_url())
+                            .setArticleId(mNewsDetail.getArticle().getId() + "")
+                            .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                            .setTextContent(mNewsDetail.getArticle().getSummary())
+                            .setTitle(mNewsDetail.getArticle().getDoc_title())
+                            .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
+                            .setShareType("文章");
+                    DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(itemView.getContext())
+                            .setImageUrl(mData.getVideo_cover())
+                            .setPlayUrl(mData.getVideo_url())
+                            .setUmengShareBean(shareBean)
+                            .setPlayContainer(mVideoContainer);
+                    DailyPlayerManager.get().listPlay(builder);
+                }
             }
         });
     }

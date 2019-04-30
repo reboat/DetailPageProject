@@ -224,11 +224,6 @@ public class MoreDialogLink extends BaseDialogFragment {
                             .seObjectType(ObjectType.C01)
                             .classID(mBean.getArticle().getChannel_id())
                             .classShortName(mBean.getArticle().getChannel_name())
-//                            .setPageType("新闻详情页")
-//                            .setOtherInfo(Analytics.newOtherInfo()
-//                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-//                                    .put("subject", "")
-//                                    .toString())
                             .selfObjectID(mBean.getArticle().getId() + "")
                             .newsID(mBean.getArticle().getMlf_id() + "")
                             .selfNewsID(mBean.getArticle().getId() + "")
@@ -249,11 +244,6 @@ public class MoreDialogLink extends BaseDialogFragment {
                             .seObjectType(ObjectType.C01)
                             .classID(mBean.getArticle().getChannel_id())
                             .classShortName(mBean.getArticle().getChannel_name())
-//                            .setPageType("新闻详情页")
-//                            .setOtherInfo(Analytics.newOtherInfo()
-//                                    .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-//                                    .put("subject", "")
-//                                    .toString())
                             .selfObjectID(mBean.getArticle().getId() + "")
                             .newsID(mBean.getArticle().getMlf_id() + "")
                             .selfNewsID(mBean.getArticle().getId() + "")
@@ -274,17 +264,6 @@ public class MoreDialogLink extends BaseDialogFragment {
             if (mBean != null & mBean.getArticle() != null) {
                 new Analytics.AnalyticsBuilder(getContext(), "800007", "AppTabClick", false)
                         .name("点击反馈问题")
-//                        .setObjectID(mBean.getArticle().getMlf_id() + "")
-//                        .setObjectName(mBean.getArticle().getDoc_title())
-//                        .setObjectType(ObjectType.NewsType)
-//                        .setClassifyID(mBean.getArticle().getChannel_id())
-//                        .setClassifyName(mBean.getArticle().getChannel_name())
-//                        .setPageType("新闻详情页")
-//                        .setOtherInfo(Analytics.newOtherInfo()
-//                                .put("relatedColumn", mBean.getArticle().getColumn_id() + "")
-//                                .put("subject", "")
-//                                .toString())
-//                        .setSelfObjectID(mBean.getArticle().getId() + "")
                         .pageType("新闻详情页")
                         .clickTabName("反馈问题")
                         .build()
@@ -479,37 +458,30 @@ public class MoreDialogLink extends BaseDialogFragment {
         if (mBeanShare != null && mBeanShare.getAnalyticsBean() != null) {
             String eventName = "";
             String WMCode = "";
-            String UMCode = "";
             String eventDetail = "";
             String shareClass = "文章";
             if (share_media == SHARE_MEDIA.WEIXIN) {
                 WMCode = "A0022";
-                UMCode = "60003";
                 eventName = "微信分享；微信分享成功";
                 eventDetail = "微信";
             } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
                 WMCode = "A0022";
-                UMCode = "60004";
                 eventName = "朋友圈分享；朋友圈分享成功";
                 eventDetail = "朋友圈";
             } else if (share_media == SHARE_MEDIA.QQ) {
                 WMCode = "A0022";
-                UMCode = "800020";
                 eventName = "QQ分享；QQ分享成功";
                 eventDetail = "QQ";
             } else if (share_media == SHARE_MEDIA.SINA) {
                 WMCode = "A0022";
-                UMCode = "60001";
                 eventName = "微博分享；微博分享成功";
                 eventDetail = "微博";
             } else if (share_media == SHARE_MEDIA.QZONE) {
                 WMCode = "A0022";
-                UMCode = "800019";
                 eventName = "QQ空间分享;QQ空间分享成功";
                 eventDetail = "QQ空间";
             } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
                 WMCode = "A0022";
-                UMCode = "800032";
                 eventName = "钉钉分享;钉钉分享成功";
                 eventDetail = "钉钉";
             }

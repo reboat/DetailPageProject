@@ -76,6 +76,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     public NewsDetailAdapter(List datas, boolean isVideoDetail) {
         super(datas);
+        if(!datas.isEmpty()){
+            detailBean = (DraftDetailBean) datas.get(0);
+        }
         this.isVideoDetail = isVideoDetail;
         setOnItemClickListener(this);
     }
@@ -169,6 +172,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     /**
      * 当webview加载出后再显示相关转移等显示全部
+     * 对于直播稿，该方法不会调用
      */
     public void showAll() {
         //只加载一次

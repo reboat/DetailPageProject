@@ -38,7 +38,6 @@ import cn.daily.news.biz.core.utils.RouteManager;
 public class VideoDetailFragment extends DailyFragment {
     public static final String FRAGMENT_DETAIL_VIDEO = "fragment_detail_video";
     public static final String FRAGMENT_DETAIL_BEAN = "fragment_detail_bean";
-    public static final String FRAGMENT_LIST_LISTENER = "fragment_list_listener";
     @BindView(R2.id.lv_notice)
     RecyclerView lvNotice;
 

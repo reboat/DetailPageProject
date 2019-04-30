@@ -317,7 +317,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         } else if (v.getId() == R.id.tv_top_bar_title || v.getId() == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
-                Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());
+                Nav.with(UIUtils.getContext()).to(mNewsDetail.getArticle().getColumn_url());
             }
         }
     }

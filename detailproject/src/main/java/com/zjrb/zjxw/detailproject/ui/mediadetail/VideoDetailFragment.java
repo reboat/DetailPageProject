@@ -43,11 +43,14 @@ public class VideoDetailFragment extends DailyFragment {
     RecyclerView lvNotice;
 
     private DraftDetailBean mNewsDetail;
-    private NewsDetailAdapter mAdapter;
+    public NewsDetailAdapter mAdapter;
     private Bundle bundle;
     private float mScale;
     private Analytics.AnalyticsBuilder builder;
 
+    public NewsDetailAdapter getAdapter(){
+        return mAdapter;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +79,7 @@ public class VideoDetailFragment extends DailyFragment {
         List datas = new ArrayList<>();
         //添加头布局
         datas.add(mNewsDetail);
-        //非直播
+        //非直播有详情部分
         if (!mNewsDetail.getArticle().isNative_live()) {
             datas.add(mNewsDetail);
         } else {

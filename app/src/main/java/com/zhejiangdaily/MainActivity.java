@@ -37,17 +37,17 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //        CommentWindowDialog.newInstance(new CommentDialogBean("740555", null)).show((
 //                        (FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(),
 //                "CommentWindowDialog");
-//        Nav.with(this).to("https://apibeta.8531.cn/api/article/detail?id=1157099");
+//        Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156949");
 //        Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156923&native=1&#xA0");
 
         //专题
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1114462");
-//            Nav.with(this).toPath("https://zjbeta.8531.cn/news.html?id=1157164");
-//        Nav.with(this).toPath("https://zjbeta.8531.cn/live.html?id=1156923&native=1");
+//            Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=1156988");
+        Nav.with(this).toPath("https://zjbeta.8531.cn/live.html?id=1156923&native=1");
 
 
 
-        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
+//        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 //        Nav.with(this).to("www.baidu.com");
 //        Nav.with(this).to("https://zj.zjol.com.cn/news.html?id=1153276");
 

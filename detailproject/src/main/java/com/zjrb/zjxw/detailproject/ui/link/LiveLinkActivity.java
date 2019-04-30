@@ -262,7 +262,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
-        //不允许点赞及评论
+        //不允许点赞及评论,在左边显示更多
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
@@ -270,30 +270,11 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             ivSetting.setVisibility(View.GONE);
             ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
-            ivSetting.setVisibility(View.VISIBLE);
-            ivSettingReplace.setVisibility(View.GONE);
-
-            //是否允许点赞
-            if (data.getArticle().isLike_enabled()) {
-                mMenuPrised.setVisibility(View.VISIBLE);
-                mMenuPrised.setSelected(data.getArticle().isLiked());
-            } else {
-                mMenuPrised.setVisibility(View.GONE);
-            }
-
-            //禁止评论，隐藏评论框及评论按钮
-            if (data.getArticle().getComment_level() == 0) {
-                mFyContainer.setVisibility(View.GONE);
-                ly_comment_num.setVisibility(View.GONE);
-                mMenuPrised.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.GONE);
-                ivPrisedRelpace.setVisibility(View.VISIBLE);
-                ivSettingReplace.setVisibility(View.VISIBLE);
-            } else {
-                mMenuPrised.setVisibility(View.VISIBLE);
-                ivSetting.setVisibility(View.VISIBLE);
+            //允许评论 在右边显示
+            if (data.getArticle().getComment_level() != 0) {
                 ivPrisedRelpace.setVisibility(View.GONE);
                 ivSettingReplace.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.VISIBLE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -303,6 +284,24 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 } else {
                     mTvCommentsNum.setVisibility(View.INVISIBLE);
                 }
+                //是否允许点赞
+                if (data.getArticle().isLike_enabled()) {
+                    mMenuPrised.setVisibility(View.VISIBLE);
+                    mMenuPrised.setSelected(data.getArticle().isLiked());
+                } else {
+                    mMenuPrised.setVisibility(View.GONE);
+                }
+            } else {//禁止评论，在左边显示
+                mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.GONE);
+                mMenuPrised.setVisibility(View.GONE);
+                if (data.getArticle().isLike_enabled()) {
+                    ivPrisedRelpace.setVisibility(View.VISIBLE);
+                } else {
+                    ivPrisedRelpace.setVisibility(View.GONE);
+                }
+                ivSettingReplace.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -444,7 +443,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         } else if (view.getId() == R.id.tv_top_bar_title || view.getId() == R.id.iv_top_subscribe_icon) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
-                Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());
+                Nav.with(UIUtils.getContext()).to(mNewsDetail.getArticle().getColumn_url());
             }
         }
     }

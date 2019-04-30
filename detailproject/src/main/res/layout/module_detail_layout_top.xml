@@ -7,7 +7,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/_ffffff_202124">
 
-    <!--宽高比为3:2-->
+    <!--宽高比为3:2 题图-->
     <com.aliya.uimode.widget.MaskImageView
         android:id="@+id/iv_top_bg"
         android:layout_width="match_parent"

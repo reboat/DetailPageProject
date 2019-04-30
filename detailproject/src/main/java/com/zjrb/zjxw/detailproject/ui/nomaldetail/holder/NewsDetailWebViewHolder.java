@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -65,6 +63,14 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
 //        mWebView.setWebContentsDebuggingEnabled(true);
+    }
+
+    public CommonWebView getWebView() {
+        return mWebView;
+    }
+
+    public DetailWebViewImpl getWebViewImpl() {
+        return webImpl;
     }
 
     /**

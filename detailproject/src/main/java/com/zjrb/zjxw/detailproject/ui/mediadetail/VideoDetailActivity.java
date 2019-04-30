@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
@@ -34,7 +33,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
-import com.zjrb.core.utils.T;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -238,7 +236,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
-            if (TextUtils.isEmpty(url)){
+            if (TextUtils.isEmpty(url)) {
                 return;
             }
             UmengShareBean shareBean = UmengShareBean.getInstance()
@@ -277,6 +275,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
+    private NewsDetailAdapter aDapter;
 
     //初始化视频/评论fragment
     private void initViewPage(DraftDetailBean bean) {
@@ -292,7 +291,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundleVideo);
         }
         videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
-
+        aDapter = videoDetailFragment.getAdapter();
         //直播间
         if (bean.getArticle().isNative_live()) {
             Bundle bundleLive = BundleHelper.creatBundle(IKey
@@ -414,16 +413,15 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
     private void initViewState(DraftDetailBean data) {
-        //不允许点赞及评论
+        ivSettingReplace.setVisibility(View.GONE);
+        ivPrisedRelpace.setVisibility(View.GONE);
+        //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
-            ivSetting.setVisibility(View.GONE);
-            ivSettingReplace.setVisibility(View.VISIBLE);
+            ivSetting.setVisibility(View.VISIBLE);
         } else {
             ivSetting.setVisibility(View.VISIBLE);
-            ivSettingReplace.setVisibility(View.GONE);
-
             //是否允许点赞
             if (data.getArticle().isLike_enabled()) {
                 mMenuPrised.setVisibility(View.VISIBLE);
@@ -431,27 +429,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else {
                 mMenuPrised.setVisibility(View.GONE);
             }
-
+            //是否允许评论
             //禁止评论，隐藏评论框及评论按钮
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
-                mMenuPrised.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.GONE);
-                ivPrisedRelpace.setVisibility(View.VISIBLE);
-                ivSettingReplace.setVisibility(View.VISIBLE);
             } else {
-                mMenuPrised.setVisibility(View.VISIBLE);
-                ivSetting.setVisibility(View.VISIBLE);
-                ivPrisedRelpace.setVisibility(View.GONE);
-                ivSettingReplace.setVisibility(View.GONE);
                 mFyContainer.setVisibility(View.VISIBLE);
-                //大致评论数量
-                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-                    mTvCommentsNum.setVisibility(View.VISIBLE);
-                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
-                } else {
-                    mTvCommentsNum.setVisibility(View.INVISIBLE);
-                }
             }
         }
     }
@@ -577,7 +560,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         } else if (view.getId() == R.id.tv_top_bar_title) {
             DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "点击进入栏目详情页", "800031", "ToDetailColumn", "");
             if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_url())) {
-                Nav.with(UIUtils.getContext()).toPath(mNewsDetail.getArticle().getColumn_url());
+                Nav.with(UIUtils.getContext()).to(mNewsDetail.getArticle().getColumn_url());
             }
         } else if (view.getId() == R.id.iv_play) {//播放按钮
             if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {//当前列表在播放
@@ -654,18 +637,23 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        DailyPlayerManager.get().onDestroy();
-        PlayerCache.get().clear();
-        //详情页播放返回
-        Intent intent = new Intent(Constant.VIDEO_EVENT);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.DATA, DailyPlayerManager.get().getBuilder());
-        PlayerAction action = new PlayerAction();
-        action.setFrom(PlayerAction.ACTIVITY_DETAIL);
-        bundle.putSerializable(Constant.EVENT, action);
-        intent.putExtras(bundle);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        if (aDapter != null && aDapter.getWebViewHolder().getWebViewImpl().isFullScreen()) {
+            aDapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
+            aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
+        } else {
+            DailyPlayerManager.get().onDestroy();
+            PlayerCache.get().clear();
+            //详情页播放返回
+            Intent intent = new Intent(Constant.VIDEO_EVENT);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constant.DATA, DailyPlayerManager.get().getBuilder());
+            PlayerAction action = new PlayerAction();
+            action.setFrom(PlayerAction.ACTIVITY_DETAIL);
+            bundle.putSerializable(Constant.EVENT, action);
+            intent.putExtras(bundle);
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+            super.onBackPressed();
+        }
     }
 
 

@@ -186,6 +186,9 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             }
             if (intent.hasExtra("isClick")) {
                 isClick = intent.getBooleanExtra("isClick", false);
+                if(adapter != null){
+                    adapter.setResort(isClick);
+                }
             }
             refreshData(startId, 10, intent.getBooleanExtra("isReverse", false));
         }

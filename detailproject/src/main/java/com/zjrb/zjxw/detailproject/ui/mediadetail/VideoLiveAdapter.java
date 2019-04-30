@@ -26,6 +26,7 @@ import cn.daily.news.biz.core.network.compatible.APICallManager;
  * create time:2019/3/26  下午2:36
  */
 public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreListener<NativeLiveBean> {
+    //是否反转请求
     private boolean isResort = false;
     private final FooterLoadMore<NativeLiveBean> mLoadMore;
     private DraftDetailBean mDraftDetailBean;
@@ -45,6 +46,9 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
         setData(data);
     }
 
+    public void setResort(boolean isResort){
+        this.isResort = isResort;
+    }
 
     public void setData(NativeLiveBean data) {
         cancelLoadMore();

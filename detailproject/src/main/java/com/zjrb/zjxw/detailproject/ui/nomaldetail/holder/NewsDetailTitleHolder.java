@@ -130,7 +130,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             if (isVideoDetail) {
                 mTvTime.setText(TimeUtils.getTime(mData.getArticle().getLive_start(), DATE_FORMAT_2) + " - " + TimeUtils.getTime(mData.getArticle().getLive_end(), DATE_FORMAT_2));
             } else {
-                mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1) + "  |");
+                mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
             }
             if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name())) {
                 mTvChannelName.setVisibility(View.VISIBLE);

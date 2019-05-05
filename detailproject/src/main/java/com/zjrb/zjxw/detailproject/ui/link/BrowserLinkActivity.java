@@ -1,12 +1,15 @@
 package com.zjrb.zjxw.detailproject.ui.link;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,6 +44,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.nav.LinkControl;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -119,7 +123,7 @@ public class BrowserLinkActivity extends DailyActivity {
         getIntentData(getIntent());
         initArgs(savedInstanceState);
         initWebview(mWebStack.urlLink);
-        addWebStack(mWebStack);
+//        addWebStack(mWebStack);
         loadData();
     }
 
@@ -223,6 +227,11 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                    if(mNewsDetail.getArticle().getDoc_type() == 3){
+                        mWebStack.urlLink = mNewsDetail.getArticle().getWeb_link();
+                    }else{
+                        mWebStack.urlLink = mNewsDetail.getArticle().getUrl();
+                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
@@ -249,6 +258,11 @@ public class BrowserLinkActivity extends DailyActivity {
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                    if(mNewsDetail.getArticle().getDoc_type() == 3){
+                        mWebStack.urlLink = mNewsDetail.getArticle().getWeb_link();
+                    }else{
+                        mWebStack.urlLink = mNewsDetail.getArticle().getUrl();
+                    }
                     fillData(mNewsDetail);
                     YiDunToken.synYiDunToken(mArticleId);
                 }
@@ -289,11 +303,11 @@ public class BrowserLinkActivity extends DailyActivity {
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-        mWebView.loadUrl(mWebStack.urlLink);
         if (topBarHolder != null) {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
         initViewState(data);
+        mWebView.loadUrl(mWebStack.urlLink);
     }
 
 

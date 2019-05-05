@@ -318,7 +318,7 @@ public class MoreDialogLink extends BaseDialogFragment {
      * 点击新闻卡片埋点
      */
     private void setCardAnalytics() {
-        if (mBeanShare == null) return;
+        if (mBeanShare == null || mBeanShare.getAnalyticsBean() == null) return;
         if (mBeanShare.isNewsCard()) { // 新闻卡片
             new Analytics.AnalyticsBuilder(UIUtils.getContext(), "800019", "AppTabClick", false)
                     .name("点击新闻卡片")

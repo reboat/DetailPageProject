@@ -28,7 +28,7 @@ public class DraftTopicListTask extends APIGetTask<SubjectListBean> {
     @Override
     public void onSetupParams(Object... params) {
         put("group_id", params[0]);
-        if (params.length > 1) {
+        if (params.length > 1&&params[1]!=null) {
             put("start", params[1]);
         }
         put("size", C.PAGE_SIZE);

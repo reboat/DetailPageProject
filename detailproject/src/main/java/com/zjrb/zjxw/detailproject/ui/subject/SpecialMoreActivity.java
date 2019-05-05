@@ -54,10 +54,6 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     ImageView ivTopCollect;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
-    @BindView(R2.id.app_bar)
-    AppBarLayout appBar;
-    @BindView(R2.id.tl_top)
-    View tlTop;
 
     /**
      * 专题id
@@ -79,15 +75,6 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         ivShare.setOnClickListener(this);
         ivTopBarBack.setOnClickListener(this);
         ivTopCollect.setOnClickListener(this);
-        appBar.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//                Log.e("lujialei","offset==="+Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange());
-//                float percent = Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange();
-//                tlTop.setAlpha(percent);
-//                tvTitle.setAlpha(1-percent);
-            }
-        });
     }
 
     private void bindData(List<SpecialGroupBean> groupBeanList) {

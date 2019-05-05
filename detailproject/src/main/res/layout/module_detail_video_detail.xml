@@ -37,17 +37,19 @@
     <com.zjrb.daily.news.ui.widget.SlidingTabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
+        android:layout_height="40dp"
+        android:paddingTop="10dp"
         android:layout_below="@+id/video_container"
         android:background="@color/_ffffff"
-        android:elevation="5dp"
         app:tl_indicator_color="@color/_ffcd3f3f"
         app:tl_indicator_height="4dp"
-        app:tl_indicator_width="18dp"
+        app:tl_indicator_width="14dp"
         app:tl_textSelectColor="@color/_222222"
         app:tl_textUnselectColor="@color/_666666"
         app:tl_textsize="@dimen/ts_14sp"
         app:tl_tab_space_equal="true"
+        app:tl_underline_height="0.5dp"
+        app:tl_underline_color="@color/_e7e7e7"
         />
 
 

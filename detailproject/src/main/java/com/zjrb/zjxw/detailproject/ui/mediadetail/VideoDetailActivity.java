@@ -640,8 +640,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void onBackPressed() {
-        if (aDapter != null && aDapter.getWebViewHolder().getWebViewImpl().isFullScreen()) {
-            aDapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
+        if (aDapter != null && aDapter.getWebViewHolder() != null &&
+                aDapter.getWebViewHolder().getWebView() != null &&
+                aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
+                aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper().getFullScreen()) {
+//            mAdapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
             aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
         } else {
             DailyPlayerManager.get().onDestroy();

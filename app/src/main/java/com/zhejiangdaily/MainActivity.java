@@ -10,14 +10,16 @@ import cn.daily.news.biz.core.nav.Nav;
 
 public class MainActivity extends DailyActivity implements View.OnClickListener {
 
-    private TextView tv;
+    private TextView tv,tv_text1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = (TextView) findViewById(R.id.tv_text);
+        tv_text1 = (TextView) findViewById(R.id.tv_text1);
         tv.setOnClickListener(this);
+        tv_text1.setOnClickListener(this);
         findViewById(R.id.tv_ui_mode).setOnClickListener(this);
         SettingManager.getInstance().setAutoPlayVideoWithWifi(true);
     }
@@ -41,13 +43,17 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
         //专题
 //        Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1114462");
 //            Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=1156988");
-        Nav.with(this).toPath("https://zjbeta.8531.cn/live.html?id=1156923&native=1");
+//        Nav.with(this).toPath("https://zjbeta.8531.cn/live.html?id=1156923&native=1");
 
 
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 //        Nav.with(this).to("www.baidu.com");
-//        Nav.with(this).to("https://zj.zjol.com.cn/news.html?id=1153276");
+        if(v.getId() == R.id.tv_text){
+            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156978");
+        }else if(v.getId() == R.id.tv_text1){
+            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156949");
+        }
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=1");
 //        Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156926");

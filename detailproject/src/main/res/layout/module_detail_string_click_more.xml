@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tv_related"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginBottom="12dp"
-    android:layout_marginTop="35dp"
-    android:gravity="center_horizontal"
-    android:padding="2dp"
-    android:textColor="@color/_222222"
-    android:textSize="12sp"
-    tools:text="点击查看更多评论" />
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/_ffffff">
+
+    <TextView
+        android:id="@+id/tv_related"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center_horizontal"
+        android:padding="2dp"
+        android:textColor="@color/_222222"
+        android:textSize="12sp"
+        tools:text="点击查看更多评论" />
+</FrameLayout>

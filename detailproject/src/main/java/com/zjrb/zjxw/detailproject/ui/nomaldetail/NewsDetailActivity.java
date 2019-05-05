@@ -144,6 +144,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         loadData();
     }
 
+
     /**
      * 页面复用调用
      *
@@ -190,8 +191,11 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     public void onBackPressed() {
         //如果是全屏
-        if (mAdapter.getWebViewHolder().getWebViewImpl().isFullScreen()) {
-            mAdapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
+        if (mAdapter != null && mAdapter.getWebViewHolder() != null &&
+                mAdapter.getWebViewHolder().getWebView() != null &&
+                mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
+                mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper().getFullScreen()) {
+//            mAdapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
             mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
         } else {
             super.onBackPressed();

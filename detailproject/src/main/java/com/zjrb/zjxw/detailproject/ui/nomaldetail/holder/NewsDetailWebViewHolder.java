@@ -1,5 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -50,6 +52,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
+//    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
@@ -135,8 +138,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
                 //当前阅读进度
-                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f /
-                        mWebViewHeight;
+                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f / mWebViewHeight;
                 //取最大阅读进度
                 if (tempScale > mReadingScale) {
                     mReadingScale = tempScale;

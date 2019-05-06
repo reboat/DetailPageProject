@@ -100,7 +100,7 @@ public class SpecialListFragment extends DailyFragment {
         final List<ArticleItemBean> articleItemBean = bean.getArticle_list();
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
-        mAdapter = new SpecialListAdapter(articleItemBean);
+        mAdapter = new SpecialListAdapter(mRecycler,articleItemBean,groupId);
         mRecycler.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

@@ -29,7 +29,7 @@ public class DetailVideoHolder extends SuperDetailVideoHolder {
         layoutPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mNewsDetail != null && mNewsDetail.getArticle() != null){
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                     UmengShareBean shareBean = UmengShareBean.getInstance()
                             .setSingle(false)
                             .setNewsCard(true)

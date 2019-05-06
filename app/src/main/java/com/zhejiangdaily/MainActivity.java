@@ -11,20 +11,20 @@ import cn.daily.news.biz.core.nav.Nav;
 
 public class MainActivity extends DailyActivity implements View.OnClickListener {
 
-//    private TextView tv,tv_text1;
-    private WebView mWebview;
+    private TextView tv,tv_text1;
+//    private WebView mWebview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        tv = (TextView) findViewById(R.id.tv_text);
-//        tv_text1 = (TextView) findViewById(R.id.tv_text1);
-//        tv.setOnClickListener(this);
-//        tv_text1.setOnClickListener(this);
-        mWebview = (WebView)findById(R.id.webview);
-//        findViewById(R.id.tv_ui_mode).setOnClickListener(this);
+        tv = (TextView) findViewById(R.id.tv_text);
+        tv_text1 = (TextView) findViewById(R.id.tv_text1);
+        tv.setOnClickListener(this);
+        tv_text1.setOnClickListener(this);
+//        mWebview = (WebView)findById(R.id.webview);
+        findViewById(R.id.tv_ui_mode).setOnClickListener(this);
         SettingManager.getInstance().setAutoPlayVideoWithWifi(true);
-        mWebview.loadUrl("http://mp.weixin.qq.com/s?__biz=MTI0MDU3NDYwMQ==&mid=2656760546&idx=1&sn=41a6659bd49a56981c5cdea5021f95fb&chksm=7a600f044d178612fd622fdd5c5caa71e18af6576929d984ae9e0b4efaf7cce63d451e6f2eed&ref_aid=1157240");
+//        mWebview.loadUrl("http://mp.weixin.qq.com/s?__biz=MTI0MDU3NDYwMQ==&mid=2656760546&idx=1&sn=41a6659bd49a56981c5cdea5021f95fb&chksm=7a600f044d178612fd622fdd5c5caa71e18af6576929d984ae9e0b4efaf7cce63d451e6f2eed&ref_aid=1157240");
     }
 
 
@@ -52,11 +52,11 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 //        Nav.with(this).to("www.baidu.com");
-//        if(v.getId() == R.id.tv_text){
-//            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1157113");
-//        }else if(v.getId() == R.id.tv_text1){
-//            Nav.with(this).to("https://apibeta.8531.cn/api/article/detail?id=1157199");
-//        }
+        if(v.getId() == R.id.tv_text){
+            Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157197");
+        }else if(v.getId() == R.id.tv_text1){
+            Nav.with(this).to("https://apibeta.8531.cn/api/article/detail?id=1157199");
+        }
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=1");
 //        Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156926");

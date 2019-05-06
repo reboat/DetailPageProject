@@ -307,7 +307,14 @@ public class BrowserLinkActivity extends DailyActivity {
             topBarHolder.setViewVisible(topBarHolder.getSettingView(), View.VISIBLE);
         }
         initViewState(data);
-        mWebView.loadUrl(mWebStack.urlLink);
+        //mWebStack.urlLink
+        mWebView.post(new Runnable() {
+            @Override
+            public void run() {
+                mWebView.loadUrl(mWebStack.urlLink);
+            }
+        });
+//        mWebView.loadUrl(mWebStack.urlLink);
     }
 
 

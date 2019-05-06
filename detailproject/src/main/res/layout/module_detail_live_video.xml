@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout="@layout/module_news_layout_video_play" />
+            android:layout="@layout/module_detail_layout_video_play" />
 
         <ViewStub
             android:id="@+id/view_stub_live"

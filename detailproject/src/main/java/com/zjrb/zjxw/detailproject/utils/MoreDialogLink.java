@@ -462,27 +462,27 @@ public class MoreDialogLink extends BaseDialogFragment {
             String shareClass = "文章";
             if (share_media == SHARE_MEDIA.WEIXIN) {
                 WMCode = "A0022";
-                eventName = "微信分享；微信分享成功";
+                eventName = "分享到微信成功";
                 eventDetail = "微信";
             } else if (share_media == SHARE_MEDIA.WEIXIN_CIRCLE) {
                 WMCode = "A0022";
-                eventName = "朋友圈分享；朋友圈分享成功";
+                eventName = "分享到朋友圈成功";
                 eventDetail = "朋友圈";
             } else if (share_media == SHARE_MEDIA.QQ) {
                 WMCode = "A0022";
-                eventName = "QQ分享；QQ分享成功";
+                eventName = "分享到QQ成功";
                 eventDetail = "QQ";
             } else if (share_media == SHARE_MEDIA.SINA) {
                 WMCode = "A0022";
-                eventName = "微博分享；微博分享成功";
+                eventName = "分享到微博成功";
                 eventDetail = "微博";
             } else if (share_media == SHARE_MEDIA.QZONE) {
                 WMCode = "A0022";
-                eventName = "QQ空间分享;QQ空间分享成功";
+                eventName = "分享到QQ空间成功";
                 eventDetail = "QQ空间";
             } else if (share_media == SHARE_MEDIA.DINGTALK) { // 钉钉
                 WMCode = "A0022";
-                eventName = "钉钉分享;钉钉分享成功";
+                eventName = "分享到钉钉成功";
                 eventDetail = "钉钉";
             }
             if (!TextUtils.isEmpty(mBeanShare.getAnalyticsBean().getPageType()) && mBeanShare.getAnalyticsBean().getPageType().equals("官员页面")) {
@@ -494,7 +494,7 @@ public class MoreDialogLink extends BaseDialogFragment {
                     .columnID(mBeanShare.getAnalyticsBean().getColumn_id())
                     .classShortName(mBeanShare.getAnalyticsBean().getClassifyName())
                     .objectShortName(mBeanShare.getTitle())
-                    .objectType("C01")
+                    .objectType(mBeanShare.getAnalyticsBean().getObjectType() != null ? mBeanShare.getAnalyticsBean().getObjectType().getCode() : "")
                     .classID(mBeanShare.getAnalyticsBean().getClassifyID())
                     .pageType(mBeanShare.getAnalyticsBean().getPageType())
                     .ilurl(mBeanShare.getAnalyticsBean().getUrl())

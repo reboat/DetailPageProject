@@ -53,9 +53,9 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 //        Nav.with(this).to("www.baidu.com");
         if(v.getId() == R.id.tv_text){
-            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1157126");
+            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156978 ");
         }else if(v.getId() == R.id.tv_text1){
-            Nav.with(this).to("https://apibeta.8531.cn/api/article/detail?id=1157199");
+            Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=1156984");
         }
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=1");

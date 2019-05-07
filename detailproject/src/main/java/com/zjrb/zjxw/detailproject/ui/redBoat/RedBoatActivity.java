@@ -33,7 +33,7 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
-import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
 import java.util.ArrayList;
@@ -43,9 +43,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
+import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
@@ -256,10 +259,37 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 DataAnalyticsUtils.get().ClickBack(mNewsDetail);
             }
             finish();
-            //红船号点击分享
+            //红船号点击更多
         } else if (v.getId() == R.id.iv_top_more) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-                MoreDialog.newInstance(mNewsDetail).setWebViewCallBack(mAdapter.getWebViewHolder(), mAdapter.getWebViewHolder()).show(getSupportFragmentManager(), "MoreDialog");
+                DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+                        .setObjectType(ObjectType.C01)
+                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setUrl(mNewsDetail.getArticle().getUrl())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+
+                UmengShareBean shareBean = UmengShareBean.getInstance()
+                        .setSingle(false).setNewsCard(true)
+                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
+                        .setArticleId(mNewsDetail.getArticle().getId() + "")
+                        .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                        .setTextContent(getString(R.string.module_detail_share_content_from))
+                        .setTitle(mNewsDetail.getArticle().getDoc_title())
+                        .setTargetUrl(mNewsDetail.getArticle().getUrl())
+                        .setAnalyticsBean(bean).setEventName("NewsShare")
+                        .setShareType("文章");
+
+                MoreDialogLink.newInstance(mNewsDetail).setShareBean(shareBean).show(getSupportFragmentManager(), "MoreDialog");
             }
             //点击订阅/取消订阅
         } else if (v.getId() == R.id.tv_top_bar_subscribe_text) {

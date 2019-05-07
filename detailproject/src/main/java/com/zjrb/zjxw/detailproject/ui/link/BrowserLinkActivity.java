@@ -54,6 +54,7 @@ import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
 import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
+import cn.daily.news.biz.core.web.LinkStackPush;
 import cn.daily.news.biz.core.web.WebViewImpl;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -64,7 +65,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends DailyActivity {
+public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
@@ -137,6 +138,7 @@ public class BrowserLinkActivity extends DailyActivity {
         mWebView.setHelper(webImpl);
     }
 
+    //链接稿复用
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -149,6 +151,7 @@ public class BrowserLinkActivity extends DailyActivity {
         if (data != null) {
             webStack.urlLink = data.toString();
         }
+        //复用链接稿入栈
         if (!TextUtils.isEmpty(webStack.urlLink)) {
             mWebStack = webStack;
             addWebStack(mWebStack);
@@ -558,6 +561,18 @@ public class BrowserLinkActivity extends DailyActivity {
         } else {
             //返回删除以后栈顶对象
             bindWebStack(mWebStacks.pop());
+        }
+    }
+
+    //重定向入栈
+    @Override
+    public void linkStackPush(WebView view, String url) {
+        WebStack webStack = new WebStack();
+        webStack.urlLink = url;
+        //复用链接稿入栈
+        if (!TextUtils.isEmpty(webStack.urlLink)) {
+            mWebStack = webStack;
+            addWebStack(mWebStack);
         }
     }
 

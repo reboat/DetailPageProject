@@ -95,7 +95,7 @@
                     android:fadingEdge="vertical"
                     android:paddingBottom="5dp"
                     android:scrollbars="vertical"
-                    android:textColor="@color/_bfbfbf"
+                    android:textColor="@color/_ededed"
                     android:textSize="@dimen/ts_14sp"
                     tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
-                    android:textColor="@color/_666666"
+                    android:textColor="@color/_ededed"
                     android:textSize="@dimen/ts_12sp"
                     android:visibility="gone"
                     tools:text="浙江新闻客户端" />
@@ -118,7 +118,7 @@
                     android:layout_marginRight="11dp"
                     android:paddingBottom="10dp"
                     android:paddingTop="3.5dp"
-                    android:textColor="@color/_666666"
+                    android:textColor="@color/_ededed"
                     android:textSize="@dimen/ts_12sp"
                     android:visibility="gone"
                     tools:text="记者：周伯通" />

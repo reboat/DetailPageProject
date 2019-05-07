@@ -102,7 +102,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             //来源及记者(发稿允许不填写)
             if (mData != null && mData.getArticle() != null) {
                 mTvReporter.setVisibility(View.VISIBLE);
-                if (isVideoDetail) {
+                //直播稿
+                if (mData.getArticle().isNative_live()) {
                     if (mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getReporter())) {
                         mTvReporter.setText(mData.getArticle().getNative_live_info().getReporter());
                     } else {
@@ -127,9 +128,11 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
         //频道显示
         if (!isRedBoat && mData != null && mData.getArticle() != null) {
-            if (isVideoDetail) {
+            if (mData.getArticle().isNative_live()) {
+                //直播稿
                 mTvTime.setText(TimeUtils.getTime(mData.getArticle().getLive_start(), DATE_FORMAT_2) + " - " + TimeUtils.getTime(mData.getArticle().getLive_end(), DATE_FORMAT_2));
             } else {
+                //普通
                 mTvTime.setText(TimeUtils.getTime(mData.getArticle().getPublished_at(), C.DATE_FORMAT_1));
             }
             if (!TextUtils.isEmpty(mData.getArticle().getSource_channel_name())) {
@@ -145,7 +148,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
 
         //阅读数
         if (!isRedBoat && mData != null && mData.getArticle() != null && !TextUtils.isEmpty(mData.getArticle().getRead_count_general())) {
-            if (isVideoDetail) {
+            if (mData.getArticle().isNative_live()) {
                 mTvReadNum.setVisibility(View.INVISIBLE);
             } else {
                 mTvReadNum.setVisibility(View.VISIBLE);
@@ -156,7 +159,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
         }
 
         //简介
-        if (mData != null && mData.getArticle() != null && mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getIntro())) {
+        if (mData.getArticle().isNative_live() && mData != null && mData.getArticle() != null && mData.getArticle().getNative_live_info() != null && !TextUtils.isEmpty(mData.getArticle().getNative_live_info().getIntro())) {
             tvSummary.setVisibility(View.VISIBLE);
             tvSummary.setText(mData.getArticle().getNative_live_info().getIntro());
         } else {

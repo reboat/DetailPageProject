@@ -142,7 +142,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
             if (mWebViewHeight > 0) {
                 //当前阅读进度
                 float tempScale = (recyclerView.getHeight() - mContainer.getTop()) * 1f / mWebViewHeight;
-                L.e("WLJ,onScrolled,tempScale="+tempScale+"，mContainer.getTop()="+mContainer.getTop());
                 //取最大阅读进度
                 if (tempScale > mReadingScale) {
                     mReadingScale = tempScale;

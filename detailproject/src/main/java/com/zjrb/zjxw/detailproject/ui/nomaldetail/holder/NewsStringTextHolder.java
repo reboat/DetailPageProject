@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ public class NewsStringTextHolder extends BaseRecyclerViewHolder<String> {
 
     @BindView(R2.id.tv_related)
     TextView mTvRelated;
+    @BindView(R2.id.v_line)
+    View mLine;
 
     public NewsStringTextHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_string_text, parent, false));
@@ -31,6 +34,11 @@ public class NewsStringTextHolder extends BaseRecyclerViewHolder<String> {
     public void bindView() {
         itemView.setOnClickListener(null);
         mTvRelated.setText(mData.toString());
+        if(mData.equals("热门评论")){
+            mLine.setVisibility(View.GONE);
+        }else{
+            mLine.setVisibility(View.VISIBLE);
+        }
     }
 
 }

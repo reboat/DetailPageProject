@@ -191,7 +191,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             //回复者评论
             if (mData.getContent() != null) {
-                if (mContent.equals("当前评论正在审核中")) {
+                if (mContent.getText().equals("当前评论正在审核中")) {
                     mContent.setTextColor(Color.parseColor("#bfbfbf"));
                     mContent.setTextSize(18);
                 } else {

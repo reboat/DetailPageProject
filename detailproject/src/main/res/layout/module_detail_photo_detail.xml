@@ -171,15 +171,14 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="32dp"
-                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/menu_prised"
                 android:visibility="visible"
                 >
 
                 <ImageView
                     android:id="@+id/menu_comment"
-                    android:layout_width="25dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/module_detail_atlas_ic_comment"
                     android:visibility="visible" />
@@ -202,10 +201,10 @@
             <!--点赞-->
             <ImageView
                 android:id="@+id/menu_prised"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="32dp"
+                android:layout_marginRight="33dp"
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:src="@drawable/module_detail_atlas_prise"
                 android:visibility="visible"
@@ -214,8 +213,8 @@
             <!--设置-->
             <ImageView
                 android:id="@+id/menu_setting"
-                android:layout_width="25dp"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"

@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="14dp"
-        android:paddingTop="14dp"
-        android:background="@color/_ffffff">
+        android:background="@color/_ffffff"
+        android:paddingTop="14dp">
 
         <com.zjrb.core.ui.widget.CircleImageView
             android:id="@+id/iv_avatar"
@@ -69,8 +69,8 @@
 
                 <ImageView
                     android:id="@+id/iv_prised"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="15dp"
+                    android:layout_height="13dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/module_detail_news_prise"
                     />
@@ -281,9 +281,9 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="8dp"
+                android:text="@string/module_detail_comment_delete"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_11sp"
-                android:text="@string/module_detail_comment_delete"
                 android:visibility="gone"
                 tools:text="删除" />
 

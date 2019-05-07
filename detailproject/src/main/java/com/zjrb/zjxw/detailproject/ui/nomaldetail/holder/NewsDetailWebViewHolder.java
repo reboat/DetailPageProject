@@ -4,11 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.commonwebview.webview.CommonWebView;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.AppUtils;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -39,6 +41,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
+    @BindView(R2.id.top_container)
+    RelativeLayout mContainer;
+
     private DetailWebViewImpl webImpl;
     private JsMultiInterfaceImp jsInterfaceImp;
     /**
@@ -136,7 +141,8 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
                 //当前阅读进度
-                float tempScale = (recyclerView.getHeight() - mWebView.getTop()) * 1f / mWebViewHeight;
+                float tempScale = (recyclerView.getHeight() - mContainer.getTop()) * 1f / mWebViewHeight;
+                L.e("WLJ,onScrolled,tempScale="+tempScale+"，mContainer.getTop()="+mContainer.getTop());
                 //取最大阅读进度
                 if (tempScale > mReadingScale) {
                     mReadingScale = tempScale;

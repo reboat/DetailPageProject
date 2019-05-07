@@ -55,7 +55,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
         if(v.getId() == R.id.tv_text){
             Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156978 ");
         }else if(v.getId() == R.id.tv_text1){
-            Nav.with(this).to("https://zjbeta.8531.cn/video.html?id=1156984");
+            Nav.with(this).to("https://zjbeta.8531.cn/album.html?id=1157303");
         }
 
 //        Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=1");

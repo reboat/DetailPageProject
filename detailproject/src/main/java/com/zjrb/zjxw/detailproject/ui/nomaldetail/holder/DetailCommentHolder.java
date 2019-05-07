@@ -191,14 +191,15 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             //回复者评论
             if (mData.getContent() != null) {
-                if (mContent.getText().equals("当前评论正在审核中")) {
+                mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
+                if (mData.getContent().equals("当前评论正在审核中")) {
                     mContent.setTextColor(Color.parseColor("#bfbfbf"));
                     mContent.setTextSize(18);
                 } else {
                     mContent.setTextColor(Color.parseColor("#222222"));
                     mContent.setTextSize(16);
                 }
-                mContent.setText(CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) != null ? CommentTagMathUtils.newInstance().doCommentTag(mData.getContent()) : mData.getContent());
+
             }
             //超过5行
             mContent.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {

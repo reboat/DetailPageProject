@@ -10,7 +10,6 @@ import com.commonwebview.webview.CommonWebView;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.AppUtils;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;

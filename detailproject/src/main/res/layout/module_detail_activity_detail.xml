@@ -6,6 +6,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/_ffffff_202124"
+                android:descendantFocusability="blocksDescendants"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
     >
 
     <com.aliya.view.ratio.RatioFrameLayout
@@ -69,6 +72,7 @@
 
     </com.aliya.view.ratio.RatioFrameLayout>
 
+
     <com.aliya.view.fitsys.FitWindowsRecyclerView
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
@@ -79,7 +83,6 @@
         android:layout_marginRight="15dp"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:descendantFocusability="blocksDescendants"
         android:scrollbars="none"
         app:fitType="bottom"
         />

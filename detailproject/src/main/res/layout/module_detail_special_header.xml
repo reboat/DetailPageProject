@@ -117,6 +117,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:paddingBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:visibility="gone"
         app:ratio_w2h="345:173">
 

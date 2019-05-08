@@ -162,6 +162,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         if (mArticle != null) {
             if (view.getId() == R.id.iv_top_share) {
                 if (!TextUtils.isEmpty(mArticle.getUrl())) {
+                    String imgUrl = "";
+                    if (!mArticle.getList_pics().isEmpty()) {
+                        imgUrl = mArticle.getList_pics().get(0);
+                    }
                     //分享专用bean
                     OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                             .setObjectID(mArticle.getMlf_id() + "")
@@ -181,7 +185,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                             .setNewsCard(true)
                             .setCardUrl(mArticle.getCard_url())
                             .setArticleId(mArticle.getId() + "")
-                            .setImgUri(mArticle.getArticle_pic())
+                            .setImgUri(imgUrl)
                             .setTextContent(mArticle.getSummary())
                             .setTitle(mArticle.getDoc_title())
                             .setAnalyticsBean(bean)

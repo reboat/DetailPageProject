@@ -319,6 +319,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         if (TextUtils.isEmpty(mArticle.getSubject_focus_image())) {
             mLayoutFocus.setVisibility(View.GONE);
         } else {
+            mLayoutFocus.setVisibility(View.VISIBLE);
             if (ivTopicPic.getContext() instanceof Activity) {
                 if (((Activity) ivTopicPic.getContext()).isDestroyed()) {
                     return;

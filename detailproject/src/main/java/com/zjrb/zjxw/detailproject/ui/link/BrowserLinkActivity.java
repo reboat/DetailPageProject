@@ -1,7 +1,6 @@
 package com.zjrb.zjxw.detailproject.ui.link;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -9,7 +8,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -44,7 +42,6 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.nav.LinkControl;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -65,7 +62,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
+public class BrowserLinkActivity extends DailyActivity implements LinkStackPush {
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
@@ -230,9 +227,9 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
-                    if(mNewsDetail.getArticle().getDoc_type() == 3){
+                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
                         mWebStack.urlLink = mNewsDetail.getArticle().getWeb_link();
-                    }else{
+                    } else {
                         mWebStack.urlLink = mNewsDetail.getArticle().getUrl();
                     }
                     fillData(mNewsDetail);
@@ -261,9 +258,9 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
-                    if(mNewsDetail.getArticle().getDoc_type() == 3){
+                    if (mNewsDetail.getArticle().getDoc_type() == 3) {
                         mWebStack.urlLink = mNewsDetail.getArticle().getWeb_link();
-                    }else{
+                    } else {
                         mWebStack.urlLink = mNewsDetail.getArticle().getUrl();
                     }
                     fillData(mNewsDetail);
@@ -315,6 +312,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
             @Override
             public void run() {
                 mWebView.loadUrl(mWebStack.urlLink);
+                addWebStack(mWebStack);
             }
         });
 //        mWebView.loadUrl(mWebStack.urlLink);
@@ -365,7 +363,13 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
                 closeActivity();
             } else {
                 //返回删除以后栈顶对象
-                bindWebStack(mWebStacks.pop());
+                mWebStacks.pop();
+                if (mWebStacks.isEmpty()) {
+                    finish();
+                    closeActivity();
+                } else {
+                    bindWebStack(mWebStacks.peek());
+                }
             }
         } else if (R.id.iv_close == id) {//点击X
             finish();
@@ -550,7 +554,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
             mClose.setVisibility(View.INVISIBLE);
         }
         mWebView.clearHistory();
-        mWebView.loadUrl(webStack.urlLink);
+        mWebView.loadUrl(mWebStack.urlLink);
     }
 
     @Override
@@ -560,11 +564,17 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush{
             closeActivity();
         } else {
             //返回删除以后栈顶对象
-            bindWebStack(mWebStacks.pop());
+            mWebStacks.pop();
+            if (mWebStacks.isEmpty()) {
+                finish();
+                closeActivity();
+            } else {
+                bindWebStack(mWebStacks.peek());
+            }
         }
     }
 
-    //重定向入栈
+    //重定向入栈,每次会新建一个webStack
     @Override
     public void linkStackPush(WebView view, String url) {
         WebStack webStack = new WebStack();

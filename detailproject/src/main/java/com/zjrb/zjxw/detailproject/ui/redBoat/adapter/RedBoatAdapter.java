@@ -81,23 +81,23 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         notifyItemRangeChanged(oldSize, datas.size() - oldSize);
     }
 
-    /**
-     * webview恢复监听
-     */
-    public void onWebViewResume() {
-        if (mWebViewHolderPosition != NO_POSITION) {
-            notifyItemChanged(mWebViewHolderPosition, PAYLOADS_RESUME);
-        }
-    }
-
-    /**
-     * webview暂停监听
-     */
-    public void onWebViewPause() {
-        if (mWebViewHolderPosition != NO_POSITION) {
-            notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
-        }
-    }
+//    /**
+//     * webview恢复监听
+//     */
+//    public void onWebViewResume() {
+//        if (mWebViewHolderPosition != NO_POSITION) {
+//            notifyItemChanged(mWebViewHolderPosition, PAYLOADS_RESUME);
+//        }
+//    }
+//
+//    /**
+//     * webview暂停监听
+//     */
+//    public void onWebViewPause() {
+//        if (mWebViewHolderPosition != NO_POSITION) {
+//            notifyItemChanged(mWebViewHolderPosition, PAYLOADS_PAUSE);
+//        }
+//    }
 
     /**
      * 视频生命周期监听

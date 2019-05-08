@@ -195,7 +195,6 @@ final public class NewsDetailActivity extends DailyActivity implements
                 mAdapter.getWebViewHolder().getWebView() != null &&
                 mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
                 mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper().getFullScreen()) {
-//            mAdapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
             mAdapter.getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
         } else {
             super.onBackPressed();
@@ -572,9 +571,9 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAdapter != null) {
-            mAdapter.onWebViewResume();
-        }
+//        if (mAdapter != null) {
+//            mAdapter.onWebViewResume();
+//        }
         //新华智云
 //        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
 //            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
@@ -589,9 +588,9 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        if (mAdapter != null) {
-            mAdapter.onWebViewPause();
-        }
+//        if (mAdapter != null) {
+//            mAdapter.onWebViewPause();
+//        }
         //新华智云
 //        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
 //            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)

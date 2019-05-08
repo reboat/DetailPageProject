@@ -126,9 +126,9 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
     @Override
     protected void onResume() {
         super.onResume();
-        if (mAdapter != null) {
-            mAdapter.onWebViewResume();
-        }
+//        if (mAdapter != null) {
+//            mAdapter.onWebViewResume();
+//        }
         //新华智云
 //        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
 //            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
@@ -143,9 +143,9 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
     @Override
     protected void onPause() {
         super.onPause();
-        if (mAdapter != null) {
-            mAdapter.onWebViewPause();
-        }
+//        if (mAdapter != null) {
+//            mAdapter.onWebViewPause();
+//        }
         //新华智云
 //        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
 //            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)

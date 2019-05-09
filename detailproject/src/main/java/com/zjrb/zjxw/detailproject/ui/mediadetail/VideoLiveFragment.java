@@ -181,14 +181,15 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     @Override
     public void refresh(Intent intent) {
         if (intent != null) {
+            //反转状态
             if (intent.hasExtra("isReverse")) {
                 isReverse = intent.getBooleanExtra("isReverse", false);
+                if(adapter != null){
+                    adapter.setResort(isReverse);
+                }
             }
             if (intent.hasExtra("isClick")) {
                 isClick = intent.getBooleanExtra("isClick", false);
-                if(adapter != null){
-                    adapter.setResort(isClick);
-                }
             }
             refreshData(startId, 10, intent.getBooleanExtra("isReverse", false));
         }

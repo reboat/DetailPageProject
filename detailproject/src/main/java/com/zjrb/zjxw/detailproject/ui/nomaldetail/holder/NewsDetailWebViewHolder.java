@@ -106,17 +106,17 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
 
-        List<String>  js = new ArrayList<>();//TODO WLJ TEST
-        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
-        List<String>  css = new ArrayList<>();
-        css.add("https://zjbeta.8531.cn/statics/wap/css/zjxw.v6.css");
-        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", css, js);
+//        List<String>  js = new ArrayList<>();//TODO WLJ TEST
+//        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
+//        List<String>  css = new ArrayList<>();
+//        css.add("https://zjbeta.8531.cn/statics/wap/css/zjxw.v6.css");
+//        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", css, js);
         //JS
-//        if (sp != null) {
-//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-//        } else {
-//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
-//        }
+        if (sp != null) {
+            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
+        } else {
+            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
+        }
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 

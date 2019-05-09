@@ -84,6 +84,7 @@ public class DraftDetailBean extends BaseData {
         private boolean like_enabled;
         private boolean liked;
         private List<String> list_pics;
+        private List<String> web_subject_list_pics;
         private String subject_focus_description;
 
         private String column_logo;
@@ -612,6 +613,23 @@ public class DraftDetailBean extends BaseData {
             this.list_pics = list_pics;
         }
 
+        public List<String> getWeb_subject_list_pics() {
+            return web_subject_list_pics;
+        }
+
+        public void setWeb_subject_list_pics(List<String> web_subject_list_pics) {
+            this.web_subject_list_pics = web_subject_list_pics;
+        }
+
+        //专题列表图第一张
+        public String getFirstSubjectPic() {
+            if (!web_subject_list_pics.isEmpty()) {
+                return web_subject_list_pics.get(0);
+            }
+            return "";
+        }
+
+
         public List<AlbumImageListBean> getAlbum_image_list() {
             return album_image_list;
         }
@@ -813,6 +831,7 @@ public class DraftDetailBean extends BaseData {
         public void setLive_end(long live_end) {
             this.live_end = live_end;
         }
+
         //原生直播
         public static class NativeLiveInfoBean implements Serializable {
             private static final long serialVersionUID = -6337097775485082698L;

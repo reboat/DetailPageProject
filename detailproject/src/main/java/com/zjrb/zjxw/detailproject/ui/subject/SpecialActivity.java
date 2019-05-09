@@ -165,7 +165,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                     //分享专用bean
                     OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
                             .setObjectID(mArticle.getMlf_id() + "")
-                            .setObjectName(mArticle.getDoc_title())
+                            .setObjectName(mArticle.getList_title())
                             .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())

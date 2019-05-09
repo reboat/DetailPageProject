@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
+import cn.daily.news.biz.core.SettingBiz;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;

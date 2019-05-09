@@ -26,6 +26,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -54,6 +55,7 @@ import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.SettingBiz;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
@@ -351,6 +353,8 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     public void onOptPageFinished() {
         mAdapter.showAll();
+        float size = SettingBiz.get().getHtmlFontScale();
+        L.e("WLJ,onOptPageFinished,size="+size);
     }
 
     private Bundle bundle;
@@ -589,6 +593,8 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     protected void onPause() {
         super.onPause();
+        float size = SettingBiz.get().getHtmlFontScale();
+        L.e("WLJ,onPause,size="+size);
 //        if (mAdapter != null) {
 //            mAdapter.onWebViewPause();
 //        }

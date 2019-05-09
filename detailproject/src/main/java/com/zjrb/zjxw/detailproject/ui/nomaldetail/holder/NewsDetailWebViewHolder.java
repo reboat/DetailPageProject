@@ -18,11 +18,11 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
 import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
-import com.zjrb.zjxw.detailproject.utils.SettingBiz;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.SettingBiz;
 import cn.daily.news.biz.core.constant.Constants;
 import cn.daily.news.biz.core.db.ThemeMode;
 import cn.daily.news.biz.core.model.ResourceBiz;

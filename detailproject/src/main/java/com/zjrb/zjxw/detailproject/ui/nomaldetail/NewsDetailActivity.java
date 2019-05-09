@@ -354,7 +354,6 @@ final public class NewsDetailActivity extends DailyActivity implements
     public void onOptPageFinished() {
         mAdapter.showAll();
         float size = SettingBiz.get().getHtmlFontScale();
-        L.e("WLJ,onOptPageFinished,size="+size);
     }
 
     private Bundle bundle;

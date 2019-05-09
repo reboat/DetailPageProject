@@ -1,5 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +21,9 @@ import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +59,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
-    //    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
         ButterKnife.bind(this, itemView);
@@ -67,7 +72,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), itemView.getContext());
         webImpl.setJsObject(jsInterfaceImp);
         mWebView.setHelper(webImpl);
-//        mWebView.setWebContentsDebuggingEnabled(true);
+        mWebView.setWebContentsDebuggingEnabled(true);
     }
 
     public CommonWebView getWebView() {
@@ -101,12 +106,17 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
 
+        List<String>  js = new ArrayList<>();//TODO WLJ TEST
+        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
+        List<String>  css = new ArrayList<>();
+        css.add("https://zjbeta.8531.cn/statics/wap/css/zjxw.v6.css");
+        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", css, js);
         //JS
-        if (sp != null) {
-            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
-        } else {
-            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
-        }
+//        if (sp != null) {
+//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", sp.css, sp.js);
+//        } else {
+//            htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", null, null);
+//        }
         mWebView.loadDataWithBaseURL(null, htmlResult, "text/html", "utf-8", null);
     }
 

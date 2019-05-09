@@ -6,9 +6,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/_ffffff_202124"
-                android:descendantFocusability="blocksDescendants"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
     >
 
     <com.aliya.view.ratio.RatioFrameLayout
@@ -44,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/vr_module_ic_play_start"
-                app:iv_maskColor="@color/_cccbcb" />
+                />
 
             <TextView
                 android:id="@+id/tv_duration"

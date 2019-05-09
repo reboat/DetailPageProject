@@ -136,11 +136,9 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                         && itemView.getRootView() != itemView) {
 
                     if (mTvReadCopy.getVisibility() != View.GONE) {
-                        L.e("WLJ,onScrolled,mTvReadCopy.GONE");
                         mTvReadCopy.setVisibility(View.GONE);
                     }
                     if (mRecyclerTabCopy.getVisibility() != View.GONE) {
-                        L.e("WLJ,onScrolled,mRecyclerTabCopy.GONE");
                         mRecyclerTabCopy.setVisibility(View.GONE);
                         ivback.setImageResource(R.mipmap.module_biz_write_back);
                         ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
@@ -150,34 +148,41 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     //需要在群众之声消失
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         if (overlayEndPosition) {
+                            //吸顶隐藏
                             if(mRecyclerTabCopy.getVisibility() == View.VISIBLE){
-                                L.e("WLJ,onScrolled,mRecyclerTabCopy.GONE,overlayEndPosition="+overlayEndPosition);
                                 mRecyclerTabCopy.setVisibility(View.GONE);
                             }
                             if(mTvReadCopy.getVisibility() == View.VISIBLE){
-                                L.e("WLJ,onScrolled,mTvReadCopy.GONE,overlayEndPosition="+overlayEndPosition);
                                 mTvReadCopy.setVisibility(View.GONE);
                             }
+
+                            ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                            ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                            ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
                         } else {
+                            //吸顶显示
                             if(mRecyclerTabCopy.getVisibility() == View.GONE){
-                                L.e("WLJ,onScrolled,mRecyclerTabCopy.VISIBLE,overlayEndPosition="+overlayEndPosition);
                                 mRecyclerTabCopy.setVisibility(View.VISIBLE);
                             }
                             if(mTvReadCopy.getVisibility() == View.GONE){
-                                L.e("WLJ,onScrolled,mTvReadCopy.VISIBLE,overlayEndPosition="+overlayEndPosition);
                                 mTvReadCopy.setVisibility(View.VISIBLE);
                             }
+                            ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                            ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                            ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+
                         }
                     }
-                    if (mGroupCopy.getVisibility() == View.VISIBLE) {
-                        ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
-                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
-                        ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
-                    } else {
-                        ivback.setImageResource(R.mipmap.module_biz_write_back);
-                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
-                        ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
-                    }
+
+//                    if (mGroupCopy.getVisibility() == View.VISIBLE) {
+//                        ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+//                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+//                        ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+//                    } else {//吸顶隐藏
+//                        ivback.setImageResource(R.mipmap.module_biz_write_back);
+//                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
+//                        ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
+//                    }
                 }
             }
         });

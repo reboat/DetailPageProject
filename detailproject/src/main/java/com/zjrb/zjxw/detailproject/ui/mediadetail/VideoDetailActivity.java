@@ -44,6 +44,7 @@ import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.callback.DetailPlayerCallBack;
 import com.zjrb.zjxw.detailproject.ui.boardcast.CommentNumReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.boardcast.VideoReceiver;
@@ -255,6 +256,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setStreamStatus(bean.getNative_live_info() == null ? 0 : bean.getNative_live_info().getStream_status())
                     .setVertical(isVertical(bean))
                     .setUmengShareBean(shareBean)
+                    .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
                     .setTitle(title)
                     .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放

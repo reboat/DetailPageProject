@@ -14,6 +14,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
@@ -37,11 +38,17 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         super(data);
     }
 
+    private DraftDetailBean bean;
+    //FUCK WM
+    public void setDetailBean(DraftDetailBean bean){
+        this.bean = bean;
+    }
+
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int
             viewType) {
-        return new ImageMoreHolder(parent);
+        return new ImageMoreHolder(parent,bean);
     }
 
     /**
@@ -53,10 +60,12 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         ImageView mIvImage;
         @BindView(R2.id.tv_title)
         TextView mTvTitle;
+        private DraftDetailBean bean;
 
-        public ImageMoreHolder(ViewGroup parent) {
+        public ImageMoreHolder(ViewGroup parent,DraftDetailBean bean) {
             super(UIUtils.inflate(R.layout.module_detail_image_more_item, parent, false));
             ButterKnife.bind(this, itemView);
+            this.bean = bean;
         }
 
         @Override
@@ -75,7 +84,7 @@ public class ImageMoreAdapter extends BaseRecyclerAdapter {
         public void onClick(View view) {
             if (ClickTracker.isDoubleClick()) return;
             if (view.getId() == R.id.ry_container && mData != null && !TextUtils.isEmpty(mData.getUri_scheme())) {
-                DataAnalyticsUtils.get().ClickMoreImgItem(mData);
+                DataAnalyticsUtils.get().ClickMoreImgItem(mData,bean);
             }
             if (mTvTitle != null) {
                 mTvTitle.setSelected(true);

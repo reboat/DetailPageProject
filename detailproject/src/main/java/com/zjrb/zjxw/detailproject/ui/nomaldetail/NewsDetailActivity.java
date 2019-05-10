@@ -459,7 +459,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
@@ -479,6 +479,8 @@ final public class NewsDetailActivity extends DailyActivity implements
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
+                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")
@@ -703,11 +705,6 @@ final public class NewsDetailActivity extends DailyActivity implements
             //确定是该栏目需要同步
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
-                if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
-                } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                }
             }
         }
     }

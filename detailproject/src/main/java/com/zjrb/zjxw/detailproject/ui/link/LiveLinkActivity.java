@@ -330,6 +330,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
@@ -381,7 +383,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
                 //进入评论编辑页面(不针对某条评论)
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");

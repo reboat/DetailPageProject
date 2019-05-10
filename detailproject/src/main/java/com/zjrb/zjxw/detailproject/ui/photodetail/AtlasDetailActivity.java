@@ -556,6 +556,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         .setUrl(mData.getArticle().getUrl())
                         .setClassifyID(mData.getArticle().getChannel_id() + "")
                         .setClassifyName(mData.getArticle().getChannel_name())
+                        .setColumn_id(mData.getArticle().getChannel_id())
+                        .setColumn_name(mData.getArticle().getColumn_name())
                         .setPageType("图集详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mData.getArticle().getColumn_id() + "")
@@ -583,7 +585,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 DataAnalyticsUtils.get().ClickCommentBox(mData);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mData);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mData,false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
                             .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(),
@@ -959,11 +961,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //确定是该栏目需要同步
             if (id == mData.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
-                if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号订阅", "A0014", "SubColumn", "订阅");
-                } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                }
             }
         }
     }

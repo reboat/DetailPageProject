@@ -270,6 +270,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setUrl(mNewsDetail.getArticle().getUrl())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()

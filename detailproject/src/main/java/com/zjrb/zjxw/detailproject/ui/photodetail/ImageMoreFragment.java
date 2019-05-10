@@ -87,6 +87,7 @@ public class ImageMoreFragment extends DailyFragment {
         if (mBean == null || mBean.getArticle() == null || mBean.getArticle().getRelated_news() == null || mBean.getArticle().getRelated_news().isEmpty())
             return;
         mAdapter = new ImageMoreAdapter(mBean.getArticle().getRelated_news());
+        mAdapter.setDetailBean(mBean);
         lvNotice.setAdapter(mAdapter);
     }
 
@@ -110,6 +111,8 @@ public class ImageMoreFragment extends DailyFragment {
                     .setObjectType(ObjectType.C01).setUrl(mBean.getArticle().getUrl())
                     .setClassifyID(mBean.getArticle().getChannel_id() + "")
                     .setClassifyName(mBean.getArticle().getChannel_name())
+                    .setColumn_id(mBean.getArticle().getChannel_id())
+                    .setColumn_name(mBean.getArticle().getColumn_name())
                     .setPageType("新闻详情页")
                     .setOtherInfo(Analytics.newOtherInfo()
                             .put("relatedColumn", mBean.getArticle().getColumn_id() + "")

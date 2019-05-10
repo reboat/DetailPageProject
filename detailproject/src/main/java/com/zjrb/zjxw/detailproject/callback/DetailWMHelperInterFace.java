@@ -135,7 +135,7 @@ public interface DetailWMHelperInterFace {
      * 创建评论埋点
      */
     interface DetailCommentBuild {
-        Analytics CreateCommentAnalytics(DraftDetailBean bean);
+        Analytics CreateCommentAnalytics(DraftDetailBean bean,boolean isCommentListPage);
     }
 
     /**
@@ -203,7 +203,7 @@ public interface DetailWMHelperInterFace {
          *
          * @param bean
          */
-        void ClickMoreImgItem(RelatedNewsBean bean);
+        void ClickMoreImgItem(RelatedNewsBean bean,DraftDetailBean detailBean);
     }
 
     /**
@@ -264,7 +264,7 @@ public interface DetailWMHelperInterFace {
          *
          * @param bean
          */
-        void SpecialCommentNewsClick(HotCommentsBean bean);
+        void SpecialCommentNewsClick(HotCommentsBean bean,DraftDetailBean detailBean);
     }
 
     /**
@@ -361,7 +361,7 @@ public interface DetailWMHelperInterFace {
         /**
          * 官员相关新闻列表点击
          */
-        void RelateNewsClick(OfficalDetailBean bean);
+        void RelateNewsClick(OfficalDetailBean bean,int position);
 
         /**
          * 打开单个官员详情页

@@ -262,7 +262,8 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
                 DataAnalyticsUtils.get().AppTabCommentClick(mNewsDetail);
             }
             try {
-                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,true);
+                CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -276,8 +277,10 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setUrl(mNewsDetail.getArticle().getUrl())
-                        .setPageType("评论页")
+                        .setPageType("评论列表页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
                                 .put("subject", "")

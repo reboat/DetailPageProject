@@ -169,6 +169,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                             .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())
+                            .setColumn_id(mArticle.getChannel_id())
+                            .setColumn_name(mArticle.getColumn_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
                                     .put("relatedColumn", mArticle.getColumn_id() + "")
@@ -183,7 +185,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                             .setArticleId(mArticle.getId() + "")
                             .setImgUri(mArticle.getFirstSubjectPic())
                             .setTextContent(mArticle.getSummary())
-                            .setTitle(mArticle.getDoc_title())
+                            .setTitle(mArticle.getList_title())
                             .setAnalyticsBean(bean)
                             .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
                             .setShareType("文章"));

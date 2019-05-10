@@ -426,7 +426,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 DataAnalyticsUtils.get().ClickCommentBox(mDetailData);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mDetailData);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mDetailData,false);
                 //进入评论编辑页面(不针对某条评论)
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
@@ -447,6 +447,8 @@ public class ActivityTopicActivity extends DailyActivity implements
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mDetailData.getArticle().getChannel_id() + "")
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
+                        .setColumn_id(mDetailData.getArticle().getChannel_id())
+                        .setColumn_name(mDetailData.getArticle().getColumn_name())
                         .setUrl(mDetailData.getArticle().getUrl())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
@@ -664,11 +666,6 @@ public class ActivityTopicActivity extends DailyActivity implements
             //确定是该栏目需要同步
             if (id == mDetailData.getArticle().getColumn_id()) {
                 mTopBarHolder.getSubscribe().setSelected(subscribe);
-                if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "订阅号订阅", "A0014", "SubColumn", "订阅");
-                } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                }
             }
         }
     }

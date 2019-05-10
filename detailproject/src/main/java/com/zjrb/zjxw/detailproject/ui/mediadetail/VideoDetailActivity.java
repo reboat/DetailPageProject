@@ -88,8 +88,7 @@ import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRA
  */
 final public class VideoDetailActivity extends DailyActivity implements DetailInterface.CommentInterFace, NewsDetailAdapter.CommonOptCallBack,
         CommentWindowDialog.LocationCallBack, DetailInterface.SubscribeSyncInterFace,
-        DetailInterface.VideoBCnterFace, ViewPager
-                .OnPageChangeListener, DetailCommentHolder.deleteCommentListener {
+        DetailInterface.VideoBCnterFace, DetailCommentHolder.deleteCommentListener {
 
     @BindView(R2.id.iv_image)
     ImageView ivImage;
@@ -327,6 +326,29 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 for (int i = 0; i < pagerAdapter.getCount(); i++) {
                     pagerAdapter.getItem(i).setUserVisibleHint(position == i);
                 }
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    if (mNewsDetail.getArticle().isNative_live()) {//直播
+                        if (position == 0) {
+                            //简介
+                            DataAnalyticsUtils.get().SummaryTabClick(mNewsDetail);
+                        } else if (position == 1) {
+                            //直播间
+                            DataAnalyticsUtils.get().LiveTabClick(mNewsDetail);
+                        } else {
+                            //评论
+                            DataAnalyticsUtils.get().LiveCommentTabClick(mNewsDetail);
+                        }
+                    } else {//视频
+                        if (position == 0) {
+                            //视频
+                            DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
+                        } else {
+                            //评论
+                            DataAnalyticsUtils.get().VideoCommentTabCLick(mNewsDetail);
+                        }
+                    }
+                }
+
             }
 
             @Override
@@ -461,7 +483,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
@@ -479,6 +501,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         .setUrl(mNewsDetail.getArticle().getUrl())
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
@@ -668,11 +692,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //确定是该栏目需要同步
             if (id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
-                if (subscribe) {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
-                } else {
-                    DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                }
             }
         }
     }
@@ -767,44 +786,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onPageScrolled(int i, float v, int i1) {
-
-    }
-
-    @Override
-    public void onPageSelected(int i) {
-        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-            if (mNewsDetail.getArticle().isNative_live()) {//直播
-                if (i == 0) {
-                    //简介
-                    DataAnalyticsUtils.get().SummaryTabClick(mNewsDetail);
-                } else if (i == 1) {
-                    //直播间
-                    DataAnalyticsUtils.get().LiveTabClick(mNewsDetail);
-                } else {
-                    //评论
-                    DataAnalyticsUtils.get().LiveCommentTabClick(mNewsDetail);
-                }
-
-            } else {//视频
-                if (i == 0) {
-                    //视频
-                    DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
-                } else {
-                    //评论
-                    DataAnalyticsUtils.get().VideoCommentTabCLick(mNewsDetail);
-                }
-            }
-        }
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) {
-
     }
 
     //删除评论

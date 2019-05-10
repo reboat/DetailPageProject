@@ -36,10 +36,12 @@
                 android:ellipsize="end"
                 android:gravity="top|left"
                 android:includeFontPadding="false"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/ly_prise"
                 android:maxLines="1"
                 android:textColor="@color/_616161"
                 android:textSize="@dimen/ts_12sp"
-                tools:text="你好你好你好你好" />
+                tools:text="你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好" />
 
             <ImageView
                 android:id="@+id/iv_host"

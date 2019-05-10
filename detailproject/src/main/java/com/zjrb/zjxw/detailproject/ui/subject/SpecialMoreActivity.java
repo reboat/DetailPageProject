@@ -133,6 +133,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                         .setObjectType(ObjectType.C01).setUrl(mDraftDetailBean.getArticle().getUrl())
                         .setClassifyID(mDraftDetailBean.getArticle().getChannel_id() + "")
                         .setClassifyName(mDraftDetailBean.getArticle().getChannel_name())
+                        .setColumn_id(mDraftDetailBean.getArticle().getChannel_id())
+                        .setColumn_name(mDraftDetailBean.getArticle().getColumn_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mDraftDetailBean.getArticle().getColumn_id() + "")

@@ -12,6 +12,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SubjectVoiceMassBean;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 
@@ -38,6 +39,11 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
         ButterKnife.bind(this, itemView);
     }
 
+    //fuck WM
+    private DraftDetailBean bean;
+    public void setDetailBean(DraftDetailBean bean){
+        this.bean = bean;
+    }
     //交互绑定
     @Override
     public void bindView() {
@@ -56,7 +62,7 @@ public class SpecialCommentHolder extends BaseRecyclerViewHolder<SubjectVoiceMas
         //进入评论文章详情页
         if (view.getId() == R.id.ry_title) {
             if (mData.getComment_list() != null && mData.getComment_list().size() > 0 && !TextUtils.isEmpty(mData.getComment_list().get(0).getTitle())) {
-                DataAnalyticsUtils.get().SpecialCommentNewsClick(mData.getComment_list().get(0));
+                DataAnalyticsUtils.get().SpecialCommentNewsClick(mData.getComment_list().get(0),bean);
                 if (bundle == null) {
                     bundle = new Bundle();
                 }

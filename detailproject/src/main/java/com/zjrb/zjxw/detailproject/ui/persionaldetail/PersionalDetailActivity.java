@@ -185,12 +185,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     @OnClick({R2.id.iv_top_share})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-//        if (view.getId() == R.id.lly_reporter) {
-//            //跳转到官员详情页H5
-//            if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getDetail_url())) {
-//                Nav.with(this).to(bean.getOfficer().getDetail_url());
-//            }
-//        } else {//点击分享
         if (bean != null && bean.getOfficer() != null && !TextUtils.isEmpty(bean.getOfficer().getShare_url())) {
             DataAnalyticsUtils.get().OfficalClickShare(bean);
             //分享
@@ -206,8 +200,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
                     .setEventName("PageShare")
             );
         }
-
-//        }
     }
 
 
@@ -257,9 +249,9 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     public void onPageSelected(int position) {
         if (bean != null && bean.getOfficer() != null) {
             if (position == 0) {
-                DataAnalyticsUtils.get().OfficialDetailClick(bean);
-            } else {
                 DataAnalyticsUtils.get().OfficialNewsClick(bean);
+            } else {
+                DataAnalyticsUtils.get().OfficialDetailClick(bean);
             }
         }
 

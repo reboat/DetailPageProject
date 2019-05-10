@@ -166,7 +166,7 @@ public class PersionalRelateFragment extends DailyFragment implements HeaderRefr
             return;
         }
         if (bean != null && bean.getOfficer() != null) {
-            DataAnalyticsUtils.get().RelateNewsClick(bean);
+            DataAnalyticsUtils.get().RelateNewsClick(bean,position);
         }
         NewsUtils.itemClick(this, mAdapter.getData(position));
     }

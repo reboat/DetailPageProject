@@ -449,6 +449,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
                     mPriseNum.setVisibility(View.VISIBLE);
                 }
                 mPriseNum.setText(mData.getLike_count() + "赞");
+                mPriseNum.setTextColor(Color.parseColor("#d12324"));
                 ZBToast.showShort(itemView.getContext(), "点赞成功");
             }
 

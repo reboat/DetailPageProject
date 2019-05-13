@@ -310,6 +310,10 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
         }
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
+        //标红
+        if(mData.isLiked()){
+            mPriseNum.setTextColor(Color.parseColor("#d12324"));
+        }
 
         if (!TextUtils.isEmpty(mData.getLocation())) { // 评论位置
             mLocation.setText(mData.getLocation());

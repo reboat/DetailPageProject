@@ -1,10 +1,17 @@
-<com.aliya.view.fitsys.FitWindowsRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                              android:id="@+id/lv_notice"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent"
-                                              android:background="@color/_ffffff_191919"
-                                              android:fitsSystemWindows="true"
-                                              android:paddingLeft="15dp"
-                                              android:paddingRight="15dp"
-                                              app:fitType="bottom" />
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/_ffffff_191919">
+
+    <com.aliya.view.fitsys.FitWindowsRecyclerView
+        android:id="@+id/lv_notice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/_ffffff_191919"
+        android:fitsSystemWindows="true"
+        app:fitType="bottom" />
+</FrameLayout>

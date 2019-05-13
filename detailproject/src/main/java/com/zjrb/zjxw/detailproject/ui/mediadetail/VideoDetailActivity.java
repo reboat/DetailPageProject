@@ -78,6 +78,8 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.update.util.NetUtils;
 
+import static com.aliya.dailyplayer.sub.DailyPlayerManager.Builder.STREAM_STATUS_FINISH;
+import static com.aliya.dailyplayer.sub.DailyPlayerManager.Builder.STREAM_STATUS_NOT_START;
 import static com.zjrb.core.utils.UIUtils.getContext;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoCommentFragment.FRAGMENT_DETAIL_COMMENT;
 import static com.zjrb.zjxw.detailproject.ui.mediadetail.VideoDetailFragment.FRAGMENT_DETAIL_BEAN;
@@ -120,6 +122,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised_relpace)
     ImageView ivPrisedRelpace;
+    @BindView(R2.id.tv_live_status)
+    TextView tvLiveStatus;
+    @BindView(R2.id.iv_play)
+    ImageView ivPlay;
 
 
     private int ui;
@@ -212,13 +218,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         String url = bean.getVideo_url();
         String title = bean.getDoc_title();
         DailyPlayerManager.Builder builder = new DailyPlayerManager.Builder(this);
-        String imagePath = mNewsDetail.getArticle().getList_pics().get(0);
+        String imagePath = mNewsDetail.getArticle().getFirstPic();
         //直播/视频
         if (bean.isNative_live() || !TextUtils.isEmpty(url)) {
-            //UI
-            videoContainer.setVisibility(View.VISIBLE);
-            GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
-                    .apply(AppGlideOptions.bigOptions()).into(ivImage);
 
             //优先判定直播稿
             if (bean.isNative_live()) {
@@ -236,6 +238,25 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     } else {
                         url = "";
                     }
+                }
+            }
+
+            //UI
+            videoContainer.setVisibility(View.VISIBLE);
+            GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
+                    .apply(AppGlideOptions.bigOptions()).into(ivImage);
+            if (builder.isLive()) {
+                if (builder.getStreamStatus() == STREAM_STATUS_NOT_START) {
+                    tvLiveStatus.setText("暂未开始");
+                    ivPlay.setVisibility(View.GONE);
+                    tvLiveStatus.setVisibility(View.VISIBLE);
+                } else if (builder.getStreamStatus() == STREAM_STATUS_FINISH) {
+                    if (TextUtils.isEmpty(builder.getPlayUrl())) {
+                        tvLiveStatus.setText("直播已结束");
+                        ivPlay.setVisibility(View.GONE);
+                        tvLiveStatus.setVisibility(View.VISIBLE);
+                    }
+
                 }
             }
 
@@ -485,7 +506,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail, false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(mCommentFragment).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
@@ -807,7 +828,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else {
                 currentPlayingView = videoContainer;
             }
-
             Bundle bundle = intent.getExtras();
             DailyPlayerManager.Builder builder = (DailyPlayerManager.Builder) bundle.getSerializable(Constant.DATA);
             PlayerAction playerAction = (PlayerAction) bundle.getSerializable(Constant.EVENT);

@@ -662,7 +662,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
     @Override
-    public void onBackPressed() {
+    public void finish() {
         if (aDapter != null && aDapter.getWebViewHolder() != null &&
                 aDapter.getWebViewHolder().getWebView() != null &&
                 aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
@@ -681,10 +681,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             bundle.putSerializable(Constant.EVENT, action);
             intent.putExtras(bundle);
             LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-            super.onBackPressed();
+            super.finish();
         }
-    }
 
+    }
 
     @Override
     public void subscribeSync(Intent intent) {
@@ -824,10 +824,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DailyPlayerManager.get().init(builder, false);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             } else if (PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
-//                builder.setContext(getActivity());
-//                builder.setPlayContainer(videoContainer);
-//                builder.setOnPlayerManagerCallBack(VideoDetailActivity.this);
-//                DailyPlayerManager.get().init(builder);
                 DailyPlayerManager.get().deleteControllers(currentPlayingView);
             }
         }

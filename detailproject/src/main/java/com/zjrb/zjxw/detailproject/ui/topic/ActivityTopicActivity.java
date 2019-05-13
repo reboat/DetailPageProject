@@ -604,6 +604,7 @@ public class ActivityTopicActivity extends DailyActivity implements
      */
     @Override
     public void onDeleteComment(int position) {
+        ZBToast.showShort(getApplicationContext(),"删除成功");
         mAdapter.remove(position);
     }
 

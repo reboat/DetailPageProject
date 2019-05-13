@@ -793,6 +793,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     //删除评论
     @Override
     public void onDeleteComment(int position) {
+        ZBToast.showShort(getApplicationContext(),"删除成功");
         mCommentFragment.onDeleteComment(position);
     }
 

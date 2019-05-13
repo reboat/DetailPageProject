@@ -160,6 +160,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
 
     //删除评论操作
     public void onDeleteComment(int position) {
+        ZBToast.showShort(getActivity(),"删除成功");
         mCommentAdapter.remove(position);
     }
 }

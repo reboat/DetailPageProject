@@ -363,6 +363,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     //删除评论
     @Override
     public void onDeleteComment(int position) {
+        ZBToast.showShort(getApplicationContext(),"删除成功");
         mAdapter.remove(position);
     }
 

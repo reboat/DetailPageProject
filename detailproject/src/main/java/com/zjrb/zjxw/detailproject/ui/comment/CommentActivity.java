@@ -328,6 +328,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     public void onDeleteComment(int position) {
         try {
             mCommentAdapter.remove(position);
+            ZBToast.showShort(getApplicationContext(),"删除成功");
         } catch (Exception e) {
 
         }

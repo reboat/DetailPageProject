@@ -65,7 +65,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         lvNotice.addItemDecoration(new NewsDetailSpaceDivider(0.5f, R.color._dddddd_7a7b7d));
         refresh = new HeaderRefresh(lvNotice);
         refresh.setOnRefreshListener(this);
-        refreshData();
+        refreshData(true);
     }
 
     @Override
@@ -80,14 +80,14 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             @Override
             public void run() {
                 refresh.setRefreshing(false);
-                refreshData();
+                refreshData(false);
             }
         });
     }
 
     //初始化适配器
-    private void initAdapter(CommentRefreshBean commentRefreshBean, DraftDetailBean newsDetail) {
-        if (mCommentAdapter == null) {
+    private void initAdapter(CommentRefreshBean commentRefreshBean, DraftDetailBean newsDetail,boolean isFirst) {
+        if (mCommentAdapter == null || isFirst) {
             mCommentAdapter = new CommentAdapter(commentRefreshBean, lvNotice, newsDetail, true);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
             mCommentAdapter.setEmptyView(
@@ -114,7 +114,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
     }
 
     //下拉刷新
-    private void refreshData() {
+    private void refreshData(final boolean isFirst) {
         new CommentListTask(new LoadingCallBack<CommentRefreshBean>() {
             @Override
             public void onSuccess(CommentRefreshBean commentRefreshBean) {
@@ -123,7 +123,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
                     if (mNewsDetail.getArticle().getHot_comments() != null) {
                         SyncCommentNum(commentRefreshBean.getComment_count() + mNewsDetail.getArticle().getHot_comments().size());
                     }
-                    initAdapter(commentRefreshBean, mNewsDetail);
+                    initAdapter(commentRefreshBean, mNewsDetail,isFirst);
                 }
                 lvNotice.scrollToPosition(0);
                 refresh.setRefreshing(false);
@@ -138,7 +138,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
             public void onError(String errMsg, int errCode) {
                 ZBToast.showShort(getContext(), errMsg);
             }
-        }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getId());
+        }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(lvNotice) : null).exe(mNewsDetail.getArticle().getId());
     }
 
     //评论成功刷新列表
@@ -152,7 +152,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
                 }
 
                 refresh.setRefreshing(false);
-                refreshData();
+                refreshData(false);
             }
         });
     }
@@ -160,7 +160,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
 
     //删除评论操作
     public void onDeleteComment(int position) {
-        ZBToast.showShort(getActivity(),"删除成功");
+        ZBToast.showShort(getActivity(), "删除成功");
         mCommentAdapter.remove(position);
     }
 }

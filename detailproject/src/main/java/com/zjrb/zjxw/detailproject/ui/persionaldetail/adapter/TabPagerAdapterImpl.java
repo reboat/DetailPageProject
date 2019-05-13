@@ -54,7 +54,7 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
 
     //设置标题
     public void setPageTitle(int position, String title) {
-        mTabList.get(position).title = title;
+        mTabList.get(position).setTitle(title);
     }
 
     /**
@@ -74,6 +74,14 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
             this.clz = clz;
             this.title = title;
             this.args = args;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 

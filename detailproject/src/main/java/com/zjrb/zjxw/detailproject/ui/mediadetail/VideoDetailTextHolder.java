@@ -23,6 +23,7 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     TextView mTvHot;
     @BindView(R2.id.tv_comment_num)
     TextView mTvNum;
+
     private int mCommentNum;
 
     public VideoDetailTextHolder(ViewGroup parent, int commentNum) {

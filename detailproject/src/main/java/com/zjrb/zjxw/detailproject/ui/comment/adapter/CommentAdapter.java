@@ -71,7 +71,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         super(null);
         mLoadMore = new FooterLoadMore<>(parent, this);
         setFooterLoadMore(mLoadMore.itemView);
-        setData(datas, bean);
         mBean = bean;
         mDatas = datas;
         if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getHot_comments() != null) {
@@ -79,6 +78,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         }
         this.commentCount = mDatas.getComment_count();
         this.isVideoDetail = isVideoDetail;
+        setData(datas, bean);
     }
 
     //设置视频详情数据
@@ -137,6 +137,10 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     private VideoDetailTextHolder hotHolder, NewsHolder;
+
+    public VideoDetailTextHolder getNewsHolder() {
+        return NewsHolder;
+    }
 
     @Override
     public BaseRecyclerViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {

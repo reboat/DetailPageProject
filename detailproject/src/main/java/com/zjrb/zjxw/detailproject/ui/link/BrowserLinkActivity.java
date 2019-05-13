@@ -195,7 +195,11 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                 //判断是否为链接稿
                 if (data.getPath().equals("/link.html")) {
                     isBrowserLink = true;
-                    browserUri = data.toString();
+                }
+                String uri_scheme = data.getQueryParameter(IKey.URI_SCHEME);
+                if (!TextUtils.isEmpty(uri_scheme)) {
+                    isBrowserLink = false;
+                    browserUri = Uri.decode(uri_scheme);
                 }
             }
 

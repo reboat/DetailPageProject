@@ -254,10 +254,10 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
         return mArticleId;
     }
 
-    @OnClick({R2.id.tv_comment, R2.id.iv_top_share})
+    @OnClick({R2.id.tv_comment, R2.id.iv_top_share,R2.id.fy_container})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
-        if (v.getId() == R.id.tv_comment) {
+        if (v.getId() == R.id.tv_comment || v.getId() == R.id.fy_container) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().AppTabCommentClick(mNewsDetail);
             }

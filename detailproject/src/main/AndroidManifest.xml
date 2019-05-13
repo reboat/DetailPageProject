@@ -93,6 +93,7 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <!-- 链接稿 path -->
+                <data android:path="/common/detail.html"/>
                 <data android:path="/link.html" />
                 <data android:path="/link/BrowserLinkActivity" />
                 <data android:host="@string/data_host" />

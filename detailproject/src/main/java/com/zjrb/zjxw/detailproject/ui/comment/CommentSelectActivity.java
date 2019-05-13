@@ -183,6 +183,7 @@ public class CommentSelectActivity extends DailyActivity implements HeaderRefres
      */
     @Override
     public void onDeleteComment(int position) {
+        ZBToast.showShort(getApplicationContext(),"删除成功");
         mCommentAdapter.remove(position);
     }
 

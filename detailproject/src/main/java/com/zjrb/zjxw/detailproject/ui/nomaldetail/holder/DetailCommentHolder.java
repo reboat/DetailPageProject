@@ -512,7 +512,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
 
             @Override
             public void onError(String errMsg, int errCode) {
-                ZBToast.showShort(itemView.getContext(), errMsg);
+                ZBToast.showShort(itemView.getContext(), "删除失败");
             }
         }).setTag(UIUtils.getActivity()).exe(comment_id);
     }

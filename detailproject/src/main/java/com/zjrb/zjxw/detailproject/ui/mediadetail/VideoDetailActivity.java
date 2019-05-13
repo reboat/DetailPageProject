@@ -487,7 +487,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 //评论发表成功
                 Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
                 try {
-                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                    CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(mCommentFragment).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -764,7 +764,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     public void syncCommentNum(Intent intent) {
         if (intent != null && intent.hasExtra("video_comment_title")) {
-            //TODO WLJ 这里更新title没有生效
             if (pagerAdapter.getCount() == 2) {
                 pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
             } else {

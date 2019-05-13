@@ -141,7 +141,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(replaceLoad(lvNotice)).exe(mNewsDetail.getArticle().getId());
     }
 
-    //提交评论时刷新列表
+    //评论成功刷新列表
     @Override
     public void onUpdateComment() {
         lvNotice.post(new Runnable() {

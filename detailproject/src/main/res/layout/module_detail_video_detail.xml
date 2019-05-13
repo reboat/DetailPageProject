@@ -30,6 +30,17 @@
             android:src="@mipmap/zjnews_video_listpage_play_icon"
             app:iv_maskColor="@color/_cccbcb" />
 
+        <TextView
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:id="@+id/tv_live_status"
+            android:textColor="@color/_ffffff"
+            android:textSize="@dimen/ts_13sp"
+            android:fontFamily="@font/fzbiaoysk_zbjt"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
 
     </com.aliya.view.ratio.RatioFrameLayout>

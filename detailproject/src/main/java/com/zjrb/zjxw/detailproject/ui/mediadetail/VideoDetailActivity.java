@@ -209,8 +209,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
         Uri uri = Uri.parse(bean.getVideo_url());
         String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
-        boolean isVertical = Integer.valueOf(type) == 1;
-        return isVertical;
+        try {
+            boolean isVertical = Integer.valueOf(type) == 1;
+            return isVertical;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 

@@ -34,6 +34,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:layout_alignParentLeft="true"
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -46,7 +47,7 @@
                 android:maxLines="1"
                 android:textColor="@color/_616161"
                 android:textSize="@dimen/ts_12sp"
-                tools:text="你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好你好" />
+                tools:text="你好" />
 
             <ImageView
                 android:id="@+id/iv_host"

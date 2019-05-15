@@ -341,6 +341,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             mCommentFragment = (VideoCommentFragment) pagerAdapter.getItem(1);
         }
 
+        //加载评论页面，防止评论更新数据时空指针
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

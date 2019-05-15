@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.ui.subject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -207,6 +208,9 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     private void bindCollect() {
         if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
             ivTopCollect.setSelected(mDraftDetailBean.getArticle().isFollowed());
+            Intent intent=new Intent();
+            intent.putExtra(SpecialActivity.KEY_COLLECT,mDraftDetailBean.getArticle().isFollowed());
+            setResult(Activity.RESULT_OK,intent);
         }
     }
 

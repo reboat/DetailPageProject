@@ -17,6 +17,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SubjectVoiceMassBean;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
+import com.zjrb.zjxw.detailproject.ui.subject.SpecialActivity;
 import com.zjrb.zjxw.detailproject.ui.subject.holder.SpecialCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.subject.holder.SpecialCommentPlaceHolder;
 import com.zjrb.zjxw.detailproject.ui.subject.holder.SpecialCommentTabHolder;
@@ -233,7 +234,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(IKey.NEWS_DETAIL, mBean);
                 bundle.putSerializable(IKey.DATA, mData);
-                Nav.with(v.getContext()).setExtras(bundle).toPath("/news/SpecialMoreActivity");
+                Nav.with(v.getContext()).setExtras(bundle).toPath("/news/SpecialMoreActivity", SpecialActivity.REQUEST_CODE_MORE);
             }
         }
     }

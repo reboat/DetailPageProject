@@ -61,6 +61,9 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
         HeaderSpecialHolder.OnClickChannelListener, DetailCommentHolder.deleteCommentListener {
 
+    public static final int REQUEST_CODE_MORE = 1111;
+    public static final String KEY_COLLECT = "collect";
+
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
     @BindView(R2.id.recycler_copy)
@@ -393,5 +396,12 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 //        }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_MORE && resultCode==RESULT_OK){
+            boolean isCollect=data.getBooleanExtra(KEY_COLLECT,false);
+            mCollect.setSelected(isCollect);
+        }
+    }
 }

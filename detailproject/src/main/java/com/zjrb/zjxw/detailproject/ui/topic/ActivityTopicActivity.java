@@ -448,7 +448,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mDetailData.getArticle().getChannel_id() + "")
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setColumn_id(mDetailData.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mDetailData.getArticle().getColumn_id()))
                         .setColumn_name(mDetailData.getArticle().getColumn_name())
                         .setUrl(mDetailData.getArticle().getUrl())
                         .setPageType("新闻详情页")

@@ -111,7 +111,7 @@ public class ImageMoreFragment extends DailyFragment {
                     .setObjectType(ObjectType.C01).setUrl(mBean.getArticle().getUrl())
                     .setClassifyID(mBean.getArticle().getChannel_id() + "")
                     .setClassifyName(mBean.getArticle().getChannel_name())
-                    .setColumn_id(mBean.getArticle().getChannel_id())
+                    .setColumn_id(String.valueOf(mBean.getArticle().getColumn_id()))
                     .setColumn_name(mBean.getArticle().getColumn_name())
                     .setPageType("新闻详情页")
                     .setOtherInfo(Analytics.newOtherInfo()

@@ -557,7 +557,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         .setUrl(mData.getArticle().getUrl())
                         .setClassifyID(mData.getArticle().getChannel_id() + "")
                         .setClassifyName(mData.getArticle().getChannel_name())
-                        .setColumn_id(mData.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mData.getArticle().getColumn_id()))
                         .setColumn_name(mData.getArticle().getColumn_name())
                         .setPageType("图集详情页")
                         .setOtherInfo(Analytics.newOtherInfo()

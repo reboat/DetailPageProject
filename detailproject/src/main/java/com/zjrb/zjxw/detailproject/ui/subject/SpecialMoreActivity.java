@@ -150,16 +150,17 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                                 .toString())
                         .setSelfobjectID(mDraftDetailBean.getArticle().getId() + "");
 
+                DraftDetailBean.ArticleBean mArticle = mDraftDetailBean.getArticle();
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
-                        .setCardUrl(mDraftDetailBean.getArticle().getCard_url())
-                        .setArticleId(mDraftDetailBean.getArticle().getId() + "")
-                        .setImgUri(mDraftDetailBean.getArticle().getArticle_pic())
-                        .setTextContent(mDraftDetailBean.getArticle().getSummary())
-                        .setTitle(mDraftDetailBean.getArticle().getDoc_title())
+                        .setCardUrl(mArticle.getCard_url())
+                        .setArticleId(mArticle.getId() + "")
+                        .setImgUri(mArticle.getFirstSubjectPic())
+                        .setTextContent(mArticle.getSummary())
+                        .setTitle(mArticle.getList_title())
                         .setAnalyticsBean(bean)
-                        .setTargetUrl(mDraftDetailBean.getArticle().getUrl()).setEventName("NewsShare")
+                        .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
                         .setShareType("文章"));
             }
         }

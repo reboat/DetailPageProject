@@ -2,9 +2,9 @@ package com.zjrb.zjxw.detailproject.ui.subject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +54,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     ImageView ivTopCollect;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
+    @BindView(R2.id.special_tab_container)
+    ViewGroup mTabContainer;
 
     /**
      * 专题id
@@ -82,17 +84,22 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
             groupBeanList = new ArrayList<>();
         }
         viewPager.setAdapter(new SpecialPagerAdapter(getSupportFragmentManager(), groupBeanList));
-        tabLayout.setViewPager(viewPager);
-        if (mCurrentBean!=null){
+        if (groupBeanList.size() > 1) {
+            tabLayout.setViewPager(viewPager);
+            mTabContainer.setVisibility(View.VISIBLE);
+        } else {
+            mTabContainer.setVisibility(View.GONE);
+        }
+        if (mCurrentBean != null) {
             int position = findCurrentPosition(groupBeanList);
             viewPager.setCurrentItem(position);
         }
     }
 
-    private int findCurrentPosition(List<SpecialGroupBean> groupBeanList){
+    private int findCurrentPosition(List<SpecialGroupBean> groupBeanList) {
         int currentPosition = 0;
-        for (int i = 0; i <groupBeanList.size(); i++) {
-            if (mCurrentBean.getGroup_id().equals(groupBeanList.get(i).getGroup_id())){
+        for (int i = 0; i < groupBeanList.size(); i++) {
+            if (mCurrentBean.getGroup_id().equals(groupBeanList.get(i).getGroup_id())) {
                 currentPosition = i;
             }
         }

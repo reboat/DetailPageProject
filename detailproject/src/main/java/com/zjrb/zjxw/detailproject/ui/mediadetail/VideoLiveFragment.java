@@ -97,6 +97,9 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
                 refreshData(startId, 10, isReverse);
             }
         });
+        if (findListPlayingView()!=null&&DailyPlayerManager.get().getBuilder()!=null){
+            DailyPlayerManager.get().onDestroy();
+        }
     }
 
 
@@ -165,7 +168,11 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
     @Override
     public void onResume() {
         super.onResume();
-        //解决8.1系统bug 当横屏返回竖屏activity时 竖屏activity会先拉成横屏再变成竖屏
+        setCanDesroty();
+    }
+
+    //解决8.1系统bug 当横屏返回竖屏activity时 竖屏activity会先拉成横屏再变成竖屏
+    private void setCanDesroty(){
         if (adapter != null) {
             adapter.setCanDestory(false);
             new Handler().postDelayed(new Runnable() {
@@ -206,6 +213,8 @@ public class VideoLiveFragment extends DailyFragment implements HeaderRefresh
             if (playContainer != null && playContainer == DailyPlayerManager.get().getBuilder().getPlayContainer()) {
                 DailyPlayerManager.get().onDestroy();
             }
+        }else {
+            setCanDesroty();
         }
     }
 

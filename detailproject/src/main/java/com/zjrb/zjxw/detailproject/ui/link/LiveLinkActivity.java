@@ -112,6 +112,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private SubscribeReceiver mReceiver;
     private WebViewImpl webImpl;
     private JsMultiInterfaceImp jsInterfaceImp;
+    private Analytics mAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +195,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                 mNewsDetail = draftDetailBean;
                 builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                mAnalytics = builder.build();
                 if (mNewsDetail.getArticle().getDoc_type() == 8) {
                     url = mNewsDetail.getArticle().getLive_url();
                 }
@@ -536,7 +538,6 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         mWebView.destroy();
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
         if (builder != null) {
-            Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }

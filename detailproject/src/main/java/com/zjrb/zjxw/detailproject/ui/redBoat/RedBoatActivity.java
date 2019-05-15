@@ -169,6 +169,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                mAnalytics = builder.build();
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -363,7 +364,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 builder.pagePercent(mScale + "");
             }
             builder.readPercent(mScale + "");
-            mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }

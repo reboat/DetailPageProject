@@ -111,6 +111,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
     //链接稿url堆栈管理
     private Stack<WebStack> mWebStacks = new Stack<>();
     private WebStack mWebStack;
+    private Analytics mAnalytics;
 
 
     @Override
@@ -232,6 +233,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                     if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
                     mNewsDetail = draftDetailBean;
                     builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                    mAnalytics = builder.build();
                     if (mNewsDetail.getArticle().getDoc_type() == 3) {
                         mWebStack.urlLink = mNewsDetail.getArticle().getWeb_link();
                     } else {
@@ -530,7 +532,6 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
     //关闭页面
     private void closeActivity() {
         if (builder != null) {
-            Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }

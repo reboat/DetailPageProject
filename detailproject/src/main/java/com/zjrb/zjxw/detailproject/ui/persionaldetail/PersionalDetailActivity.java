@@ -69,6 +69,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
 
     private TabPagerAdapterImpl pagerAdapter;
     private OfficalDetailBean bean;
+    private Analytics mAnalytics;
 
 
     @Override
@@ -109,6 +110,7 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
             public void onSuccess(OfficalDetailBean data) {
                 if (data == null) return;
                 builder = DataAnalyticsUtils.get().CreateOfficalAnalytic(data);
+                mAnalytics = builder.build();
                 initView(data);
             }
 
@@ -164,7 +166,6 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
     protected void onDestroy() {
         super.onDestroy();
         if (builder != null) {
-            Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }

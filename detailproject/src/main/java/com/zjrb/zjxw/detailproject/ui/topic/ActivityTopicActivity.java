@@ -216,6 +216,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 mTopBarHolder.setShareVisible(true);
                 if (data.getArticle() != null) {
                     builder = DataAnalyticsUtils.get().pageStayTime(data);
+                    mAnalytics = builder.build();
                 }
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
@@ -615,7 +616,6 @@ public class ActivityTopicActivity extends DailyActivity implements
             if (builder != null) {
                 builder.pagePercent(mScale + "");
                 builder.readPercent(mScale + "");
-                mAnalytics = builder.build();
                 if (mAnalytics != null) {
                     mAnalytics.sendWithDuration();
                 }

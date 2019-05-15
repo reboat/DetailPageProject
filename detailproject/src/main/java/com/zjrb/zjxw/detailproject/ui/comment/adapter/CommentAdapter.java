@@ -78,6 +78,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         }
         this.commentCount = mDatas.getComment_count();
         this.isVideoDetail = isVideoDetail;
+        this.articleId = String.valueOf(bean.getArticle().getId());
         setData(datas, bean);
     }
 

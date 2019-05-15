@@ -173,6 +173,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
+        DailyPlayerManager.get().onDestroy();
     }
 
     private void getIntentData(Intent intent) {

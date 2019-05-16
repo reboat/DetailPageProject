@@ -88,7 +88,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         if (viewType == VIEW_TYPE_TOP) {
             return new NewsDetailTitleHolder(parent, isRedBoat,isVideoDetail);
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
-            webviewHolder = new NewsDetailWebViewHolder(parent);
+            if(webviewHolder == null){
+                webviewHolder = new NewsDetailWebViewHolder(parent);
+            }
             return webviewHolder;
         } else if (viewType == VIEW_TYPE_MIDDLE) {
             return new NewsDetailMiddleHolder(parent);

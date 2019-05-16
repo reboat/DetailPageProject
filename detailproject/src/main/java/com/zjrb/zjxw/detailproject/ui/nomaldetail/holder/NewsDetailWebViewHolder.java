@@ -22,9 +22,6 @@ import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.SettingBiz;
@@ -59,6 +56,9 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      */
     private float mReadingScale;
 
+    //TODO 防止item复用时重新加载，不知道有没有问题，需要确认
+    private boolean isLoaded = false;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public NewsDetailWebViewHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_web, parent, false));
@@ -92,6 +92,13 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     @Override
     public void bindView() {
+
+        if(isLoaded){
+            return;
+        }
+
+        isLoaded = true;
+
         String htmlCode = AppUtils.getAssetsText(C.HTML_RULE_PATH);
         String uiModeCssUri = ThemeMode.isNightMode()
                 ? C.NIGHT_CSS_URI : C.DAY_CSS_URI;

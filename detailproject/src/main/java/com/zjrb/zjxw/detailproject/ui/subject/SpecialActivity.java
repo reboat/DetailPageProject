@@ -22,6 +22,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.other.NewsUtils;
+import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
@@ -144,7 +145,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
      */
     private void initView() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new SpecialSpaceDivider(0.5f, R.color._dddddd_343434));
+        mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
     }
 
     @Override

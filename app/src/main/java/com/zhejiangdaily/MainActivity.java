@@ -52,7 +52,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //        Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157031");
 //        Nav.with(this).to("www.baidu.com");
         if (v.getId() == R.id.tv_text) {
-            Nav.with(this).to("https://pre-act.8531.cn/money_zjxw/sign/index.html?zjxw_control=1101#/sign?q=t56ZqF7OGi5vxwLidOcYHBPqpfT0fzVVdHbVeUt21oPjphifIbz8Y8Ew3ggo91UIandX0iF1ZGR9Fv9kP/Q9C3+NaSvQ8GP+O0kiHDcZ8beEJRqZN/cEjts= ");
+            Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1156948");
         } else if (v.getId() == R.id.tv_text1) {
             Nav.with(this).to("https://test-act.8531.cn/lottery/index.html?zjxw_control=1101#/?q=YunSLJq4&ref_aid=1157326");
         }

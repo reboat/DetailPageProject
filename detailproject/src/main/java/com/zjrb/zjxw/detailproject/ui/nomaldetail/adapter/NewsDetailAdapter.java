@@ -104,7 +104,6 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             holder.setCommentType("热门评论");
             return holder;
         } else if (viewType == VIEW_TYPE_STRING) {
-            //热门评论时，这里多了一条线
             return new NewsStringTextHolder(parent);
         } else if (viewType == VIEW_TYPE_STRING_CLICK_MORE) {
             return new NewsStringClickMoreHolder(parent);

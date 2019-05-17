@@ -354,7 +354,6 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     public void onOptPageFinished() {
         mAdapter.showAll();
-        float size = SettingBiz.get().getHtmlFontScale();
     }
 
     private Bundle bundle;
@@ -595,8 +594,6 @@ final public class NewsDetailActivity extends DailyActivity implements
     @Override
     protected void onPause() {
         super.onPause();
-        float size = SettingBiz.get().getHtmlFontScale();
-        L.e("WLJ,onPause,size=" + size);
 //        if (mAdapter != null) {
 //            mAdapter.onWebViewPause();
 //        }

@@ -1,10 +1,11 @@
 package com.zjrb.zjxw.detailproject.ui.subject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +55,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     ImageView ivTopCollect;
     @BindView(R2.id.tv_title)
     TextView tvTitle;
+    @BindView(R2.id.special_tab_container)
+    ViewGroup mTabContainer;
 
     /**
      * 专题id
@@ -82,17 +85,22 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
             groupBeanList = new ArrayList<>();
         }
         viewPager.setAdapter(new SpecialPagerAdapter(getSupportFragmentManager(), groupBeanList));
-        tabLayout.setViewPager(viewPager);
-        if (mCurrentBean!=null){
+        if (groupBeanList.size() > 1) {
+            tabLayout.setViewPager(viewPager);
+            mTabContainer.setVisibility(View.VISIBLE);
+        } else {
+            mTabContainer.setVisibility(View.GONE);
+        }
+        if (mCurrentBean != null) {
             int position = findCurrentPosition(groupBeanList);
             viewPager.setCurrentItem(position);
         }
     }
 
-    private int findCurrentPosition(List<SpecialGroupBean> groupBeanList){
+    private int findCurrentPosition(List<SpecialGroupBean> groupBeanList) {
         int currentPosition = 0;
-        for (int i = 0; i <groupBeanList.size(); i++) {
-            if (mCurrentBean.getGroup_id().equals(groupBeanList.get(i).getGroup_id())){
+        for (int i = 0; i < groupBeanList.size(); i++) {
+            if (mCurrentBean.getGroup_id().equals(groupBeanList.get(i).getGroup_id())) {
                 currentPosition = i;
             }
         }
@@ -133,7 +141,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                         .setObjectType(ObjectType.C01).setUrl(mDraftDetailBean.getArticle().getUrl())
                         .setClassifyID(mDraftDetailBean.getArticle().getChannel_id() + "")
                         .setClassifyName(mDraftDetailBean.getArticle().getChannel_name())
-                        .setColumn_id(mDraftDetailBean.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mDraftDetailBean.getArticle().getColumn_id()))
                         .setColumn_name(mDraftDetailBean.getArticle().getColumn_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()
@@ -142,16 +150,17 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                                 .toString())
                         .setSelfobjectID(mDraftDetailBean.getArticle().getId() + "");
 
+                DraftDetailBean.ArticleBean mArticle = mDraftDetailBean.getArticle();
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
-                        .setCardUrl(mDraftDetailBean.getArticle().getCard_url())
-                        .setArticleId(mDraftDetailBean.getArticle().getId() + "")
-                        .setImgUri(mDraftDetailBean.getArticle().getArticle_pic())
-                        .setTextContent(mDraftDetailBean.getArticle().getSummary())
-                        .setTitle(mDraftDetailBean.getArticle().getDoc_title())
+                        .setCardUrl(mArticle.getCard_url())
+                        .setArticleId(mArticle.getId() + "")
+                        .setImgUri(mArticle.getFirstSubjectPic())
+                        .setTextContent(mArticle.getSummary())
+                        .setTitle(mArticle.getList_title())
                         .setAnalyticsBean(bean)
-                        .setTargetUrl(mDraftDetailBean.getArticle().getUrl()).setEventName("NewsShare")
+                        .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
                         .setShareType("文章"));
             }
         }
@@ -200,6 +209,9 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     private void bindCollect() {
         if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
             ivTopCollect.setSelected(mDraftDetailBean.getArticle().isFollowed());
+            Intent intent=new Intent();
+            intent.putExtra(SpecialActivity.KEY_COLLECT,mDraftDetailBean.getArticle().isFollowed());
+            setResult(Activity.RESULT_OK,intent);
         }
     }
 

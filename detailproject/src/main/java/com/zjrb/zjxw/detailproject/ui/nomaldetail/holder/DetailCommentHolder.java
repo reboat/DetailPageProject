@@ -45,6 +45,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
+import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
 /**
  * 详情页/评论列表item holder
@@ -308,6 +309,7 @@ public class DetailCommentHolder extends BaseRecyclerViewHolder<HotCommentsBean>
             mPriseNum.setVisibility(View.GONE);
             mPriseNum.setText("");
         }
+        TypeFaceUtils.formatNumToDin(mPriseNum);
         //是否已点赞
         mThumb.setSelected(mData.isLiked() == true);
         //标红

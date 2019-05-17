@@ -22,6 +22,7 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.other.NewsUtils;
+import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
@@ -60,6 +61,9 @@ import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
  */
 public class SpecialActivity extends DailyActivity implements OnItemClickListener,
         HeaderSpecialHolder.OnClickChannelListener, DetailCommentHolder.deleteCommentListener {
+
+    public static final int REQUEST_CODE_MORE = 1111;
+    public static final String KEY_COLLECT = "collect";
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -141,7 +145,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
      */
     private void initView() {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.addItemDecoration(new SpecialSpaceDivider(0.5f, R.color._dddddd_343434));
+        mRecycler.addItemDecoration(new NewsSpaceDivider(14,14));
     }
 
     @Override
@@ -169,7 +173,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                             .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
                             .setClassifyID(mArticle.getChannel_id() + "")
                             .setClassifyName(mArticle.getChannel_name())
-                            .setColumn_id(mArticle.getChannel_id())
+                            .setColumn_id(String.valueOf(mArticle.getColumn_id()))
                             .setColumn_name(mArticle.getColumn_name())
                             .setPageType("新闻详情页")
                             .setOtherInfo(Analytics.newOtherInfo()
@@ -393,5 +397,12 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 //        }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_MORE && resultCode==RESULT_OK){
+            boolean isCollect=data.getBooleanExtra(KEY_COLLECT,false);
+            mCollect.setSelected(isCollect);
+        }
+    }
 }

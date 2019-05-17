@@ -10,6 +10,7 @@ import com.zjrb.zjxw.detailproject.R2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.utils.TypeFaceUtils;
 
 /**
  * 详情页文案holder
@@ -41,6 +42,7 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
         } else {
             mTvNum.setText(mCommentNum + "");
         }
+        TypeFaceUtils.formatNumToDin(mTvNum);
     }
 
     //评论数

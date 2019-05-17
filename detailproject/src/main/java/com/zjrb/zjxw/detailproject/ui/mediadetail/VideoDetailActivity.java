@@ -173,6 +173,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         super.onNewIntent(intent);
         getIntentData(intent);
         loadData();
+        DailyPlayerManager.get().onDestroy();
     }
 
     private void getIntentData(Intent intent) {
@@ -208,8 +209,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
         Uri uri = Uri.parse(bean.getVideo_url());
         String type = uri.getQueryParameter("isVertical");//1 竖视频 2普通
-        boolean isVertical = Integer.valueOf(type) == 1;
-        return isVertical;
+        try {
+            boolean isVertical = Integer.valueOf(type) == 1;
+            return isVertical;
+        }catch (Exception e){
+            return false;
+        }
     }
 
 
@@ -241,6 +246,28 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
+//            分享bean
+            UmengShareBean shareBean = UmengShareBean.getInstance()
+                    .setSingle(false)
+                    .setNewsCard(true)
+                    .setCardUrl(mNewsDetail.getArticle().getCard_url())
+                    .setArticleId(mNewsDetail.getArticle().getId() + "")
+                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
+                    .setTextContent(mNewsDetail.getArticle().getSummary())
+                    .setTitle(mNewsDetail.getArticle().getDoc_title())
+                    .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
+                    .setShareType("文章");
+
+//            构建player builder
+            builder.setImageUrl(imagePath)
+                    .setPlayUrl(url)
+                    .setStreamStatus(bean.getNative_live_info() == null ? 0 : bean.getNative_live_info().getStream_status())
+                    .setVertical(isVertical(bean))
+                    .setUmengShareBean(shareBean)
+                    .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
+                    .setTitle(title)
+                    .setPlayContainer(videoContainer);
+
             //UI
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
@@ -260,25 +287,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 }
             }
 
-            UmengShareBean shareBean = UmengShareBean.getInstance()
-                    .setSingle(false)
-                    .setNewsCard(true)
-                    .setCardUrl(mNewsDetail.getArticle().getCard_url())
-                    .setArticleId(mNewsDetail.getArticle().getId() + "")
-                    .setImgUri(mNewsDetail.getArticle().getFirstPic())
-                    .setTextContent(mNewsDetail.getArticle().getSummary())
-                    .setTitle(mNewsDetail.getArticle().getDoc_title())
-                    .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
-                    .setShareType("文章");
 
-            builder.setImageUrl(imagePath)
-                    .setPlayUrl(url)
-                    .setStreamStatus(bean.getNative_live_info() == null ? 0 : bean.getNative_live_info().getStream_status())
-                    .setVertical(isVertical(bean))
-                    .setUmengShareBean(shareBean)
-                    .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
-                    .setTitle(title)
-                    .setPlayContainer(videoContainer);
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
                 DailyPlayerManager.get().play(builder);
                 if (PlayerCache.get().getPlayer(url).getPlaybackState() == Player.STATE_ENDED) {//已经结束
@@ -336,6 +345,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             mCommentFragment = (VideoCommentFragment) pagerAdapter.getItem(1);
         }
 
+        //加载评论页面，防止评论更新数据时空指针
+        viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -524,7 +535,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         .setUrl(mNewsDetail.getArticle().getUrl())
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
                         .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setPageType("新闻详情页")
                         .setOtherInfo(Analytics.newOtherInfo()

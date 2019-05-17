@@ -91,6 +91,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
+                android:id="@+id/special_tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="45dp">
                 <View

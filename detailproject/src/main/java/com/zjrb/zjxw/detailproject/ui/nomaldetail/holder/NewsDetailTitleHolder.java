@@ -12,6 +12,7 @@ import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.TimeUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.news.other.TypeFaceUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -153,6 +154,7 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
             } else {
                 mTvReadNum.setVisibility(View.VISIBLE);
                 mTvReadNum.setText(mData.getArticle().getRead_count_general());
+                TypeFaceUtils.changeNumberFont(mTvReadNum);
             }
         } else {
             mTvReadNum.setVisibility(View.INVISIBLE);

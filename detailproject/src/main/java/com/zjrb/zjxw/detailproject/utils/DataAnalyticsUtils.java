@@ -218,7 +218,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .relatedContentClick("所属频道")
+                .relatedContentClickType("所属频道")
                 .build()
                 .send();
     }
@@ -233,7 +233,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .selfChannelID(bean.getArticle().getChannel_id())
                 .channelName(bean.getArticle().getChannel_name())
                 .pageType("新闻详情页")
-                .relatedContentClick("所属频道")
+                .relatedContentClickType("所属频道")
                 .build()
                 .send();
     }
@@ -279,7 +279,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .channelName(bean.getArticle().getChannel_name())
                 .pubUrl(bean.getArticle().getUrl())
                 .pageType("新闻详情页")
-                .relatedContentClick("相关新闻")
+                .relatedContentClickType("相关新闻")
                 .build()
                 .send();
     }
@@ -302,7 +302,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .channelName(bean.getArticle().getChannel_name())
                 .pubUrl(bean.getArticle().getUrl())
                 .pageType("新闻详情页")
-                .relatedContentClick("相关专题")
+                .relatedContentClickType("相关专题")
                 .build()
                 .send();
     }

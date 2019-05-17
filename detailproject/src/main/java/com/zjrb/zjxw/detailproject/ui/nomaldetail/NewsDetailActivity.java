@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -123,6 +122,7 @@ final public class NewsDetailActivity extends DailyActivity implements
     //订阅同步广播
     private SubscribeReceiver mReceiver;
     private int ui;//记录系统状态栏和导航栏样式
+    private Analytics mAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +218,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 if (draftDetailBean == null || draftDetailBean.getArticle() == null) return;
 
                 builder = DataAnalyticsUtils.get().pageStayTime(draftDetailBean);
+                mAnalytics = builder.build();
                 if (mView.getVisibility() == View.VISIBLE) {
                     mView.setVisibility(View.GONE);
                 }
@@ -459,7 +460,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail, false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
                 } catch (Exception e) {
@@ -479,7 +480,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                         .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
                         .setClassifyName(mNewsDetail.getArticle().getChannel_name())
                         .setPageType("新闻详情页")
-                        .setColumn_id(mNewsDetail.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
                         .setColumn_name(mNewsDetail.getArticle().getColumn_name())
                         .setOtherInfo(Analytics.newOtherInfo()
                                 .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
@@ -595,7 +596,7 @@ final public class NewsDetailActivity extends DailyActivity implements
     protected void onPause() {
         super.onPause();
         float size = SettingBiz.get().getHtmlFontScale();
-        L.e("WLJ,onPause,size="+size);
+        L.e("WLJ,onPause,size=" + size);
 //        if (mAdapter != null) {
 //            mAdapter.onWebViewPause();
 //        }
@@ -621,7 +622,6 @@ final public class NewsDetailActivity extends DailyActivity implements
                 builder.pagePercent(mScale + "");
             }
             builder.readPercent(mScale + "");
-            Analytics mAnalytics = builder.build();
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }

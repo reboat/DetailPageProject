@@ -216,6 +216,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 mTopBarHolder.setShareVisible(true);
                 if (data.getArticle() != null) {
                     builder = DataAnalyticsUtils.get().pageStayTime(data);
+                    mAnalytics = builder.build();
                 }
                 fillData(data);
                 YiDunToken.synYiDunToken(mArticleId);
@@ -447,7 +448,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                         .setObjectType(ObjectType.C01)
                         .setClassifyID(mDetailData.getArticle().getChannel_id() + "")
                         .setClassifyName(mDetailData.getArticle().getChannel_name())
-                        .setColumn_id(mDetailData.getArticle().getChannel_id())
+                        .setColumn_id(String.valueOf(mDetailData.getArticle().getColumn_id()))
                         .setColumn_name(mDetailData.getArticle().getColumn_name())
                         .setUrl(mDetailData.getArticle().getUrl())
                         .setPageType("新闻详情页")
@@ -615,7 +616,6 @@ public class ActivityTopicActivity extends DailyActivity implements
             if (builder != null) {
                 builder.pagePercent(mScale + "");
                 builder.readPercent(mScale + "");
-                mAnalytics = builder.build();
                 if (mAnalytics != null) {
                     mAnalytics.sendWithDuration();
                 }

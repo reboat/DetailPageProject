@@ -3,6 +3,7 @@ package com.zjrb.zjxw.detailproject.utils;
 import android.content.Context;
 
 import com.zjrb.core.utils.UIUtils;
+import com.zjrb.passport.listener.IFailure;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
@@ -161,6 +162,9 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
 
     @Override
     public void ClickBack(DraftDetailBean bean) {
+        if (bean==null||bean.getArticle()==null){
+            return;
+        }
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "800001", "AppTabClick", false)
                 .name("点击返回")
                 .objectID(bean.getArticle().getMlf_id() + "")

@@ -398,9 +398,10 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             long id = intent.getLongExtra("id", 0);
             boolean subscribe = intent.getBooleanExtra("subscribe", false);
             //确定是该栏目需要同步
-            if (id == mNewsDetail.getArticle().getColumn_id()) {
+            if (mNewsDetail != null && mNewsDetail.getArticle() != null && id == mNewsDetail.getArticle().getColumn_id()) {
                 topHolder.getSubscribe().setSelected(subscribe);
             }
+
         }
     }
 }

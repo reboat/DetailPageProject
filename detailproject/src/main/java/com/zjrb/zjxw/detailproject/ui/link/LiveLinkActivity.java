@@ -48,6 +48,7 @@ import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
+import cn.daily.news.biz.core.nav.LinkControl;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -253,8 +254,28 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         } else {
             topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
         }
-        mWebView.loadUrl(url);
+//        mWebView.loadUrl(url);
+        loadUrlScheme(url);
         initViewState(data);
+    }
+
+
+    private void  loadUrlScheme(final String url){
+        //链接稿单独逻辑
+        if (!TextUtils.isEmpty(url)) {
+            //链接稿与外链稿在当前页面打开
+            if (!url.contains("/live.html")) {
+                Nav.with(UIUtils.getActivity()).to(url);
+                finish();
+            }else{
+                mWebView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mWebView.loadUrl(url);
+                    }
+                });
+            }
+        }
     }
 
 

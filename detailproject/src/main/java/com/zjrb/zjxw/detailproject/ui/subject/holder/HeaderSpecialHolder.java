@@ -105,7 +105,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         mGroupCopy = groupCopy;
         mRecyclerTabCopy = copy;
         fyContainer = view;
-        ivback = fyContainer.findViewById(R.id.iv_top_bar_back);
+        ivback = fyContainer.findViewById(R.id.iv_back);
         ivCollect = fyContainer.findViewById(R.id.iv_top_collect);
         ivShare = fyContainer.findViewById(R.id.iv_top_share);
         mOnClickChannelListener = listener;

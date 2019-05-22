@@ -48,6 +48,8 @@ import com.zjrb.zjxw.detailproject.utils.global.C;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.ZBJTOpenAppShareMenuBean;
+import bean.ZBJTOpenAppShareMenuRspBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -488,10 +490,20 @@ final public class NewsDetailActivity extends DailyActivity implements
                                 .put("subject", "")
                                 .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+                //更新预分享
+                UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
+                ZBJTOpenAppShareMenuBean menuBean = null;
+                boolean isUpdateShare = false;
+                if(mJsShareBean != null){
+                    menuBean = mJsShareBean.getBean();
+                    isUpdateShare = true;
+                }
                 //分享操作
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
+                        .setBean(menuBean)
+                        .setShareUpdate(isUpdateShare)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())

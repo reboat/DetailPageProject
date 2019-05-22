@@ -40,6 +40,7 @@ import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
+import bean.ZBJTOpenAppShareMenuBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,7 +49,6 @@ import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
-import cn.daily.news.biz.core.nav.LinkControl;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -260,14 +260,14 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     }
 
 
-    private void  loadUrlScheme(final String url){
+    private void loadUrlScheme(final String url) {
         //链接稿单独逻辑
         if (!TextUtils.isEmpty(url)) {
             //链接稿与外链稿在当前页面打开
             if (!url.contains("/live.html")) {
                 Nav.with(UIUtils.getActivity()).to(url);
                 finish();
-            }else{
+            } else {
                 mWebView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -362,9 +362,20 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                                 .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
+                //更新预分享
+                UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
+                ZBJTOpenAppShareMenuBean menuBean = null;
+                boolean isUpdateShare = false;
+                if (mJsShareBean != null) {
+                    menuBean = mJsShareBean.getBean();
+                    isUpdateShare = true;
+                }
+
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
+                        .setBean(menuBean)
+                        .setShareUpdate(isUpdateShare)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())
@@ -406,7 +417,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 //进入评论编辑页面(不针对某条评论)
                 DataAnalyticsUtils.get().ClickCommentBox(mNewsDetail);
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,false);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail, false);
                 //进入评论编辑页面(不针对某条评论)
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");

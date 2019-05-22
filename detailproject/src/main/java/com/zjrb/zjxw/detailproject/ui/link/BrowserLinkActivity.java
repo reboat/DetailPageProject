@@ -35,6 +35,7 @@ import com.zjrb.zjxw.detailproject.utils.global.C;
 
 import java.util.Stack;
 
+import bean.ZBJTOpenAppShareMenuBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -428,8 +429,20 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                                 .toString())
                         .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
 
+                //更新预分享
+                UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
+                ZBJTOpenAppShareMenuBean menuBean = null;
+                boolean isUpdateShare = false;
+                if(mJsShareBean != null){
+                    menuBean = mJsShareBean.getBean();
+                    isUpdateShare = true;
+                }
+
                 UmengShareBean shareBean = UmengShareBean.getInstance()
-                        .setSingle(false).setNewsCard(true)
+                        .setSingle(false)
+                        .setNewsCard(true)
+                        .setBean(menuBean)
+                        .setShareUpdate(isUpdateShare)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())

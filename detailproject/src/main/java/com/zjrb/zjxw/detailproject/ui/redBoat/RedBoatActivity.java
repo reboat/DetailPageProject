@@ -215,6 +215,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         if (!TextUtils.isEmpty(article.getColumn_name())) {
             //栏目名称
             topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
+            topHolder.setViewVisible(topHolder.getSubscribe(), View.VISIBLE);
             topHolder.getTitleView().setText(article.getColumn_name());
             //栏目头像
             GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
@@ -226,7 +227,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 topHolder.getSubscribe().setSelected(false);
             }
         } else {
-            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.INVISIBLE);
+            topHolder.setViewVisible(topHolder.getSubscribe(), View.INVISIBLE);
         }
         mNewsDetail = data;
         List datas = new ArrayList<>();
@@ -247,7 +249,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
      */
     private void showEmptyNewsDetail() {
         mView.setVisibility(View.VISIBLE);
-        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.INVISIBLE);
+        topHolder.setViewVisible(topHolder.getSubscribe(), View.INVISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

@@ -726,33 +726,30 @@ public class MoreDialogLink extends BaseDialogFragment {
     private void openAppShareMenuResult(String result, SHARE_MEDIA share_media, boolean isShareUpdate) {
         //6.0JS分享
         if (jsCallBack != null && isShareUpdate) {
-            mBeanShare.getRspBean().setCode(result);
-            ZBJTOpenAppShareMenuRspBean.DataBean dataBean = new ZBJTOpenAppShareMenuRspBean.DataBean();
-            switch (share_media) {
-                case WEIXIN:
-                    dataBean.setShareTo("1");
-                    break;
-                case WEIXIN_CIRCLE:
-                    dataBean.setShareTo("2");
-                    break;
-                case DINGTALK:
-                    dataBean.setShareTo("3");
-                    break;
-                case QQ:
-                    dataBean.setShareTo("4");
-                    break;
-                case SINA:
-                    dataBean.setShareTo("5");
-                    break;
-                case QZONE:
-                    dataBean.setShareTo("6");
-                    break;
-            }
-            //更新预设分享
             ZBJTOpenAppShareMenuRspBean bean = new ZBJTOpenAppShareMenuRspBean();
             ZBJTOpenAppShareMenuRspBean.DataBean returnBean = new ZBJTOpenAppShareMenuRspBean.DataBean();
             bean.setCode(result);
             bean.setData(returnBean);
+            switch (share_media) {
+                case WEIXIN:
+                    returnBean.setShareTo("1");
+                    break;
+                case WEIXIN_CIRCLE:
+                    returnBean.setShareTo("2");
+                    break;
+                case DINGTALK:
+                    returnBean.setShareTo("3");
+                    break;
+                case QQ:
+                    returnBean.setShareTo("4");
+                    break;
+                case SINA:
+                    returnBean.setShareTo("5");
+                    break;
+                case QZONE:
+                    returnBean.setShareTo("6");
+                    break;
+            }
             jsCallBack.updateAppShareData(bean, mBeanShare.getBean().getCallback());
         }
     }

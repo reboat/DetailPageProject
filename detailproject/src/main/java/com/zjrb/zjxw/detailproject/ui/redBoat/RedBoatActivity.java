@@ -186,7 +186,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
-//                    topHolder.getShareView().setVisibility(View.GONE);
+                    topHolder.getIvmore().setVisibility(View.INVISIBLE);
                     showEmptyNewsDetail();
                 } else {
                     ZBToast.showShort(RedBoatActivity.this, errMsg);
@@ -209,7 +209,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                             .title(article.getList_title())
                             .url(article.getUrl()));
         }
-//        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getIvmore(), View.VISIBLE);
 
         //中间栏目布局处理
         if (!TextUtils.isEmpty(article.getColumn_name())) {

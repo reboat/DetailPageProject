@@ -295,7 +295,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     DailyPlayerManager.get().showStateEnd(videoContainer);
                 }
             } else {
-                DailyPlayerManager.get().init(builder);
+                boolean b1 = "暂未开始".equals(tvLiveStatus.getText().toString());
+                boolean b2 = "直播已结束".equals(tvLiveStatus.getText().toString());
+                boolean b3 = tvLiveStatus.getVisibility()==View.VISIBLE;
+                if ((b1||b2)&&b3){//暂未开始和已经结束不初始化播放器
+
+                }else {
+                    DailyPlayerManager.get().init(builder);
+                }
             }
         } else {
             videoContainer.setVisibility(View.GONE);

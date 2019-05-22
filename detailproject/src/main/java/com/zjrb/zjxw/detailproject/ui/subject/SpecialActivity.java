@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,7 +23,6 @@ import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.daily.news.other.NewsUtils;
-import com.zjrb.daily.news.ui.widget.NewsSpaceDivider;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
@@ -52,6 +52,8 @@ import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
+import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
+import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 /**
@@ -83,7 +85,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     ImageView mCollect;
     @BindView(R2.id.fy_container)
     FitWindowsFrameLayout fyContainer;
-    @BindView(R2.id.iv_top_bar_back)
+    @BindView(R2.id.iv_back)
     ImageView ivBack;
     @BindView(R2.id.iv_top_share)
     ImageView ivShare;
@@ -120,10 +122,21 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         loadData();
     }
 
+
+    //专题撤稿专用
+    private RedBoatTopBarHolder topHolder;
+
     @Override
-    public boolean isShowTopBar() {
-        return false;
+    protected View onCreateTopBar(ViewGroup view) {
+        topHolder = BIZTopBarFactory.createRedBoatTopBar(view, this);
+        topHolder.getView().setVisibility(View.GONE);
+        return topHolder.getView();
     }
+//
+//    @Override
+//    public boolean isShowTopBar() {
+//        return false;
+//    }
 
     private void initArgs(Intent intent) {
         if (intent != null) {
@@ -159,50 +172,50 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         }
     }
 
-    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect, R2.id.iv_top_bar_back})
+    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect, R2.id.iv_back})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
-        if (mArticle != null) {
-            if (view.getId() == R.id.iv_top_share) {
-                if (!TextUtils.isEmpty(mArticle.getUrl())) {
-                    //分享专用bean
-                    OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                            .setObjectID(mArticle.getMlf_id() + "")
-                            .setObjectName(mArticle.getList_title())
-                            .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
-                            .setClassifyID(mArticle.getChannel_id() + "")
-                            .setClassifyName(mArticle.getChannel_name())
-                            .setColumn_id(String.valueOf(mArticle.getColumn_id()))
-                            .setColumn_name(mArticle.getColumn_name())
-                            .setPageType("新闻详情页")
-                            .setOtherInfo(Analytics.newOtherInfo()
-                                    .put("relatedColumn", mArticle.getColumn_id() + "")
-                                    .put("subject", "")
-                                    .toString())
-                            .setSelfobjectID(mArticle.getId() + "");
+        if (view.getId() == R.id.iv_top_share) {
+            if (!TextUtils.isEmpty(mArticle.getUrl())) {
+                //分享专用bean
+                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+                        .setObjectID(mArticle.getMlf_id() + "")
+                        .setObjectName(mArticle.getList_title())
+                        .setObjectType(ObjectType.C01).setUrl(mArticle.getUrl())
+                        .setClassifyID(mArticle.getChannel_id() + "")
+                        .setClassifyName(mArticle.getChannel_name())
+                        .setColumn_id(String.valueOf(mArticle.getColumn_id()))
+                        .setColumn_name(mArticle.getColumn_name())
+                        .setPageType("新闻详情页")
+                        .setOtherInfo(Analytics.newOtherInfo()
+                                .put("relatedColumn", mArticle.getColumn_id() + "")
+                                .put("subject", "")
+                                .toString())
+                        .setSelfobjectID(mArticle.getId() + "");
 
-                    UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                            .setSingle(false)
-                            .setNewsCard(true)
-                            .setCardUrl(mArticle.getCard_url())
-                            .setArticleId(mArticle.getId() + "")
-                            .setImgUri(mArticle.getFirstSubjectPic())
-                            .setTextContent(mArticle.getSummary())
-                            .setTitle(mArticle.getList_title())
-                            .setAnalyticsBean(bean)
-                            .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
-                            .setShareType("文章"));
-                }
-
-            } else if (view.getId() == R.id.iv_top_collect) {
-                //未被收藏
-                DataAnalyticsUtils.get().ClickCollect(mArticle);
-                collectTask(); // 收藏
-            } else if (view.getId() == R.id.iv_top_bar_back) {//返回
-                DataAnalyticsUtils.get().ClickBack(bean);
-                finish();
+                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setNewsCard(true)
+                        .setCardUrl(mArticle.getCard_url())
+                        .setArticleId(mArticle.getId() + "")
+                        .setImgUri(mArticle.getFirstSubjectPic())
+                        .setTextContent(mArticle.getSummary())
+                        .setTitle(mArticle.getList_title())
+                        .setAnalyticsBean(bean)
+                        .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
+                        .setShareType("文章"));
             }
+
+        } else if (view.getId() == R.id.iv_top_collect) {
+            //未被收藏
+            DataAnalyticsUtils.get().ClickCollect(mArticle);
+            collectTask(); // 收藏
+        } else if (view.getId() == R.id.iv_back || view.getId() == R.id.iv_top_bar_back) {//返回
+            if (bean != null && bean.getArticle() != null) {
+                DataAnalyticsUtils.get().ClickBack(bean);
+            }
+            finish();
         }
     }
 
@@ -326,6 +339,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
      * 显示撤稿页面
      */
     private void showCancelDraft() {
+        topHolder.getView().setVisibility(View.VISIBLE);
         mView.setVisibility(View.VISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container,
@@ -367,7 +381,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     //删除评论
     @Override
     public void onDeleteComment(int position) {
-        ZBToast.showShort(getApplicationContext(),"删除成功");
+        ZBToast.showShort(getApplicationContext(), "删除成功");
         mAdapter.remove(position);
     }
 
@@ -400,8 +414,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_MORE && resultCode==RESULT_OK){
-            boolean isCollect=data.getBooleanExtra(KEY_COLLECT,false);
+        if (requestCode == REQUEST_CODE_MORE && resultCode == RESULT_OK) {
+            boolean isCollect = data.getBooleanExtra(KEY_COLLECT, false);
             mCollect.setSelected(isCollect);
         }
     }

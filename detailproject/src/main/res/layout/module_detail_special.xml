@@ -75,7 +75,7 @@
         >
 
         <ImageView
-            android:id="@+id/iv_top_bar_back"
+            android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="48dp"
             android:layout_gravity="center_vertical"

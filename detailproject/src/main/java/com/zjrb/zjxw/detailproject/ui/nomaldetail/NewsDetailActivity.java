@@ -25,7 +25,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -49,14 +48,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.ZBJTOpenAppShareMenuBean;
-import bean.ZBJTOpenAppShareMenuRspBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
-import cn.daily.news.biz.core.SettingBiz;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
 import cn.daily.news.biz.core.nav.Nav;
@@ -69,6 +66,7 @@ import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
+import port.JsInterfaceCallBack;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -493,16 +491,19 @@ final public class NewsDetailActivity extends DailyActivity implements
                 //更新预分享
                 UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
                 ZBJTOpenAppShareMenuBean menuBean = null;
+                JsInterfaceCallBack jsCallBack = null;
                 boolean isUpdateShare = false;
-                if(mJsShareBean != null){
+                if (mJsShareBean != null && mAdapter != null && mAdapter.getWebViewHolder() != null && mAdapter.getWebViewHolder().getJsInterfaceImp() != null) {
                     menuBean = mJsShareBean.getBean();
                     isUpdateShare = true;
+                    jsCallBack = mAdapter.getWebViewHolder().getJsInterfaceImp().getmCallback();
                 }
                 //分享操作
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
                         .setBean(menuBean)
+                        .setJsCallback(jsCallBack)
                         .setShareUpdate(isUpdateShare)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")

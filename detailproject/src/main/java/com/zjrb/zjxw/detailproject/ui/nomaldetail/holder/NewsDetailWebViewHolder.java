@@ -46,6 +46,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     RelativeLayout mContainer;
 
     private DetailWebViewImpl webImpl;
+
     private JsMultiInterfaceImp jsInterfaceImp;
     /**
      * WebView的高度
@@ -75,6 +76,10 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
     public CommonWebView getWebView() {
         return mWebView;
+    }
+
+    public JsMultiInterfaceImp getJsInterfaceImp() {
+        return jsInterfaceImp;
     }
 
     /**

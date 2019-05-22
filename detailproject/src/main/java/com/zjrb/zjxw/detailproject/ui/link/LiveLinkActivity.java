@@ -61,6 +61,7 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.WebViewImpl;
+import port.JsInterfaceCallBack;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -365,15 +366,18 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 //更新预分享
                 UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
                 ZBJTOpenAppShareMenuBean menuBean = null;
+                JsInterfaceCallBack jsCallBack = null;
                 boolean isUpdateShare = false;
-                if (mJsShareBean != null) {
+                if (mJsShareBean != null && jsInterfaceImp != null) {
                     menuBean = mJsShareBean.getBean();
                     isUpdateShare = true;
-                }
+                    jsCallBack = jsInterfaceImp.getmCallback();
 
+                }
                 UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
                         .setSingle(false)
                         .setNewsCard(true)
+                        .setJsCallback(jsCallBack)
                         .setBean(menuBean)
                         .setShareUpdate(isUpdateShare)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())

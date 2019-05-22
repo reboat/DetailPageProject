@@ -39,6 +39,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 
 import java.util.List;
 
+import bean.ZBJTOpenAppShareMenuRspBean;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,6 +57,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
+import port.JsInterfaceCallBack;
 
 /**
  * Created by wanglinjie on 2017/9/21.
@@ -88,6 +90,7 @@ public class MoreDialogLink extends BaseDialogFragment {
 
     private MoreDialog.IWebViewDN callback;
     private Bundle bundle;
+    private JsInterfaceCallBack jsCallBack;
 
     /**
      * @return
@@ -97,6 +100,7 @@ public class MoreDialogLink extends BaseDialogFragment {
 
     public MoreDialogLink setShareBean(UmengShareBean mBeanShare) {
         this.mBeanShare = mBeanShare;
+        jsCallBack = mBeanShare.getJsCallback();
         return this;
 
     }
@@ -530,6 +534,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         public void onResult(SHARE_MEDIA share_media) {
             dismissAllDialog();
             ZBToast.showShort(UIUtils.getApp(), "分享成功");
+            openAppShareMenuResult("1", share_media, mBeanShare.isShareUpdate());
             setAnalytics(share_media, true);
             //稿件分享成功后，登录用户获取积分
             new ArticShareTask(new LoadingCallBack<BaseData>() {
@@ -540,7 +545,6 @@ public class MoreDialogLink extends BaseDialogFragment {
 
                 @Override
                 public void onError(String errMsg, int errCode) {
-
                 }
 
                 @Override
@@ -553,6 +557,7 @@ public class MoreDialogLink extends BaseDialogFragment {
 
         @Override
         public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            openAppShareMenuResult("0", share_media, mBeanShare.isShareUpdate());
             setAnalytics(share_media, false);
             ZBToast.showShort(UIUtils.getApp(), "分享失败");
             dismissAllDialog();
@@ -561,6 +566,7 @@ public class MoreDialogLink extends BaseDialogFragment {
         @Override
         public void onCancel(SHARE_MEDIA share_media) {
             dismissAllDialog();
+            openAppShareMenuResult("0", share_media, mBeanShare.isShareUpdate());
         }
     };
 
@@ -714,5 +720,40 @@ public class MoreDialogLink extends BaseDialogFragment {
         }
         dismissAllDialog();
         return true;
+    }
+
+    //打开分享回调结果
+    private void openAppShareMenuResult(String result, SHARE_MEDIA share_media, boolean isShareUpdate) {
+        //6.0JS分享
+        if (jsCallBack != null && isShareUpdate) {
+            mBeanShare.getRspBean().setCode(result);
+            ZBJTOpenAppShareMenuRspBean.DataBean dataBean = new ZBJTOpenAppShareMenuRspBean.DataBean();
+            switch (share_media) {
+                case WEIXIN:
+                    dataBean.setShareTo("1");
+                    break;
+                case WEIXIN_CIRCLE:
+                    dataBean.setShareTo("2");
+                    break;
+                case DINGTALK:
+                    dataBean.setShareTo("3");
+                    break;
+                case QQ:
+                    dataBean.setShareTo("4");
+                    break;
+                case SINA:
+                    dataBean.setShareTo("5");
+                    break;
+                case QZONE:
+                    dataBean.setShareTo("6");
+                    break;
+            }
+            //更新预设分享
+            ZBJTOpenAppShareMenuRspBean bean = new ZBJTOpenAppShareMenuRspBean();
+            ZBJTOpenAppShareMenuRspBean.DataBean returnBean = new ZBJTOpenAppShareMenuRspBean.DataBean();
+            bean.setCode(result);
+            bean.setData(returnBean);
+            jsCallBack.updateAppShareData(bean, mBeanShare.getBean().getCallback());
+        }
     }
 }

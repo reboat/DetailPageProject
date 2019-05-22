@@ -54,6 +54,7 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
+import port.JsInterfaceCallBack;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -288,10 +289,12 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 //更新预分享
                 UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
                 ZBJTOpenAppShareMenuBean menuBean = null;
+                JsInterfaceCallBack jsCallBack = null;
                 boolean isUpdateShare = false;
-                if (mJsShareBean != null) {
+                if (mJsShareBean != null && mAdapter != null && mAdapter.getWebViewHolder() != null && mAdapter.getWebViewHolder().getJsInterfaceImp() != null) {
                     menuBean = mJsShareBean.getBean();
                     isUpdateShare = true;
+                    jsCallBack = mAdapter.getWebViewHolder().getJsInterfaceImp().getmCallback();
                 }
 
                 UmengShareBean shareBean = UmengShareBean.getInstance()
@@ -299,6 +302,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         .setNewsCard(true)
                         .setBean(menuBean)
                         .setShareUpdate(isUpdateShare)
+                        .setJsCallback(jsCallBack)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())

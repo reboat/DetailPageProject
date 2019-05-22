@@ -55,6 +55,7 @@ import cn.daily.news.biz.core.utils.RouteManager;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.LinkStackPush;
 import cn.daily.news.biz.core.web.WebViewImpl;
+import port.JsInterfaceCallBack;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 
@@ -432,10 +433,13 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                 //更新预分享
                 UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
                 ZBJTOpenAppShareMenuBean menuBean = null;
+                JsInterfaceCallBack jsCallBack = null;
                 boolean isUpdateShare = false;
-                if(mJsShareBean != null){
+                if (mJsShareBean != null && jsInterfaceImp != null) {
                     menuBean = mJsShareBean.getBean();
                     isUpdateShare = true;
+                    jsCallBack = jsInterfaceImp.getmCallback();
+
                 }
 
                 UmengShareBean shareBean = UmengShareBean.getInstance()
@@ -443,6 +447,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                         .setNewsCard(true)
                         .setBean(menuBean)
                         .setShareUpdate(isUpdateShare)
+                        .setJsCallback(jsCallBack)
                         .setCardUrl(mNewsDetail.getArticle().getCard_url())
                         .setArticleId(mNewsDetail.getArticle().getId() + "")
                         .setImgUri(mNewsDetail.getArticle().getFirstPic())

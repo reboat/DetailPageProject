@@ -21,7 +21,7 @@
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignRight="@+id/iv_image"
         android:layout_below="@+id/iv_image"
         android:background="@color/_fff0f0f0"
@@ -35,6 +35,6 @@
         android:paddingTop="6dp"
         android:textColor="@color/_222222"
         android:textSize="@dimen/ts_14sp"
-        tools:text="张高丽夏宝龙车俊对温州倒要求全力搜救要求全力全" />
+        tools:text="张高丽" />
 
 </RelativeLayout>

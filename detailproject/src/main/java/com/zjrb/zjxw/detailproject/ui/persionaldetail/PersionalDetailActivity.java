@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
+import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.glide.AppGlideOptions;
@@ -209,11 +210,10 @@ public class PersionalDetailActivity extends DailyActivity implements ViewPager
      */
     private OutSizeAnalyticsBean getWMData() {
         return OutSizeAnalyticsBean.getInstance()
-                .setObjectID(bean.getOfficer().getId() + "")
                 .setPageType("官员页面")
-                .setOtherInfo(Analytics.newOtherInfo()
-                        .put("customObjectType", "OfficerType")
-                        .toString());
+                .setObjectType(ObjectType.C01)
+                .setOfficialName(bean.getOfficer().getName())
+                .setOfficialID(String.valueOf(bean.getOfficer().getId()));
     }
 
     /**

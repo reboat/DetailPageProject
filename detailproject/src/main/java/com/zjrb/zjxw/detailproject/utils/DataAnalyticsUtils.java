@@ -350,24 +350,6 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
 
     @Override
     public void UpdateComment(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0023", "Comment", false)
-                .name("发表评论")
-                .objectID(bean.getArticle().getMlf_id() + "")
-                .objectShortName(bean.getArticle().getDoc_title())
-                .classID(bean.getArticle().getChannel_id())
-                .classShortName(bean.getArticle().getChannel_name())
-                .selfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id() + "")
-                .selfNewsID(bean.getArticle().getId() + "")
-                .newsTitle(bean.getArticle().getDoc_title())
-                .selfChannelID(bean.getArticle().getChannel_id())
-                .channelName(bean.getArticle().getChannel_name()).columnID(bean.getArticle().getColumn_id() + "")
-                .columnName(bean.getArticle().getColumn_name())
-                .pubUrl(bean.getArticle().getUrl())
-                .pageType("评论列表页")
-                .commentType("文章")
-                .build()
-                .send();
     }
 
     @Override

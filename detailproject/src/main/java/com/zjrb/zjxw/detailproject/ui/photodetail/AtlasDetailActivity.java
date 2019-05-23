@@ -286,8 +286,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         reInitView();
     }
 
-    private Analytics.AnalyticsBuilder builder;
-
     /**
      * 获取图集数据
      */
@@ -365,8 +363,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
     }
 
-    private Analytics mAnalytics;
-
     /**
      * @param data 获取图集详情页数据
      */
@@ -384,8 +380,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                             .tag(article.getList_tag())
                             .title(article.getList_title())
                             .url(article.getUrl()));
-            builder = DataAnalyticsUtils.get().pageStayTime(data);
-            mAnalytics = builder.build();
         }
 
         mData = data;
@@ -586,7 +580,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 DataAnalyticsUtils.get().ClickCommentBox(mData);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mData,false);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mData, false);
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
                             .valueOf(mData.getArticle().getId())))).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(),
@@ -753,10 +747,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
         calculationMaxHeight();
 
-        if (mData != null && mData.getArticle() != null) {
-            DataAnalyticsUtils.get().AtlasSlide(mData);
-        }
-
     }
 
     /**
@@ -769,9 +759,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 //                mTvMore.setVisibility(View.VISIBLE);
 //                topHolder.getFrlTitle().setVisibility(View.GONE);
                 setTopBarInOut(View.GONE);
-                if (mData != null && mData.getArticle() != null) {
-                    DataAnalyticsUtils.get().ClickMoreImage(mData);
-                }
             } else {
 //                mTvMore.setVisibility(View.GONE);
 //                topHolder.getFrlTitle().setVisibility(View.VISIBLE);
@@ -912,15 +899,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mData != null && mData.getArticle() != null) {
-            if (builder != null) {
-                builder.pagePercent(mReadingScale + "");
-                builder.readPercent(mReadingScale + "");
-                if (mAnalytics != null) {
-                    mAnalytics.sendWithDuration();
-                }
-            }
-        }
         LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mReceiver);
 
     }

@@ -135,4 +135,37 @@ public class ImageMoreFragment extends DailyFragment {
             );
         }
     }
+
+    private Analytics mAnalytics;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DraftDetailBean.ArticleBean articleBean = mBean.getArticle();
+        mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "PicturePageStay", true)
+                .name("打开“更多图集”页面")
+                .selfObjectID(String.valueOf(articleBean.getMlf_id()))
+                .columnID(String.valueOf(articleBean.getColumn_id()))
+                .classShortName(articleBean.getChannel_name())
+                .objectShortName(articleBean.getDoc_title())
+                .classID(articleBean.getChannel_id())
+                .pageType("更多图集页")
+                .ilurl(articleBean.getUrl())
+                .seObjectType(ObjectType.C01)
+                .objectID(String.valueOf(articleBean.getMlf_id()))
+                .columnName(articleBean.getColumn_name())
+                .selfNewsID(String.valueOf(articleBean.getMlf_id()))
+                .pubUrl(articleBean.getUrl())
+                .selfChannelID(articleBean.getChannel_id())
+                .newsID(String.valueOf(articleBean.getMlf_id()))
+                .newsTitle(articleBean.getDoc_title())
+                .channelName(articleBean.getChannel_name())
+                .build();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAnalytics.sendWithDuration();
+    }
 }

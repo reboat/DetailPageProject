@@ -1,8 +1,10 @@
 package com.zjrb.zjxw.detailproject.ui.subject.holder;
 
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
@@ -10,6 +12,8 @@ import com.zjrb.zjxw.detailproject.R2;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.daily.news.biz.core.constant.Constants;
+import cn.daily.news.biz.core.model.ResourceBiz;
 
 /**
  * 群众之声Tab holder
@@ -29,6 +33,11 @@ public class SpecialCommentTabHolder extends BaseRecyclerViewHolder<String> {
     @Override
     public void bindView() {
         itemView.setOnClickListener(null);
-        tvTab.setText(mData.toString());
+        ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
+        if (sp != null && !TextUtils.isEmpty(sp.subject_comment_tag)) {
+            tvTab.setText(sp.subject_comment_tag);
+        } else {
+            tvTab.setText(mData.toString());
+        }
     }
 }

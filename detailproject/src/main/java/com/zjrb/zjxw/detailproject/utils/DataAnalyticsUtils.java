@@ -524,6 +524,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
         if (!list.isEmpty() && list.get(position) != null) {
             new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "210005", "AppContentClick", false)
                     .name("官员相关新闻列表点击")
+                    .seObjectType(ObjectType.C01)
                     .objectID(bean.getOfficer().getArticle_list().get(position).getMlf_id() + "")
                     .selfObjectID(bean.getOfficer().getArticle_list().get(position).getId() + "")
                     .officialID(bean.getOfficer().getId()+"")

@@ -45,7 +45,7 @@ public class DetailImagePreviewFragment extends ImagePreviewFragment {
         if (mBean != null) {
             mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "PicturePageStay", true)
                     .name("图片浏览（左右滑动）")
-                    .selfObjectID(String.valueOf(mBean.getMlf_id()))
+                    .selfObjectID(String.valueOf(mBean.getId()))
                     .columnID(String.valueOf(mBean.getColumn_id()))
                     .classShortName(mBean.getChannel_name())
                     .objectShortName(mBean.getDoc_title())

@@ -144,7 +144,7 @@ public class ImageMoreFragment extends DailyFragment {
         DraftDetailBean.ArticleBean articleBean = mBean.getArticle();
         mAnalytics = new Analytics.AnalyticsBuilder(getContext(), "A0010", "PicturePageStay", true)
                 .name("打开“更多图集”页面")
-                .selfObjectID(String.valueOf(articleBean.getMlf_id()))
+                .selfObjectID(String.valueOf(articleBean.getId()))
                 .columnID(String.valueOf(articleBean.getColumn_id()))
                 .classShortName(articleBean.getChannel_name())
                 .objectShortName(articleBean.getDoc_title())
@@ -154,7 +154,7 @@ public class ImageMoreFragment extends DailyFragment {
                 .seObjectType(ObjectType.C01)
                 .objectID(String.valueOf(articleBean.getMlf_id()))
                 .columnName(articleBean.getColumn_name())
-                .selfNewsID(String.valueOf(articleBean.getMlf_id()))
+                .selfNewsID(String.valueOf(articleBean.getId()))
                 .pubUrl(articleBean.getUrl())
                 .selfChannelID(articleBean.getChannel_id())
                 .newsID(String.valueOf(articleBean.getMlf_id()))

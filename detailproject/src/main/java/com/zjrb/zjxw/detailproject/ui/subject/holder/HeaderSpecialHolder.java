@@ -22,7 +22,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.GridSpaceDivider;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -66,7 +65,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     @BindView(R2.id.tv_indicator)
     TextView mTvIndicator;
     @BindView(R2.id.recycler_tab)
-    RecyclerView mRecyclerTab;
+    RecyclerView mRecyclerTab;//未吸顶列表
     @BindView(R2.id.iv_focus)
     ImageView ivTopicPic;
     @BindView(R2.id.tv_focus)
@@ -81,7 +80,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     TextView tvRead;
 
     private boolean isOpen;
-    //将标签列表进行复制显示
+    //吸顶标签列表
     private RecyclerView mRecyclerTabCopy;
     //聚合阅读
     private TextView mTvReadCopy;
@@ -89,7 +88,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private FitWindowsFrameLayout fyContainer;
     //返回键、收藏、分享
     private ImageView ivback, ivCollect, ivShare;
-    private FrameLayout mGroupCopy;
+    //    private FrameLayout mGroupCopy;
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
     private DraftDetailBean.ArticleBean mArticle;
@@ -102,7 +101,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
         mTvReadCopy = tvReadCopy;
-        mGroupCopy = groupCopy;
+//        mGroupCopy = groupCopy;
         mRecyclerTabCopy = copy;
         fyContainer = view;
         ivback = fyContainer.findViewById(R.id.iv_back);
@@ -149,10 +148,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     if (mChannelAdapter != null && mChannelAdapter.getDataSize() > 1) {
                         if (overlayEndPosition) {
                             //吸顶隐藏
-                            if(mRecyclerTabCopy.getVisibility() == View.VISIBLE){
+                            if (mRecyclerTabCopy.getVisibility() == View.VISIBLE) {
                                 mRecyclerTabCopy.setVisibility(View.GONE);
                             }
-                            if(mTvReadCopy.getVisibility() == View.VISIBLE){
+                            if (mTvReadCopy.getVisibility() == View.VISIBLE) {
                                 mTvReadCopy.setVisibility(View.GONE);
                             }
 
@@ -161,10 +160,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                             ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
                         } else {
                             //吸顶显示
-                            if(mRecyclerTabCopy.getVisibility() == View.GONE){
+                            if (mRecyclerTabCopy.getVisibility() == View.GONE) {
                                 mRecyclerTabCopy.setVisibility(View.VISIBLE);
                             }
-                            if(mTvReadCopy.getVisibility() == View.GONE){
+                            if (mTvReadCopy.getVisibility() == View.GONE) {
                                 mTvReadCopy.setVisibility(View.VISIBLE);
                             }
                             ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
@@ -223,9 +222,9 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 }
             }
             //群众之声位置
-            if(overlayEndPosition != RecyclerView.NO_POSITION){
+            if (overlayEndPosition != RecyclerView.NO_POSITION) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
 //            return overlayEndPosition;

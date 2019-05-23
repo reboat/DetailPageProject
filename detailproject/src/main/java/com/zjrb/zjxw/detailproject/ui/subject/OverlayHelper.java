@@ -25,6 +25,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
+
     public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
         mRecyclerTabCopy = recyclerCopy;
         mGroupCopy = groupCopy;
@@ -38,7 +39,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (recyclerView.getAdapter() instanceof SpecialAdapter) {
             SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
-            // 悬浮组名
+            // 悬浮组名位置
             int overlayPosition = RecyclerView.NO_POSITION;
             //去除悬浮
             int overlayEndPosition = RecyclerView.NO_POSITION;
@@ -58,6 +59,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             }
 
             //专题tab显示时机
+            //TODO WLJ 这里index错误
             if (startPosition != RecyclerView.NO_POSITION) {
                 List data = adapter.getData();
                 if (data != null) {

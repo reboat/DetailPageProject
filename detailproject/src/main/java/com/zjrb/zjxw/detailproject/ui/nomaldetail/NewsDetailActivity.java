@@ -175,7 +175,6 @@ final public class NewsDetailActivity extends DailyActivity implements
                 }
             }
 
-
         }
     }
 

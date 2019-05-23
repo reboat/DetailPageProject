@@ -22,6 +22,9 @@ import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.SettingBiz;
@@ -56,8 +59,6 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
      * 当前稿件阅读进度
      */
     private float mReadingScale;
-
-    //TODO 防止item复用时重新加载，不知道有没有问题，需要确认
     private boolean isLoaded = false;
 
     public NewsDetailWebViewHolder(ViewGroup parent) {
@@ -114,7 +115,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
 
 //        List<String>  js = new ArrayList<>();//TODO WLJ TEST
 //        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
-//        List<String>  css = new ArrayList<>();
+//        List<String> css = new ArrayList<>();
 //        css.add("https://zjbeta.8531.cn/statics/wap/css/zjxw.v6.css");
 //        htmlResult = CssJsUtils.get(itemView.getContext()).setmHelper(webImpl).detailInjectCssJs(htmlCode, htmlBody, uiModeCssUri, "file:///android_asset/js/basic.js", css, js);
         //JS
@@ -152,6 +153,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
+                mContainer.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
                 //当前阅读进度
                 float tempScale = (recyclerView.getHeight() - mContainer.getTop()) * 1f / mWebViewHeight;
                 //取最大阅读进度

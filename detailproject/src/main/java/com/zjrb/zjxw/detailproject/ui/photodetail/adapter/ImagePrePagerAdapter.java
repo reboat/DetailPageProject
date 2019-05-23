@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.ui.photodetail.DetailImagePreviewFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.ImageMoreFragment;
 
 import cn.daily.news.biz.core.web.ImagePreviewFragment;
@@ -37,7 +38,7 @@ public class ImagePrePagerAdapter extends FragmentStatePagerAdapter {
         }
 
         //普通图集
-        return ImagePreviewFragment.newInstance(
+        return DetailImagePreviewFragment.newInstance(mBean.getArticle(),
                 mBean.getArticle().getAlbum_image_list().get(position).getImage_url()
                 , true, mBean.getArticle().getMlf_id());
     }

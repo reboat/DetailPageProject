@@ -14,6 +14,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 
 import java.util.List;
+import java.util.UUID;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
@@ -547,25 +548,25 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     /**********图集页***********************************************************************************************************************************/
     @Override
     public void ClickDownLoad(DraftDetailBean bean) {
-        new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0025", "PictureRelatedOperation", false)
+        DraftDetailBean.ArticleBean articleBean=bean.getArticle();
+        new Analytics.AnalyticsBuilder(getContext(), "A0025", "PictureRelatedOperation", false)
                 .name("点击下载按钮")
-                .objectID(bean.getArticle().getMlf_id() + "")
-                .objectShortName(bean.getArticle().getDoc_title())
-                .seObjectType(ObjectType.C11)
-                .ilurl(bean.getArticle().getUrl())
-                .classID(bean.getArticle().getChannel_id())
-                .classShortName(bean.getArticle().getChannel_name())
-                .columnID(bean.getArticle().getColumn_id() + "")
-                .columnName(bean.getArticle().getColumn_name())
-                .selfObjectID(bean.getArticle().getId() + "")
-                .newsID(bean.getArticle().getMlf_id() + "")
-                .selfNewsID(bean.getArticle().getId() + "")
-                .newsTitle(bean.getArticle().getDoc_title())
-                .selfChannelID(bean.getArticle().getChannel_id())
-                .channelName(bean.getArticle().getChannel_name()).columnID(bean.getArticle().getColumn_id() + "")
-                .columnName(bean.getArticle().getColumn_name())
-                .pubUrl(bean.getArticle().getUrl())
+                .selfObjectID(String.valueOf(articleBean.getId()))
+                .columnID(String.valueOf(articleBean.getColumn_id()))
+                .classShortName(articleBean.getChannel_name())
+                .objectShortName(articleBean.getDoc_title())
+                .classID(articleBean.getChannel_id())
                 .pageType("图集详情页")
+                .ilurl(articleBean.getUrl())
+                .seObjectType(ObjectType.C11)
+                .objectID(String.valueOf(articleBean.getMlf_id()))
+                .columnName(articleBean.getColumn_name())
+                .selfNewsID(String.valueOf(articleBean.getId()))
+                .pubUrl(articleBean.getUrl())
+                .selfChannelID(articleBean.getChannel_id())
+                .newsID(String.valueOf(articleBean.getMlf_id()))
+                .newsTitle(articleBean.getDoc_title())
+                .channelName(articleBean.getChannel_name())
                 .operationType("保存图片")
                 .build()
                 .send();

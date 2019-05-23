@@ -213,7 +213,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         try {
             boolean isVertical = Integer.valueOf(type) == 1;
             return isVertical;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -297,10 +297,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else {
                 boolean b1 = "暂未开始".equals(tvLiveStatus.getText().toString());
                 boolean b2 = "直播已结束".equals(tvLiveStatus.getText().toString());
-                boolean b3 = tvLiveStatus.getVisibility()==View.VISIBLE;
-                if ((b1||b2)&&b3){//暂未开始和已经结束不初始化播放器
+                boolean b3 = tvLiveStatus.getVisibility() == View.VISIBLE;
+                if ((b1 || b2) && b3) {//暂未开始和已经结束不初始化播放器
 
-                }else {
+                } else {
                     DailyPlayerManager.get().init(builder);
                 }
             }
@@ -313,7 +313,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-    private NewsDetailAdapter aDapter;
+//    private NewsDetailAdapter aDapter;
 
     //初始化视频/评论fragment
     private void initViewPage(DraftDetailBean bean) {
@@ -329,7 +329,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundleVideo);
         }
         videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
-        aDapter = videoDetailFragment.getAdapter();
+//        aDapter = videoDetailFragment.getAdapter();
         //直播间
         if (bean.getArticle().isNative_live()) {
             Bundle bundleLive = BundleHelper.creatBundle(IKey
@@ -383,6 +383,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     } else {//视频
                         if (position == 0) {
                             //视频
+                            //切换到视频页面时,取消焦点
+                            ryContainer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
                             DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
                         } else {
                             //评论
@@ -555,8 +557,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 UmengShareBean mJsShareBean = SPHelper.get().getObject(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
                 ZBJTOpenAppShareMenuBean menuBean = null;
                 boolean isUpdateShare = false;
-                if(mJsShareBean != null){
-                     menuBean = mJsShareBean.getBean();
+                if (mJsShareBean != null) {
+                    menuBean = mJsShareBean.getBean();
                     isUpdateShare = true;
                 }
 
@@ -714,12 +716,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void finish() {
-        if (aDapter != null && aDapter.getWebViewHolder() != null &&
-                aDapter.getWebViewHolder().getWebView() != null &&
-                aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
-                aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper().getFullScreen()) {
-//            mAdapter.getWebViewHolder().getWebViewImpl().setFullScreen(false);
-            aDapter.getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
+        if (videoDetailFragment != null && videoDetailFragment.getAdapter() != null && videoDetailFragment.getAdapter().getWebViewHolder() != null &&
+                videoDetailFragment.getAdapter().getWebViewHolder().getWebView() != null &&
+                videoDetailFragment.getAdapter().getWebViewHolder().getWebView().getmChromeClientWrapper() != null &&
+                videoDetailFragment.getAdapter().getWebViewHolder().getWebView().getmChromeClientWrapper().getFullScreen()) {
+            videoDetailFragment.getAdapter().getWebViewHolder().getWebView().getmChromeClientWrapper().onHideCustomView();
         } else {
             DailyPlayerManager.get().onDestroy();
             PlayerCache.get().clear();
@@ -843,7 +844,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     //删除评论
     @Override
     public void onDeleteComment(int position) {
-        ZBToast.showShort(getApplicationContext(),"删除成功");
+        ZBToast.showShort(getApplicationContext(), "删除成功");
         mCommentFragment.onDeleteComment(position);
     }
 

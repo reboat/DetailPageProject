@@ -1,7 +1,5 @@
 package com.zjrb.zjxw.detailproject.ui.nomaldetail.holder;
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,9 +19,6 @@ import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +88,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
     @Override
     public void bindView() {
 
-        if(isLoaded){
+        if (isLoaded) {
             return;
         }
 
@@ -153,6 +148,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
+                //取消焦点
                 mContainer.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
                 //当前阅读进度
                 float tempScale = (recyclerView.getHeight() - mContainer.getTop()) * 1f / mWebViewHeight;

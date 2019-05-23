@@ -35,7 +35,7 @@ public class PersionalTextHolder extends BaseRecyclerViewHolder<OfficalArticlesB
 
     @Override
     public void bindView() {
-        if (mData.getTitle() != null) {
+        if (mData!=null && mData.getTitle() != null) {
             mTvTitle.setText(mData.getTitle());
             mTvTitle.setSelected(ReadNewsDaoHelper.alreadyRead(mData.getId()));
         }

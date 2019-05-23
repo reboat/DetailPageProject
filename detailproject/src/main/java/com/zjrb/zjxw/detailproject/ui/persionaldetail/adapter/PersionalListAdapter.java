@@ -46,7 +46,7 @@ public class PersionalListAdapter extends BaseRecyclerAdapter implements LoadMor
         List list = new ArrayList<>();
         for (int i = 0; i < data.getOfficer_list().size(); i++) {
             list.add(data.getOfficer_list().get(i));
-            if (data.getOfficer_list().get(i).getArticles() != null && !data.getOfficer_list().get(i).getArticles().isEmpty()) {
+            if (data.getOfficer_list().get(i)!=null && data.getOfficer_list().get(i).getArticles() != null && !data.getOfficer_list().get(i).getArticles().isEmpty()) {
                 list.addAll(data.getOfficer_list().get(i).getArticles());
             }
         }

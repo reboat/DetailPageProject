@@ -430,7 +430,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
-                    topHolder.getShareView().setVisibility(View.GONE);
+                    topHolder.getShareView().setVisibility(View.INVISIBLE);
                     showEmptyNewsDetail();
                 } else {
                     ZBToast.showShort(getApplication(), errMsg);
@@ -459,6 +459,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         if (!TextUtils.isEmpty(article.getColumn_name())) {
             //栏目名称
             topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.VISIBLE);
+            topHolder.setViewVisible(topHolder.getSubscribe(), View.VISIBLE);
             topHolder.getTitleView().setText(article.getColumn_name());
             //栏目头像
             GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
@@ -469,7 +470,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 topHolder.getSubscribe().setSelected(false);
             }
         } else {
-            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+            topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.INVISIBLE);
+            topHolder.setViewVisible(topHolder.getSubscribe(), View.INVISIBLE);
         }
 
         mNewsDetail = data;
@@ -701,7 +703,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         viewPager.setVisibility(View.GONE);
         tabLayout.setVisibility(View.GONE);
         videoContainer.setVisibility(View.GONE);
-        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.GONE);
+        topHolder.setViewVisible(topHolder.getSubscribe(), View.INVISIBLE);
+        topHolder.setViewVisible(topHolder.getFitRelativeLayout(), View.INVISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

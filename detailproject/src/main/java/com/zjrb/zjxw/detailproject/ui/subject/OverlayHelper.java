@@ -75,6 +75,13 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     }
                 }
             }
+            if (firstVisibleItemPosition == 0) {
+                if (mGroupCopy.getVisibility() == View.GONE) {
+                    mGroupCopy.setVisibility(View.VISIBLE);
+                }
+                Object data = adapter.getData(firstVisibleItemPosition);
+                updateChannelTab(data);
+            }
 
             //专题tab显示的位置
             if (overlayPosition != RecyclerView.NO_POSITION) {
@@ -83,7 +90,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                 }
                 if (mOverlayPosition != overlayPosition) {
                     mOverlayPosition = overlayPosition;
-                    Object data = adapter.getData(mOverlayPosition);
+                    Object data = adapter.getData(firstVisibleItemPosition);
                     updateChannelTab(data);
                 }
                 //专题tab滑动到群众之声时隐藏
@@ -104,7 +111,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
     }
 
     public void updateChannelTab(Object data) {
-        if (data != null) {
+        if (data != null && data instanceof SpecialGroupBean) {
             mOverlayHolder.setData(data);
         }
         if (mRecyclerTabCopy.getAdapter() instanceof ChannelAdapter) {

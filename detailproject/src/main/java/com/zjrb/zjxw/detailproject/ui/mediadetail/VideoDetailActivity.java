@@ -231,23 +231,27 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //优先判定直播稿
             if (bean.isNative_live()) {
                 builder.setLive(true);
-                url = bean.getNative_live_info().getStream_url();
-                title = bean.getNative_live_info().getTitle();
-                if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())) {
-                    imagePath = bean.getNative_live_info().getCover();
-                }
-                //直播回放并且回放地址不为空  取直播回放地址
-                if (bean.getNative_live_info().getStream_status() == 2) {
-                    if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())) {
-                        builder.setLive(false);//直播回放就当成普通视频
-                        url = bean.getNative_live_info().getPlayback_url();
-                    } else {
-                        url = "";
+                DraftDetailBean.ArticleBean.NativeLiveInfoBean beanLive = bean.getNative_live_info();
+                if(beanLive != null){
+                    url = bean.getNative_live_info().getStream_url();
+                    title = bean.getNative_live_info().getTitle();
+                    if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())) {
+                        imagePath = bean.getNative_live_info().getCover();
+                    }
+                    //直播回放并且回放地址不为空  取直播回放地址
+                    if (bean.getNative_live_info().getStream_status() == 2) {
+                        if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())) {
+                            builder.setLive(false);//直播回放就当成普通视频
+                            url = bean.getNative_live_info().getPlayback_url();
+                        } else {
+                            url = "";
+                        }
                     }
                 }
+
+
             }
 
-//            分享bean
             UmengShareBean shareBean = UmengShareBean.getInstance()
                     .setSingle(false)
                     .setNewsCard(true)
@@ -258,8 +262,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setTitle(mNewsDetail.getArticle().getDoc_title())
                     .setTargetUrl(mNewsDetail.getArticle().getUrl()).setEventName("NewsShare")
                     .setShareType("文章");
-
-//            构建player builder
             builder.setImageUrl(imagePath)
                     .setPlayUrl(url)
                     .setStreamStatus(bean.getNative_live_info() == null ? 0 : bean.getNative_live_info().getStream_status())

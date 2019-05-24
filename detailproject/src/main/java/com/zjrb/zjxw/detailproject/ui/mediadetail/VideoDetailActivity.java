@@ -232,7 +232,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             if (bean.isNative_live()) {
                 builder.setLive(true);
                 DraftDetailBean.ArticleBean.NativeLiveInfoBean beanLive = bean.getNative_live_info();
-                if(beanLive != null){
+                if (beanLive != null) {
                     url = bean.getNative_live_info().getStream_url();
                     title = bean.getNative_live_info().getTitle();
                     if (!TextUtils.isEmpty(bean.getNative_live_info().getCover())) {
@@ -315,8 +315,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-//    private NewsDetailAdapter aDapter;
-
     //初始化视频/评论fragment
     private void initViewPage(DraftDetailBean bean) {
         pagerAdapter = new TabPagerAdapterImpl(getSupportFragmentManager(), this);
@@ -331,7 +329,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             pagerAdapter.addTabInfo(VideoDetailFragment.class, "视频", bundleVideo);
         }
         videoDetailFragment = (VideoDetailFragment) pagerAdapter.getItem(0);
-//        aDapter = videoDetailFragment.getAdapter();
         //直播间
         if (bean.getArticle().isNative_live()) {
             Bundle bundleLive = BundleHelper.creatBundle(IKey

@@ -62,6 +62,9 @@ public class VideoDetailFragment extends DailyFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getArguments() != null) {
+            mNewsDetail = (DraftDetailBean) getArguments().getSerializable(FRAGMENT_DETAIL_BEAN);
+        }
         ButterKnife.bind(this, view);
         init();
     }

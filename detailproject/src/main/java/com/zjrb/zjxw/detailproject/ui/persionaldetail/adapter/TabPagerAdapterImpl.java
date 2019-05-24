@@ -36,10 +36,17 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         TabInfo tabInfo = mTabList.get(position);
         if (tabInfo.fragment == null) {
-            tabInfo.fragment = Fragment.instantiate(mContext, tabInfo.clz.getName(),
-                    tabInfo.args);
+            tabInfo.fragment = Fragment.instantiate(mContext, tabInfo.clz.getName(),tabInfo.args);
         }
         return tabInfo.fragment;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        if(!mTabList.isEmpty() && mTabList.get(position) != null && mTabList.get(position).fragment != null){
+            return mTabList.get(position).fragment.hashCode();
+        }
+        return position;
     }
 
     @Override

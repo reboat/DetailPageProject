@@ -545,15 +545,15 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
     public void onDestroy() {
         super.onDestroy();
         closeActivity();
-    }
-
-    //关闭页面
-    private void closeActivity() {
         if (builder != null) {
             if (mAnalytics != null) {
                 mAnalytics.sendWithDuration();
             }
         }
+    }
+
+    //关闭页面
+    private void closeActivity() {
         SPHelper.get().remove(JsMultiInterfaceImp.ZJXW_JS_SHARE_BEAN);
         //清空webview依赖
         if (mWebView.getParent() != null && mWebView.getParent() instanceof ViewGroup) {

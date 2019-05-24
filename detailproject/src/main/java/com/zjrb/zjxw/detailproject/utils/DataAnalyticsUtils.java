@@ -823,21 +823,22 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
 
     @Override
     public void SpecialCommentNewsClick(HotCommentsBean bean, DraftDetailBean detailBean) {
+        DraftDetailBean.ArticleBean articleBean=detailBean.getArticle();
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "200007", "AppContentClick", false)
                 .name("评论关联新闻点击")
-                .objectID(detailBean.getArticle().getMlf_id() + "")
-                .objectShortName(detailBean.getArticle().getDoc_title())
-                .classID(detailBean.getArticle().getChannel_id())
-                .classShortName(detailBean.getArticle().getChannel_name())
-                .selfObjectID(bean.getId() + "")
-                .seObjectType(ObjectType.C01)
-                .ilurl(bean.getUrl())
+                .selfObjectID(String.valueOf(articleBean.getId()))
                 .pageType("专题详情页")
-                .newsID(detailBean.getArticle().getMlf_id() + "")
-                .selfNewsID(detailBean.getArticle().getId() + "")
-                .newsTitle(detailBean.getArticle().getDoc_title())
+                .ilurl(articleBean.getUrl())
+                .seObjectType(ObjectType.C01)
+                .objectID(String.valueOf(articleBean.getMlf_id()))
+                .objectShortName(articleBean.getDoc_title())
+                .selfNewsID(String.valueOf(articleBean.getId()))
                 .objectType("评论新闻链接")
-                .pubUrl(bean.getUrl())
+                .pubUrl(articleBean.getUrl())
+                .selfChannelID(articleBean.getChannel_id())
+                .newsID(String.valueOf(articleBean.getMlf_id()))
+                .newsTitle(articleBean.getDoc_title())
+                .channelName(articleBean.getChannel_name())
                 .build()
                 .send();
     }

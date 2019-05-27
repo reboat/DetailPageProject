@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.aliya.dailyplayer.sub.Constant;
+import com.aliya.dailyplayer.sub.DailyPlayerManager;
+import com.aliya.dailyplayer.sub.PlayerAction;
+import com.aliya.dailyplayer.sub.PlayerCache;
 import com.aliya.view.fitsys.FitWindowsFrameLayout;
 import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.db.SPHelper;
@@ -418,5 +423,21 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             boolean isCollect = data.getBooleanExtra(KEY_COLLECT, false);
             mCollect.setSelected(isCollect);
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        //详情页返回 列表需要停止播放
+        DailyPlayerManager.get().onDestroy();
+        PlayerCache.get().clear();
+        Intent intent = new Intent(Constant.VIDEO_EVENT);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.DATA, DailyPlayerManager.get().getBuilder());
+        PlayerAction action = new PlayerAction();
+        action.setFrom(PlayerAction.ACTIVITY_DETAIL);
+        bundle.putSerializable(Constant.EVENT, action);
+        intent.putExtras(bundle);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 }

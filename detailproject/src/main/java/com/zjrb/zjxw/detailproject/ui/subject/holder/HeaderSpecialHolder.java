@@ -88,7 +88,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
     private FitWindowsFrameLayout fyContainer;
     //返回键、收藏、分享
     private ImageView ivback, ivCollect, ivShare;
-    //    private FrameLayout mGroupCopy;
+    private FrameLayout mGroupCopy;
     private ChannelAdapter mChannelAdapter;
     private OnClickChannelListener mOnClickChannelListener;
     private DraftDetailBean.ArticleBean mArticle;
@@ -101,7 +101,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         super(parent, R.layout.module_detail_special_header);
         ButterKnife.bind(this, itemView);
         mTvReadCopy = tvReadCopy;
-//        mGroupCopy = groupCopy;
+        mGroupCopy = groupCopy;
         mRecyclerTabCopy = copy;
         fyContainer = view;
         ivback = fyContainer.findViewById(R.id.iv_back);

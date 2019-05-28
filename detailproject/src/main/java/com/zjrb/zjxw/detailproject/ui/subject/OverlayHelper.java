@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.zjrb.core.recycleView.OverlayViewHolder;
+import com.zjrb.core.utils.L;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.ChannelAdapter;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
@@ -25,6 +26,11 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
 
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
+    private SpecialGroupBean bean;
+
+    public void setSpecialGroupBean(SpecialGroupBean bean) {
+        this.bean = bean;
+    }
 
     public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
         mRecyclerTabCopy = recyclerCopy;
@@ -59,7 +65,6 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             }
 
             //专题tab显示时机
-            //TODO WLJ 这里index错误
             if (startPosition != RecyclerView.NO_POSITION) {
                 List data = adapter.getData();
                 if (data != null) {
@@ -75,22 +80,28 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     }
                 }
             }
-            if (firstVisibleItemPosition == 0) {
-                if (mGroupCopy.getVisibility() == View.GONE) {
-                    mGroupCopy.setVisibility(View.VISIBLE);
-                }
-                Object data = adapter.getData(firstVisibleItemPosition);
-                updateChannelTab(data);
-            }
 
             //专题tab显示的位置
             if (overlayPosition != RecyclerView.NO_POSITION) {
                 if (mGroupCopy.getVisibility() == View.GONE) {
                     mGroupCopy.setVisibility(View.VISIBLE);
                 }
+                if (bean != null && bean.isClickChannel()) {
+                    Object data;
+                    data = bean;
+                    bean.setClickChannel(false);
+                    updateChannelTab(data);
+                }
+
                 if (mOverlayPosition != overlayPosition) {
                     mOverlayPosition = overlayPosition;
-                    Object data = adapter.getData(firstVisibleItemPosition);
+                    Object data;
+                    if (bean != null && bean.isClickChannel()) {
+                        data = bean;
+                        bean.setClickChannel(false);
+                    } else {
+                        data = adapter.getData(firstVisibleItemPosition);
+                    }
                     updateChannelTab(data);
                 }
                 //专题tab滑动到群众之声时隐藏
@@ -99,13 +110,25 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     mGroupCopy.setVisibility(View.GONE);
                 }
             } else {
-                if (mGroupCopy.getVisibility() == View.VISIBLE) {
-                    mGroupCopy.setVisibility(View.GONE);
+                if (bean != null && bean.isClickChannel()) {
+                    if (firstVisibleItemPosition == 0) {
+                        if (mGroupCopy.getVisibility() == View.GONE) {
+                            mGroupCopy.setVisibility(View.VISIBLE);
+                        }
+                        bean.setClickChannel(false);
+                        Object data = bean;
+                        updateChannelTab(data);
+                    }
+                } else {
+                    if (mGroupCopy.getVisibility() == View.VISIBLE) {
+                        mGroupCopy.setVisibility(View.GONE);
+                    }
+                    if (mOverlayPosition != RecyclerView.NO_POSITION) {
+                        mOverlayPosition = RecyclerView.NO_POSITION;
+                        updateChannelTab(null);
+                    }
                 }
-                if (mOverlayPosition != RecyclerView.NO_POSITION) {
-                    mOverlayPosition = RecyclerView.NO_POSITION;
-                    updateChannelTab(null);
-                }
+
             }
         }
     }

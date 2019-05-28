@@ -99,6 +99,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     private SpecialAdapter mAdapter;
 
     private Analytics mAnalytics;
+    private boolean isFirst = false;
     /**
      * 稿件ID
      */
@@ -115,6 +116,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_special);
         ButterKnife.bind(this);
+        isFirst = true;
         initArgs(getIntent());
         initView();
         loadData();
@@ -361,9 +363,19 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         List data = mAdapter.getData();
         if (data != null && bean != null) { // 跳转到指定分组
             int index = data.indexOf(bean);
+            if(mOverlayHelper != null){
+                bean.setClickChannel(true);
+                mOverlayHelper.setSpecialGroupBean(bean);
+            }
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
-            lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
-                    mRecyclerTabCopy.getHeight());
+            if(isFirst){
+                isFirst = false;
+                lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
+                        mRecyclerTabCopy.getHeight() + tvReadCopy.getHeight());
+            }else{
+                lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
+                        mRecyclerTabCopy.getHeight());
+            }
             DataAnalyticsUtils.get().ClickChannel(mArticle, bean);
             //点击tab标签背景渐变
             headHolder.getItemView().setBackgroundResource(R.color._ffffff);

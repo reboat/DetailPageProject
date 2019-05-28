@@ -15,6 +15,7 @@ public class SpecialGroupBean implements Serializable {
     private String group_name;
     private boolean group_has_more;
     private int unread_count;
+    private boolean isClickChannel = false;
 
     private List<ArticleItemBean> group_articles;
 
@@ -56,6 +57,14 @@ public class SpecialGroupBean implements Serializable {
 
     public void setUnread_count(int unread_count) {
         this.unread_count = unread_count;
+    }
+
+    public boolean isClickChannel() {
+        return isClickChannel;
+    }
+
+    public void setClickChannel(boolean clickChannel) {
+        isClickChannel = clickChannel;
     }
 
 }

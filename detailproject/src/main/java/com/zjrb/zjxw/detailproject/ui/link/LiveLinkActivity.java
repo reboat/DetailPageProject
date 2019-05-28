@@ -316,6 +316,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 mMenuPrised.setVisibility(View.GONE);
                 if (data.getArticle().isLike_enabled()) {
                     ivPrisedRelpace.setVisibility(View.VISIBLE);
+                    ivPrisedRelpace.setSelected(data.getArticle().isLiked());
                 } else {
                     ivPrisedRelpace.setVisibility(View.GONE);
                 }
@@ -503,7 +504,12 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    mMenuPrised.setSelected(true);
+                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                        mMenuPrised.setSelected(true);
+                    }
+                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -514,7 +520,12 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                mMenuPrised.setSelected(true);
+                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    mMenuPrised.setSelected(true);
+                }
+                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    ivPrisedRelpace.setSelected(true);
+                }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
@@ -536,13 +547,13 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         super.onPause();
         mWebView.onPause();
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 
@@ -551,13 +562,13 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         super.onResume();
         mWebView.onResume();
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 

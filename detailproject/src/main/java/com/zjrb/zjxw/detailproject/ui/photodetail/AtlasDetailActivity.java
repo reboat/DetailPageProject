@@ -946,27 +946,27 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     @Override
     protected void onResume() {
         super.onResume();
-//        if (mData != null && mData.getArticle() != null) {
+        if (mData != null && mData.getArticle() != null) {
 //            //新华智云
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-//                    .setTargetID(mData.getArticle().getId() + "")
-//                    .setUrl(mData.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //新华智云
-//        if (mData != null && mData.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-//                    .setTargetID(mData.getArticle().getId() + "")
-//                    .setUrl(mData.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mData != null && mData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mData.getArticle().getId() + "")
+                    .setUrl(mData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
 

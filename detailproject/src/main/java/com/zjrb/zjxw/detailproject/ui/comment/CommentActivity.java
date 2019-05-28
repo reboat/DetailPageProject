@@ -35,14 +35,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
-import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
-import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
-import cn.daily.news.biz.core.share.UmengShareBean;
-import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
@@ -126,7 +122,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topHolder = BIZTopBarFactory.createCommonTopBar(view, this);
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        topHolder.setViewVisible(topHolder.getShareView(), View.GONE);
         return topHolder.getView();
     }
 
@@ -254,7 +250,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
         return mArticleId;
     }
 
-    @OnClick({R2.id.tv_comment, R2.id.iv_top_share,R2.id.fy_container})
+    @OnClick({R2.id.tv_comment/*, R2.id.iv_top_share*/, R2.id.fy_container})
     public void onClick(View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.tv_comment || v.getId() == R.id.fy_container) {
@@ -262,47 +258,49 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
                 DataAnalyticsUtils.get().AppTabCommentClick(mNewsDetail);
             }
             try {
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail,true);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail, true);
                 CommentWindowDialog.newInstance(new CommentDialogBean(articleId)).setListen(this).setWMData(analytics).setLocationCallBack(this).show(getSupportFragmentManager(), "CommentWindowDialog");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (v.getId() == R.id.iv_top_share) {
-            if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
-                DataAnalyticsUtils.get().AppTabClick(mNewsDetail);
-                //分享专用bean
-                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
-                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
-                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
-                        .setObjectType(ObjectType.C01)
-                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
-                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
-                        .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
-                        .setUrl(mNewsDetail.getArticle().getUrl())
-                        .setPageType("评论列表页")
-                        .setOtherInfo(Analytics.newOtherInfo()
-                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
-                                .put("subject", "")
-                                .toString())
-                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
-
-                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
-                        .setSingle(false)
-                        .setNewsCard(true)
-                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
-                        .setArticleId(getID(mBean))
-                        .setImgUri(mBean.getShare_article_info().getArticle_pic())
-                        .setTextContent(mBean.getShare_article_info().getSummary())
-                        .setTitle(mBean.getShare_article_info().getList_title())
-                        .setAnalyticsBean(bean)
-                        .setTargetUrl(mBean.getShare_article_info().getUrl())
-                        .setShareType("评论")
-                        .setEventName("PageShare"));
-            }
-
         }
-    }
+//        else if (v.getId() == R.id.iv_top_share) {
+//            if (mBean != null && mBean.getShare_article_info() != null && !TextUtils.isEmpty(mBean.getShare_article_info().getUrl())) {
+//                DataAnalyticsUtils.get().AppTabClick(mNewsDetail);
+//                //分享专用bean
+//                OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
+//                        .setObjectID(mNewsDetail.getArticle().getMlf_id() + "")
+//                        .setObjectName(mNewsDetail.getArticle().getDoc_title())
+//                        .setObjectType(ObjectType.C01)
+//                        .setClassifyID(mNewsDetail.getArticle().getChannel_id() + "")
+//                        .setClassifyName(mNewsDetail.getArticle().getChannel_name())
+//                        .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+//                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
+//                        .setUrl(mNewsDetail.getArticle().getUrl())
+//                        .setPageType("评论列表页")
+//                        .setOtherInfo(Analytics.newOtherInfo()
+//                                .put("relatedColumn", mNewsDetail.getArticle().getColumn_id() + "")
+//                                .put("subject", "")
+//                                .toString())
+//                        .setSelfobjectID(mNewsDetail.getArticle().getId() + "");
+//
+//                UmengShareUtils.getInstance().startShare(UmengShareBean.getInstance()
+//                        .setSingle(false)
+//                        .setNewsCard(true)
+//                        .setCardUrl(mNewsDetail.getArticle().getCard_url())
+//                        .setArticleId(getID(mBean))
+//                        .setImgUri(mBean.getShare_article_info().getArticle_pic())
+//                        .setTextContent(mBean.getShare_article_info().getSummary())
+//                        .setTitle(mBean.getShare_article_info().getList_title())
+//                        .setAnalyticsBean(bean)
+//                        .setTargetUrl(mBean.getShare_article_info().getUrl())
+//                        .setShareType("评论")
+//                        .setEventName("PageShare"));
+//            }
+
+//    }
+
+}
 
 
     @Override
@@ -328,7 +326,7 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
     public void onDeleteComment(int position) {
         try {
             mCommentAdapter.remove(position);
-            ZBToast.showShort(getApplicationContext(),"删除成功");
+            ZBToast.showShort(getApplicationContext(), "删除成功");
         } catch (Exception e) {
 
         }

@@ -339,12 +339,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         }
     }
 
-
-    /**
-     * 刷新底部栏状态
-     *
-     * @param data
-     */
+    //顶部栏状态
     private void initViewState(DraftDetailBean data) {
         //是否允许点赞
         if (data.getArticle().isLike_enabled()) {
@@ -483,7 +478,12 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    mMenuPrised.setSelected(true);
+                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                        mMenuPrised.setSelected(true);
+                    }
+                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -494,7 +494,12 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                mMenuPrised.setSelected(true);
+                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    mMenuPrised.setSelected(true);
+                }
+                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    ivPrisedRelpace.setSelected(true);
+                }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
@@ -516,13 +521,13 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         super.onPause();
         mWebView.onPause();
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 
@@ -531,13 +536,13 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         super.onResume();
         mWebView.onResume();
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 

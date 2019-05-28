@@ -341,6 +341,9 @@ final public class NewsDetailActivity extends DailyActivity implements
                 mMenuPrised.setVisibility(View.GONE);
                 if (data.getArticle().isLike_enabled()) {
                     ivPrisedRelpace.setVisibility(View.VISIBLE);
+                    if (data.getArticle().isLike_enabled()){
+                        ivPrisedRelpace.setSelected(data.getArticle().isLiked());
+                    }
                 } else {
                     ivPrisedRelpace.setVisibility(View.GONE);
                 }
@@ -406,7 +409,12 @@ final public class NewsDetailActivity extends DailyActivity implements
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    mMenuPrised.setSelected(true);
+                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                        mMenuPrised.setSelected(true);
+                    }
+                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -418,7 +426,12 @@ final public class NewsDetailActivity extends DailyActivity implements
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                mMenuPrised.setSelected(true);
+                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    mMenuPrised.setSelected(true);
+                }
+                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    ivPrisedRelpace.setSelected(true);
+                }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }
@@ -595,13 +608,13 @@ final public class NewsDetailActivity extends DailyActivity implements
 //            mAdapter.onWebViewResume();
 //        }
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 
@@ -612,13 +625,13 @@ final public class NewsDetailActivity extends DailyActivity implements
 //            mAdapter.onWebViewPause();
 //        }
         //新华智云
-//        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-//                    .setTargetID(mNewsDetail.getArticle().getId() + "")
-//                    .setUrl(mNewsDetail.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
 
     }
 

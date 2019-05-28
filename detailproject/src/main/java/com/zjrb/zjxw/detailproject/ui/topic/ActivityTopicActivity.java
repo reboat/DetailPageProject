@@ -675,25 +675,25 @@ public class ActivityTopicActivity extends DailyActivity implements
     protected void onResume() {
         super.onResume();
         //新华智云
-//        if (mDetailData != null && mDetailData.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
-//                    .setTargetID(mDetailData.getArticle().getId() + "")
-//                    .setUrl(mDetailData.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mDetailData.getArticle().getId() + "")
+                    .setUrl(mDetailData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         //新华智云
-//        if (mDetailData != null && mDetailData.getArticle() != null) {
-//            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
-//                    .setTargetID(mDetailData.getArticle().getId() + "")
-//                    .setUrl(mDetailData.getArticle().getUrl())
-//                    .build()
-//                    .send();
-//        }
+        if (mDetailData != null && mDetailData.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mDetailData.getArticle().getId() + "")
+                    .setUrl(mDetailData.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
     }
 }

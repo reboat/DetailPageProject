@@ -505,7 +505,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-
     @OnClick({R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play, R2.id.menu_setting_relpace})
@@ -669,7 +668,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    mMenuPrised.setSelected(true);
+                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                        mMenuPrised.setSelected(true);
+                    }
+                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -681,7 +685,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                mMenuPrised.setSelected(true);
+                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    mMenuPrised.setSelected(true);
+                }
+                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    ivPrisedRelpace.setSelected(true);
+                }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());
     }

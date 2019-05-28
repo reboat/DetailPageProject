@@ -1,12 +1,31 @@
 package com.zhejiangdaily;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.zjrb.core.permission.AbsPermSingleCallBack;
+import com.zjrb.core.permission.IPermissionOperate;
+import com.zjrb.core.permission.Permission;
+import com.zjrb.core.permission.PermissionManager;
+import com.zjrb.core.utils.PathManager;
+import com.zjrb.core.utils.UIUtils;
+
+import java.io.File;
+import java.util.List;
+
+import bean.ZBJTSelectImageRspBean;
 import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.db.SettingManager;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.web.WebViewImpl;
 
 public class MainActivity extends DailyActivity implements View.OnClickListener {
 
@@ -34,6 +53,67 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 
     private Bundle bundle;
 
+    private File mTakePicFile;
+    private String mTakePicPath;
+
+//    private void takePicture() {
+//        PermissionManager.get().request((IPermissionOperate) UIUtils.getActivity(), new AbsPermSingleCallBack() {
+//            @Override
+//            public void onGranted(boolean isAlreadyDef) {
+////                if (bundle == null) {
+////                    bundle = new Bundle();
+////                }
+////                bundle.putString("takePicPath", mTakePicPath);
+////                bundle.putString("dataType", dataType);
+////                bundle.putString("callback", callback);
+////                bundle.putSerializable("JsInterfaceCallBack", mCallback);
+////                bundle.putSerializable("ZBJTSelectImageRspBean", beanRsp);
+////                intent.putExtra("bundle", bundle);
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                mTakePicFile = PathManager.get().obtainTakePicFile();
+//                if (mTakePicFile == null) return;
+//                mTakePicPath = mTakePicFile.getAbsolutePath();
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mTakePicFile));
+//                UIUtils.getActivity().startActivityForResult(intent, WebViewImpl.REQUEST_CODE_TAKE_PICTURE);
+//            }
+//
+//            @Override
+//            public void onDenied(List<String> neverAskPerms) {
+//                Toast.makeText(UIUtils.getActivity(), "拍照必须要允许使用相机权限", Toast.LENGTH_SHORT).show();
+//            }
+//        }, Permission.CAMERA,Permission.STORAGE_READE,Permission.STORAGE_WRITE);
+//    }
+
+    private void takePicture() {
+        PermissionManager.get().request(this, new AbsPermSingleCallBack() {
+            @Override
+            public void onGranted(boolean isAlreadyDef) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mTakePicFile = PathManager.get().obtainTakePicFile();
+                if (mTakePicFile == null) return;
+                mTakePicPath = mTakePicFile.getAbsolutePath();
+                Uri uri;
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    uri = Uri.fromFile(mTakePicFile);
+                } else {
+                    ContentValues contentValues = new ContentValues(1);
+                    contentValues.put(MediaStore.Images.Media.DATA, mTakePicPath);
+                    uri = getContentResolver()
+                            .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+                }
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                startActivityForResult(intent, C.request.TAKE_PICTURE);
+            }
+
+            @Override
+            public void onDenied(List<String> neverAskPerms) {
+
+            }
+
+        }, Permission.CAMERA, Permission.STORAGE_READE, Permission.STORAGE_WRITE);
+    }
+
+
     @Override
     public void onClick(View v) {
 //        AudioDialog.newInstance().show(((FragmentActivity) UIUtils.getActivity()).getSupportFragmentManager(), "MoreDialog");
@@ -55,7 +135,8 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=0");
             Nav.with(this).to("https://pre-act.8531.cn/money_zjxw/sign/index.html?zjxw_control=1101#/sign?q=t56ZqF7OGi5vxwLidOcYHBPqpfT0fzVVdHbVeUt21oPjphifIbz8Y8Ew3ggo91UIandX0iF1ZGR9Fv9kP/Q9C3+NaSvQ8GP+O0kiHDcZ8beEJRqZN/cEjts= ");
         } else if (v.getId() == R.id.tv_text1) {
-            Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1146710"); // 741334
+//            takePicture();
+            Nav.with(this).to("https://test-vip.8531.cn/wiki/demo/jssdk/new_test.htm?zjxw_control=1101&ref_aid=1156948");
 //            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1157484&native=0");
         }
 

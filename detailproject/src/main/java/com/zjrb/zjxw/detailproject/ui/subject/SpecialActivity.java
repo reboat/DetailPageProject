@@ -293,6 +293,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
         if (mOverlayHelper == null) {
             mOverlayHelper = new OverlayHelper(mRecycler, mRecyclerTabCopy, mGroupCopy);
+            mOverlayHelper.setArticDetail(mArticle);
         }
     }
 

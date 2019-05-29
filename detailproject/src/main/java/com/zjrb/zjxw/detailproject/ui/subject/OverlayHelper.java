@@ -7,6 +7,7 @@ import android.widget.FrameLayout;
 
 import com.zjrb.core.recycleView.OverlayViewHolder;
 import com.zjrb.core.utils.L;
+import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.ChannelAdapter;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
@@ -27,9 +28,14 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
     private int mOverlayPosition = RecyclerView.NO_POSITION;
 
     private SpecialGroupBean bean;
+    private DraftDetailBean.ArticleBean articleBean;
 
     public void setSpecialGroupBean(SpecialGroupBean bean) {
         this.bean = bean;
+    }
+
+    public void setArticDetail(DraftDetailBean.ArticleBean articleBean) {
+        this.articleBean = articleBean;
     }
 
     public OverlayHelper(RecyclerView recycler, RecyclerView recyclerCopy, FrameLayout groupCopy) {
@@ -85,12 +91,14 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             if (overlayPosition != RecyclerView.NO_POSITION) {
                 if (mGroupCopy.getVisibility() == View.GONE) {
                     mGroupCopy.setVisibility(View.VISIBLE);
+                    L.e("WLJ,66666");
                 }
                 if (bean != null && bean.isClickChannel()) {
                     Object data;
                     data = bean;
                     bean.setClickChannel(false);
                     updateChannelTab(data);
+                    L.e("WLJ,1111");
                 }
 
                 if (mOverlayPosition != overlayPosition) {
@@ -99,10 +107,18 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (bean != null && bean.isClickChannel()) {
                         data = bean;
                         bean.setClickChannel(false);
+                        L.e("WLJ,77777");
                     } else {
-                        data = adapter.getData(firstVisibleItemPosition);
+                        L.e("WLJ,88888，firstVisibleItemPosition=" + firstVisibleItemPosition + "，mOverlayPosition=" + mOverlayPosition + ",startPosition=" + startPosition);
+                        //TODO WLJ 这里的判断有问题
+                        if (articleBean.getSubject_groups().size() == 1) {
+                            data = adapter.getData(mOverlayPosition);
+                        } else {
+                            data = adapter.getData(firstVisibleItemPosition);
+                        }
                     }
                     updateChannelTab(data);
+                    L.e("WLJ,2222");
                 }
                 //专题tab滑动到群众之声时隐藏
             } else if (overlayEndPosition != RecyclerView.NO_POSITION) {
@@ -114,11 +130,13 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (firstVisibleItemPosition == 0) {
                         if (mGroupCopy.getVisibility() == View.GONE) {
                             mGroupCopy.setVisibility(View.VISIBLE);
+                            L.e("WLJ,77777");
                         }
                         bean.setClickChannel(false);
                         Object data = bean;
                         updateChannelTab(data);
                     }
+                    L.e("WLJ,33333");
                 } else {
                     if (mGroupCopy.getVisibility() == View.VISIBLE) {
                         mGroupCopy.setVisibility(View.GONE);
@@ -126,7 +144,10 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (mOverlayPosition != RecyclerView.NO_POSITION) {
                         mOverlayPosition = RecyclerView.NO_POSITION;
                         updateChannelTab(null);
+                        L.e("WLJ,44444");
                     }
+                    L.e("WLJ,55555");
+
                 }
 
             }

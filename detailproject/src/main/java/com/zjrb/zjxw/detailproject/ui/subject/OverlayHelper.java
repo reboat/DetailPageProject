@@ -98,7 +98,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     data = bean;
                     bean.setClickChannel(false);
                     updateChannelTab(data);
-                    L.e("WLJ,1111");
+                    return;
                 }
 
                 if (mOverlayPosition != overlayPosition) {
@@ -109,12 +109,11 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                         bean.setClickChannel(false);
                         L.e("WLJ,77777");
                     } else {
-                        L.e("WLJ,88888，firstVisibleItemPosition=" + firstVisibleItemPosition + "，mOverlayPosition=" + mOverlayPosition + ",startPosition=" + startPosition);
-                        //TODO WLJ 这里的判断有问题
+                        L.e("WLJ,88888，firstVisibleItemPosition=" + firstVisibleItemPosition + "，mOverlayPosition=" + mOverlayPosition + ",startPosition=" + startPosition+",articleBean.getSubject_groups().size()="+articleBean.getSubject_groups().size());
                         if (articleBean.getSubject_groups().size() == 1) {
                             data = adapter.getData(mOverlayPosition);
                         } else {
-                            data = adapter.getData(firstVisibleItemPosition);
+                            data = adapter.getData(mOverlayPosition);
                         }
                     }
                     updateChannelTab(data);
@@ -157,12 +156,18 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
     public void updateChannelTab(Object data) {
         if (data != null && data instanceof SpecialGroupBean) {
             mOverlayHolder.setData(data);
+            L.e("WLJ,SpecialGroupBean");
         }
         if (mRecyclerTabCopy.getAdapter() instanceof ChannelAdapter) {
+            L.e("WLJ,ChannelAdapter");
             ChannelAdapter adapter = (ChannelAdapter) mRecyclerTabCopy.getAdapter();
             if (data instanceof SpecialGroupBean) {
+                L.e("WLJ,1111SpecialGroupBean");
                 adapter.setSelectedData((SpecialGroupBean) data);
             } else {
+                if(data != null){
+                    L.e("WLJ,null,data="+data.getClass().getName());
+                }
                 adapter.setSelectedData(null);
             }
             adapter.notifyDataSetChanged();

@@ -133,14 +133,18 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 //        Nav.with(this).to("www.baidu.com");
         if (v.getId() == R.id.tv_text) {
 //            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1156947&native=0");
-            Nav.with(this).to("https://pre-act.8531.cn/money_zjxw/sign/index.html?zjxw_control=1101#/sign?q=t56ZqF7OGi5vxwLidOcYHBPqpfT0fzVVdHbVeUt21oPjphifIbz8Y8Ew3ggo91UIandX0iF1ZGR9Fv9kP/Q9C3+NaSvQ8GP+O0kiHDcZ8beEJRqZN/cEjts= ");
+            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156926");
+//            Nav.with(this).to("https://pre-act.8531.cn/money_zjxw/sign/index.html?zjxw_control=1101#/sign?q=t56ZqF7OGi5vxwLidOcYHBPqpfT0fzVVdHbVeUt21oPjphifIbz8Y8Ew3ggo91UIandX0iF1ZGR9Fv9kP/Q9C3+NaSvQ8GP+O0kiHDcZ8beEJRqZN/cEjts= ");
         } else if (v.getId() == R.id.tv_text1) {
 //            takePicture();
 //            Nav.with(this).to("https://test-vip.8531.cn/wiki/demo/jssdk/new_test.htm?zjxw_control=1101&ref_aid=1156948");
 //            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1157484&native=0");
+//            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156926");
+            Nav.with(this).to("https://zjbeta.8531.cn/activity.html?id=1157419");
+
 //            Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1146710");
 //            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1157170");
-            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1158530");
+//            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1158530");
 
             //https://zjbeta.8531.cn/subject.html?id=1157170 单个标签
         }

@@ -20,6 +20,9 @@ import com.zjrb.zjxw.detailproject.utils.DetailWebViewImpl;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.SettingBiz;
@@ -108,7 +111,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         }
         ResourceBiz sp = SPHelper.get().getObject(Constants.Key.INITIALIZATION_RESOURCES);
 
-//        List<String>  js = new ArrayList<>();//TODO WLJ TEST
+//        List<String> js = new ArrayList<>();//TODO WLJ TEST
 //        js.add("https://dev-tool.8531.cn/style/public/front/js/zjrb-elements.js");
 //        List<String> css = new ArrayList<>();
 //        css.add("https://zjbeta.8531.cn/statics/wap/css/zjxw.v6.css");
@@ -149,7 +152,7 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             if (mWebViewHeight > 0) {
                 //取消焦点
-                mContainer.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+//                mContainer.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
                 //当前阅读进度
                 float tempScale = (recyclerView.getHeight() - mContainer.getTop()) * 1f / mWebViewHeight;
                 //取最大阅读进度

@@ -383,7 +383,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         if (position == 0) {
                             //视频
                             //切换到视频页面时,取消焦点
-                            ryContainer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+//                            ryContainer.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
                             DataAnalyticsUtils.get().VideoTabClick(mNewsDetail);
                         } else {
                             //评论

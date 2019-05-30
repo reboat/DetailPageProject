@@ -668,10 +668,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    if (mMenuPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setSelected(true);
                     }
-                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);
                     }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
@@ -685,10 +685,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                if (mMenuPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setSelected(true);
                 }
-                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);
                 }
             }
@@ -823,7 +823,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         videoDetailFragment.onReadingScaleChange(scale);
     }
 
-    //同步评论数
+    //同步TAB评论数，广播没收到
     @Override
     public void syncCommentNum(Intent intent) {
         if (intent != null && intent.hasExtra("video_comment_title")) {

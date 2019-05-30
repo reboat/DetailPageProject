@@ -107,6 +107,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
 
         }
         setData(list.size() > 0 ? list : null);
+        updateCommentTab();
     }
 
 
@@ -264,8 +265,19 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
             if (commentCount > 99999) {
                 mCommentNum.setText("99999+");
             } else {
-                mCommentNum.setText(commentCount+"");
+                mCommentNum.setText(commentCount + "");
             }
+        }
+    }
+
+    /**
+     * 更新tab、热门、最新评论数
+     */
+    private void updateCommentTab() {
+        if (mDatas.getComment_count() > 99999) {
+            NewsHolder.getCommentNumView().setText("99999+");
+        } else {
+            NewsHolder.getCommentNumView().setText(mDatas.getComment_count() + "");
         }
     }
 }

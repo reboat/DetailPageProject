@@ -23,7 +23,7 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     @BindView(R2.id.tv_hot)
     TextView mTvHot;
     @BindView(R2.id.tv_comment_num)
-    TextView mTvNum;
+    public TextView mTvNum;
 
     private int mCommentNum;
 
@@ -48,5 +48,10 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     //评论数
     public void setText(String text) {
         mTvNum.setText(text);
+    }
+
+    //返回评论数控件
+    public TextView getCommentNumView() {
+        return mTvNum;
     }
 }

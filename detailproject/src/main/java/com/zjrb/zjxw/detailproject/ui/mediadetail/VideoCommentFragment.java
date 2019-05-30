@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
 import com.zjrb.core.recycleView.HeaderRefresh;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.CommentRefreshBean;
@@ -110,7 +111,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
         } else {
             intent.putExtra("video_comment_title", "评论 (" + commentNum + ")");
         }
-        LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(UIUtils.getActivity()).sendBroadcast(intent);
     }
 
     //下拉刷新

@@ -32,6 +32,7 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
+import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -823,7 +824,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         videoDetailFragment.onReadingScaleChange(scale);
     }
 
-    //同步TAB评论数，广播没收到
     @Override
     public void syncCommentNum(Intent intent) {
         if (intent != null && intent.hasExtra("video_comment_title")) {
@@ -832,6 +832,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             } else {
                 pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
             }
+            tabLayout.notifyDataSetChanged();
         }
     }
 

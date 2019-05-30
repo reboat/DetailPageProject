@@ -1,5 +1,7 @@
 package com.zjrb.zjxw.detailproject.ui.comment.adapter;
 
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -85,6 +87,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     //设置视频详情数据
     public void setData(CommentRefreshBean data, DraftDetailBean bean) {
         cancelLoadMore();
+        commentCount = data.getComment_count();
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
         List list = new ArrayList();
         if (bean != null && hotCommentNUm > 0) {
@@ -149,7 +152,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         if (viewType == COMMENT_HOT) {
             return hotHolder = new VideoDetailTextHolder(parent, hotCommentNUm);
         } else if (viewType == COMMENT_NEW) {
-            return NewsHolder = new VideoDetailTextHolder(parent, mDatas.getComment_count());
+            return NewsHolder = new VideoDetailTextHolder(parent, commentCount);
         } else {
             DetailCommentHolder holder = new DetailCommentHolder(UIUtils.inflate(R.layout.module_detail_item_comment, parent, false), articleId, "评论页", mBean);
             holder.setCommentType("最新评论");
@@ -203,14 +206,28 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     }
 
     //删除评论，如果清空，则需要删除热门评论/最新评论等标签
+    private boolean isHotComment = false;
+
     public void remove(int position) {
+        if (getData(position) instanceof HotCommentsBean) {
+            HotCommentsBean bean = (HotCommentsBean) getData(position);
+            if (bean.isHotComment()) {
+                isHotComment = true;
+            } else {
+                isHotComment = false;
+            }
+        }
         getData().remove(cleanPosition(position));
         if (!isVideoDetail) {
             updateHead();
         } else {
-            deleteVideoComment(position);
+            deleteVideoComment(isHotComment);
         }
-        notifyItemRemoved(position);
+        if (getDataSize() == 0) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRemoved(position);
+        }
     }
 
     //最新评论数
@@ -218,35 +235,28 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         this.commentCount = commentCount;
     }
 
-    //删除评论后更新评论相关
-    private void deleteVideoComment(int position) {
-        if (getData(position) instanceof HotCommentsBean) {
-            HotCommentsBean bean = (HotCommentsBean) getData(position);
-            //热门评论
-            if (bean.isHotComment()) {
-                if (hotCommentNUm > 99999) {
-                    hotHolder.setText("99999+");
+    private void deleteVideoComment(boolean isHotComment) {
+        if (isHotComment) {//热门评论数为0则可以清空第一项标签
+            if (hotCommentNUm > 0) {
+                --hotCommentNUm;
+            }
+            if (hotCommentNUm == 0) {
+                getData().remove(0);
+            }
+        } else {
+            if (commentCount > 0) {
+                --commentCount;
+            }
+            if (commentCount == 0) {
+                if (hotCommentNUm == 0) {
+                    getData().remove(0);
                 } else {
-                    if (--hotCommentNUm == 0) {
-                        hotHolder.itemView.setVisibility(View.GONE);
-                    } else {
-                        hotHolder.itemView.setVisibility(View.VISIBLE);
-                        hotHolder.setText(hotCommentNUm + "");
-                    }
-                }
-            } else {//最新评论
-                if (commentCount > 99999) {
-                    NewsHolder.setText("99999+");
-                } else {
-                    if (--commentCount == 0) {
-                        NewsHolder.itemView.setVisibility(View.GONE);
-                    } else {
-                        NewsHolder.itemView.setVisibility(View.VISIBLE);
-                        NewsHolder.setText(commentCount + "");
-                    }
+                    getData().remove(hotCommentNUm + 1);
                 }
             }
         }
+        SyncCommentNum(hotCommentNUm + commentCount);
+        updateCommentTab();
     }
 
     //添加
@@ -258,6 +268,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
      * 刷新评论列表文案头部
      */
     private void updateHead() {
+        --commentCount;
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);
         } else {
@@ -274,10 +285,32 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
      * 更新tab、热门、最新评论数
      */
     private void updateCommentTab() {
-        if (mDatas.getComment_count() > 99999) {
-            NewsHolder.getCommentNumView().setText("99999+");
-        } else {
-            NewsHolder.getCommentNumView().setText(mDatas.getComment_count() + "");
+        if (NewsHolder != null && mDatas != null && commentCount > 0) {
+            if (commentCount > 99999) {
+                NewsHolder.getCommentNumView().setText("99999+");
+            } else {
+                NewsHolder.setCommentNum(commentCount);
+                NewsHolder.getCommentNumView().setText(commentCount + "");
+            }
         }
+        if (hotHolder != null && mDatas != null && hotCommentNUm > 0) {
+            if (hotCommentNUm > 99999) {
+                hotHolder.getCommentNumView().setText("99999+");
+            } else {
+                hotHolder.setCommentNum(hotCommentNUm);
+                hotHolder.getCommentNumView().setText(hotCommentNUm + "");
+            }
+        }
+    }
+
+    //删除评论数更新广播
+    private void SyncCommentNum(int commentNum) {
+        Intent intent = new Intent("sync_comment_num");
+        if (commentNum == 0) {
+            intent.putExtra("video_comment_title", "评论");
+        } else {
+            intent.putExtra("video_comment_title", "评论 (" + commentNum + ")");
+        }
+        LocalBroadcastManager.getInstance(UIUtils.getActivity()).sendBroadcast(intent);
     }
 }

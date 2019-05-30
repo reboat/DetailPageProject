@@ -25,6 +25,7 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     @BindView(R2.id.tv_comment_num)
     public TextView mTvNum;
 
+
     private int mCommentNum;
 
     public VideoDetailTextHolder(ViewGroup parent, int commentNum) {
@@ -54,4 +55,9 @@ public class VideoDetailTextHolder extends BaseRecyclerViewHolder<String> {
     public TextView getCommentNumView() {
         return mTvNum;
     }
+
+    public void setCommentNum(int commentNum) {
+        mCommentNum = commentNum;
+    }
+
 }

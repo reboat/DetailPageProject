@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by wanglinjie.
  * create time:2017/7/17  上午10:12
  */
-public class TabPagerAdapterImpl extends FragmentPagerAdapter {
+public class TabPagerAdapterImpl extends FragmentStatePagerAdapter {
 
     private List<TabInfo> mTabList;
     private Context mContext;
@@ -41,13 +42,13 @@ public class TabPagerAdapterImpl extends FragmentPagerAdapter {
         return tabInfo.fragment;
     }
 
-    @Override
-    public long getItemId(int position) {
-        if(!mTabList.isEmpty() && mTabList.get(position) != null && mTabList.get(position).fragment != null){
-            return mTabList.get(position).fragment.hashCode();
-        }
-        return position;
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        if(!mTabList.isEmpty() && mTabList.get(position) != null && mTabList.get(position).fragment != null){
+//            return mTabList.get(position).fragment.hashCode();
+//        }
+//        return position;
+//    }
 
     @Override
     public int getCount() {

@@ -38,6 +38,7 @@ public class CommentRefreshBean extends BaseData {
      */
     private int comment_count;
     private boolean has_more;
+    //非热门评论
     private List<HotCommentsBean> comment_list;
 
     private ShareArtcleInfo share_article_info;

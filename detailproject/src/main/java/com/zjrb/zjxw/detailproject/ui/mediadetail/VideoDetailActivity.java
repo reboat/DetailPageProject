@@ -304,6 +304,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 if ((b1 || b2) && b3) {//暂未开始和已经结束不初始化播放器
 
                 } else {
+                    DailyPlayerManager.get().onDestroy();
                     DailyPlayerManager.get().init(builder);
                 }
             }

@@ -242,6 +242,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         if (!TextUtils.isEmpty(mNewsDetail.getArticle().getColumn_name())) {
             //栏目名称
             topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.VISIBLE);
+            topBarHolder.setViewVisible(topBarHolder.getSubscribe(), View.VISIBLE);
             topBarHolder.getTitleView().setText(mNewsDetail.getArticle().getColumn_name());
             //栏目头像
             GlideApp.with(topBarHolder.getIvIcon()).load(mNewsDetail.getArticle().getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
@@ -253,7 +254,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 topBarHolder.getSubscribe().setSelected(false);
             }
         } else {
-            topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
+            topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.INVISIBLE);
+            topBarHolder.setViewVisible(topBarHolder.getSubscribe(), View.INVISIBLE);
         }
         webImpl.setLinkUrl(url);
         loadUrlScheme(url);
@@ -537,7 +539,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         mFloorBar.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
         topBarHolder.getShareView().setVisibility(View.GONE);
-        topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.GONE);
+        topBarHolder.setViewVisible(topBarHolder.getSubscribe(), View.INVISIBLE);
+        topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.INVISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
     }

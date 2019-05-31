@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.zjrb.core.recycleView.OverlayViewHolder;
-import com.zjrb.core.utils.L;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.ChannelAdapter;
@@ -91,7 +90,6 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
             if (overlayPosition != RecyclerView.NO_POSITION) {
                 if (mGroupCopy.getVisibility() == View.GONE) {
                     mGroupCopy.setVisibility(View.VISIBLE);
-                    L.e("WLJ,66666");
                 }
                 if (bean != null && bean.isClickChannel()) {
                     Object data;
@@ -107,9 +105,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (bean != null && bean.isClickChannel()) {
                         data = bean;
                         bean.setClickChannel(false);
-                        L.e("WLJ,77777");
                     } else {
-                        L.e("WLJ,88888，firstVisibleItemPosition=" + firstVisibleItemPosition + "，mOverlayPosition=" + mOverlayPosition + ",startPosition=" + startPosition+",articleBean.getSubject_groups().size()="+articleBean.getSubject_groups().size());
                         if (articleBean.getSubject_groups().size() == 1) {
                             data = adapter.getData(mOverlayPosition);
                         } else {
@@ -117,7 +113,6 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                         }
                     }
                     updateChannelTab(data);
-                    L.e("WLJ,2222");
                 }
                 //专题tab滑动到群众之声时隐藏
             } else if (overlayEndPosition != RecyclerView.NO_POSITION) {
@@ -129,13 +124,11 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (firstVisibleItemPosition == 0) {
                         if (mGroupCopy.getVisibility() == View.GONE) {
                             mGroupCopy.setVisibility(View.VISIBLE);
-                            L.e("WLJ,77777");
                         }
                         bean.setClickChannel(false);
                         Object data = bean;
                         updateChannelTab(data);
                     }
-                    L.e("WLJ,33333");
                 } else {
                     if (mGroupCopy.getVisibility() == View.VISIBLE) {
                         mGroupCopy.setVisibility(View.GONE);
@@ -143,10 +136,7 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
                     if (mOverlayPosition != RecyclerView.NO_POSITION) {
                         mOverlayPosition = RecyclerView.NO_POSITION;
                         updateChannelTab(null);
-                        L.e("WLJ,44444");
                     }
-                    L.e("WLJ,55555");
-
                 }
 
             }
@@ -156,18 +146,12 @@ public class OverlayHelper extends RecyclerView.OnScrollListener {
     public void updateChannelTab(Object data) {
         if (data != null && data instanceof SpecialGroupBean) {
             mOverlayHolder.setData(data);
-            L.e("WLJ,SpecialGroupBean");
         }
         if (mRecyclerTabCopy.getAdapter() instanceof ChannelAdapter) {
-            L.e("WLJ,ChannelAdapter");
             ChannelAdapter adapter = (ChannelAdapter) mRecyclerTabCopy.getAdapter();
             if (data instanceof SpecialGroupBean) {
-                L.e("WLJ,1111SpecialGroupBean");
                 adapter.setSelectedData((SpecialGroupBean) data);
             } else {
-                if(data != null){
-                    L.e("WLJ,null,data="+data.getClass().getName());
-                }
                 adapter.setSelectedData(null);
             }
             adapter.notifyDataSetChanged();

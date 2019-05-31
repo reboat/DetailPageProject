@@ -219,6 +219,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         }
         getData().remove(cleanPosition(position));
         if (!isVideoDetail) {
+            --commentCount;
             updateHead();
         } else {
             deleteVideoComment(isHotComment);
@@ -268,7 +269,6 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
      * 刷新评论列表文案头部
      */
     private void updateHead() {
-        --commentCount;
         if (getDataSize() == 0) {
             mView.setVisibility(View.GONE);
         } else {

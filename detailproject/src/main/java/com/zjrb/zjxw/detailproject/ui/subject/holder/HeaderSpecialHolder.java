@@ -173,6 +173,24 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
 
                         }
                     }
+
+                    if (mChannelAdapter != null && mChannelAdapter.getDataSize() == 1){
+                        if(mGroupCopy.getVisibility() == View.VISIBLE){
+                            ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                            ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                            ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                        }else{
+                            if(overlayEndPosition){
+                                ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                                ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                                ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                            }else{
+                                ivback.setImageResource(R.mipmap.module_biz_write_back);
+                                ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
+                                ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
+                            }
+                        }
+                    }
                 }
             }
         });

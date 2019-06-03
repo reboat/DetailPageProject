@@ -116,6 +116,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                //是否已经到了群众之声
                 boolean overlayEndPosition = showOrHideOverlay(recyclerView);
                 int maxRange = itemView.getHeight()
                         - ivSubject.getHeight() - fyContainer.getHeight();
@@ -159,42 +160,54 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                             ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
                             ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
                             ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
-                        } else {
+                        } else {//这里反复执行引起抖动
                             //吸顶显示
-                            if (mRecyclerTabCopy.getVisibility() == View.GONE) {
-                                mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                            if (mStartPosition > mOverlayEndPosition && mOverlayEndPosition != 0) {
+                                mRecyclerTabCopy.setVisibility(View.GONE);
+                                mTvReadCopy.setVisibility(View.GONE);
+                            } else {
+                                if(mStartPosition < mOverlayEndPosition || mOverlayEndPosition == 0){
+                                    mRecyclerTabCopy.setVisibility(View.VISIBLE);
+                                    mTvReadCopy.setVisibility(View.VISIBLE);
+                                }
+//                                if (mRecyclerTabCopy.getVisibility() == View.GONE) {
+//                                    mRecyclerTabCopy.setVisibility(View.VISIBLE);
+//                                }
+//                                if (mTvReadCopy.getVisibility() == View.GONE) {
+//                                    mTvReadCopy.setVisibility(View.VISIBLE);
+//                                }
                             }
-                            if (mTvReadCopy.getVisibility() == View.GONE) {
-                                mTvReadCopy.setVisibility(View.VISIBLE);
-                            }
-                            ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
-                            ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
-                            ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                        ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                        ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
 
-                        }
                     }
+                }
 
-                    if (mChannelAdapter != null && mChannelAdapter.getDataSize() == 1){
-                        if(mGroupCopy.getVisibility() == View.VISIBLE){
+                if (mChannelAdapter != null && mChannelAdapter.getDataSize() == 1) {
+                    if (mGroupCopy.getVisibility() == View.VISIBLE) {
+                        ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
+                        ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
+                        ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
+                    } else {
+                        if (overlayEndPosition) {
                             ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
                             ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
                             ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
-                        }else{
-                            if(overlayEndPosition){
-                                ivback.setImageResource(R.mipmap.module_biz_top_bar_back);
-                                ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect_anim);
-                                ivShare.setImageResource(R.mipmap.module_biz_topbar_share);
-                            }else{
-                                ivback.setImageResource(R.mipmap.module_biz_write_back);
-                                ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
-                                ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
-                            }
+                        } else {
+                            ivback.setImageResource(R.mipmap.module_biz_write_back);
+                            ivCollect.setImageResource(R.drawable.module_biz_ic_special_collect);
+                            ivShare.setImageResource(R.mipmap.module_biz_atlas_share);
                         }
                     }
                 }
             }
-        });
-    }
+        }
+    });
+}
+
+    private int mStartPosition;
+    private int mOverlayEndPosition;
 
     //计算群众之声index
     private boolean showOrHideOverlay(RecyclerView recyclerView) {
@@ -202,6 +215,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             SpecialAdapter adapter = (SpecialAdapter) recyclerView.getAdapter();
             //去除悬浮
             int overlayEndPosition = RecyclerView.NO_POSITION;
+            //当前滑动到哪个position
             int startPosition;
             LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
             int firstVisibleItemPosition = startPosition = lm.findFirstVisibleItemPosition();
@@ -211,7 +225,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     int top = recyclerView.findViewHolderForAdapterPosition(i).itemView.getTop();
                     boolean visible = mRecyclerTabCopy.getVisibility() == View.VISIBLE;
                     if (top > (visible ? mRecyclerTabCopy.getHeight() : 0)) {
-                        startPosition = i;
+                        mStartPosition = startPosition = i;
                         break;
                     }
                 }
@@ -224,7 +238,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                     int index = adapter.cleanPosition(startPosition);
                     while (--index >= 0) {
                         if (adapter.isVoiceOfMassType(index)) {
-                            overlayEndPosition = index;
+                            mOverlayEndPosition = overlayEndPosition = index;
                             break;
                         }
                     }
@@ -236,10 +250,8 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
             } else {
                 return false;
             }
-//            return overlayEndPosition;
         } else {
             return false;
-//            return RecyclerView.NO_POSITION;
         }
     }
 
@@ -400,10 +412,10 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
         }
     }
 
-    public interface OnClickChannelListener {
+public interface OnClickChannelListener {
 
-        void onClickChannel(SpecialGroupBean bean);
+    void onClickChannel(SpecialGroupBean bean);
 
-    }
+}
 
 }

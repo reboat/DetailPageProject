@@ -32,7 +32,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.utils.BundleHelper;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -344,7 +343,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
         bundleComment.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         if (bean.getArticle().getComment_count() > 0) {
-            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundleComment);
+            int commentNum = bean.getArticle().getComment_count() + bean.getArticle().getHot_comments().size();
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + commentNum + ")", bundleComment);
         } else {
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundleComment);
         }
@@ -828,10 +828,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @Override
     public void syncCommentNum(Intent intent) {
         if (intent != null && intent.hasExtra("video_comment_title")) {
-            if (pagerAdapter.getCount() == 2) {
-                pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
-            } else {
-                pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
+            if (pagerAdapter != null) {
+                if (pagerAdapter.getCount() == 2) {
+                    pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
+                } else {
+                    pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
+                }
             }
             tabLayout.notifyDataSetChanged();
         }

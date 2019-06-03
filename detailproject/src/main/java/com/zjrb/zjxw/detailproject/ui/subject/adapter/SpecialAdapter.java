@@ -126,8 +126,8 @@ public class SpecialAdapter extends NewsBaseAdapter {
             return holder;
             //评论列表文章
         } else if (TYPE_TITLE == viewType) {
-            SpecialCommentHolder holder =  new SpecialCommentHolder(parent);
-            if(mBean != null && mBean.getArticle() != null){
+            SpecialCommentHolder holder = new SpecialCommentHolder(parent);
+            if (mBean != null && mBean.getArticle() != null) {
                 holder.setDetailBean(mBean);
             }
             return holder;

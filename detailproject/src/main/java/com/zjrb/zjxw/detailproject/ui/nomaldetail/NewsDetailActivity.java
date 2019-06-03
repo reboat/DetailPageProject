@@ -97,8 +97,6 @@ final public class NewsDetailActivity extends DailyActivity implements
     RelativeLayout mFyContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
-    @BindView(R2.id.tv_net_hint)
-    TextView tvNetHint;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
     @BindView(R2.id.menu_prised_relpace)

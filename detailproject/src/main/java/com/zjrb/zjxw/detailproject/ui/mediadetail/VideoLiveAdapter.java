@@ -153,7 +153,6 @@ public class VideoLiveAdapter extends BaseRecyclerAdapter implements LoadMoreLis
 
     public void setCanDestory(boolean canDestory) {
         this.canDestory = canDestory;
-        Log.e("lujialei","canDestory==="+canDestory);
     }
 
     public boolean isCanDestory() {

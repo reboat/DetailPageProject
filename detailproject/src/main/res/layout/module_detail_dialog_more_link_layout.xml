@@ -27,7 +27,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/module_detail_collect"
-                app:maskColor="@android:color/transparent" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
                 android:layout_marginTop="6.5dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="收藏"
+                android:text="@string/module_detail_collect"
                 android:textColor="@color/_484848_7a7b7d"
                 android:textSize="@dimen/ts_11sp" />
 
@@ -55,7 +55,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@mipmap/module_detail_feed_back"
-                app:maskColor="@android:color/transparent" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 android:layout_marginTop="6.5dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="反馈问题"
+                android:text="@string/module_detail_feedback"
                 android:textColor="@color/_484848_7a7b7d"
                 android:textSize="@dimen/ts_11sp" />
 

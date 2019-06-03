@@ -35,7 +35,7 @@
         android:layout_marginRight="15dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
         android:textColor="@color/_484848_7a7b7d"
-        android:text="全部"
+        android:text="@string/module_detail_all"
         android:visibility="gone" />
 
 </RelativeLayout>

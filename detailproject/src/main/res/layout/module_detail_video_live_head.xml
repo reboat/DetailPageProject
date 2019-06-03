@@ -29,7 +29,7 @@
         android:layout_height="16dp"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="6dp"
-        android:text="倒序浏览"
+        android:text="@string/module_detail_backward"
         android:textColor="@color/_222222"
         android:textSize="@dimen/ts_12sp"
         />

@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:fontFamily="@font/fzzcysk_zbjt"
-        android:text="更多图集"
+        android:text="@string/module_detail_more_imgs"
         android:textColor="@color/_ffffff"
         android:textSize="@dimen/ts_16sp"
         />

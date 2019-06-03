@@ -1,75 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/ry_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/_ffffff_202124"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:background="@color/_ffffff_202124"
     >
 
-    <com.aliya.view.ratio.RatioFrameLayout
-        android:id="@+id/video_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:paddingTop="15dp"
-        android:visibility="gone"
-        app:ratio_w2h="16:9">
+    <!--<com.aliya.view.ratio.RatioFrameLayout-->
+    <!--android:id="@+id/video_container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:paddingTop="15dp"-->
+    <!--android:visibility="gone"-->
+    <!--app:ratio_w2h="16:9">-->
 
-        <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_image"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scaleType="fitXY"-->
+    <!--/>-->
 
-        <!--播放-->
-        <LinearLayout
-            android:id="@+id/iv_type_video"
-            android:layout_width="58dp"
-            android:layout_height="58dp"
-            android:layout_gravity="left|bottom"
-            android:layout_margin="11.5dp"
-            android:background="@drawable/vr_module_video_bg_oval_99ffffff_80000000"
-            android:foreground="?attr/actionBarItemBackground"
-            android:gravity="center"
-            android:orientation="vertical">
+    <!--&lt;!&ndash;播放&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/iv_type_video"-->
+    <!--android:layout_width="58dp"-->
+    <!--android:layout_height="58dp"-->
+    <!--android:layout_gravity="left|bottom"-->
+    <!--android:layout_margin="11.5dp"-->
+    <!--android:background="@drawable/vr_module_video_bg_oval_99ffffff_80000000"-->
+    <!--android:foreground="?attr/actionBarItemBackground"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="vertical">-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/vr_module_ic_play_start"
-                />
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@mipmap/vr_module_ic_play_start"-->
+    <!--/>-->
 
-            <TextView
-                android:id="@+id/tv_duration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:letterSpacing="0.03"
-                android:textColor="@color/_f44b50_7a7b7d"
-                android:textSize="11dp"
-                android:visibility="gone"
-                tools:text="00:00" />
-        </LinearLayout>
+    <!--<TextView-->
+    <!--android:id="@+id/tv_duration"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="2dp"-->
+    <!--android:letterSpacing="0.03"-->
+    <!--android:textColor="@color/_f44b50_7a7b7d"-->
+    <!--android:textSize="11dp"-->
+    <!--android:visibility="gone"-->
+    <!--tools:text="00:00" />-->
+    <!--</LinearLayout>-->
 
-        <!--网络提醒-->
-        <include
-            android:id="@+id/ll_net_hint"
-            layout="@layout/vr_layout_start_area"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:visibility="gone"
-            ></include>
+    <!--&lt;!&ndash;网络提醒&ndash;&gt;-->
+    <!--<include-->
+    <!--android:id="@+id/ll_net_hint"-->
+    <!--layout="@layout/vr_layout_start_area"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:visibility="gone"-->
+    <!--&gt;</include>-->
 
-    </com.aliya.view.ratio.RatioFrameLayout>
+    <!--</com.aliya.view.ratio.RatioFrameLayout>-->
 
 
     <com.aliya.view.fitsys.FitWindowsRecyclerView

@@ -15,7 +15,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="60dp"
-        android:text="是否确认删除该评论"
+        android:text="@string/module_detail_is_delete_comment"
         android:textColor="@color/_484848_7a7b7d"
         android:textSize="16sp" />
 
@@ -53,7 +53,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="删除"
+            android:text="@string/module_detail_comment_delete"
             android:textColor="@color/_f44b50_8e3636"
             android:textSize="16sp" />
     </LinearLayout>

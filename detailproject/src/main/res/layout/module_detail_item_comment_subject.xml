@@ -121,7 +121,7 @@
             android:layout_marginRight="12.5dp"
             android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/iv_avatar"
-            android:text="展开全部"
+            android:text="@string/module_detail_openall"
             android:textColor="@color/_2378d1"
             android:textSize="@dimen/ts_16sp"
             android:visibility="gone" />
@@ -225,7 +225,7 @@
                 android:layout_below="@+id/tv_comment_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="7dp"
-                android:text="展开全部"
+                android:text="@string/module_detail_openall"
                 android:textColor="@color/_2378d1"
                 android:textSize="@dimen/ts_14sp"
                 android:visibility="gone" />

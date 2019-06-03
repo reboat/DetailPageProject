@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@drawable/module_detail_comment_more_bg"
@@ -27,7 +26,7 @@
                 android:layout_width="30dp"
                 android:layout_height="28dp"
                 android:src="@drawable/module_detail_collect"
-                app:maskColor="@android:color/transparent" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -35,7 +34,7 @@
                 android:layout_marginTop="7dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="收藏"
+                android:text="@string/module_detail_collect"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_12sp" />
 
@@ -55,7 +54,7 @@
                 android:layout_width="30dp"
                 android:layout_height="28dp"
                 android:src="@mipmap/module_detail_feed_back"
-                app:maskColor="@android:color/transparent" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -63,7 +62,7 @@
                 android:layout_marginTop="7dp"
                 android:gravity="center"
                 android:maxLines="1"
-                android:text="反馈问题"
+                android:text="@string/module_detail_feedback"
                 android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_12sp" />
 
@@ -93,7 +92,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginBottom="4dp"
             android:src="@mipmap/module_core_font_small"
-            app:maskColor="@color/_00000000_5c5c5c" />
+            />
 
         <RadioGroup
             android:id="@+id/rg_module_core_more_set_font_size"
@@ -114,7 +113,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="7dp"
                 android:drawableBottom="@drawable/module_core_font_size_small_selector"
-                android:text="小"
+                android:text="@string/module_detail_small"
                 android:textColor="@color/_484848_7a7b7d"
                 android:textSize="@dimen/ts_11sp" />
 
@@ -131,7 +130,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="4dp"
                 android:drawableBottom="@drawable/module_core_font_size_normal_selector"
-                android:text="中"
+                android:text="@string/module_detail_middle"
                 android:textColor="@color/_484848_7a7b7d"
                 android:textSize="@dimen/ts_14sp" />
 
@@ -146,7 +145,7 @@
                 android:id="@+id/rb_module_core_more_set_font_size_big"
                 style="@style/set_font_size_style"
                 android:drawableBottom="@drawable/module_core_font_size_big_selector"
-                android:text="大"
+                android:text="@string/module_detail_big"
                 android:textColor="@color/_484848_7a7b7d"
                 android:textSize="@dimen/ts_18sp" />
         </RadioGroup>
@@ -158,7 +157,7 @@
             android:layout_alignBottom="@+id/rg_module_core_more_set_font_size"
             android:layout_alignParentRight="true"
             android:src="@mipmap/module_core_font_big"
-            app:maskColor="@color/_00000000_5c5c5c" />
+            />
 
     </RelativeLayout>
 

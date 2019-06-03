@@ -18,7 +18,7 @@
         android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
         android:drawablePadding="6dp"
         android:fontFamily="@font/fzzcysk_zbjt"
-        android:text="最新评论"
+        android:text="@string/module_detail_new_comment"
         android:textColor="@color/_222222"
         android:textSize="14sp"
         />

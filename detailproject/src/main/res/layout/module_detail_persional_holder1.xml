@@ -56,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_avatar"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tv_content"
         android:drawablePadding="4dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
         android:gravity="center"

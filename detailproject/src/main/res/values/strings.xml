@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">detailProject</string>
-    <!-- TODO TEST -->
-
     <string name="module_detail_comment_hint">写评论…</string>
     <string name="module_detail_comment_window_hint">我来说两句（评论内容不少于5个字）</string>
     <string name="module_detail_save_success">保存成功</string>
@@ -20,6 +18,23 @@
     <string name="module_detail_share_content_from">来自浙江新闻客户端</string>
     <string name="module_detail_no_network">网络不可用</string>
     <string name="module_detail_prise_success">点赞成功</string>
+    <string name="module_detail_openall">展开全部</string>
+    <string name="module_detail_aggregate_read">聚合阅读</string>
+    <string name="module_detail_collect">收藏</string>
+    <string name="module_detail_feedback">反馈问题</string>
+    <string name="module_detail_is_delete_comment">是否确认删除该评论</string>
+    <string name="module_detail_backward">倒序浏览</string>
+    <string name="module_detail_more_imgs">更多图集</string>
+    <string name="module_detail_loading">加载中...</string>
+    <string name="module_detail_write_comment">写评论...</string>
+    <string name="module_detail_tip">提示</string>
+    <string name="module_detail_small">小</string>
+    <string name="module_detail_middle">中</string>
+    <string name="module_detail_big">大</string>
+    <string name="module_detail_all">全部</string>
+    <string name="module_detail_new_comment">最新评论</string>
+    <string name="module_detail_voice_masses">群众之声</string>
+
     <!--scheme地址-->
     <!--<string name="data_host_dev">10.100.60.98</string>-->
     <string name="data_host_dev">10.100.62.206</string>

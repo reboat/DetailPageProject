@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.zjrb.zjxw.detailproject">
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,7 +14,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -19,11 +24,15 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- umeng permission start -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission
+        android:name="android.permission.SET_DEBUG_APP"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -93,7 +102,7 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <!-- 链接稿 path -->
-                <data android:path="/common/detail.html"/>
+                <data android:path="/common/detail.html" />
                 <data android:path="/link.html" />
                 <data android:path="/link/BrowserLinkActivity" />
                 <data android:host="@string/data_host" />
@@ -197,30 +206,30 @@
 
         <!--&lt;!&ndash; 话题详情页 &ndash;&gt;-->
         <!--<activity-->
-            <!--android:name=".ui.topic.ActivityTopicActivity"-->
-            <!--android:configChanges="uiMode"-->
-            <!--android:launchMode="singleTop">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.VIEW" />-->
+        <!--android:name=".ui.topic.ActivityTopicActivity"-->
+        <!--android:configChanges="uiMode"-->
+        <!--android:launchMode="singleTop">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <!--<category android:name="android.intent.category.DEFAULT" />-->
-                <!--<category android:name="android.intent.category.BROWSABLE" />-->
+        <!--<category android:name="android.intent.category.DEFAULT" />-->
+        <!--<category android:name="android.intent.category.BROWSABLE" />-->
 
-                <!--<data android:scheme="@string/data_scheme" />-->
-                <!--<data android:scheme="@string/data_scheme_https" />-->
-                <!--<data android:path="/topic.html" />-->
-                <!--<data android:path="/topic/ActivityTopicActivity" />-->
-                <!--<data android:host="@string/data_host" />-->
+        <!--<data android:scheme="@string/data_scheme" />-->
+        <!--<data android:scheme="@string/data_scheme_https" />-->
+        <!--<data android:path="/topic.html" />-->
+        <!--<data android:path="/topic/ActivityTopicActivity" />-->
+        <!--<data android:host="@string/data_host" />-->
 
-                <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
-                <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
-                <!--<data android:host="@string/data_host_dev" />-->
-                <!--<data android:host="@string/data_host_test" />-->
-                <!--<data android:host="@string/data_host_pre" />-->
-                <!--<data android:host="@string/data_host_real" />-->
-                <!--<data android:host="@string/data_host_zjol" />-->
-                <!--<data android:host="@string/data_host_zj" />-->
-            <!--</intent-filter>-->
+        <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
+        <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
+        <!--<data android:host="@string/data_host_dev" />-->
+        <!--<data android:host="@string/data_host_test" />-->
+        <!--<data android:host="@string/data_host_pre" />-->
+        <!--<data android:host="@string/data_host_real" />-->
+        <!--<data android:host="@string/data_host_zjol" />-->
+        <!--<data android:host="@string/data_host_zj" />-->
+        <!--</intent-filter>-->
         <!--</activity>-->
 
         <!-- 红船号详情页 -->

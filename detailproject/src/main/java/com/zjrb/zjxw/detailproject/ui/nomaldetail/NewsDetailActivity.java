@@ -341,7 +341,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                 mMenuPrised.setVisibility(View.GONE);
                 if (data.getArticle().isLike_enabled()) {
                     ivPrisedRelpace.setVisibility(View.VISIBLE);
-                    if (data.getArticle().isLike_enabled()){
+                    if (data.getArticle().isLike_enabled()) {
                         ivPrisedRelpace.setSelected(data.getArticle().isLiked());
                     }
                 } else {
@@ -409,10 +409,10 @@ final public class NewsDetailActivity extends DailyActivity implements
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    if (mMenuPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setSelected(true);
                     }
-                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);
                     }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
@@ -426,10 +426,10 @@ final public class NewsDetailActivity extends DailyActivity implements
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                if (mMenuPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setSelected(true);
                 }
-                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);
                 }
             }
@@ -437,8 +437,8 @@ final public class NewsDetailActivity extends DailyActivity implements
     }
 
     @OnClick({R2.id.ly_comment_num, R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.menu_setting_relpace,
-            R2.id.fl_comment, R2.id.iv_top_share, /*R2.id.iv_type_video,*/ R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.iv_top_subscribe_icon, R2.id.tv_top_bar_title/*, R2.id.ll_net_hint*/})
+            R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
+            R2.id.tv_top_bar_subscribe_text, R2.id.iv_top_subscribe_icon, R2.id.tv_top_bar_title})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         //评论列表

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
     >
 
     <ImageView
@@ -14,7 +13,6 @@
         android:layout_marginBottom="6.5dp"
         android:scaleType="fitXY"
         android:src="@mipmap/module_detail_me_friend_btn"
-        app:iv_maskColor="@android:color/transparent"
         />
 
     <TextView
@@ -27,5 +25,5 @@
         android:maxLines="1"
         android:textColor="@color/_999999_5c5c5c"
         android:textSize="11sp"
-        tools:text="QQ空间"/>
+        tools:text="QQ空间" />
 </RelativeLayout>

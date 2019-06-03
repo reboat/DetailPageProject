@@ -18,7 +18,7 @@
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
         android:paddingTop="5dp"
-        android:text="群众之声"
+        android:text="@string/module_detail_voice_masses"
         android:textColor="@color/_ffffff"
         android:textSize="12sp"
         />

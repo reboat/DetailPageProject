@@ -26,7 +26,7 @@
         android:layout_marginRight="12dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
         android:drawablePadding="6dp"
-        android:text="更多"
+        android:text="@string/module_detail_offical_more"
         android:textColor="@color/_222222"
         android:textSize="@dimen/ts_14sp" />
 

@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/module_detail_text_indicator"
-            app:iv_maskColor="@color/_7a7b7d" />
+            />
 
         <TextView
             android:id="@+id/tv_indicator"
@@ -94,7 +94,7 @@
         android:drawablePadding="6dp"
         android:fontFamily="@font/fzzcysk_zbjt"
         android:gravity="center_vertical|left"
-        android:text="聚合阅读"
+        android:text="@string/module_detail_aggregate_read"
         android:textColor="@color/_222222"
         android:textSize="14sp"
         />

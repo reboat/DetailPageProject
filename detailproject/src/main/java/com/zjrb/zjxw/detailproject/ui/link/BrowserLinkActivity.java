@@ -324,6 +324,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         if (!TextUtils.isEmpty(url)) {
             LinkControl linkControl = new LinkControl(Uri.parse(url));
             //链接稿与外链稿在当前页面打开
+            //原生稿件将跳转
             if (!url.contains("/link.html") && linkControl.isInnerUrl(Uri.parse(url))) {
                 Nav.with(UIUtils.getActivity()).to(url);
                 finish();

@@ -138,7 +138,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
         } else if (v.getId() == R.id.tv_text1) {
 //            takePicture();
 //            Nav.with(this).to("https://test-vip.8531.cn/wiki/demo/jssdk/new_test.htm?zjxw_control=1101&ref_aid=1156948");
-            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1157484&native=1");
+//            Nav.with(this).to("https://zjbeta.8531.cn/live.html?id=1157484&native=1");
 //            Nav.with(this).to("https://zjbeta.8531.cn/news.html?id=1156926");
 //            Nav.with(this).to("https://zjbeta.8531.cn/activity.html?id=1157419");
 //            Nav.with(this).to("https://zjbeta.8531.cn/link.html?id=1157342");
@@ -146,7 +146,7 @@ public class MainActivity extends DailyActivity implements View.OnClickListener 
 
 //            Nav.with(this).to("https://zj.zjol.com.cn/subject.html?id=1146710");
 //            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1157170");
-//            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1158530");
+            Nav.with(this).to("https://zjbeta.8531.cn/subject.html?id=1158530");
 
             //https://zjbeta.8531.cn/subject.html?id=1157170 单个标签
         }

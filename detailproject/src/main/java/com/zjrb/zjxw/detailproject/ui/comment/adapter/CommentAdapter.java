@@ -260,7 +260,7 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
                 }
             }
         }
-        SyncCommentNum(hotCommentNUm + commentCount);
+        SyncCommentNum(commentCount);
         updateCommentTab();
     }
 

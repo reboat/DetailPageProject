@@ -22,7 +22,6 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.GridSpaceDivider;
-import com.zjrb.core.utils.L;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;

@@ -3,7 +3,6 @@ package com.zjrb.zjxw.detailproject.utils;
 import android.content.Context;
 
 import com.zjrb.core.utils.UIUtils;
-import com.zjrb.passport.listener.IFailure;
 import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
@@ -14,7 +13,6 @@ import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.callback.DetailWMHelperInterFace;
 
 import java.util.List;
-import java.util.UUID;
 
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;

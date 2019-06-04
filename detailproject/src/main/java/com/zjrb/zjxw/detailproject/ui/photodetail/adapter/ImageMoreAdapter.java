@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
-import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
 
 import java.util.List;
 

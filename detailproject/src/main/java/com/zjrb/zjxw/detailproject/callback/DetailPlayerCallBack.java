@@ -1,14 +1,9 @@
 package com.zjrb.zjxw.detailproject.callback;
 
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.aliya.dailyplayer.sub.PlayAnalyCallBack;
-import com.zjrb.core.base.BaseFragment;
 import com.zjrb.core.utils.UIUtils;
-import com.zjrb.daily.news.bean.ArticleItemBean;
-import com.zjrb.daily.news.ui.fragment.NewsFragment;
-import com.zjrb.daily.video.fragment.VideoListFragment;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 
 import cn.daily.news.analytics.Analytics;

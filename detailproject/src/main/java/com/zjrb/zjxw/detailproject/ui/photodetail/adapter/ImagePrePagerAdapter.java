@@ -8,8 +8,6 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.ui.photodetail.DetailImagePreviewFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.ImageMoreFragment;
 
-import cn.daily.news.biz.core.web.ImagePreviewFragment;
-
 /**
  * 图片预览 ViewPager 适配器，图集需要展示更多图集
  * Created by wanglinjie.

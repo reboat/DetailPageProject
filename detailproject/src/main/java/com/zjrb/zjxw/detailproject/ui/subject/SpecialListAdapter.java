@@ -7,7 +7,6 @@ import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.FooterLoadMoreV2;
 import com.zjrb.core.recycleView.LoadMore;
 import com.zjrb.daily.news.bean.ArticleItemBean;
-import com.zjrb.daily.news.bean.DataArticleList;
 import com.zjrb.daily.news.other.Page;
 import com.zjrb.daily.news.ui.adapter.NewsBaseAdapter;
 import com.zjrb.zjxw.detailproject.apibean.bean.SubjectListBean;

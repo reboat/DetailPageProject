@@ -78,7 +78,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
         if (mBean != null && mBean.getArticle() != null && mBean.getArticle().getHot_comments() != null) {
             hotCommentNUm = mBean.getArticle().getHot_comments().size();
         }
-        this.commentCount = mDatas.getComment_count();
+        if(mDatas != null){
+            this.commentCount = mDatas.getComment_count();
+        }
         this.isVideoDetail = isVideoDetail;
         this.articleId = String.valueOf(bean.getArticle().getId());
         setData(datas, bean);
@@ -87,7 +89,9 @@ public class CommentAdapter extends BaseRecyclerAdapter implements LoadMoreListe
     //设置视频详情数据
     public void setData(CommentRefreshBean data, DraftDetailBean bean) {
         cancelLoadMore();
-        commentCount = data.getComment_count();
+        if(data != null){
+            commentCount = data.getComment_count();
+        }
         mLoadMore.setState(noMore(data) ? LoadMore.TYPE_NO_MORE : LoadMore.TYPE_IDLE);
         List list = new ArrayList();
         if (bean != null && hotCommentNUm > 0) {

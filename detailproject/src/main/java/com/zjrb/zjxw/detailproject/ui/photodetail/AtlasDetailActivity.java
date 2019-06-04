@@ -72,9 +72,9 @@ import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
 import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
 import cn.daily.news.biz.core.ui.widget.photoview.HackyViewPager;
+import cn.daily.news.biz.core.utils.DownloadUtil;
 import cn.daily.news.biz.core.utils.PathUtil;
 import cn.daily.news.biz.core.utils.RouteManager;
-import cn.daily.news.update.util.DownloadUtil;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
 

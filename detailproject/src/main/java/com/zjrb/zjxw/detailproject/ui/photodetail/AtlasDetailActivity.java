@@ -880,7 +880,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                                 .module_detail_save_failed));
                     }
                 })
-                .download(url);
+                .download(PathUtil.getSpliteUrl(url));
     }
 
 

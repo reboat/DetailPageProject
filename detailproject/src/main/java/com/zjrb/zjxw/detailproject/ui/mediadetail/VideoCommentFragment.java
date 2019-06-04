@@ -87,7 +87,7 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
     }
 
     //初始化适配器
-    private void initAdapter(CommentRefreshBean commentRefreshBean, DraftDetailBean newsDetail,boolean isFirst) {
+    private void initAdapter(CommentRefreshBean commentRefreshBean, DraftDetailBean newsDetail, boolean isFirst) {
         if (mCommentAdapter == null || isFirst) {
             mCommentAdapter = new CommentAdapter(commentRefreshBean, lvNotice, newsDetail, true);
             mCommentAdapter.setHeaderRefresh(refresh.getItemView());
@@ -122,9 +122,9 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
                 //最新评论加热门评论数
                 if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                     if (mNewsDetail.getArticle().getHot_comments() != null) {
-                        SyncCommentNum(commentRefreshBean.getComment_count() + mNewsDetail.getArticle().getHot_comments().size());
+                        SyncCommentNum(commentRefreshBean.getComment_count());
                     }
-                    initAdapter(commentRefreshBean, mNewsDetail,isFirst);
+                    initAdapter(commentRefreshBean, mNewsDetail, isFirst);
                 }
                 lvNotice.scrollToPosition(0);
                 refresh.setRefreshing(false);

@@ -343,12 +343,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 .FRAGMENT_ARGS, FRAGMENT_DETAIL_COMMENT);
         bundleComment.putSerializable(FRAGMENT_DETAIL_BEAN, bean);
         if (bean.getArticle().getComment_count() > 0) {
-            int hotNum = 0;
-            if(bean.getArticle().getHot_comments() != null && !bean.getArticle().getHot_comments().isEmpty()){
-                hotNum = bean.getArticle().getHot_comments().size();
-            }
-            int commentNum = bean.getArticle().getComment_count() + hotNum;
-            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + commentNum + ")", bundleComment);
+            pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论 (" + bean.getArticle().getComment_count() + ")", bundleComment);
         } else {
             pagerAdapter.addTabInfo(VideoCommentFragment.class, "评论", bundleComment);
         }

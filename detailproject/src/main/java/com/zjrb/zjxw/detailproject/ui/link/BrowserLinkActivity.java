@@ -343,7 +343,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
     //顶部栏状态
     private void initViewState(DraftDetailBean data) {
         //是否允许点赞
-        if (data.getArticle().isLike_enabled()) {
+        if (data != null && data.getArticle() != null && data.getArticle().isLike_enabled()) {
             topBarHolder.getIvPrised().setVisibility(View.VISIBLE);
             topBarHolder.getIvPrised().setSelected(data.getArticle().isLiked());
         } else {
@@ -351,13 +351,13 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         }
 
         //禁止评论
-        if (data.getArticle().getComment_level() == 0) {
+        if (data != null && data.getArticle() != null && data.getArticle().getComment_level() == 0) {
             topBarHolder.getIvComment().setVisibility(View.GONE);
             topBarHolder.getTvCommentsNum().setVisibility(View.GONE);
         } else {
             topBarHolder.getIvComment().setVisibility(View.VISIBLE);
             //大致评论数量
-            if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
+            if (data != null && data.getArticle() != null && !TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
                 topBarHolder.getTvCommentsNum().setVisibility(View.VISIBLE);
                 topBarHolder.getTvCommentsNum().setText(data.getArticle().getComment_count_general());
             } else {

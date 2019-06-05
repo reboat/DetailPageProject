@@ -27,6 +27,7 @@ import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.daily.news.biz.core.DailyFragment;
+import cn.daily.news.biz.core.constant.APICode;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
@@ -137,7 +138,9 @@ public class VideoCommentFragment extends DailyFragment implements HeaderRefresh
 
             @Override
             public void onError(String errMsg, int errCode) {
-                ZBToast.showShort(getContext(), errMsg);
+                if(errCode != APICode.code.PARSE_JSON_EXCEPTION){
+                    ZBToast.showShort(getContext(), errMsg);
+                }
             }
         }, false).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(lvNotice) : null).exe(mNewsDetail.getArticle().getId());
     }

@@ -36,6 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.daily.news.analytics.Analytics;
 import cn.daily.news.biz.core.DailyActivity;
+import cn.daily.news.biz.core.constant.APICode;
 import cn.daily.news.biz.core.constant.C;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
@@ -225,7 +226,9 @@ public class CommentActivity extends DailyActivity implements HeaderRefresh.OnRe
 
             @Override
             public void onError(String errMsg, int errCode) {
-                ZBToast.showShort(getBaseContext(), errMsg);
+                if(errCode != APICode.code.PARSE_JSON_EXCEPTION){
+                    ZBToast.showShort(getBaseContext(), errMsg);
+                }
             }
         }, is_select_list).setTag(this).setShortestTime(C.REFRESH_SHORTEST_TIME).bindLoadViewHolder(isFirst ? replaceLoad(ry_containerl) : null).exe(articleId);
     }

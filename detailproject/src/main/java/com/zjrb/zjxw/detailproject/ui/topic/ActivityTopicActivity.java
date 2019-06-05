@@ -427,7 +427,7 @@ public class ActivityTopicActivity extends DailyActivity implements
                 DataAnalyticsUtils.get().ClickCommentBox(mDetailData);
 
                 //评论发表成功
-                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mDetailData,false);
+                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mDetailData, false);
                 //进入评论编辑页面(不针对某条评论)
                 try {
                     CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(String
@@ -588,12 +588,10 @@ public class ActivityTopicActivity extends DailyActivity implements
     private long getLastCommentMinPublishTime(List<HotCommentsBean> list) {
         if (list != null && list.size() > 0) {
             int size = list.size();
-            if (size > 0) {
-                int count = 1;
-                while (size - count >= 0) {
-                    HotCommentsBean data = list.get(size - count++);
-                    return data.getSort_number();
-                }
+            int count = 1;
+            while (size - count >= 0) {
+                HotCommentsBean data = list.get(size - count++);
+                return data.getSort_number();
             }
         }
 
@@ -605,7 +603,7 @@ public class ActivityTopicActivity extends DailyActivity implements
      */
     @Override
     public void onDeleteComment(int position) {
-        ZBToast.showShort(getApplicationContext(),"删除成功");
+        ZBToast.showShort(getApplicationContext(), "删除成功");
         mAdapter.remove(position);
     }
 

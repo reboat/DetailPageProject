@@ -58,7 +58,7 @@ public class OverlyHolder {
             // 主持人
             List<String> hosts = mArticle.getTopic_hosts();
             String host_s = "";
-            if (hosts != null && !hosts.isEmpty() && hosts.size() > 0) {
+            if (hosts != null && !hosts.isEmpty()) {
                 mTvHost.setVisibility(View.VISIBLE);
                 for (int i = 0; i < hosts.size(); i++) {
                     if (i == (hosts.size() - 1)) {
@@ -76,7 +76,7 @@ public class OverlyHolder {
             // 嘉宾
             List<String> guests = mArticle.getTopic_guests();
             String guest_s = "";
-            if (guests != null && !guests.isEmpty() && guests.size() > 0) {
+            if (guests != null && !guests.isEmpty()) {
                 mTvGuest.setVisibility(View.VISIBLE);
                 for (int i = 0; i < guests.size(); i++) {
                     if (i == (guests.size() - 1)) {

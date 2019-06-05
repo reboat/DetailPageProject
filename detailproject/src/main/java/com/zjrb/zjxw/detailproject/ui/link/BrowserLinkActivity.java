@@ -1,9 +1,11 @@
 package com.zjrb.zjxw.detailproject.ui.link;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,8 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.BizCoreInterface;
+import cn.daily.news.biz.core.web.CallbackReceiver;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.LinkStackPush;
 import cn.daily.news.biz.core.web.WebViewImpl;
@@ -65,7 +69,7 @@ import static com.zjrb.core.utils.UIUtils.getContext;
  * Created by wanglinjie.
  * create time:2017/10/08  上午10:14
  */
-public class BrowserLinkActivity extends DailyActivity implements LinkStackPush {
+public class BrowserLinkActivity extends DailyActivity implements LinkStackPush, BizCoreInterface {
 
     @BindView(R2.id.web_view)
     CommonWebView mWebView;
@@ -114,6 +118,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
     private Stack<WebStack> mWebStacks = new Stack<>();
     private WebStack mWebStack;
     private Analytics mAnalytics;
+    private CallbackReceiver receiver;
 
 
     @Override
@@ -122,6 +127,8 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
         mFloorBar.setVisibility(View.GONE);
+        receiver = new CallbackReceiver(this);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter("js_call_back"));
         getIntentData(getIntent());
         initArgs(savedInstanceState);
         initWebview(mWebStack.urlLink);
@@ -319,7 +326,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         loadUrlScheme(mWebStack.urlLink);
     }
 
-    private void  loadUrlScheme(final String url){
+    private void loadUrlScheme(final String url) {
         //链接稿单独逻辑
         if (!TextUtils.isEmpty(url)) {
             LinkControl linkControl = new LinkControl(Uri.parse(url));
@@ -328,7 +335,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
             if (!url.contains("/link.html") && linkControl.isInnerUrl(Uri.parse(url))) {
                 Nav.with(UIUtils.getActivity()).to(url);
                 finish();
-            }else{
+            } else {
                 mWebView.post(new Runnable() {
                     @Override
                     public void run() {
@@ -479,10 +486,10 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if(mMenuPrised.getVisibility() == View.VISIBLE){
+                    if (mMenuPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setSelected(true);
                     }
-                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);
                     }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
@@ -495,10 +502,10 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if(mMenuPrised.getVisibility() == View.VISIBLE){
+                if (mMenuPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setSelected(true);
                 }
-                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);
                 }
             }
@@ -556,6 +563,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
                 mAnalytics.sendWithDuration();
             }
         }
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(receiver);
     }
 
     //关闭页面
@@ -627,6 +635,25 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush 
         if (!TextUtils.isEmpty(webStack.urlLink)) {
             mWebStack = webStack;
             addWebStack(mWebStack);
+        }
+    }
+
+    //JS专用回退
+    @Override
+    public void jsCallBack(Intent intent) {
+        //堆栈为空则直接返回
+        if (mWebStacks.isEmpty()) {
+            finish();
+            closeActivity();
+        } else {
+            //返回删除以后栈顶对象
+            mWebStacks.pop();
+            if (mWebStacks.isEmpty()) {
+                finish();
+                closeActivity();
+            } else {
+                bindWebStack(mWebStacks.peek());
+            }
         }
     }
 

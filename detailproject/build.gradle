@@ -62,7 +62,7 @@ dependencies {
     api('cn.daily.android:daily-vr:6.0.0.1') {
         exclude group: 'cn.daily.android'
     }
-    api 'cn.daily.android:biz-core:6.0.2.106'
+    api 'cn.daily.android:biz-core:6.0.2.112'
     api 'org.jsoup:jsoup:1.10.2'
 }
 

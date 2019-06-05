@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
@@ -89,6 +90,21 @@ public class NewsDetailWebViewHolder extends BaseRecyclerViewHolder<DraftDetailB
         itemView.addOnAttachStateChangeListener(this);
         mWebView.addOnLayoutChangeListener(this);
         mWebView.setLongClickCallBack(this);
+        mWebView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_UP:
+                        if (!v.hasFocus()) {
+                            v.requestFocus();
+                            v.requestFocusFromTouch();
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     /**

@@ -6,6 +6,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/_ffffff_202124"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
     >
 
     <com.aliya.view.ratio.RatioFrameLayout

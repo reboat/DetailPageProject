@@ -20,6 +20,14 @@ allprojects {
         jcenter()
         maven { url "http://10.100.62.98:8086/nexus/content/groups/public" }
         maven { url 'http://pre.haier.com/nexus/content/repositories/qdmobile-release/' }
+        maven{
+            url 'http://maven.wts.xinwen.cn/repository/maven-public'
+            credentials{
+                username 'public-normal-wts'
+                password 'wts!normal?703'
+            }
+        }
+
         google()
     }
 }

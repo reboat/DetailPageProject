@@ -135,6 +135,15 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         if (mAdapter != null) {
             mAdapter.onWebViewResume();
         }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.comeIn)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
     @Override
@@ -143,6 +152,15 @@ public class RedBoatActivity extends BaseActivity implements View.OnClickListene
         if (mAdapter != null) {
             mAdapter.onWebViewPause();
         }
+        //新华智云
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            new Analytics.AnalyticsBuilder(getContext(), Analytics.AnalyticsBuilder.SHWEventType.leave)
+                    .setTargetID(mNewsDetail.getArticle().getId() + "")
+                    .setUrl(mNewsDetail.getArticle().getUrl())
+                    .build()
+                    .send();
+        }
+
     }
 
     /**

@@ -3,7 +3,6 @@
 
 <com.aliya.view.fitsys.FitWindowsFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ry_container"
     android:layout_width="match_parent"
@@ -169,7 +168,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_toLeftOf="@+id/menu_prised"
                 android:src="@mipmap/module_detail_atlas_detail_comment"
-                app:iv_maskColor="@android:color/transparent"
                 />
 
             <TextView
@@ -198,7 +196,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:src="@drawable/module_detail_atlas_prise"
-                app:iv_maskColor="@android:color/transparent"
                 />
 
             <ImageView
@@ -212,7 +209,6 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="12dp"
                 android:src="@mipmap/module_detail_more_atlas"
-                app:iv_maskColor="@android:color/transparent"
                 />
         </RelativeLayout>
     </LinearLayout>

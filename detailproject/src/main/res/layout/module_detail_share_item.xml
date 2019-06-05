@@ -14,7 +14,6 @@
         android:layout_marginBottom="6.5dp"
         android:scaleType="fitXY"
         android:src="@mipmap/module_detail_me_friend_btn"
-        app:iv_maskColor="@android:color/transparent"
         />
 
     <TextView

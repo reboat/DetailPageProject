@@ -141,6 +141,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
     //初始化webview相关设置
     private void initWebview(String linkUrl) {
         webImpl = new WebViewImpl();
+        webImpl.setSupportZoom(false);
         webImpl.setWebViewJsObject(C.JS_OBJ_NAME);
         webImpl.setLinkUrl(linkUrl);
         jsInterfaceImp = new JsMultiInterfaceImp(mWebView, webImpl.getWebViewJsObject(), getContext());

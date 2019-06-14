@@ -61,7 +61,6 @@
         <activity
             android:name=".ui.nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
-            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

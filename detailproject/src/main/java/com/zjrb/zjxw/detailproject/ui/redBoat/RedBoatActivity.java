@@ -53,6 +53,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
+import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import port.JsInterfaceCallBack;
 
@@ -90,6 +91,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_redboat_activity);
         ButterKnife.bind(this);
+        AndroidBug5497Workaround.assistActivity(this);
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         getIntentData(getIntent());

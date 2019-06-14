@@ -61,6 +61,7 @@
         <activity
             android:name=".ui.nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -204,33 +205,33 @@
             </intent-filter>
         </activity>
 
-        <!--&lt;!&ndash; 话题详情页 &ndash;&gt;-->
-        <!--<activity-->
-        <!--android:name=".ui.topic.ActivityTopicActivity"-->
-        <!--android:configChanges="uiMode"-->
-        <!--android:launchMode="singleTop">-->
-        <!--<intent-filter>-->
-        <!--<action android:name="android.intent.action.VIEW" />-->
+        <!-- 话题详情页 -->
+        <activity
+            android:name=".ui.topic.ActivityTopicActivity"
+            android:configChanges="uiMode"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <!--<category android:name="android.intent.category.DEFAULT" />-->
-        <!--<category android:name="android.intent.category.BROWSABLE" />-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-        <!--<data android:scheme="@string/data_scheme" />-->
-        <!--<data android:scheme="@string/data_scheme_https" />-->
-        <!--<data android:path="/topic.html" />-->
-        <!--<data android:path="/topic/ActivityTopicActivity" />-->
-        <!--<data android:host="@string/data_host" />-->
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/topic.html" />
+                <data android:path="/topic/ActivityTopicActivity" />
+                <data android:host="@string/data_host" />
 
-        <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
-        <!--&lt;!&ndash; 以下测试 host &ndash;&gt;-->
-        <!--<data android:host="@string/data_host_dev" />-->
-        <!--<data android:host="@string/data_host_test" />-->
-        <!--<data android:host="@string/data_host_pre" />-->
-        <!--<data android:host="@string/data_host_real" />-->
-        <!--<data android:host="@string/data_host_zjol" />-->
-        <!--<data android:host="@string/data_host_zj" />-->
-        <!--</intent-filter>-->
-        <!--</activity>-->
+                <!-- 以下测试 host -->
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+            </intent-filter>
+        </activity>
 
         <!-- 红船号详情页 -->
         <activity

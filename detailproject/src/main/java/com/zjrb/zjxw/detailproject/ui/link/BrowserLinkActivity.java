@@ -54,6 +54,7 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder4;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.BizCoreInterface;
 import cn.daily.news.biz.core.web.CallbackReceiver;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
@@ -126,6 +127,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_browser);
         ButterKnife.bind(this);
+        AndroidBug5497Workaround.assistActivity(this);
         mFloorBar.setVisibility(View.GONE);
         receiver = new CallbackReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(receiver, new IntentFilter("js_call_back"));

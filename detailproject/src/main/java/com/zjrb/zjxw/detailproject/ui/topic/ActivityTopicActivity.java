@@ -69,6 +69,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
+import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 
 import static com.zjrb.core.utils.UIUtils.getContext;
@@ -135,6 +136,7 @@ public class ActivityTopicActivity extends DailyActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_topic_activity);
         ButterKnife.bind(this);
+        AndroidBug5497Workaround.assistActivity(this);
         getIntentData(getIntent());
         initView();
         mReceiver = new SubscribeReceiver(this);

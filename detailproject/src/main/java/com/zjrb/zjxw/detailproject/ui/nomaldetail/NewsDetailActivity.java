@@ -65,6 +65,7 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import port.JsInterfaceCallBack;
 
@@ -127,6 +128,7 @@ final public class NewsDetailActivity extends DailyActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_detail);
         ButterKnife.bind(this);
+        AndroidBug5497Workaround.assistActivity(this);
         init();
     }
 

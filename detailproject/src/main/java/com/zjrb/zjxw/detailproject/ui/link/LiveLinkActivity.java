@@ -59,6 +59,7 @@ import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
 import cn.daily.news.biz.core.ui.toolsbar.holder.CommonTopBarHolder;
 import cn.daily.news.biz.core.utils.RouteManager;
+import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import cn.daily.news.biz.core.web.WebViewImpl;
 import port.JsInterfaceCallBack;
@@ -120,6 +121,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_activity_browser);
+        AndroidBug5497Workaround.assistActivity(this);
         ButterKnife.bind(this);
         getIntentData(getIntent());
         mFloorBar.setOnTouchListener(new View.OnTouchListener() {

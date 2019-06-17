@@ -27,7 +27,7 @@
             android:background="?attr/actionBarItemBackground"
             android:paddingRight="7dp"
             android:scaleType="center"
-            android:src="@mipmap/ic_top_bar_back_dark"
+            android:src="@mipmap/module_biz_top_bar_back"
             app:iv_maskColor="@android:color/transparent" />
 
         <TextView
@@ -38,10 +38,29 @@
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>
 
+    <TextView
+        android:id="@+id/tv_empty_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/_80000000"
+        android:drawablePadding="10dp"
+        android:gravity="center|left"
+        android:lineSpacingExtra="3dp"
+        android:paddingBottom="11dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="12dp"
+        android:textColor="@color/_ffffff_999999"
+        android:text="@string/module_detail_revoke"
+        android:textSize="@dimen/ts_14sp"
+        tools:text="很抱歉,来晚一步,这篇已经不在了,别着急,你可以看看其他热门内容" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lv_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         >
     </android.support.v7.widget.RecyclerView>
 </com.aliya.view.fitsys.FitWindowsLinearLayout>

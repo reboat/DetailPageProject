@@ -1,5 +1,3 @@
-include ':app', ':detailproject'
-include(':core-library')
-project(":core-library").projectDir = new File('../CoreProject/core')
-//include(':scaner-library')
-//project(":scaner-library").projectDir = new File('../Scaner/scaner')
+include ':app', ':detailproject',':BizCore'
+include(':BizCore')
+project(":BizCore").projectDir = new File('../BizCoreProject/BizCore')

@@ -1,19 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/item_content_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
 
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tv_title"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="7dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginTop="10dp"
-    android:ellipsize="end"
-    android:lineSpacingMultiplier="1.2"
-    android:maxLines="2"
-    android:textColor="@color/module_news_tc_item_title"
-    android:textSize="@dimen/ts_16sp"
-    tools:text="张高丽夏宝龙车俊对温州倒房作出批，要求全力搜救要求全力搜救要求全面加加啥叫撒娇是 "
-    />
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="2"
+        android:textColor="@color/module_news_tc_item_title"
+        android:textSize="@dimen/ts_18sp"
+        tools:text="张高丽夏宝龙车俊对温州倒房作出批，要求全力搜救要求全力搜救要求全面加加啥叫撒娇是 "
+        />
+
+    <!--来自频道-->
+    <TextView
+        android:id="@+id/tv_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="16dp"
+        android:maxLines="1"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="@dimen/ts_12sp"
+        android:visibility="gone"
+        tools:text="涌金楼" />
+
+    <!--点赞数-->
+    <TextView
+        android:id="@+id/tv_prise_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/tv_channel"
+        android:maxLines="1"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="@dimen/ts_12sp"
+        android:visibility="gone"
+        tools:text="76赞" />
+
+</RelativeLayout>

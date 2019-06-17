@@ -5,11 +5,12 @@
               android:layout_height="wrap_content">
 
     <LinearLayout
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="56.5dp"
-        android:gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         >
 
@@ -17,23 +18,21 @@
             android:id="@+id/tv_year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="top"
             android:maxEms="3"
-            android:paddingBottom="3dp"
-            android:paddingTop="3dp"
-            android:textColor="@color/_484848_7a7b7d"
-            android:textSize="@dimen/ts_14sp"
+            android:text="2017年"
+            android:textColor="@color/_222222"
+            android:textSize="@dimen/ts_12sp"
+            android:visibility="invisible"
             tools:text="2017年" />
 
         <TextView
             android:id="@+id/tv_month"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="center|bottom"
             android:maxEms="3"
-            android:paddingBottom="2dp"
-            android:paddingTop="2dp"
-            android:textColor="@color/_999999_5c5c5c"
+            android:textColor="@color/_bfbfbf"
             android:textSize="@dimen/ts_12sp"
             tools:text="4月" />
 
@@ -43,15 +42,16 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="5.5dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="14dp"
         >
 
         <View
-            android:layout_width="0.5dp"
+            android:layout_width="2dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:background="@color/_dddddd_7a7b7d" />
+            android:background="@drawable/module_detail_dash_v"
+            android:layerType="software" />
 
         <ImageView
             android:layout_width="7dp"
@@ -67,13 +67,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginRight="55dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:textColor="@color/_000000_7a7b7d"
+        android:layout_marginRight="26dp"
+        android:paddingBottom="16dp"
+        android:paddingLeft="7dp"
+        android:paddingTop="16dp"
+        android:textColor="@color/_222222"
         android:textSize="@dimen/ts_16sp"
-        tools:text="浙江省委书记" />
+        tools:text="浙江省委书记浙江省委书记浙江省委书记浙江省委书记浙江省委书记" />
 
 </LinearLayout>

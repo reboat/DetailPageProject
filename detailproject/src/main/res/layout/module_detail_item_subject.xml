@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/item_content_root"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
-
-    <ImageView
-        android:id="@+id/iv_pic"
-        android:layout_width="117dp"
-        android:layout_height="78dp"
-        android:layout_alignParentLeft="true"
-        android:scaleType="fitXY"
-        app:ratio_w2h="117:78"
-        />
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_pic"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="17dp"
-        android:layout_toRightOf="@id/iv_pic"
+        android:layout_marginRight="12dp"
+        android:layout_toLeftOf="@id/iv_pic"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
@@ -33,15 +22,41 @@
         tools:text="张高丽夏宝龙车俊对温州倒房作出批，要求全力搜救要求全力搜救要求全面加加啥叫撒娇是 "
         />
 
+    <!--来自频道-->
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_channel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_title"
         android:layout_below="@+id/tv_title"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:maxLines="1"
-        android:textColor="@color/_484848_7a7b7d"
-        tools:text="刚刚" />
+        android:layout_marginRight="12dp"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="@dimen/ts_12sp"
+        android:visibility="gone"
+        tools:text="涌金楼" />
+
+    <!--点赞数-->
+    <TextView
+        android:id="@+id/tv_prise_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/tv_channel"
+        android:maxLines="1"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="@dimen/ts_12sp"
+        android:visibility="gone"
+        tools:text="76赞" />
+
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="111dp"
+        android:layout_height="74dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        tools:src="@mipmap/hearde_logo"
+        />
 
 </RelativeLayout>

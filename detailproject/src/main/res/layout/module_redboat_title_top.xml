@@ -2,28 +2,28 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/top_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/_ffffff_202124">
 
     <!--宽高比为3:2-->
-    <ImageView
+    <com.aliya.uimode.widget.MaskImageView
         android:id="@+id/iv_top_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         app:ratio_w2h="3:2"
         android:scaleType="fitXY"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:src="@mipmap/ic_launcher"/>
 
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fit_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_top_bg"
-        android:layout_marginLeft="12.5dp"
-        android:layout_marginRight="12.5dp"
         android:layout_marginTop="5dp"
         android:orientation="vertical"
         app:fitType="top">
@@ -33,18 +33,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:fontFamily="@font/fzzcysk_zbjt"
             android:lineSpacingMultiplier="1.1"
             android:textColor="@color/_000000_7a7b7d"
             android:textSize="@dimen/ts_22sp"
-            android:textStyle="bold"/>
+            tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度"/>
 
         <TextView
             android:id="@+id/tv_reporter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/_999999_5c5c5c"
-            android:textSize="@dimen/ts_14sp"/>
+            android:textColor="@color/_bfbfbf"
+            android:textSize="@dimen/ts_12sp"
+            tools:text="浙江新闻客户端 记者 周州 通讯员 包卫丽 储杰"/>
     </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
     <TextView
@@ -52,13 +54,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fit_top_layout"
-        android:layout_marginLeft="12.5dp"
-        android:layout_marginRight="5dp"
+        android:fontFamily="@font/din_medium"
         android:gravity="center"
         android:maxLines="1"
         android:paddingBottom="5dp"
-        android:paddingTop="5dp"
-        android:textColor="@color/_999999_5c5c5c"
-        android:textSize="@dimen/ts_14sp"/>
+        android:paddingTop="6dp"
+        android:textColor="@color/_bfbfbf"
+        android:textSize="@dimen/ts_12sp"
+        tools:text="2017-05-16 14:24" />
 
 </RelativeLayout>

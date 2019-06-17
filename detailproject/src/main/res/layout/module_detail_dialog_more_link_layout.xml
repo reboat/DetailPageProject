@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/module_detail_comment_more_bg"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/_f8f8f8_202124"
+        android:paddingBottom="27dp"
+        android:paddingTop="27dp">
+
+        <LinearLayout
+            android:id="@+id/ll_module_core_more_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="99dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_module_core_more_collect"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/module_detail_collect"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/module_detail_collect"
+                android:textColor="@color/_484848_7a7b7d"
+                android:textSize="@dimen/ts_11sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_module_core_more_feed_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="98dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_module_core_more_feed_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/module_detail_feed_back"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6.5dp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="@string/module_detail_feedback"
+                android:textColor="@color/_484848_7a7b7d"
+                android:textSize="@dimen/ts_11sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:background="@color/_d8d8d8_5c5c5c" />
+
+    <include
+        android:id="@+id/ly_share"
+        layout="@layout/module_biz_dialog_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

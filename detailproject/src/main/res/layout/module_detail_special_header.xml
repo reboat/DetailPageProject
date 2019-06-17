@@ -1,46 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?><!--新闻专题详情页列表页眉-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/_ffffff_191919"
-    android:orientation="vertical"
-    android:paddingBottom="5dp">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/_ffffff_191919"
+              android:orientation="vertical"
+              android:paddingBottom="5dp">
 
-    <ImageView
+    <!--需要添加渐变阴影-->
+    <com.aliya.uimode.widget.MaskImageView
         android:id="@+id/iv_subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="题图"
         android:scaleType="fitXY"
-        android:src="@drawable/place_holder_zhe_big"
-        app:ratio_w2h="360:123" />
+        android:visibility="visible"
+        app:ratio_w2h="375:125"
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="27dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
         android:lineSpacingMultiplier="1.1"
-        android:padding="10dp"
-        android:textColor="@color/_000000_7a7b7d"
-        android:textSize="19sp"
-        android:textStyle="bold"
+        android:paddingBottom="14dp"
+        android:paddingTop="15dp"
+        android:textColor="@color/_222222"
+        android:textSize="20sp"
         tools:text="收到就好是电视剧多少大好时机第三季度手机号电视剧版惊世毒妃是费劲那吧 看卡萨丁设计费吧是否  " />
 
     <TextView
         android:id="@+id/tv_summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.2"
-        android:textColor="@color/_999999_5c5c5c"
-        android:textSize="@dimen/ts_14sp"
+        android:textColor="@color/_666666"
+        android:textSize="@dimen/ts_16sp"
         tools:text="加深对建设电视剧搭框架卡拉翰是否来看看交互的斯凯方式复健科说服力加深对菲利克斯冯老师发胜多负少 防守打法地方是否水电费少妇群无法请问请问，王企鹅啊无法无法挖坟我的v💰发" />
 
+    <!--向下箭头-->
     <LinearLayout
         android:id="@+id/layout_indicator"
         android:layout_width="wrap_content"
@@ -57,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/module_detail_text_indicator"
-            app:iv_maskColor="@color/_7a7b7d" />
+            />
 
         <TextView
             android:id="@+id/tv_indicator"
@@ -72,14 +77,37 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/_f5f5f5" />
+    <!--聚合阅读-->
+    <TextView
+        android:id="@+id/tv_read"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="19dp"
+        android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
+        android:drawablePadding="6dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
+        android:gravity="center_vertical|left"
+        android:text="@string/module_detail_aggregate_read"
+        android:textColor="@color/_222222"
+        android:textSize="14sp"
+        />
+
+    <!--专题频道管理-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:paddingTop="5dp" />
 
     <!--专题焦点图-->
@@ -87,14 +115,19 @@
         android:id="@+id/layout_focus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        app:ratio_w2h="360:178">
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="gone"
+        app:ratio_w2h="345:173">
 
         <ImageView
             android:id="@+id/iv_focus"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY" />
+            android:scaleType="fitXY"
+            tools:src="@mipmap/authority" />
 
         <TextView
             android:id="@+id/tv_focus"
@@ -106,8 +139,8 @@
             android:lineSpacingMultiplier="1.2"
             android:maxLines="2"
             android:paddingBottom="7dp"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="30dp"
             android:paddingTop="7dp"
             android:textColor="@color/_ffffff_7a7b7d"
             tools:text="夏宝龙：奋力打好小城镇环境综合整治的具体啦了工作在开化东阳调研时强调化东" />

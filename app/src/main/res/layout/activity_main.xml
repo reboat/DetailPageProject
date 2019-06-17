@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/bc_ffffff">
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/tv_text"
@@ -11,11 +11,29 @@
         android:layout_height="40dp"
         android:gravity="center"
         android:text="Hello World!"
-        android:textColor="?attr/tc_484848"
+        android:textColor="#484848"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<WebView-->
+        <!--android:id="@+id/webview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+    <!--</WebView>-->
+    <TextView
+        android:id="@+id/tv_text1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="link2!"
+        android:textColor="#484848"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="100dp"/>
 
     <TextView
         android:id="@+id/tv_ui_mode"
@@ -26,7 +44,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="日/夜"
-        android:textColor="?attr/tc_484848"
+        android:textColor="#484848"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

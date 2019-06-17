@@ -3,7 +3,6 @@
 
 <com.aliya.view.fitsys.FitWindowsFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ry_container"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
     android:fitsSystemWindows="true"
     >
 
-    <com.zjrb.core.ui.widget.photoview.HackyViewPager
+    <cn.daily.news.biz.core.ui.widget.photoview.HackyViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -69,9 +68,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@+id/tv_title"
                         android:layout_toLeftOf="@+id/tv_tottle_num"
-                        android:textColor="@color/_ffffff_191919"
-                        android:textSize="@dimen/ts_20sp"
-                        tools:text="1 /" />
+                        android:fontFamily="@font/din_medium"
+                        android:textColor="@color/_d12324"
+                        android:textSize="@dimen/ts_16sp"
+                        tools:text="1" />
 
                     <TextView
                         android:id="@+id/tv_tottle_num"
@@ -80,9 +80,10 @@
                         android:layout_alignBottom="@+id/tv_index"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="11dp"
+                        android:fontFamily="@font/din_medium"
                         android:textColor="@color/_ffffff_191919"
                         android:textSize="@dimen/ts_12sp"
-                        tools:text="6" />
+                        tools:text="/6" />
                 </RelativeLayout>
 
                 <TextView
@@ -94,7 +95,7 @@
                     android:fadingEdge="vertical"
                     android:paddingBottom="5dp"
                     android:scrollbars="vertical"
-                    android:textColor="@color/_d7d7d7_7a7b7d"
+                    android:textColor="@color/_ededed"
                     android:textSize="@dimen/ts_14sp"
                     tools:text="6月1日，航拍江苏江都邵伯古镇，紧挨着世界遗产中国大运河的民居星罗密布。邵伯镇是中国千座历史文化名镇之一" />
 
@@ -104,9 +105,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
-                    android:textColor="@color/_9f9f9f_5c5c5c"
-                    android:textSize="@dimen/ts_13sp"
-                    android:visibility="gone" />
+                    android:textColor="@color/_ededed"
+                    android:textSize="@dimen/ts_12sp"
+                    android:visibility="gone"
+                    tools:text="浙江新闻客户端" />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -116,103 +118,107 @@
                     android:layout_marginRight="11dp"
                     android:paddingBottom="10dp"
                     android:paddingTop="3.5dp"
-                    android:textColor="@color/_9f9f9f_5c5c5c"
-                    android:textSize="@dimen/ts_13sp"
-                    android:visibility="gone" />
+                    android:textColor="@color/_ededed"
+                    android:textSize="@dimen/ts_12sp"
+                    android:visibility="gone"
+                    tools:text="记者：周伯通" />
             </LinearLayout>
         </ScrollView>
         <!--底部floorBar-->
         <RelativeLayout
             android:id="@+id/floor_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/_33ffffff_191919">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_alignParentTop="true"
-                android:background="@color/_33ffffff_191919" />
-
-            <FrameLayout
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="@color/_000000"
+            >
+            <!--评论框-->
+            <RelativeLayout
                 android:id="@+id/fl_comment"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_toLeftOf="@+id/menu_comment"
+                android:layout_marginLeft="15dp"
+                android:layout_toLeftOf="@+id/ly_comment_num"
+                android:visibility="visible"
                 >
 
                 <TextView
                     android:id="@+id/tv_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/module_detail_atlas_edit_bg"
-                    android:drawableLeft="@mipmap/module_detail_atlas_comment_left"
-                    android:drawablePadding="10dp"
-                    android:gravity="center_vertical|left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:hint="@string/module_detail_comment_hint"
-                    android:paddingLeft="20dp"
-                    android:text="@string/module_detail_comment_hint"
-                    android:textColor="@color/_484848_7a7b7d"
-                    android:textColorHint="@color/_484848_7a7b7d"
-                    android:textSize="@dimen/ts_14sp" />
+                    android:textColor="@color/_bfbfbf"
+                    android:textColorHint="@color/_bfbfbf"
+                    android:textSize="@dimen/ts_13sp"
+                    />
 
-            </FrameLayout>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/tv_comment"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/_ffffff" />
 
-            <ImageView
-                android:id="@+id/menu_comment"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_toLeftOf="@+id/menu_prised"
-                android:src="@mipmap/module_detail_atlas_detail_comment"
-                app:iv_maskColor="@android:color/transparent"
-                />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_comments_num"
+
+            <!--评论列表-->
+            <RelativeLayout
+                android:id="@+id/ly_comment_num"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/menu_comment"
-                android:layout_marginLeft="-12dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/menu_comment"
-                android:background="@drawable/module_detail_comment_num"
-                android:paddingBottom="2dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="2dp"
-                android:textColor="@color/_ffffff_7a7b7d"
-                android:textSize="@dimen/ts_10sp"
-                android:visibility="gone"
-                tools:text="9999+" />
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="32dp"
+                android:layout_toLeftOf="@+id/menu_prised"
+                android:visibility="visible"
+                >
 
+                <ImageView
+                    android:id="@+id/menu_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/module_detail_atlas_ic_comment"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_comments_num"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/menu_comment"
+                    android:fontFamily="@font/din_medium"
+                    android:maxLines="1"
+                    android:textColor="@color/_d12324"
+                    android:textSize="12sp"
+                    android:visibility="invisible"
+                    tools:text="9999+" />
+            </RelativeLayout>
+
+
+            <!--点赞-->
             <ImageView
                 android:id="@+id/menu_prised"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginRight="33dp"
                 android:layout_toLeftOf="@+id/menu_setting"
                 android:src="@drawable/module_detail_atlas_prise"
-                app:iv_maskColor="@android:color/transparent"
+                android:visibility="visible"
                 />
 
+            <!--设置-->
             <ImageView
                 android:id="@+id/menu_setting"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="12dp"
-                android:src="@mipmap/module_detail_more_atlas"
-                app:iv_maskColor="@android:color/transparent"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/module_detail_atlas_more"
                 />
         </RelativeLayout>
     </LinearLayout>

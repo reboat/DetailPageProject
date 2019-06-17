@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<TextView
+<!--最新评论标签-->
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/tv_hot"
+    android:id="@+id/ly_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginTop="13dp"
-    android:background="@drawable/module_detail_border_f5f5f5"
-    android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
-    android:drawablePadding="9.5dp"
-    android:letterSpacing="0.25"
-    android:paddingBottom="9.5dp"
-    android:paddingTop="9dp"
-    android:textColor="@color/_484848_7a7b7d"
-    android:textSize="14sp"
-    android:textStyle="bold"
-    tools:text="热门评论" />
+    android:layout_below="@+id/tv_title"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_hot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/module_detail_indicator_color_fdc247"
+        android:drawablePadding="6dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
+        android:text="@string/module_detail_new_comment"
+        android:textColor="@color/_222222"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/tv_comment_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/_bfbfbf"
+        android:fontFamily="@font/din_medium"
+        android:textSize="12sp"
+        tools:text="9999+" />
+</LinearLayout>
 

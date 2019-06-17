@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_comment"
     android:layout_width="match_parent"
@@ -12,73 +13,59 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="40.5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
         android:gravity="left"
         android:lineSpacingMultiplier="1.1"
         android:textColor="@color/_000000_7a7b7d"
         android:textSize="@dimen/ts_22sp"
-        tools:text="浙江出现新一轮浙江出现新一轮" />
-
-    <TextView
-        android:id="@+id/tv_comment_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_title"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="7dp"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_14sp"
-        tools:text="23条评论" />
+        tools:text="九曲黄河奔涌东流宁夏经济建设再创新辉煌" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/fy_container"
-        android:layout_below="@+id/tv_comment_num"
-        android:layout_marginTop="13dp" />
+        android:layout_below="@+id/tv_title"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        />
 
 
-    <com.aliya.view.fitsys.FitWindowsFrameLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fy_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
         android:background="@color/_ffffff_191919"
         android:fitsSystemWindows="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:elevation="10dp"
         app:fitType="bottom">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/_dddddd_343434" />
 
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/module_detail_edit_bg"
-            android:drawableLeft="@mipmap/module_detail_commentedit_left"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:hint="写评论..."
-            android:paddingBottom="6.5dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="5.5dp"
-            android:textColor="@color/_484848_7a7b7d"
-            android:textColorHint="@color/_999999_5c5c5c"
+            android:layout_height="wrap_content"
+            android:hint="@string/module_detail_write_comment"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:textColorHint="@color/_bfbfbf"
+            android:textSize="@dimen/ts_11sp"
             />
 
-    </com.aliya.view.fitsys.FitWindowsFrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/_bfbfbf" />
+
+    </com.aliya.view.fitsys.FitWindowsLinearLayout>
 
 
 </RelativeLayout>

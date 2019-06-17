@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.zjrb.zjxw.detailproject">
 
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,7 +14,9 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -19,11 +24,15 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- umeng permission start -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission
+        android:name="android.permission.READ_LOGS"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission
+        android:name="android.permission.SET_DEBUG_APP"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -50,7 +59,7 @@
             android:required="false" />
         <!-- 普通详情页 保持在栈顶 -->
         <activity
-            android:name=".nomaldetail.NewsDetailActivity"
+            android:name=".ui.nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -64,8 +73,6 @@
 
                 <!-- 普通详情 path -->
                 <data android:path="/news.html" />
-                <!-- 视频详情 path -->
-                <data android:path="/video.html" />
                 <!-- 活动详情 path -->
                 <data android:path="/activity.html" />
                 <data android:host="@string/data_host" />
@@ -80,9 +87,9 @@
             </intent-filter>
         </activity>
 
-        <!-- 链接稿 -->
+        <!-- 链接稿 所有内部非原生稿都走这里 -->
         <activity
-            android:name=".link.BrowserLinkActivity"
+            android:name=".ui.link.BrowserLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -95,7 +102,9 @@
                 <data android:scheme="@string/data_scheme_https" />
 
                 <!-- 链接稿 path -->
+                <data android:path="/common/detail.html" />
                 <data android:path="/link.html" />
+                <data android:path="/link/BrowserLinkActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -111,7 +120,7 @@
 
         <!-- 链接稿 -->
         <activity
-            android:name=".link.LiveLinkActivity"
+            android:name=".ui.link.LiveLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -124,6 +133,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <!-- 直播稿 path -->
                 <data android:path="/live.html" />
+                <data android:path="/link/LiveLinkActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -139,7 +149,7 @@
 
         <!-- 图集详情页 -->
         <activity
-            android:name=".photodetail.AtlasDetailActivity"
+            android:name=".ui.photodetail.AtlasDetailActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -152,6 +162,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/album.html" />
                 <data android:path="/red_boat_album.html" />
+                <data android:path="/photodetail/AtlasDetailActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -167,7 +178,7 @@
 
         <!-- 专题详情页 -->
         <activity
-            android:name=".subject.SpecialActivity"
+            android:name=".ui.subject.SpecialActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -179,6 +190,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/subject.html" />
+                <data android:path="/subject/SpecialActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -194,7 +206,7 @@
 
         <!-- 话题详情页 -->
         <activity
-            android:name=".topic.ActivityTopicActivity"
+            android:name=".ui.topic.ActivityTopicActivity"
             android:configChanges="uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -206,6 +218,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/topic.html" />
+                <data android:path="/topic/ActivityTopicActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -221,7 +234,7 @@
 
         <!-- 红船号详情页 -->
         <activity
-            android:name=".redBoat.RedBoatActivity"
+            android:name=".ui.redBoat.RedBoatActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
             android:launchMode="singleTop">
             <intent-filter>
@@ -233,6 +246,7 @@
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/red_boat.html" />
+                <data android:path="/redBoat/RedBoatActivity" />
                 <data android:host="@string/data_host" />
 
                 <!-- 以下测试 host -->
@@ -248,7 +262,7 @@
 
         <!-- 专题列表 -->
         <activity
-            android:name=".subject.SpecialListActivity"
+            android:name=".ui.subject.SpecialListActivity"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -256,16 +270,24 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/SpecialListActivity"
-                    android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/native/news/subject/list" />
+                <data android:path="/detail/SpecialListActivity" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
             </intent-filter>
         </activity>
 
         <!-- 官员详情页 -->
         <activity
-            android:name=".persionaldetail.PersionalDetailActivity"
+            android:name=".ui.persionaldetail.PersionalDetailActivity"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -290,7 +312,7 @@
 
         <!-- 官员新闻列表 -->
         <activity
-            android:name=".persionaldetail.PersionalListActivity"
+            android:name=".ui.persionaldetail.PersionalListActivity"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -302,6 +324,7 @@
                 <data android:scheme="@string/data_scheme_https" />
                 <data android:path="/gy_list.html" />
                 <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />
                 <data android:host="@string/data_host_test" />
                 <data android:host="@string/data_host_pre" />
@@ -313,43 +336,7 @@
 
         <!-- 评论列表 -->
         <activity
-            android:name=".comment.CommentActivity"
-            android:configChanges="uiMode"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/CommentActivity"
-                    android:scheme="@string/data_scheme" />
-            </intent-filter>
-        </activity>
-
-        <!-- 精选评论列表 -->
-        <activity
-            android:name=".comment.CommentSelectActivity"
-            android:configChanges="uiMode"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="@string/data_host"
-                    android:path="/detail/CommentSelectActivity"
-                    android:scheme="@string/data_scheme" />
-            </intent-filter>
-        </activity>
-
-        <!--广告详情页-->
-        <activity
-            android:name=".addetai.AdDetailActivity"
+            android:name=".ui.comment.CommentActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -360,8 +347,81 @@
 
                 <data android:scheme="@string/data_scheme" />
                 <data android:scheme="@string/data_scheme_https" />
-                <data android:path="/advert.html" />
-                <data android:path="/addetai/AdDetailActivity" />
+                <data android:path="/detail/CommentActivity" />
+                <data android:path="/native/comment/list" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+
+            </intent-filter>
+        </activity>
+
+        <!-- 精选评论列表 -->
+        <activity
+            android:name=".ui.comment.CommentSelectActivity"
+            android:configChanges="uiMode"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/detail/CommentSelectActivity" />
+                <data android:path="/native/comment/select/list" />
+                <!-- 以下测试 host -->
+                <data android:host="@string/data_host" />
+                <data android:host="@string/data_host_dev" />
+                <data android:host="@string/data_host_test" />
+                <data android:host="@string/data_host_pre" />
+                <data android:host="@string/data_host_real" />
+                <data android:host="@string/data_host_zjol" />
+                <data android:host="@string/data_host_zj" />
+
+            </intent-filter>
+        </activity>
+
+        <!--专题更多xd-->
+        <activity
+            android:name=".ui.subject.SpecialMoreActivity"
+            android:configChanges="uiMode">
+            <intent-filter>
+                <action android:name="android.intent.action.DAILY" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/data_host"
+                    android:path="/news/SpecialMoreActivity"
+                    android:scheme="@string/data_scheme" />
+            </intent-filter>
+        </activity>
+
+        <!--视频/直播页面-->
+        <activity
+            android:name=".ui.mediadetail.VideoDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/data_scheme" />
+                <data android:scheme="@string/data_scheme_https" />
+                <data android:path="/video.html" />
+                <data android:path="/native_live.html" />
+                <data android:path="/mediadetail/VideoDetailActivity" />
                 <!-- 以下测试 host -->
                 <data android:host="@string/data_host" />
                 <data android:host="@string/data_host_dev" />

@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.aliya.view.fitsys.FitWindowsLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/ly_container"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/_ffffff_191919"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical"
-              app:fitType="bottom">
+                                              xmlns:app="http://schemas.android.com/apk/res-auto"
+                                              xmlns:tools="http://schemas.android.com/tools"
+                                              android:id="@+id/ly_container"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              android:fitsSystemWindows="true"
+                                              android:orientation="vertical"
+                                              app:fitType="bottom">
 
     <RelativeLayout
         android:id="@+id/lly_reporter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/_f5f5f5_191919">
+        android:background="@color/_ffffff"
+        android:paddingBottom="16dp"
+        android:paddingTop="14dp">
 
         <ImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="106dp"
-            android:layout_height="139dp"
+            android:layout_width="114dp"
+            android:layout_height="160dp"
             android:layout_alignParentLeft="true"
-            android:layout_margin="9dp"
+            android:layout_marginLeft="15dp"
             android:scaleType="fitXY"
-            app:ratio_w2h="106:139"
-             />
+            tools:src="@mipmap/authority"
+            />
 
         <LinearLayout
             android:id="@+id/ly_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_avatar"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/iv_avatar"
             android:orientation="horizontal">
 
@@ -39,11 +40,10 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_gravity="center"
-                android:textColor="@color/_000000_7a7b7d"
-                android:textSize="@dimen/ts_16sp"
-                android:textStyle="bold"
+                android:fontFamily="@font/fzzcysk_zbjt"
+                android:textColor="@color/_222222"
+                android:textSize="@dimen/ts_18sp"
                 tools:text="车俊" />
 
             <TextView
@@ -51,9 +51,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="9dp"
+                android:layout_marginLeft="12dp"
                 android:layout_toRightOf="@+id/tv_name"
-                android:textColor="@color/_808080_5c5c5c"
+                android:textColor="@color/_666666"
                 android:textSize="@dimen/ts_14sp"
                 tools:text="男" />
 
@@ -64,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ly_name"
-            android:layout_marginRight="26dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="5dp"
             android:layout_marginTop="18dp"
             android:layout_toRightOf="@+id/iv_avatar"
             android:ellipsize="end"
@@ -80,32 +81,37 @@
             android:layout_alignBottom="@+id/iv_avatar"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_content"
-            android:layout_marginRight="26dp"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="4dp"
             android:drawableRight="@mipmap/module_detail_offical_more"
             android:gravity="center"
             android:text="@string/module_detail_offical_more"
+            android:visibility="gone"
             android:textColor="@color/_484848_7a7b7d"
-            android:textSize="@dimen/ts_11sp"
+            android:textSize="@dimen/ts_12sp"
             tools:text="更多" />
-
     </RelativeLayout>
 
-    <android.support.design.widget.TabLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="18dp"
+        android:background="@color/_f8f8f8_202124" />
+
+    <com.zjrb.daily.news.ui.widget.SlidingTabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="75dp"
-        android:layout_marginRight="75dp"
-        android:layout_marginTop="24dp"
-        android:layoutMode="clipBounds"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="fixed" />
+        android:layout_height="43dp"
+        android:background="@color/_ffffff"
+        app:tl_indicator_color="@color/_ffcd3f3f"
+        app:tl_indicator_height="4dp"
+        app:tl_indicator_width="18dp"
+        app:tl_textSelectColor="@color/_222222"
+        app:tl_textUnselectColor="@color/_666666"
+        app:tl_textsize="@dimen/ts_14sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="13dp"
         android:background="@color/_dddddd_7a7b7d" />
 
     <android.support.v4.view.ViewPager

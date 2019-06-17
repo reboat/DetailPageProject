@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:foreground="?attr/selectableItemBackground"
+              android:orientation="vertical"
+    >
+
+    <!--时间 置顶等-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_timeline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/module_detail_video_live_holder"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/din_medium"
+            android:textColor="@color/_666666"
+            android:textSize="@dimen/ts_12sp"
+            tools:text="2018.10.25 10:16" />
+
+        <ImageView
+            android:id="@+id/iv_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="visible"
+            android:src="@mipmap/module_detail_video_live_top" />
+    </RelativeLayout>
+    <!--标题-->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_time"
+        android:layout_marginTop="13dp"
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_16sp"
+        android:visibility="gone"
+        tools:text="到达本次旅程的第一站：嘉兴站"
+        />
+
+    <com.aliya.view.ratio.RatioFrameLayout
+        android:id="@+id/video_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
+        app:ratio_w2h="16:9">
+
+        <ImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            />
+
+        <ViewStub
+            android:id="@+id/view_stub_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout="@layout/module_detail_layout_video_play" />
+
+        <ViewStub
+            android:id="@+id/view_stub_live"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_gravity="center"
+            android:layout_margin="11.5dp"
+            android:layout="@layout/module_news_layout_live_tag" />
+
+
+    </com.aliya.view.ratio.RatioFrameLayout>
+</LinearLayout>

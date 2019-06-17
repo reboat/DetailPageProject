@@ -3,10 +3,10 @@ package com.zjrb.zjxw.detailproject.utils;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import com.zjrb.core.api.callback.APICallBack;
-import com.zjrb.zjxw.detailproject.task.AntiCheatingTask;
+import com.zjrb.zjxw.detailproject.apibean.task.AntiCheatingTask;
 
-import cn.daily.news.biz.core.global.Key;
+import cn.daily.news.biz.core.constant.Key;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.utils.YiDunUtils;
 
 

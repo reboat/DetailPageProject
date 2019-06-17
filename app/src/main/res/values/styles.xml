@@ -2,308 +2,308 @@
 
     <style name="AppTheme" parent="CoreTheme.Base">
 
-        <item name="android:theme">@style/DetailDayTheme</item>
+        <!--<item name="android:theme">@style/DetailDayTheme</item>-->
 
-        <item name="module_news_color_484848_7a7b7d">#484848</item>
-        <item name="module_news_color_f44b50_8e3636">#f44b50</item>
-        <item name="module_news_color_4d95fa_315277">#4d95fa</item>
-        <item name="module_news_color_000000_7a7b7d">#000000</item>
-        <item name="module_news_color_ffffff_bababa">#ffffff</item>
-        <item name="module_news_color_e85757_8e3636">#e85757</item>
-        <item name="module_news_color_999999_5c5c5c">#999999</item>
-        <item name="module_news_color_ffffff_cacaca">#ffffff</item>
-        <item name="module_news_color_ffffff_202124">#ffffff</item>
-        <item name="module_news_color_7f000000_7f191919">#7f000000</item>
-        <item name="module_news_color_dddddd_343434">#dddddd</item>
-        <item name="module_news_color_f0f0f0_191919">#f0f0f0</item>
-        <item name="module_news_color_f5f5f5_191919">#f5f5f5</item>
-        <item name="module_news_color_d8d8d8_5c5c5c">#d8d8d8</item>
-        <item name="module_news_color_ffffff_7a7b7d">#ffffff</item>
-        <item name="module_news_color_cc696969_cc333333">#cc696969</item>
-        <item name="module_news_mask_00000000_7f000000">#00000000</item>
+        <!--<item name="module_news_color_484848_7a7b7d">#484848</item>-->
+        <!--<item name="module_news_color_f44b50_8e3636">#f44b50</item>-->
+        <!--<item name="module_news_color_4d95fa_315277">#4d95fa</item>-->
+        <!--<item name="module_news_color_000000_7a7b7d">#000000</item>-->
+        <!--<item name="module_news_color_ffffff_bababa">#ffffff</item>-->
+        <!--<item name="module_news_color_e85757_8e3636">#e85757</item>-->
+        <!--<item name="module_news_color_999999_5c5c5c">#999999</item>-->
+        <!--<item name="module_news_color_ffffff_cacaca">#ffffff</item>-->
+        <!--<item name="module_news_color_ffffff_202124">#ffffff</item>-->
+        <!--<item name="module_news_color_7f000000_7f191919">#7f000000</item>-->
+        <!--<item name="module_news_color_dddddd_343434">#dddddd</item>-->
+        <!--<item name="module_news_color_f0f0f0_191919">#f0f0f0</item>-->
+        <!--<item name="module_news_color_f5f5f5_191919">#f5f5f5</item>-->
+        <!--<item name="module_news_color_d8d8d8_5c5c5c">#d8d8d8</item>-->
+        <!--<item name="module_news_color_ffffff_7a7b7d">#ffffff</item>-->
+        <!--<item name="module_news_color_cc696969_cc333333">#cc696969</item>-->
+        <!--<item name="module_news_mask_00000000_7f000000">#00000000</item>-->
 
-        <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>
-        <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>
-        <item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>
+        <!--<item name="module_news_tc_subscribe">@color/module_news_tc_subscribe</item>-->
+        <!--<item name="module_news_tc_tab_news">@color/module_news_tc_tab_news</item>-->
+        <!--<item name="module_news_tc_item_title">@color/module_news_tc_item_title</item>-->
 
-        <item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>
-        <item name="module_news_tc_tag">@color/module_news_tc_tag</item>
-        <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>
-        <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>
-        <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>
-        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>
+        <!--<item name="module_news_bg_tag">@drawable/module_news_bg_tag</item>-->
+        <!--<item name="module_news_tc_tag">@color/module_news_tc_tag</item>-->
+        <!--<item name="module_news_border_f44b50">@drawable/module_news_border_f44b50</item>-->
+        <!--<item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10</item>-->
+        <!--<item name="module_news_border_subscribe">@drawable/module_news_border_subscribe</item>-->
+        <!--<item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5</item>-->
 
-        <item name="module_news_tc_white">@color/module_news_tc_white</item>
-        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag</item>
-        <item name="module_news_banner_indicator_dot">
-            @drawable/module_news_banner_indicator_dot
-        </item>
-        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar</item>
-        <item name="module_news_bg_search">@drawable/module_news_bg_search</item>
-        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross</item>
-        <item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text</item>
-        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text</item>
-        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item</item>
-        <item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete
-        </item>
+        <!--<item name="module_news_tc_white">@color/module_news_tc_white</item>-->
+        <!--<item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag</item>-->
+        <!--<item name="module_news_banner_indicator_dot">-->
+            <!--@drawable/module_news_banner_indicator_dot-->
+        <!--</item>-->
+        <!--<item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar</item>-->
+        <!--<item name="module_news_bg_search">@drawable/module_news_bg_search</item>-->
+        <!--<item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross</item>-->
+        <!--<item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text</item>-->
+        <!--<item name="module_news_bg_search_text">@drawable/module_news_bg_search_text</item>-->
+        <!--<item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item</item>-->
+        <!--<item name="module_news_bg_recommend_complete">@drawable/module_news_bg_recommend_complete-->
+        <!--</item>-->
 
-        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city</item>
-        <item name="module_news_tc_manage_channel_item">#000000</item>
-        <item name="module_news_tc_recommend_complete">@color/tc_ffffff</item>
-        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city</item>
+        <!--<item name="module_news_tc_switch_city">@color/module_news_tc_switch_city</item>-->
+        <!--<item name="module_news_tc_manage_channel_item">#000000</item>-->
+        <!--<item name="module_news_tc_recommend_complete">@color/tc_ffffff</item>-->
+        <!--<item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city</item>-->
 
-        <item name="module_video_color_878686_5c5c5c">#878686</item>
-        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay</item>
-        <item name="module_video_controls_mobile_play">@mipmap/module_player_controls_mobile_play
-        </item>
-        <item name="module_video_controls_seek_bar">@drawable/module_player_seek_bar_drawable</item>
-        <item name="module_video_controls_seek_bar_thumb">@drawable/module_player_seek_bar_thumb
-        </item>
-        <item name="module_video_controls_progress_bar">
-            @drawable/module_player_progress_bar_drawable
-        </item>
-        <item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>
-        <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>
-        <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>
-
-
+        <!--<item name="module_video_color_878686_5c5c5c">#878686</item>-->
+        <!--<item name="module_video_controls_replay">@mipmap/module_player_controls_replay</item>-->
+        <!--<item name="module_video_controls_mobile_play">@mipmap/module_player_controls_mobile_play-->
+        <!--</item>-->
+        <!--<item name="module_video_controls_seek_bar">@drawable/module_player_seek_bar_drawable</item>-->
+        <!--<item name="module_video_controls_seek_bar_thumb">@drawable/module_player_seek_bar_thumb-->
+        <!--</item>-->
+        <!--<item name="module_video_controls_progress_bar">-->
+            <!--@drawable/module_player_progress_bar_drawable-->
+        <!--</item>-->
+        <!--<item name="module_video_tc_tab">@color/module_video_sl_tc_tab</item>-->
+        <!--<item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout</item>-->
+        <!--<item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item</item>-->
 
 
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--#484848  7a7b7d-->
-        <item name="tc_484848">@color/tc_484848</item>
-        <!--#ffffff  #202124-->
-        <item name="bc_202124">@color/bc_ffffff</item>
-        <!--#191919  #ffffff-->
-        <item name="bc_191919">@color/bc_191919</item>
-        <!--dddddd  7a7b7d-->
-        <item name="bc_dddddd">@color/bc_dddddd</item>
-        <!--999999  5c5c5c-->
-        <item name="tc_999999">@color/tc_999999</item>
-        <!--f44b50  8e3636-->
-        <item name="tc_f44b50">@color/tc_f44b50</item>
-        <!--ffffff  aaaaaa-->
-        <item name="tc_ffffff">@color/tc_ffffff</item>
-        <!--000000   7a7b7d-->
-        <item name="tc_000000">@color/tc_000000</item>
-        <!--f5f5f5  191919-->
-        <item name="bc_f5f5f5">@color/tc_f5f5f5</item>
-        <!--f5f5f5 343434-->
-        <item name="bc_343434">@color/bc_f5f5f5</item>
-        <!--e85757 8e3636-->
-        <item name="bc_e85757">@color/bc_e85757</item>
-        <!--7f080808  202124-->
-        <item name="bc_7f080808">@color/bc_7f080808</item>
-        <!--ffffff f0f0f0-->
-        <item name="bc_f0f0f0">@color/bc_ffffff</item>
-        <!--4d95fa  5c5c5c-->
-        <item name="tc_4d95fa">@color/tc_4d95fa</item>
-        <!--4682c5 315277-->
-        <item name="tc_4682c5">@color/tc_4682c5</item>
-        <!--e2e2e2  343434-->
-        <item name="bc_e2e2e2">@color/bc_e2e2e2</item>
 
-        <item name="dc_dddddd">@color/dc_dddddd</item>
-        <item name="bc_a4a3a3">@color/bc_a4a3a3</item>
-        <item name="tc_d2d2d2">@color/tc_d2d2d2</item>
-        <item name="bc_ffffff">@color/bc_ffffff</item>
-        <item name="bc_33ffffff">@color/bc_33ffffff</item>
-        <item name="bc_f4f5f6">@color/bc_f4f5f6</item>
 
-        <item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel</item>
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--&lt;!&ndash;#484848  7a7b7d&ndash;&gt;-->
+        <!--<item name="tc_484848">@color/_484848</item>-->
+        <!--&lt;!&ndash;#ffffff  #202124&ndash;&gt;-->
+        <!--<item name="bc_202124">@color/bc_ffffff</item>-->
+        <!--&lt;!&ndash;#191919  #ffffff&ndash;&gt;-->
+        <!--<item name="bc_191919">@color/bc_191919</item>-->
+        <!--&lt;!&ndash;dddddd  7a7b7d&ndash;&gt;-->
+        <!--<item name="bc_dddddd">@color/bc_dddddd</item>-->
+        <!--&lt;!&ndash;999999  5c5c5c&ndash;&gt;-->
+        <!--<item name="tc_999999">@color/tc_999999</item>-->
+        <!--&lt;!&ndash;f44b50  8e3636&ndash;&gt;-->
+        <!--<item name="tc_f44b50">@color/tc_f44b50</item>-->
+        <!--&lt;!&ndash;ffffff  aaaaaa&ndash;&gt;-->
+        <!--<item name="tc_ffffff">@color/tc_ffffff</item>-->
+        <!--&lt;!&ndash;000000   7a7b7d&ndash;&gt;-->
+        <!--<item name="tc_000000">@color/tc_000000</item>-->
+        <!--&lt;!&ndash;f5f5f5  191919&ndash;&gt;-->
+        <!--<item name="bc_f5f5f5">@color/tc_f5f5f5</item>-->
+        <!--&lt;!&ndash;f5f5f5 343434&ndash;&gt;-->
+        <!--<item name="bc_343434">@color/bc_f5f5f5</item>-->
+        <!--&lt;!&ndash;e85757 8e3636&ndash;&gt;-->
+        <!--<item name="bc_e85757">@color/bc_e85757</item>-->
+        <!--&lt;!&ndash;7f080808  202124&ndash;&gt;-->
+        <!--<item name="bc_7f080808">@color/bc_7f080808</item>-->
+        <!--&lt;!&ndash;ffffff f0f0f0&ndash;&gt;-->
+        <!--<item name="bc_f0f0f0">@color/bc_ffffff</item>-->
+        <!--&lt;!&ndash;4d95fa  5c5c5c&ndash;&gt;-->
+        <!--<item name="tc_4d95fa">@color/tc_4d95fa</item>-->
+        <!--&lt;!&ndash;4682c5 315277&ndash;&gt;-->
+        <!--<item name="tc_4682c5">@color/tc_4682c5</item>-->
+        <!--&lt;!&ndash;e2e2e2  343434&ndash;&gt;-->
+        <!--<item name="bc_e2e2e2">@color/bc_e2e2e2</item>-->
 
-        <item name="module_detail_color_7f000000_7f191919">#7f000000</item>
-        <item name="module_detail_color_ffffff_7a7b7d">#ffffff</item>
-        <item name="module_detail_color_ffffff_202124">#ffffff</item>
-        <item name="module_detail_color_d2d2d2_5c5c5c">#d2d2d2</item>
-        <item name="module_detail_color_000000_7a7b7d">#000000</item>
-        <item name="module_detail_color_999999_5c5c5c">#999999</item>
-        <item name="module_detail_color_484848_7a7b7d">#484848</item>
+        <!--<item name="dc_dddddd">@color/dc_dddddd</item>-->
+        <!--<item name="bc_a4a3a3">@color/bc_a4a3a3</item>-->
+        <!--<item name="tc_d2d2d2">@color/tc_d2d2d2</item>-->
+        <!--<item name="bc_ffffff">@color/bc_ffffff</item>-->
+        <!--<item name="bc_33ffffff">@color/bc_33ffffff</item>-->
+        <!--<item name="bc_f4f5f6">@color/bc_f4f5f6</item>-->
 
-        <item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>
-        <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>
-        <item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>
+        <!--<item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel</item>-->
 
-        <!--评论-->
-        <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>
+        <!--<item name="module_detail_color_7f000000_7f191919">#7f000000</item>-->
+        <!--<item name="module_detail_color_ffffff_7a7b7d">#ffffff</item>-->
+        <!--<item name="module_detail_color_ffffff_202124">#ffffff</item>-->
+        <!--<item name="module_detail_color_d2d2d2_5c5c5c">#d2d2d2</item>-->
+        <!--<item name="module_detail_color_000000_7a7b7d">#000000</item>-->
+        <!--<item name="module_detail_color_999999_5c5c5c">#999999</item>-->
+        <!--<item name="module_detail_color_484848_7a7b7d">#484848</item>-->
 
-        <!--图集-->
-        <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>
-        <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>
-        <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>
-        <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>
-        <item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>
-        <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>
-        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_atlas_detail_comment</item>
-        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas</item>
-        <item name="module_detail_tc_808080">@color/tc_808080</item>
-        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>
-        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>
-        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit</item>
-        <item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>
-        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>
-        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color</item>
-        <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f</item>
-        <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>
+        <!--<item name="module_detail_news_prise">@drawable/module_detail_news_prise</item>-->
+        <!--<item name="module_detail_edit_bg">@drawable/module_detail_edit_bg</item>-->
+        <!--<item name="module_detail_tc_4d95fa">@color/tc_4d95fa</item>-->
+
+        <!--&lt;!&ndash;评论&ndash;&gt;-->
+        <!--<item name="module_detail_comment_prise">@drawable/module_detail_comment_prise</item>-->
+
+        <!--&lt;!&ndash;图集&ndash;&gt;-->
+        <!--<item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise</item>-->
+        <!--<item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5</item>-->
+        <!--<item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247</item>-->
+        <!--<item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red</item>-->
+        <!--<item name="module_detail_comment_num">@drawable/module_detail_comment_num</item>-->
+        <!--<item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg</item>-->
+        <!--<item name="module_detail_atlas_detail_comment">@mipmap/module_detail_atlas_detail_comment</item>-->
+        <!--<item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas</item>-->
+        <!--<item name="module_detail_tc_808080">@color/tc_808080</item>-->
+        <!--<item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg</item>-->
+        <!--<item name="module_detail_atlas_comment_left">@mipmap/module_detail_commentedit_left</item>-->
+        <!--<item name="module_detail_comment_edit">@drawable/module_detail_comment_edit</item>-->
+        <!--<item name="module_detail_bc_e2e2e2">@color/bc_e2e2e2</item>-->
+        <!--<item name="module_core_image_load">@mipmap/module_core_ic_load_zhe</item>-->
+        <!--<item name="module_core_image_load_text_color">@color/module_core_image_load_text_color</item>-->
+        <!--<item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f</item>-->
+        <!--<item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7</item>-->
     </style>
 
     <style name="NightAppTheme" parent="CoreThemeNight.Base">
 
-        <item name="android:theme">@style/DetailNightTheme</item>
+        <!--<item name="android:theme">@style/DetailNightTheme</item>-->
 
-        <item name="module_news_color_484848_7a7b7d">#7a7b7d</item>
-        <item name="module_news_color_f44b50_8e3636">#8e3636</item>
-        <item name="module_news_color_4d95fa_315277">#315277</item>
-        <item name="module_news_color_000000_7a7b7d">#7a7b7d</item>
-        <item name="module_news_color_ffffff_bababa">#bababa</item>
-        <item name="module_news_color_e85757_8e3636">#8e3636</item>
-        <item name="module_news_color_999999_5c5c5c">#5c5c5c</item>
-        <item name="module_news_color_ffffff_cacaca">#cacaca</item>
-        <item name="module_news_color_ffffff_202124">#202124</item>
-        <item name="module_news_color_dddddd_343434">#343434</item>
-        <item name="module_news_color_f0f0f0_191919">#191919</item>
-        <item name="module_news_color_f5f5f5_191919">#191919</item>
-        <item name="module_news_color_d8d8d8_5c5c5c">#5c5c5c</item>
-        <item name="module_news_color_ffffff_7a7b7d">#7a7b7d</item>
-        <item name="module_news_color_7f000000_7f191919">#7f191919</item>
-        <item name="module_news_color_cc696969_cc333333">#cc333333</item>
-        <item name="module_news_mask_00000000_7f000000">#7f000000</item>
+        <!--<item name="module_news_color_484848_7a7b7d">#7a7b7d</item>-->
+        <!--<item name="module_news_color_f44b50_8e3636">#8e3636</item>-->
+        <!--<item name="module_news_color_4d95fa_315277">#315277</item>-->
+        <!--<item name="module_news_color_000000_7a7b7d">#7a7b7d</item>-->
+        <!--<item name="module_news_color_ffffff_bababa">#bababa</item>-->
+        <!--<item name="module_news_color_e85757_8e3636">#8e3636</item>-->
+        <!--<item name="module_news_color_999999_5c5c5c">#5c5c5c</item>-->
+        <!--<item name="module_news_color_ffffff_cacaca">#cacaca</item>-->
+        <!--<item name="module_news_color_ffffff_202124">#202124</item>-->
+        <!--<item name="module_news_color_dddddd_343434">#343434</item>-->
+        <!--<item name="module_news_color_f0f0f0_191919">#191919</item>-->
+        <!--<item name="module_news_color_f5f5f5_191919">#191919</item>-->
+        <!--<item name="module_news_color_d8d8d8_5c5c5c">#5c5c5c</item>-->
+        <!--<item name="module_news_color_ffffff_7a7b7d">#7a7b7d</item>-->
+        <!--<item name="module_news_color_7f000000_7f191919">#7f191919</item>-->
+        <!--<item name="module_news_color_cc696969_cc333333">#cc333333</item>-->
+        <!--<item name="module_news_mask_00000000_7f000000">#7f000000</item>-->
 
-        <item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>
-        <item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>
-        <item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>
+        <!--<item name="module_news_tc_subscribe">@color/module_news_tc_subscribe_night</item>-->
+        <!--<item name="module_news_tc_tab_news">@color/module_news_tc_tab_news_night</item>-->
+        <!--<item name="module_news_tc_item_title">@color/module_news_tc_item_title_night</item>-->
 
-        <item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>
-        <item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>
-        <item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>
-        <item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night
-        </item>
-        <item name="module_news_border_subscribe">@drawable/module_news_border_subscribe_night
-        </item>
-        <item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>
+        <!--<item name="module_news_bg_tag">@drawable/module_news_bg_tag_night</item>-->
+        <!--<item name="module_news_tc_tag">@color/module_news_tc_tag_night</item>-->
+        <!--<item name="module_news_border_f44b50">@drawable/module_news_border_f44b50_night</item>-->
+        <!--<item name="module_news_border_999999_r10">@drawable/module_news_border_999999_r10_night-->
+        <!--</item>-->
+        <!--<item name="module_news_border_subscribe">@drawable/module_news_border_subscribe_night-->
+        <!--</item>-->
+        <!--<item name="module_news_border_e5e5e5">@drawable/module_news_border_e5e5e5_night</item>-->
 
-        <item name="module_news_tc_white">@color/module_news_tc_white_night</item>
-        <item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag_night</item>
-        <item name="module_news_banner_indicator_dot">
-            @drawable/module_news_banner_indicator_dot_night
-        </item>
-        <item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar_night</item>
-        <item name="module_news_bg_search">@drawable/module_news_bg_search_night</item>
-        <item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross_night</item>
-        <item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text_night</item>
-        <item name="module_news_bg_search_text">@drawable/module_news_bg_search_text_night</item>
-        <item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item_night</item>
-        <item name="module_news_bg_recommend_complete">
-            @drawable/module_news_bg_recommend_complete_night
-        </item>
+        <!--<item name="module_news_tc_white">@color/module_news_tc_white_night</item>-->
+        <!--<item name="module_news_bg_activity_tag">@drawable/module_news_bg_activity_tag_night</item>-->
+        <!--<item name="module_news_banner_indicator_dot">-->
+            <!--@drawable/module_news_banner_indicator_dot_night-->
+        <!--</item>-->
+        <!--<item name="module_news_bg_search_bar">@drawable/module_news_bg_search_bar_night</item>-->
+        <!--<item name="module_news_bg_search">@drawable/module_news_bg_search_night</item>-->
+        <!--<item name="module_news_ic_search_cross">@mipmap/module_news_ic_cross_night</item>-->
+        <!--<item name="module_news_sl_tc_search_text">@color/module_news_tc_search_text_night</item>-->
+        <!--<item name="module_news_bg_search_text">@drawable/module_news_bg_search_text_night</item>-->
+        <!--<item name="module_news_bg_channel_item">@drawable/module_news_bg_channel_item_night</item>-->
+        <!--<item name="module_news_bg_recommend_complete">-->
+            <!--@drawable/module_news_bg_recommend_complete_night-->
+        <!--</item>-->
 
-        <item name="module_news_tc_switch_city">@color/module_news_tc_switch_city_night</item>
-        <item name="module_news_tc_manage_channel_item">
-            @color/module_news_tc_manage_channel_item_night
-        </item>
-        <item name="module_news_tc_recommend_complete">@color/tc_cccbcb</item>
-        <item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city_night</item>
+        <!--<item name="module_news_tc_switch_city">@color/module_news_tc_switch_city_night</item>-->
+        <!--<item name="module_news_tc_manage_channel_item">-->
+            <!--@color/module_news_tc_manage_channel_item_night-->
+        <!--</item>-->
+        <!--<item name="module_news_tc_recommend_complete">@color/tc_cccbcb</item>-->
+        <!--<item name="module_news_bg_switch_city">@drawable/module_news_bg_switch_city_night</item>-->
 
-        <item name="module_video_color_878686_5c5c5c">#5c5c5c</item>
-        <item name="module_video_controls_replay">@mipmap/module_player_controls_replay_night</item>
-        <item name="module_video_controls_mobile_play">
-            @mipmap/module_player_controls_mobile_play_night
-        </item>
-        <item name="module_video_controls_seek_bar">
-            @drawable/module_player_seek_bar_drawable_night
-        </item>
-        <item name="module_video_controls_seek_bar_thumb">
-            @drawable/module_player_seek_bar_thumb_night
-        </item>
-        <item name="module_video_controls_progress_bar">
-            @drawable/module_player_progress_bar_drawable_night
-        </item>
-        <item name="module_video_tc_tab">@color/module_video_sl_tc_tab_night</item>
-        <item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout_night</item>
-        <item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item_night</item>
-
-
-
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary_night</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--#484848  7a7b7d-->
-        <item name="tc_484848">@color/tc_484848_night</item>
-        <!--#ffffff  #202124-->
-        <item name="bc_202124">@color/bc_ffffff_night</item>
-        <!--#191919  #ffffff-->
-        <item name="bc_191919">@color/bc_191919_night</item>
-        <!--dddddd  7a7b7d-->
-        <item name="bc_dddddd">@color/bc_dddddd_night</item>
-        <!--999999  5c5c5c-->
-        <item name="tc_999999">@color/tc_999999_night</item>
-        <!--f44b50  8e3636-->
-        <item name="tc_f44b50">@color/tc_f44b50_night</item>
-        <!--ffffff  aaaaaa-->
-        <item name="tc_ffffff">@color/tc_ffffff_night</item>
-        <!--000000   7a7b7d-->
-        <item name="tc_000000">@color/tc_000000_night</item>
-        <!--f5f5f5  191919-->
-        <item name="bc_f5f5f5">@color/tc_f5f5f5_night</item>
-        <!--f5f5f5 343434-->
-        <item name="bc_343434">@color/bc_f5f5f5_night</item>
-        <!--e85757 8e3636-->
-        <item name="bc_e85757">@color/bc_e85757_night</item>
-        <!--7f080808  202124-->
-        <item name="bc_7f080808">@color/bc_7f080808_night</item>
-        <!--ffffff f0f0f0-->
-        <item name="bc_f0f0f0">@color/bc_f0f0f0_night</item>
-        <!--4d95fa  5c5c5c-->
-        <item name="tc_4d95fa">@color/tc_4d95fa_night</item>
-        <!--4682c5 315277-->
-        <item name="tc_4682c5">@color/tc_4682c5_night</item>
-        <!--e2e2e2  343434-->
-        <item name="bc_e2e2e2">@color/bc_e2e2e2_night</item>
-
-        <item name="dc_dddddd">@color/dc_dddddd_night</item>
-        <item name="bc_a4a3a3">@color/tc_484848</item>
-        <item name="tc_d2d2d2">@color/tc_d2d2d2_night</item>
-        <item name="bc_33ffffff">@color/bc_191919</item>
-        <item name="bc_f4f5f6">@color/bc_f4f5f6_night</item>
+        <!--<item name="module_video_color_878686_5c5c5c">#5c5c5c</item>-->
+        <!--<item name="module_video_controls_replay">@mipmap/module_player_controls_replay_night</item>-->
+        <!--<item name="module_video_controls_mobile_play">-->
+            <!--@mipmap/module_player_controls_mobile_play_night-->
+        <!--</item>-->
+        <!--<item name="module_video_controls_seek_bar">-->
+            <!--@drawable/module_player_seek_bar_drawable_night-->
+        <!--</item>-->
+        <!--<item name="module_video_controls_seek_bar_thumb">-->
+            <!--@drawable/module_player_seek_bar_thumb_night-->
+        <!--</item>-->
+        <!--<item name="module_video_controls_progress_bar">-->
+            <!--@drawable/module_player_progress_bar_drawable_night-->
+        <!--</item>-->
+        <!--<item name="module_video_tc_tab">@color/module_video_sl_tc_tab_night</item>-->
+        <!--<item name="module_video_bg_tab_layout">@drawable/module_video_bg_tab_layout_night</item>-->
+        <!--<item name="module_video_bg_tab_item">@drawable/module_video_bg_tab_item_night</item>-->
 
 
-        <item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel_night</item>
 
-        <item name="module_detail_color_7f000000_7f191919">#7f191919</item>
-        <item name="module_detail_color_ffffff_7a7b7d">#7a7b7d</item>
-        <item name="module_detail_color_ffffff_202124">#202124</item>
-        <item name="module_detail_color_d2d2d2_5c5c5c">#5c5c5c</item>
-        <item name="module_detail_color_000000_7a7b7d">#7a7b7d</item>
-        <item name="module_detail_color_999999_5c5c5c">#5c5c5c</item>
-        <item name="module_detail_color_484848_7a7b7d">#7a7b7d</item>
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/colorPrimary_night</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark_night</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--&lt;!&ndash;#484848  7a7b7d&ndash;&gt;-->
+        <!--<item name="tc_484848">@color/_484848</item>-->
+        <!--&lt;!&ndash;#ffffff  #202124&ndash;&gt;-->
+        <!--<item name="bc_202124">@color/bc_ffffff_night</item>-->
+        <!--&lt;!&ndash;#191919  #ffffff&ndash;&gt;-->
+        <!--<item name="bc_191919">@color/bc_191919_night</item>-->
+        <!--&lt;!&ndash;dddddd  7a7b7d&ndash;&gt;-->
+        <!--<item name="bc_dddddd">@color/bc_dddddd_night</item>-->
+        <!--&lt;!&ndash;999999  5c5c5c&ndash;&gt;-->
+        <!--<item name="tc_999999">@color/tc_999999_night</item>-->
+        <!--&lt;!&ndash;f44b50  8e3636&ndash;&gt;-->
+        <!--<item name="tc_f44b50">@color/tc_f44b50_night</item>-->
+        <!--&lt;!&ndash;ffffff  aaaaaa&ndash;&gt;-->
+        <!--<item name="tc_ffffff">@color/tc_ffffff_night</item>-->
+        <!--&lt;!&ndash;000000   7a7b7d&ndash;&gt;-->
+        <!--<item name="tc_000000">@color/tc_000000_night</item>-->
+        <!--&lt;!&ndash;f5f5f5  191919&ndash;&gt;-->
+        <!--<item name="bc_f5f5f5">@color/tc_f5f5f5_night</item>-->
+        <!--&lt;!&ndash;f5f5f5 343434&ndash;&gt;-->
+        <!--<item name="bc_343434">@color/bc_f5f5f5_night</item>-->
+        <!--&lt;!&ndash;e85757 8e3636&ndash;&gt;-->
+        <!--<item name="bc_e85757">@color/bc_e85757_night</item>-->
+        <!--&lt;!&ndash;7f080808  202124&ndash;&gt;-->
+        <!--<item name="bc_7f080808">@color/bc_7f080808_night</item>-->
+        <!--&lt;!&ndash;ffffff f0f0f0&ndash;&gt;-->
+        <!--<item name="bc_f0f0f0">@color/bc_f0f0f0_night</item>-->
+        <!--&lt;!&ndash;4d95fa  5c5c5c&ndash;&gt;-->
+        <!--<item name="tc_4d95fa">@color/tc_4d95fa_night</item>-->
+        <!--&lt;!&ndash;4682c5 315277&ndash;&gt;-->
+        <!--<item name="tc_4682c5">@color/tc_4682c5_night</item>-->
+        <!--&lt;!&ndash;e2e2e2  343434&ndash;&gt;-->
+        <!--<item name="bc_e2e2e2">@color/bc_e2e2e2_night</item>-->
 
-        <item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>
-        <item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>
-        <item name="module_detail_tc_4d95fa">@color/tc_315277</item>
-        <!--评论-->
-        <item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>
-        <!--图集-->
-        <item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>
-        <item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>
-        <item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>
-        <item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>
-        <item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>
-        <item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>
-        <item name="module_detail_atlas_detail_comment">@mipmap/module_detail_ic_comment_night</item>
-        <item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas_night</item>
-        <item name="module_detail_tc_808080">@color/tc_5c5c5c</item>
-        <item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg_night</item>
-        <item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>
-        <item name="module_detail_comment_edit">@drawable/module_detail_comment_edit_night</item>
-        <item name="module_detail_bc_e2e2e2">@color/bc_343434</item>
-        <item name="module_core_image_load">@mipmap/module_core_ic_load_zhe_night</item>
-        <item name="module_core_image_load_text_color">@color/module_core_image_load_text_color_night</item>
-        <item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f_night</item>
-        <item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7_night</item>
+        <!--<item name="dc_dddddd">@color/dc_dddddd_night</item>-->
+        <!--<item name="bc_a4a3a3">@color/tc_484848</item>-->
+        <!--<item name="tc_d2d2d2">@color/tc_d2d2d2_night</item>-->
+        <!--<item name="bc_33ffffff">@color/bc_191919</item>-->
+        <!--<item name="bc_f4f5f6">@color/bc_f4f5f6_night</item>-->
+
+
+        <!--<item name="module_detail_special_channel_bg">@drawable/module_detail_special_channel_night</item>-->
+
+        <!--<item name="module_detail_color_7f000000_7f191919">#7f191919</item>-->
+        <!--<item name="module_detail_color_ffffff_7a7b7d">#7a7b7d</item>-->
+        <!--<item name="module_detail_color_ffffff_202124">#202124</item>-->
+        <!--<item name="module_detail_color_d2d2d2_5c5c5c">#5c5c5c</item>-->
+        <!--<item name="module_detail_color_000000_7a7b7d">#7a7b7d</item>-->
+        <!--<item name="module_detail_color_999999_5c5c5c">#5c5c5c</item>-->
+        <!--<item name="module_detail_color_484848_7a7b7d">#7a7b7d</item>-->
+
+        <!--<item name="module_detail_news_prise">@drawable/module_detail_news_prise_night</item>-->
+        <!--<item name="module_detail_edit_bg">@drawable/module_detail_edit_bg_night</item>-->
+        <!--<item name="module_detail_tc_4d95fa">@color/tc_315277</item>-->
+        <!--&lt;!&ndash;评论&ndash;&gt;-->
+        <!--<item name="module_detail_comment_prise">@drawable/module_detail_comment_prise_night</item>-->
+        <!--&lt;!&ndash;图集&ndash;&gt;-->
+        <!--<item name="module_detail_atlas_prise">@drawable/module_detail_atlas_prise_night</item>-->
+        <!--<item name="module_detail_border_f5f5f5">@drawable/module_detail_border_f5f5f5_night</item>-->
+        <!--<item name="module_detail_indicator_color_fdc247">@drawable/module_detail_indicator_color_fdc247_night</item>-->
+        <!--<item name="module_detail_activity_subscribe_red">@drawable/module_detail_activity_subscribe_red_night</item>-->
+        <!--<item name="module_detail_comment_num">@drawable/module_detail_comment_num_night</item>-->
+        <!--<item name="module_detail_atlas_edit_bg">@drawable/module_detail_atlas_edit_bg_night</item>-->
+        <!--<item name="module_detail_atlas_detail_comment">@mipmap/module_detail_ic_comment_night</item>-->
+        <!--<item name="module_detail_atlas_more">@mipmap/module_detail_more_atlas_night</item>-->
+        <!--<item name="module_detail_tc_808080">@color/tc_5c5c5c</item>-->
+        <!--<item name="module_detail_persional_info_item_bg">@drawable/module_detail_persional_info_item_bg_night</item>-->
+        <!--<item name="module_detail_atlas_comment_left">@mipmap/module_detail_atlas_comment_left_night</item>-->
+        <!--<item name="module_detail_comment_edit">@drawable/module_detail_comment_edit_night</item>-->
+        <!--<item name="module_detail_bc_e2e2e2">@color/bc_343434</item>-->
+        <!--<item name="module_core_image_load">@mipmap/module_core_ic_load_zhe_night</item>-->
+        <!--<item name="module_core_image_load_text_color">@color/module_core_image_load_text_color_night</item>-->
+        <!--<item name="module_detail_tc_9f9f9f">@color/module_detail_tc_9f9f9f_night</item>-->
+        <!--<item name="module_detail_tc_d7d7d7">@color/module_detail_tc_d7d7d7_night</item>-->
     </style>
 
 </resources>

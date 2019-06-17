@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/layout_title_bar"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:background="#000000"
+                                             android:minHeight="@dimen/toolbar_normal_height"
+    >
+
+
+    <TextView
+        android:id="@+id/tv_top_bar_title"
+        style="@style/ToolbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/fzzcysk_zbjt"
+        android:text="@string/module_detail_more_imgs"
+        android:textColor="@color/_ffffff"
+        android:textSize="@dimen/ts_16sp"
+        />
+
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="42dp"
+        android:layout_height="@dimen/toolbar_normal_height"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:scaleType="center"
+        android:src="@mipmap/module_core_back_topbar"
+        />
+
+    <ImageView
+        android:id="@+id/iv_share"
+        android:layout_width="42dp"
+        android:layout_height="@dimen/toolbar_normal_height"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:scaleType="center"
+        android:src="@mipmap/module_biz_atlas_share"
+        />
+
+    <ImageView
+        android:id="@+id/iv_top_download"
+        android:layout_width="42dp"
+        android:layout_height="@dimen/toolbar_normal_height"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:layout_marginRight="40dp"
+        android:scaleType="center"
+        android:src="@mipmap/module_core_image_download"
+        android:visibility="gone"
+        app:maskColor="@android:color/transparent"
+        />
+
+</com.aliya.view.fitsys.FitWindowsFrameLayout>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/ry_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/_fff0f0f0"
+    >
+
+    <RelativeLayout
+        android:id="@+id/ly_replay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="14dp"
+        android:background="@color/_ffffff"
+        android:paddingTop="14dp">
+
+        <com.zjrb.core.ui.widget.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/module_detail_defaule_icon"
+            />
+
+        <RelativeLayout
+            android:id="@+id/ly_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="top|left"
+                android:includeFontPadding="false"
+                android:layout_toLeftOf="@+id/ly_prise"
+                android:layout_marginRight="15dp"
+                android:maxLines="1"
+                android:textColor="@color/_616161"
+                android:textSize="@dimen/ts_12sp"
+                tools:text="你好" />
+
+            <ImageView
+                android:id="@+id/iv_host"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/tv_name"
+                android:src="@color/_4d95fa_315277"
+                android:visibility="gone"
+                tools:src="@mipmap/module_detail_activity_host" />
+
+            <!--无点赞状态-->
+            <LinearLayout
+                android:id="@+id/ly_prise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="7dp"
+                android:paddingLeft="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_prised"
+                    android:layout_width="15dp"
+                    android:layout_height="13dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/module_detail_news_prise"
+                    />
+                <!--点赞-->
+                <TextView
+                    android:id="@+id/tv_prise_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:maxLines="1"
+                    android:textColor="@color/_666666"
+                    android:textSize="@dimen/ts_11sp"
+                    android:visibility="gone"
+                    tools:text="1赞" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ly_name"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="12.5dp"
+            android:layout_marginTop="9dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:gravity="left|bottom"
+            android:includeFontPadding="false"
+            android:lineSpacingMultiplier="1.2"
+            android:textColor="@color/_484848_7a7b7d"
+            android:textSize="@dimen/ts_16sp"
+            tools:text="卡死搭建的空间啊打快点卡打卡机大厦接萨科技打开打打上的阿坤打口的和阿坤的" />
+
+        <TextView
+            android:id="@+id/tv_show_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_content"
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="12.5dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:text="@string/module_detail_openall"
+            android:textColor="@color/_2378d1"
+            android:textSize="@dimen/ts_16sp"
+            android:visibility="gone" />
+
+        <!--回复-->
+        <RelativeLayout
+            android:id="@+id/ly_comment_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ly_name"
+            android:layout_below="@id/tv_show_all"
+            android:layout_marginRight="11.5dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/module_detail_comment_replay_stroke"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:id="@+id/tv_delete_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginBottom="17dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="17dp"
+                android:textColor="@color/_bfbfbf"
+                android:textSize="@dimen/ts_14sp"
+                android:visibility="gone"
+                tools:text="评论已删除" />
+
+            <RelativeLayout
+                android:id="@+id/ly_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/tv_comment_src"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:padding="3dp"
+                    android:textColor="@color/_616161"
+                    android:textSize="@dimen/ts_12sp"
+                    tools:text="评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者评论者" />
+
+                <ImageView
+                    android:id="@+id/iv_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toRightOf="@+id/tv_comment_src"
+                    android:src="@mipmap/module_detail_activity_guest"
+                    android:visibility="gone"
+                    tools:src="@mipmap/module_detail_activity_guest" />
+
+            </RelativeLayout>
+
+            <!--用户地理位置-->
+            <TextView
+                android:id="@+id/tv_comment_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ly_comment"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:maxLines="1"
+                android:textColor="@color/_bfbfbf"
+                android:textSize="@dimen/ts_11sp"
+                android:visibility="gone"
+                tools:text="新疆威武儿子自取字了新疆" />
+
+
+            <TextView
+                android:id="@+id/tv_comment_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_comment_location"
+                android:layout_marginBottom="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:gravity="left|center"
+                android:lineSpacingMultiplier="1.2"
+                android:textColor="@color/_666666"
+                android:textSize="@dimen/ts_14sp"
+                tools:text="手动加卡是的空间啊觉得啊会计师空数据东方时空京东方空数据东方红看似简单福克斯就返回数据看大富科技是地方接口是父控件是父控件是的福克斯的父控件是的发" />
+
+            <!--评论回复展开全部-->
+            <TextView
+                android:id="@+id/tv_parent_show_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_comment_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="7dp"
+                android:text="@string/module_detail_openall"
+                android:textColor="@color/_2378d1"
+                android:textSize="@dimen/ts_14sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+        <!--评论时间-->
+        <RelativeLayout
+            android:id="@+id/ry_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ly_comment_reply"
+            android:layout_marginBottom="9dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="13dp"
+            android:layout_toRightOf="@id/iv_avatar"
+            >
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/_bfbfbf"
+                android:textSize="@dimen/ts_11sp"
+                tools:text="09-01 21:20"
+                />
+
+            <TextView
+                android:id="@+id/tv_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_time"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tv_time"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="@color/_bfbfbf"
+                android:textSize="@dimen/ts_11sp"
+                android:visibility="gone"
+                tools:text="上海"
+                />
+
+            <!--如果是自己发布的评论 则可以删除-->
+            <TextView
+                android:id="@+id/tv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_time"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="11.5dp"
+                android:layout_alignParentRight="true"
+                android:paddingBottom="8dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="8dp"
+                android:text="@string/module_detail_comment_delete"
+                android:textColor="@color/_666666"
+                android:textSize="@dimen/ts_11sp"
+                android:visibility="gone"
+                tools:text="删除" />
+
+            <TextView
+                android:id="@+id/tv_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_time"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="11.5dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="8dp"
+                android:text="@string/module_detail_replay_to"
+                android:textColor="@color/_666666"
+                android:textSize="@dimen/ts_11sp"
+                tools:text="回复" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

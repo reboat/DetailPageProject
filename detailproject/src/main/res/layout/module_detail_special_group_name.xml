@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="30dp"
-    android:background="?attr/selectableItemBackground">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:paddingTop="15dp"
+             android:paddingBottom="3dp"
+             android:background="?attr/selectableItemBackground"
+             android:paddingLeft="11dp">
 
     <TextView
         android:id="@+id/tv_group_name"
@@ -12,8 +15,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_16sp"
-        android:textStyle="bold"
+        android:textSize="@dimen/ts_14sp"
         tools:text="理论视野" />
 
     <TextView
@@ -21,10 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|right"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="12dp"
         android:drawableRight="@mipmap/module_detail_offical_more"
-        android:text="更多"
-        android:textColor="@color/_484848_7a7b7d"
-        android:textSize="@dimen/ts_11sp" />
+        android:drawablePadding="6dp"
+        android:text="@string/module_detail_offical_more"
+        android:textColor="@color/_222222"
+        android:textSize="@dimen/ts_14sp" />
 
 </FrameLayout>

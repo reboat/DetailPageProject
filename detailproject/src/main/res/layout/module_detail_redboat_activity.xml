@@ -19,6 +19,9 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:descendantFocusability="blocksDescendants"
             android:scrollbars="vertical"/>
 
     </com.aliya.view.fitsys.FitWindowsFrameLayout>

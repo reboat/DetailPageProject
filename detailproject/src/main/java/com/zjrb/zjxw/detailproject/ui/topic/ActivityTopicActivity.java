@@ -108,8 +108,8 @@ public class ActivityTopicActivity extends DailyActivity implements
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
-//    @BindView(R2.id.menu_setting)
-//    ImageView ivSetting;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
 
 
     private TopicAdapter mAdapter;
@@ -283,9 +283,11 @@ public class ActivityTopicActivity extends DailyActivity implements
             mFyContainer.setVisibility(View.INVISIBLE);
             ly_comment_num.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.VISIBLE);
         } else {
             //允许评论 在右边显示
             if (data.getArticle().getComment_level() != 0) {
+                ivSetting.setVisibility(View.VISIBLE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -305,6 +307,7 @@ public class ActivityTopicActivity extends DailyActivity implements
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.VISIBLE);
                 if (data.getArticle().isLike_enabled()) {
                     mMenuPrised.setVisibility(View.VISIBLE);
                 } else {

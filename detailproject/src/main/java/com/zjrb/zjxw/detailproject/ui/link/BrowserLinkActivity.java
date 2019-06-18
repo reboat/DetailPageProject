@@ -94,8 +94,8 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
-//    @BindView(R2.id.menu_setting)
-//    ImageView ivSetting;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
 
     private String mArticleId;
     /**

@@ -94,8 +94,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
-    @BindView(R2.id.iv_top_share)
-    View mShareView;
+    @BindView(R2.id.menu_setting)
+    ImageView ivSetting;
 
     private String mArticleId;
     /**
@@ -147,7 +147,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         getIntentData(intent);
         loadData();
         if (topBarHolder != null) {
-            mShareView.setVisibility(View.VISIBLE);
+            topBarHolder.getShareView().setVisibility(View.VISIBLE);
         }
     }
 
@@ -179,7 +179,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @Override
     protected View onCreateTopBar(ViewGroup view) {
         topBarHolder = BIZTopBarFactory.createCommonTopBar(view, this);
-        mShareView.setVisibility(View.VISIBLE);
+        topBarHolder.setViewVisible(topBarHolder.getShareView(), View.VISIBLE);
         return topBarHolder.getView();
     }
 
@@ -285,9 +285,11 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             mFyContainer.setVisibility(View.INVISIBLE);
             ly_comment_num.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.VISIBLE);
         } else {
             //允许评论 在右边显示
             if (data.getArticle().getComment_level() != 0) {
+                ivSetting.setVisibility(View.VISIBLE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -307,6 +309,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
+                ivSetting.setVisibility(View.VISIBLE);
                 if (data.getArticle().isLike_enabled()) {
                     mMenuPrised.setVisibility(View.VISIBLE);
                     mMenuPrised.setSelected(data.getArticle().isLiked());
@@ -522,7 +525,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private void showEmptyNewsDetail() {
         mFloorBar.setVisibility(View.GONE);
         mView.setVisibility(View.VISIBLE);
-        mShareView.setVisibility(View.GONE);
+        topBarHolder.getShareView().setVisibility(View.GONE);
         topBarHolder.setViewVisible(topBarHolder.getSubscribe(), View.INVISIBLE);
         topBarHolder.setViewVisible(topBarHolder.getFitRelativeLayout(), View.INVISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

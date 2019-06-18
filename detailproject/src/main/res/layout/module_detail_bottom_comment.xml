@@ -79,9 +79,9 @@
 
     <!--设置-->
     <ImageView
-        android:id="@+id/menu_setting"
+        android:id="@+id/iv_top_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="14dp"
-        android:src="@mipmap/module_biz_tools_bar_more" />
+        android:src="@mipmap/module_biz_topbar_share" />
 </LinearLayout>

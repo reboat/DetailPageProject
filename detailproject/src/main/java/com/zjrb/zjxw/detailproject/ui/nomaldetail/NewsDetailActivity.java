@@ -90,14 +90,16 @@ final public class NewsDetailActivity extends DailyActivity implements
     View mFloorBar;
     @BindView(R2.id.ry_container)
     RelativeLayout mContainer;
-    @BindView(R2.id.menu_setting)
-    ImageView ivSetting;
+//    @BindView(R2.id.menu_setting)
+//    ImageView ivSetting;
     @BindView(R2.id.fl_comment)
     RelativeLayout mFyContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
+    @BindView(R2.id.iv_top_share)
+    View mShareView;
 
     /**
      * 稿件ID
@@ -230,7 +232,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
-                    topHolder.getShareView().setVisibility(View.INVISIBLE);
+                    mShareView.setVisibility(View.GONE);
                     showEmptyNewsDetail();
                 } else {
                     ZBToast.showShort(NewsDetailActivity.this, errMsg);
@@ -255,7 +257,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                             .url(article.getUrl()));
         }
 
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        mShareView.setVisibility(View.VISIBLE);
         //中间栏目布局处理
         if (!TextUtils.isEmpty(article.getColumn_name())) {
             //栏目名称
@@ -305,11 +307,9 @@ final public class NewsDetailActivity extends DailyActivity implements
             mFyContainer.setVisibility(View.INVISIBLE);
             ly_comment_num.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
-            ivSetting.setVisibility(View.VISIBLE);
         } else {
             //允许评论 在右边显示
             if (data.getArticle().getComment_level() != 0) {
-                ivSetting.setVisibility(View.VISIBLE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
                 //大致评论数量
@@ -329,7 +329,6 @@ final public class NewsDetailActivity extends DailyActivity implements
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.INVISIBLE);
                 ly_comment_num.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.VISIBLE);
                 if (data.getArticle().isLike_enabled()) {
                     mMenuPrised.setVisibility(View.VISIBLE);
                     if (data.getArticle().isLike_enabled()) {

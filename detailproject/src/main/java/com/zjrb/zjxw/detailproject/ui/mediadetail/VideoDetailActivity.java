@@ -115,14 +115,16 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
-    @BindView(R2.id.menu_setting)
-    ImageView ivSetting;
+//    @BindView(R2.id.menu_setting)
+//    ImageView ivSetting;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.tv_live_status)
     TextView tvLiveStatus;
     @BindView(R2.id.iv_play)
     ImageView ivPlay;
+    @BindView(R2.id.iv_top_share)
+    View mShareView;
 
 
     private int ui;
@@ -427,7 +429,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 //撤稿
                 if (errCode == C.DRAFFT_IS_NOT_EXISE) {
-                    topHolder.getShareView().setVisibility(View.INVISIBLE);
+                    mShareView.setVisibility(View.INVISIBLE);
                     showEmptyNewsDetail();
                 } else {
                     ZBToast.showShort(getApplication(), errMsg);
@@ -451,7 +453,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                             .url(article.getUrl()));
         }
 
-        topHolder.setViewVisible(topHolder.getShareView(), View.VISIBLE);
+        mShareView.setVisibility(View.VISIBLE);
         //中间栏目布局处理
         if (!TextUtils.isEmpty(article.getColumn_name())) {
             //栏目名称
@@ -480,9 +482,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
-            ivSetting.setVisibility(View.VISIBLE);
         } else {
-            ivSetting.setVisibility(View.VISIBLE);
             //是否允许点赞
             if (data.getArticle().isLike_enabled()) {
                 mMenuPrised.setVisibility(View.VISIBLE);

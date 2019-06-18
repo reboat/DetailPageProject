@@ -80,11 +80,11 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
     TextView mTvCommentsNum;
 
     @BindView(R2.id.ry_container)
-    View mContainer;
+    FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
     FrameLayout mView;
     @BindView(R2.id.ly_bottom_comment)
-    View mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.iv_close)
     ImageView mClose;
 
@@ -94,8 +94,12 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
     @BindView(R2.id.menu_setting)
     ImageView ivSetting;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
 
     private String mArticleId;
     /**
@@ -375,7 +379,7 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
 
     private Bundle bundle;
 
-    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_setting, R2.id.iv_close})
+    @OnClick({R2.id.iv_back, R2.id.menu_comment, R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.iv_close, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
         int id = view.getId();
@@ -408,11 +412,11 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
-        } else if (view.getId() == R.id.menu_prised ) {
+        } else if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting ) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 //分享专用bean
@@ -488,6 +492,9 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
                     if (mMenuPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setSelected(true);
                     }
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -500,6 +507,9 @@ public class BrowserLinkActivity extends DailyActivity implements LinkStackPush,
                 mNewsDetail.getArticle().setLiked(true);
                 if (mMenuPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setSelected(true);
+                }
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
+                    ivPrisedRelpace.setSelected(true);
                 }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());

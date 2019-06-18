@@ -105,7 +105,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @BindView(R2.id.ry_container)
     RelativeLayout ryContainer;
     @BindView(R2.id.ly_bottom_comment)
-    View mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
 
@@ -115,10 +115,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
     @BindView(R2.id.menu_setting)
     ImageView ivSetting;
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
     @BindView(R2.id.tv_live_status)
     TextView tvLiveStatus;
     @BindView(R2.id.iv_play)
@@ -476,6 +480,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     }
 
     private void initViewState(DraftDetailBean data) {
+        ivSettingReplace.setVisibility(View.GONE);
+        ivPrisedRelpace.setVisibility(View.GONE);
         //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
@@ -500,18 +506,18 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-    @OnClick({R2.id.menu_prised,  R2.id.menu_setting,
+    @OnClick({R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play})
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.menu_prised ) {
+        if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
                 MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
@@ -666,6 +672,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     if (mMenuPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setSelected(true);
                     }
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -679,6 +688,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 mNewsDetail.getArticle().setLiked(true);
                 if (mMenuPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setSelected(true);
+                }
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
+                    ivPrisedRelpace.setSelected(true);
                 }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());

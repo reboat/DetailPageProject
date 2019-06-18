@@ -86,7 +86,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @BindView(R2.id.menu_prised)
     ImageView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    View mFloorBar;
+    FitWindowsRelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
@@ -94,8 +94,12 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
     @BindView(R2.id.ly_comment_num)
     RelativeLayout ly_comment_num;
+    @BindView(R2.id.menu_setting_relpace)
+    ImageView ivSettingReplace;
     @BindView(R2.id.menu_setting)
     ImageView ivSetting;
+    @BindView(R2.id.menu_prised_relpace)
+    ImageView ivPrisedRelpace;
 
     private String mArticleId;
     /**
@@ -282,13 +286,16 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private void initViewState(DraftDetailBean data) {
         //不允许点赞及评论,在左边显示更多
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
-            mFyContainer.setVisibility(View.INVISIBLE);
+            mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
             mMenuPrised.setVisibility(View.GONE);
-            ivSetting.setVisibility(View.VISIBLE);
+            ivSetting.setVisibility(View.GONE);
+            ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
             //允许评论 在右边显示
             if (data.getArticle().getComment_level() != 0) {
+                ivPrisedRelpace.setVisibility(View.GONE);
+                ivSettingReplace.setVisibility(View.GONE);
                 ivSetting.setVisibility(View.VISIBLE);
                 mFyContainer.setVisibility(View.VISIBLE);
                 ly_comment_num.setVisibility(View.VISIBLE);
@@ -309,13 +316,15 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.VISIBLE);
+                ivSetting.setVisibility(View.GONE);
+                mMenuPrised.setVisibility(View.GONE);
                 if (data.getArticle().isLike_enabled()) {
-                    mMenuPrised.setVisibility(View.VISIBLE);
-                    mMenuPrised.setSelected(data.getArticle().isLiked());
+                    ivPrisedRelpace.setVisibility(View.VISIBLE);
+                    ivPrisedRelpace.setSelected(data.getArticle().isLiked());
                 } else {
-                    mMenuPrised.setVisibility(View.GONE);
+                    ivPrisedRelpace.setVisibility(View.GONE);
                 }
+                ivSettingReplace.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -324,8 +333,8 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private Bundle bundle;
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment,
-            R2.id.menu_prised, R2.id.menu_setting, R2.id.fl_comment,
-            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon})
+            R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.fl_comment,
+            R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -398,11 +407,11 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
-        } else if (view.getId() == R.id.menu_prised ) {
+        } else if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多
-        } else if (view.getId() == R.id.menu_setting ) {
+        } else if (view.getId() == R.id.menu_setting || view.getId() == R.id.menu_setting_relpace) {
             DataAnalyticsUtils.get().ClickMoreIcon(mNewsDetail);
             MoreDialog.newInstance(mNewsDetail).show(getSupportFragmentManager(), "MoreDialog");
             //评论框
@@ -502,6 +511,9 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                     if(mMenuPrised.getVisibility() == View.VISIBLE){
                         mMenuPrised.setSelected(true);
                     }
+                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                        ivPrisedRelpace.setSelected(true);
+                    }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
@@ -514,6 +526,9 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 mNewsDetail.getArticle().setLiked(true);
                 if(mMenuPrised.getVisibility() == View.VISIBLE){
                     mMenuPrised.setSelected(true);
+                }
+                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    ivPrisedRelpace.setSelected(true);
                 }
             }
         }).setTag(this).exe(mArticleId, true, mNewsDetail.getArticle().getUrl());

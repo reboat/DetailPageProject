@@ -32,7 +32,7 @@ public class VideoDetailPicAdapterHolder extends BaseRecyclerViewHolder<String> 
     @Override
     public void bindView() {
         //无图片时用占位图
-        GlideApp.with(mIvImage).load(mData).centerCrop().placeholder(PH.zheSmall()).apply(AppGlideOptions.smallOptions()).into(mIvImage);
+        GlideApp.with(mIvImage).load(mData).placeholder(R.mipmap.news_place_holder_zhe_small).error(R.mipmap.news_place_holder_zhe_small).centerCrop().into(mIvImage);
     }
 
 }

@@ -70,6 +70,7 @@
     <!--顶部tools bar 颜色渐变-->
     <com.aliya.view.fitsys.FitWindowsFrameLayout
         android:id="@+id/fy_container"
+        android:background="@color/_ffffff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"

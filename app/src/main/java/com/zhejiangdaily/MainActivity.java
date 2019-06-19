@@ -40,9 +40,9 @@ public class MainActivity extends DailyActivity implements OnItemClickListener {
         entities.add(new Entity("链接稿件","https://zjbeta.8531.cn/link.html?id=1156948"));
         entities.add(new Entity("活动稿件", "https://zjbeta.8531.cn/activity.html?id=1158579"));
         entities.add(new Entity("视频稿件", "https://zjbeta.8531.cn/video.html?id=1156732"));
-        entities.add(new Entity("直播稿件", "https://zjbeta.8531.cn/live.html?id=1157188&native=1"));
+        entities.add(new Entity("直播稿件", "https://zjbeta.8531.cn/live.html?id=1156923&native=1"));
         entities.add(new Entity("图集稿件", "https://zjbeta.8531.cn/album.html?id=1156729"));
-        entities.add(new Entity("专题稿件","https://zjbeta.8531.cn/subject.html?id=1156752"));
+        entities.add(new Entity("专题稿件","https://zj.zjol.com.cn/subject.html?id=1146710"));
         entities.add(new Entity("起航号稿件", "https://zj.zjol.com.cn/red_boat.html?id=100035879"));
         entities.add(new Entity("起航号图集稿件", "https://zjbeta.8531.cn/red_boat_album.html?id=100041077"));
 

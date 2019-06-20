@@ -3,6 +3,8 @@ package com.zjrb.zjxw.detailproject.utils;
 import android.content.Context;
 
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.adapter.NewsDetailAdapter;
+import com.zjrb.zjxw.detailproject.ui.redBoat.RedBoatActivity;
+import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.ui.topic.adapter.TopicAdapter;
 
 import cn.daily.news.biz.core.web.WebViewImpl;
@@ -19,6 +21,8 @@ public class DetailWebViewImpl extends WebViewImpl {
             ((NewsDetailAdapter.CommonOptCallBack) ctx).onOptPageFinished();
         } else if (ctx instanceof TopicAdapter.CommonOptCallBack) {
             ((TopicAdapter.CommonOptCallBack) ctx).onOptPageFinished();
+        } else if( ctx instanceof RedBoatAdapter.CommonOptCallBack){
+            ((RedBoatAdapter.CommonOptCallBack)ctx).onOptPageFinished();
         }
     }
 

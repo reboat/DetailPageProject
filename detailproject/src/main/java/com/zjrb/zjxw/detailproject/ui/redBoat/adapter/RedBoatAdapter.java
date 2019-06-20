@@ -5,7 +5,9 @@ import android.view.ViewGroup;
 
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
+import com.zjrb.zjxw.detailproject.apibean.bean.DetailShareItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailShareHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.RedBoatDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.ui.topic.holder.NewsPlaceHolder;
@@ -23,6 +25,8 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
     public static final int VIEW_TYPE_TOP = 1;
     //webview
     public static final int VIEW_TYPE_WEB_VIEW = 2;
+    //分享
+    public static final int VIEW_TYPE_SHARE = 11;
 
     private NewsDetailWebViewHolder webviewHolder;
     public static final int NO_POSITION = -1;
@@ -45,6 +49,8 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         } else if (viewType == VIEW_TYPE_WEB_VIEW) {
             webviewHolder = new NewsDetailWebViewHolder(parent);
             return webviewHolder;
+        }else if(viewType == VIEW_TYPE_SHARE){
+            return new NewsDetailShareHolder(parent);
         }
         return new NewsPlaceHolder(parent);
     }
@@ -56,6 +62,8 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         } else if (position == 1) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
+        } else if(getData(position) instanceof DetailShareItemBean){
+            return VIEW_TYPE_SHARE;
         }
         return 0;
     }
@@ -74,6 +82,8 @@ public class RedBoatAdapter extends BaseRecyclerAdapter {
         int oldSize = datas.size();
         //添加标题头
         detailBean = (DraftDetailBean) datas.get(0);
+        //分享
+        datas.add(new DetailShareItemBean(detailBean));
         //中间
         datas.add(detailBean);
 

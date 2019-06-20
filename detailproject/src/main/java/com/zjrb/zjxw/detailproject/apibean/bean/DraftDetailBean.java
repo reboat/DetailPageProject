@@ -18,6 +18,7 @@ public class DraftDetailBean extends BaseData {
 
     private static final long serialVersionUID = -1884972278517660728L;
     private ArticleBean article;
+    public boolean isShareItem;
 
     public ArticleBean getArticle() {
         return article;

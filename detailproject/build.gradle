@@ -64,7 +64,7 @@ dependencies {
     }
     api 'cn.daily.android:biz-core:6.0.2.131'
     api 'org.jsoup:jsoup:1.10.2'
-    implementation project(':BizCore')
+//    implementation project(':BizCore')
 }
 
 

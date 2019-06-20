@@ -11,12 +11,14 @@ import com.zjrb.core.recycleView.adapter.BaseRecyclerAdapter;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.zjxw.detailproject.apibean.bean.DetailShareItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedNewsBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.RelatedSubjectsBean;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailMiddleHolder;
+import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailShareHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailTitleHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsDetailWebViewHolder;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.NewsRelateNewsHolder;
@@ -59,6 +61,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
     public static final int VIEW_TYPE_STRING_CLICK_MORE = 9;
     //占位
     public static final int VIEW_REPLEASE = 10;
+    //分享
+    public static final int VIEW_TYPE_SHARE = 11;
     //恢复
     public static final String PAYLOADS_RESUME = "on_resume";
     //暂停
@@ -76,7 +80,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
     public NewsDetailAdapter(List datas, boolean isVideoDetail) {
         super(datas);
-        if(!datas.isEmpty()){
+        if (!datas.isEmpty()) {
             detailBean = (DraftDetailBean) datas.get(0);
         }
         this.isVideoDetail = isVideoDetail;
@@ -111,6 +115,8 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
             return new NewsStringClickMoreHolder(parent);
         } else if (viewType == VIEW_REPLEASE) {
             return new NewsPlaceHolder(parent);
+        } else if (viewType == VIEW_TYPE_SHARE) {
+            return new NewsDetailShareHolder(parent);
         }
 
         return new NewsPlaceHolder(parent);
@@ -124,7 +130,9 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
         } else if (position == 1 && getData(position) instanceof DraftDetailBean && !((DraftDetailBean) getData(position)).getArticle().isNative_live()) {
             mWebViewHolderPosition = position;
             return VIEW_TYPE_WEB_VIEW;
-        } else if (position == 2 && getData(position) instanceof DraftDetailBean && !TextUtils.isEmpty(((DraftDetailBean) getData(position)).getArticle().getSource_channel_name())) {
+        }else if(getData(position) instanceof DetailShareItemBean){
+            return VIEW_TYPE_SHARE;
+        } else if (position == 3 && getData(position) instanceof DraftDetailBean && !TextUtils.isEmpty(((DraftDetailBean) getData(position)).getArticle().getSource_channel_name())) {
             return VIEW_TYPE_MIDDLE;
         } else if (getData(position) instanceof String && !getData(position).toString().equals("点击查看更多评论") && !getData(position).toString().equals("占位")) {
             return VIEW_TYPE_STRING;
@@ -183,6 +191,7 @@ public class NewsDetailAdapter extends BaseRecyclerAdapter implements OnItemClic
 
         int oldSize = datas.size();
         detailBean = (DraftDetailBean) datas.get(0);
+        datas.add(new DetailShareItemBean(detailBean));
         //添加中间项
         if (!TextUtils.isEmpty(detailBean.getArticle().getSource_channel_name())) {
             datas.add(detailBean);

@@ -19,8 +19,6 @@ import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.sub.PlayerAction;
 import com.aliya.dailyplayer.sub.PlayerCache;
-import com.aliya.view.fitsys.FitWindowsFrameLayout;
-import com.aliya.view.fitsys.FitWindowsLinearLayout;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
@@ -94,6 +92,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
     ImageView ivBack;
     @BindView(R2.id.iv_top_share)
     ImageView ivShare;
+    @BindView(R2.id.tv_follow)
+    TextView tvFollow;
 
 
     private SpecialAdapter mAdapter;
@@ -179,7 +179,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         }
     }
 
-    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect, R2.id.iv_back})
+    @OnClick({R2.id.iv_top_share, R2.id.iv_top_collect, R2.id.iv_back,R2.id.tv_follow})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
 
@@ -223,7 +223,14 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 DataAnalyticsUtils.get().ClickBack(bean);
             }
             finish();
+        }else if (view.getId() == R.id.tv_follow) {
+
+            followTask(); // 收藏
         }
+    }
+
+    private void followTask() {
+
     }
 
     private void loadData() {
@@ -364,16 +371,16 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         List data = mAdapter.getData();
         if (data != null && bean != null) { // 跳转到指定分组
             int index = data.indexOf(bean);
-            if(mOverlayHelper != null){
+            if (mOverlayHelper != null) {
                 bean.setClickChannel(true);
                 mOverlayHelper.setSpecialGroupBean(bean);
             }
             LinearLayoutManager lm = (LinearLayoutManager) mRecycler.getLayoutManager();
-            if(isFirst){
+            if (isFirst) {
                 isFirst = false;
                 lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                         mRecyclerTabCopy.getHeight() + tvReadCopy.getHeight());
-            }else{
+            } else {
                 lm.scrollToPositionWithOffset(index + mAdapter.getHeaderCount(),
                         mRecyclerTabCopy.getHeight());
             }

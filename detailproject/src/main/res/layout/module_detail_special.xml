@@ -33,6 +33,25 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
             android:orientation="horizontal">
+            
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_follow"
+                android:fontFamily="@font/fzbiaoysk_zbjt"
+                android:textColor="@color/_d12324"
+                android:textSize="@dimen/ts_12sp"
+                android:gravity="center"
+                android:adjustViewBounds="true"
+                android:minWidth="50dp"
+                android:background="@drawable/module_detail_shape_border_d12324_r999"
+                android:layout_marginRight="30dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="追踪"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/iv_top_collect"

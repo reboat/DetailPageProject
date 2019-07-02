@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -39,6 +41,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
+import com.zjrb.daily.news.other.Utils;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -168,6 +171,26 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         ButterKnife.bind(this);
         init();
         initListener();
+        mMenuPrised.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mGiftView.getLayoutParams();
+                Rect rect = new Rect();
+                mMenuPrised.getGlobalVisibleRect(rect);
+                Rect rectBig = new Rect();
+                mGiftView.getGlobalVisibleRect(rectBig);
+                int marginRight = Utils.getScreenWidthPixels(getBaseContext())-rect.centerX()-rectBig.width()/2;
+                int marginBottom = Utils.getScreenHeightPixels(getBaseContext())-rect.centerY();
+                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
+                layoutParams.rightMargin = marginRight;
+                layoutParams.bottomMargin = marginBottom;
+                mGiftView.setLayoutParams(layoutParams);
+                if (!rect.isEmpty()&&!rectBig.isEmpty()){
+                    mMenuPrised.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
+            }
+        });
 
     }
 
@@ -188,7 +211,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
             @Override
             public void onPrisedClick(View view) {
-                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+                if (true){
+//                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
                     mGiftView.addGiftView();
                     prisedCount++;
                     handler.removeCallbacks(mergePriseTask);

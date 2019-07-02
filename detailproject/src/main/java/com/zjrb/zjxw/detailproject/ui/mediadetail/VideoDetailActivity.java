@@ -181,7 +181,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 mGiftView.getGlobalVisibleRect(rectBig);
                 int marginRight = Utils.getScreenWidthPixels(getBaseContext())-rect.centerX()-rectBig.width()/2;
                 int marginBottom = Utils.getScreenHeightPixels(getBaseContext())-rect.centerY();
-                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
+//                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
                 layoutParams.rightMargin = marginRight;
                 layoutParams.bottomMargin = marginBottom;
                 mGiftView.setLayoutParams(layoutParams);

@@ -30,6 +30,7 @@ public class LiveGiftView extends RelativeLayout{
     private int mWidth, mHeight;
     private Drawable[] drawables = new Drawable[5];
     LayoutParams layoutParams;
+    public static final int GIFT_SIZE = 60;
 
     public LiveGiftView(Context context) {
         super(context);
@@ -47,7 +48,7 @@ public class LiveGiftView extends RelativeLayout{
         drawables[2] = ContextCompat.getDrawable(getContext(), R.mipmap.module_biz_news_prise_click);
         drawables[3] = ContextCompat.getDrawable(getContext(), R.mipmap.module_biz_news_prise_click);
         drawables[4] = ContextCompat.getDrawable(getContext(), R.mipmap.module_biz_news_prise_click);
-        layoutParams = new LayoutParams(80, 80);
+        layoutParams = new LayoutParams(GIFT_SIZE, GIFT_SIZE);
         layoutParams.addRule(CENTER_HORIZONTAL);
         layoutParams.addRule(ALIGN_PARENT_BOTTOM);
     }
@@ -93,7 +94,7 @@ public class LiveGiftView extends RelativeLayout{
     }
 
     private void startBezierAnim(final ImageView imageView) {
-        PointF startPoint = new PointF(mWidth / 2-40, mHeight-40);
+        PointF startPoint = new PointF(mWidth / 2-GIFT_SIZE/2, mHeight-GIFT_SIZE/2);
         PointF endPoint = new PointF((float) (Math.random() * mWidth * 2 / 3), (float) (Math.random() * 50));
 
         ValueAnimator animator = ValueAnimator.ofObject(new GiftEvaluator(getPointF(), getPointF()), startPoint, endPoint);

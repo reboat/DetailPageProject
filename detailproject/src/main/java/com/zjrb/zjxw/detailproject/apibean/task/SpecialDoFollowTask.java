@@ -4,11 +4,12 @@ package com.zjrb.zjxw.detailproject.apibean.task;
 import com.core.network.callback.ApiCallback;
 
 import cn.daily.news.biz.core.network.compatible.APIGetTask;
+import cn.daily.news.biz.core.network.compatible.APIPostTask;
 
 /**
     直播订阅
  */
-public class SpecialDoFollowTask extends APIGetTask<Void> {
+public class SpecialDoFollowTask extends APIPostTask<Void> {
 
     public SpecialDoFollowTask(ApiCallback<Void> mCallBack) {
         super(mCallBack);

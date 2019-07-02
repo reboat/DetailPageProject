@@ -33,6 +33,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.SpecialDoFollowTask;
+import com.zjrb.zjxw.detailproject.apibean.task.SpecialUnDoFollowTask;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
@@ -235,11 +236,11 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         }
         String s = tvFollow.getText().toString();
         if ("已追踪".equals(s)){
-            new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
+            new SpecialUnDoFollowTask(new APIExpandCallBack<Void>() {
                 @Override
                 public void onSuccess(Void data) {
-//                    item.setLive_reserved(true);
-//                    tvFollow.setText(item.isLive_reserved()?"已订阅":"订阅");
+                    mArticle.traced = false;
+                    tvFollow.setText(mArticle.traced?"已追踪":"追踪");
                     ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
                 }
 
@@ -258,8 +259,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
                 @Override
                 public void onSuccess(Void data) {
-//                    item.setLive_reserved(true);
-//                    tvFollow.setText(item.isLive_reserved()?"已订阅":"订阅");
+                    mArticle.traced = true;
+                    tvFollow.setText(mArticle.traced?"已追踪":"追踪");
                     ZBToast.showShort(tvFollow.getContext(), "追踪成功");
                 }
 
@@ -315,6 +316,8 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         mView.setVisibility(View.GONE);
         if (data != null && data.getArticle() != null) {
             mArticle = data.getArticle();
+            tvFollow.setVisibility(View.VISIBLE);
+            tvFollow.setText(mArticle.traced?"已追踪":"追踪");
             // 记录阅读信息
             ReadNewsDaoHelper.get().asyncRecord(
                     ReadNewsBean.newBuilder().id(mArticle.getId())

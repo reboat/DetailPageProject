@@ -7,11 +7,13 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -56,6 +58,7 @@ import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
+import com.zjrb.zjxw.detailproject.widget.LiveGiftView;
 
 import bean.ZBJTOpenAppShareMenuBean;
 import butterknife.BindView;
@@ -127,6 +130,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     TextView tvLiveStatus;
     @BindView(R2.id.iv_play)
     ImageView ivPlay;
+    @BindView(R2.id.mDivergeView)
+    LiveGiftView mGiftView;
+    @BindView(R2.id.iv_love)
+    ImageView ivLove;
 
 
     private int ui;
@@ -142,6 +149,15 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoDetailFragment videoDetailFragment;
     private VideoLiveFragment mVideoLiveFragment;
     private VideoCommentFragment mCommentFragment;
+    Handler handler = new Handler();
+
+    private Runnable sendGiftRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mGiftView.addGiftView();
+            handler.postDelayed(this, 100);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +165,22 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         setContentView(R.layout.module_detail_video_detail);
         ButterKnife.bind(this);
         init();
+        ivLove.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_UP){
+                    handler.removeCallbacks(sendGiftRunnable);
+                    return true;
+                }
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    handler.post(sendGiftRunnable);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
     }
 
     private void init() {

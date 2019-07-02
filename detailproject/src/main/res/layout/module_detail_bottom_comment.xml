@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.aliya.view.fitsys.FitWindowsRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
                                                 xmlns:tools="http://schemas.android.com/tools"
                                                 android:id="@+id/floor_bar"
@@ -7,9 +7,7 @@
                                                 android:layout_height="50dp"
                                                 android:layout_gravity="bottom"
                                                 android:background="@color/_ffffff_202124"
-                                                android:elevation="10dp"
-                                                android:fitsSystemWindows="true"
-                                                app:fitType="bottom">
+                                                android:elevation="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -109,7 +107,7 @@
 
 
         <!--点赞-->
-        <ImageView
+        <com.zjrb.zjxw.detailproject.widget.AnimationPriseView
             android:id="@+id/menu_prised"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,4 +129,4 @@
             android:src="@mipmap/module_biz_tools_bar_more"
             />
     </RelativeLayout>
-</com.aliya.view.fitsys.FitWindowsRelativeLayout>
+</RelativeLayout>

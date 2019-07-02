@@ -63,15 +63,17 @@ public class LiveGiftView extends RelativeLayout{
      * 点击点赞时,添加点赞图片
      */
     public void addGiftView() {
-        ImageView imageView = new ImageView(getContext());
-        imageView.setImageDrawable(drawables[(int) (Math.random() * drawables.length)]);
-        imageView.setLayoutParams(layoutParams);
-        addView(imageView);
+        for (int i = 0; i < 3; i++) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageDrawable(drawables[(int) (Math.random() * drawables.length)]);
+            imageView.setLayoutParams(layoutParams);
+            addView(imageView);
 
-        // 放大动画
-        startScaleAnim(imageView);
-        // 贝塞尔曲线伴随透明度动画
-        startBezierAnim(imageView);
+            // 放大动画
+            startScaleAnim(imageView);
+            // 贝塞尔曲线伴随透明度动画
+            startBezierAnim(imageView);
+        }
     }
 
     /**
@@ -91,7 +93,7 @@ public class LiveGiftView extends RelativeLayout{
     }
 
     private void startBezierAnim(final ImageView imageView) {
-        PointF startPoint = new PointF(mWidth / 2-50, mHeight-100);
+        PointF startPoint = new PointF(mWidth / 2-40, mHeight-40);
         PointF endPoint = new PointF((float) (Math.random() * mWidth * 2 / 3), (float) (Math.random() * 50));
 
         ValueAnimator animator = ValueAnimator.ofObject(new GiftEvaluator(getPointF(), getPointF()), startPoint, endPoint);

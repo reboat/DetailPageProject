@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.apibean.task.DraftMultyPraiseTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
 import com.zjrb.zjxw.detailproject.callback.DetailPlayerCallBack;
@@ -58,6 +60,7 @@ import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
+import com.zjrb.zjxw.detailproject.widget.AnimationPriseView;
 import com.zjrb.zjxw.detailproject.widget.LiveGiftView;
 
 import bean.ZBJTOpenAppShareMenuBean;
@@ -108,12 +111,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     @BindView(R2.id.ry_container)
     RelativeLayout ryContainer;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsRelativeLayout mFloorBar;
+    RelativeLayout mFloorBar;
     @BindView(R2.id.viewpager)
     ViewPager viewPager;
 
     @BindView(R2.id.menu_prised)
-    ImageView mMenuPrised;
+    AnimationPriseView mMenuPrised;
     @BindView(R2.id.fl_comment)
     RelativeLayout mFyContainer;
     @BindView(R2.id.ly_comment_num)
@@ -132,8 +135,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     ImageView ivPlay;
     @BindView(R2.id.mDivergeView)
     LiveGiftView mGiftView;
-    @BindView(R2.id.iv_love)
-    ImageView ivLove;
 
 
     private int ui;
@@ -149,13 +150,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoDetailFragment videoDetailFragment;
     private VideoLiveFragment mVideoLiveFragment;
     private VideoCommentFragment mCommentFragment;
-    Handler handler = new Handler();
-
-    private Runnable sendGiftRunnable = new Runnable() {
+    private int prisedCount;
+    private Handler handler = new Handler();
+    private Runnable mergePriseTask = new Runnable() {
         @Override
         public void run() {
-            mGiftView.addGiftView();
-            handler.postDelayed(this, 100);
+            doMultyPrise(prisedCount);
+            prisedCount=0;
         }
     };
 
@@ -165,22 +166,53 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         setContentView(R.layout.module_detail_video_detail);
         ButterKnife.bind(this);
         init();
-        ivLove.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    handler.removeCallbacks(sendGiftRunnable);
-                    return true;
-                }
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
-                    handler.post(sendGiftRunnable);
-                    return true;
-                }
+        initListener();
 
-                return false;
+    }
+
+    private void initListener() {
+        mMenuPrised.setOnTouchingListener(new AnimationPriseView.OnTouchingListener() {
+            @Override
+            public void onTouching(View view) {
+
+            }
+
+            @Override
+            public void onNotPriseClick(View view) {
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
+                }
+                onOptFabulous();
+            }
+
+            @Override
+            public void onPrisedClick(View view) {
+                mGiftView.addGiftView();
+                prisedCount++;
+                handler.removeCallbacks(mergePriseTask);
+                handler.postDelayed(mergePriseTask,2000);
             }
         });
+    }
 
+    private void doMultyPrise(int count) {
+        new DraftMultyPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+
+            }
+
+            @Override
+            public void onSuccess(Void baseInnerData) {
+
+            }
+        }).setTag(this).exe(mNewsDetail.getArticle().getUrl(),count);
     }
 
     private void init() {
@@ -524,7 +556,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             //是否允许点赞
             if (data.getArticle().isLike_enabled()) {
                 mMenuPrised.setVisibility(View.VISIBLE);
-                mMenuPrised.setSelected(data.getArticle().isLiked());
+                mMenuPrised.setPrised(data.getArticle().isLiked());
             } else {
                 mMenuPrised.setVisibility(View.GONE);
             }
@@ -538,12 +570,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         }
     }
 
-    @OnClick({R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting,
+    @OnClick({R2.id.menu_prised_relpace, R2.id.menu_setting,
             R2.id.fl_comment, R2.id.iv_top_share, R2.id.iv_top_bar_back,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_play, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
-        if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
+        if (view.getId() == R.id.menu_prised_relpace) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
                 DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             }
@@ -702,7 +734,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
                     if (mMenuPrised.getVisibility() == View.VISIBLE) {
-                        mMenuPrised.setSelected(true);
+                        mMenuPrised.setPrised(true);
+                        mGiftView.addGiftView();
                     }
                     if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);
@@ -719,7 +752,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
                 if (mMenuPrised.getVisibility() == View.VISIBLE) {
-                    mMenuPrised.setSelected(true);
+                    mMenuPrised.setPrised(true);
+                    mGiftView.addGiftView();
                 }
                 if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);

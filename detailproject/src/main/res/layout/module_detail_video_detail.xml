@@ -86,13 +86,6 @@
         android:id="@+id/mDivergeView"
         android:layout_width="100dp"
         android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/iv_love"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/module_biz_news_prise_click" />
     </com.zjrb.zjxw.detailproject.widget.LiveGiftView>
     <FrameLayout
         android:id="@+id/v_container"

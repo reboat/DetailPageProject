@@ -101,6 +101,7 @@ public class DraftDetailBean extends BaseData {
         private boolean topped;
         private boolean native_live;
         public boolean traced;//专题是否追踪 6.1版本添加
+        public boolean allow_repeat_like;//是否允许重复点赞 6.1版本添加
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明

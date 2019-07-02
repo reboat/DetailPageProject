@@ -32,6 +32,7 @@ import com.zjrb.zjxw.detailproject.apibean.bean.ArticleItemBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.apibean.task.SpecialDoFollowTask;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.subject.adapter.SpecialAdapter;
@@ -224,13 +225,56 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             }
             finish();
         }else if (view.getId() == R.id.tv_follow) {
-
             followTask(); // 收藏
         }
     }
 
     private void followTask() {
+        if (bean==null||bean.getArticle()==null||TextUtils.isEmpty(bean.getArticle().getUrl())){
+            return;
+        }
+        String s = tvFollow.getText().toString();
+        if ("已追踪".equals(s)){
+            new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
+                @Override
+                public void onSuccess(Void data) {
+//                    item.setLive_reserved(true);
+//                    tvFollow.setText(item.isLive_reserved()?"已订阅":"订阅");
+                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
+                }
 
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    ZBToast.showShort(getActivity(), errMsg);
+                }
+
+            }).setTag(this).exe(bean.getArticle().getUrl());
+        }else if ("追踪".equals(s)) {
+            new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
+                @Override
+                public void onSuccess(Void data) {
+//                    item.setLive_reserved(true);
+//                    tvFollow.setText(item.isLive_reserved()?"已订阅":"订阅");
+                    ZBToast.showShort(tvFollow.getContext(), "追踪成功");
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    ZBToast.showShort(getActivity(), errMsg);
+                }
+
+            }).setTag(this).exe(bean.getArticle().getUrl());
+        }
     }
 
     private void loadData() {

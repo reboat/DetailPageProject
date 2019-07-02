@@ -80,7 +80,6 @@
         android:layout_alignParentBottom="true" />
 
     <com.zjrb.zjxw.detailproject.widget.LiveGiftView
-        android:layout_above="@id/ly_bottom_comment"
         android:layout_below="@id/tabLayout"
         android:layout_alignParentRight="true"
         android:id="@+id/mDivergeView"

@@ -152,6 +152,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoCommentFragment mCommentFragment;
     private int prisedCount;
     private Handler handler = new Handler();
+    //合并一定时间内的点赞请求
     private Runnable mergePriseTask = new Runnable() {
         @Override
         public void run() {
@@ -187,10 +188,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
             @Override
             public void onPrisedClick(View view) {
-                mGiftView.addGiftView();
-                prisedCount++;
-                handler.removeCallbacks(mergePriseTask);
-                handler.postDelayed(mergePriseTask,2000);
+                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+                    mGiftView.addGiftView();
+                    prisedCount++;
+                    handler.removeCallbacks(mergePriseTask);
+                    handler.postDelayed(mergePriseTask,2000);
+                }
             }
         });
     }

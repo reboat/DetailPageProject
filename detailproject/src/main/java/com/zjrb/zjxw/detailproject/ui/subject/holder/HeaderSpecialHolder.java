@@ -23,7 +23,9 @@ import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.recycleView.PageItem;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.ui.divider.GridSpaceDivider;
+import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
+import com.zjrb.daily.news.other.Utils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -134,7 +136,7 @@ public class HeaderSpecialHolder extends PageItem implements OnItemClickListener
                 }
 
                 //吸顶显示时机
-                if (mRecyclerTab.getTop() + itemView.getTop() + dy - fyContainer.getBottom() > 0
+                if (mRecyclerTab.getTop() + itemView.getTop() + dy - fyContainer.getBottom()+ fyContainer.getMinimumHeight() > 0
                         && itemView.getRootView() != itemView) {
 
                     if (mTvReadCopy.getVisibility() != View.GONE) {

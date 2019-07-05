@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.aliya.dailyplayer.interfaces.OnControllerClickListener;
 import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.sub.PlayerAction;
@@ -154,15 +155,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoLiveFragment mVideoLiveFragment;
     private VideoCommentFragment mCommentFragment;
     private int prisedCount;
-    private Handler handler = new Handler();
-    //合并一定时间内的点赞请求
-    private Runnable mergePriseTask = new Runnable() {
-        @Override
-        public void run() {
-            doMultyPrise(prisedCount);
-            prisedCount=0;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,8 +207,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 //                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
                     mGiftView.addGiftView();
                     prisedCount++;
-                    handler.removeCallbacks(mergePriseTask);
-                    handler.postDelayed(mergePriseTask,2000);
                 }
             }
         });
@@ -332,7 +322,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     //直播回放并且回放地址不为空  取直播回放地址
                     if (bean.getNative_live_info().getStream_status() == 2) {
                         if (!TextUtils.isEmpty(bean.getNative_live_info().getPlayback_url())) {
-                            builder.setLive(false);//直播回放就当成普通视频
                             url = bean.getNative_live_info().getPlayback_url();
                         } else {
                             url = "";
@@ -360,6 +349,18 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setUmengShareBean(shareBean)
                     .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
                     .setTitle(title)
+                    .setArticleId(mNewsDetail.getArticle().getId()+"")
+                    .setSchemeUrl(mNewsDetail.getArticle().getUrl())
+                    .setOnControllerClickListener(new OnControllerClickListener() {
+                        @Override
+                        public void onISayClicked(View view) {
+                            try {
+                                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(mCommentFragment).setLocationCallBack(VideoDetailActivity.this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    })
                     .setPlayContainer(videoContainer);
 
             //UI
@@ -935,6 +936,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     protected void onPause() {
         super.onPause();
         DailyPlayerManager.get().onPause();
+        if (prisedCount>0){
+            doMultyPrise(prisedCount);
+            prisedCount=0;
+        }
     }
 
     @Override

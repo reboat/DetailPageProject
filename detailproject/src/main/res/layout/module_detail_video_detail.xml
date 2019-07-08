@@ -73,8 +73,10 @@
         android:layout_below="@+id/tabLayout" />
 
     <RelativeLayout
+        android:layout_marginBottom="40dp"
+        android:paddingTop="13dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/ly_bottom_comment"
         >
@@ -110,7 +112,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="32dp"
             android:layout_marginLeft="15dp"
             android:layout_toLeftOf="@+id/ly_comment_num"
@@ -141,9 +142,8 @@
         <RelativeLayout
             android:id="@+id/ly_comment_num"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/menu_prised"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/ll_prised"
             android:visibility="visible"
             >
 
@@ -170,17 +170,33 @@
         </RelativeLayout>
 
 
-        <!--点赞-->
-        <com.zjrb.zjxw.detailproject.widget.AnimationPriseView
-            android:id="@+id/menu_prised"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:id="@+id/ll_prised"
             android:layout_marginRight="36dp"
             android:layout_toLeftOf="@+id/menu_setting"
-            android:src="@drawable/module_biz_news_prise"
-            android:visibility="visible"
-            />
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.zjrb.zjxw.detailproject.widget.AnimationPriseView
+                android:id="@+id/menu_prised"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/module_biz_news_prise"
+                android:visibility="visible"
+                />
+
+            <TextView
+                android:fontFamily="@font/din_medium"
+                android:id="@+id/tv_zan"
+                android:textColor="@color/_222222"
+                android:textSize="@dimen/ts_12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="111" />
+        </LinearLayout>
+        <!--点赞-->
+
 
         <!--设置-->
         <ImageView
@@ -188,11 +204,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginRight="14dp"
             android:src="@mipmap/module_biz_tools_bar_more"
             />
     </RelativeLayout>
+
     <com.zjrb.zjxw.detailproject.widget.LiveGiftView
         android:layout_below="@id/tabLayout"
         android:layout_alignParentRight="true"

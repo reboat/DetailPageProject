@@ -8,19 +8,17 @@ import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,7 +27,6 @@ import com.aliya.dailyplayer.sub.Constant;
 import com.aliya.dailyplayer.sub.DailyPlayerManager;
 import com.aliya.dailyplayer.sub.PlayerAction;
 import com.aliya.dailyplayer.sub.PlayerCache;
-import com.aliya.view.fitsys.FitWindowsRelativeLayout;
 import com.aliya.view.ratio.RatioFrameLayout;
 import com.daily.news.location.DataLocation;
 import com.daily.news.location.LocationManager;
@@ -62,6 +59,7 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
 import com.zjrb.zjxw.detailproject.ui.persionaldetail.adapter.TabPagerAdapterImpl;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.NumberConvertUtils;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
 import com.zjrb.zjxw.detailproject.widget.AnimationPriseView;
@@ -139,6 +137,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     ImageView ivPlay;
     @BindView(R2.id.mDivergeView)
     LiveGiftView mGiftView;
+    @BindView(R2.id.tv_zan)
+    TextView tvZan;
+    @BindView(R2.id.ll_prised)
+    LinearLayout llPrised;
 
 
     private int ui;
@@ -171,13 +173,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 mMenuPrised.getGlobalVisibleRect(rect);
                 Rect rectBig = new Rect();
                 mGiftView.getGlobalVisibleRect(rectBig);
-                int marginRight = Utils.getScreenWidthPixels(getBaseContext())-rect.centerX()-rectBig.width()/2;
-                int marginBottom = Utils.getScreenHeightPixels(getBaseContext())-rect.centerY();
+                int marginRight = Utils.getScreenWidthPixels(getBaseContext()) - rect.centerX() - rectBig.width() / 2;
+                int marginBottom = Utils.getScreenHeightPixels(getBaseContext()) - rect.centerY();
 //                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
                 layoutParams.rightMargin = marginRight;
                 layoutParams.bottomMargin = marginBottom;
                 mGiftView.setLayoutParams(layoutParams);
-                if (!rect.isEmpty()&&!rectBig.isEmpty()){
+                if (!rect.isEmpty() && !rectBig.isEmpty()) {
                     mMenuPrised.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
 
@@ -199,17 +201,25 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
                 }
                 onOptFabulous();
+                addLikeCount();
             }
 
             @Override
             public void onPrisedClick(View view) {
-                if (true){
+                if (true) {
 //                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
                     mGiftView.addGiftView();
                     prisedCount++;
+                    addLikeCount();
                 }
             }
         });
+    }
+
+    private void addLikeCount() {
+        mNewsDetail.getArticle().setLike_count(mNewsDetail.getArticle().getLike_count() + 1);
+        String s = NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count());
+        tvZan.setText(s);
     }
 
     private void doMultyPrise(int count) {
@@ -229,7 +239,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
 
             }
-        }).setTag(this).exe(mNewsDetail.getArticle().getUrl(),count);
+        }).setTag(this).exe(mNewsDetail.getArticle().getUrl(), count);
     }
 
     private void init() {
@@ -349,7 +359,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setUmengShareBean(shareBean)
                     .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
                     .setTitle(title)
-                    .setArticleId(mNewsDetail.getArticle().getId()+"")
+                    .setArticleId(mNewsDetail.getArticle().getId() + "")
                     .setSchemeUrl(mNewsDetail.getArticle().getUrl())
                     .setOnControllerClickListener(new OnControllerClickListener() {
                         @Override
@@ -574,19 +584,20 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private void initViewState(DraftDetailBean data) {
         ivSettingReplace.setVisibility(View.GONE);
         ivPrisedRelpace.setVisibility(View.GONE);
+        tvZan.setText(NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count()));
         //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            mMenuPrised.setVisibility(View.GONE);
+            llPrised.setVisibility(View.GONE);
             ivSetting.setVisibility(View.VISIBLE);
         } else {
             ivSetting.setVisibility(View.VISIBLE);
             //是否允许点赞
             if (data.getArticle().isLike_enabled()) {
-                mMenuPrised.setVisibility(View.VISIBLE);
+                llPrised.setVisibility(View.VISIBLE);
                 mMenuPrised.setPrised(data.getArticle().isLiked());
             } else {
-                mMenuPrised.setVisibility(View.GONE);
+                llPrised.setVisibility(View.GONE);
             }
             //是否允许评论
             //禁止评论，隐藏评论框及评论按钮
@@ -761,7 +772,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if (mMenuPrised.getVisibility() == View.VISIBLE) {
+                    if (llPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setPrised(true);
                         mGiftView.addGiftView();
                     }
@@ -779,7 +790,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if (mMenuPrised.getVisibility() == View.VISIBLE) {
+                if (llPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setPrised(true);
                     mGiftView.addGiftView();
                 }
@@ -936,9 +947,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     protected void onPause() {
         super.onPause();
         DailyPlayerManager.get().onPause();
-        if (prisedCount>0){
+        if (prisedCount > 0) {
             doMultyPrise(prisedCount);
-            prisedCount=0;
+            prisedCount = 0;
         }
     }
 

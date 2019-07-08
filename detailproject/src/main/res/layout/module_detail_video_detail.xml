@@ -73,7 +73,6 @@
         android:layout_below="@+id/tabLayout" />
 
     <RelativeLayout
-        android:layout_marginBottom="40dp"
         android:paddingTop="13dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

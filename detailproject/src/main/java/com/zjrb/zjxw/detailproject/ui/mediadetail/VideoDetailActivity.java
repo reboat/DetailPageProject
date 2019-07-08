@@ -206,8 +206,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
             @Override
             public void onPrisedClick(View view) {
-                if (true) {
-//                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+//                if (true) {
+                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
                     mGiftView.addGiftView();
                     prisedCount++;
                     addLikeCount();

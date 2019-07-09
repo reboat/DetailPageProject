@@ -211,6 +211,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     mGiftView.addGiftView();
                     prisedCount++;
                     addLikeCount();
+                }else {
+                    ZBToast.showShort(getActivity(),"您已经赞过");
                 }
             }
         });

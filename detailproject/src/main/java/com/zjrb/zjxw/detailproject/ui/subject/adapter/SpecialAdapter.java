@@ -211,7 +211,7 @@ public class SpecialAdapter extends NewsBaseAdapter {
 
         @Override
         public void bindView() {
-            tvGroupName.setText("#" + mData.getGroup_name() + "#");
+            tvGroupName.setText(mData.getGroup_name());
             // 显示是否有更多
             tvMore.setVisibility(mData.isGroup_has_more() ? View.VISIBLE : View.GONE);
         }

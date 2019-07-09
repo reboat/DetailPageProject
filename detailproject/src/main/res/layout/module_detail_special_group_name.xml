@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
+        android:fontFamily="@font/fzzcysk_zbjt"
         android:textColor="@color/_484848_7a7b7d"
         android:textSize="@dimen/ts_14sp"
         tools:text="理论视野" />

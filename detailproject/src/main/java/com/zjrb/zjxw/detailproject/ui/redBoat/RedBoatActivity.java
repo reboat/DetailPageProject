@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.aliya.view.fitsys.FitWindowsRecyclerView;
 import com.zjrb.core.common.glide.GlideApp;
 import com.zjrb.core.db.SPHelper;
 import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.recycleView.EmptyPageHolder;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -28,10 +31,13 @@ import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.task.PromoteResponse;
+import com.zjrb.zjxw.detailproject.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
+import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.global.C;
@@ -48,11 +54,12 @@ import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.nav.Nav;
+import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
+import cn.daily.news.biz.core.share.UmengShareUtils;
+import cn.daily.news.biz.core.ui.dialog.ZBDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
-import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
-import cn.daily.news.biz.core.ui.toolsbar.holder.RedBoatTopBarHolder;
 import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
 import port.JsInterfaceCallBack;
@@ -99,7 +106,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = BIZTopBarFactory.createRedBoatTopBar(view, this);
+        topHolder = new RedBoatTopBarHolder(view, this);
         return topHolder.getView();
     }
 
@@ -226,7 +233,14 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
             if (article.isColumn_subscribed()) {
+                topHolder.getSubscribe().setVisibility(View.INVISIBLE);
                 topHolder.getSubscribe().setSelected(true);
+                topHolder.rankActionView.setVisibility(View.VISIBLE);
+                if (article.rank_hited) {
+                    topHolder.rankActionView.setText("拉票");
+                } else {
+                    topHolder.rankActionView.setText("打榜");
+                }
             } else {
                 topHolder.getSubscribe().setSelected(false);
             }
@@ -257,6 +271,57 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         topHolder.setViewVisible(topHolder.getSubscribe(), View.INVISIBLE);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.v_container, EmptyStateFragment.newInstance()).commit();
+    }
+
+    @OnClick(R2.id.rank_action_view)
+    public void onRankActionClick(final TextView view) {
+        if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+            final DraftDetailBean.ArticleBean bean = mNewsDetail.getArticle();
+            if (bean.rank_hited) {
+
+                String shareName = String.format("我正在为起航号“%s”拉赞助力，快来和我一起为它加油！", bean.getColumn_name());
+                String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
+                String shareUrl = "https://zj.zjol.com.cn/";
+
+                UmengShareBean shareBean = UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setTitle(shareName)
+                        .setTextContent(shareDes).setTargetUrl(shareUrl)
+                        .setShareType("栏目")
+                        .setNewsCard(false)
+                        .setCardUrl(bean.rank_card_url);
+                if (!StringUtils.isEmpty(bean.getColumn_logo())) {
+                    shareBean.setImgUri(bean.getColumn_logo());
+                } else {
+                    shareBean.setPicId(R.mipmap.ic_launcher);
+                }
+                shareBean.setPicId(R.mipmap.ic_launcher);
+                UmengShareUtils.getInstance().startShare(shareBean);
+
+
+            } else {
+                new PromoteTask(new APICallBack<PromoteResponse>() {
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        super.onError(errMsg, errCode);
+                        if (errCode == 53003) {
+                            ZBToast.showShort(RedBoatActivity.this, errMsg);
+                        }
+                    }
+                    @Override
+                    public void onSuccess(final PromoteResponse data) {
+                        view.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                ZBToast.showShort(getContext(), data.toast);
+                                bean.rank_hited = true;
+                                view.setText("拉票");
+                            }
+                        });
+                    }
+                }).exe(mNewsDetail.getArticle().getColumn_id());
+            }
+        }
     }
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_more, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon})
@@ -348,9 +413,30 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
+
+                            if (!mNewsDetail.getArticle().rank_hited) {
+                                ZBDialog.Builder builder = new ZBDialog.Builder()
+                                        .setLeftText("取消")
+                                        .setRightText("打榜")
+                                        .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                        .setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                sendActionRequest(mNewsDetail.getArticle().getColumn_id());
+                                            }
+                                        });
+                                ZBDialog dialog = new ZBDialog(RedBoatActivity.this);
+                                dialog.setBuilder(builder);
+                                dialog.show();
+                            } else {
+                                ZBToast.showShort(getApplicationContext(), "订阅成功");
+                                topHolder.rankActionView.setText("拉票");
+                            }
+
                             topHolder.getSubscribe().setSelected(true);
-                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
+                            topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                            topHolder.rankActionView.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -374,6 +460,30 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 Nav.with(UIUtils.getContext()).to(mNewsDetail.getArticle().getColumn_url());
             }
         }
+    }
+
+    private void sendActionRequest(int column_id) {
+        new PromoteTask(new APICallBack<PromoteResponse>() {
+            @Override
+            public void onError(String errMsg, int errCode) {
+                super.onError(errMsg, errCode);
+                if (errCode == 53003) {
+                    ZBToast.showShort(RedBoatActivity.this, errMsg);
+                }
+            }
+
+            @Override
+            public void onSuccess(final PromoteResponse data) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ZBToast.showShort(RedBoatActivity.this, data.toast);
+                        mNewsDetail.getArticle().rank_hited = true;
+                        topHolder.rankActionView.setText("拉票");
+                    }
+                });
+            }
+        }).exe(column_id);
     }
 
     @Override

@@ -396,6 +396,11 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
 
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
+                if (DailyPlayerManager.get().getBuilder().isVertical()){//竖视频正在播放的情况
+
+                }else {
+
+                }
                 DailyPlayerManager.get().play(builder);
                 if (PlayerCache.get().getPlayer(url).getPlaybackState() == Player.STATE_ENDED) {//已经结束
                     DailyPlayerManager.get().showStateEnd(videoContainer);
@@ -1000,7 +1005,19 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DailyPlayerManager.get().init(builder, false);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             } else if (PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
-                DailyPlayerManager.get().deleteControllers(currentPlayingView);
+                if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {
+                    currentPlayingView = mVideoLiveFragment.findListPlayingView();
+                } else {
+                    currentPlayingView = videoContainer;
+                }
+                builder.setContext(getActivity());
+                builder.setPlayContainer(currentPlayingView);
+                DailyPlayerManager.get().play(builder);
+                if (playerAction.isShouldPause()){
+                    DailyPlayerManager.get().userPause();
+                }
+//                DailyPlayerManager.get().onDestroy();
+//                DailyPlayerManager.get().deleteControllers(currentPlayingView);
             }
         }
     }

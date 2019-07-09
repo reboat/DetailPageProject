@@ -102,6 +102,13 @@ public class DraftDetailBean extends BaseData {
         private boolean native_live;
         public boolean traced;//专题是否追踪 6.1版本添加
         public boolean allow_repeat_like;//是否允许重复点赞 6.1版本添加
+
+        //6.1版本 打榜相关
+        public boolean rank_hited;
+        public String rank_share_url;
+        public String rank_card_url;
+        public int hit_rank_count;
+        public String hit_rank_count_general;
         /**
          * image_url : http://www.zjol.com.cn/picture.jpg
          * description : 图集文字说明

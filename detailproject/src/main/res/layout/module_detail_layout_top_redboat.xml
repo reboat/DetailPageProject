@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.aliya.view.fitsys.FitWindowsFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/daily_top_bar_background"
+    android:fitsSystemWindows="true"
+    app:fitType="top">
+
+    <com.aliya.view.fitsys.FitWindowsRelativeLayout
+        android:id="@+id/layout_title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/toolbar_normal_height">
+
+        <ImageView
+            android:id="@+id/iv_top_bar_back"
+            android:layout_width="42dp"
+            android:layout_height="@dimen/toolbar_normal_height"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/actionBarItemBackground"
+            android:scaleType="center"
+            android:src="@mipmap/module_biz_top_bar_back"
+            app:maskColor="@android:color/transparent" />
+
+        <com.aliya.view.fitsys.FitWindowsRelativeLayout
+            android:id="@+id/frl_title"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <!--频道头像-->
+            <ImageView
+                android:id="@+id/iv_top_subscribe_icon"
+                android:layout_width="19.4dp"
+                android:layout_height="19.4dp"
+                android:layout_centerVertical="true"
+                app:maskColor="@android:color/transparent"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/tv_top_bar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@+id/iv_top_subscribe_icon"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/_484848_7a7b7d"
+                android:textSize="@dimen/ts_14sp"
+                tools:text="联合国科合国科合国科合国科合国科" />
+        </com.aliya.view.fitsys.FitWindowsRelativeLayout>
+
+        <ImageView
+            android:id="@+id/tv_top_bar_subscribe_text"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_top_more"
+            android:background="@drawable/module_biz_topbar_subscribe"
+            android:visibility="invisible"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/rank_action_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_top_more"
+            android:background="@drawable/rank_action_background"
+            android:paddingLeft="14dp"
+            android:paddingTop="4dp"
+            android:paddingRight="14dp"
+            android:paddingBottom="4dp"
+            android:text="打榜"
+            android:textColor="#ffd12324"
+            android:textSize="12sp"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/iv_top_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="center"
+            android:src="@mipmap/module_biz_topbar_more"
+            android:visibility="invisible"
+            app:maskColor="@android:color/transparent" />
+
+    </com.aliya.view.fitsys.FitWindowsRelativeLayout>
+</com.aliya.view.fitsys.FitWindowsFrameLayout>

@@ -983,7 +983,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         @Override
         public void onReceive(Context context, Intent intent) {
             ViewGroup currentPlayingView;
-
             if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {
                 currentPlayingView = mVideoLiveFragment.findListPlayingView();
             } else {

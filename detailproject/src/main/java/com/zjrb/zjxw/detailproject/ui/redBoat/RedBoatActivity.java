@@ -37,6 +37,7 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
+import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.global.C;
@@ -84,7 +85,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
     public String mArticleId;
     private String mFromChannel;
 
-    private RedBoatDetailTopBarHolder topHolder;
+    private RedBoatTopBarHolder topHolder;
     private Analytics.AnalyticsBuilder builder;
     private DraftDetailBean mNewsDetail;
     private RedBoatAdapter mAdapter;
@@ -105,7 +106,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = new RedBoatDetailTopBarHolder(view, this);
+        topHolder = new RedBoatTopBarHolder(view, this);
         return topHolder.getView();
     }
 
@@ -300,6 +301,13 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
             } else {
                 new PromoteTask(new APICallBack<PromoteResponse>() {
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        super.onError(errMsg, errCode);
+                        if (errCode == 53003) {
+                            ZBToast.showShort(RedBoatActivity.this, errMsg);
+                        }
+                    }
                     @Override
                     public void onSuccess(final PromoteResponse data) {
                         view.post(new Runnable() {

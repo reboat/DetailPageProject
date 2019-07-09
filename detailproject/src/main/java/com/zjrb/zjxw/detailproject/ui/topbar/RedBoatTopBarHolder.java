@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.ui.redBoat;
+package com.zjrb.zjxw.detailproject.ui.topbar;
 
 
 import android.app.Activity;
@@ -18,14 +18,14 @@ import cn.daily.news.biz.core.ui.toolsbar.holder.TopBarViewHolder;
  * @author wanglinjie
  * @date 2018/4/28 14:33.
  */
-public class RedBoatDetailTopBarHolder extends TopBarViewHolder {
+public class RedBoatTopBarHolder extends TopBarViewHolder {
     public FitWindowsRelativeLayout mContainer;
     public TextView tvTitle;
     public ImageView ivmore, tvSubscribe, mIvIcon;
     public FitWindowsRelativeLayout mRelativeLayout;
     public TextView rankActionView;
 
-    public RedBoatDetailTopBarHolder(ViewGroup view, Activity activity) {
+    public RedBoatTopBarHolder(ViewGroup view, Activity activity) {
         super(view, activity);
         mContainer = findViewById(R.id.layout_title_bar);
         tvTitle = findViewById(R.id.tv_top_bar_title);

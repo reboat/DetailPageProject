@@ -5,6 +5,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
@@ -28,6 +29,7 @@ import com.zjrb.core.load.LoadingCallBack;
 import com.zjrb.core.permission.IPermissionCallBack;
 import com.zjrb.core.permission.Permission;
 import com.zjrb.core.permission.PermissionManager;
+import com.zjrb.core.utils.StringUtils;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
@@ -41,9 +43,12 @@ import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.task.PromoteResponse;
+import com.zjrb.zjxw.detailproject.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.adapter.ImagePrePagerAdapter;
+import com.zjrb.zjxw.detailproject.ui.topbar.AtlasTopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
@@ -67,9 +72,8 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.BottomSaveDialogFragment;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
+import cn.daily.news.biz.core.ui.dialog.ZBDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
-import cn.daily.news.biz.core.ui.toolsbar.BIZTopBarFactory;
-import cn.daily.news.biz.core.ui.toolsbar.holder.DefaultTopBarHolder3;
 import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
 import cn.daily.news.biz.core.ui.widget.photoview.HackyViewPager;
 import cn.daily.news.biz.core.utils.DownloadUtil;
@@ -197,16 +201,14 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     /**
      * topbar
      */
-    private DefaultTopBarHolder3 topHolder;
+    private AtlasTopBarHolder topHolder;
     //    private TextView mTvMore;
     private ImageView mIvDownLoad;
     private ImageView mIvShare;
 
     @Override
     protected View onCreateTopBar(ViewGroup view) {
-        topHolder = BIZTopBarFactory.createDefault3(view, this);
-//        mTvTitleTop = topHolder.getTitleView();
-//        mTvMore = topHolder.getTvMore();
+        topHolder = new AtlasTopBarHolder(view, this);
         mIvDownLoad = topHolder.getDownView();
         mIvShare = topHolder.getShareView();
         topHolder.getView().setBackgroundColor(Color.TRANSPARENT);
@@ -479,6 +481,15 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //订阅状态 采用select
             if (data.getArticle().isColumn_subscribed()) {
                 topHolder.getSubscribe().setSelected(true);
+                if (isRedAlbum) {
+                    topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                    topHolder.rankActionView.setVisibility(View.VISIBLE);
+                    if (data.getArticle().rank_hited) {
+                        topHolder.rankActionView.setText("拉票");
+                    } else {
+                        topHolder.rankActionView.setText("打榜");
+                    }
+                }
             } else {
                 topHolder.getSubscribe().setSelected(false);
             }
@@ -511,6 +522,57 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         }
     }
 
+    @OnClick(R2.id.rank_action_view)
+    public void onRankActionClick(final TextView view) {
+        if (mData != null && mData.getArticle() != null) {
+            final DraftDetailBean.ArticleBean bean = mData.getArticle();
+            if (bean.rank_hited) {
+
+                String shareName = String.format("我正在为起航号“%s”拉赞助力，快来和我一起为它加油！", bean.getColumn_name());
+                String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
+                String shareUrl = "https://zj.zjol.com.cn/";
+
+                UmengShareBean shareBean = UmengShareBean.getInstance()
+                        .setSingle(false)
+                        .setTitle(shareName)
+                        .setTextContent(shareDes).setTargetUrl(shareUrl)
+                        .setShareType("栏目")
+                        .setNewsCard(false)
+                        .setCardUrl(bean.rank_card_url);
+                if (!StringUtils.isEmpty(bean.getColumn_logo())) {
+                    shareBean.setImgUri(bean.getColumn_logo());
+                } else {
+                    shareBean.setPicId(R.mipmap.ic_launcher);
+                }
+                shareBean.setPicId(R.mipmap.ic_launcher);
+                UmengShareUtils.getInstance().startShare(shareBean);
+
+
+            } else {
+                new PromoteTask(new APICallBack<PromoteResponse>() {
+                    @Override
+                    public void onError(String errMsg, int errCode) {
+                        super.onError(errMsg, errCode);
+                        if (errCode == 53003) {
+                            ZBToast.showShort(AtlasDetailActivity.this, errMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(final PromoteResponse data) {
+                        view.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                ZBToast.showShort(getContext(), data.toast);
+                                bean.rank_hited = true;
+                                view.setText("拉票");
+                            }
+                        });
+                    }
+                }).exe(mData.getArticle().getColumn_id());
+            }
+        }
+    }
 
     @OnClick({R2.id.iv_share, R2.id.fl_comment, R2.id.tv_comment, R2.id.menu_comment, R2.id.menu_prised, R2.id
             .menu_setting, R2.id.iv_top_download, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title_sub, R2.id.iv_top_subscribe_icon})
@@ -651,9 +713,32 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                         @Override
                         public void onSuccess(Void baseInnerData) {
-                            topHolder.getSubscribe().setSelected(true);
+
+                            if (isRedAlbum) {
+                                if (!mData.getArticle().rank_hited) {
+                                    ZBDialog.Builder builder = new ZBDialog.Builder()
+                                            .setLeftText("取消")
+                                            .setRightText("打榜")
+                                            .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                            .setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    sendActionRequest(mData.getArticle().getColumn_id());
+                                                }
+                                            });
+                                    ZBDialog dialog = new ZBDialog(AtlasDetailActivity.this);
+                                    dialog.setBuilder(builder);
+                                    dialog.show();
+                                } else {
+                                    topHolder.rankActionView.setText("拉票");
+                                }
+                                topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                                topHolder.rankActionView.setVisibility(View.VISIBLE);
+                            }
                             ZBToast.showShort(getApplicationContext(), "订阅成功");
+                            topHolder.getSubscribe().setSelected(true);
                             SyncSubscribeColumn(true, mData.getArticle().getColumn_id());
+
                         }
 
                         @Override
@@ -678,6 +763,31 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             }
         }
     }
+
+    private void sendActionRequest(int column_id) {
+        new PromoteTask(new APICallBack<PromoteResponse>() {
+            @Override
+            public void onError(String errMsg, int errCode) {
+                super.onError(errMsg, errCode);
+                if (errCode == 53003) {
+                    ZBToast.showShort(AtlasDetailActivity.this, errMsg);
+                }
+            }
+
+            @Override
+            public void onSuccess(final PromoteResponse data) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        ZBToast.showShort(AtlasDetailActivity.this, data.toast);
+                        mData.getArticle().rank_hited = true;
+                        topHolder.rankActionView.setText("拉票");
+                    }
+                });
+            }
+        }).exe(column_id);
+    }
+
 
     //图集阅读深度
     private float mReadingScale;

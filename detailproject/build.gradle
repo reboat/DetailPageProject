@@ -49,11 +49,11 @@ dependencies {
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
     api 'cn.daily.android:daily-db:5.1.0'
-    api('cn.daily.android:android-player:0.3.2.29') {
+    api('cn.daily.android:android-player:0.3.2.36') {
         exclude group: 'com.android.support'
         exclude group: 'cn.daily.android'
     }
-    api('cn.daily.android:daily-news:6.0.1.56') {
+    api('cn.daily.android:daily-news:6.0.6.67.1') {
         exclude group: 'cn.daily.android'
         exclude group: 'com.android.support'
     }

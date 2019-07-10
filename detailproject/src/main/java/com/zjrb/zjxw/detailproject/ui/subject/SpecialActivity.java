@@ -25,6 +25,7 @@ import com.zjrb.core.recycleView.listener.OnItemClickListener;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
+import com.zjrb.daily.news.other.FollowIgnoreSetting;
 import com.zjrb.daily.news.other.NewsUtils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
@@ -154,6 +155,12 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 getIntent().setData(data);
                 if (data.getQueryParameter(IKey.ID) != null) {
                     mArticleId = data.getQueryParameter(IKey.ID);
+                    try{
+                       int id = Integer.valueOf(mArticleId);
+                        FollowIgnoreSetting.getInstance().putIgnoreItem(id);
+                    }catch (Exception e){
+
+                    }
                 }
                 if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);

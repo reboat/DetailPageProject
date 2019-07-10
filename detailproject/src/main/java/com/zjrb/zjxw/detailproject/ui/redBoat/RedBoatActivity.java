@@ -58,7 +58,7 @@ import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
 import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
-import cn.daily.news.biz.core.ui.dialog.ZBDialog;
+import cn.daily.news.biz.core.ui.dialog.RankTipDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.web.AndroidBug5497Workaround;
 import cn.daily.news.biz.core.web.JsMultiInterfaceImp;
@@ -415,17 +415,17 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         public void onSuccess(Void baseInnerData) {
 
                             if (!mNewsDetail.getArticle().rank_hited) {
-                                ZBDialog.Builder builder = new ZBDialog.Builder()
+                                RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                         .setLeftText("取消")
                                         .setRightText("打榜")
                                         .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
-                                        .setOnClickListener(new View.OnClickListener() {
+                                        .setOnRightClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 sendActionRequest(mNewsDetail.getArticle().getColumn_id());
                                             }
                                         });
-                                ZBDialog dialog = new ZBDialog(RedBoatActivity.this);
+                                RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);
                                 dialog.setBuilder(builder);
                                 dialog.show();
                             } else {

@@ -72,7 +72,7 @@ import cn.daily.news.biz.core.share.UmengShareBean;
 import cn.daily.news.biz.core.share.UmengShareUtils;
 import cn.daily.news.biz.core.ui.dialog.BottomSaveDialogFragment;
 import cn.daily.news.biz.core.ui.dialog.CommentWindowDialog;
-import cn.daily.news.biz.core.ui.dialog.ZBDialog;
+import cn.daily.news.biz.core.ui.dialog.RankTipDialog;
 import cn.daily.news.biz.core.ui.toast.ZBToast;
 import cn.daily.news.biz.core.ui.widget.DepthPageTransformer;
 import cn.daily.news.biz.core.ui.widget.photoview.HackyViewPager;
@@ -716,17 +716,17 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                             if (isRedAlbum) {
                                 if (!mData.getArticle().rank_hited) {
-                                    ZBDialog.Builder builder = new ZBDialog.Builder()
+                                    RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                             .setLeftText("取消")
                                             .setRightText("打榜")
                                             .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
-                                            .setOnClickListener(new View.OnClickListener() {
+                                            .setOnRightClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     sendActionRequest(mData.getArticle().getColumn_id());
                                                 }
                                             });
-                                    ZBDialog dialog = new ZBDialog(AtlasDetailActivity.this);
+                                    RankTipDialog dialog = new RankTipDialog(AtlasDetailActivity.this);
                                     dialog.setBuilder(builder);
                                     dialog.show();
                                 } else {

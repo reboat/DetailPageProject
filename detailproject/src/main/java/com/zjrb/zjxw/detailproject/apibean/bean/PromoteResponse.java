@@ -1,4 +1,4 @@
-package com.zjrb.zjxw.detailproject.task;
+package com.zjrb.zjxw.detailproject.apibean.bean;
 
 import cn.daily.news.biz.core.network.IgnoreProGuard;
 

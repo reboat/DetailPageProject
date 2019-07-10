@@ -1,6 +1,7 @@
-package com.zjrb.zjxw.detailproject.task;
+package com.zjrb.zjxw.detailproject.apibean.task;
 
 import com.core.network.callback.ApiCallback;
+import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
 
 import cn.daily.news.biz.core.network.compatible.APIPostTask;
 

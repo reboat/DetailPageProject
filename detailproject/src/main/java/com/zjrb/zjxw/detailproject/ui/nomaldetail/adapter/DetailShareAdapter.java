@@ -67,8 +67,8 @@ public final class DetailShareAdapter extends BaseRecyclerAdapter {
                 UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_friend_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.WEIXIN) {
                 UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_wechat_btn);
-            } else if (mData.getPlatform() == SHARE_MEDIA.QQ) {
-                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_qq_btn);
+            } else if (mData.getPlatform() == SHARE_MEDIA.FACEBOOK) {
+                UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_biz_share_card);
             } else if (mData.getPlatform() == SHARE_MEDIA.SINA) {
                 UiModeUtils.applySave(iv_img, Attr.NAME_SRC, R.mipmap.module_detail_me_sina_btn);
             } else if (mData.getPlatform() == SHARE_MEDIA.QZONE) {

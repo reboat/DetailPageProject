@@ -50,7 +50,7 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
     public NewsDetailShareHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_share, parent, false));
         ButterKnife.bind(this, itemView);
-        mRecyleView.addItemDecoration(new GridSpaceDivider(34));
+        mRecyleView.addItemDecoration(new GridSpaceDivider(10));
         GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
         mRecyleView.setLayoutManager(managerFollow);
     }
@@ -69,10 +69,11 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
     private void initShareBean() {
         if (mListData == null) {
             mListData = new ArrayList<>();
+            //使用FACEBOOK作为新闻卡片的ID
+            mListData.add(new DetailShareBean("新闻卡片", SHARE_MEDIA.FACEBOOK));
             mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
             mListData.add(new DetailShareBean("钉钉", SHARE_MEDIA.DINGTALK));
-            mListData.add(new DetailShareBean("QQ", SHARE_MEDIA.QQ));
             mListData.add(new DetailShareBean("更多", SHARE_MEDIA.MORE));
         }
 
@@ -139,7 +140,7 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
                     .setTitle(mData.draftDetailBean.getArticle().getDoc_title())
                     .setPlatform(mListData.get(position).getPlatform())
                     .setTargetUrl(mData.draftDetailBean.getArticle().getUrl())
-                    .setEventName("NewsShare")
+                    .setCardUrl(getData().draftDetailBean.getArticle().getCard_url())
                     .setShareType("文章"));
 
         }

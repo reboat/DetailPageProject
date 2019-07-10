@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/iv_share_image"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6.5dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/module_detail_me_friend_btn"
-        />
+        android:src="@mipmap/module_detail_me_friend_btn" />
 
     <TextView
         android:id="@+id/tv_share_name"
@@ -23,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@color/_999999_5c5c5c"
-        android:textSize="11sp"
+        android:textColor="@color/_666666"
+        android:textSize="12sp"
         tools:text="QQ空间" />
 </RelativeLayout>

@@ -787,7 +787,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     mNewsDetail.getArticle().setLiked(true);
                     if (llPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setPrised(true);
-                        mGiftView.addGiftView();
+                        //允许重复点赞的情况才刷点赞动画
+                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+                            mGiftView.addGiftView();
+                        }
                     }
                     if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);

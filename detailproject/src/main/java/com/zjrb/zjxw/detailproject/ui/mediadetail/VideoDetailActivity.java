@@ -207,7 +207,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             @Override
             public void onPrisedClick(View view) {
 //                if (true) {
-                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
                     mGiftView.addGiftView();
                     prisedCount++;
                     addLikeCount();
@@ -788,7 +788,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     if (llPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setPrised(true);
                         //允许重复点赞的情况才刷点赞动画
-                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like)){
+                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
                             mGiftView.addGiftView();
                         }
                     }
@@ -808,7 +808,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 mNewsDetail.getArticle().setLiked(true);
                 if (llPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setPrised(true);
-                    mGiftView.addGiftView();
+                    //允许重复点赞的情况才刷点赞动画
+                    if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
+                        mGiftView.addGiftView();
+                    }
                 }
                 if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);

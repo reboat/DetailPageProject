@@ -382,6 +382,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
             //直播而且是图文直播只显示封面 //0图文直播 1视频直播
             if (mNewsDetail.getArticle().isNative_live()&&mNewsDetail.getArticle().getLive_type()==0){
+                ivPlay.setVisibility(View.GONE);
                 return;
             }
             if (builder.isLive()) {

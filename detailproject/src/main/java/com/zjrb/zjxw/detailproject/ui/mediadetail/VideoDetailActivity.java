@@ -379,6 +379,10 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             videoContainer.setVisibility(View.VISIBLE);
             GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
+            //直播而且是图文直播只显示封面 //0图文直播 1视频直播
+            if (mNewsDetail.getArticle().isNative_live()&&mNewsDetail.getArticle().getLive_type()==0){
+                return;
+            }
             if (builder.isLive()) {
                 if (builder.getStreamStatus() == STREAM_STATUS_NOT_START) {
                     tvLiveStatus.setText("暂未开始");
@@ -1004,19 +1008,19 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 DailyPlayerManager.get().init(builder, false);
                 DailyPlayerManager.get().showStateEnd(currentPlayingView);
             } else if (PlayerAction.ACTIVITY_VERTICAL.equals(playerAction.getFrom())) {//竖视频返回
-                if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {
-                    currentPlayingView = mVideoLiveFragment.findListPlayingView();
-                } else {
-                    currentPlayingView = videoContainer;
-                }
-                builder.setContext(getActivity());
-                builder.setPlayContainer(currentPlayingView);
-                DailyPlayerManager.get().play(builder);
-                if (playerAction.isShouldPause()){
-                    DailyPlayerManager.get().userPause();
-                }
-//                DailyPlayerManager.get().onDestroy();
-//                DailyPlayerManager.get().deleteControllers(currentPlayingView);
+//                if (mVideoLiveFragment != null && mVideoLiveFragment.findListPlayingView() != null) {
+//                    currentPlayingView = mVideoLiveFragment.findListPlayingView();
+//                } else {
+//                    currentPlayingView = videoContainer;
+//                }
+//                builder.setContext(getActivity());
+//                builder.setPlayContainer(currentPlayingView);
+//                DailyPlayerManager.get().play(builder);
+//                if (playerAction.isShouldPause()){
+//                    DailyPlayerManager.get().userPause();
+//                }
+                DailyPlayerManager.get().onDestroy();
+                DailyPlayerManager.get().deleteControllers(currentPlayingView);
             }
         }
     }

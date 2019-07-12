@@ -547,6 +547,14 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 shareBean.setPicId(R.mipmap.ic_launcher);
                 UmengShareUtils.getInstance().startShare(shareBean);
 
+                new Analytics.AnalyticsBuilder(view.getContext(), "A0062", "", false)
+                        .name("点击拉票")
+                        .pageType("新闻详情页")
+                        .columnID(String.valueOf(bean.getColumn_id()))
+                        .columnName(bean.getColumn_name())
+                        .seObjectType(ObjectType.C90)
+                        .build()
+                        .send();
 
             } else {
                 new PromoteTask(new APICallBack<PromoteResponse>() {
@@ -570,6 +578,15 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         });
                     }
                 }).exe(mData.getArticle().getColumn_id());
+
+                new Analytics.AnalyticsBuilder(view.getContext(), "A0061", "", false)
+                        .name("点击打榜")
+                        .pageType("新闻详情页")
+                        .columnID(String.valueOf(bean.getColumn_id()))
+                        .columnName(bean.getColumn_name())
+                        .seObjectType(ObjectType.C90)
+                        .build()
+                        .send();
             }
         }
     }

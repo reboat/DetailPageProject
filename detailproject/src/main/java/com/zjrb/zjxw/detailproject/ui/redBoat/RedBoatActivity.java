@@ -325,7 +325,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
     }
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_more, R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon})
-    public void onClick(View v) {
+    public void onClick(final View v) {
         if (ClickTracker.isDoubleClick()) return;
         if (v.getId() == R.id.iv_top_bar_back) {
             if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
@@ -428,9 +428,26 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                 RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);
                                 dialog.setBuilder(builder);
                                 dialog.show();
+
+                                new Analytics.AnalyticsBuilder(v.getContext(), "A0061", "", false)
+                                        .name("点击打榜")
+                                        .pageType("新闻详情页")
+                                        .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                                        .columnName(mNewsDetail.getArticle().getColumn_name())
+                                        .seObjectType(ObjectType.C90)
+                                        .build()
+                                        .send();
                             } else {
                                 ZBToast.showShort(getApplicationContext(), "订阅成功");
                                 topHolder.rankActionView.setText("拉票");
+                                new Analytics.AnalyticsBuilder(v.getContext(), "A0062", "", false)
+                                        .name("点击拉票")
+                                        .pageType("新闻详情页")
+                                        .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                                        .columnName(mNewsDetail.getArticle().getColumn_name())
+                                        .seObjectType(ObjectType.C90)
+                                        .build()
+                                        .send();
                             }
 
                             topHolder.getSubscribe().setSelected(true);

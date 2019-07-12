@@ -283,8 +283,16 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
                 String shareUrl = "https://zj.zjol.com.cn/";
 
+                OutSizeAnalyticsBean analyticsBean=OutSizeAnalyticsBean
+                        .getInstance()
+                        .setPageType("新闻详情页")
+                        .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                        .setColumn_name(mNewsDetail.getArticle().getColumn_name())
+                        .setObjectType(ObjectType.C90);
+
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
+                        .setAnalyticsBean(analyticsBean)
                         .setTitle(shareName)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")

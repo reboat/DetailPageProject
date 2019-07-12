@@ -532,9 +532,17 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
                 String shareUrl = "https://zj.zjol.com.cn/";
 
+                OutSizeAnalyticsBean analyticsBean=OutSizeAnalyticsBean
+                        .getInstance()
+                        .setPageType("新闻详情页")
+                        .setColumn_id(String.valueOf(bean.getColumn_id()))
+                        .setColumn_name(bean.getColumn_name())
+                        .setObjectType(ObjectType.C90);
+
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
+                        .setAnalyticsBean(analyticsBean)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")
                         .setNewsCard(false)
@@ -546,6 +554,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 }
                 shareBean.setPicId(R.mipmap.ic_launcher);
                 UmengShareUtils.getInstance().startShare(shareBean);
+
+
 
                 new Analytics.AnalyticsBuilder(view.getContext(), "A0062", "", false)
                         .name("点击拉票")

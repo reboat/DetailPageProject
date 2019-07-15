@@ -141,6 +141,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     TextView tvZan;
     @BindView(R2.id.ll_prised)
     LinearLayout llPrised;
+    @BindView(R2.id.view_cover_shadow)
+    View viewCoverShadow;
 
 
     private int ui;
@@ -207,12 +209,12 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             @Override
             public void onPrisedClick(View view) {
 //                if (true) {
-                if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
+                if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
                     mGiftView.addGiftView();
                     prisedCount++;
                     addLikeCount();
-                }else {
-                    ZBToast.showShort(getActivity(),"您已经赞过");
+                } else {
+                    ZBToast.showShort(getActivity(), "您已经赞过");
                 }
             }
         });
@@ -381,8 +383,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             GlideApp.with(ivImage).load(imagePath).placeholder(PH.zheBig()).centerCrop()
                     .apply(AppGlideOptions.bigOptions()).into(ivImage);
             //直播而且是图文直播只显示封面 //0图文直播 1视频直播
-            if (mNewsDetail.getArticle().isNative_live()&&mNewsDetail.getArticle().getLive_type()==0){
+            if (mNewsDetail.getArticle().isNative_live() && mNewsDetail.getArticle().getLive_type() == 0) {
                 ivPlay.setVisibility(View.GONE);
+                viewCoverShadow.setVisibility(View.GONE);
                 return;
             }
             if (builder.isLive()) {
@@ -402,9 +405,9 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
 
             if (PlayerCache.get().getPlayer(url) != null && PlayerCache.get().getPlayer(url).getPlayWhenReady()) {//播放器正在播放
-                if (DailyPlayerManager.get().getBuilder().isVertical()){//竖视频正在播放的情况
+                if (DailyPlayerManager.get().getBuilder().isVertical()) {//竖视频正在播放的情况
 
-                }else {
+                } else {
 
                 }
                 DailyPlayerManager.get().play(builder);
@@ -788,7 +791,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     if (llPrised.getVisibility() == View.VISIBLE) {
                         mMenuPrised.setPrised(true);
                         //允许重复点赞的情况才刷点赞动画
-                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
+                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
                             mGiftView.addGiftView();
                         }
                     }
@@ -809,7 +812,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 if (llPrised.getVisibility() == View.VISIBLE) {
                     mMenuPrised.setPrised(true);
                     //允许重复点赞的情况才刷点赞动画
-                    if ((mNewsDetail != null && mNewsDetail.getArticle() != null&&mNewsDetail.getArticle().allow_repeat_like&&mNewsDetail.getArticle().isNative_live())){
+                    if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
                         mGiftView.addGiftView();
                     }
                 }

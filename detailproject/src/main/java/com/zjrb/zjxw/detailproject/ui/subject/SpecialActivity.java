@@ -262,6 +262,21 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 }
 
             }).setTag(this).exe(bean.getArticle().getUrl());
+            if (mArticle!=null){
+                new Analytics.AnalyticsBuilder(getBaseContext(), "A0163", "", false)
+                        .name("点击取消追踪")
+                        .selfObjectID(mArticle.getId()+"")
+                        .classShortName(mArticle.getChannel_name())
+                        .objectShortName(mArticle.getDoc_title())
+                        .objectType("C01")
+                        .classID(mArticle.getChannel_id())
+                        .pageType("专题详情页")
+                        .ilurl(mArticle.getUrl())
+                        .objectID(mArticle.getMlf_id()+"")
+                        .build()
+                        .send();
+            }
+
         }else if ("追踪".equals(s)) {
             new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
                 @Override
@@ -282,6 +297,20 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 }
 
             }).setTag(this).exe(bean.getArticle().getUrl());
+            if (mArticle!=null){
+                new Analytics.AnalyticsBuilder(getBaseContext(), "A0063", "", false)
+                        .name("点击追踪")
+                        .selfObjectID(mArticle.getId()+"")
+                        .classShortName(mArticle.getChannel_name())
+                        .objectShortName(mArticle.getDoc_title())
+                        .objectType("C01")
+                        .classID(mArticle.getChannel_id())
+                        .pageType("专题详情页")
+                        .ilurl(mArticle.getUrl())
+                        .objectID(mArticle.getMlf_id()+"")
+                        .build()
+                        .send();
+            }
         }
     }
 

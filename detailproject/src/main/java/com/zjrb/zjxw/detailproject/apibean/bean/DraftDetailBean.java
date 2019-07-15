@@ -102,6 +102,7 @@ public class DraftDetailBean extends BaseData {
         private boolean native_live;
         public boolean traced;//专题是否追踪 6.1版本添加
         public boolean allow_repeat_like;//是否允许重复点赞 6.1版本添加
+        public boolean live_bullet_screen;//是否显示弹幕按钮 6.1添加
 
         //6.1版本 打榜相关
         public boolean rank_hited;

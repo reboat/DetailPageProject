@@ -363,7 +363,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     .setUmengShareBean(shareBean)
                     .setPlayAnalyCallBack(new DetailPlayerCallBack(mNewsDetail.getArticle()))
                     .setTitle(title)
-                    .setCanComment(mNewsDetail.getArticle().getComment_level() != 0)
+                    .setShowDanmuButton(mNewsDetail.getArticle().getComment_level() != 0&&mNewsDetail.getArticle().live_bullet_screen)
                     .setArticleId(mNewsDetail.getArticle().getId() + "")
                     .setSchemeUrl(mNewsDetail.getArticle().getUrl())
                     .setOnControllerClickListener(new OnControllerClickListener() {

@@ -38,13 +38,13 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
+import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
-import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
-import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.adapter.ImagePrePagerAdapter;
@@ -153,47 +153,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         initSubscribeReceiver();
         mFloorBar.setOnTouchListener(this);
         loadData();
-
-
-        mScrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        y = event.getRawY();
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        float duration = y - event.getRawY();
-                        y = event.getRawY();
-                        if (Math.abs(duration) < 10) {
-                            return true;
-                        }
-                        ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
-                        if (params != null) {
-                            params.height += duration;
-                            if (params.height <= mMinHeight) {
-                                params.height = mMinHeight;
-                                mScrollView.setLayoutParams(params);
-                                return false;
-                            } else if (params.height >= mMaxHeight) {
-                                params.height = mMaxHeight;
-                                mScrollView.setLayoutParams(params);
-                                return false;
-                            } else {
-                                mScrollView.setLayoutParams(params);
-                            }
-                        }
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        return false;
-                }
-
-                return true;
-            }
-        });
+        mScrollView.setOnTouchListener(new AtlasScrollListener());
     }
 
     private float y = 0;
@@ -533,7 +493,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
                 String shareUrl = "https://zj.zjol.com.cn/";
 
-                OutSizeAnalyticsBean analyticsBean=OutSizeAnalyticsBean
+                OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean
                         .getInstance()
                         .setPageType("新闻详情页")
                         .setColumn_id(String.valueOf(bean.getColumn_id()))
@@ -555,7 +515,6 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 }
                 shareBean.setPicId(R.mipmap.ic_launcher);
                 UmengShareUtils.getInstance().startShare(shareBean);
-
 
 
                 new Analytics.AnalyticsBuilder(view.getContext(), "A0062", "", false)
@@ -720,7 +679,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
                         ZBToast.showShort(getApplicationContext(), "取消订阅成功");
-                        SyncSubscribeColumn(false, mData.getArticle().getColumn_id());
+                        syncSubscribeColumn(false, mData.getArticle().getColumn_id());
                     }
 
                     @Override
@@ -743,29 +702,11 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         public void onSuccess(Void baseInnerData) {
 
                             if (isRedAlbum && BizUtils.isRankEnable()) {
-                                if (!mData.getArticle().rank_hited) {
-                                    RankTipDialog.Builder builder = new RankTipDialog.Builder()
-                                            .setLeftText("取消")
-                                            .setRightText("打榜")
-                                            .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
-                                            .setOnRightClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    sendActionRequest(mData.getArticle().getColumn_id());
-                                                }
-                                            });
-                                    RankTipDialog dialog = new RankTipDialog(AtlasDetailActivity.this);
-                                    dialog.setBuilder(builder);
-                                    dialog.show();
-                                } else {
-                                    topHolder.rankActionView.setText("拉票");
-                                }
-                                topHolder.getSubscribe().setVisibility(View.INVISIBLE);
-                                topHolder.rankActionView.setVisibility(View.VISIBLE);
+                                hitRank();
                             }
                             ZBToast.showShort(getApplicationContext(), "订阅成功");
                             topHolder.getSubscribe().setSelected(true);
-                            SyncSubscribeColumn(true, mData.getArticle().getColumn_id());
+                            syncSubscribeColumn(true, mData.getArticle().getColumn_id());
 
                         }
 
@@ -792,7 +733,32 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
         }
     }
 
-    private void sendActionRequest(int column_id) {
+    /**
+     * 打榜
+     */
+    private void hitRank() {
+        if (!mData.getArticle().rank_hited) {
+            RankTipDialog.Builder builder = new RankTipDialog.Builder()
+                    .setLeftText("取消")
+                    .setRightText("打榜")
+                    .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                    .setOnRightClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendActionRequest(mData.getArticle().getColumn_id());
+                        }
+                    });
+            RankTipDialog dialog = new RankTipDialog(AtlasDetailActivity.this);
+            dialog.setBuilder(builder);
+            dialog.show();
+        } else {
+            topHolder.rankActionView.setText("拉票");
+        }
+        topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+        topHolder.rankActionView.setVisibility(View.VISIBLE);
+    }
+
+    private void sendActionRequest(final long column_id) {
         new PromoteTask(new APICallBack<PromoteResponse>() {
             @Override
             public void onError(String errMsg, int errCode) {
@@ -810,6 +776,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         ZBToast.showShort(AtlasDetailActivity.this, data.toast);
                         mData.getArticle().rank_hited = true;
                         topHolder.rankActionView.setText("拉票");
+                        BizUtils.syncRankState(AtlasDetailActivity.this, column_id, data.delta_count);
                     }
                 });
             }
@@ -1044,7 +1011,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     /**
      * 同步订阅栏目
      */
-    private void SyncSubscribeColumn(boolean isSubscribe, int columnid) {
+    private void syncSubscribeColumn(boolean isSubscribe, int columnid) {
         Intent intent = new Intent("subscribe_success");
         intent.putExtra("subscribe", isSubscribe);
         intent.putExtra("id", (long) columnid);
@@ -1108,4 +1075,43 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
     }
 
 
+    private class AtlasScrollListener implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+
+            int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    y = event.getRawY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float duration = y - event.getRawY();
+                    y = event.getRawY();
+                    if (Math.abs(duration) < 10) {
+                        return true;
+                    }
+                    ViewGroup.LayoutParams params = mScrollView.getLayoutParams();
+                    if (params != null) {
+                        params.height += duration;
+                        if (params.height <= mMinHeight) {
+                            params.height = mMinHeight;
+                            mScrollView.setLayoutParams(params);
+                            return false;
+                        } else if (params.height >= mMaxHeight) {
+                            params.height = mMaxHeight;
+                            mScrollView.setLayoutParams(params);
+                            return false;
+                        } else {
+                            mScrollView.setLayoutParams(params);
+                        }
+                    }
+
+                    break;
+                case MotionEvent.ACTION_UP:
+                    return false;
+            }
+
+            return true;
+        }
+    }
 }

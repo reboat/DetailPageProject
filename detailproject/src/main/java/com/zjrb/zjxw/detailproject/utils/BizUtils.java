@@ -1,6 +1,9 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.Animator;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
@@ -83,4 +86,10 @@ public class BizUtils {
         return isRankEnable;
     }
 
+    public static void syncRankState(Context context, long column_id, int score) {
+        Intent intent = new Intent("hit_rank_success");
+        intent.putExtra("id", column_id);
+        intent.putExtra("score", score);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

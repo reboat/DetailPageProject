@@ -36,6 +36,7 @@ import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
+import com.zjrb.zjxw.detailproject.ui.photodetail.AtlasDetailActivity;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -492,7 +493,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         }
     }
 
-    private void sendActionRequest(int column_id) {
+    private void sendActionRequest(final int column_id) {
         new PromoteTask(new APICallBack<PromoteResponse>() {
             @Override
             public void onError(String errMsg, int errCode) {
@@ -510,6 +511,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         ZBToast.showShort(RedBoatActivity.this, data.toast);
                         mNewsDetail.getArticle().rank_hited = true;
                         topHolder.rankActionView.setText("拉票");
+                        BizUtils.syncRankState(RedBoatActivity.this, column_id, data.delta_count);
                     }
                 });
             }

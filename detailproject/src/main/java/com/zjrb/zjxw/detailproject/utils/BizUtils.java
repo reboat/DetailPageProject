@@ -4,6 +4,10 @@ import android.animation.Animator;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
+import com.zjrb.core.db.SPHelper;
+
+import cn.daily.news.biz.core.model.ResourceBiz;
+
 /**
  * 业务相关的逻辑处理工具
  * Created by wanglinjie.
@@ -58,6 +62,25 @@ public class BizUtils {
         @Override
         public void onAnimationRepeat(Animator animation) {
         }
+    }
+
+    /**
+     * 榜单是否开启,默认开启
+     *
+     * @return
+     */
+    public static boolean isRankEnable() {
+        boolean isRankEnable = true;
+        ResourceBiz resourceBiz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
+        if (resourceBiz != null && resourceBiz.feature_list != null && resourceBiz.feature_list.size() > 0) {
+            for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
+                if ("columns_rank".equals(bean.name)) {
+                    isRankEnable = bean.enabled;
+                    break;
+                }
+            }
+        }
+        return isRankEnable;
     }
 
 }

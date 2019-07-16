@@ -38,6 +38,7 @@ import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.global.C;
@@ -233,7 +234,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
-            if (article.isColumn_subscribed() && isRankEnable()) {
+            if (article.isColumn_subscribed() && BizUtils.isRankEnable()) {
                 topHolder.getSubscribe().setVisibility(View.INVISIBLE);
                 topHolder.getSubscribe().setSelected(true);
                 topHolder.rankActionView.setVisibility(View.VISIBLE);
@@ -261,25 +262,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         mAdapter.setEmptyView(new EmptyPageHolder(mRvContent,
                 EmptyPageHolder.ArgsBuilder.newBuilder().content("暂无数据")).itemView);
         mRvContent.setAdapter(mAdapter);
-    }
-
-    /**
-     * 榜单是否开启,默认开启
-     *
-     * @return
-     */
-    private boolean isRankEnable() {
-        boolean isRankEnable = true;
-        ResourceBiz resourceBiz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
-        if (resourceBiz != null && resourceBiz.feature_list != null && resourceBiz.feature_list.size() > 0) {
-            for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
-                if ("columns_rank".equals(bean.name)) {
-                    isRankEnable = bean.enabled;
-                    break;
-                }
-            }
-        }
-        return isRankEnable;
     }
 
     /**
@@ -442,7 +424,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         @Override
                         public void onSuccess(Void baseInnerData) {
 
-                            if (isRankEnable()) {
+                            if (BizUtils.isRankEnable()) {
                                 if (!mNewsDetail.getArticle().rank_hited) {
                                     RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                             .setLeftText("取消")

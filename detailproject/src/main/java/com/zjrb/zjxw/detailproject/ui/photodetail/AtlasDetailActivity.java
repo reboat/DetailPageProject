@@ -49,6 +49,7 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.adapter.ImagePrePagerAdapter;
 import com.zjrb.zjxw.detailproject.ui.topbar.AtlasTopBarHolder;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
@@ -399,7 +400,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             mViewPager.addOnPageChangeListener(this);
             mViewPager.setPageTransformer(true, new DepthPageTransformer());
             //设置图集标题和指示器
-            mTvIndex.setText(String.valueOf(mIndex + 1) + "/");
+            mTvIndex.setText((mIndex + 1) + "/");
             mTvTottleNum.setText(String.valueOf(data.getArticle()
                     .getAlbum_image_count()));
             mTvTitle.setText(data.getArticle().getDoc_title());
@@ -481,7 +482,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //订阅状态 采用select
             if (data.getArticle().isColumn_subscribed()) {
                 topHolder.getSubscribe().setSelected(true);
-                if (isRedAlbum) {
+                if (isRedAlbum && BizUtils.isRankEnable()) {
                     topHolder.getSubscribe().setVisibility(View.INVISIBLE);
                     topHolder.rankActionView.setVisibility(View.VISIBLE);
                     if (data.getArticle().rank_hited) {
@@ -741,7 +742,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         @Override
                         public void onSuccess(Void baseInnerData) {
 
-                            if (isRedAlbum) {
+                            if (isRedAlbum && BizUtils.isRankEnable()) {
                                 if (!mData.getArticle().rank_hited) {
                                     RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                             .setLeftText("取消")

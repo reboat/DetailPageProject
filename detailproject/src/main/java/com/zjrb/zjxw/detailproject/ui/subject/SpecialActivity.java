@@ -72,6 +72,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
 
     public static final int REQUEST_CODE_MORE = 1111;
     public static final String KEY_COLLECT = "collect";
+    public static final String KEY_FOLLOW = "trace";
 
     @BindView(R2.id.recycler)
     RecyclerView mRecycler;
@@ -524,7 +525,10 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_MORE && resultCode == RESULT_OK) {
             boolean isCollect = data.getBooleanExtra(KEY_COLLECT, false);
+            boolean isTrace = data.getBooleanExtra(KEY_FOLLOW, false);
             mCollect.setSelected(isCollect);
+            mArticle.traced = isTrace;
+            tvFollow.setText(mArticle.traced?"已追踪":"追踪");
         }
     }
 

@@ -16,6 +16,8 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.SpecialGroupBean;
+import com.zjrb.zjxw.detailproject.apibean.task.SpecialDoFollowTask;
+import com.zjrb.zjxw.detailproject.apibean.task.SpecialUnDoFollowTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     TextView tvTitle;
     @BindView(R2.id.special_tab_container)
     ViewGroup mTabContainer;
+    @BindView(R2.id.tv_follow)
+    TextView tvFollow;
 
     /**
      * 专题id
@@ -78,6 +82,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         ivShare.setOnClickListener(this);
         ivTopBarBack.setOnClickListener(this);
         ivTopCollect.setOnClickListener(this);
+        tvFollow.setOnClickListener(this);
     }
 
     private void bindData(List<SpecialGroupBean> groupBeanList) {
@@ -109,6 +114,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
 
     private void initView() {
         if (mDraftDetailBean != null) {
+            tvFollow.setVisibility(View.VISIBLE);
+            tvFollow.setText(mDraftDetailBean.getArticle().traced?"已追踪":"追踪");
             bindData(mDraftDetailBean.getArticle().getSubject_groups());
             GlideApp.with(this).load(mDraftDetailBean.getArticle().getArticle_pic()).into(ivTopBg);
             tvTitle.setText(mDraftDetailBean.getArticle().getDoc_title());
@@ -125,10 +132,97 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
         }
     }
 
+    private void followTask() {
+        if (mDraftDetailBean==null||mDraftDetailBean.getArticle()==null||TextUtils.isEmpty(mDraftDetailBean.getArticle().getUrl())){
+            return;
+        }
+        String s = tvFollow.getText().toString();
+        if ("已追踪".equals(s)){
+            new SpecialUnDoFollowTask(new APIExpandCallBack<Void>() {
+                @Override
+                public void onSuccess(Void data) {
+                    mDraftDetailBean.getArticle().traced = false;
+                    tvFollow.setText(mDraftDetailBean.getArticle().traced?"已追踪":"追踪");
+                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    ZBToast.showShort(getActivity(), errMsg);
+                }
+
+            }).setTag(this).exe(mDraftDetailBean.getArticle().getUrl());
+            if (mDraftDetailBean.getArticle()!=null){
+                new Analytics.AnalyticsBuilder(getBaseContext(), "A0163", "", false)
+                        .name("点击取消追踪")
+                        .selfObjectID(mDraftDetailBean.getArticle().getId()+"")
+                        .classShortName(mDraftDetailBean.getArticle().getChannel_name())
+                        .objectShortName(mDraftDetailBean.getArticle().getDoc_title())
+                        .objectType("C01")
+                        .classID(mDraftDetailBean.getArticle().getChannel_id())
+                        .pageType("专题详情页")
+                        .ilurl(mDraftDetailBean.getArticle().getUrl())
+                        .objectID(mDraftDetailBean.getArticle().getMlf_id()+"")
+                        .build()
+                        .send();
+            }
+
+        }else if ("追踪".equals(s)) {
+            new SpecialDoFollowTask(new APIExpandCallBack<Void>() {
+                @Override
+                public void onSuccess(Void data) {
+                    mDraftDetailBean.getArticle().traced = true;
+                    tvFollow.setText(mDraftDetailBean.getArticle().traced?"已追踪":"追踪");
+                    ZBToast.showShort(tvFollow.getContext(), "追踪成功！可在“我的追踪”中查看动态更新哦");
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(String errMsg, int errCode) {
+                    ZBToast.showShort(getActivity(), errMsg);
+                }
+
+            }).setTag(this).exe(mDraftDetailBean.getArticle().getUrl());
+            if (mDraftDetailBean.getArticle()!=null){
+                new Analytics.AnalyticsBuilder(getBaseContext(), "A0063", "", false)
+                        .name("点击追踪")
+                        .selfObjectID(mDraftDetailBean.getArticle().getId()+"")
+                        .classShortName(mDraftDetailBean.getArticle().getChannel_name())
+                        .objectShortName(mDraftDetailBean.getArticle().getDoc_title())
+                        .objectType("C01")
+                        .classID(mDraftDetailBean.getArticle().getChannel_id())
+                        .pageType("专题详情页")
+                        .ilurl(mDraftDetailBean.getArticle().getUrl())
+                        .objectID(mDraftDetailBean.getArticle().getMlf_id()+"")
+                        .build()
+                        .send();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent();
+        intent.putExtra(SpecialActivity.KEY_COLLECT,mDraftDetailBean.getArticle().isFollowed());
+        intent.putExtra(SpecialActivity.KEY_FOLLOW,mDraftDetailBean.getArticle().traced);
+        setResult(Activity.RESULT_OK,intent);
+        super.onBackPressed();
+
+    }
+
     @Override
     public void onClick(View view) {
         if (view.getId() == ivTopBarBack.getId()) {
-            super.onBackPressed();
+            onBackPressed();
         } else if (view.getId() == ivTopCollect.getId()) {
             //未被收藏
             collectTask(); // 收藏
@@ -163,6 +257,8 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                         .setTargetUrl(mArticle.getUrl()).setEventName("NewsShare")
                         .setShareType("文章"));
             }
+        }else if (view.getId() == tvFollow.getId()){
+            followTask();
         }
     }
 
@@ -209,10 +305,9 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
     private void bindCollect() {
         if (mDraftDetailBean != null && mDraftDetailBean.getArticle() != null) {
             ivTopCollect.setSelected(mDraftDetailBean.getArticle().isFollowed());
-            Intent intent=new Intent();
-            intent.putExtra(SpecialActivity.KEY_COLLECT,mDraftDetailBean.getArticle().isFollowed());
-            setResult(Activity.RESULT_OK,intent);
         }
     }
+
+
 
 }

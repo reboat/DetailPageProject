@@ -309,6 +309,15 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 shareBean.setPicId(R.mipmap.ic_launcher);
                 UmengShareUtils.getInstance().startShare(shareBean);
 
+                new Analytics.AnalyticsBuilder(getActivity(), "A0062", "", false)
+                        .name("点击拉票")
+                        .pageType("新闻详情页")
+                        .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                        .columnName(mNewsDetail.getArticle().getColumn_name())
+                        .seObjectType(ObjectType.C90)
+                        .build()
+                        .send();
+
 
             } else {
                 new PromoteTask(new APICallBack<PromoteResponse>() {

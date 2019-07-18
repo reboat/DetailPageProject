@@ -39,6 +39,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
+import com.zjrb.daily.news.other.NotchScreenUtil;
 import com.zjrb.daily.news.other.Utils;
 import com.zjrb.daily.news.ui.widget.SlidingTabLayout;
 import com.zjrb.zjxw.detailproject.R;
@@ -176,7 +177,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 Rect rectBig = new Rect();
                 mGiftView.getGlobalVisibleRect(rectBig);
                 int marginRight = Utils.getScreenWidthPixels(getBaseContext()) - rect.centerX() - rectBig.width() / 2;
-                int marginBottom = Utils.getScreenHeightPixels(getBaseContext()) - rect.centerY();
+                int sH = Utils.getScreenHeightPixels(getBaseContext())+ NotchScreenUtil.getNotchInScreen(getActivity());
+                int marginBottom = sH - rect.centerY();
 //                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
                 layoutParams.rightMargin = marginRight;
                 layoutParams.bottomMargin = marginBottom;

@@ -1,8 +1,15 @@
 package com.zjrb.zjxw.detailproject.utils;
 
 import android.animation.Animator;
+import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+
+import com.zjrb.core.db.SPHelper;
+
+import cn.daily.news.biz.core.model.ResourceBiz;
 
 /**
  * 业务相关的逻辑处理工具
@@ -60,4 +67,29 @@ public class BizUtils {
         }
     }
 
+    /**
+     * 榜单是否开启,默认开启
+     *
+     * @return
+     */
+    public static boolean isRankEnable() {
+        boolean isRankEnable = true;
+        ResourceBiz resourceBiz = SPHelper.get().getObject(cn.daily.news.biz.core.constant.Constants.Key.INITIALIZATION_RESOURCES);
+        if (resourceBiz != null && resourceBiz.feature_list != null && resourceBiz.feature_list.size() > 0) {
+            for (ResourceBiz.FeatureListBean bean : resourceBiz.feature_list) {
+                if ("columns_rank".equals(bean.name)) {
+                    isRankEnable = bean.enabled;
+                    break;
+                }
+            }
+        }
+        return isRankEnable;
+    }
+
+    public static void syncRankState(Context context, long column_id, int score) {
+        Intent intent = new Intent("hit_rank_success");
+        intent.putExtra("id", column_id);
+        intent.putExtra("score", score);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
 }

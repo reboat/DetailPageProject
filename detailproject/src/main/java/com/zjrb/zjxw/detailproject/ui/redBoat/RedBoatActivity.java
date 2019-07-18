@@ -36,8 +36,10 @@ import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
+import com.zjrb.zjxw.detailproject.ui.photodetail.AtlasDetailActivity;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
+import com.zjrb.zjxw.detailproject.utils.BizUtils;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialogLink;
 import com.zjrb.zjxw.detailproject.utils.global.C;
@@ -53,6 +55,7 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
+import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -232,7 +235,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
-            if (article.isColumn_subscribed()) {
+            if (article.isColumn_subscribed() && BizUtils.isRankEnable()) {
                 topHolder.getSubscribe().setVisibility(View.INVISIBLE);
                 topHolder.getSubscribe().setSelected(true);
                 topHolder.rankActionView.setVisibility(View.VISIBLE);
@@ -422,46 +425,49 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         @Override
                         public void onSuccess(Void baseInnerData) {
 
-                            if (!mNewsDetail.getArticle().rank_hited) {
-                                RankTipDialog.Builder builder = new RankTipDialog.Builder()
-                                        .setLeftText("取消")
-                                        .setRightText("打榜")
-                                        .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
-                                        .setOnRightClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                sendActionRequest(mNewsDetail.getArticle().getColumn_id());
-                                            }
-                                        });
-                                RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);
-                                dialog.setBuilder(builder);
-                                dialog.show();
+                            if (BizUtils.isRankEnable()) {
+                                if (!mNewsDetail.getArticle().rank_hited) {
+                                    RankTipDialog.Builder builder = new RankTipDialog.Builder()
+                                            .setLeftText("取消")
+                                            .setRightText("打榜")
+                                            .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                            .setOnRightClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    sendActionRequest(mNewsDetail.getArticle().getColumn_id());
+                                                }
+                                            });
+                                    RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);
+                                    dialog.setBuilder(builder);
+                                    dialog.show();
 
-                                new Analytics.AnalyticsBuilder(v.getContext(), "A0061", "", false)
-                                        .name("点击打榜")
-                                        .pageType("新闻详情页")
-                                        .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                                        .columnName(mNewsDetail.getArticle().getColumn_name())
-                                        .seObjectType(ObjectType.C90)
-                                        .build()
-                                        .send();
-                            } else {
-                                ZBToast.showShort(getApplicationContext(), "订阅成功");
-                                topHolder.rankActionView.setText("拉票");
-                                new Analytics.AnalyticsBuilder(v.getContext(), "A0062", "", false)
-                                        .name("点击拉票")
-                                        .pageType("新闻详情页")
-                                        .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                                        .columnName(mNewsDetail.getArticle().getColumn_name())
-                                        .seObjectType(ObjectType.C90)
-                                        .build()
-                                        .send();
+                                    new Analytics.AnalyticsBuilder(v.getContext(), "A0061", "", false)
+                                            .name("点击打榜")
+                                            .pageType("新闻详情页")
+                                            .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                                            .columnName(mNewsDetail.getArticle().getColumn_name())
+                                            .seObjectType(ObjectType.C90)
+                                            .build()
+                                            .send();
+                                } else {
+                                    ZBToast.showShort(getApplicationContext(), "订阅成功");
+                                    topHolder.rankActionView.setText("拉票");
+                                    new Analytics.AnalyticsBuilder(v.getContext(), "A0062", "", false)
+                                            .name("点击拉票")
+                                            .pageType("新闻详情页")
+                                            .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
+                                            .columnName(mNewsDetail.getArticle().getColumn_name())
+                                            .seObjectType(ObjectType.C90)
+                                            .build()
+                                            .send();
+                                }
+
+                                topHolder.rankActionView.setVisibility(View.VISIBLE);
+                                topHolder.getSubscribe().setVisibility(View.INVISIBLE);
                             }
 
                             topHolder.getSubscribe().setSelected(true);
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
-                            topHolder.getSubscribe().setVisibility(View.INVISIBLE);
-                            topHolder.rankActionView.setVisibility(View.VISIBLE);
                         }
 
                         @Override
@@ -487,7 +493,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
         }
     }
 
-    private void sendActionRequest(int column_id) {
+    private void sendActionRequest(final int column_id) {
         new PromoteTask(new APICallBack<PromoteResponse>() {
             @Override
             public void onError(String errMsg, int errCode) {
@@ -505,6 +511,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         ZBToast.showShort(RedBoatActivity.this, data.toast);
                         mNewsDetail.getArticle().rank_hited = true;
                         topHolder.rankActionView.setText("拉票");
+                        BizUtils.syncRankState(RedBoatActivity.this, column_id, data.delta_count);
                     }
                 });
             }

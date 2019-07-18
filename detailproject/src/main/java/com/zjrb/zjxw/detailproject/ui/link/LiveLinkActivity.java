@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.ui.link;
 
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +11,10 @@ import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.daily.db.bean.ReadNewsBean;
 import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
+import com.zjrb.daily.news.other.Utils;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
@@ -37,8 +41,11 @@ import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.utils.DataAnalyticsUtils;
 import com.zjrb.zjxw.detailproject.utils.MoreDialog;
+import com.zjrb.zjxw.detailproject.utils.NumberConvertUtils;
 import com.zjrb.zjxw.detailproject.utils.YiDunToken;
 import com.zjrb.zjxw.detailproject.utils.global.C;
+import com.zjrb.zjxw.detailproject.widget.AnimationPriseView;
+import com.zjrb.zjxw.detailproject.widget.LiveGiftView;
 
 import bean.ZBJTOpenAppShareMenuBean;
 import butterknife.BindView;
@@ -84,9 +91,9 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @BindView(R2.id.tv_comments_num)
     TextView mTvCommentsNum;
     @BindView(R2.id.menu_prised)
-    ImageView mMenuPrised;
+    AnimationPriseView mMenuPrised;
     @BindView(R2.id.ly_bottom_comment)
-    FitWindowsRelativeLayout mFloorBar;
+    RelativeLayout mFloorBar;
     @BindView(R2.id.ry_container)
     FitWindowsRelativeLayout mContainer;
     @BindView(R2.id.v_container)
@@ -100,6 +107,12 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     ImageView ivSetting;
     @BindView(R2.id.menu_prised_relpace)
     ImageView ivPrisedRelpace;
+    @BindView(R2.id.tv_zan)
+    TextView tvZan;
+    @BindView(R2.id.ll_prised)
+    LinearLayout llPrised;
+    @BindView(R2.id.mDivergeView)
+    LiveGiftView mGiftView;
 
     private String mArticleId;
     /**
@@ -107,6 +120,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
      */
     private DraftDetailBean mNewsDetail;
     private String mFromChannel;
+    private int prisedCount;
     /**
      * 网页地址
      */
@@ -123,6 +137,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         setContentView(R.layout.module_detail_activity_browser);
         AndroidBug5497Workaround.assistActivity(this);
         ButterKnife.bind(this);
+        initListener();
         getIntentData(getIntent());
         mFloorBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -134,6 +149,64 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         mReceiver = new SubscribeReceiver(this);
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mReceiver, new IntentFilter("subscribe_success"));
         loadData();
+    }
+
+    private void initListener() {
+        mMenuPrised.setOnTouchingListener(new AnimationPriseView.OnTouchingListener() {
+            @Override
+            public void onTouching(View view) {
+
+            }
+
+            @Override
+            public void onNotPriseClick(View view) {
+                if (mNewsDetail != null && mNewsDetail.getArticle() != null) {
+                    DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
+                }
+                onOptFabulous();
+                addLikeCount();
+            }
+
+            @Override
+            public void onPrisedClick(View view) {
+//                if (true) {
+                if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like)) {
+                    mGiftView.addGiftView();
+                    prisedCount++;
+                    addLikeCount();
+                } else {
+                    ZBToast.showShort(getActivity(), "您已经赞过");
+                }
+            }
+        });
+
+
+        mMenuPrised.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) mGiftView.getLayoutParams();
+                Rect rect = new Rect();
+                mMenuPrised.getGlobalVisibleRect(rect);
+                Rect rectBig = new Rect();
+                mGiftView.getGlobalVisibleRect(rectBig);
+                int marginRight = Utils.getScreenWidthPixels(getBaseContext()) - rect.centerX() - rectBig.width() / 2;
+                int marginBottom = Utils.getScreenHeightPixels(getBaseContext()) - rect.centerY();
+//                Log.e("lujialei","getScreenHeightPixels=="+Utils.getScreenHeightPixels(getBaseContext())+"==rect.centerY()=="+rect.centerY());
+                layoutParams.rightMargin = marginRight;
+                layoutParams.bottomMargin = marginBottom;
+                mGiftView.setLayoutParams(layoutParams);
+                if (!rect.isEmpty() && !rectBig.isEmpty()) {
+                    mMenuPrised.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+
+            }
+        });
+    }
+
+    private void addLikeCount() {
+        mNewsDetail.getArticle().setLike_count(mNewsDetail.getArticle().getLike_count() + 1);
+        String s = NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count());
+        tvZan.setText(s);
     }
 
     //初始化webview相关设置
@@ -288,7 +361,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
-            mMenuPrised.setVisibility(View.GONE);
+            llPrised.setVisibility(View.INVISIBLE);
             ivSetting.setVisibility(View.GONE);
             ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
@@ -308,16 +381,16 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 }
                 //是否允许点赞
                 if (data.getArticle().isLike_enabled()) {
-                    mMenuPrised.setVisibility(View.VISIBLE);
-                    mMenuPrised.setSelected(data.getArticle().isLiked());
+                    llPrised.setVisibility(View.VISIBLE);
+                    mMenuPrised.setPrised(data.getArticle().isLiked());
                 } else {
-                    mMenuPrised.setVisibility(View.GONE);
+                    llPrised.setVisibility(View.INVISIBLE);
                 }
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
                 ivSetting.setVisibility(View.GONE);
-                mMenuPrised.setVisibility(View.GONE);
+                llPrised.setVisibility(View.INVISIBLE);
                 if (data.getArticle().isLike_enabled()) {
                     ivPrisedRelpace.setVisibility(View.VISIBLE);
                     ivPrisedRelpace.setSelected(data.getArticle().isLiked());
@@ -333,7 +406,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     private Bundle bundle;
 
     @OnClick({R2.id.iv_top_bar_back, R2.id.iv_top_share, R2.id.menu_comment,
-            R2.id.menu_prised, R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.fl_comment,
+             R2.id.menu_prised_relpace, R2.id.menu_setting, R2.id.fl_comment,
             R2.id.tv_top_bar_subscribe_text, R2.id.tv_top_bar_title, R2.id.iv_top_subscribe_icon, R2.id.menu_setting_relpace})
     public void onClick(View view) {
         if (ClickTracker.isDoubleClick()) return;
@@ -407,7 +480,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                 Nav.with(UIUtils.getContext()).setExtras(bundle).toPath(RouteManager.COMMENT_ACTIVITY_PATH);
             }
             //点赞
-        } else if (view.getId() == R.id.menu_prised || view.getId() == R.id.menu_prised_relpace) {
+        } else if (view.getId() == R.id.menu_prised_relpace) {
             DataAnalyticsUtils.get().ClickPriseIcon(mNewsDetail);
             onOptFabulous();
             //更多
@@ -490,7 +563,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     /**
      * 点赞操作
      */
-    private void onOptFabulous() {
+    public void onOptFabulous() {
         if (mNewsDetail == null) return;
         // 点赞
         if (mNewsDetail.getArticle().isLiked()) {
@@ -508,26 +581,35 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if(mMenuPrised.getVisibility() == View.VISIBLE){
-                        mMenuPrised.setSelected(true);
+                    if (llPrised.getVisibility() == View.VISIBLE) {
+                        mMenuPrised.setPrised(true);
+                        //允许重复点赞的情况才刷点赞动画
+                        if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
+                            mGiftView.addGiftView();
+                        }
                     }
-                    if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                    if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                         ivPrisedRelpace.setSelected(true);
                     }
                     ZBToast.showShort(getBaseContext(), "已点赞成功");
                 } else {
                     ZBToast.showShort(getBaseContext(), errMsg);
                 }
+
             }
 
             @Override
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if(mMenuPrised.getVisibility() == View.VISIBLE){
-                    mMenuPrised.setSelected(true);
+                if (llPrised.getVisibility() == View.VISIBLE) {
+                    mMenuPrised.setPrised(true);
+                    //允许重复点赞的情况才刷点赞动画
+                    if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
+                        mGiftView.addGiftView();
+                    }
                 }
-                if(ivPrisedRelpace.getVisibility() == View.VISIBLE){
+                if (ivPrisedRelpace.getVisibility() == View.VISIBLE) {
                     ivPrisedRelpace.setSelected(true);
                 }
             }

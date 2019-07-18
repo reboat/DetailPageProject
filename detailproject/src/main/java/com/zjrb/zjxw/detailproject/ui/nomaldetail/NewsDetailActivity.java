@@ -674,22 +674,6 @@ final public class NewsDetailActivity extends DailyActivity implements
     }
 
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        //横屏去掉topbar
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideTopBar();
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        } else {
-            showTopBar();
-            getWindow().getDecorView().setSystemUiVisibility(ui);
-        }
-    }
-
     /**
      * 同步订阅栏目
      */

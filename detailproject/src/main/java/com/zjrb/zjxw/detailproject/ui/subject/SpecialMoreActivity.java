@@ -143,7 +143,7 @@ public class SpecialMoreActivity extends DailyActivity implements View.OnClickLi
                 public void onSuccess(Void data) {
                     mDraftDetailBean.getArticle().traced = false;
                     tvFollow.setText(mDraftDetailBean.getArticle().traced?"已追踪":"追踪");
-                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
+//                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
                 }
 
                 @Override

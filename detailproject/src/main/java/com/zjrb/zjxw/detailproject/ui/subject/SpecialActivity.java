@@ -249,7 +249,7 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
                 public void onSuccess(Void data) {
                     mArticle.traced = false;
                     tvFollow.setText(mArticle.traced?"已追踪":"追踪");
-                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
+//                    ZBToast.showShort(tvFollow.getContext(), "取消追踪成功");
                 }
 
                 @Override

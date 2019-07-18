@@ -317,6 +317,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         super.onError(errMsg, errCode);
                         if (errCode == 53003) {
                             ZBToast.showShort(RedBoatActivity.this, errMsg);
+                        }else{
+                            ZBToast.showShort(RedBoatActivity.this,"打榜失败");
                         }
                     }
                     @Override

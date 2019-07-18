@@ -533,6 +533,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         super.onError(errMsg, errCode);
                         if (errCode == 53003) {
                             ZBToast.showShort(AtlasDetailActivity.this, errMsg);
+                        }else{
+                            ZBToast.showShort(AtlasDetailActivity.this,"打榜失败");
                         }
                     }
 

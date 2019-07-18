@@ -28,15 +28,14 @@ import com.zjrb.daily.db.dao.ReadNewsDaoHelper;
 import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
+import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
-import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
-import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
-import com.zjrb.zjxw.detailproject.ui.photodetail.AtlasDetailActivity;
 import com.zjrb.zjxw.detailproject.ui.redBoat.adapter.RedBoatAdapter;
 import com.zjrb.zjxw.detailproject.ui.topbar.RedBoatTopBarHolder;
 import com.zjrb.zjxw.detailproject.utils.BizUtils;
@@ -55,7 +54,6 @@ import cn.daily.news.analytics.Analytics;
 import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
-import cn.daily.news.biz.core.model.ResourceBiz;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -286,7 +284,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 String shareDes = String.format("点击查看起航号“%s”榜上排名", bean.getColumn_name());
                 String shareUrl = "https://zj.zjol.com.cn/";
 
-                OutSizeAnalyticsBean analyticsBean=OutSizeAnalyticsBean
+                OutSizeAnalyticsBean analyticsBean = OutSizeAnalyticsBean
                         .getInstance()
                         .setPageType("新闻详情页")
                         .setColumn_id(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
@@ -296,6 +294,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setAnalyticsBean(analyticsBean)
+                        .setCardPageType("卡片详情")
                         .setTitle(shareName)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")
@@ -326,10 +325,11 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         super.onError(errMsg, errCode);
                         if (errCode == 53003) {
                             ZBToast.showShort(RedBoatActivity.this, errMsg);
-                        }else{
-                            ZBToast.showShort(RedBoatActivity.this,"打榜失败");
+                        } else {
+                            ZBToast.showShort(RedBoatActivity.this, "打榜失败");
                         }
                     }
+
                     @Override
                     public void onSuccess(final PromoteResponse data) {
                         view.post(new Runnable() {
@@ -442,10 +442,25 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                             .setLeftText("取消")
                                             .setRightText("打榜")
                                             .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                            .setOnLeftClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    new Analytics.AnalyticsBuilder(getActivity(), "200037", "", false)
+                                                            .name("点击取消打榜")
+                                                            .pageType("弹框")
+                                                            .build()
+                                                            .send();
+                                                }
+                                            })
                                             .setOnRightClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
                                                     sendActionRequest(mNewsDetail.getArticle().getColumn_id());
+                                                    new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
+                                                            .name("点击打榜")
+                                                            .pageType("弹框")
+                                                            .build()
+                                                            .send();
                                                 }
                                             });
                                     RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);

@@ -503,6 +503,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
+                        .setCardPageType("卡片详情")
                         .setAnalyticsBean(analyticsBean)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")
@@ -744,10 +745,25 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     .setLeftText("取消")
                     .setRightText("打榜")
                     .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                    .setOnLeftClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new Analytics.AnalyticsBuilder(getActivity(), "200037", "", false)
+                                    .name("点击取消打榜")
+                                    .pageType("弹框")
+                                    .build()
+                                    .send();
+                        }
+                    })
                     .setOnRightClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             sendActionRequest(mData.getArticle().getColumn_id());
+                            new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
+                                    .name("点击打榜")
+                                    .pageType("弹框")
+                                    .build()
+                                    .send();
                         }
                     });
             RankTipDialog dialog = new RankTipDialog(AtlasDetailActivity.this);

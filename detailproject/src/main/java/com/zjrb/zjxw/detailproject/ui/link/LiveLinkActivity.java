@@ -35,6 +35,7 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
+import com.zjrb.zjxw.detailproject.apibean.task.DraftMultyPraiseTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
@@ -641,7 +642,31 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                     .build()
                     .send();
         }
+        if (prisedCount > 0) {
+            doMultyPrise(prisedCount);
+            prisedCount = 0;
+        }
 
+    }
+
+    private void doMultyPrise(int count) {
+        new DraftMultyPraiseTask(new LoadingCallBack<Void>() {
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(String errMsg, int errCode) {
+
+            }
+
+            @Override
+            public void onSuccess(Void baseInnerData) {
+
+            }
+        }).setTag(this).exe(mNewsDetail.getArticle().getUrl(), count);
     }
 
     @Override
@@ -710,5 +735,6 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             }
         }
     }
+
 
 }

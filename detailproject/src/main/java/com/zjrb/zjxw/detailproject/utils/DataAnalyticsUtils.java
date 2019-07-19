@@ -178,6 +178,33 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
                 .send();
     }
 
+    public Analytics CreateCommentAnalytics(DraftDetailBean bean,String pageType) {
+        Analytics analytics = new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0023", "Comment", false)
+                .name("文章评论成功")
+                .objectID(bean.getArticle().getMlf_id() + "")
+                .objectShortName(bean.getArticle().getDoc_title())
+                .seObjectType(ObjectType.C01)
+                .classID(bean.getArticle().getChannel_id())
+                .classShortName(bean.getArticle().getChannel_name())
+                .ilurl(bean.getArticle().getUrl())
+                .action("文章")
+                .columnID(bean.getArticle().getColumn_id() + "")
+                .columnName(bean.getArticle().getColumn_name())
+                .selfObjectID(bean.getArticle().getId() + "")
+                .newsID(bean.getArticle().getMlf_id() + "")
+                .selfNewsID(bean.getArticle().getId() + "")
+                .newsTitle(bean.getArticle().getDoc_title())
+                .selfChannelID(bean.getArticle().getChannel_id())
+                .channelName(bean.getArticle().getChannel_name())
+                .columnID(bean.getArticle().getColumn_id() + "")
+                .columnName(bean.getArticle().getColumn_name())
+                .pubUrl(bean.getArticle().getUrl())
+                .pageType(pageType)
+                .commentType("文章")
+                .build();
+        return analytics;
+    }
+
     @Override
     public Analytics CreateCommentAnalytics(DraftDetailBean bean,boolean isCommentListPage) {
         String pageType = "新闻详情页";

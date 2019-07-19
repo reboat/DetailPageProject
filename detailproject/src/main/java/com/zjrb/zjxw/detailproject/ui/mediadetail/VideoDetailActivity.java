@@ -344,8 +344,6 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         }
                     }
                 }
-
-
             }
 
             UmengShareBean shareBean = UmengShareBean.getInstance()
@@ -372,7 +370,8 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         @Override
                         public void onISayClicked(View view) {
                             try {
-                                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setListen(mCommentFragment).setLocationCallBack(VideoDetailActivity.this).show(getSupportFragmentManager(), "CommentWindowDialog");
+                                Analytics analytics = DataAnalyticsUtils.get().CreateCommentAnalytics(mNewsDetail, "直播详情页");
+                                CommentWindowDialog.newInstance(new CommentDialogBean(String.valueOf(mNewsDetail.getArticle().getId()))).setWMData(analytics).setListen(mCommentFragment).setLocationCallBack(VideoDetailActivity.this).show(getSupportFragmentManager(), "CommentWindowDialog");
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

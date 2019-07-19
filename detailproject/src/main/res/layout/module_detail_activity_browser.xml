@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.aliya.view.fitsys.FitWindowsRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ry_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/_ffffff_202124">
+    android:background="@color/_ffffff_202124"
+    >
 
 
     <com.commonwebview.webview.CommonWebView
@@ -14,152 +14,12 @@
         android:layout_above="@+id/ly_bottom_comment"
         />
 
-    <RelativeLayout
-        android:paddingTop="13dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+    <include
         android:id="@+id/ly_bottom_comment"
-        >
-
-        <!--点赞-->
-        <ImageView
-            android:id="@+id/menu_prised_relpace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="17dp"
-            android:src="@drawable/module_biz_news_prise"
-            android:visibility="gone"
-            />
-
-        <!--更多代替显示-->
-        <ImageView
-            android:id="@+id/menu_setting_relpace"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/menu_prised_relpace"
-            android:src="@mipmap/module_biz_tools_bar_more"
-            android:visibility="gone"
-            />
-
-        <!--评论框-->
-        <RelativeLayout
-            android:id="@+id/fl_comment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="32dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toLeftOf="@+id/ly_comment_num"
-            android:visibility="visible"
-            >
-
-            <TextView
-                android:id="@+id/tv_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="@string/module_detail_comment_hint"
-                android:textColor="@color/_999999_5c5c5c"
-                android:textColorHint="@color/_bfbfbf"
-                android:textSize="@dimen/ts_13sp"
-                />
-
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
-                android:layout_below="@+id/tv_comment"
-                android:layout_marginTop="2dp"
-                android:background="@color/_bfbfbf" />
-
-        </RelativeLayout>
-
-
-        <!--评论列表-->
-        <RelativeLayout
-            android:id="@+id/ly_comment_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/ll_prised"
-            android:visibility="visible"
-            >
-
-            <ImageView
-                android:id="@+id/menu_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/module_biz_ic_comment"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/tv_comments_num"
-                android:layout_width="38dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="9dp"
-                android:layout_toRightOf="@+id/menu_comment"
-                android:fontFamily="@font/din_medium"
-                android:maxLines="1"
-                android:textColor="@color/_d12324"
-                android:textSize="11sp"
-                android:visibility="invisible"
-                tools:text="10.8万+" />
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:id="@+id/ll_prised"
-            android:layout_marginRight="36dp"
-            android:layout_toLeftOf="@+id/menu_setting"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.zjrb.zjxw.detailproject.widget.AnimationPriseView
-                android:id="@+id/menu_prised"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/module_biz_news_prise"
-                android:visibility="visible"
-                />
-
-            <TextView
-                android:fontFamily="@font/din_medium"
-                android:id="@+id/tv_zan"
-                android:textColor="@color/_222222"
-                android:textSize="@dimen/ts_12sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="111" />
-        </LinearLayout>
-        <!--点赞-->
-
-
-        <!--设置-->
-        <ImageView
-            android:id="@+id/menu_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="14dp"
-            android:src="@mipmap/module_biz_tools_bar_more"
-            />
-    </RelativeLayout>
-
-    <com.zjrb.zjxw.detailproject.widget.LiveGiftView
-        android:layout_below="@id/tabLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="40dp"
-        android:id="@+id/mDivergeView"
-        android:layout_width="80dp"
-        android:layout_height="260dp">
-    </com.zjrb.zjxw.detailproject.widget.LiveGiftView>
+        layout="@layout/module_detail_bottom_comment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true" />
 
     <FrameLayout
         android:id="@+id/v_container"

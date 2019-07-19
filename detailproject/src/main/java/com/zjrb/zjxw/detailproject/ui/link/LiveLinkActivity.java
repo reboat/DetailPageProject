@@ -136,7 +136,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.module_detail_activity_browser);
+        setContentView(R.layout.module_detail_activity_live_link);
         AndroidBug5497Workaround.assistActivity(this);
         ButterKnife.bind(this);
         initListener();

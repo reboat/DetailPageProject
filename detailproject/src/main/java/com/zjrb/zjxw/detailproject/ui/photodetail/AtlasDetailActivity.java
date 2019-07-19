@@ -503,7 +503,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
-                        .setCardPageType("卡片详情")
+                        .setCardPageType("卡片详情页")
                         .setAnalyticsBean(analyticsBean)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")

@@ -61,11 +61,12 @@ public class NumberConvertUtils {
             return "";
         }
 
-        if (number < HUNDRED_THOUSANDS) {
+        if (number < TEN_THOUSANDS) {
             return String.valueOf(number);
         }
-
-        return formatter.format(1.0 * number / TEN_THOUSANDS) + "万";
+        double d = 1.0 * number / TEN_THOUSANDS;
+        DecimalFormat df = new DecimalFormat("###.0");
+        return df.format(d) + "万";
     }
 
 

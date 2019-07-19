@@ -457,7 +457,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                                 public void onClick(View v) {
                                                     sendActionRequest(mNewsDetail.getArticle().getColumn_id());
                                                     new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
-                                                            .name("点击打榜")
+                                                            .name("点击继续打榜")
                                                             .pageType("弹框")
                                                             .build()
                                                             .send();

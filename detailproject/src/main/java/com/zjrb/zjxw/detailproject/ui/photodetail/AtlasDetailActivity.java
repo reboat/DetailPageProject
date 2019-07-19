@@ -760,7 +760,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         public void onClick(View v) {
                             sendActionRequest(mData.getArticle().getColumn_id());
                             new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
-                                    .name("点击打榜")
+                                    .name("点击继续打榜")
                                     .pageType("弹框")
                                     .build()
                                     .send();

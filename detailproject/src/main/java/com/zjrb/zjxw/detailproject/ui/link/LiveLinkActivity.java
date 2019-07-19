@@ -359,6 +359,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
+        tvZan.setText(NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count()));
         //不允许点赞及评论,在左边显示更多
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);

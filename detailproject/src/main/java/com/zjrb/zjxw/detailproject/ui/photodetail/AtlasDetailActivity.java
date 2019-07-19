@@ -503,7 +503,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setTitle(shareName)
-                        .setCardPageType("卡片详情")
+                        .setCardPageType("卡片详情页")
                         .setAnalyticsBean(analyticsBean)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")
@@ -760,7 +760,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         public void onClick(View v) {
                             sendActionRequest(mData.getArticle().getColumn_id());
                             new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
-                                    .name("点击打榜")
+                                    .name("点击继续打榜")
                                     .pageType("弹框")
                                     .build()
                                     .send();

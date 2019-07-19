@@ -294,7 +294,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                 UmengShareBean shareBean = UmengShareBean.getInstance()
                         .setSingle(false)
                         .setAnalyticsBean(analyticsBean)
-                        .setCardPageType("卡片详情")
+                        .setCardPageType("卡片详情页")
                         .setTitle(shareName)
                         .setTextContent(shareDes).setTargetUrl(shareUrl)
                         .setShareType("栏目")
@@ -457,7 +457,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                                 public void onClick(View v) {
                                                     sendActionRequest(mNewsDetail.getArticle().getColumn_id());
                                                     new Analytics.AnalyticsBuilder(getActivity(), "200038", "", false)
-                                                            .name("点击打榜")
+                                                            .name("点击继续打榜")
                                                             .pageType("弹框")
                                                             .build()
                                                             .send();
@@ -466,15 +466,6 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                     RankTipDialog dialog = new RankTipDialog(RedBoatActivity.this);
                                     dialog.setBuilder(builder);
                                     dialog.show();
-
-                                    new Analytics.AnalyticsBuilder(v.getContext(), "A0061", "", false)
-                                            .name("点击打榜")
-                                            .pageType("新闻详情页")
-                                            .columnID(String.valueOf(mNewsDetail.getArticle().getColumn_id()))
-                                            .columnName(mNewsDetail.getArticle().getColumn_name())
-                                            .seObjectType(ObjectType.C90)
-                                            .build()
-                                            .send();
                                 } else {
                                     ZBToast.showShort(getApplicationContext(), "订阅成功");
                                     topHolder.rankActionView.setText("拉票");

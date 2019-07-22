@@ -254,4 +254,40 @@ public class DetailPlayerCallBack implements PlayAnalyCallBack {
                 .columnName(bean.getColumn_name())
                 .build().send();
     }
+
+    @Override
+    public void onDanmuOpen(View view) {
+        new Analytics.AnalyticsBuilder(view.getContext(), "A0155", "", false)
+                .name("点击开启弹幕")
+                .selfObjectID(bean.getId()+"")
+                .columnID(bean.getColumn_id()+"")
+                .classShortName(bean.getChannel_name())
+                .objectShortName(bean.getDoc_title())
+                .seObjectType(ObjectType.C21)
+                .classID(bean.getChannel_id())
+                .pageType("视频页面")
+                .ilurl(bean.getUrl())
+                .objectID(String.valueOf(bean.getMlf_id()))
+                .columnName(bean.getColumn_name())
+                .build()
+                .send();
+    }
+
+    @Override
+    public void onDanmuClose(View view) {
+        new Analytics.AnalyticsBuilder(view.getContext(), "A0155", "", false)
+                .name("点击关闭弹幕")
+                .selfObjectID(bean.getId()+"")
+                .columnID(bean.getColumn_id()+"")
+                .classShortName(bean.getChannel_name())
+                .objectShortName(bean.getDoc_title())
+                .seObjectType(ObjectType.C21)
+                .classID(bean.getChannel_id())
+                .pageType("视频页面")
+                .ilurl(bean.getUrl())
+                .objectID(String.valueOf(bean.getMlf_id()))
+                .columnName(bean.getColumn_name())
+                .build()
+                .send();
+    }
 }

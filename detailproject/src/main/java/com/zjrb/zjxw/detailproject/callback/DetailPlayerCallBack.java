@@ -257,7 +257,7 @@ public class DetailPlayerCallBack implements PlayAnalyCallBack {
 
     @Override
     public void onDanmuOpen(View view) {
-        new Analytics.AnalyticsBuilder(view.getContext(), "A0155", "", false)
+        new Analytics.AnalyticsBuilder(view.getContext(), "A0055", "", false)
                 .name("点击开启弹幕")
                 .selfObjectID(bean.getId()+"")
                 .columnID(bean.getColumn_id()+"")
@@ -265,7 +265,7 @@ public class DetailPlayerCallBack implements PlayAnalyCallBack {
                 .objectShortName(bean.getDoc_title())
                 .seObjectType(ObjectType.C21)
                 .classID(bean.getChannel_id())
-                .pageType("视频页面")
+                .pageType("直播详情页")
                 .ilurl(bean.getUrl())
                 .objectID(String.valueOf(bean.getMlf_id()))
                 .columnName(bean.getColumn_name())
@@ -283,7 +283,7 @@ public class DetailPlayerCallBack implements PlayAnalyCallBack {
                 .objectShortName(bean.getDoc_title())
                 .seObjectType(ObjectType.C21)
                 .classID(bean.getChannel_id())
-                .pageType("视频页面")
+                .pageType("直播详情页")
                 .ilurl(bean.getUrl())
                 .objectID(String.valueOf(bean.getMlf_id()))
                 .columnName(bean.getColumn_name())

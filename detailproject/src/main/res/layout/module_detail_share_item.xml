@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:gravity="center">
 
     <ImageView
@@ -24,5 +25,5 @@
         android:maxLines="1"
         android:textColor="@color/_666666"
         android:textSize="12sp"
-        tools:text="QQ空间" />
-</RelativeLayout>
+        tools:text="新闻卡片" />
+</LinearLayout>

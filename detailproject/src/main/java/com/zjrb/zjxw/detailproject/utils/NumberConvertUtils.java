@@ -68,6 +68,7 @@ public class NumberConvertUtils {
         double d = 1.0 * number / TEN_THOUSANDS;
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(1);
+        df.setMinimumFractionDigits(1);
         df.setGroupingSize(0);
         df.setRoundingMode(RoundingMode.FLOOR);
         return df.format(d) + "万";

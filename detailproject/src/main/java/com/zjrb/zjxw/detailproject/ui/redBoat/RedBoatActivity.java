@@ -296,7 +296,8 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         .setAnalyticsBean(analyticsBean)
                         .setCardPageType("卡片详情页")
                         .setTitle(shareName)
-                        .setTextContent(shareDes).setTargetUrl(shareUrl)
+                        .setTextContent(shareDes)
+                        .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url)?shareUrl:bean.rank_share_url)
                         .setShareType("栏目")
                         .setNewsCard(false)
                         .setCardUrl(bean.rank_card_url);

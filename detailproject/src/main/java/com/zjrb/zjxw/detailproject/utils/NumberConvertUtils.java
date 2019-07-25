@@ -1,5 +1,6 @@
 package com.zjrb.zjxw.detailproject.utils;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -65,7 +66,10 @@ public class NumberConvertUtils {
             return String.valueOf(number);
         }
         double d = 1.0 * number / TEN_THOUSANDS;
-        DecimalFormat df = new DecimalFormat("###.0");
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(1);
+        df.setGroupingSize(0);
+        df.setRoundingMode(RoundingMode.FLOOR);
         return df.format(d) + "万";
     }
 

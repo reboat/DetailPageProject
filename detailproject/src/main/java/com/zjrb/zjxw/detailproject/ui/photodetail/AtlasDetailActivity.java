@@ -442,13 +442,17 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //订阅状态 采用select
             if (data.getArticle().isColumn_subscribed()) {
                 topHolder.getSubscribe().setSelected(true);
-                if (isRedAlbum && BizUtils.isRankEnable()) {
-                    topHolder.getSubscribe().setVisibility(View.INVISIBLE);
-                    topHolder.rankActionView.setVisibility(View.VISIBLE);
-                    if (data.getArticle().rank_hited) {
-                        topHolder.rankActionView.setText("拉票");
+                if (isRedAlbum) {
+                    if (BizUtils.isRankEnable()) {
+                        topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                        topHolder.rankActionView.setVisibility(View.VISIBLE);
+                        if (data.getArticle().rank_hited) {
+                            topHolder.rankActionView.setText("拉票");
+                        } else {
+                            topHolder.rankActionView.setText("打榜");
+                        }
                     } else {
-                        topHolder.rankActionView.setText("打榜");
+                        topHolder.getSubscribe().setSelected(true);
                     }
                 }
             } else {
@@ -506,7 +510,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         .setCardPageType("卡片详情页")
                         .setAnalyticsBean(analyticsBean)
                         .setTextContent(shareDes)
-                        .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url)?shareUrl:bean.rank_share_url)
+                        .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url) ? shareUrl : bean.rank_share_url)
                         .setShareType("栏目")
                         .setNewsCard(false)
                         .setCardUrl(bean.rank_card_url);
@@ -535,8 +539,8 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                         super.onError(errMsg, errCode);
                         if (errCode == 53003) {
                             ZBToast.showShort(AtlasDetailActivity.this, errMsg);
-                        }else{
-                            ZBToast.showShort(AtlasDetailActivity.this,"打榜失败");
+                        } else {
+                            ZBToast.showShort(AtlasDetailActivity.this, "打榜失败");
                         }
                     }
 

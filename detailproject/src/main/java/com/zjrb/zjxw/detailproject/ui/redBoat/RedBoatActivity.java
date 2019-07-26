@@ -233,14 +233,18 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             GlideApp.with(topHolder.getIvIcon()).load(article.getColumn_logo()).placeholder(R.mipmap.ic_top_bar_redboat_icon)
                     .error(R.mipmap.ic_top_bar_redboat_icon).centerCrop().into(topHolder.getIvIcon());
             //订阅状态 采用select
-            if (article.isColumn_subscribed() && BizUtils.isRankEnable()) {
-                topHolder.getSubscribe().setVisibility(View.INVISIBLE);
-                topHolder.getSubscribe().setSelected(true);
-                topHolder.rankActionView.setVisibility(View.VISIBLE);
-                if (article.rank_hited) {
-                    topHolder.rankActionView.setText("拉票");
+            if (article.isColumn_subscribed()) {
+                if (BizUtils.isRankEnable()) {
+                    topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                    topHolder.getSubscribe().setSelected(true);
+                    topHolder.rankActionView.setVisibility(View.VISIBLE);
+                    if (article.rank_hited) {
+                        topHolder.rankActionView.setText("拉票");
+                    } else {
+                        topHolder.rankActionView.setText("打榜");
+                    }
                 } else {
-                    topHolder.rankActionView.setText("打榜");
+                    topHolder.getSubscribe().setSelected(true);
                 }
             } else {
                 topHolder.getSubscribe().setSelected(false);
@@ -297,7 +301,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                         .setCardPageType("卡片详情页")
                         .setTitle(shareName)
                         .setTextContent(shareDes)
-                        .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url)?shareUrl:bean.rank_share_url)
+                        .setTargetUrl(TextUtils.isEmpty(bean.rank_share_url) ? shareUrl : bean.rank_share_url)
                         .setShareType("栏目")
                         .setNewsCard(false)
                         .setCardUrl(bean.rank_card_url);

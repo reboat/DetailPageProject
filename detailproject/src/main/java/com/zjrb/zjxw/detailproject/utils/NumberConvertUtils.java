@@ -60,18 +60,25 @@ public class NumberConvertUtils {
     public static String convertLikeCount(Integer number) {
         if (number <= 0) {
             return "";
-        }
-
-        if (number < TEN_THOUSANDS) {
+        } else if (number < TEN_THOUSANDS) {
             return String.valueOf(number);
+        } else if (number < HUNDRED_MILLIONS){
+            double d = 1.0 * number / TEN_THOUSANDS;
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(1);
+            df.setMinimumFractionDigits(1);
+            df.setGroupingSize(0);
+            df.setRoundingMode(RoundingMode.FLOOR);
+            return df.format(d) + "万";
         }
-        double d = 1.0 * number / TEN_THOUSANDS;
+        double d = 1.0 * number / HUNDRED_MILLIONS;
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(1);
         df.setMinimumFractionDigits(1);
         df.setGroupingSize(0);
         df.setRoundingMode(RoundingMode.FLOOR);
-        return df.format(d) + "万";
+        return df.format(d) + "亿";
+
     }
 
 

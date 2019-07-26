@@ -364,7 +364,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
             ly_comment_num.setVisibility(View.GONE);
-            llPrised.setVisibility(View.INVISIBLE);
+            llPrised.setVisibility(View.GONE);
             ivSetting.setVisibility(View.GONE);
             ivSettingReplace.setVisibility(View.VISIBLE);
         } else {
@@ -387,13 +387,13 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                     llPrised.setVisibility(View.VISIBLE);
                     mMenuPrised.setPrised(data.getArticle().isLiked());
                 } else {
-                    llPrised.setVisibility(View.INVISIBLE);
+                    llPrised.setVisibility(View.GONE);
                 }
             } else {//禁止评论，在左边显示
                 mFyContainer.setVisibility(View.GONE);
                 ly_comment_num.setVisibility(View.GONE);
                 ivSetting.setVisibility(View.GONE);
-                llPrised.setVisibility(View.INVISIBLE);
+                llPrised.setVisibility(View.GONE);
                 if (data.getArticle().isLike_enabled()) {
                     ivPrisedRelpace.setVisibility(View.VISIBLE);
                     ivPrisedRelpace.setSelected(data.getArticle().isLiked());

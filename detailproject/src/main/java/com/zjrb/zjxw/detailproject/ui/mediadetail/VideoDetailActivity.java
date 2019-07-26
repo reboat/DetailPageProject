@@ -605,7 +605,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            llPrised.setVisibility(View.INVISIBLE);
+            llPrised.setVisibility(View.GONE);
             ivSetting.setVisibility(View.VISIBLE);
         } else {
             ivSetting.setVisibility(View.VISIBLE);
@@ -614,7 +614,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 llPrised.setVisibility(View.VISIBLE);
                 mMenuPrised.setPrised(data.getArticle().isLiked());
             } else {
-                llPrised.setVisibility(View.INVISIBLE);
+                llPrised.setVisibility(View.GONE);
             }
             //是否允许评论
             //禁止评论，隐藏评论框及评论按钮

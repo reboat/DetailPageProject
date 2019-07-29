@@ -377,48 +377,29 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
      * @param data
      */
     private void initViewState(DraftDetailBean data) {
+        ivSettingReplace.setVisibility(View.GONE);
+        ivPrisedRelpace.setVisibility(View.GONE);
         tvZan.setText(NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count()));
-        //不允许点赞及评论,在左边显示更多
+        //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            ly_comment_num.setVisibility(View.GONE);
             hidePrised(true);
-            ivSetting.setVisibility(View.GONE);
-            ivSettingReplace.setVisibility(View.VISIBLE);
+            ivSetting.setVisibility(View.VISIBLE);
         } else {
-            //允许评论 在右边显示
-            if (data.getArticle().getComment_level() != 0) {
-                ivPrisedRelpace.setVisibility(View.GONE);
-                ivSettingReplace.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.VISIBLE);
-                mFyContainer.setVisibility(View.VISIBLE);
-                ly_comment_num.setVisibility(View.VISIBLE);
-                //大致评论数量
-                if (!TextUtils.isEmpty(data.getArticle().getComment_count_general())) {
-                    mTvCommentsNum.setVisibility(View.VISIBLE);
-                    mTvCommentsNum.setText(data.getArticle().getComment_count_general());
-                } else {
-                    mTvCommentsNum.setVisibility(View.INVISIBLE);
-                }
-                //是否允许点赞
-                if (data.getArticle().isLike_enabled()) {
-                    hidePrised(false);
-                    mMenuPrised.setPrised(data.getArticle().isLiked());
-                } else {
-                    hidePrised(true);
-                }
-            } else {//禁止评论，在左边显示
-                mFyContainer.setVisibility(View.GONE);
-                ly_comment_num.setVisibility(View.GONE);
-                ivSetting.setVisibility(View.GONE);
+            ivSetting.setVisibility(View.VISIBLE);
+            //是否允许点赞
+            if (data.getArticle().isLike_enabled()) {
+                hidePrised(false);
+                mMenuPrised.setPrised(data.getArticle().isLiked());
+            } else {
                 hidePrised(true);
-                if (data.getArticle().isLike_enabled()) {
-                    ivPrisedRelpace.setVisibility(View.VISIBLE);
-                    ivPrisedRelpace.setSelected(data.getArticle().isLiked());
-                } else {
-                    ivPrisedRelpace.setVisibility(View.GONE);
-                }
-                ivSettingReplace.setVisibility(View.VISIBLE);
+            }
+            //是否允许评论
+            //禁止评论，隐藏评论框及评论按钮
+            if (data.getArticle().getComment_level() == 0) {
+                mFyContainer.setVisibility(View.GONE);
+            } else {
+                mFyContainer.setVisibility(View.VISIBLE);
             }
         }
     }

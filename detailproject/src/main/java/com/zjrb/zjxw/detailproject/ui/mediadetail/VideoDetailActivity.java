@@ -160,12 +160,14 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private VideoLiveFragment mVideoLiveFragment;
     private VideoCommentFragment mCommentFragment;
     private int prisedCount;
+    private int priseWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.module_detail_video_detail);
         ButterKnife.bind(this);
+        priseWidth = llPrised.getLayoutParams().width;
         init();
         initListener();
         mMenuPrised.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -186,10 +188,25 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                 if (!rect.isEmpty() && !rectBig.isEmpty()) {
                     mMenuPrised.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
-
             }
         });
 
+    }
+
+    private void hidePrised(boolean isHide){
+        if (isHide){
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) llPrised.getLayoutParams();
+            layoutParams.width = 0;
+            layoutParams.rightMargin = Utils.dp2px(getContext(),0);
+            llPrised.setLayoutParams(layoutParams);
+            llPrised.postInvalidate();
+        }else {
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) llPrised.getLayoutParams();
+            layoutParams.width = priseWidth;
+            layoutParams.rightMargin = Utils.dp2px(getContext(),36);
+            llPrised.setLayoutParams(layoutParams);
+            llPrised.postInvalidate();
+        }
     }
 
     private void initListener() {
@@ -605,16 +622,16 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
         //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);
-            llPrised.setVisibility(View.GONE);
+            hidePrised(true);
             ivSetting.setVisibility(View.VISIBLE);
         } else {
             ivSetting.setVisibility(View.VISIBLE);
             //是否允许点赞
             if (data.getArticle().isLike_enabled()) {
-                llPrised.setVisibility(View.VISIBLE);
+                hidePrised(false);
                 mMenuPrised.setPrised(data.getArticle().isLiked());
             } else {
-                llPrised.setVisibility(View.GONE);
+                hidePrised(true);
             }
             //是否允许评论
             //禁止评论，隐藏评论框及评论按钮
@@ -789,7 +806,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onError(String errMsg, int errCode) {
                 if (errCode == 50013) {
                     mNewsDetail.getArticle().setLiked(true);
-                    if (llPrised.getVisibility() == View.VISIBLE) {
+                    if (llPrised.getLayoutParams().width!=0) {
                         mMenuPrised.setPrised(true);
                         //允许重复点赞的情况才刷点赞动画
                         if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {
@@ -810,7 +827,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
             public void onSuccess(Void baseInnerData) {
                 ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_prise_success));
                 mNewsDetail.getArticle().setLiked(true);
-                if (llPrised.getVisibility() == View.VISIBLE) {
+                if (llPrised.getLayoutParams().width!=0) {
                     mMenuPrised.setPrised(true);
                     //允许重复点赞的情况才刷点赞动画
                     if ((mNewsDetail != null && mNewsDetail.getArticle() != null && mNewsDetail.getArticle().allow_repeat_like && mNewsDetail.getArticle().isNative_live())) {

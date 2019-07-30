@@ -194,6 +194,9 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
         if (ClickTracker.isDoubleClick()) return;
 
         if (view.getId() == R.id.iv_top_share) {
+            if (mArticle==null){
+                return;
+            }
             if (!TextUtils.isEmpty(mArticle.getUrl())) {
                 //分享专用bean
                 OutSizeAnalyticsBean bean = OutSizeAnalyticsBean.getInstance()
@@ -225,6 +228,9 @@ public class SpecialActivity extends DailyActivity implements OnItemClickListene
             }
 
         } else if (view.getId() == R.id.iv_top_collect) {
+            if (mArticle==null){
+                return;
+            }
             //未被收藏
             DataAnalyticsUtils.get().ClickCollect(mArticle);
             collectTask(); // 收藏

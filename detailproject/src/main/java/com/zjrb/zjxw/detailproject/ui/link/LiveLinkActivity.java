@@ -398,8 +398,13 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
             //禁止评论，隐藏评论框及评论按钮
             if (data.getArticle().getComment_level() == 0) {
                 mFyContainer.setVisibility(View.GONE);
+                ly_comment_num.setVisibility(View.GONE);
+                mTvCommentsNum.setVisibility(View.GONE);
             } else {
                 mFyContainer.setVisibility(View.VISIBLE);
+                ly_comment_num.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setVisibility(View.VISIBLE);
+                mTvCommentsNum.setText(data.getArticle().getComment_count_general());
             }
         }
     }

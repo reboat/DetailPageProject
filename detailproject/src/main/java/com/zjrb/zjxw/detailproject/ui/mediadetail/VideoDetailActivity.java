@@ -618,7 +618,13 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
     private void initViewState(DraftDetailBean data) {
         ivSettingReplace.setVisibility(View.GONE);
         ivPrisedRelpace.setVisibility(View.GONE);
-        tvZan.setText(NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count()));
+        if (mNewsDetail.getArticle().isNative_live()){
+            tvZan.setVisibility(View.VISIBLE);
+            tvZan.setText(NumberConvertUtils.convertLikeCount(mNewsDetail.getArticle().getLike_count()));
+        }else {
+            tvZan.setVisibility(View.INVISIBLE);
+        }
+
         //只在右边显示
         if (!data.getArticle().isLike_enabled() && data.getArticle().getComment_level() == 0) {
             mFyContainer.setVisibility(View.GONE);

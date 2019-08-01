@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zjrb.core.recycleView.BaseRecyclerViewHolder;
 import com.zjrb.core.recycleView.listener.OnItemClickListener;
-import com.zjrb.core.ui.divider.GridSpaceDivider;
 import com.zjrb.core.utils.UIUtils;
 import com.zjrb.core.utils.click.ClickTracker;
 import com.zjrb.zjxw.detailproject.R;
@@ -60,17 +59,21 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
         itemView.removeOnAttachStateChangeListener(this);
         itemView.addOnAttachStateChangeListener(this);
         //初始化分享
-        initShareBean();
+        initShareBean(getData());
     }
 
     /**
      * 初始化滚动列表数据
+     *
+     * @param data
      */
-    private void initShareBean() {
+    private void initShareBean(DetailShareItemBean data) {
         if (mListData == null) {
             mListData = new ArrayList<>();
             //使用FACEBOOK作为新闻卡片的ID
-            mListData.add(new DetailShareBean("新闻卡片", SHARE_MEDIA.FACEBOOK));
+            if (data.draftDetailBean != null && data.draftDetailBean.getArticle() != null && !TextUtils.isEmpty(data.draftDetailBean.getArticle().getCard_url())) {
+                mListData.add(new DetailShareBean("新闻卡片", SHARE_MEDIA.FACEBOOK));
+            }
             mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
             mListData.add(new DetailShareBean("钉钉", SHARE_MEDIA.DINGTALK));
@@ -101,7 +104,7 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
     @Override
     public void onItemClick(View itemView, int position) {
         if (ClickTracker.isDoubleClick()) return;
-        if (mData != null && mData.draftDetailBean !=null && mData.draftDetailBean.getArticle() != null && !TextUtils.isEmpty(mData.draftDetailBean.getArticle().getUrl())) {
+        if (mData != null && mData.draftDetailBean != null && mData.draftDetailBean.getArticle() != null && !TextUtils.isEmpty(mData.draftDetailBean.getArticle().getUrl())) {
             if (position == 4) {
                 new Analytics.AnalyticsBuilder(itemView.getContext(), "800005", "AppTabClick", false)
                         .name("点击更多")

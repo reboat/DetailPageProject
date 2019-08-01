@@ -49,9 +49,6 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
     public NewsDetailShareHolder(ViewGroup parent) {
         super(UIUtils.inflate(R.layout.module_detail_layout_share, parent, false));
         ButterKnife.bind(this, itemView);
-//        mRecyleView.addItemDecoration(new GridSpaceDivider(10));
-        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), 5);
-        mRecyleView.setLayoutManager(managerFollow);
     }
 
     @Override
@@ -80,6 +77,8 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
             mListData.add(new DetailShareBean("更多", SHARE_MEDIA.MORE));
         }
 
+        GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), mListData.size());
+        mRecyleView.setLayoutManager(managerFollow);
         mAdapter = new DetailShareAdapter(mListData);
         mAdapter.setOnItemClickListener(this);
         mRecyleView.setAdapter(mAdapter);

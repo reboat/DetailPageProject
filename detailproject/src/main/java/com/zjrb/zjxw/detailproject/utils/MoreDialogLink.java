@@ -501,6 +501,7 @@ public class MoreDialogLink extends BaseDialogFragment {
                     .classShortName(mBeanShare.getAnalyticsBean().getClassifyName())
                     .objectShortName(mBeanShare.getTitle())
                     .objectType(mBeanShare.getAnalyticsBean().getObjectType() != null ? mBeanShare.getAnalyticsBean().getObjectType().getCode() : "")
+                    .seObjectType(mBeanShare.getAnalyticsBean().getObjectType() != null ? mBeanShare.getAnalyticsBean().getObjectType() : null)
                     .classID(mBeanShare.getAnalyticsBean().getClassifyID())
                     .pageType(mBeanShare.getAnalyticsBean().getPageType())
                     .ilurl(mBeanShare.getAnalyticsBean().getUrl())

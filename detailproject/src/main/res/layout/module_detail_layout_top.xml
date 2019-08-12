@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/top_container"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/_ffffff_202124">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/top_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/_ffffff_202124">
 
     <!--宽高比为3:2 题图-->
     <com.aliya.uimode.widget.MaskImageView
@@ -16,8 +16,7 @@
         android:scaleType="fitXY"
         android:visibility="gone"
         app:ratio_w2h="3:2"
-        tools:src="@mipmap/module_core_ic_load_zhe"
-        />
+        tools:src="@mipmap/module_core_ic_load_zhe" />
 
     <com.aliya.view.fitsys.FitWindowsLinearLayout
         android:id="@+id/fit_top_layout"
@@ -30,6 +29,17 @@
 
         <TextView
             android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:fontFamily="@font/fzzcysk_zbjt"
+            android:lineSpacingMultiplier="1.1"
+            android:textColor="@color/_000000_7a7b7d"
+            android:textSize="@dimen/ts_22sp"
+            tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度" />
+
+        <TextView
+            android:id="@+id/tv_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -55,9 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fit_top_layout"
-        android:paddingBottom="6dp"
         android:paddingTop="6dp"
-        >
+        android:paddingBottom="6dp">
 
         <TextView
             android:id="@+id/tv_time"
@@ -74,9 +83,9 @@
             android:id="@+id/tv_channel_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
             android:layout_toRightOf="@+id/tv_time"
-            android:layout_centerVertical="true"
             android:background="?attr/actionBarItemBackground"
             android:ellipsize="end"
             android:maxLines="1"
@@ -90,8 +99,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:fontFamily="@font/fzbiaoysk_zbjt"
             android:layout_toRightOf="@+id/tv_channel_name"
+            android:fontFamily="@font/fzbiaoysk_zbjt"
             android:maxLines="1"
             android:textColor="@color/_bfbfbf"
             android:textSize="@dimen/ts_12sp"

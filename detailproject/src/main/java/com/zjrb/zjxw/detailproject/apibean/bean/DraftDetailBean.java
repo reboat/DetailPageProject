@@ -39,6 +39,7 @@ public class DraftDetailBean extends BaseData {
          * 详情页标题
          */
         private String doc_title;
+        private String doc_subtitle;
         private int list_style;
         private String list_tag;
         private int doc_type;
@@ -162,6 +163,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setDoc_title(String doc_title) {
             this.doc_title = doc_title;
+        }
+
+        public String getDoc_subtitle() {
+            return doc_subtitle;
+        }
+
+        public void setDoc_subtitle(String doc_subtitle) {
+            this.doc_subtitle = doc_subtitle;
         }
 
         public long getGuid() {

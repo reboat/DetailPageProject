@@ -39,6 +39,8 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
     MaskImageView mIvTopBg;
     @BindView(R2.id.tv_title)
     TextView mTvTitle;
+    @BindView(R2.id.tv_subtitle)
+    TextView mSubtitle;
     @BindView(R2.id.tv_reporter)
     TextView mTvReporter;
     @BindView(R2.id.tv_channel_name)
@@ -89,9 +91,18 @@ public class NewsDetailTitleHolder extends BaseRecyclerViewHolder<DraftDetailBea
                 } else {
                     mTvTitle.setVisibility(View.GONE);
                 }
+
+                if (!TextUtils.isEmpty(mData.getArticle().getDoc_subtitle())) {
+                    mSubtitle.setVisibility(View.VISIBLE);
+                    mSubtitle.setText(mData.getArticle().getDoc_subtitle());
+                } else {
+                    mSubtitle.setVisibility(View.GONE);
+                }
+
             }
         } else {
             mTvTitle.setVisibility(View.GONE);
+            mSubtitle.setVisibility(View.GONE);
         }
         //红船号稿件
         if (isRedBoat) {

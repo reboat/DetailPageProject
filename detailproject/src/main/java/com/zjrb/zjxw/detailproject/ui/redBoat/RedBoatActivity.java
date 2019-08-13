@@ -418,7 +418,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "操作成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -429,7 +429,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(RedBoatActivity.this, "取消订阅失败");
+                        ZBToast.showShort(RedBoatActivity.this, "操作失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -446,7 +446,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                     RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                             .setLeftText("取消")
                                             .setRightText("打榜")
-                                            .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                            .setMessage("关注成功，来为它打榜，助它荣登榜首吧！")
                                             .setOnLeftClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
@@ -481,7 +481,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                             .build()
                                             .send();
                                 } else {
-                                    ZBToast.showShort(getApplicationContext(), "订阅成功");
+                                    ZBToast.showShort(getApplicationContext(), "操作成功");
                                     topHolder.rankActionView.setText("拉票");
                                     new Analytics.AnalyticsBuilder(v.getContext(), "A0062", "", false)
                                             .name("点击拉票")
@@ -508,7 +508,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(RedBoatActivity.this, "订阅失败");
+                            ZBToast.showShort(RedBoatActivity.this, "操作失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

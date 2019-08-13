@@ -550,7 +550,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "操作成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -561,7 +561,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(NewsDetailActivity.this, "取消订阅失败");
+                        ZBToast.showShort(NewsDetailActivity.this, "操作失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -573,7 +573,7 @@ final public class NewsDetailActivity extends DailyActivity implements
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            ZBToast.showShort(getApplicationContext(), "订阅成功");
+                            ZBToast.showShort(getApplicationContext(), "操作成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -584,7 +584,7 @@ final public class NewsDetailActivity extends DailyActivity implements
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(NewsDetailActivity.this, "订阅失败");
+                            ZBToast.showShort(NewsDetailActivity.this, "操作失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

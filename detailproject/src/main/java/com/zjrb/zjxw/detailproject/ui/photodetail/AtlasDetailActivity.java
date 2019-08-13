@@ -686,7 +686,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
+                        ZBToast.showShort(getApplicationContext(), "操作成功");
                         syncSubscribeColumn(false, mData.getArticle().getColumn_id());
                     }
 
@@ -697,7 +697,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(AtlasDetailActivity.this, "取消订阅失败");
+                        ZBToast.showShort(AtlasDetailActivity.this, "操作失败");
                     }
 
                 }).setTag(this).exe(mData.getArticle().getColumn_id(), false);
@@ -712,7 +712,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
                             if (isRedAlbum && BizUtils.isRankEnable()) {
                                 hitRank();
                             }
-                            ZBToast.showShort(getApplicationContext(), "订阅成功");
+                            ZBToast.showShort(getApplicationContext(), "操作成功");
                             topHolder.getSubscribe().setSelected(true);
                             syncSubscribeColumn(true, mData.getArticle().getColumn_id());
 
@@ -725,7 +725,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(AtlasDetailActivity.this, "订阅失败");
+                            ZBToast.showShort(AtlasDetailActivity.this, "操作失败");
                         }
 
                     }).setTag(this).exe(mData.getArticle().getColumn_id(), true);
@@ -749,7 +749,7 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             RankTipDialog.Builder builder = new RankTipDialog.Builder()
                     .setLeftText("取消")
                     .setRightText("打榜")
-                    .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                    .setMessage("关注成功，来为它打榜，助它荣登榜首吧！")
                     .setOnLeftClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

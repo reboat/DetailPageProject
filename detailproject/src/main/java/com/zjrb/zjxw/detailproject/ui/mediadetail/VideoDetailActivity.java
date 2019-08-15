@@ -960,16 +960,17 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
     @Override
     public void syncCommentNum(Intent intent) {
-        if (intent != null && intent.hasExtra("video_comment_title")) {
-            if (pagerAdapter != null) {
-                if (pagerAdapter.getCount() == 2) {
-                    pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
-                } else {
-                    pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
-                }
-            }
-            tabLayout.notifyDataSetChanged();
-        }
+        //直播间删除评论不操作
+//        if (intent != null && intent.hasExtra("video_comment_title")) {
+//            if (pagerAdapter != null) {
+//                if (pagerAdapter.getCount() == 2) {
+//                    pagerAdapter.setPageTitle(1, intent.getStringExtra("video_comment_title"));
+//                } else {
+//                    pagerAdapter.setPageTitle(2, intent.getStringExtra("video_comment_title"));
+//                }
+//            }
+//            tabLayout.notifyDataSetChanged();
+//        }
     }
 
     @Override

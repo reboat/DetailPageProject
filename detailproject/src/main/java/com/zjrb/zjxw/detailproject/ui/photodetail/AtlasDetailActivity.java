@@ -39,12 +39,14 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.AlbumImageListBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
+import com.zjrb.zjxw.detailproject.apibean.bean.SubscribeResponse;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.callback.SubscribeCallBack;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.photodetail.adapter.ImagePrePagerAdapter;
@@ -681,53 +683,30 @@ public class AtlasDetailActivity extends DailyActivity implements ViewPager
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
                 DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                new ColumnSubscribeTask(new SubscribeCallBack(this,true) {
 
                     @Override
-                    public void onSuccess(Void baseInnerData) {
+                    public void onSuccess(SubscribeResponse baseInnerData) {
+                        super.onSuccess(baseInnerData);
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         syncSubscribeColumn(false, mData.getArticle().getColumn_id());
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(AtlasDetailActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 DataAnalyticsUtils.get().SubscribeAnalytics(mData, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                    new ColumnSubscribeTask(new SubscribeCallBack(this,false) {
 
                         @Override
-                        public void onSuccess(Void baseInnerData) {
-
+                        public void onSuccess(SubscribeResponse baseInnerData) {
+                            super.onSuccess(baseInnerData);
                             if (isRedAlbum && BizUtils.isRankEnable()) {
                                 hitRank();
                             }
-                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             topHolder.getSubscribe().setSelected(true);
                             syncSubscribeColumn(true, mData.getArticle().getColumn_id());
-
                         }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-
-                        @Override
-                        public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(AtlasDetailActivity.this, "订阅失败");
-                        }
-
                     }).setTag(this).exe(mData.getArticle().getColumn_id(), true);
                 }
 

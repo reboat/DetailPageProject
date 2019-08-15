@@ -29,10 +29,12 @@ import com.zjrb.zjxw.detailproject.R;
 import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.PromoteResponse;
+import com.zjrb.zjxw.detailproject.apibean.bean.SubscribeResponse;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.PromoteTask;
 import com.zjrb.zjxw.detailproject.apibean.task.RedBoatTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.callback.SubscribeCallBack;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.NewsDetailSpaceDivider;
@@ -413,40 +415,28 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
                 DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                new ColumnSubscribeTask(new SubscribeCallBack(this,true) {
 
                     @Override
-                    public void onSuccess(Void baseInnerData) {
+                    public void onSuccess(SubscribeResponse baseInnerData) {
+                        super.onSuccess(baseInnerData);
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(RedBoatActivity.this, "取消订阅失败");
-                    }
-
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                    new ColumnSubscribeTask(new SubscribeCallBack(this,false) {
 
                         @Override
-                        public void onSuccess(Void baseInnerData) {
-
+                        public void onSuccess(SubscribeResponse baseInnerData) {
                             if (BizUtils.isRankEnable()) {
                                 if (!mNewsDetail.getArticle().rank_hited) {
                                     RankTipDialog.Builder builder = new RankTipDialog.Builder()
                                             .setLeftText("取消")
                                             .setRightText("打榜")
-                                            .setMessage("订阅成功，来为它打榜，助它荣登榜首吧！")
+                                            .setMessage(baseInnerData.normal_column?"订阅成功，来为它打榜，助它荣登榜首吧！":"关注成功，来为它打榜，助它荣登榜首吧！")
                                             .setOnLeftClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View v) {
@@ -481,7 +471,7 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
                                             .build()
                                             .send();
                                 } else {
-                                    ZBToast.showShort(getApplicationContext(), "订阅成功");
+                                    super.onSuccess(baseInnerData);
                                     topHolder.rankActionView.setText("拉票");
                                     new Analytics.AnalyticsBuilder(v.getContext(), "A0062", "", false)
                                             .name("点击拉票")
@@ -495,22 +485,13 @@ public class RedBoatActivity extends DailyActivity implements RedBoatAdapter.Com
 
                                 topHolder.rankActionView.setVisibility(View.VISIBLE);
                                 topHolder.getSubscribe().setVisibility(View.INVISIBLE);
+                            }else {
+                                super.onSuccess(baseInnerData);
                             }
 
                             topHolder.getSubscribe().setSelected(true);
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-
-                        @Override
-                        public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(RedBoatActivity.this, "订阅失败");
-                        }
-
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);
                 }
 

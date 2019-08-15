@@ -33,11 +33,13 @@ import com.zjrb.zjxw.detailproject.R2;
 import com.zjrb.zjxw.detailproject.apibean.bean.CommentRefreshBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.DraftDetailBean;
 import com.zjrb.zjxw.detailproject.apibean.bean.HotCommentsBean;
+import com.zjrb.zjxw.detailproject.apibean.bean.SubscribeResponse;
 import com.zjrb.zjxw.detailproject.apibean.task.ColumnSubscribeTask;
 import com.zjrb.zjxw.detailproject.apibean.task.CommentListTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftDetailTask;
 import com.zjrb.zjxw.detailproject.apibean.task.DraftPraiseTask;
 import com.zjrb.zjxw.detailproject.callback.DetailInterface;
+import com.zjrb.zjxw.detailproject.callback.SubscribeCallBack;
 import com.zjrb.zjxw.detailproject.ui.boardcast.SubscribeReceiver;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.EmptyStateFragment;
 import com.zjrb.zjxw.detailproject.ui.nomaldetail.holder.DetailCommentHolder;
@@ -331,22 +333,12 @@ public class ActivityTopicActivity extends DailyActivity implements
      */
     @Override
     public void onOptSubscribe() {
-        new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+        new ColumnSubscribeTask(new SubscribeCallBack(this,false) {
 
             @Override
-            public void onSuccess(Void baseInnerData) {
+            public void onSuccess(SubscribeResponse baseInnerData) {
+                super.onSuccess(baseInnerData);
                 mAdapter.updateSubscribeInfo();
-                ZBToast.showShort(getBaseContext(), getString(R.string.module_detail_subscribe_success));
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(String errMsg, int errCode) {
-                ZBToast.showShort(ActivityTopicActivity.this, errMsg);
             }
 
         }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), true);
@@ -480,46 +472,26 @@ public class ActivityTopicActivity extends DailyActivity implements
             //已订阅状态->取消订阅
             if (mTopBarHolder.getSubscribe().isSelected()) {
                 DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                new ColumnSubscribeTask(new SubscribeCallBack(this,true) {
 
                     @Override
-                    public void onSuccess(Void baseInnerData) {
+                    public void onSuccess(SubscribeResponse baseInnerData) {
                         mTopBarHolder.getSubscribe().setSelected(false);
                         mTopBarHolder.getSubscribe().setText("+订阅");
                         SyncSubscribeColumn(false, mDetailData.getArticle().getColumn_id());
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-
-                    @Override
-                    public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(ActivityTopicActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), false);
             } else {//未订阅状态->订阅
                 if (!mTopBarHolder.getSubscribe().isSelected()) {
                     DataAnalyticsUtils.get().SubscribeAnalytics(mDetailData, "订阅号订阅", "A0014", "SubColumn", "订阅");
-                    new ColumnSubscribeTask(new LoadingCallBack<Void>() {
+                    new ColumnSubscribeTask(new SubscribeCallBack(this,false) {
 
                         @Override
-                        public void onSuccess(Void baseInnerData) {
+                        public void onSuccess(SubscribeResponse baseInnerData) {
                             mTopBarHolder.getSubscribe().setSelected(true);
                             mTopBarHolder.getSubscribe().setText("已订阅");
                             SyncSubscribeColumn(true, mDetailData.getArticle().getColumn_id());
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-
-                        @Override
-                        public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(ActivityTopicActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mDetailData.getArticle().getColumn_id(), true);

@@ -2,6 +2,7 @@ package com.zjrb.zjxw.detailproject.apibean.task;
 
 
 import com.zjrb.core.load.LoadingCallBack;
+import com.zjrb.zjxw.detailproject.apibean.bean.SubscribeResponse;
 import com.zjrb.zjxw.detailproject.utils.global.APIManager;
 
 import cn.daily.news.biz.core.network.compatible.APIPostTask;
@@ -12,8 +13,8 @@ import cn.daily.news.biz.core.network.compatible.APIPostTask;
  * create time:2017/7/28  上午11:18
  */
 
-public class ColumnSubscribeTask extends APIPostTask<Void> {
-    public ColumnSubscribeTask(LoadingCallBack<Void> callBack) {
+public class ColumnSubscribeTask extends APIPostTask<SubscribeResponse> {
+    public ColumnSubscribeTask(LoadingCallBack<SubscribeResponse> callBack) {
         super(callBack);
     }
 

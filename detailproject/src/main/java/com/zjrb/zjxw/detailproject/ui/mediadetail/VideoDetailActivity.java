@@ -739,7 +739,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "操作成功");
+                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -750,7 +750,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(getApplication(), "操作失败");
+                        ZBToast.showShort(getApplication(), "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -762,7 +762,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topHolder.getSubscribe().setSelected(true);
-                            ZBToast.showShort(getApplicationContext(), "操作成功");
+                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -773,7 +773,7 @@ final public class VideoDetailActivity extends DailyActivity implements DetailIn
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(getApplication(), "操作失败");
+                            ZBToast.showShort(getApplication(), "订阅失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

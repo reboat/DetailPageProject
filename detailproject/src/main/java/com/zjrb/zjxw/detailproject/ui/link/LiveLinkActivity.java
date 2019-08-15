@@ -517,7 +517,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                     @Override
                     public void onSuccess(Void baseInnerData) {
                         topBarHolder.getSubscribe().setSelected(false);
-                        ZBToast.showShort(getApplicationContext(), "操作成功");
+                        ZBToast.showShort(getApplicationContext(), "取消订阅成功");
                         SyncSubscribeColumn(false, mNewsDetail.getArticle().getColumn_id());
                     }
 
@@ -528,7 +528,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
                     @Override
                     public void onError(String errMsg, int errCode) {
-                        ZBToast.showShort(LiveLinkActivity.this, "操作失败");
+                        ZBToast.showShort(LiveLinkActivity.this, "取消订阅失败");
                     }
 
                 }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), false);
@@ -540,7 +540,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
                         @Override
                         public void onSuccess(Void baseInnerData) {
                             topBarHolder.getSubscribe().setSelected(true);
-                            ZBToast.showShort(getApplicationContext(), "操作成功");
+                            ZBToast.showShort(getApplicationContext(), "订阅成功");
                             SyncSubscribeColumn(true, mNewsDetail.getArticle().getColumn_id());
                         }
 
@@ -551,7 +551,7 @@ public class LiveLinkActivity extends DailyActivity implements CommentWindowDial
 
                         @Override
                         public void onError(String errMsg, int errCode) {
-                            ZBToast.showShort(LiveLinkActivity.this, "操作失败");
+                            ZBToast.showShort(LiveLinkActivity.this, "订阅失败");
                         }
 
                     }).setTag(this).exe(mNewsDetail.getArticle().getColumn_id(), true);

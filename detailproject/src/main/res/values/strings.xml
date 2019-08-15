@@ -4,7 +4,7 @@
     <string name="module_detail_comment_window_hint">我来说两句（评论内容不少于5个字）</string>
     <string name="module_detail_save_success">保存成功</string>
     <string name="module_detail_save_failed">保存失败</string>
-    <string name="module_detail_subscribe_success">操作成功</string>
+    <string name="module_detail_subscribe_success">订阅成功</string>
     <string name="module_detail_subscribe">订阅</string>
     <string name="module_detail_to_see">去看</string>
     <string name="module_detail_comment_delete">删除</string>

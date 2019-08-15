@@ -153,7 +153,7 @@ public class ImageMoreFragment extends DailyFragment {
                     .pageType("更多图集页")
                     .ilurl(articleBean.getUrl())
                     .seObjectType(ObjectType.C01)
-                    .objectID(String.valueOf(articleBean.getMlf_id()))
+                    .objectID(String.valueOf(articleBean.getDoc_category()==1?articleBean.getMlf_id():articleBean.guid))
                     .columnName(articleBean.getColumn_name())
                     .selfNewsID(String.valueOf(articleBean.getId()))
                     .pubUrl(articleBean.getUrl())

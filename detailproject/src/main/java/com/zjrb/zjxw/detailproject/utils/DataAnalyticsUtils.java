@@ -66,7 +66,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public Analytics.AnalyticsBuilder pageStayTime(DraftDetailBean bean) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "ViewAppNewsDetail", true)
                 .name("页面停留时长")
-                .objectID(bean.getArticle().getMlf_id() + "")
+                .objectID(String.valueOf(bean.getArticle().getDoc_category()==1?bean.getArticle().getMlf_id():bean.getArticle().guid))
                 .objectShortName(bean.getArticle().getDoc_title())
                 .ilurl(bean.getArticle().getUrl())
                 .seObjectType(ObjectType.C01)
@@ -601,7 +601,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void AtlasSlide(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0010", "PicturePageStay", false)
                 .name("图片浏览(左右滑动)")
-                .objectID(bean.getArticle().getMlf_id() + "")
+                .objectID(String.valueOf(bean.getArticle().getDoc_category()==1?bean.getArticle().getMlf_id():bean.getArticle().guid))
                 .objectShortName(bean.getArticle().getDoc_title())
                 .seObjectType(ObjectType.C01)
                 .ilurl(bean.getArticle().getUrl())
@@ -627,7 +627,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public void ClickMoreImage(DraftDetailBean bean) {
         new Analytics.AnalyticsBuilder(UIUtils.getActivity(), "A0010", "PicturePageStay", false)
                 .name("打开\"更多图集\"页面)")
-                .objectID(bean.getArticle().getMlf_id() + "")
+                .objectID(String.valueOf(bean.getArticle().getDoc_category()==1?bean.getArticle().getMlf_id():bean.getArticle().guid))
                 .objectShortName(bean.getArticle().getDoc_title())
                 .seObjectType(ObjectType.C01)
                 .ilurl(bean.getArticle().getUrl())
@@ -807,7 +807,7 @@ final public class DataAnalyticsUtils implements DetailWMHelperInterFace.NewsDet
     public Analytics pageStayTimeSpecial(DraftDetailBean.ArticleBean mArticle) {
         return new Analytics.AnalyticsBuilder(getContext(), "A0010", "SubjectDetailPageStay", true)
                 .name("专题详情页停留时长")
-                .objectID(mArticle.getMlf_id() + "")
+                .objectID(String.valueOf(mArticle.getDoc_category()==1?mArticle.getMlf_id():mArticle.guid))
                 .objectShortName(mArticle.getDoc_title())
                 .seObjectType(ObjectType.C01)
                 .ilurl(mArticle.getUrl())

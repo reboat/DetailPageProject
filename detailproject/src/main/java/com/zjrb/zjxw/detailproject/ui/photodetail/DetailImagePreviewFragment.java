@@ -54,7 +54,7 @@ public class DetailImagePreviewFragment extends ImagePreviewFragment {
                         .pageType("图集详情页")
                         .ilurl(mBean.getUrl())
                         .seObjectType(ObjectType.C01)
-                        .objectID(String.valueOf(mBean.getMlf_id()))
+                        .objectID(String.valueOf(mBean.getDoc_category()==1?mBean.getMlf_id():mBean.guid))
                         .columnName(mBean.getColumn_name())
                         .selfNewsID(String.valueOf(mBean.getId()))
                         .pubUrl(mBean.getUrl())

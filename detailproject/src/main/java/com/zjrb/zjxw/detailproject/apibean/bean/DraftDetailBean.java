@@ -43,6 +43,7 @@ public class DraftDetailBean extends BaseData {
         private int list_style;
         private String list_tag;
         private int doc_type;
+        private int doc_category;//稿件大类区分，1-普通新闻 2-政务号
         private int read_count;
         private int like_count;
         private int comment_count;
@@ -187,6 +188,14 @@ public class DraftDetailBean extends BaseData {
 
         public void setCard_url(String card_url) {
             this.card_url = card_url;
+        }
+
+        public int getDoc_category() {
+            return doc_category;
+        }
+
+        public void setDoc_category(int doc_category) {
+            this.doc_category = doc_category;
         }
 
         /**

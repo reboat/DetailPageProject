@@ -45,7 +45,7 @@
             android:layout_gravity="left"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/fzzcysk_zbjt"
-            android:textColor="#ff666666"
+            android:textColor="@color/_000000_7a7b7d"
             android:textSize="18sp"
             android:visibility="gone"
             tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度" />

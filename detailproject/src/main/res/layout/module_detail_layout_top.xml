@@ -39,14 +39,15 @@
             tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度" />
 
         <TextView
-            android:layout_marginTop="6dp"
             android:id="@+id/tv_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/fzzcysk_zbjt"
             android:textColor="#ff666666"
             android:textSize="18sp"
+            android:visibility="gone"
             tools:text="浙商银行程度浙商银行程度浙商银行程度浙商银行程度" />
         <!--新闻来源全部显示-->
         <TextView

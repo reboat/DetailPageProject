@@ -61,6 +61,7 @@
         <activity
             android:name=".ui.nomaldetail.NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -91,6 +92,7 @@
         <activity
             android:name=".ui.link.BrowserLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -122,6 +124,7 @@
         <activity
             android:name=".ui.link.LiveLinkActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -151,6 +154,7 @@
         <activity
             android:name=".ui.photodetail.AtlasDetailActivity"
             android:configChanges="uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -180,6 +184,7 @@
         <activity
             android:name=".ui.subject.SpecialActivity"
             android:configChanges="uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -208,6 +213,7 @@
         <activity
             android:name=".ui.topic.ActivityTopicActivity"
             android:configChanges="uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -236,6 +242,7 @@
         <activity
             android:name=".ui.redBoat.RedBoatActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -263,6 +270,7 @@
         <!-- 专题列表 -->
         <activity
             android:name=".ui.subject.SpecialListActivity"
+            android:screenOrientation="portrait"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -288,6 +296,7 @@
         <!-- 官员详情页 -->
         <activity
             android:name=".ui.persionaldetail.PersionalDetailActivity"
+            android:screenOrientation="portrait"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -313,6 +322,7 @@
         <!-- 官员新闻列表 -->
         <activity
             android:name=".ui.persionaldetail.PersionalListActivity"
+            android:screenOrientation="portrait"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -391,6 +401,7 @@
         <!--专题更多xd-->
         <activity
             android:name=".ui.subject.SpecialMoreActivity"
+            android:screenOrientation="portrait"
             android:configChanges="uiMode">
             <intent-filter>
                 <action android:name="android.intent.action.DAILY" />
@@ -410,6 +421,7 @@
         <activity
             android:name=".ui.mediadetail.VideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|uiMode"
+            android:screenOrientation="portrait"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

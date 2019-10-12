@@ -67,14 +67,18 @@ public class NewsDetailShareHolder extends BaseRecyclerViewHolder<DetailShareIte
     private void initShareBean(DetailShareItemBean data) {
         if (mListData == null) {
             mListData = new ArrayList<>();
-            //使用FACEBOOK作为新闻卡片的ID
-            if (data.draftDetailBean != null && data.draftDetailBean.getArticle() != null && !TextUtils.isEmpty(data.draftDetailBean.getArticle().getCard_url())) {
-                mListData.add(new DetailShareBean("新闻卡片", SHARE_MEDIA.FACEBOOK));
-            }
+
             mListData.add(new DetailShareBean("微信", SHARE_MEDIA.WEIXIN));
             mListData.add(new DetailShareBean("朋友圈", SHARE_MEDIA.WEIXIN_CIRCLE));
             mListData.add(new DetailShareBean("钉钉", SHARE_MEDIA.DINGTALK));
             mListData.add(new DetailShareBean("更多", SHARE_MEDIA.MORE));
+
+            //使用FACEBOOK作为新闻卡片的ID
+            if (data.draftDetailBean != null && data.draftDetailBean.getArticle() != null && !TextUtils.isEmpty(data.draftDetailBean.getArticle().getCard_url())) {
+                mListData.add(0, new DetailShareBean("新闻卡片", SHARE_MEDIA.FACEBOOK));
+            } else {
+                mListData.add(3, new DetailShareBean("QQ", SHARE_MEDIA.QQ));
+            }
         }
 
         GridLayoutManager managerFollow = new GridLayoutManager(UIUtils.getContext(), mListData.size());

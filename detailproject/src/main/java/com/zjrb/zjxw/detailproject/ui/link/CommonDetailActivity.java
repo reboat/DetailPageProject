@@ -48,7 +48,6 @@ import cn.daily.news.analytics.ObjectType;
 import cn.daily.news.biz.core.DailyActivity;
 import cn.daily.news.biz.core.constant.IKey;
 import cn.daily.news.biz.core.model.CommentDialogBean;
-import cn.daily.news.biz.core.nav.LinkControl;
 import cn.daily.news.biz.core.nav.Nav;
 import cn.daily.news.biz.core.network.compatible.APICallBack;
 import cn.daily.news.biz.core.share.OutSizeAnalyticsBean;
@@ -332,24 +331,16 @@ public class CommonDetailActivity extends DailyActivity implements LinkStackPush
         loadUrlScheme(mWebStack.urlLink);
     }
 
+    //通用详情页直接加载
     private void loadUrlScheme(final String url) {
-        //链接稿单独逻辑
         if (!TextUtils.isEmpty(url)) {
-            LinkControl linkControl = new LinkControl(Uri.parse(url));
-            //链接稿与外链稿在当前页面打开
-            //原生稿件将跳转
-            if (!url.contains("/link.html") && linkControl.isInnerUrl(Uri.parse(url))) {
-                Nav.with(UIUtils.getActivity()).to(url);
-                finish();
-            } else {
-                mWebView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mWebView.loadUrl(mWebStack.urlLink);
-                        addWebStack(mWebStack);
-                    }
-                });
-            }
+            mWebView.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWebView.loadUrl(mWebStack.urlLink);
+                    addWebStack(mWebStack);
+                }
+            });
         }
     }
 

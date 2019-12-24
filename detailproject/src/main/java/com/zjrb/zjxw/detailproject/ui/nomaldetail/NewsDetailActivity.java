@@ -174,6 +174,8 @@ final public class NewsDetailActivity extends DailyActivity implements
                 }
                 if (data.getQueryParameter(IKey.FROM_CHANNEL) != null) {
                     mFromChannel = data.getQueryParameter(IKey.FROM_CHANNEL);
+                } else {
+                    mFromChannel = null;
                 }
             }
 
@@ -547,7 +549,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             //已订阅状态->取消订阅
             if (topHolder.getSubscribe().isSelected()) {
                 DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号取消订阅", "A0114", "SubColumn", "取消订阅");
-                new ColumnSubscribeTask(new SubscribeCallBack(this,true) {
+                new ColumnSubscribeTask(new SubscribeCallBack(this, true) {
 
                     @Override
                     public void onSuccess(SubscribeResponse baseInnerData) {
@@ -560,7 +562,7 @@ final public class NewsDetailActivity extends DailyActivity implements
             } else {//未订阅状态->订阅
                 DataAnalyticsUtils.get().SubscribeAnalytics(mNewsDetail, "订阅号订阅", "A0014", "SubColumn", "订阅");
                 if (!topHolder.getSubscribe().isSelected()) {
-                    new ColumnSubscribeTask(new SubscribeCallBack(this,false) {
+                    new ColumnSubscribeTask(new SubscribeCallBack(this, false) {
 
                         @Override
                         public void onSuccess(SubscribeResponse baseInnerData) {
